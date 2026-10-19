@@ -1,0 +1,231 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Pollo saag: curry suave de pollo con espinacas",
+    "one_line": "Pollo guisado en salsa suave de cebolla y tomate con mucha espinaca y yogur griego al final.",
+    "main_ingredients": [
+     "chicken breast",
+     "spinach",
+     "onion",
+     "crushed tomatoes",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 330,
+     "protein_g": 46,
+     "carbs_g": 18,
+     "fat_g": 6
+    },
+    "image_prompt": "Mild chicken and spinach curry in a bowl with a swirl of yogurt"
+   },
+   {
+    "idea_id": "2",
+    "name": "Pasta integral con pollo, espinacas y yogur griego",
+    "one_line": "Pasta integral con pollo en tiras y espinacas en salsa cremosa de yogur y limón.",
+    "main_ingredients": [
+     "chicken breast",
+     "wholemeal pasta",
+     "spinach",
+     "greek yogurt 0%",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 46,
+     "carbs_g": 45,
+     "fat_g": 8
+    },
+    "image_prompt": "Wholemeal pasta with sliced chicken and spinach in a creamy yogurt sauce"
+   },
+   {
+    "idea_id": "3",
+    "name": "Pollo cacciatore con pimiento y champiñones",
+    "one_line": "Muslos de pollo guisados con pimiento, champiñones y cebolla en salsa de tomate.",
+    "main_ingredients": [
+     "chicken thigh",
+     "red bell pepper",
+     "mushrooms",
+     "crushed tomatoes",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 400,
+     "protein_g": 45,
+     "carbs_g": 15,
+     "fat_g": 18
+    },
+    "image_prompt": "Chicken cacciatore with peppers and mushrooms in tomato sauce"
+   },
+   {
+    "idea_id": "4",
+    "name": "Bowl griego de pollo con arroz y feta",
+    "one_line": "Pollo a la plancha sobre arroz con pepino, tomate y feta, con salsa de yogur aparte.",
+    "main_ingredients": [
+     "chicken breast",
+     "rice",
+     "cucumber",
+     "tomato",
+     "feta",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 470,
+     "protein_g": 46,
+     "carbs_g": 45,
+     "fat_g": 9
+    },
+    "image_prompt": "Greek chicken bowl with rice, cucumber, tomato and feta"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Pollo saag: curry suave de pollo con espinacas",
+  "servings": 4,
+  "prep_time_min": 45,
+  "ingredients": [
+   {
+    "name": "chicken breast",
+    "grams_per_serving": 190,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spinach",
+    "grams_per_serving": 75,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 55,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "crushed tomatoes",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "greek yogurt 0%",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "curry powder",
+    "grams_per_serving": 3,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 8,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Corta el pollo en dados y la cebolla en cubos pequeños.",
+   "Sofríe la cebolla con el aceite y el curry 5 minutos.",
+   "Añade el pollo y dóralo 5 minutos. Echa el tomate triturado y cocina 15 minutos a fuego suave.",
+   "Añade la espinaca y deja que se ablande 3 minutos. Fuera del fuego, mezcla el yogur.",
+   "Reparte en 4 táperes y guarda en la nevera. Calienta en el microondas en el trabajo."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Pollo saag: curry suave de pollo con espinacas",
+   "servings": 4,
+   "prep_time_min": 45,
+   "ingredients": [
+    {
+     "name": "chicken breast",
+     "grams_per_serving": 175,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "spinach",
+     "grams_per_serving": 75,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 55,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "crushed tomatoes",
+     "grams_per_serving": 100,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "greek yogurt 0%",
+     "grams_per_serving": 60,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "curry powder",
+     "grams_per_serving": 3,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "extra virgin olive oil",
+     "grams_per_serving": 12,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Corta el pollo en dados y la cebolla en cubos pequeños.",
+    "Sofríe la cebolla con el aceite y el curry 5 minutos.",
+    "Añade el pollo y dóralo 5 minutos. Echa el tomate triturado y cocina 15 minutos a fuego suave.",
+    "Añade la espinaca y deja que se ablande 3 minutos. Fuera del fuego, mezcla el yogur.",
+    "Reparte en 4 táperes y guarda en la nevera. Calienta en el microondas en el trabajo."
+   ]
+  }
+ ]
+}

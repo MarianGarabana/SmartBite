@@ -1,0 +1,248 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Merluza al horno con patatas panaderas",
+    "one_line": "Patata y cebolla en l\u00e1minas al horno, con la merluza encima hasta que se deshaga en lascas.",
+    "main_ingredients": [
+     "frozen hake",
+     "potato",
+     "onion",
+     "garlic",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 40,
+     "carbs_g": 45,
+     "fat_g": 6
+    },
+    "image_prompt": "Baked hake fillet on sliced roasted potatoes and onion in a tray"
+   },
+   {
+    "idea_id": "2",
+    "name": "Merluza al horno con tomate y patata",
+    "one_line": "Merluza sobre una cama de patata y tomate triturado con ajo y piment\u00f3n, todo en una fuente al horno.",
+    "main_ingredients": [
+     "frozen hake",
+     "potato",
+     "crushed tomatoes",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 430,
+     "protein_g": 40,
+     "carbs_g": 44,
+     "fat_g": 5
+    },
+    "image_prompt": "Baked hake with potatoes in tomato sauce and paprika in a baking dish"
+   },
+   {
+    "idea_id": "3",
+    "name": "Salm\u00f3n al horno con patatas y jud\u00edas verdes",
+    "one_line": "Bandeja de salm\u00f3n con patata, jud\u00edas verdes y lim\u00f3n, todo asado en el horno.",
+    "main_ingredients": [
+     "salmon",
+     "potato",
+     "green beans",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 470,
+     "protein_g": 38,
+     "carbs_g": 35,
+     "fat_g": 18
+    },
+    "image_prompt": "Roasted salmon fillet with potatoes and green beans on a tray"
+   },
+   {
+    "idea_id": "4",
+    "name": "Lomo de cerdo al horno con patatas y zanahoria",
+    "one_line": "Solomillo de cerdo asado en una bandeja con patata y zanahoria hasta que el centro est\u00e9 justo hecho.",
+    "main_ingredients": [
+     "pork loin",
+     "potato",
+     "carrot",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 42,
+     "carbs_g": 38,
+     "fat_g": 10
+    },
+    "image_prompt": "Sliced roasted pork loin with potatoes and carrots on a sheet pan"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Merluza al horno con patatas panaderas",
+  "servings": 2,
+  "prep_time_min": 50,
+  "ingredients": [
+   {
+    "name": "frozen hake",
+    "grams_per_serving": 200,
+    "units_per_serving": 0,
+    "storage": "frozen",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "potato",
+    "grams_per_serving": 300,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "lemon juice",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Descongela la merluza en la nevera la noche anterior.",
+   "Calienta el horno a 200 grados.",
+   "Corta la patata y la cebolla en l\u00e1minas finas y el ajo en l\u00e1minas.",
+   "Mezcla las verduras con el aceite, el piment\u00f3n y la sal y ponlas en una bandeja.",
+   "Hornea 25 minutos hasta que la patata empiece a dorarse.",
+   "Pon la merluza encima, roc\u00edala con el zumo de lim\u00f3n y hornea 15 minutos m\u00e1s hasta que se deshaga en lascas."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Merluza al horno con patatas panaderas",
+   "servings": 2,
+   "prep_time_min": 50,
+   "ingredients": [
+    {
+     "name": "frozen hake",
+     "grams_per_serving": 200,
+     "units_per_serving": 0,
+     "storage": "frozen",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "potato",
+     "grams_per_serving": 260,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 100,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "garlic",
+     "grams_per_serving": 4,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "lemon juice",
+     "grams_per_serving": 10,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "extra virgin olive oil",
+     "grams_per_serving": 3,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "paprika",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Descongela la merluza en la nevera la noche anterior.",
+    "Calienta el horno a 200 grados.",
+    "Corta la patata y la cebolla en l\u00e1minas finas y el ajo en l\u00e1minas.",
+    "Mezcla las verduras con el aceite, el piment\u00f3n y la sal y ponlas en una bandeja.",
+    "Hornea 25 minutos hasta que la patata empiece a dorarse.",
+    "Pon la merluza encima, roc\u00edala con el zumo de lim\u00f3n y hornea 15 minutos m\u00e1s hasta que se deshaga en lascas."
+   ]
+  }
+ ]
+}

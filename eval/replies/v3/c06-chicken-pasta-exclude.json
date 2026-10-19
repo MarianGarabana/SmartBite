@@ -1,0 +1,265 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Pasta cremosa de pollo con yogur y espinacas",
+    "one_line": "Pasta integral con pollo y espinacas en una salsa de yogur griego, limón y un poco de queso.",
+    "main_ingredients": [
+     "chicken breast",
+     "wholemeal pasta",
+     "greek yogurt 0%",
+     "spinach",
+     "lemon juice",
+     "grana padano"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 45,
+     "carbs_g": 50,
+     "fat_g": 10
+    },
+    "image_prompt": "Creamy wholemeal pasta with sliced chicken breast and spinach in a light yogurt sauce"
+   },
+   {
+    "idea_id": "2",
+    "name": "Bowls griegos de pollo con arroz y feta",
+    "one_line": "Pollo marinado sobre arroz con pepino, tomate, feta y salsa de yogur.",
+    "main_ingredients": [
+     "chicken breast",
+     "rice",
+     "cucumber",
+     "tomato",
+     "feta",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 45,
+     "carbs_g": 48,
+     "fat_g": 12
+    },
+    "image_prompt": "Greek chicken rice bowl with cucumber, tomato, feta and yogurt sauce"
+   },
+   {
+    "idea_id": "3",
+    "name": "Pollo y coliflor al horno con grana padano",
+    "one_line": "Pechugas y ramilletes de coliflor asados en una bandeja, con queso rallado y limón.",
+    "main_ingredients": [
+     "chicken breast",
+     "frozen cauliflower",
+     "grana padano",
+     "lemon",
+     "potato"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 46,
+     "carbs_g": 40,
+     "fat_g": 14
+    },
+    "image_prompt": "Sheet pan with roasted chicken breast, cauliflower florets and grated cheese with lemon"
+   },
+   {
+    "idea_id": "4",
+    "name": "Arroz con pollo, alcachofas y limón en una olla",
+    "one_line": "Pollo dorado con ajo y alcachofas, cocinado con arroz y caldo, con un toque de limón.",
+    "main_ingredients": [
+     "chicken breast",
+     "artichoke hearts",
+     "rice",
+     "lemon juice",
+     "garlic",
+     "chicken broth"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 45,
+     "carbs_g": 50,
+     "fat_g": 9
+    },
+    "image_prompt": "One-pot lemon chicken and rice with artichoke hearts in a pan"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Pasta cremosa de pollo con yogur y espinacas",
+  "servings": 4,
+  "prep_time_min": 35,
+  "ingredients": [
+   {
+    "name": "chicken breast",
+    "grams_per_serving": 125,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "wholemeal pasta",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "greek yogurt 0%",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spinach",
+    "grams_per_serving": 75,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "grana padano",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lemon juice",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic powder",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Corta la pechuga en tiras y sazónala con ajo en polvo, pimienta y sal.",
+   "Cocínala en una sartén antiadherente sin aceite hasta que esté dorada. Déjala enfriar.",
+   "Cuece la pasta integral en agua con sal. Guarda un vaso del agua de cocción.",
+   "Mezcla el yogur con el limón y el queso rallado en un bol.",
+   "Fuera del fuego, mezcla la pasta, el pollo, las espinacas y la salsa con un poco de agua de cocción.",
+   "Reparte en 4 táperes. Se recalienta en el microondas en el trabajo."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Pasta cremosa de pollo con yogur y espinacas",
+   "servings": 4,
+   "prep_time_min": 35,
+   "ingredients": [
+    {
+     "name": "chicken breast",
+     "grams_per_serving": 125,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "wholemeal pasta",
+     "grams_per_serving": 80,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": true
+    },
+    {
+     "name": "greek yogurt 0%",
+     "grams_per_serving": 60,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "spinach",
+     "grams_per_serving": 75,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "grana padano",
+     "grams_per_serving": 10,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "lemon juice",
+     "grams_per_serving": 10,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "garlic powder",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "black pepper",
+     "grams_per_serving": 0.5,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Corta la pechuga en tiras y sazónala con ajo en polvo, pimienta y sal.",
+    "Cocínala en una sartén antiadherente sin aceite hasta que esté dorada. Déjala enfriar.",
+    "Cuece la pasta integral en agua con sal. Guarda un vaso del agua de cocción.",
+    "Mezcla el yogur con el limón y el queso rallado en un bol.",
+    "Fuera del fuego, mezcla la pasta, el pollo, las espinacas y la salsa con un poco de agua de cocción.",
+    "Reparte en 4 táperes. Se recalienta en el microondas en el trabajo."
+   ]
+  }
+ ]
+}

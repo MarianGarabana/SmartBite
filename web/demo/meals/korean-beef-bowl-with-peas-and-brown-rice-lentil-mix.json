@@ -1,0 +1,716 @@
+{
+ "date": "2026-10-13",
+ "form": {
+  "craving": "Beef with peas and rice for meal prep: high protein, budget friendly, high fiber. Brown rice mixed with quinoa and lentils adds fiber and protein. About 450 calories and 40+ g of protein. Other grain mixes that add protein and fiber are welcome.",
+  "exclude": [
+   "olive oil"
+  ],
+  "kcal_target": 450,
+  "protein_g_target": 40,
+  "carbs_g_max": 40,
+  "budget_total_eur": 19.5,
+  "servings": 8,
+  "keep_leftovers_low": true,
+  "time_limit_min": 45,
+  "gear": [
+   "oven",
+   "no_blender"
+  ],
+  "reheat_at_work": true
+ },
+ "picked_idea": {
+  "idea_id": "1",
+  "name": "Korean beef bowl with peas and brown rice-lentil mix",
+  "one_line": "Korean-style ground beef with peas over a small mix of brown rice and lentils. Reheats well at work.",
+  "main_ingredients": [
+   "ground beef",
+   "frozen peas",
+   "brown rice",
+   "dried lentils",
+   "spring onion",
+   "garlic"
+  ],
+  "rough_macros": {
+   "kcal": 460,
+   "protein_g": 41,
+   "carbs_g": 38,
+   "fat_g": 14
+  },
+  "image_prompt": "overhead photo of a dark bowl with ground beef, green peas, brown rice and lentils, spring onion on top"
+ },
+ "recipe": {
+  "idea_id": "1",
+  "title": "Korean beef bowl with peas and brown rice-lentil mix",
+  "servings": 8,
+  "prep_time_min": 40,
+  "ingredients": [
+   {
+    "name": "ground beef",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "frozen peas",
+    "grams_per_serving": 90,
+    "units_per_serving": 0,
+    "storage": "frozen",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "brown rice",
+    "grams_per_serving": 16,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "dried lentils",
+    "grams_per_serving": 48,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "spring onion",
+    "grams_per_serving": 28,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "soy sauce",
+    "grams_per_serving": 8,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "ground ginger",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "sesame seeds",
+    "grams_per_serving": 2,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "chili flakes",
+    "grams_per_serving": 0.3,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.3,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Rinse the lentils. Put the lentils and brown rice in one pot with plenty of water and boil 30 to 35 minutes until soft. Drain.",
+   "While they cook, mince the garlic and slice the spring onions. Keep a few green slices for the top.",
+   "Mix the soy sauce, ginger, chili flakes and black pepper in a small bowl with a splash of water.",
+   "Brown the ground beef in a dry large pan over high heat, breaking it into small bits, about 8 minutes. Add the garlic and spring onion for 2 minutes.",
+   "Add the frozen peas and the sauce. Cook 4 minutes until the peas are hot and the sauce coats the beef.",
+   "Mix in the rice and lentils. Divide into 8 containers and sprinkle with sesame seeds and the green spring onion.",
+   "Cool, close and keep in the fridge up to 4 days. Reheat 2 minutes in the microwave at work, stir, and heat 1 more minute."
+  ]
+ },
+ "evaluation": {
+  "status": "issues",
+  "recipe_title": "Korean beef bowl with peas and brown rice-lentil mix",
+  "items": [
+   {
+    "name": "ground beef",
+    "food": "ground beef",
+    "grams_per_serving": 100,
+    "total_grams": 800,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "frozen peas",
+    "food": "frozen peas",
+    "grams_per_serving": 90,
+    "total_grams": 720,
+    "units_total": null,
+    "storage": "frozen",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "brown rice",
+    "food": "brown rice",
+    "grams_per_serving": 16,
+    "total_grams": 128,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "dried lentils",
+    "food": "dried lentils",
+    "grams_per_serving": 48,
+    "total_grams": 384,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "spring onion",
+    "food": "spring onion",
+    "grams_per_serving": 28,
+    "total_grams": 224,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "garlic",
+    "food": "garlic",
+    "grams_per_serving": 4,
+    "total_grams": 32,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "soy sauce",
+    "food": "soy sauce",
+    "grams_per_serving": 8,
+    "total_grams": 64,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "ground ginger",
+    "food": "ground ginger",
+    "grams_per_serving": 0.5,
+    "total_grams": 4.0,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "sesame seeds",
+    "food": "sesame seeds",
+    "grams_per_serving": 2,
+    "total_grams": 16,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "chili flakes",
+    "food": "chili flakes",
+    "grams_per_serving": 0.3,
+    "total_grams": 2.4,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "black pepper",
+    "food": "black pepper",
+    "grams_per_serving": 0.3,
+    "total_grams": 2.4,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   }
+  ],
+  "pack": {
+   "lines": [
+    {
+     "ingredient": "ground beef",
+     "grams_needed": 800,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "ground beef 400 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 800,
+     "grams_left": 0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 0.0,
+     "leftover_status": "none",
+     "food": "ground beef"
+    },
+    {
+     "ingredient": "frozen peas",
+     "grams_needed": 720,
+     "storage": "frozen",
+     "optional": false,
+     "has_price": false,
+     "product_name": "frozen peas 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 280,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 28.0,
+     "leftover_status": "keeps",
+     "food": "frozen peas"
+    },
+    {
+     "ingredient": "brown rice",
+     "grams_needed": 128,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "brown rice 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 872,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 87.2,
+     "leftover_status": "keeps",
+     "food": "brown rice"
+    },
+    {
+     "ingredient": "dried lentils",
+     "grams_needed": 384,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "dried lentils 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 616,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 61.6,
+     "leftover_status": "keeps",
+     "food": "dried lentils"
+    },
+    {
+     "ingredient": "spring onion",
+     "grams_needed": 224,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "spring onion, loose (90 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 3,
+     "grams_bought": 270,
+     "grams_left": 46,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 17.037037037037038,
+     "leftover_status": "use_in_another_meal",
+     "food": "spring onion"
+    },
+    {
+     "ingredient": "garlic",
+     "grams_needed": 32,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "garlic, loose (36 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 36,
+     "grams_left": 4,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 11.11111111111111,
+     "leftover_status": "keeps",
+     "food": "garlic"
+    },
+    {
+     "ingredient": "soy sauce",
+     "grams_needed": 64,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "soy sauce 150 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 150,
+     "grams_left": 86,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 57.333333333333336,
+     "leftover_status": "keeps",
+     "food": "soy sauce"
+    },
+    {
+     "ingredient": "ground ginger",
+     "grams_needed": 4.0,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "ground ginger 40 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 40,
+     "grams_left": 36.0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 90.0,
+     "leftover_status": "keeps",
+     "food": "ground ginger"
+    },
+    {
+     "ingredient": "sesame seeds",
+     "grams_needed": 16,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "sesame seeds 250 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 250,
+     "grams_left": 234,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 93.6,
+     "leftover_status": "keeps",
+     "food": "sesame seeds"
+    },
+    {
+     "ingredient": "chili flakes",
+     "grams_needed": 2.4,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "chili flakes 40 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 40,
+     "grams_left": 37.6,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 94.0,
+     "leftover_status": "keeps",
+     "food": "chili flakes"
+    },
+    {
+     "ingredient": "black pepper",
+     "grams_needed": 2.4,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "black pepper 65 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 65,
+     "grams_left": 62.6,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 96.3076923076923,
+     "leftover_status": "keeps",
+     "food": "black pepper"
+    }
+   ],
+   "cart_total_eur": 0,
+   "cost_per_serving_eur": 0.0,
+   "used_total_eur": 0,
+   "waste_grams": 1818,
+   "waste_eur": 0,
+   "within_budget": true,
+   "over_budget_eur": null,
+   "optional_total_eur": 0,
+   "budget_check_complete": false,
+   "unpriced": [
+    "ground beef",
+    "frozen peas",
+    "brown rice",
+    "dried lentils",
+    "spring onion",
+    "garlic"
+   ],
+   "price_note": null,
+   "change_requests": []
+  },
+  "macros": {
+   "per_serving": {
+    "kcal": 485.5,
+    "protein_g": 40.22,
+    "carbs_g": 45.03,
+    "fat_g": 12.81
+   },
+   "total": {
+    "kcal": 3883.98,
+    "protein_g": 321.8,
+    "carbs_g": 360.21,
+    "fat_g": 102.52
+   },
+   "misses": [
+    "carbs 45 g over max 40 g"
+   ],
+   "missing_nutrition": [],
+   "unresolved": [],
+   "lines": [
+    {
+     "name": "ground beef",
+     "food": "ground beef",
+     "grams": 800,
+     "source": "ciqual",
+     "source_id": "6252",
+     "amount": {
+      "kcal": 1360.0,
+      "protein_g": 160.0,
+      "carbs_g": 0.0,
+      "fat_g": 80.0
+     },
+     "missing": []
+    },
+    {
+     "name": "frozen peas",
+     "food": "frozen peas",
+     "grams": 720,
+     "source": "ciqual",
+     "source_id": "20084",
+     "amount": {
+      "kcal": 560.88,
+      "protein_g": 42.19,
+      "carbs_g": 68.4,
+      "fat_g": 2.88
+     },
+     "missing": []
+    },
+    {
+     "name": "brown rice",
+     "food": "brown rice",
+     "grams": 128,
+     "source": "ciqual",
+     "source_id": "9102",
+     "amount": {
+      "kcal": 448.0,
+      "protein_g": 8.99,
+      "carbs_g": 91.39,
+      "fat_g": 3.58
+     },
+     "missing": []
+    },
+    {
+     "name": "dried lentils",
+     "food": "dried lentils",
+     "grams": 384,
+     "source": "ciqual",
+     "source_id": "20359",
+     "amount": {
+      "kcal": 1255.68,
+      "protein_g": 96.38,
+      "carbs_g": 170.88,
+      "fat_g": 6.91
+     },
+     "missing": []
+    },
+    {
+     "name": "spring onion",
+     "food": "spring onion",
+     "grams": 224,
+     "source": "usda",
+     "source_id": "170005",
+     "amount": {
+      "kcal": 71.68,
+      "protein_g": 4.1,
+      "carbs_g": 16.44,
+      "fat_g": 0.43
+     },
+     "missing": []
+    },
+    {
+     "name": "garlic",
+     "food": "garlic",
+     "grams": 32,
+     "source": "ciqual",
+     "source_id": "11000",
+     "amount": {
+      "kcal": 34.88,
+      "protein_g": 1.7,
+      "carbs_g": 5.95,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "soy sauce",
+     "food": "soy sauce",
+     "grams": 64,
+     "source": "ciqual",
+     "source_id": "11104",
+     "amount": {
+      "kcal": 25.54,
+      "protein_g": 4.64,
+      "carbs_g": 1.1,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "ground ginger",
+     "food": "ground ginger",
+     "grams": 4.0,
+     "source": "ciqual",
+     "source_id": "11006",
+     "amount": {
+      "kcal": 13.4,
+      "protein_g": 0.36,
+      "carbs_g": 2.33,
+      "fat_g": 0.17
+     },
+     "missing": []
+    },
+    {
+     "name": "sesame seeds",
+     "food": "sesame seeds",
+     "grams": 16,
+     "source": "ciqual",
+     "source_id": "15010",
+     "amount": {
+      "kcal": 96.96,
+      "protein_g": 2.83,
+      "carbs_g": 2.05,
+      "fat_g": 7.95
+     },
+     "missing": []
+    },
+    {
+     "name": "chili flakes",
+     "food": "chili flakes",
+     "grams": 2.4,
+     "source": "ciqual",
+     "source_id": "11088",
+     "amount": {
+      "kcal": 9.02,
+      "protein_g": 0.29,
+      "carbs_g": 0.71,
+      "fat_g": 0.42
+     },
+     "missing": []
+    },
+    {
+     "name": "black pepper",
+     "food": "black pepper",
+     "grams": 2.4,
+     "source": "ciqual",
+     "source_id": "11015",
+     "amount": {
+      "kcal": 7.94,
+      "protein_g": 0.32,
+      "carbs_g": 0.96,
+      "fat_g": 0.18
+     },
+     "missing": []
+    }
+   ]
+  },
+  "change_requests": [
+   {
+    "from_agent": "macro",
+    "ingredient": null,
+    "reason": "misses_macros",
+    "hint": "Per serving: carbs 45 g over max 40 g. Adjust grams or swap ingredients."
+   }
+  ]
+ },
+ "mfp": "SmartBite: Korean beef bowl with peas and brown rice-lentil mix\nServings: 8\n\nground beef, 800 g (raw)\nfrozen peas, 720 g\nbrown rice, 128 g (dry)\ndried lentils, 384 g (dry)\nspring onion, 224 g (raw)\ngarlic, 32 g (raw)\nsoy sauce, 64 g\nground ginger, 4 g\nsesame seeds, 16 g\nchili flakes, 2 g\nblack pepper, 2 g (raw)",
+ "slug": "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix",
+ "demo": true,
+ "photo": "/demo/images/korean-beef-bowl-with-peas-and-brown-rice-lentil-mix.jpg",
+ "photo_ai_generated": true
+}

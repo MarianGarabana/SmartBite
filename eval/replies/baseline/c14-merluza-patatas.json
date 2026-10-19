@@ -1,0 +1,159 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Merluza al horno con patatas y cebolla",
+    "one_line": "Merluza al horno sobre patatas y cebolla con limón. Un plato clásico, todo en una bandeja.",
+    "main_ingredients": [
+     "frozen hake",
+     "potato",
+     "onion",
+     "lemon"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 41,
+     "carbs_g": 42,
+     "fat_g": 6
+    },
+    "image_prompt": "Baked hake fillets on sliced potatoes and onion in a tray with lemon slices"
+   },
+   {
+    "idea_id": "2",
+    "name": "Merluza al horno con judías verdes y patatas",
+    "one_line": "Merluza con judías verdes y patatas en bandeja, con limón. Se hornea todo junto.",
+    "main_ingredients": [
+     "frozen hake",
+     "green beans",
+     "potato",
+     "lemon"
+    ],
+    "rough_macros": {
+     "kcal": 430,
+     "protein_g": 41,
+     "carbs_g": 40,
+     "fat_g": 5
+    },
+    "image_prompt": "Sheet pan with baked hake, green beans and potato wedges with lemon"
+   },
+   {
+    "idea_id": "3",
+    "name": "Merluza en salsa de tomate con patatas al horno",
+    "one_line": "Merluza horneada en salsa de tomate con cebolla, con patatas asadas al lado.",
+    "main_ingredients": [
+     "frozen hake",
+     "crushed tomatoes",
+     "potato",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 41,
+     "carbs_g": 44,
+     "fat_g": 5
+    },
+    "image_prompt": "Hake fillets baked in tomato sauce served with roasted potatoes"
+   },
+   {
+    "idea_id": "4",
+    "name": "Merluza a la flamenca con patatas, guisantes y pimiento",
+    "one_line": "Base de patata, guisantes, pimiento y tomate con merluza encima, horneada en una fuente.",
+    "main_ingredients": [
+     "frozen hake",
+     "potato",
+     "frozen peas",
+     "red bell pepper",
+     "crushed tomatoes"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 42,
+     "carbs_g": 45,
+     "fat_g": 5
+    },
+    "image_prompt": "Baking dish with hake over potato, peas, red pepper and tomato sauce"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Merluza al horno con patatas y cebolla",
+  "servings": 2,
+  "prep_time_min": 50,
+  "ingredients": [
+   {
+    "name": "frozen hake",
+    "grams_per_serving": 240,
+    "units_per_serving": 0,
+    "storage": "frozen",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "potato",
+    "grams_per_serving": 250,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lemon",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 6,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 2,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "dried parsley",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Descongela la merluza en la nevera la noche antes. Precalienta el horno a 200 grados.",
+   "Pela las patatas y la cebolla y corta todo en rodajas finas. Corta el limón en rodajas.",
+   "Pon patata y cebolla en una bandeja con aceite, sal y pimentón. Hornea 20 minutos.",
+   "Pon la merluza encima, con sal, perejil y el limón. Hornea otros 15 minutos.",
+   "Sirve en 2 platos."
+  ]
+ }
+}

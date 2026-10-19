@@ -1,0 +1,225 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Menemen with tomato and green pepper",
+    "one_line": "Turkish eggs scrambled into a quick sauce of tomato, green pepper and onion.",
+    "main_ingredients": [
+     "eggs",
+     "tomato",
+     "green bell pepper",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 330,
+     "protein_g": 22,
+     "carbs_g": 12,
+     "fat_g": 20
+    },
+    "image_prompt": "Menemen, soft scrambled eggs with tomato and green pepper in a small skillet, overhead"
+   },
+   {
+    "idea_id": "2",
+    "name": "Spinach and mushroom cottage cheese frittata",
+    "one_line": "Small frittata with eggs, cottage cheese, spinach, mushrooms and red pepper.",
+    "main_ingredients": [
+     "eggs",
+     "cottage cheese",
+     "spinach",
+     "mushrooms",
+     "red bell pepper"
+    ],
+    "rough_macros": {
+     "kcal": 340,
+     "protein_g": 32,
+     "carbs_g": 8,
+     "fat_g": 18
+    },
+    "image_prompt": "Slice of vegetable frittata with spinach and mushrooms on a dark plate, overhead"
+   },
+   {
+    "idea_id": "3",
+    "name": "Spanakopita egg scramble",
+    "one_line": "Greek-style eggs with spinach, feta and spring onion, cooked in one pan.",
+    "main_ingredients": [
+     "eggs",
+     "spinach",
+     "feta",
+     "spring onion"
+    ],
+    "rough_macros": {
+     "kcal": 350,
+     "protein_g": 26,
+     "carbs_g": 5,
+     "fat_g": 25
+    },
+    "image_prompt": "Scrambled eggs with spinach, feta and spring onion on a dark plate, overhead"
+   },
+   {
+    "idea_id": "4",
+    "name": "Greek yogurt egg salad with cucumber",
+    "one_line": "Chopped boiled eggs mixed with Greek yogurt and mustard, served with cucumber.",
+    "main_ingredients": [
+     "eggs",
+     "greek yogurt 0%",
+     "mustard",
+     "cucumber"
+    ],
+    "rough_macros": {
+     "kcal": 310,
+     "protein_g": 28,
+     "carbs_g": 6,
+     "fat_g": 17
+    },
+    "image_prompt": "Egg salad with Greek yogurt and sliced cucumber in a bowl, overhead"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Menemen con tomate y pimiento verde",
+  "servings": 1,
+  "prep_time_min": 15,
+  "ingredients": [
+   {
+    "name": "eggs",
+    "grams_per_serving": 204,
+    "units_per_serving": 4,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "tomato",
+    "grams_per_serving": 123,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "green bell pepper",
+    "grams_per_serving": 119,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 110,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 3,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Corta la cebolla, el pimiento y el tomate en dados pequeños.",
+   "Cocina la cebolla y el pimiento con el aceite en una sartén 5 minutos.",
+   "Añade el tomate, el pimentón y la sal. Cocina 5 minutos hasta que se haga una salsa.",
+   "Bate los huevos, échalos a la sartén y remueve 2 minutos hasta que cuajen.",
+   "Sirve enseguida."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Menemen con tomate y pimiento verde",
+   "servings": 1,
+   "prep_time_min": 15,
+   "ingredients": [
+    {
+     "name": "eggs",
+     "leftover_plan": "use_in_another_meal",
+     "grams_per_serving": 204,
+     "units_per_serving": 4,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "tomato",
+     "grams_per_serving": 123,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "green bell pepper",
+     "grams_per_serving": 119,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 110,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "extra virgin olive oil",
+     "grams_per_serving": 3,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "paprika",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Corta la cebolla, el pimiento y el tomate en dados pequeños.",
+    "Cocina la cebolla y el pimiento con el aceite en una sartén 5 minutos.",
+    "Añade el tomate, el pimentón y la sal. Cocina 5 minutos hasta que se haga una salsa.",
+    "Bate los huevos, échalos a la sartén y remueve 2 minutos hasta que cuajen.",
+    "Sirve enseguida."
+   ]
+  }
+ ]
+}

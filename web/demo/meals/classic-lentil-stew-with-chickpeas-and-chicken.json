@@ -1,0 +1,773 @@
+{
+ "date": "2026-10-03",
+ "form": {
+  "craving": "Lentil stew with vegetables for the whole week.",
+  "exclude": [],
+  "kcal_target": 450,
+  "protein_g_target": 45,
+  "budget_total_eur": 25,
+  "servings": 8,
+  "keep_leftovers_low": true,
+  "gear": [
+   "no_blender"
+  ],
+  "reheat_at_work": true
+ },
+ "picked_idea": {
+  "idea_id": "1",
+  "name": "Classic lentil stew with chickpeas",
+  "one_line": "Lentil and chickpea stew with carrot, onion, tomato and red pepper. A vegetarian base that pairs with yogurt or eggs for more protein.",
+  "rough_macros": {
+   "kcal": 385,
+   "protein_g": 19,
+   "carbs_g": 58,
+   "fat_g": 9
+  },
+  "image_prompt": "Warm lentil and chickpea stew in a ceramic bowl with visible carrot chunks, red pepper, and rich tomato broth",
+  "main_ingredients": [
+   "dried lentils",
+   "canned chickpeas",
+   "chicken breast",
+   "textured soy protein",
+   "carrot",
+   "onion",
+   "red bell pepper",
+   "crushed tomatoes"
+  ]
+ },
+ "recipe": {
+  "title": "Classic lentil stew with chickpeas and chicken",
+  "servings": 8,
+  "prep_time_min": 70,
+  "ingredients": [
+   {
+    "name": "dried lentils",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "canned chickpeas",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "chicken breast",
+    "grams_per_serving": 110,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "textured soy protein",
+    "grams_per_serving": 15,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "carrot",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "red bell pepper",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "crushed tomatoes",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 2,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 2,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "cumin",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Dice the onion, red pepper, carrot and garlic small. Cut the chicken breast into 2 cm cubes.",
+   "In a large pot, heat the oil and fry the onion, garlic and pepper for 5 minutes. Add the chicken and brown it for 4 minutes.",
+   "Add the paprika, cumin and salt. Stir for 30 seconds, then add the crushed tomato and the carrot.",
+   "Add the dry lentils (no soaking), the textured soy and water to 3 fingers above them. Bring to a boil.",
+   "Lower the heat and cook covered for 30 minutes, stirring now and then. Add water if it gets dry.",
+   "Drain the cooked chickpeas, add them and cook 10 more minutes, until the lentils are tender. Taste and add salt if needed.",
+   "Let it cool and divide it into 8 containers. Keep 3 in the fridge for the first days and freeze the rest. Reheat in the microwave at work."
+  ]
+ },
+ "evaluation": {
+  "status": "issues",
+  "recipe_title": "Classic lentil stew with chickpeas and chicken",
+  "items": [
+   {
+    "name": "dried lentils",
+    "food": "dried lentils",
+    "grams_per_serving": 40,
+    "total_grams": 320,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "canned chickpeas",
+    "food": "canned chickpeas",
+    "grams_per_serving": 60,
+    "total_grams": 480,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "chicken breast",
+    "food": "chicken breast",
+    "grams_per_serving": 110,
+    "total_grams": 880,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "textured soy protein",
+    "food": "textured soy protein",
+    "grams_per_serving": 15,
+    "total_grams": 120,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "carrot",
+    "food": "carrot",
+    "grams_per_serving": 50,
+    "total_grams": 400,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "onion",
+    "food": "onion",
+    "grams_per_serving": 40,
+    "total_grams": 320,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "red bell pepper",
+    "food": "red bell pepper",
+    "grams_per_serving": 40,
+    "total_grams": 320,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "crushed tomatoes",
+    "food": "crushed tomatoes",
+    "grams_per_serving": 60,
+    "total_grams": 480,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "garlic",
+    "food": "garlic",
+    "grams_per_serving": 2,
+    "total_grams": 16,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "extra virgin olive oil",
+    "food": "extra virgin olive oil",
+    "grams_per_serving": 2,
+    "total_grams": 16,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "paprika",
+    "food": "paprika",
+    "grams_per_serving": 1,
+    "total_grams": 8,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "cumin",
+    "food": "cumin",
+    "grams_per_serving": 0.5,
+    "total_grams": 4.0,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   }
+  ],
+  "pack": {
+   "lines": [
+    {
+     "ingredient": "dried lentils",
+     "grams_needed": 320,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "dried lentils 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 680,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 68.0,
+     "leftover_status": "keeps",
+     "food": "dried lentils"
+    },
+    {
+     "ingredient": "canned chickpeas",
+     "grams_needed": 480,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "canned chickpeas 500 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 500,
+     "grams_left": 20,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 4.0,
+     "leftover_status": "keeps",
+     "food": "canned chickpeas"
+    },
+    {
+     "ingredient": "chicken breast",
+     "grams_needed": 880,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "chicken breast 500 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 1000,
+     "grams_left": 120,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 12.0,
+     "leftover_status": "use_in_2_days",
+     "food": "chicken breast"
+    },
+    {
+     "ingredient": "textured soy protein",
+     "grams_needed": 120,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "textured soy protein 250 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 250,
+     "grams_left": 130,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 52.0,
+     "leftover_status": "keeps",
+     "food": "textured soy protein"
+    },
+    {
+     "ingredient": "carrot",
+     "grams_needed": 400,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "carrot, loose (61 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 7,
+     "grams_bought": 427,
+     "grams_left": 27,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 6.323185011709602,
+     "leftover_status": "use_in_2_days",
+     "food": "carrot"
+    },
+    {
+     "ingredient": "onion",
+     "grams_needed": 320,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "onion, loose (110 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 3,
+     "grams_bought": 330,
+     "grams_left": 10,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 3.0303030303030303,
+     "leftover_status": "use_in_2_days",
+     "food": "onion"
+    },
+    {
+     "ingredient": "red bell pepper",
+     "grams_needed": 320,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "red bell pepper, loose (119 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 3,
+     "grams_bought": 357,
+     "grams_left": 37,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 10.364145658263306,
+     "leftover_status": "use_in_2_days",
+     "food": "red bell pepper"
+    },
+    {
+     "ingredient": "crushed tomatoes",
+     "grams_needed": 480,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "crushed tomatoes 400 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 800,
+     "grams_left": 320,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 40.0,
+     "leftover_status": "keeps",
+     "food": "crushed tomatoes"
+    },
+    {
+     "ingredient": "garlic",
+     "grams_needed": 16,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "garlic, loose (36 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 36,
+     "grams_left": 20,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 55.55555555555556,
+     "leftover_status": "use_in_2_days",
+     "food": "garlic"
+    },
+    {
+     "ingredient": "extra virgin olive oil",
+     "grams_needed": 16,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "extra virgin olive oil 460 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 460,
+     "grams_left": 444,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 96.52173913043478,
+     "leftover_status": "keeps",
+     "food": "extra virgin olive oil"
+    },
+    {
+     "ingredient": "paprika",
+     "grams_needed": 8,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "paprika 75 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 75,
+     "grams_left": 67,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 89.33333333333333,
+     "leftover_status": "keeps",
+     "food": "paprika"
+    },
+    {
+     "ingredient": "cumin",
+     "grams_needed": 4.0,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "cumin 30 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 30,
+     "grams_left": 26.0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 86.66666666666667,
+     "leftover_status": "keeps",
+     "food": "cumin"
+    }
+   ],
+   "cart_total_eur": 0,
+   "cost_per_serving_eur": 0.0,
+   "used_total_eur": 0,
+   "waste_grams": 1364,
+   "waste_eur": 0,
+   "within_budget": true,
+   "over_budget_eur": null,
+   "optional_total_eur": 0,
+   "budget_check_complete": false,
+   "unpriced": [
+    "dried lentils",
+    "canned chickpeas",
+    "chicken breast",
+    "textured soy protein",
+    "carrot",
+    "onion",
+    "red bell pepper",
+    "crushed tomatoes",
+    "garlic"
+   ],
+   "price_note": null,
+   "change_requests": [
+    {
+     "from_agent": "pack",
+     "ingredient": "garlic",
+     "reason": "high_leftover",
+     "hint": "Buying 36 g but using 16 g (56% left, spoils fast). Do not grow the portion: grams may change at most 15% from the first recipe. Use a different ingredient, or mark the leftover to use in another meal (leftover_plan \"use_in_another_meal\")."
+    }
+   ]
+  },
+  "macros": {
+   "per_serving": {
+    "kcal": 457.23,
+    "protein_g": 49.86,
+    "carbs_g": 42.27,
+    "fat_g": 6.65
+   },
+   "total": {
+    "kcal": 3657.8,
+    "protein_g": 398.87,
+    "carbs_g": 338.13,
+    "fat_g": 53.18
+   },
+   "misses": [],
+   "missing_nutrition": [],
+   "unresolved": [],
+   "lines": [
+    {
+     "name": "dried lentils",
+     "food": "dried lentils",
+     "grams": 320,
+     "source": "ciqual",
+     "source_id": "20359",
+     "amount": {
+      "kcal": 1046.4,
+      "protein_g": 80.32,
+      "carbs_g": 142.4,
+      "fat_g": 5.76
+     },
+     "missing": []
+    },
+    {
+     "name": "canned chickpeas",
+     "food": "canned chickpeas",
+     "grams": 480,
+     "source": "ciqual",
+     "source_id": "20532",
+     "amount": {
+      "kcal": 585.6,
+      "protein_g": 32.35,
+      "carbs_g": 72.0,
+      "fat_g": 12.86
+     },
+     "missing": []
+    },
+    {
+     "name": "chicken breast",
+     "food": "chicken breast",
+     "grams": 880,
+     "source": "ciqual",
+     "source_id": "36017",
+     "amount": {
+      "kcal": 968.0,
+      "protein_g": 205.92,
+      "carbs_g": 0.0,
+      "fat_g": 13.2
+     },
+     "missing": []
+    },
+    {
+     "name": "textured soy protein",
+     "food": "textured soy protein",
+     "grams": 120,
+     "source": "usda",
+     "source_id": "174275",
+     "amount": {
+      "kcal": 392.4,
+      "protein_g": 61.75,
+      "carbs_g": 40.7,
+      "fat_g": 1.46
+     },
+     "missing": []
+    },
+    {
+     "name": "carrot",
+     "food": "carrot",
+     "grams": 400,
+     "source": "ciqual",
+     "source_id": "20009",
+     "amount": {
+      "kcal": 120.8,
+      "protein_g": 3.12,
+      "carbs_g": 20.64,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "onion",
+     "food": "onion",
+     "grams": 320,
+     "source": "ciqual",
+     "source_id": "20034",
+     "amount": {
+      "kcal": 124.8,
+      "protein_g": 3.52,
+      "carbs_g": 20.0,
+      "fat_g": 1.98
+     },
+     "missing": []
+    },
+    {
+     "name": "red bell pepper",
+     "food": "red bell pepper",
+     "grams": 320,
+     "source": "ciqual",
+     "source_id": "20087",
+     "amount": {
+      "kcal": 107.52,
+      "protein_g": 3.39,
+      "carbs_g": 19.14,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "crushed tomatoes",
+     "food": "crushed tomatoes",
+     "grams": 480,
+     "source": "ciqual",
+     "source_id": "20169",
+     "amount": {
+      "kcal": 108.48,
+      "protein_g": 5.76,
+      "carbs_g": 17.42,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "garlic",
+     "food": "garlic",
+     "grams": 16,
+     "source": "ciqual",
+     "source_id": "11000",
+     "amount": {
+      "kcal": 17.44,
+      "protein_g": 0.85,
+      "carbs_g": 2.98,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "extra virgin olive oil",
+     "food": "extra virgin olive oil",
+     "grams": 16,
+     "source": "ciqual",
+     "source_id": "17270",
+     "amount": {
+      "kcal": 143.84,
+      "protein_g": 0.04,
+      "carbs_g": 0.0,
+      "fat_g": 15.98
+     },
+     "missing": []
+    },
+    {
+     "name": "paprika",
+     "food": "paprika",
+     "grams": 8,
+     "source": "ciqual",
+     "source_id": "11049",
+     "amount": {
+      "kcal": 25.44,
+      "protein_g": 1.13,
+      "carbs_g": 1.5,
+      "fat_g": 1.03
+     },
+     "missing": []
+    },
+    {
+     "name": "cumin",
+     "food": "cumin",
+     "grams": 4.0,
+     "source": "ciqual",
+     "source_id": "11042",
+     "amount": {
+      "kcal": 17.08,
+      "protein_g": 0.71,
+      "carbs_g": 1.35,
+      "fat_g": 0.89
+     },
+     "missing": []
+    }
+   ]
+  },
+  "change_requests": [
+   {
+    "from_agent": "pack",
+    "ingredient": "garlic",
+    "reason": "high_leftover",
+    "hint": "Buying 36 g but using 16 g (56% left, spoils fast). Do not grow the portion: grams may change at most 15% from the first recipe. Use a different ingredient, or mark the leftover to use in another meal (leftover_plan \"use_in_another_meal\")."
+   }
+  ]
+ },
+ "mfp": "SmartBite: Classic lentil stew with chickpeas and chicken\nServings: 8\n\ndried lentils, 320 g (dry)\ncanned chickpeas, 480 g\nchicken breast, 880 g (raw)\ntextured soy protein, 120 g\ncarrot, 400 g (raw)\nonion, 320 g (raw)\nred bell pepper, 320 g (raw)\ncrushed tomatoes, 480 g\ngarlic, 16 g (raw)\nextra virgin olive oil, 16 g\npaprika, 8 g\ncumin, 4 g",
+ "slug": "classic-lentil-stew-with-chickpeas-and-chicken",
+ "demo": true,
+ "photo": "/demo/images/classic-lentil-stew-with-chickpeas-and-chicken.jpg",
+ "photo_ai_generated": true
+}

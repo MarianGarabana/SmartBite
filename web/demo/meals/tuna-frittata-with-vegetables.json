@@ -1,0 +1,562 @@
+{
+ "date": "2026-10-03",
+ "form": {
+  "craving": "Egg frittata with vegetables.",
+  "exclude": [],
+  "kcal_target": 450,
+  "protein_g_target": 45,
+  "budget_total_eur": 15,
+  "servings": 4,
+  "keep_leftovers_low": true,
+  "gear": [
+   "oven"
+  ],
+  "reheat_at_work": true
+ },
+ "picked_idea": {
+  "idea_id": "1",
+  "name": "Tuna frittata with vegetables",
+  "one_line": "Frittata with canned tuna, peppers, and courgette for 45g protein",
+  "rough_macros": {
+   "kcal": 445,
+   "protein_g": 47,
+   "carbs_g": 18,
+   "fat_g": 22
+  },
+  "image_prompt": "Golden baked frittata in cast iron with flakes of white tuna, diced red peppers and courgette visible throughout, fresh herbs on top",
+  "main_ingredients": [
+   "eggs",
+   "canned tuna in water",
+   "zucchini",
+   "red bell pepper",
+   "onion"
+  ]
+ },
+ "recipe": {
+  "title": "Tuna frittata with vegetables",
+  "servings": 4,
+  "prep_time_min": 45,
+  "ingredients": [
+   {
+    "name": "eggs",
+    "grams_per_serving": 255,
+    "units_per_serving": 5,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "canned tuna in water",
+    "grams_per_serving": 52,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "zucchini",
+    "grams_per_serving": 250,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "red bell pepper",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 30,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 2,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Heat the oven to 180 degrees with top and bottom heat.",
+   "Cut the 1000 g of zucchini, the pepper and the onion into small cubes.",
+   "Saute the vegetables in an ovenproof pan with the oil for 10 minutes, until they soften and release their water. Let them cool for 2 minutes.",
+   "Beat the 20 eggs with the salt and pepper in a large bowl.",
+   "Drain the 4 cans of tuna and flake the tuna. Mix it with the vegetables.",
+   "Pour the beaten eggs over the vegetables and tuna, and spread them evenly.",
+   "Bake 25 to 30 minutes, until the center is set and the top is golden.",
+   "Let it cool 10 minutes and cut it into 4 equal portions.",
+   "Store each portion in a container. To eat, heat it 1 minute in the microwave at work."
+  ]
+ },
+ "evaluation": {
+  "status": "issues",
+  "recipe_title": "Tuna frittata with vegetables",
+  "items": [
+   {
+    "name": "eggs",
+    "food": "eggs",
+    "grams_per_serving": 255,
+    "total_grams": 1020,
+    "units_total": 20,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "canned tuna in water",
+    "food": "canned tuna in water",
+    "grams_per_serving": 52,
+    "total_grams": 208,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "zucchini",
+    "food": "zucchini",
+    "grams_per_serving": 250,
+    "total_grams": 1000,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "red bell pepper",
+    "food": "red bell pepper",
+    "grams_per_serving": 40,
+    "total_grams": 160,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "onion",
+    "food": "onion",
+    "grams_per_serving": 30,
+    "total_grams": 120,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "extra virgin olive oil",
+    "food": "extra virgin olive oil",
+    "grams_per_serving": 2,
+    "total_grams": 8,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "salt",
+    "food": "salt",
+    "grams_per_serving": 1,
+    "total_grams": 4,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "black pepper",
+    "food": "black pepper",
+    "grams_per_serving": 0.5,
+    "total_grams": 2.0,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   }
+  ],
+  "pack": {
+   "lines": [
+    {
+     "ingredient": "eggs",
+     "grams_needed": 1020,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "eggs clase M 24 uds",
+     "product_url": null,
+     "sold_by": "per_unit",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "units_needed": 20,
+     "units_bought": 24,
+     "grams_bought": 1224,
+     "grams_left": 204,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 16.666666666666668,
+     "leftover_status": "use_in_2_days",
+     "food": "eggs"
+    },
+    {
+     "ingredient": "canned tuna in water",
+     "grams_needed": 208,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "canned tuna in water 168 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 336,
+     "grams_left": 128,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 38.095238095238095,
+     "leftover_status": "keeps",
+     "food": "canned tuna in water"
+    },
+    {
+     "ingredient": "zucchini",
+     "grams_needed": 1000,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "zucchini, loose (196 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 6,
+     "grams_bought": 1176,
+     "grams_left": 176,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 14.965986394557824,
+     "leftover_status": "use_in_2_days",
+     "food": "zucchini"
+    },
+    {
+     "ingredient": "red bell pepper",
+     "grams_needed": 160,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "red bell pepper, loose (119 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 238,
+     "grams_left": 78,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 32.773109243697476,
+     "leftover_status": "use_in_2_days",
+     "food": "red bell pepper"
+    },
+    {
+     "ingredient": "onion",
+     "grams_needed": 120,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "onion, loose (110 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 220,
+     "grams_left": 100,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 45.45454545454545,
+     "leftover_status": "keeps",
+     "food": "onion"
+    },
+    {
+     "ingredient": "extra virgin olive oil",
+     "grams_needed": 8,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "extra virgin olive oil 460 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 460,
+     "grams_left": 452,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 98.26086956521739,
+     "leftover_status": "keeps",
+     "food": "extra virgin olive oil"
+    },
+    {
+     "ingredient": "salt",
+     "grams_needed": 4,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "salt 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 996,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 99.6,
+     "leftover_status": "keeps",
+     "food": "salt"
+    },
+    {
+     "ingredient": "black pepper",
+     "grams_needed": 2.0,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "black pepper 65 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 65,
+     "grams_left": 63.0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 96.92307692307692,
+     "leftover_status": "keeps",
+     "food": "black pepper"
+    }
+   ],
+   "cart_total_eur": 0,
+   "cost_per_serving_eur": 0.0,
+   "used_total_eur": 0,
+   "waste_grams": 686,
+   "waste_eur": 0,
+   "within_budget": true,
+   "over_budget_eur": null,
+   "optional_total_eur": 0,
+   "budget_check_complete": false,
+   "unpriced": [
+    "eggs",
+    "canned tuna in water",
+    "zucchini",
+    "red bell pepper",
+    "onion"
+   ],
+   "price_note": null,
+   "change_requests": [
+    {
+     "from_agent": "pack",
+     "ingredient": "red bell pepper",
+     "reason": "high_leftover",
+     "hint": "Buying 238 g but using 160 g (33% left, spoils fast). Do not grow the portion: grams may change at most 15% from the first recipe. Use a different ingredient, or mark the leftover to use in another meal (leftover_plan \"use_in_another_meal\")."
+    }
+   ]
+  },
+  "macros": {
+   "per_serving": {
+    "kcal": 509.56,
+    "protein_g": 49.39,
+    "carbs_g": 10.9,
+    "fat_g": 28.85
+   },
+   "total": {
+    "kcal": 2038.26,
+    "protein_g": 197.55,
+    "carbs_g": 43.61,
+    "fat_g": 115.39
+   },
+   "misses": [
+    "kcal 510 vs target 450"
+   ],
+   "missing_nutrition": [],
+   "unresolved": [],
+   "lines": [
+    {
+     "name": "eggs",
+     "food": "eggs",
+     "grams": 1020,
+     "source": "ciqual",
+     "source_id": "22000",
+     "amount": {
+      "kcal": 1428.0,
+      "protein_g": 130.56,
+      "carbs_g": 0.61,
+      "fat_g": 100.27
+     },
+     "missing": []
+    },
+    {
+     "name": "canned tuna in water",
+     "food": "canned tuna in water",
+     "grams": 208,
+     "source": "ciqual",
+     "source_id": "26181",
+     "amount": {
+      "kcal": 264.16,
+      "protein_g": 51.58,
+      "carbs_g": 7.63,
+      "fat_g": 3.04
+     },
+     "missing": []
+    },
+    {
+     "name": "zucchini",
+     "food": "zucchini",
+     "grams": 1000,
+     "source": "ciqual",
+     "source_id": "20020",
+     "amount": {
+      "kcal": 167.0,
+      "protein_g": 12.1,
+      "carbs_g": 17.5,
+      "fat_g": 3.2
+     },
+     "missing": []
+    },
+    {
+     "name": "red bell pepper",
+     "food": "red bell pepper",
+     "grams": 160,
+     "source": "ciqual",
+     "source_id": "20087",
+     "amount": {
+      "kcal": 53.76,
+      "protein_g": 1.7,
+      "carbs_g": 9.57,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "onion",
+     "food": "onion",
+     "grams": 120,
+     "source": "ciqual",
+     "source_id": "20034",
+     "amount": {
+      "kcal": 46.8,
+      "protein_g": 1.32,
+      "carbs_g": 7.5,
+      "fat_g": 0.74
+     },
+     "missing": []
+    },
+    {
+     "name": "extra virgin olive oil",
+     "food": "extra virgin olive oil",
+     "grams": 8,
+     "source": "ciqual",
+     "source_id": "17270",
+     "amount": {
+      "kcal": 71.92,
+      "protein_g": 0.02,
+      "carbs_g": 0.0,
+      "fat_g": 7.99
+     },
+     "missing": []
+    },
+    {
+     "name": "salt",
+     "food": "salt",
+     "grams": 4,
+     "source": "ciqual",
+     "source_id": "11017",
+     "amount": {
+      "kcal": 0.0,
+      "protein_g": 0.0,
+      "carbs_g": 0.0,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "black pepper",
+     "food": "black pepper",
+     "grams": 2.0,
+     "source": "ciqual",
+     "source_id": "11015",
+     "amount": {
+      "kcal": 6.62,
+      "protein_g": 0.27,
+      "carbs_g": 0.8,
+      "fat_g": 0.15
+     },
+     "missing": []
+    }
+   ]
+  },
+  "change_requests": [
+   {
+    "from_agent": "pack",
+    "ingredient": "red bell pepper",
+    "reason": "high_leftover",
+    "hint": "Buying 238 g but using 160 g (33% left, spoils fast). Do not grow the portion: grams may change at most 15% from the first recipe. Use a different ingredient, or mark the leftover to use in another meal (leftover_plan \"use_in_another_meal\")."
+   },
+   {
+    "from_agent": "macro",
+    "ingredient": null,
+    "reason": "misses_macros",
+    "hint": "Per serving: kcal 510 vs target 450. Adjust grams or swap ingredients."
+   }
+  ]
+ },
+ "mfp": "SmartBite: Tuna frittata with vegetables\nServings: 4\n\neggs, 1020 g\ncanned tuna in water, 208 g\nzucchini, 1000 g (raw)\nred bell pepper, 160 g (raw)\nonion, 120 g (raw)\nextra virgin olive oil, 8 g\nsalt, 4 g\nblack pepper, 2 g (raw)",
+ "slug": "tuna-frittata-with-vegetables",
+ "demo": true,
+ "photo": "/demo/images/tuna-frittata-with-vegetables.jpg",
+ "photo_ai_generated": true
+}

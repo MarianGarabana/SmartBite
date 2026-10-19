@@ -1,0 +1,126 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Salmón al horno con boniato y brócoli",
+    "one_line": "Bandeja de salmón, boniato y brócoli al horno con salsa teriyaki.",
+    "main_ingredients": [
+     "salmon",
+     "sweet potato",
+     "broccoli",
+     "teriyaki sauce"
+    ],
+    "rough_macros": {
+     "kcal": 520,
+     "protein_g": 40,
+     "carbs_g": 35,
+     "fat_g": 24
+    },
+    "image_prompt": "Sheet pan with baked salmon fillet, sweet potato cubes and broccoli glazed with teriyaki"
+   },
+   {
+    "idea_id": "2",
+    "name": "Bowl de salmón al horno con quinoa",
+    "one_line": "Salmón al horno con limón sobre quinoa, con rúcula y pepino.",
+    "main_ingredients": [
+     "salmon",
+     "quinoa",
+     "arugula",
+     "cucumber",
+     "lemon"
+    ],
+    "rough_macros": {
+     "kcal": 530,
+     "protein_g": 41,
+     "carbs_g": 32,
+     "fat_g": 26
+    },
+    "image_prompt": "Overhead photo of a bowl with baked salmon over quinoa, arugula, sliced cucumber and lemon"
+   },
+   {
+    "idea_id": "3",
+    "name": "Salmón al horno con judías verdes y limón",
+    "one_line": "Salmón con limón y judías verdes en una sola bandeja de horno.",
+    "main_ingredients": [
+     "salmon",
+     "green beans",
+     "lemon"
+    ],
+    "rough_macros": {
+     "kcal": 430,
+     "protein_g": 40,
+     "carbs_g": 8,
+     "fat_g": 26
+    },
+    "image_prompt": "Baked salmon fillets with green beans and lemon slices on a baking tray"
+   },
+   {
+    "idea_id": "4",
+    "name": "Pasta integral con salmón y espinacas",
+    "one_line": "Salmón al horno desmenuzado con pasta integral, espinacas y tomates cherry.",
+    "main_ingredients": [
+     "salmon",
+     "wholemeal pasta",
+     "spinach",
+     "cherry tomatoes"
+    ],
+    "rough_macros": {
+     "kcal": 540,
+     "protein_g": 41,
+     "carbs_g": 48,
+     "fat_g": 18
+    },
+    "image_prompt": "Overhead photo of wholemeal pasta with flaked salmon, spinach and cherry tomatoes"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Salmón al horno con boniato y brócoli",
+  "servings": 2,
+  "prep_time_min": 40,
+  "ingredients": [
+   {
+    "name": "salmon",
+    "grams_per_serving": 190,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "sweet potato",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "broccoli",
+    "grams_per_serving": 120,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "teriyaki sauce",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Calienta el horno a 200 C.",
+   "Corta el boniato en cubos y hornéalo 15 minutos en la bandeja.",
+   "Añade el brócoli en ramilletes y el salmón con la salsa teriyaki por encima.",
+   "Hornea otros 12 minutos hasta que el salmón se desmenuce.",
+   "Sirve en dos platos."
+  ]
+ }
+}

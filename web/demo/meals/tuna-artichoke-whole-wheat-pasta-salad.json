@@ -1,0 +1,625 @@
+{
+ "date": "2026-10-06",
+ "form": {
+  "craving": "Take my saved tuna artichoke salad and add whole wheat pasta, then adjust the recipe to meet my macros.",
+  "exclude": [],
+  "kcal_target": 450,
+  "protein_g_target": 45,
+  "carbs_g_max": 30,
+  "budget_total_eur": 38.5,
+  "servings": 7,
+  "keep_leftovers_low": true,
+  "time_limit_min": 30,
+  "gear": [
+   "oven",
+   "no_blender"
+  ],
+  "reheat_at_work": true
+ },
+ "picked_idea": {
+  "idea_id": "1",
+  "name": "Tuna Artichoke Whole Wheat Pasta Salad",
+  "one_line": "Your tuna artichoke salad with whole wheat pasta, fresh spinach, cherry tomato, feta and fresh parsley. No dressing.",
+  "main_ingredients": [
+   "canned tuna in water",
+   "artichoke hearts",
+   "wholemeal pasta",
+   "cherry tomatoes",
+   "spinach",
+   "feta",
+   "fresh parsley"
+  ],
+  "rough_macros": {
+   "kcal": 440,
+   "protein_g": 52,
+   "carbs_g": 28,
+   "fat_g": 10
+  },
+  "image_prompt": "overhead photo of whole wheat pasta salad with flaked tuna, artichoke hearts, cherry tomatoes, fresh spinach leaves, crumbled feta and chopped fresh parsley on a dark plate, no dressing, natural light, no text",
+  "changes": "No yogurt dressing; add parsley and feta cheese. Spinach can replace the arugula. 7 servings from 5 cans of tuna (130 g each)."
+ },
+ "recipe": {
+  "idea_id": "1",
+  "title": "Tuna Artichoke Whole Wheat Pasta Salad",
+  "servings": 7,
+  "prep_time_min": 25,
+  "ingredients": [
+   {
+    "name": "canned tuna in water",
+    "grams_per_serving": 92,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "artichoke hearts",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "wholemeal pasta",
+    "grams_per_serving": 35,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "cherry tomatoes",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "spinach",
+    "grams_per_serving": 42,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "feta",
+    "grams_per_serving": 56,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "fresh parsley",
+    "grams_per_serving": 15,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Boil 245 g of whole wheat pasta in salted water for 9 to 10 minutes, until just tender. Drain and rinse with cold water so it stops cooking. Let it dry well.",
+   "Open the 5 cans of tuna and drain them well. Flake the tuna with a fork (644 g in total for 7 servings).",
+   "Drain the artichoke hearts (560 g) and cut each heart into quarters.",
+   "Halve the cherry tomatoes (350 g). Chop the fresh parsley (105 g). Crumble the feta (392 g) with your hands.",
+   "Wash the fresh spinach (294 g) and dry it. Keep it whole or tear the larger leaves.",
+   "In a large bowl, mix the cold pasta, tuna, artichoke, tomato and parsley. Season with a little salt and pepper. Do not add dressing: the tuna and feta give enough flavor.",
+   "Divide into 7 boxes. Keep the spinach and feta on top in each box and mix just before eating, so the spinach stays fresh.",
+   "At work, stir the box and eat cold, or heat the pasta part for 1 minute in the microwave and add the spinach and feta after."
+  ]
+ },
+ "evaluation": {
+  "status": "issues",
+  "recipe_title": "Tuna Artichoke Whole Wheat Pasta Salad",
+  "items": [
+   {
+    "name": "canned tuna in water",
+    "food": "canned tuna in water",
+    "grams_per_serving": 92,
+    "total_grams": 644,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "artichoke hearts",
+    "food": "artichoke hearts",
+    "grams_per_serving": 80,
+    "total_grams": 560,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "wholemeal pasta",
+    "food": "wholemeal pasta",
+    "grams_per_serving": 35,
+    "total_grams": 245,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true,
+    "optional": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "cherry tomatoes",
+    "food": "cherry tomatoes",
+    "grams_per_serving": 50,
+    "total_grams": 350,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "spinach",
+    "food": "spinach",
+    "grams_per_serving": 42,
+    "total_grams": 294,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "feta",
+    "food": "feta",
+    "grams_per_serving": 56,
+    "total_grams": 392,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "fresh parsley",
+    "food": "fresh parsley",
+    "grams_per_serving": 15,
+    "total_grams": 105,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "salt",
+    "food": "salt",
+    "grams_per_serving": 1,
+    "total_grams": 7,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "black pepper",
+    "food": "black pepper",
+    "grams_per_serving": 0.5,
+    "total_grams": 3.5,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   }
+  ],
+  "pack": {
+   "lines": [
+    {
+     "ingredient": "canned tuna in water",
+     "grams_needed": 644,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "canned tuna in water 168 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 4,
+     "grams_bought": 672,
+     "grams_left": 28,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 4.166666666666667,
+     "leftover_status": "keeps",
+     "food": "canned tuna in water"
+    },
+    {
+     "ingredient": "artichoke hearts",
+     "grams_needed": 560,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "artichoke hearts 240 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 3,
+     "grams_bought": 720,
+     "grams_left": 160,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 22.22222222222222,
+     "leftover_status": "keeps",
+     "food": "artichoke hearts"
+    },
+    {
+     "ingredient": "wholemeal pasta",
+     "grams_needed": 245,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "wholemeal pasta 500 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 500,
+     "grams_left": 255,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 51.0,
+     "leftover_status": "use_in_another_meal",
+     "food": "wholemeal pasta"
+    },
+    {
+     "ingredient": "cherry tomatoes",
+     "grams_needed": 350,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "cherry tomatoes 500 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 500,
+     "grams_left": 150,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 30.0,
+     "leftover_status": "use_in_another_meal",
+     "food": "cherry tomatoes"
+    },
+    {
+     "ingredient": "spinach",
+     "grams_needed": 294,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "spinach 300 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 300,
+     "grams_left": 6,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 2.0,
+     "leftover_status": "use_in_2_days",
+     "food": "spinach"
+    },
+    {
+     "ingredient": "feta",
+     "grams_needed": 392,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "feta 200 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 400,
+     "grams_left": 8,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 2.0,
+     "leftover_status": "use_in_2_days",
+     "food": "feta"
+    },
+    {
+     "ingredient": "fresh parsley",
+     "grams_needed": 105,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "fresh parsley, loose (50 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 3,
+     "grams_bought": 150,
+     "grams_left": 45,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 30.0,
+     "leftover_status": "use_in_2_days",
+     "food": "fresh parsley"
+    },
+    {
+     "ingredient": "salt",
+     "grams_needed": 7,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "salt 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 993,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 99.3,
+     "leftover_status": "keeps",
+     "food": "salt"
+    },
+    {
+     "ingredient": "black pepper",
+     "grams_needed": 3.5,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "black pepper 65 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 65,
+     "grams_left": 61.5,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 94.61538461538461,
+     "leftover_status": "keeps",
+     "food": "black pepper"
+    }
+   ],
+   "cart_total_eur": 0,
+   "cost_per_serving_eur": 0.0,
+   "used_total_eur": 0,
+   "waste_grams": 652,
+   "waste_eur": 0,
+   "within_budget": true,
+   "over_budget_eur": null,
+   "optional_total_eur": 0,
+   "budget_check_complete": false,
+   "unpriced": [
+    "canned tuna in water",
+    "artichoke hearts",
+    "wholemeal pasta",
+    "cherry tomatoes",
+    "spinach",
+    "feta",
+    "fresh parsley"
+   ],
+   "price_note": null,
+   "change_requests": [
+    {
+     "from_agent": "pack",
+     "ingredient": "fresh parsley",
+     "reason": "high_leftover",
+     "hint": "Buying 150 g but using 105 g (30% left, spoils fast). Do not grow the portion: grams may change at most 15% from the first recipe. Use a different ingredient, or mark the leftover to use in another meal (leftover_plan \"use_in_another_meal\")."
+    }
+   ]
+  },
+  "macros": {
+   "per_serving": {
+    "kcal": 456.71,
+    "protein_g": 39.13,
+    "carbs_g": 34.05,
+    "fat_g": 16.02
+   },
+   "total": {
+    "kcal": 3196.94,
+    "protein_g": 273.94,
+    "carbs_g": 238.32,
+    "fat_g": 112.12
+   },
+   "misses": [
+    "protein 39 g vs target 45 g",
+    "carbs 34 g over max 30 g"
+   ],
+   "missing_nutrition": [],
+   "unresolved": [],
+   "lines": [
+    {
+     "name": "canned tuna in water",
+     "food": "canned tuna in water",
+     "grams": 644,
+     "source": "ciqual",
+     "source_id": "26181",
+     "amount": {
+      "kcal": 817.88,
+      "protein_g": 159.71,
+      "carbs_g": 23.63,
+      "fat_g": 9.4
+     },
+     "missing": []
+    },
+    {
+     "name": "artichoke hearts",
+     "food": "artichoke hearts",
+     "grams": 560,
+     "source": "ciqual",
+     "source_id": "20155",
+     "amount": {
+      "kcal": 135.52,
+      "protein_g": 10.08,
+      "carbs_g": 12.94,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "wholemeal pasta",
+     "food": "wholemeal pasta",
+     "grams": 245,
+     "source": "ciqual",
+     "source_id": "9870",
+     "amount": {
+      "kcal": 864.85,
+      "protein_g": 28.91,
+      "carbs_g": 165.62,
+      "fat_g": 5.39
+     },
+     "missing": []
+    },
+    {
+     "name": "cherry tomatoes",
+     "food": "cherry tomatoes",
+     "grams": 350,
+     "source": "ciqual",
+     "source_id": "20172",
+     "amount": {
+      "kcal": 111.3,
+      "protein_g": 4.58,
+      "carbs_g": 19.67,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "spinach",
+     "food": "spinach",
+     "grams": 294,
+     "source": "ciqual",
+     "source_id": "20059",
+     "amount": {
+      "kcal": 97.9,
+      "protein_g": 7.88,
+      "carbs_g": 9.0,
+      "fat_g": 1.15
+     },
+     "missing": []
+    },
+    {
+     "name": "feta",
+     "food": "feta",
+     "grams": 392,
+     "source": "ciqual",
+     "source_id": "12066",
+     "amount": {
+      "kcal": 1113.28,
+      "protein_g": 59.19,
+      "carbs_g": 1.76,
+      "fat_g": 95.26
+     },
+     "missing": []
+    },
+    {
+     "name": "fresh parsley",
+     "food": "fresh parsley",
+     "grams": 105,
+     "source": "ciqual",
+     "source_id": "11014",
+     "amount": {
+      "kcal": 44.62,
+      "protein_g": 3.12,
+      "carbs_g": 4.3,
+      "fat_g": 0.66
+     },
+     "missing": []
+    },
+    {
+     "name": "salt",
+     "food": "salt",
+     "grams": 7,
+     "source": "ciqual",
+     "source_id": "11017",
+     "amount": {
+      "kcal": 0.0,
+      "protein_g": 0.0,
+      "carbs_g": 0.0,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "black pepper",
+     "food": "black pepper",
+     "grams": 3.5,
+     "source": "ciqual",
+     "source_id": "11015",
+     "amount": {
+      "kcal": 11.59,
+      "protein_g": 0.47,
+      "carbs_g": 1.4,
+      "fat_g": 0.26
+     },
+     "missing": []
+    }
+   ]
+  },
+  "change_requests": [
+   {
+    "from_agent": "pack",
+    "ingredient": "fresh parsley",
+    "reason": "high_leftover",
+    "hint": "Buying 150 g but using 105 g (30% left, spoils fast). Do not grow the portion: grams may change at most 15% from the first recipe. Use a different ingredient, or mark the leftover to use in another meal (leftover_plan \"use_in_another_meal\")."
+   },
+   {
+    "from_agent": "macro",
+    "ingredient": null,
+    "reason": "misses_macros",
+    "hint": "Per serving: protein 39 g vs target 45 g; carbs 34 g over max 30 g. Adjust grams or swap ingredients."
+   }
+  ]
+ },
+ "mfp": "SmartBite: Tuna Artichoke Whole Wheat Pasta Salad\nServings: 7\n\ncanned tuna in water, 644 g\nartichoke hearts, 560 g\nwholemeal pasta, 245 g (dry)\ncherry tomatoes, 350 g (raw)\nspinach, 294 g (raw)\nfeta, 392 g\nfresh parsley, 105 g\nsalt, 7 g\nblack pepper, 4 g (raw)",
+ "slug": "tuna-artichoke-whole-wheat-pasta-salad",
+ "demo": true,
+ "photo": "/demo/images/tuna-artichoke-whole-wheat-pasta-salad.jpg",
+ "photo_ai_generated": true
+}

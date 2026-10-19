@@ -1,0 +1,259 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "High protein pasta bolognese",
+    "one_line": "Lean ground beef simmered with mushrooms in tomato sauce, tossed with wholemeal pasta.",
+    "main_ingredients": [
+     "ground beef",
+     "wholemeal pasta",
+     "crushed tomatoes",
+     "mushrooms",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 600,
+     "protein_g": 50,
+     "carbs_g": 60,
+     "fat_g": 14
+    },
+    "image_prompt": "Plate of wholemeal spaghetti with beef and mushroom bolognese sauce"
+   },
+   {
+    "idea_id": "2",
+    "name": "Creamy Greek yogurt chicken pasta",
+    "one_line": "Wholemeal pasta with sliced chicken breast and spinach in a yogurt, lemon and pasta water sauce.",
+    "main_ingredients": [
+     "chicken breast",
+     "wholemeal pasta",
+     "greek yogurt 0%",
+     "spinach",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 590,
+     "protein_g": 52,
+     "carbs_g": 62,
+     "fat_g": 9
+    },
+    "image_prompt": "Creamy wholemeal pasta with sliced chicken and spinach"
+   },
+   {
+    "idea_id": "3",
+    "name": "Wholemeal pasta with salmon and spinach",
+    "one_line": "Pasta tossed with flaked salmon, wilted spinach and cherry tomatoes in a light pan sauce.",
+    "main_ingredients": [
+     "salmon",
+     "wholemeal pasta",
+     "spinach",
+     "cherry tomatoes"
+    ],
+    "rough_macros": {
+     "kcal": 620,
+     "protein_g": 48,
+     "carbs_g": 55,
+     "fat_g": 20
+    },
+    "image_prompt": "Wholemeal pasta with flaked salmon, spinach and cherry tomatoes"
+   },
+   {
+    "idea_id": "4",
+    "name": "Tuna pasta salad with corn and tomato",
+    "one_line": "Cooled wholemeal pasta mixed with canned tuna, sweetcorn and diced tomato. Good cold at work.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "wholemeal pasta",
+     "canned sweetcorn",
+     "tomato"
+    ],
+    "rough_macros": {
+     "kcal": 580,
+     "protein_g": 50,
+     "carbs_g": 70,
+     "fat_g": 7
+    },
+    "image_prompt": "Pasta salad with tuna, sweetcorn and diced tomato in a bowl"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Pasta bolo\u00f1esa alta en prote\u00edna",
+  "servings": 4,
+  "prep_time_min": 40,
+  "ingredients": [
+   {
+    "name": "ground beef",
+    "grams_per_serving": 150,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "wholemeal pasta",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "crushed tomatoes",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "mushrooms",
+    "grams_per_serving": 62,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 3,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "oregano",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Pica la cebolla y el ajo y lamina los champi\u00f1ones.",
+   "Sofr\u00ede la cebolla y el ajo en una sart\u00e9n sin aceite con un chorrito de agua.",
+   "A\u00f1ade la carne picada y d\u00f3rala bien. Suma los champi\u00f1ones y cocina 5 minutos.",
+   "A\u00f1ade el tomate triturado, or\u00e9gano, sal y pimienta. Cocina a fuego bajo 15 minutos.",
+   "Cuece la pasta (peso en seco) seg\u00fan el paquete y esc\u00farrela.",
+   "Mezcla la pasta con la salsa y reparte en 4 t\u00e1peres. Se recalienta en el microondas."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Pasta bolo\u00f1esa alta en prote\u00edna",
+   "servings": 4,
+   "prep_time_min": 40,
+   "ingredients": [
+    {
+     "name": "ground beef",
+     "grams_per_serving": 172,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "wholemeal pasta",
+     "grams_per_serving": 80,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": true
+    },
+    {
+     "name": "crushed tomatoes",
+     "grams_per_serving": 100,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "mushrooms",
+     "grams_per_serving": 62,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 60,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "garlic",
+     "grams_per_serving": 3,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "oregano",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "black pepper",
+     "grams_per_serving": 0.5,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Pica la cebolla y el ajo y lamina los champi\u00f1ones.",
+    "Sofr\u00ede la cebolla y el ajo en una sart\u00e9n sin aceite con un chorrito de agua.",
+    "A\u00f1ade la carne picada y d\u00f3rala bien. Suma los champi\u00f1ones y cocina 5 minutos.",
+    "A\u00f1ade el tomate triturado, or\u00e9gano, sal y pimienta. Cocina a fuego bajo 15 minutos.",
+    "Cuece la pasta (peso en seco) seg\u00fan el paquete y esc\u00farrela.",
+    "Mezcla la pasta con la salsa y reparte en 4 t\u00e1peres. Se recalienta en el microondas."
+   ]
+  }
+ ]
+}

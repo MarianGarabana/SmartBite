@@ -1,0 +1,152 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Merluza al horno con patatas panaderas",
+    "one_line": "Patata y cebolla asadas en bandeja con merluza encima, al horno hasta que se abre en lascas.",
+    "main_ingredients": [
+     "frozen hake",
+     "potato",
+     "onion",
+     "fresh parsley"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 40,
+     "carbs_g": 45,
+     "fat_g": 8
+    },
+    "image_prompt": "Baked hake fillet on sliced roasted potatoes and onion in a tray with fresh parsley"
+   },
+   {
+    "idea_id": "2",
+    "name": "Merluza al horno con patatas y judías verdes",
+    "one_line": "Bandeja de merluza con patata, judías verdes, ajo y zumo de limón, todo al horno.",
+    "main_ingredients": [
+     "frozen hake",
+     "potato",
+     "green beans",
+     "garlic",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 430,
+     "protein_g": 40,
+     "carbs_g": 42,
+     "fat_g": 7
+    },
+    "image_prompt": "Baked hake with potato wedges and green beans in a roasting tray with garlic"
+   },
+   {
+    "idea_id": "3",
+    "name": "Lomo de cerdo al horno con patatas y zanahorias",
+    "one_line": "Bandeja de lomo de cerdo con patatas y zanahorias asadas hasta que el centro está justo hecho.",
+    "main_ingredients": [
+     "pork loin",
+     "potato",
+     "carrot",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 40,
+     "carbs_g": 38,
+     "fat_g": 12
+    },
+    "image_prompt": "Sheet pan with sliced roast pork loin, potatoes and carrots"
+   },
+   {
+    "idea_id": "4",
+    "name": "Huevos a la flamenca con patata",
+    "one_line": "Base de patata, guisantes, pimiento y tomate con huevos al horno hasta que cuajan.",
+    "main_ingredients": [
+     "eggs",
+     "potato",
+     "frozen peas",
+     "red bell pepper",
+     "crushed tomatoes"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 36,
+     "carbs_g": 40,
+     "fat_g": 16
+    },
+    "image_prompt": "Baked eggs flamenco style in a dish with potato, peas, red pepper and tomato sauce"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Merluza al horno con patatas panaderas",
+  "servings": 2,
+  "prep_time_min": 50,
+  "ingredients": [
+   {
+    "name": "frozen hake",
+    "grams_per_serving": 200,
+    "units_per_serving": 0,
+    "storage": "frozen",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "potato",
+    "grams_per_serving": 213,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 55,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "fresh parsley",
+    "grams_per_serving": 25,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Descongela la merluza en la nevera la noche antes.",
+   "Precalienta el horno a 200 grados. Corta la patata y la cebolla en rodajas finas.",
+   "Pon la patata y la cebolla en la bandeja con el aceite, la sal y el pimentón. Hornea 25 minutos.",
+   "Pon la merluza encima y hornea 15 minutos más, hasta que se abra en lascas.",
+   "Pica el perejil y échalo por encima."
+  ]
+ }
+}

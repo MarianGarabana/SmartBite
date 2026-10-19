@@ -1,0 +1,161 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Cottage cheese vegetable frittata",
+    "one_line": "Quick skillet frittata with eggs, cottage cheese, spinach, mushrooms and red pepper.",
+    "main_ingredients": [
+     "eggs",
+     "cottage cheese",
+     "spinach",
+     "mushrooms",
+     "red bell pepper"
+    ],
+    "rough_macros": {
+     "kcal": 390,
+     "protein_g": 34,
+     "carbs_g": 8,
+     "fat_g": 24
+    },
+    "image_prompt": "Slice of vegetable frittata with spinach, mushrooms and red pepper on a plate"
+   },
+   {
+    "idea_id": "2",
+    "name": "Shakshuka with feta",
+    "one_line": "Eggs poached in a quick tomato and pepper sauce, topped with a little feta.",
+    "main_ingredients": [
+     "eggs",
+     "crushed tomatoes",
+     "red bell pepper",
+     "onion",
+     "feta"
+    ],
+    "rough_macros": {
+     "kcal": 400,
+     "protein_g": 30,
+     "carbs_g": 16,
+     "fat_g": 23
+    },
+    "image_prompt": "Skillet shakshuka with poached eggs in tomato sauce topped with feta"
+   },
+   {
+    "idea_id": "3",
+    "name": "Zucchini and spring onion frittata",
+    "one_line": "Sauteed zucchini and spring onion set with eggs and a little grated grana padano.",
+    "main_ingredients": [
+     "eggs",
+     "zucchini",
+     "spring onion",
+     "grana padano"
+    ],
+    "rough_macros": {
+     "kcal": 380,
+     "protein_g": 32,
+     "carbs_g": 7,
+     "fat_g": 24
+    },
+    "image_prompt": "Round zucchini frittata with spring onion on a plate"
+   },
+   {
+    "idea_id": "4",
+    "name": "Chinese tomato and egg stir-fry",
+    "one_line": "Soft scrambled eggs with juicy tomato and spring onion over a small portion of rice.",
+    "main_ingredients": [
+     "eggs",
+     "tomato",
+     "spring onion",
+     "rice"
+    ],
+    "rough_macros": {
+     "kcal": 410,
+     "protein_g": 28,
+     "carbs_g": 38,
+     "fat_g": 16
+    },
+    "image_prompt": "Tomato and egg stir-fry over rice in a bowl"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Cottage cheese vegetable frittata",
+  "servings": 1,
+  "prep_time_min": 15,
+  "ingredients": [
+   {
+    "name": "eggs",
+    "grams_per_serving": 153,
+    "units_per_serving": 3,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cottage cheese",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spinach",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "mushrooms",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "red bell pepper",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 3,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Slice the mushrooms and dice the red pepper.",
+   "Heat the oil in a small non-stick pan and cook the mushrooms and pepper for 4 minutes.",
+   "Add the spinach and stir until wilted, about 1 minute.",
+   "Whisk the eggs with the cottage cheese, salt and pepper.",
+   "Pour over the vegetables, cover and cook on low heat for 6 to 7 minutes until set.",
+   "Slide onto a plate and eat."
+  ]
+ }
+}

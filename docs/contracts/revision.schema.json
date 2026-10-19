@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "smartbite/revision.schema.json",
+  "title": "Idea agent revision (no tools)",
+  "description": "Rewrites one idea with the user's changes from the idea preview. Prompt: prompts/revision.md. Same idea_id, same fields as one idea; code adds the changes field after.",
+  "$defs": {
+    "Input": {
+      "type": "object",
+      "required": ["form", "kitchen_profile", "idea", "changes"],
+      "properties": {
+        "form": { "$ref": "common.schema.json#/$defs/MealForm" },
+        "kitchen_profile": { "type": "string" },
+        "idea": { "$ref": "idea.schema.json#/$defs/Idea" },
+        "changes": { "type": "string", "maxLength": 500 }
+      }
+    },
+    "Output": {
+      "type": "object",
+      "required": ["idea"],
+      "properties": {
+        "idea": { "$ref": "idea.schema.json#/$defs/Idea" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

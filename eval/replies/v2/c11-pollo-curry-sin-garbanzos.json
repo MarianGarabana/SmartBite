@@ -1,0 +1,235 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Pollo saag: curry suave de pollo y espinacas",
+    "one_line": "Pechuga de pollo con espinacas en salsa suave de cebolla, tomate y curry, con yogur al final.",
+    "main_ingredients": [
+     "chicken breast",
+     "spinach",
+     "onion",
+     "crushed tomatoes",
+     "greek yogurt 0%",
+     "curry powder"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 45,
+     "carbs_g": 25,
+     "fat_g": 8
+    },
+    "image_prompt": "Mild chicken and spinach curry in a creamy tomato sauce in a bowl"
+   },
+   {
+    "idea_id": "2",
+    "name": "Pasta integral con pollo, espinacas y yogur",
+    "one_line": "Pasta integral con pollo en tiras y espinacas, con salsa de yogur, limón y un poco de queso.",
+    "main_ingredients": [
+     "chicken breast",
+     "wholemeal pasta",
+     "spinach",
+     "greek yogurt 0%",
+     "lemon juice",
+     "grated cheese"
+    ],
+    "rough_macros": {
+     "kcal": 470,
+     "protein_g": 45,
+     "carbs_g": 45,
+     "fat_g": 9
+    },
+    "image_prompt": "Whole wheat pasta with sliced chicken and spinach in a creamy yogurt sauce"
+   },
+   {
+    "idea_id": "3",
+    "name": "Bowl de pollo griego con arroz y feta",
+    "one_line": "Pollo a la plancha sobre arroz con pepino, tomate, feta y salsa de yogur aparte.",
+    "main_ingredients": [
+     "chicken breast",
+     "rice",
+     "cucumber",
+     "tomato",
+     "feta",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 460,
+     "protein_g": 45,
+     "carbs_g": 40,
+     "fat_g": 10
+    },
+    "image_prompt": "Greek chicken bowl with rice, cucumber, tomato and feta"
+   },
+   {
+    "idea_id": "4",
+    "name": "Bowl mexicano de pollo con arroz y maíz",
+    "one_line": "Pollo especiado sobre arroz con maíz, aguacate y tomate fresco.",
+    "main_ingredients": [
+     "chicken breast",
+     "rice",
+     "canned sweetcorn",
+     "avocado",
+     "tomato"
+    ],
+    "rough_macros": {
+     "kcal": 470,
+     "protein_g": 45,
+     "carbs_g": 42,
+     "fat_g": 11
+    },
+    "image_prompt": "Mexican chicken rice bowl with corn, avocado and tomato"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Pollo saag: curry suave de pollo y espinacas",
+  "servings": 4,
+  "prep_time_min": 45,
+  "ingredients": [
+   {
+    "name": "chicken breast",
+    "grams_per_serving": 180,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spinach",
+    "grams_per_serving": 75,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "crushed tomatoes",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "greek yogurt 0%",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "rice",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "curry powder",
+    "grams_per_serving": 3,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Cuece el arroz y deja que se enfríe.",
+   "Corta el pollo en dados y la cebolla en cubitos.",
+   "Sofríe la cebolla en una sartén antihaderente, añade el pollo y dóralo 6 minutos.",
+   "Añade el curry y el tomate triturado y cocina 10 minutos a fuego bajo.",
+   "Agrega las espinacas hasta que se ablanden y apaga el fuego.",
+   "Mezcla el yogur fuera del fuego.",
+   "Reparte el pollo y el arroz en 4 táperes."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Pollo saag: curry suave de pollo y espinacas",
+   "servings": 4,
+   "prep_time_min": 45,
+   "ingredients": [
+    {
+     "name": "chicken breast",
+     "grams_per_serving": 170,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "spinach",
+     "grams_per_serving": 75,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 60,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "crushed tomatoes",
+     "grams_per_serving": 100,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "greek yogurt 0%",
+     "grams_per_serving": 50,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "rice",
+     "grams_per_serving": 40,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": true
+    },
+    {
+     "name": "curry powder",
+     "grams_per_serving": 3,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Cuece el arroz y deja que se enfríe.",
+    "Corta el pollo en dados y la cebolla en cubitos.",
+    "Sofríe la cebolla en una sartén antihaderente, añade el pollo y dóralo 6 minutos.",
+    "Añade el curry y el tomate triturado y cocina 10 minutos a fuego bajo.",
+    "Agrega las espinacas hasta que se ablanden y apaga el fuego.",
+    "Mezcla el yogur fuera del fuego.",
+    "Reparte el pollo y el arroz en 4 táperes."
+   ]
+  }
+ ]
+}

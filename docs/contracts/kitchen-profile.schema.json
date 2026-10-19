@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "smartbite/kitchen-profile.schema.json",
+  "title": "Kitchen Profile",
+  "description": "The user's cooking settings, stored in the browser. Every field is one editable line; smartbite_engine.prompts.render_profile turns it into prompt text. Default: prompts/kitchen-profile.default.json.",
+  "$defs": {
+    "Output": {
+      "type": "object",
+      "required": ["id", "version", "name", "sections"],
+      "properties": {
+        "id": { "type": "string" },
+        "version": { "type": "integer", "minimum": 1 },
+        "name": { "type": "string", "maxLength": 60 },
+        "note": { "type": "string" },
+        "sections": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/Section" } }
+      },
+      "additionalProperties": false
+    },
+    "Section": {
+      "type": "object",
+      "required": ["id", "label", "fields"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string", "maxLength": 40 },
+        "plain": { "type": "boolean", "description": "True: lines are printed with no heading and no bullets." },
+        "fields": { "type": "array", "items": { "$ref": "#/$defs/Field" } }
+      },
+      "additionalProperties": false
+    },
+    "Field": {
+      "type": "object",
+      "required": ["id", "label", "type", "value"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string", "maxLength": 60, "description": "Shown next to the input in the profile editor." },
+        "type": { "enum": ["text", "number", "list"] },
+        "value": { "type": ["string", "number", "array", "null"], "description": "text: the whole line. number: the number. list: the items. Empty or null leaves the line out." },
+        "unit": { "type": "string" },
+        "line": { "type": "string", "description": "number and list fields: the prompt line, with {value} where the value goes." },
+        "help": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

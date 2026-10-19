@@ -1,0 +1,276 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Guiso de pavo con pimientos y champiñones",
+    "one_line": "Pavo en tiras con cebolla, pimientos y champiñones, cocinado todo junto en una sartén.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "red bell pepper",
+     "green bell pepper",
+     "mushrooms",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 340,
+     "protein_g": 40,
+     "carbs_g": 18,
+     "fat_g": 7
+    },
+    "image_prompt": "Turkey strips stewed with red and green peppers and mushrooms in a pan, overhead"
+   },
+   {
+    "idea_id": "2",
+    "name": "Salteado de pavo con brócoli y zanahoria",
+    "one_line": "Pavo en dados salteado con brócoli, zanahoria y champiñones en una salsa ligera de soja.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "broccoli",
+     "carrot",
+     "mushrooms",
+     "soy sauce"
+    ],
+    "rough_macros": {
+     "kcal": 330,
+     "protein_g": 41,
+     "carbs_g": 14,
+     "fat_g": 6
+    },
+    "image_prompt": "Turkey and broccoli stir-fry with carrot and mushrooms on a dark plate, overhead"
+   },
+   {
+    "idea_id": "3",
+    "name": "Sartén de pavo estilo taco con maíz",
+    "one_line": "Pavo picado fino con pimiento, cebolla, tomate y maíz, con especias de taco.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "canned sweetcorn",
+     "green bell pepper",
+     "tomato",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 350,
+     "protein_g": 40,
+     "carbs_g": 24,
+     "fat_g": 6
+    },
+    "image_prompt": "Turkey taco skillet with corn, green pepper and tomato, overhead"
+   },
+   {
+    "idea_id": "4",
+    "name": "Escalopines de pavo al limón con judías verdes",
+    "one_line": "Filetes finos de pavo a la plancha con salsa de ajo, limón y perejil, y judías verdes.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "lemon juice",
+     "garlic",
+     "fresh parsley",
+     "green beans"
+    ],
+    "rough_macros": {
+     "kcal": 300,
+     "protein_g": 42,
+     "carbs_g": 8,
+     "fat_g": 5
+    },
+    "image_prompt": "Thin lemon turkey cutlets with parsley and green beans, overhead"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Guiso de pavo con pimientos y champiñones",
+  "servings": 3,
+  "prep_time_min": 40,
+  "ingredients": [
+   {
+    "name": "turkey tenderloin",
+    "grams_per_serving": 170,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "red bell pepper",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "green bell pepper",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "mushrooms",
+    "grams_per_serving": 83,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 37,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "potato",
+    "grams_per_serving": 90,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 3,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "smoked paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Corta el pavo en tiras, la cebolla, los pimientos, los champiñones y la patata en dados.",
+   "Sofríe la cebolla, el ajo y los pimientos con el aceite en una sartén grande unos 8 minutos.",
+   "Añade el pavo y la patata, el pimentón y la sal. Cocina 5 minutos.",
+   "Agrega los champiñones, tapa y cocina 15 minutos con un chorrito de agua hasta que la patata esté tierna.",
+   "Reparte en 3 raciones y guarda en la nevera."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Guiso de pavo con pimientos y champiñones",
+   "servings": 3,
+   "prep_time_min": 40,
+   "ingredients": [
+    {
+     "name": "turkey tenderloin",
+     "grams_per_serving": 170,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "red bell pepper",
+     "grams_per_serving": 39,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "green bell pepper",
+     "grams_per_serving": 39,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "mushrooms",
+     "grams_per_serving": 83,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 36,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "potato",
+     "grams_per_serving": 90,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "garlic",
+     "leftover_plan": "use_in_another_meal",
+     "grams_per_serving": 3,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "extra virgin olive oil",
+     "grams_per_serving": 5,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "smoked paprika",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Corta el pavo en tiras, la cebolla, los pimientos, los champiñones y la patata en dados.",
+    "Sofríe la cebolla, el ajo y los pimientos con el aceite en una sartén grande unos 8 minutos.",
+    "Añade el pavo y la patata, el pimentón y la sal. Cocina 5 minutos.",
+    "Agrega los champiñones, tapa y cocina 15 minutos con un chorrito de agua hasta que la patata esté tierna.",
+    "Reparte en 3 raciones y guarda en la nevera."
+   ]
+  }
+ ]
+}

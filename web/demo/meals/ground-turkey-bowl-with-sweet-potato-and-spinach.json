@@ -1,0 +1,500 @@
+{
+ "date": "2026-10-03",
+ "form": {
+  "craving": "Ground turkey bowl with sweet potato.",
+  "exclude": [],
+  "kcal_target": 450,
+  "protein_g_target": 45,
+  "budget_total_eur": 15,
+  "servings": 3,
+  "keep_leftovers_low": true,
+  "gear": [
+   "no_blender"
+  ],
+  "reheat_at_work": true
+ },
+ "picked_idea": {
+  "idea_id": "1",
+  "name": "Roasted turkey with sweet potato and spinach",
+  "one_line": "Ground turkey with roasted sweet potato, fresh spinach, and garlic",
+  "rough_macros": {
+   "kcal": 530,
+   "protein_g": 46,
+   "carbs_g": 32,
+   "fat_g": 24
+  },
+  "image_prompt": "overhead shot of a white bowl with roasted sweet potato cubes, brown ground turkey, and fresh green spinach, drizzled with olive oil",
+  "main_ingredients": [
+   "ground turkey",
+   "sweet potato",
+   "spinach",
+   "eggs",
+   "garlic"
+  ]
+ },
+ "recipe": {
+  "title": "Ground turkey bowl with sweet potato and spinach",
+  "servings": 3,
+  "prep_time_min": 35,
+  "ingredients": [
+   {
+    "name": "ground turkey",
+    "grams_per_serving": 180,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "sweet potato",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spinach",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "eggs",
+    "grams_per_serving": 51,
+    "units_per_serving": 1,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Heat the oven to 200 C. Peel the sweet potato and cut it into 2 cm cubes.",
+   "Toss the sweet potato with the paprika and a pinch of salt. Bake 25 minutes on baking paper, turning it halfway through.",
+   "Finely chop the garlic. Heat a large non-stick pan over medium-high heat, with no oil.",
+   "Add the ground turkey with salt. Cook it 8 minutes, breaking it up, until browned and no longer pink.",
+   "Add the garlic and cook 1 more minute. Lower the heat to medium.",
+   "Beat the 3 eggs in a glass with a pinch of salt. Pour them over the turkey and stir 2 minutes until set.",
+   "Put the fresh spinach in the pan and stir 1 minute until it wilts. Take the pan off the heat.",
+   "Divide the turkey with egg and spinach into 3 bowls and add the roasted sweet potato on top.",
+   "Store in containers. Reheat the bowl in the microwave for 2 minutes at work."
+  ]
+ },
+ "evaluation": {
+  "status": "issues",
+  "recipe_title": "Ground turkey bowl with sweet potato and spinach",
+  "items": [
+   {
+    "name": "ground turkey",
+    "food": "ground turkey",
+    "grams_per_serving": 180,
+    "total_grams": 540,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "sweet potato",
+    "food": "sweet potato",
+    "grams_per_serving": 80,
+    "total_grams": 240,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "spinach",
+    "food": "spinach",
+    "grams_per_serving": 80,
+    "total_grams": 240,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "eggs",
+    "food": "eggs",
+    "grams_per_serving": 51,
+    "total_grams": 153,
+    "units_total": 3,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "garlic",
+    "food": "garlic",
+    "grams_per_serving": 4,
+    "total_grams": 12,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "paprika",
+    "food": "paprika",
+    "grams_per_serving": 1,
+    "total_grams": 3,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "salt",
+    "food": "salt",
+    "grams_per_serving": 1,
+    "total_grams": 3,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   }
+  ],
+  "pack": {
+   "lines": [
+    {
+     "ingredient": "ground turkey",
+     "grams_needed": 540,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "ground turkey 400 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 800,
+     "grams_left": 260,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 32.5,
+     "leftover_status": "use_in_2_days",
+     "food": "ground turkey"
+    },
+    {
+     "ingredient": "sweet potato",
+     "grams_needed": 240,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "sweet potato, loose (300 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 300,
+     "grams_left": 60,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 20.0,
+     "leftover_status": "keeps",
+     "food": "sweet potato"
+    },
+    {
+     "ingredient": "spinach",
+     "grams_needed": 240,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "spinach 300 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 300,
+     "grams_left": 60,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 20.0,
+     "leftover_status": "use_in_2_days",
+     "food": "spinach"
+    },
+    {
+     "ingredient": "eggs",
+     "grams_needed": 153,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "eggs clase M 12 uds",
+     "product_url": null,
+     "sold_by": "per_unit",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "units_needed": 3,
+     "units_bought": 12,
+     "grams_bought": 612,
+     "grams_left": 459,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 75.0,
+     "leftover_status": "keeps",
+     "food": "eggs"
+    },
+    {
+     "ingredient": "garlic",
+     "grams_needed": 12,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "garlic, loose (36 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 36,
+     "grams_left": 24,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 66.66666666666667,
+     "leftover_status": "keeps",
+     "food": "garlic"
+    },
+    {
+     "ingredient": "paprika",
+     "grams_needed": 3,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "paprika 75 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 75,
+     "grams_left": 72,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 96.0,
+     "leftover_status": "keeps",
+     "food": "paprika"
+    },
+    {
+     "ingredient": "salt",
+     "grams_needed": 3,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "salt 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 997,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 99.7,
+     "leftover_status": "keeps",
+     "food": "salt"
+    }
+   ],
+   "cart_total_eur": 0,
+   "cost_per_serving_eur": 0.0,
+   "used_total_eur": 0,
+   "waste_grams": 863,
+   "waste_eur": 0,
+   "within_budget": true,
+   "over_budget_eur": null,
+   "optional_total_eur": 0,
+   "budget_check_complete": false,
+   "unpriced": [
+    "ground turkey",
+    "sweet potato",
+    "spinach",
+    "eggs",
+    "garlic"
+   ],
+   "price_note": null,
+   "change_requests": [
+    {
+     "from_agent": "pack",
+     "ingredient": "ground turkey",
+     "reason": "high_leftover",
+     "hint": "Buying 800 g but using 540 g (32% left, spoils fast). Do not grow the portion: grams may change at most 15% from the first recipe. Use a different ingredient, or mark the leftover to use in another meal (leftover_plan \"use_in_another_meal\")."
+    }
+   ]
+  },
+  "macros": {
+   "per_serving": {
+    "kcal": 454.2,
+    "protein_g": 41.49,
+    "carbs_g": 17.09,
+    "fat_g": 22.76
+   },
+   "total": {
+    "kcal": 1362.61,
+    "protein_g": 124.48,
+    "carbs_g": 51.27,
+    "fat_g": 68.27
+   },
+   "misses": [],
+   "missing_nutrition": [],
+   "unresolved": [],
+   "lines": [
+    {
+     "name": "ground turkey",
+     "food": "ground turkey",
+     "grams": 540,
+     "source": "usda",
+     "source_id": "2514747",
+     "amount": {
+      "kcal": 850.99,
+      "protein_g": 93.64,
+      "carbs_g": 0.0,
+      "fat_g": 51.79
+     },
+     "missing": []
+    },
+    {
+     "name": "sweet potato",
+     "food": "sweet potato",
+     "grams": 240,
+     "source": "ciqual",
+     "source_id": "4101",
+     "amount": {
+      "kcal": 194.88,
+      "protein_g": 3.77,
+      "carbs_g": 41.04,
+      "fat_g": 0.12
+     },
+     "missing": []
+    },
+    {
+     "name": "spinach",
+     "food": "spinach",
+     "grams": 240,
+     "source": "ciqual",
+     "source_id": "20059",
+     "amount": {
+      "kcal": 79.92,
+      "protein_g": 6.43,
+      "carbs_g": 7.34,
+      "fat_g": 0.94
+     },
+     "missing": []
+    },
+    {
+     "name": "eggs",
+     "food": "eggs",
+     "grams": 153,
+     "source": "ciqual",
+     "source_id": "22000",
+     "amount": {
+      "kcal": 214.2,
+      "protein_g": 19.58,
+      "carbs_g": 0.09,
+      "fat_g": 15.04
+     },
+     "missing": []
+    },
+    {
+     "name": "garlic",
+     "food": "garlic",
+     "grams": 12,
+     "source": "ciqual",
+     "source_id": "11000",
+     "amount": {
+      "kcal": 13.08,
+      "protein_g": 0.64,
+      "carbs_g": 2.23,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "paprika",
+     "food": "paprika",
+     "grams": 3,
+     "source": "ciqual",
+     "source_id": "11049",
+     "amount": {
+      "kcal": 9.54,
+      "protein_g": 0.42,
+      "carbs_g": 0.56,
+      "fat_g": 0.39
+     },
+     "missing": []
+    },
+    {
+     "name": "salt",
+     "food": "salt",
+     "grams": 3,
+     "source": "ciqual",
+     "source_id": "11017",
+     "amount": {
+      "kcal": 0.0,
+      "protein_g": 0.0,
+      "carbs_g": 0.0,
+      "fat_g": 0.0
+     },
+     "missing": []
+    }
+   ]
+  },
+  "change_requests": [
+   {
+    "from_agent": "pack",
+    "ingredient": "ground turkey",
+    "reason": "high_leftover",
+    "hint": "Buying 800 g but using 540 g (32% left, spoils fast). Do not grow the portion: grams may change at most 15% from the first recipe. Use a different ingredient, or mark the leftover to use in another meal (leftover_plan \"use_in_another_meal\")."
+   }
+  ]
+ },
+ "mfp": "SmartBite: Ground turkey bowl with sweet potato and spinach\nServings: 3\n\nground turkey, 540 g (raw)\nsweet potato, 240 g (raw)\nspinach, 240 g (raw)\neggs, 153 g\ngarlic, 12 g (raw)\npaprika, 3 g\nsalt, 3 g",
+ "slug": "ground-turkey-bowl-with-sweet-potato-and-spinach",
+ "demo": true,
+ "photo": "/demo/images/ground-turkey-bowl-with-sweet-potato-and-spinach.jpg",
+ "photo_ai_generated": true
+}

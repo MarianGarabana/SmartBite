@@ -1,0 +1,226 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "High protein pasta bolognese with beef",
+    "one_line": "Lean ground beef simmered with mushrooms in tomato sauce, tossed with wholemeal pasta.",
+    "main_ingredients": [
+     "ground beef",
+     "wholemeal pasta",
+     "crushed tomatoes",
+     "mushrooms",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 610,
+     "protein_g": 50,
+     "carbs_g": 58,
+     "fat_g": 18
+    },
+    "image_prompt": "Plate of wholemeal spaghetti bolognese with beef and mushroom tomato sauce"
+   },
+   {
+    "idea_id": "2",
+    "name": "Creamy Greek yogurt chicken pasta",
+    "one_line": "Wholemeal pasta with sliced chicken and spinach in a light yogurt, lemon and pasta water sauce.",
+    "main_ingredients": [
+     "chicken breast",
+     "wholemeal pasta",
+     "greek yogurt 0%",
+     "spinach",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 590,
+     "protein_g": 55,
+     "carbs_g": 60,
+     "fat_g": 12
+    },
+    "image_prompt": "Bowl of wholemeal pasta with sliced chicken breast and spinach in a creamy yogurt sauce"
+   },
+   {
+    "idea_id": "3",
+    "name": "Turkey ragu pasta with carrot and tomato",
+    "one_line": "Ground turkey ragu with carrot, onion and tomato over wholemeal pasta, lean and high in protein.",
+    "main_ingredients": [
+     "ground turkey",
+     "wholemeal pasta",
+     "crushed tomatoes",
+     "carrot",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 580,
+     "protein_g": 50,
+     "carbs_g": 62,
+     "fat_g": 12
+    },
+    "image_prompt": "Wholemeal pasta topped with ground turkey ragu, carrot and tomato sauce"
+   },
+   {
+    "idea_id": "4",
+    "name": "Wholemeal pasta with salmon and spinach",
+    "one_line": "Wholemeal pasta tossed with flaked salmon, wilted spinach and cherry tomatoes in a light pan sauce.",
+    "main_ingredients": [
+     "salmon",
+     "wholemeal pasta",
+     "spinach",
+     "cherry tomatoes"
+    ],
+    "rough_macros": {
+     "kcal": 640,
+     "protein_g": 48,
+     "carbs_g": 55,
+     "fat_g": 24
+    },
+    "image_prompt": "Wholemeal pasta with flaked salmon, spinach and halved cherry tomatoes"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Pasta boloñesa alta en proteína",
+  "servings": 4,
+  "prep_time_min": 40,
+  "ingredients": [
+   {
+    "name": "ground beef",
+    "grams_per_serving": 150,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "wholemeal pasta",
+    "grams_per_serving": 90,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "crushed tomatoes",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "mushrooms",
+    "grams_per_serving": 62,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 55,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "oregano",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Corta la cebolla y los champiñones en trozos pequeños.",
+   "Sofríe la cebolla en una sartén antiadherente sin aceite, con un chorro de agua si se pega, y añade la carne hasta que se dore.",
+   "Añade los champiñones, el tomate triturado, la sal y el orégano. Cocina 20 minutos a fuego bajo.",
+   "Cuece la pasta según el paquete y mézclala con la salsa.",
+   "Guarda en 4 tuppers. Se calienta en el microondas en el trabajo."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Pasta boloñesa alta en proteína",
+   "servings": 4,
+   "prep_time_min": 40,
+   "ingredients": [
+    {
+     "name": "ground beef",
+     "grams_per_serving": 172,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "wholemeal pasta",
+     "grams_per_serving": 80,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": true
+    },
+    {
+     "name": "crushed tomatoes",
+     "grams_per_serving": 100,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "mushrooms",
+     "grams_per_serving": 62,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 55,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "oregano",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Corta la cebolla y los champiñones en trozos pequeños.",
+    "Sofríe la cebolla en una sartén antiadherente sin aceite, con un chorro de agua si se pega, y añade la carne hasta que se dore.",
+    "Añade los champiñones, el tomate triturado, la sal y el orégano. Cocina 20 minutos a fuego bajo.",
+    "Cuece la pasta según el paquete y mézclala con la salsa.",
+    "Guarda en 4 tuppers. Se calienta en el microondas en el trabajo."
+   ]
+  }
+ ]
+}

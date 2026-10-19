@@ -1,0 +1,162 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Guiso de calabaza y lentejas",
+    "one_line": "Lentejas y calabaza en cubos cocidas con cebolla, ajo y tomate. Un guiso caliente y saciante.",
+    "main_ingredients": [
+     "dried lentils",
+     "pumpkin",
+     "onion",
+     "crushed tomatoes",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 30,
+     "carbs_g": 65,
+     "fat_g": 4
+    },
+    "image_prompt": "Bowl of hearty lentil and pumpkin stew in tomato sauce"
+   },
+   {
+    "idea_id": "2",
+    "name": "Mujaddara: lentejas con arroz y yogur",
+    "one_line": "Lentejas y arroz con comino y cebolla dorada, con yogur griego por encima.",
+    "main_ingredients": [
+     "dried lentils",
+     "rice",
+     "onion",
+     "greek yogurt 0%",
+     "cumin"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 30,
+     "carbs_g": 65,
+     "fat_g": 4
+    },
+    "image_prompt": "Mujaddara lentils and rice topped with caramelized onions and a spoon of yogurt"
+   },
+   {
+    "idea_id": "3",
+    "name": "Lentejas viudas con verduras",
+    "one_line": "Lentejas con zanahoria, cebolla y pimiento verde, con sofrito de ajo y pimentón.",
+    "main_ingredients": [
+     "dried lentils",
+     "carrot",
+     "onion",
+     "green bell pepper",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 30,
+     "carbs_g": 62,
+     "fat_g": 4
+    },
+    "image_prompt": "Spanish lentil stew with diced carrot and green pepper in a rustic bowl"
+   },
+   {
+    "idea_id": "4",
+    "name": "Dal tadka de lentejas con tomate",
+    "one_line": "Lentejas especiadas con tomate, cebolla y ajo, al estilo indio.",
+    "main_ingredients": [
+     "dried lentils",
+     "tomato",
+     "onion",
+     "garlic",
+     "cumin"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 30,
+     "carbs_g": 64,
+     "fat_g": 4
+    },
+    "image_prompt": "Indian dal tadka lentil stew with tomato and garlic in a bowl"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Guiso de calabaza y lentejas",
+  "servings": 4,
+  "prep_time_min": 50,
+  "ingredients": [
+   {
+    "name": "dried lentils",
+    "grams_per_serving": 115,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "pumpkin",
+    "grams_per_serving": 105,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "crushed tomatoes",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 27,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 9,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "cumin",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Pela la calabaza y córtala en cubos. Pica la cebolla y el ajo.",
+   "Pon las lentejas en una olla con 1 litro de agua y cuécelas 15 minutos.",
+   "Añade la cebolla, el ajo, la calabaza, el tomate triturado, el pimentón, el comino y la sal.",
+   "Cuece 25 minutos más, hasta que la calabaza y las lentejas estén tiernas.",
+   "Reparte en 4 táperes. Se recalienta en el microondas en el trabajo."
+  ]
+ }
+}

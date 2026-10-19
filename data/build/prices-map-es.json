@@ -1,0 +1,1020 @@
+{
+ "note": "Each SmartBite food mapped by hand to one row of the MAPA Panel de consumo alimentario en hogares (monthly file, T.ESPANA columns). section is the group row the product row sits under in the sheet (row names repeat across groups, e.g. BROCOLI fresh and frozen). match: exact (same food), close (same food, mixed with its subtypes), broad (parent category, can be far off), none (no row). Only exact and close get an estimated price. unit: kg, l (litre) or unit (one egg). alt: the same product under an older row name, used for months where the main row is missing (Sep to Dec 2025 sheets).",
+ "foods": {
+  "apple": {
+   "match": "exact",
+   "section": "T.FRUTAS FRESCAS",
+   "row": "MANZANAS",
+   "unit": "kg",
+   "note": "All apple varieties."
+  },
+  "artichoke hearts": {
+   "match": "close",
+   "section": "FRUTA&HORTA.CONSERVA",
+   "row": "ALCACHOFAS",
+   "unit": "kg",
+   "note": "Canned or jarred artichokes, hearts and whole. Pack sizes are drained weight; MAPA volume is likely net weight, so the estimate can be low."
+  },
+  "arugula": {
+   "match": "broad",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "VERD./HORT. IV GAMA",
+   "unit": "kg",
+   "note": "All bagged salads and cut vegetables."
+  },
+  "avocado": {
+   "match": "exact",
+   "section": "T.FRUTAS FRESCAS",
+   "row": "AGUACATE",
+   "unit": "kg",
+   "note": "Loose avocado."
+  },
+  "banana": {
+   "match": "exact",
+   "section": "T.FRUTAS FRESCAS",
+   "row": "PLATANOS",
+   "unit": "kg",
+   "note": "Bananas and Canary plantains together."
+  },
+  "basmati rice": {
+   "match": "broad",
+   "section": "ARROZ",
+   "row": "OTROS TIPOS ARROZ",
+   "unit": "kg",
+   "note": "Every rice that is not long, normal or parboiled."
+  },
+  "beef steak": {
+   "match": "close",
+   "section": "CARNE VACUNO",
+   "row": "TERNERA",
+   "unit": "kg",
+   "note": "All fresh veal and young beef cuts, not steaks only."
+  },
+  "black pepper": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "blueberries": {
+   "match": "exact",
+   "section": "T.FRUTAS FRESCAS",
+   "row": "ARANDANO",
+   "unit": "kg",
+   "note": "Fresh blueberries."
+  },
+  "broccoli": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "BROCOLI",
+   "unit": "kg",
+   "note": "Fresh broccoli."
+  },
+  "brown rice": {
+   "match": "broad",
+   "section": "ARROZ",
+   "row": "OTROS TIPOS ARROZ",
+   "unit": "kg",
+   "note": "Every rice that is not long, normal or parboiled."
+  },
+  "brussels sprouts": {
+   "match": "close",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "COLES",
+   "unit": "kg",
+   "note": "All fresh cabbages, sprouts included."
+  },
+  "canned chickpeas": {
+   "match": "close",
+   "section": "LEGUMBRES",
+   "row": "LEGUMBRES COCIDAS",
+   "unit": "kg",
+   "note": "All cooked pulses in jars and cans. Pack sizes are drained weight; MAPA volume is likely net weight, so the estimate can be low."
+  },
+  "canned lentils": {
+   "match": "exact",
+   "section": "LENTEJAS",
+   "row": "LENTEJAS COCIDAS",
+   "unit": "kg",
+   "note": "Cooked lentils in jars and cans. Pack sizes are drained weight; MAPA volume is likely net weight, so the estimate can be low."
+  },
+  "canned mackerel": {
+   "match": "exact",
+   "section": "T.PESCADO/MARISCO CONSERVADO",
+   "row": "CONS.CHICHARRO/CABALLA",
+   "unit": "kg",
+   "note": "Canned mackerel and horse mackerel. Pack sizes are drained weight; MAPA volume is likely net weight, so the estimate can be low.",
+   "alt": [
+    {
+     "section": "CONS.PESCADO/MOLUSCO",
+     "row": "CHICHARRO/CABALLA"
+    }
+   ]
+  },
+  "canned red kidney beans": {
+   "match": "close",
+   "section": "LEGUMBRES",
+   "row": "LEGUMBRES COCIDAS",
+   "unit": "kg",
+   "note": "All cooked pulses in jars and cans. Pack sizes are drained weight; MAPA volume is likely net weight, so the estimate can be low."
+  },
+  "canned sardines": {
+   "match": "exact",
+   "section": "T.PESCADO/MARISCO CONSERVADO",
+   "row": "CONS.SARDINAS",
+   "unit": "kg",
+   "note": "Canned sardines. Pack sizes are drained weight; MAPA volume is likely net weight, so the estimate can be low.",
+   "alt": [
+    {
+     "section": "CONS.PESCADO/MOLUSCO",
+     "row": "SARDINAS"
+    }
+   ]
+  },
+  "canned sliced mushrooms": {
+   "match": "exact",
+   "section": "FRUTA&HORTA.CONSERVA",
+   "row": "CHAMPIÑOSNES+SETAS",
+   "unit": "kg",
+   "note": "Canned mushrooms (MAPA spells the row CHAMPIÑOSNES). Pack sizes are drained weight; MAPA volume is likely net weight, so the estimate can be low."
+  },
+  "canned sweetcorn": {
+   "match": "exact",
+   "section": "FRUTA&HORTA.CONSERVA",
+   "row": "MAIZ DULCE",
+   "unit": "kg",
+   "note": "Canned sweetcorn. Pack sizes are drained weight; MAPA volume is likely net weight, so the estimate can be low."
+  },
+  "canned tuna in oil": {
+   "match": "close",
+   "section": "T.PESCADO/MARISCO CONSERVADO",
+   "row": "CONS.ATUN",
+   "unit": "kg",
+   "note": "All canned tuna, in oil and in water. Pack sizes are drained weight; MAPA volume is likely net weight, so the estimate can be low.",
+   "alt": [
+    {
+     "section": "CONS.PESCADO/MOLUSCO",
+     "row": "ATUN"
+    }
+   ]
+  },
+  "canned tuna in water": {
+   "match": "close",
+   "section": "T.PESCADO/MARISCO CONSERVADO",
+   "row": "CONS.ATUN",
+   "unit": "kg",
+   "note": "All canned tuna, in oil and in water. Pack sizes are drained weight; MAPA volume is likely net weight, so the estimate can be low.",
+   "alt": [
+    {
+     "section": "CONS.PESCADO/MOLUSCO",
+     "row": "ATUN"
+    }
+   ]
+  },
+  "canned white beans": {
+   "match": "close",
+   "section": "LEGUMBRES",
+   "row": "LEGUMBRES COCIDAS",
+   "unit": "kg",
+   "note": "All cooked pulses in jars and cans. Pack sizes are drained weight; MAPA volume is likely net weight, so the estimate can be low."
+  },
+  "carrot": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "ZANAHORIAS",
+   "unit": "kg",
+   "note": "Fresh carrots."
+  },
+  "cauliflower": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "COLIFLOR",
+   "unit": "kg",
+   "note": "Fresh cauliflower."
+  },
+  "cherry tomatoes": {
+   "match": "broad",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "TOMATES",
+   "unit": "kg",
+   "note": "All fresh tomatoes; cherry tomatoes cost more per kg."
+  },
+  "chia seeds": {
+   "match": "broad",
+   "section": "FRUTOS SECOS&SEMILLAS",
+   "row": "SEMILLAS",
+   "unit": "kg",
+   "note": "All seeds, sunflower and pumpkin included."
+  },
+  "chicken breast": {
+   "match": "close",
+   "section": "CARNE POLLO",
+   "row": "POLLO FILETES",
+   "unit": "kg",
+   "note": "Chicken fillets, mostly breast."
+  },
+  "chicken broth": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "CALDOS",
+   "unit": "kg",
+   "note": "Stock cubes and liquid stock together."
+  },
+  "chicken thigh": {
+   "match": "close",
+   "section": "CARNE POLLO",
+   "row": "POLLO POR PIEZAS",
+   "unit": "kg",
+   "note": "All chicken pieces (thighs, legs, wings)."
+  },
+  "chili flakes": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "cinnamon": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "cooked quinoa": {
+   "match": "none",
+   "section": null,
+   "row": null,
+   "unit": null,
+   "note": "No quinoa row in the panel."
+  },
+  "cottage cheese": {
+   "match": "broad",
+   "section": "QUESO",
+   "row": "QUESO FRESCO",
+   "unit": "kg",
+   "note": "All fresh cheeses."
+  },
+  "couscous": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "HARINAS Y SEMOLAS",
+   "unit": "kg",
+   "note": "Flours and semolinas together."
+  },
+  "crushed tomatoes": {
+   "match": "exact",
+   "section": "FRUTA&HORTA.CONSERVA",
+   "row": "TOMATE N.TRITUR.",
+   "unit": "kg",
+   "note": "Canned crushed tomato."
+  },
+  "cucumber": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "PEPINOS",
+   "unit": "kg",
+   "note": "Fresh cucumbers."
+  },
+  "cumin": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "curry powder": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "dried chickpeas": {
+   "match": "close",
+   "section": "LEGUMBRES",
+   "row": "LEGUMBRES SECAS",
+   "unit": "kg",
+   "note": "All dried pulses."
+  },
+  "dried lentils": {
+   "match": "exact",
+   "section": "LENTEJAS",
+   "row": "LENTEJAS SECAS",
+   "unit": "kg",
+   "note": "Dried lentils."
+  },
+  "dried parsley": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "egg whites": {
+   "match": "none",
+   "section": null,
+   "row": null,
+   "unit": null,
+   "note": "No egg white row in the panel."
+  },
+  "eggplant": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "BERENJENAS",
+   "unit": "kg",
+   "note": "Fresh eggplant."
+  },
+  "eggs": {
+   "match": "exact",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "TOTAL HUEVOS GALLINA",
+   "unit": "unit",
+   "note": "Hen eggs, price per egg (all sizes)."
+  },
+  "extra virgin olive oil": {
+   "match": "exact",
+   "section": "TOTAL ACEITES OLIVA",
+   "row": "A.O VIRGEN EXTRA",
+   "unit": "l",
+   "note": "Extra virgin olive oil, price per litre."
+  },
+  "feta": {
+   "match": "broad",
+   "section": "QUESO",
+   "row": "OTROS TIPOS QUESO",
+   "unit": "kg",
+   "note": "All other cheeses."
+  },
+  "firm tofu": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "PROTEINAS VEGETALES",
+   "unit": "kg",
+   "note": "All plant protein products."
+  },
+  "fresh parsley": {
+   "match": "broad",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "OTR.HORTALIZAS/VERD.",
+   "unit": "kg",
+   "note": "Other fresh vegetables; herbs are sold in small bunches."
+  },
+  "fresh tuna": {
+   "match": "close",
+   "section": "PESCADOS",
+   "row": "ATUN Y BONITO",
+   "unit": "kg",
+   "note": "Tuna and bonito, fresh and frozen together."
+  },
+  "frozen broccoli": {
+   "match": "exact",
+   "section": "VERD./HORT.CONGELAD",
+   "row": "BROCOLI",
+   "unit": "kg",
+   "note": "Frozen broccoli."
+  },
+  "frozen cauliflower": {
+   "match": "exact",
+   "section": "VERD./HORT.CONGELAD",
+   "row": "COLIFLOR",
+   "unit": "kg",
+   "note": "Frozen cauliflower."
+  },
+  "frozen edamame": {
+   "match": "broad",
+   "section": "VERD./HORT.CONGELAD",
+   "row": "OTR.VERD/HOR.CONG.",
+   "unit": "kg",
+   "note": "Other frozen vegetables."
+  },
+  "frozen green beans": {
+   "match": "exact",
+   "section": "VERD./HORT.CONGELAD",
+   "row": "JUDIA VERDE",
+   "unit": "kg",
+   "note": "Frozen green beans."
+  },
+  "frozen hake": {
+   "match": "close",
+   "section": "MERLUZA/PESCAD",
+   "row": "MERLUZA/PESCAD.CON",
+   "unit": "kg",
+   "note": "Frozen hake and whiting, whole and fillets."
+  },
+  "frozen mixed berries": {
+   "match": "close",
+   "section": "FRUTA&HORTA.CONGELAD",
+   "row": "FRUTAS CONGELADAS",
+   "unit": "kg",
+   "note": "All frozen fruit."
+  },
+  "frozen peas": {
+   "match": "exact",
+   "section": "VERD./HORT.CONGELAD",
+   "row": "GUISANTES",
+   "unit": "kg",
+   "note": "Frozen peas."
+  },
+  "frozen salmon": {
+   "match": "exact",
+   "section": "SALMON",
+   "row": "SALMON CONGELADO",
+   "unit": "kg",
+   "note": "Frozen salmon."
+  },
+  "frozen shrimp": {
+   "match": "exact",
+   "section": "GAMBAS/LANGOSTINOS",
+   "row": "GAMBAS/LANG.CONG.",
+   "unit": "kg",
+   "note": "Frozen shrimp and prawns."
+  },
+  "frozen spinach": {
+   "match": "exact",
+   "section": "VERD./HORT.CONGELAD",
+   "row": "ESPINACAS",
+   "unit": "kg",
+   "note": "Frozen spinach."
+  },
+  "frozen stir-fry vegetables": {
+   "match": "broad",
+   "section": "VERD./HORT.CONGELAD",
+   "row": "MENESTRA",
+   "unit": "kg",
+   "note": "Frozen mixed vegetables (menestra)."
+  },
+  "garlic": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "AJOS",
+   "unit": "kg",
+   "note": "Fresh garlic."
+  },
+  "garlic powder": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "gnocchi": {
+   "match": "broad",
+   "section": "PASTAS ALIMENTICIAS",
+   "row": "PASTA ALIM.FRESCA",
+   "unit": "kg",
+   "note": "All fresh pasta."
+  },
+  "grana padano": {
+   "match": "broad",
+   "section": "QUESO",
+   "row": "QUESO CURADO",
+   "unit": "kg",
+   "note": "All cured cheeses."
+  },
+  "grated cheese": {
+   "match": "broad",
+   "section": "QUESO",
+   "row": "OTROS TIPOS QUESO",
+   "unit": "kg",
+   "note": "All other cheeses."
+  },
+  "greek yogurt": {
+   "match": "broad",
+   "section": "YOGUR",
+   "row": "YOGUR NATURAL",
+   "unit": "kg",
+   "note": "All plain yogurt; Greek style costs more.",
+   "alt": [
+    {
+     "section": "YOGURT",
+     "row": "YOGURT NATURAL"
+    }
+   ]
+  },
+  "greek yogurt 0%": {
+   "match": "broad",
+   "section": "YOGUR",
+   "row": "YOGUR DESNATADO",
+   "unit": "kg",
+   "note": "All skimmed yogurt; Greek style costs more.",
+   "alt": [
+    {
+     "section": "YOGURT",
+     "row": "YOGURT DESNATADO"
+    }
+   ]
+  },
+  "green beans": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "JUDIAS VERDES",
+   "unit": "kg",
+   "note": "Fresh green beans."
+  },
+  "green bell pepper": {
+   "match": "close",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "PIMIENTOS",
+   "unit": "kg",
+   "note": "All fresh peppers, every colour."
+  },
+  "ground beef": {
+   "match": "broad",
+   "section": "CARNE FRESCA",
+   "row": "CARNE VACUNO",
+   "unit": "kg",
+   "note": "All fresh beef."
+  },
+  "ground chicken": {
+   "match": "broad",
+   "section": "CARNE FRESCA",
+   "row": "CARNE POLLO",
+   "unit": "kg",
+   "note": "All fresh chicken."
+  },
+  "ground ginger": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "ground turkey": {
+   "match": "broad",
+   "section": "OTRAS CARNES FRESCA",
+   "row": "PAVO",
+   "unit": "kg",
+   "note": "All fresh turkey."
+  },
+  "hummus": {
+   "match": "none",
+   "section": null,
+   "row": null,
+   "unit": null,
+   "note": "No hummus row in the panel."
+  },
+  "kalamata olives": {
+   "match": "broad",
+   "section": "ACEITUNAS",
+   "row": "ACEITUNA ENV.C/HUESO",
+   "unit": "kg",
+   "note": "All packed olives with stones."
+  },
+  "kale": {
+   "match": "broad",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "VERDURAS DE HOJA",
+   "unit": "kg",
+   "note": "All leafy greens."
+  },
+  "kefir": {
+   "match": "exact",
+   "section": "LECHES FERMENTADAS",
+   "row": "KEFIR",
+   "unit": "kg",
+   "note": "Kefir."
+  },
+  "kiwi": {
+   "match": "exact",
+   "section": "T.FRUTAS FRESCAS",
+   "row": "KIWI",
+   "unit": "kg",
+   "note": "Fresh kiwi."
+  },
+  "lemon": {
+   "match": "exact",
+   "section": "T.FRUTAS FRESCAS",
+   "row": "LIMONES",
+   "unit": "kg",
+   "note": "Fresh lemons."
+  },
+  "lemon juice": {
+   "match": "none",
+   "section": null,
+   "row": null,
+   "unit": null,
+   "note": "No bottled lemon juice row in the panel."
+  },
+  "lettuce": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "LECHUGA/ESC./ENDIVIA",
+   "unit": "kg",
+   "note": "Lettuce, escarole and endive together."
+  },
+  "light cream cheese": {
+   "match": "broad",
+   "section": "QUESO",
+   "row": "QUESO FUNDIDO",
+   "unit": "kg",
+   "note": "All processed cheese."
+  },
+  "light fresh cheese": {
+   "match": "exact",
+   "section": "QUESO",
+   "row": "Q.FRESCO LIGHT",
+   "unit": "kg",
+   "note": "Light fresh cheese."
+  },
+  "light mozzarella": {
+   "match": "broad",
+   "section": "QUESO",
+   "row": "OTROS TIPOS QUESO",
+   "unit": "kg",
+   "note": "All other cheeses."
+  },
+  "lime": {
+   "match": "broad",
+   "section": "T.FRUTAS FRESCAS",
+   "row": "LIMONES",
+   "unit": "kg",
+   "note": "Lemons; limes are not a row of their own."
+  },
+  "lime juice": {
+   "match": "none",
+   "section": null,
+   "row": null,
+   "unit": null,
+   "note": "No bottled lime juice row in the panel."
+  },
+  "macaroni": {
+   "match": "exact",
+   "section": "PASTAS ALIMENTICIAS",
+   "row": "PASTA ALIM.SECA",
+   "unit": "kg",
+   "note": "All dry pasta."
+  },
+  "microwave rice": {
+   "match": "broad",
+   "section": "ARROZ",
+   "row": "OTROS TIPOS ARROZ",
+   "unit": "kg",
+   "note": "Every rice that is not long, normal or parboiled."
+  },
+  "mozzarella": {
+   "match": "broad",
+   "section": "QUESO",
+   "row": "OTROS TIPOS QUESO",
+   "unit": "kg",
+   "note": "All other cheeses."
+  },
+  "mushrooms": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "CHAMPIÑONES+O.SETAS",
+   "unit": "kg",
+   "note": "Fresh mushrooms."
+  },
+  "mustard": {
+   "match": "exact",
+   "section": "SALSAS",
+   "row": "MOSTAZA",
+   "unit": "kg",
+   "note": "Mustard."
+  },
+  "nutmeg": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "onion": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "CEBOLLAS",
+   "unit": "kg",
+   "note": "Fresh onions."
+  },
+  "onion powder": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "orange": {
+   "match": "exact",
+   "section": "T.FRUTAS FRESCAS",
+   "row": "NARANJAS",
+   "unit": "kg",
+   "note": "All oranges."
+  },
+  "oregano": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "paprika": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "peanut butter": {
+   "match": "none",
+   "section": null,
+   "row": null,
+   "unit": null,
+   "note": "No peanut butter row in the panel."
+  },
+  "pita bread": {
+   "match": "broad",
+   "section": "PAN INDUSTRIAL",
+   "row": "PAN INDUSTRIAL FRES",
+   "unit": "kg",
+   "note": "All packaged soft bread."
+  },
+  "plain yogurt 0%": {
+   "match": "close",
+   "section": "YOGUR",
+   "row": "YOGUR DESNATADO",
+   "unit": "kg",
+   "note": "All skimmed yogurt.",
+   "alt": [
+    {
+     "section": "YOGURT",
+     "row": "YOGURT DESNATADO"
+    }
+   ]
+  },
+  "pomegranate": {
+   "match": "broad",
+   "section": "T.FRUTAS FRESCAS",
+   "row": "OTRAS FRUTAS FRESCAS",
+   "unit": "kg",
+   "note": "Other fresh fruit."
+  },
+  "pork loin": {
+   "match": "close",
+   "section": "CARNE FRESCA",
+   "row": "CARNE CERDO",
+   "unit": "kg",
+   "note": "All fresh pork cuts, not loin only."
+  },
+  "potato": {
+   "match": "exact",
+   "section": "TOTAL PATATAS",
+   "row": "PATATAS FRESCAS",
+   "unit": "kg",
+   "note": "Fresh potatoes."
+  },
+  "pumpkin": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "CALABAZA",
+   "unit": "kg",
+   "note": "Fresh pumpkin."
+  },
+  "quark 0%": {
+   "match": "broad",
+   "section": "QUESO",
+   "row": "QUESO FRESCO",
+   "unit": "kg",
+   "note": "All fresh cheeses."
+  },
+  "quinoa": {
+   "match": "none",
+   "section": null,
+   "row": null,
+   "unit": null,
+   "note": "No quinoa row in the panel."
+  },
+  "raspberries": {
+   "match": "exact",
+   "section": "T.FRUTAS FRESCAS",
+   "row": "FRAMBUESAS",
+   "unit": "kg",
+   "note": "Fresh raspberries."
+  },
+  "red bell pepper": {
+   "match": "close",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "PIMIENTOS",
+   "unit": "kg",
+   "note": "All fresh peppers, every colour."
+  },
+  "rice": {
+   "match": "exact",
+   "section": "ARROZ",
+   "row": "NORMAL",
+   "unit": "kg",
+   "note": "Normal (round and medium grain) rice."
+  },
+  "ricotta": {
+   "match": "broad",
+   "section": "QUESO",
+   "row": "QUESO FRESCO",
+   "unit": "kg",
+   "note": "All fresh cheeses."
+  },
+  "roasted red peppers": {
+   "match": "close",
+   "section": "FRUTA&HORTA.CONSERVA",
+   "row": "PIMIENTOS",
+   "unit": "kg",
+   "note": "All canned and jarred peppers. Pack sizes are drained weight; MAPA volume is likely net weight, so the estimate can be low."
+  },
+  "rolled oats": {
+   "match": "broad",
+   "section": "CEREALES",
+   "row": "CEREALES DESAY.ENV.",
+   "unit": "kg",
+   "note": "All packed breakfast cereals."
+  },
+  "salmon": {
+   "match": "exact",
+   "section": "SALMON",
+   "row": "SALMON FRESCO",
+   "unit": "kg",
+   "note": "Fresh salmon."
+  },
+  "salt": {
+   "match": "exact",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "SAL",
+   "unit": "kg",
+   "note": "Salt."
+  },
+  "semi-skimmed milk": {
+   "match": "exact",
+   "section": "TOTAL LECHE LIQUIDA",
+   "row": "LECHE SEMIDESNATAD",
+   "unit": "l",
+   "note": "Semi-skimmed milk, price per litre."
+  },
+  "sesame seeds": {
+   "match": "broad",
+   "section": "FRUTOS SECOS&SEMILLAS",
+   "row": "SEMILLAS",
+   "unit": "kg",
+   "note": "All seeds."
+  },
+  "skyr": {
+   "match": "broad",
+   "section": "LECHES FERMENTADAS",
+   "row": "O.LECHES FERMENTADS",
+   "unit": "kg",
+   "note": "Other fermented milks."
+  },
+  "sliced turkey breast": {
+   "match": "close",
+   "section": "FIAMBRES",
+   "row": "PAVO",
+   "unit": "kg",
+   "note": "Turkey cold cuts."
+  },
+  "smoked paprika": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "soy milk": {
+   "match": "close",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "BEBIDAS VEGETALES",
+   "unit": "l",
+   "note": "All plant drinks (soy, oat, almond), price per litre."
+  },
+  "soy sauce": {
+   "match": "broad",
+   "section": "SALSAS",
+   "row": "OTRAS SALSAS",
+   "unit": "kg",
+   "note": "All other sauces."
+  },
+  "spinach": {
+   "match": "close",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "VERDURAS DE HOJA",
+   "unit": "kg",
+   "note": "All fresh leafy greens, spinach included."
+  },
+  "spring onion": {
+   "match": "broad",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "CEBOLLAS",
+   "unit": "kg",
+   "note": "Onions; spring onions are sold in bunches."
+  },
+  "strawberries": {
+   "match": "exact",
+   "section": "T.FRUTAS FRESCAS",
+   "row": "FRESAS/FRESON",
+   "unit": "kg",
+   "note": "Fresh strawberries."
+  },
+  "sugar": {
+   "match": "exact",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "AZUCAR",
+   "unit": "kg",
+   "note": "Sugar."
+  },
+  "sweet potato": {
+   "match": "broad",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "OTR.HORTALIZAS/VERD.",
+   "unit": "kg",
+   "note": "Other fresh vegetables."
+  },
+  "teriyaki sauce": {
+   "match": "broad",
+   "section": "SALSAS",
+   "row": "OTRAS SALSAS",
+   "unit": "kg",
+   "note": "All other sauces."
+  },
+  "textured soy protein": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "PROTEINAS VEGETALES",
+   "unit": "kg",
+   "note": "All plant protein products."
+  },
+  "thyme": {
+   "match": "broad",
+   "section": ".TOTAL ALIMENTACION",
+   "row": "ESPECIAS Y CONDIMENTO",
+   "unit": "kg",
+   "note": "All spices and condiments together."
+  },
+  "tomato": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "TOMATES",
+   "unit": "kg",
+   "note": "Fresh tomatoes."
+  },
+  "tomato sauce": {
+   "match": "close",
+   "section": "FRUTA&HORTA.CONSERVA",
+   "row": "TOMATE FRITO",
+   "unit": "kg",
+   "note": "Tomate frito, the usual Spanish tomato sauce."
+  },
+  "turkey tenderloin": {
+   "match": "close",
+   "section": "OTRAS CARNES FRESCA",
+   "row": "PAVO",
+   "unit": "kg",
+   "note": "All fresh turkey cuts."
+  },
+  "vanilla whey protein": {
+   "match": "none",
+   "section": null,
+   "row": null,
+   "unit": null,
+   "note": "No protein powder row in the panel."
+  },
+  "vinegar": {
+   "match": "close",
+   "section": "VINAGRE",
+   "row": "VINAGRE DE VINO",
+   "unit": "l",
+   "note": "Wine vinegar, price per litre."
+  },
+  "walnuts": {
+   "match": "exact",
+   "section": "FRUTOS SEC.NUECES",
+   "row": "NUECES SIN CASCARA",
+   "unit": "kg",
+   "note": "Shelled walnuts."
+  },
+  "wheat tortillas": {
+   "match": "broad",
+   "section": "PAN INDUSTRIAL",
+   "row": "PAN INDUSTRIAL FRES",
+   "unit": "kg",
+   "note": "All packaged soft bread."
+  },
+  "wholemeal pasta": {
+   "match": "close",
+   "section": "PASTAS ALIMENTICIAS",
+   "row": "PASTA ALIM.SECA",
+   "unit": "kg",
+   "note": "All dry pasta, white and wholemeal."
+  },
+  "wholemeal sandwich bread": {
+   "match": "exact",
+   "section": "PAN INDUSTRIAL",
+   "row": "PAN IND.F.INTEGRAL",
+   "unit": "kg",
+   "note": "Packaged wholemeal soft bread."
+  },
+  "zucchini": {
+   "match": "exact",
+   "section": "T.HORTALIZAS FRESCAS",
+   "row": "CALABACINES",
+   "unit": "kg",
+   "note": "Fresh zucchini."
+  }
+ }
+}

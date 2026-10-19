@@ -1,0 +1,557 @@
+{
+ "country": "ES",
+ "currency": "EUR",
+ "source": "MAPA, Panel de consumo alimentario en hogares",
+ "source_url": "https://www.mapa.gob.es/es/alimentacion/temas/consumo-tendencias/panel-de-consumo-alimentario/series-anuales",
+ "files": [
+  "2025dic-datos-mensuales-panel-consumo-hogares-ccaa.xlsx",
+  "2026jul-datos-mensuales-panel-consumo-hogares-ccaa.xlsx"
+ ],
+ "period_from": "2025-08",
+ "period_to": "2026-07",
+ "months": 12,
+ "built": "2026-10-19",
+ "note": "Average price paid by households in Spain, volume-weighted over the period (total value / total volume, T.ESPANA). Averages over brands, pack sizes, shops and promotions; not a shop price. Liquids sold per litre are converted to per kg with the density used for the pack sizes.",
+ "foods": {
+  "apple": {
+   "match": "exact",
+   "mapa_section": "T.FRUTAS FRESCAS",
+   "mapa_row": "MANZANAS",
+   "months": 12,
+   "price_per_kg_eur": 1.998
+  },
+  "artichoke hearts": {
+   "match": "close",
+   "mapa_section": "FRUTA&HORTA.CONSERVA",
+   "mapa_row": "ALCACHOFAS",
+   "months": 12,
+   "price_per_kg_eur": 5.722
+  },
+  "avocado": {
+   "match": "exact",
+   "mapa_section": "T.FRUTAS FRESCAS",
+   "mapa_row": "AGUACATE",
+   "months": 12,
+   "price_per_kg_eur": 4.891
+  },
+  "banana": {
+   "match": "exact",
+   "mapa_section": "T.FRUTAS FRESCAS",
+   "mapa_row": "PLATANOS",
+   "months": 12,
+   "price_per_kg_eur": 1.806
+  },
+  "beef steak": {
+   "match": "close",
+   "mapa_section": "CARNE VACUNO",
+   "mapa_row": "TERNERA",
+   "months": 12,
+   "price_per_kg_eur": 15.157
+  },
+  "blueberries": {
+   "match": "exact",
+   "mapa_section": "T.FRUTAS FRESCAS",
+   "mapa_row": "ARANDANO",
+   "months": 12,
+   "price_per_kg_eur": 12.821
+  },
+  "broccoli": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "BROCOLI",
+   "months": 12,
+   "price_per_kg_eur": 2.41
+  },
+  "brussels sprouts": {
+   "match": "close",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "COLES",
+   "months": 12,
+   "price_per_kg_eur": 1.731
+  },
+  "canned chickpeas": {
+   "match": "close",
+   "mapa_section": "LEGUMBRES",
+   "mapa_row": "LEGUMBRES COCIDAS",
+   "months": 12,
+   "price_per_kg_eur": 1.811
+  },
+  "canned lentils": {
+   "match": "exact",
+   "mapa_section": "LENTEJAS",
+   "mapa_row": "LENTEJAS COCIDAS",
+   "months": 12,
+   "price_per_kg_eur": 1.869
+  },
+  "canned mackerel": {
+   "match": "exact",
+   "mapa_section": "T.PESCADO/MARISCO CONSERVADO",
+   "mapa_row": "CONS.CHICHARRO/CABALLA",
+   "months": 12,
+   "price_per_kg_eur": 11.546
+  },
+  "canned red kidney beans": {
+   "match": "close",
+   "mapa_section": "LEGUMBRES",
+   "mapa_row": "LEGUMBRES COCIDAS",
+   "months": 12,
+   "price_per_kg_eur": 1.811
+  },
+  "canned sardines": {
+   "match": "exact",
+   "mapa_section": "T.PESCADO/MARISCO CONSERVADO",
+   "mapa_row": "CONS.SARDINAS",
+   "months": 12,
+   "price_per_kg_eur": 11.818
+  },
+  "canned sliced mushrooms": {
+   "match": "exact",
+   "mapa_section": "FRUTA&HORTA.CONSERVA",
+   "mapa_row": "CHAMPIÑOSNES+SETAS",
+   "months": 12,
+   "price_per_kg_eur": 3.651
+  },
+  "canned sweetcorn": {
+   "match": "exact",
+   "mapa_section": "FRUTA&HORTA.CONSERVA",
+   "mapa_row": "MAIZ DULCE",
+   "months": 12,
+   "price_per_kg_eur": 4.097
+  },
+  "canned tuna in oil": {
+   "match": "close",
+   "mapa_section": "T.PESCADO/MARISCO CONSERVADO",
+   "mapa_row": "CONS.ATUN",
+   "months": 12,
+   "price_per_kg_eur": 9.844
+  },
+  "canned tuna in water": {
+   "match": "close",
+   "mapa_section": "T.PESCADO/MARISCO CONSERVADO",
+   "mapa_row": "CONS.ATUN",
+   "months": 12,
+   "price_per_kg_eur": 9.844
+  },
+  "canned white beans": {
+   "match": "close",
+   "mapa_section": "LEGUMBRES",
+   "mapa_row": "LEGUMBRES COCIDAS",
+   "months": 12,
+   "price_per_kg_eur": 1.811
+  },
+  "carrot": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "ZANAHORIAS",
+   "months": 12,
+   "price_per_kg_eur": 1.453
+  },
+  "cauliflower": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "COLIFLOR",
+   "months": 12,
+   "price_per_kg_eur": 1.815
+  },
+  "chicken breast": {
+   "match": "close",
+   "mapa_section": "CARNE POLLO",
+   "mapa_row": "POLLO FILETES",
+   "months": 12,
+   "price_per_kg_eur": 7.729
+  },
+  "chicken thigh": {
+   "match": "close",
+   "mapa_section": "CARNE POLLO",
+   "mapa_row": "POLLO POR PIEZAS",
+   "months": 12,
+   "price_per_kg_eur": 5.6
+  },
+  "crushed tomatoes": {
+   "match": "exact",
+   "mapa_section": "FRUTA&HORTA.CONSERVA",
+   "mapa_row": "TOMATE N.TRITUR.",
+   "months": 12,
+   "price_per_kg_eur": 1.626
+  },
+  "cucumber": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "PEPINOS",
+   "months": 12,
+   "price_per_kg_eur": 1.907
+  },
+  "dried chickpeas": {
+   "match": "close",
+   "mapa_section": "LEGUMBRES",
+   "mapa_row": "LEGUMBRES SECAS",
+   "months": 12,
+   "price_per_kg_eur": 2.755
+  },
+  "dried lentils": {
+   "match": "exact",
+   "mapa_section": "LENTEJAS",
+   "mapa_row": "LENTEJAS SECAS",
+   "months": 12,
+   "price_per_kg_eur": 2.414
+  },
+  "eggplant": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "BERENJENAS",
+   "months": 12,
+   "price_per_kg_eur": 2.126
+  },
+  "eggs": {
+   "match": "exact",
+   "mapa_section": ".TOTAL ALIMENTACION",
+   "mapa_row": "TOTAL HUEVOS GALLINA",
+   "months": 12,
+   "price_per_unit_eur": 0.2717
+  },
+  "extra virgin olive oil": {
+   "match": "exact",
+   "mapa_section": "TOTAL ACEITES OLIVA",
+   "mapa_row": "A.O VIRGEN EXTRA",
+   "months": 12,
+   "price_per_kg_eur": 5.732,
+   "price_per_litre_eur": 5.273,
+   "grams_per_ml": 0.92
+  },
+  "fresh tuna": {
+   "match": "close",
+   "mapa_section": "PESCADOS",
+   "mapa_row": "ATUN Y BONITO",
+   "months": 12,
+   "price_per_kg_eur": 13.366
+  },
+  "frozen broccoli": {
+   "match": "exact",
+   "mapa_section": "VERD./HORT.CONGELAD",
+   "mapa_row": "BROCOLI",
+   "months": 12,
+   "price_per_kg_eur": 2.142
+  },
+  "frozen cauliflower": {
+   "match": "exact",
+   "mapa_section": "VERD./HORT.CONGELAD",
+   "mapa_row": "COLIFLOR",
+   "months": 12,
+   "price_per_kg_eur": 2.257
+  },
+  "frozen green beans": {
+   "match": "exact",
+   "mapa_section": "VERD./HORT.CONGELAD",
+   "mapa_row": "JUDIA VERDE",
+   "months": 12,
+   "price_per_kg_eur": 1.752
+  },
+  "frozen hake": {
+   "match": "close",
+   "mapa_section": "MERLUZA/PESCAD",
+   "mapa_row": "MERLUZA/PESCAD.CON",
+   "months": 12,
+   "price_per_kg_eur": 9.737
+  },
+  "frozen mixed berries": {
+   "match": "close",
+   "mapa_section": "FRUTA&HORTA.CONGELAD",
+   "mapa_row": "FRUTAS CONGELADAS",
+   "months": 12,
+   "price_per_kg_eur": 6.672
+  },
+  "frozen peas": {
+   "match": "exact",
+   "mapa_section": "VERD./HORT.CONGELAD",
+   "mapa_row": "GUISANTES",
+   "months": 12,
+   "price_per_kg_eur": 2.167
+  },
+  "frozen salmon": {
+   "match": "exact",
+   "mapa_section": "SALMON",
+   "mapa_row": "SALMON CONGELADO",
+   "months": 12,
+   "price_per_kg_eur": 20.048
+  },
+  "frozen shrimp": {
+   "match": "exact",
+   "mapa_section": "GAMBAS/LANGOSTINOS",
+   "mapa_row": "GAMBAS/LANG.CONG.",
+   "months": 12,
+   "price_per_kg_eur": 12.804
+  },
+  "frozen spinach": {
+   "match": "exact",
+   "mapa_section": "VERD./HORT.CONGELAD",
+   "mapa_row": "ESPINACAS",
+   "months": 12,
+   "price_per_kg_eur": 2.454
+  },
+  "garlic": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "AJOS",
+   "months": 12,
+   "price_per_kg_eur": 6.303
+  },
+  "green beans": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "JUDIAS VERDES",
+   "months": 12,
+   "price_per_kg_eur": 4.614
+  },
+  "green bell pepper": {
+   "match": "close",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "PIMIENTOS",
+   "months": 12,
+   "price_per_kg_eur": 2.708
+  },
+  "kefir": {
+   "match": "exact",
+   "mapa_section": "LECHES FERMENTADAS",
+   "mapa_row": "KEFIR",
+   "months": 7,
+   "price_per_kg_eur": 3.507
+  },
+  "kiwi": {
+   "match": "exact",
+   "mapa_section": "T.FRUTAS FRESCAS",
+   "mapa_row": "KIWI",
+   "months": 12,
+   "price_per_kg_eur": 4.487
+  },
+  "lemon": {
+   "match": "exact",
+   "mapa_section": "T.FRUTAS FRESCAS",
+   "mapa_row": "LIMONES",
+   "months": 12,
+   "price_per_kg_eur": 2.503
+  },
+  "lettuce": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "LECHUGA/ESC./ENDIVIA",
+   "months": 12,
+   "price_per_kg_eur": 3.26
+  },
+  "light fresh cheese": {
+   "match": "exact",
+   "mapa_section": "QUESO",
+   "mapa_row": "Q.FRESCO LIGHT",
+   "months": 12,
+   "price_per_kg_eur": 4.698
+  },
+  "macaroni": {
+   "match": "exact",
+   "mapa_section": "PASTAS ALIMENTICIAS",
+   "mapa_row": "PASTA ALIM.SECA",
+   "months": 12,
+   "price_per_kg_eur": 2.101
+  },
+  "mushrooms": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "CHAMPIÑONES+O.SETAS",
+   "months": 12,
+   "price_per_kg_eur": 5.762
+  },
+  "mustard": {
+   "match": "exact",
+   "mapa_section": "SALSAS",
+   "mapa_row": "MOSTAZA",
+   "months": 12,
+   "price_per_kg_eur": 5.883
+  },
+  "onion": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "CEBOLLAS",
+   "months": 12,
+   "price_per_kg_eur": 1.894
+  },
+  "orange": {
+   "match": "exact",
+   "mapa_section": "T.FRUTAS FRESCAS",
+   "mapa_row": "NARANJAS",
+   "months": 12,
+   "price_per_kg_eur": 1.472
+  },
+  "plain yogurt 0%": {
+   "match": "close",
+   "mapa_section": "YOGUR",
+   "mapa_row": "YOGUR DESNATADO",
+   "months": 12,
+   "price_per_kg_eur": 2.196
+  },
+  "pork loin": {
+   "match": "close",
+   "mapa_section": "CARNE FRESCA",
+   "mapa_row": "CARNE CERDO",
+   "months": 12,
+   "price_per_kg_eur": 7.604
+  },
+  "potato": {
+   "match": "exact",
+   "mapa_section": "TOTAL PATATAS",
+   "mapa_row": "PATATAS FRESCAS",
+   "months": 12,
+   "price_per_kg_eur": 1.182
+  },
+  "pumpkin": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "CALABAZA",
+   "months": 12,
+   "price_per_kg_eur": 1.83
+  },
+  "raspberries": {
+   "match": "exact",
+   "mapa_section": "T.FRUTAS FRESCAS",
+   "mapa_row": "FRAMBUESAS",
+   "months": 12,
+   "price_per_kg_eur": 15.693
+  },
+  "red bell pepper": {
+   "match": "close",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "PIMIENTOS",
+   "months": 12,
+   "price_per_kg_eur": 2.708
+  },
+  "rice": {
+   "match": "exact",
+   "mapa_section": "ARROZ",
+   "mapa_row": "NORMAL",
+   "months": 12,
+   "price_per_kg_eur": 1.611
+  },
+  "roasted red peppers": {
+   "match": "close",
+   "mapa_section": "FRUTA&HORTA.CONSERVA",
+   "mapa_row": "PIMIENTOS",
+   "months": 12,
+   "price_per_kg_eur": 5.21
+  },
+  "salmon": {
+   "match": "exact",
+   "mapa_section": "SALMON",
+   "mapa_row": "SALMON FRESCO",
+   "months": 12,
+   "price_per_kg_eur": 13.761
+  },
+  "salt": {
+   "match": "exact",
+   "mapa_section": ".TOTAL ALIMENTACION",
+   "mapa_row": "SAL",
+   "months": 12,
+   "price_per_kg_eur": 0.731
+  },
+  "semi-skimmed milk": {
+   "match": "exact",
+   "mapa_section": "TOTAL LECHE LIQUIDA",
+   "mapa_row": "LECHE SEMIDESNATAD",
+   "months": 12,
+   "price_per_kg_eur": 0.938,
+   "price_per_litre_eur": 0.966,
+   "grams_per_ml": 1.03
+  },
+  "sliced turkey breast": {
+   "match": "close",
+   "mapa_section": "FIAMBRES",
+   "mapa_row": "PAVO",
+   "months": 12,
+   "price_per_kg_eur": 11.208
+  },
+  "soy milk": {
+   "match": "close",
+   "mapa_section": ".TOTAL ALIMENTACION",
+   "mapa_row": "BEBIDAS VEGETALES",
+   "months": 12,
+   "price_per_kg_eur": 1.181,
+   "price_per_litre_eur": 1.181,
+   "grams_per_ml": 1.0
+  },
+  "spinach": {
+   "match": "close",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "VERDURAS DE HOJA",
+   "months": 12,
+   "price_per_kg_eur": 3.894
+  },
+  "strawberries": {
+   "match": "exact",
+   "mapa_section": "T.FRUTAS FRESCAS",
+   "mapa_row": "FRESAS/FRESON",
+   "months": 12,
+   "price_per_kg_eur": 4.475
+  },
+  "sugar": {
+   "match": "exact",
+   "mapa_section": ".TOTAL ALIMENTACION",
+   "mapa_row": "AZUCAR",
+   "months": 12,
+   "price_per_kg_eur": 1.252
+  },
+  "tomato": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "TOMATES",
+   "months": 12,
+   "price_per_kg_eur": 2.442
+  },
+  "tomato sauce": {
+   "match": "close",
+   "mapa_section": "FRUTA&HORTA.CONSERVA",
+   "mapa_row": "TOMATE FRITO",
+   "months": 12,
+   "price_per_kg_eur": 2.105
+  },
+  "turkey tenderloin": {
+   "match": "close",
+   "mapa_section": "OTRAS CARNES FRESCA",
+   "mapa_row": "PAVO",
+   "months": 12,
+   "price_per_kg_eur": 8.058
+  },
+  "vinegar": {
+   "match": "close",
+   "mapa_section": "VINAGRE",
+   "mapa_row": "VINAGRE DE VINO",
+   "months": 12,
+   "price_per_kg_eur": 0.927,
+   "price_per_litre_eur": 0.927,
+   "grams_per_ml": 1.0
+  },
+  "walnuts": {
+   "match": "exact",
+   "mapa_section": "FRUTOS SEC.NUECES",
+   "mapa_row": "NUECES SIN CASCARA",
+   "months": 12,
+   "price_per_kg_eur": 13.628
+  },
+  "wholemeal pasta": {
+   "match": "close",
+   "mapa_section": "PASTAS ALIMENTICIAS",
+   "mapa_row": "PASTA ALIM.SECA",
+   "months": 12,
+   "price_per_kg_eur": 2.101
+  },
+  "wholemeal sandwich bread": {
+   "match": "exact",
+   "mapa_section": "PAN INDUSTRIAL",
+   "mapa_row": "PAN IND.F.INTEGRAL",
+   "months": 12,
+   "price_per_kg_eur": 2.159
+  },
+  "zucchini": {
+   "match": "exact",
+   "mapa_section": "T.HORTALIZAS FRESCAS",
+   "mapa_row": "CALABACINES",
+   "months": 12,
+   "price_per_kg_eur": 1.866
+  }
+ }
+}

@@ -1,0 +1,487 @@
+{
+ "date": "2026-10-03",
+ "form": {
+  "craving": "A warm chicken meal.",
+  "exclude": [
+   "olive oil"
+  ],
+  "kcal_target": 450,
+  "protein_g_target": 45,
+  "budget_total_eur": 10,
+  "servings": 2,
+  "keep_leftovers_low": true,
+  "gear": [
+   "no_blender"
+  ],
+  "reheat_at_work": true
+ },
+ "picked_idea": {
+  "idea_id": "1",
+  "name": "Roast chicken with roast potatoes",
+  "one_line": "Roast chicken breast with crispy potatoes, a classic recipe with plenty of protein.",
+  "rough_macros": {
+   "kcal": 445,
+   "protein_g": 64,
+   "carbs_g": 50,
+   "fat_g": 8
+  },
+  "image_prompt": "Golden roasted chicken breast with crispy roasted potatoes, herbs on top, warm meal photography",
+  "main_ingredients": [
+   "chicken breast",
+   "potato",
+   "skyr"
+  ]
+ },
+ "recipe": {
+  "title": "Roast chicken with roast potatoes",
+  "servings": 2,
+  "prep_time_min": 45,
+  "ingredients": [
+   {
+    "name": "chicken breast",
+    "grams_per_serving": 200,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "potato",
+    "grams_per_serving": 250,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "skyr",
+    "grams_per_serving": 75,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 2,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "garlic powder",
+    "grams_per_serving": 2,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "oregano",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Heat the oven to 220 C. Wash the potatoes and cut them into 2 cm cubes, skin on.",
+   "Mix the potatoes with half of the paprika, garlic powder, oregano and black pepper, plus a pinch of salt. Spread them on a tray lined with baking paper. No oil. Bake 20 minutes.",
+   "Season the chicken breasts with the rest of the spices and salt. Add them to the tray, turn the potatoes, and bake 20 to 25 minutes more, until the chicken is white inside and the potatoes are golden.",
+   "Mix the skyr with a pinch of garlic powder, black pepper and salt for a quick dressing.",
+   "Slice the chicken. Serve with the potatoes and the skyr dressing. To reheat at work, store the chicken and potatoes in a box and the dressing apart; microwave 2 minutes and add the dressing after."
+  ]
+ },
+ "evaluation": {
+  "status": "issues",
+  "recipe_title": "Roast chicken with roast potatoes",
+  "items": [
+   {
+    "name": "chicken breast",
+    "food": "chicken breast",
+    "grams_per_serving": 200,
+    "total_grams": 400,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "potato",
+    "food": "potato",
+    "grams_per_serving": 250,
+    "total_grams": 500,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "skyr",
+    "food": "skyr",
+    "grams_per_serving": 75,
+    "total_grams": 150,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "paprika",
+    "food": "paprika",
+    "grams_per_serving": 2,
+    "total_grams": 4,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "garlic powder",
+    "food": "garlic powder",
+    "grams_per_serving": 2,
+    "total_grams": 4,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "oregano",
+    "food": "oregano",
+    "grams_per_serving": 1,
+    "total_grams": 2,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "black pepper",
+    "food": "black pepper",
+    "grams_per_serving": 1,
+    "total_grams": 2,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   }
+  ],
+  "pack": {
+   "lines": [
+    {
+     "ingredient": "chicken breast",
+     "grams_needed": 400,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "chicken breast 400 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 400,
+     "grams_left": 0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 0.0,
+     "leftover_status": "none",
+     "food": "chicken breast"
+    },
+    {
+     "ingredient": "potato",
+     "grams_needed": 500,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "potato, loose (213 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 3,
+     "grams_bought": 639,
+     "grams_left": 139,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 21.752738654147105,
+     "leftover_status": "use_in_2_days",
+     "food": "potato"
+    },
+    {
+     "ingredient": "skyr",
+     "grams_needed": 150,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "skyr 150 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 150,
+     "grams_left": 0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 0.0,
+     "leftover_status": "none",
+     "food": "skyr"
+    },
+    {
+     "ingredient": "paprika",
+     "grams_needed": 4,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "paprika 75 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 75,
+     "grams_left": 71,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 94.66666666666667,
+     "leftover_status": "keeps",
+     "food": "paprika"
+    },
+    {
+     "ingredient": "garlic powder",
+     "grams_needed": 4,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "garlic powder 60 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 60,
+     "grams_left": 56,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 93.33333333333333,
+     "leftover_status": "keeps",
+     "food": "garlic powder"
+    },
+    {
+     "ingredient": "oregano",
+     "grams_needed": 2,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "oregano 8 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 8,
+     "grams_left": 6,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 75.0,
+     "leftover_status": "keeps",
+     "food": "oregano"
+    },
+    {
+     "ingredient": "black pepper",
+     "grams_needed": 2,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "black pepper 65 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 65,
+     "grams_left": 63,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 96.92307692307692,
+     "leftover_status": "keeps",
+     "food": "black pepper"
+    }
+   ],
+   "cart_total_eur": 0,
+   "cost_per_serving_eur": 0.0,
+   "used_total_eur": 0,
+   "waste_grams": 139,
+   "waste_eur": 0,
+   "within_budget": true,
+   "over_budget_eur": null,
+   "optional_total_eur": 0,
+   "budget_check_complete": false,
+   "unpriced": [
+    "chicken breast",
+    "potato",
+    "skyr"
+   ],
+   "price_note": null,
+   "change_requests": []
+  },
+  "macros": {
+   "per_serving": {
+    "kcal": 484.99,
+    "protein_g": 60.41,
+    "carbs_g": 45.54,
+    "fat_g": 3.89
+   },
+   "total": {
+    "kcal": 969.98,
+    "protein_g": 120.82,
+    "carbs_g": 91.09,
+    "fat_g": 7.79
+   },
+   "misses": [
+    "protein 60 g is more than 20% over target 45 g: cut the protein ingredient"
+   ],
+   "missing_nutrition": [],
+   "unresolved": [],
+   "lines": [
+    {
+     "name": "chicken breast",
+     "food": "chicken breast",
+     "grams": 400,
+     "source": "ciqual",
+     "source_id": "36017",
+     "amount": {
+      "kcal": 440.0,
+      "protein_g": 93.6,
+      "carbs_g": 0.0,
+      "fat_g": 6.0
+     },
+     "missing": []
+    },
+    {
+     "name": "potato",
+     "food": "potato",
+     "grams": 500,
+     "source": "ciqual",
+     "source_id": "4008",
+     "amount": {
+      "kcal": 400.0,
+      "protein_g": 10.1,
+      "carbs_g": 81.0,
+      "fat_g": 0.45
+     },
+     "missing": []
+    },
+    {
+     "name": "skyr",
+     "food": "skyr",
+     "grams": 150,
+     "source": "usda",
+     "source_id": "330137",
+     "amount": {
+      "kcal": 91.5,
+      "protein_g": 15.45,
+      "carbs_g": 5.46,
+      "fat_g": 0.55
+     },
+     "missing": []
+    },
+    {
+     "name": "paprika",
+     "food": "paprika",
+     "grams": 4,
+     "source": "ciqual",
+     "source_id": "11049",
+     "amount": {
+      "kcal": 12.72,
+      "protein_g": 0.56,
+      "carbs_g": 0.75,
+      "fat_g": 0.52
+     },
+     "missing": []
+    },
+    {
+     "name": "garlic powder",
+     "food": "garlic powder",
+     "grams": 4,
+     "source": "ciqual",
+     "source_id": "11023",
+     "amount": {
+      "kcal": 13.84,
+      "protein_g": 0.66,
+      "carbs_g": 2.55,
+      "fat_g": 0.03
+     },
+     "missing": []
+    },
+    {
+     "name": "oregano",
+     "food": "oregano",
+     "grams": 2,
+     "source": "ciqual",
+     "source_id": "11035",
+     "amount": {
+      "kcal": 5.3,
+      "protein_g": 0.18,
+      "carbs_g": 0.53,
+      "fat_g": 0.09
+     },
+     "missing": []
+    },
+    {
+     "name": "black pepper",
+     "food": "black pepper",
+     "grams": 2,
+     "source": "ciqual",
+     "source_id": "11015",
+     "amount": {
+      "kcal": 6.62,
+      "protein_g": 0.27,
+      "carbs_g": 0.8,
+      "fat_g": 0.15
+     },
+     "missing": []
+    }
+   ]
+  },
+  "change_requests": [
+   {
+    "from_agent": "macro",
+    "ingredient": null,
+    "reason": "misses_macros",
+    "hint": "Per serving: protein 60 g is more than 20% over target 45 g: cut the protein ingredient. Adjust grams or swap ingredients."
+   }
+  ]
+ },
+ "mfp": "SmartBite: Roast chicken with roast potatoes\nServings: 2\n\nchicken breast, 400 g (raw)\npotato, 500 g (raw)\nskyr, 150 g\npaprika, 4 g\ngarlic powder, 4 g\noregano, 2 g\nblack pepper, 2 g (raw)",
+ "slug": "roast-chicken-with-roast-potatoes",
+ "demo": true,
+ "photo": "/demo/images/roast-chicken-with-roast-potatoes.jpg",
+ "photo_ai_generated": true
+}

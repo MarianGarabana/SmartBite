@@ -1,0 +1,14 @@
+[project]
+name = "smartbite-engine"
+version = "0.1.0"
+description = "Meal planning engine: recipe grams to whole packs, leftovers and macros, all in code"
+license = "AGPL-3.0-only"
+requires-python = ">=3.11"
+dependencies = ["fastapi==0.147.0"]
+
+[tool.setuptools]
+packages = ["smartbite_engine"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

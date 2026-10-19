@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "smartbite/common.schema.json",
+  "title": "Shared types",
+  "$defs": {
+    "Macros": {
+      "type": "object",
+      "required": ["kcal", "protein_g", "carbs_g", "fat_g"],
+      "properties": {
+        "kcal": { "type": "number", "minimum": 0 },
+        "protein_g": { "type": "number", "minimum": 0 },
+        "carbs_g": { "type": "number", "minimum": 0 },
+        "fat_g": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "MealForm": {
+      "description": "What the user typed in the Make Your Meal form. Same fields as smartbite_engine.form.MealForm.",
+      "type": "object",
+      "required": ["craving", "servings", "budget_total_eur", "kcal_target", "protein_g_target", "keep_leftovers_low"],
+      "properties": {
+        "craving": { "type": "string", "maxLength": 300 },
+        "exclude": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "kcal_target": { "type": "number", "exclusiveMinimum": 0, "default": 450 },
+        "protein_g_target": { "type": "number", "minimum": 0, "default": 45 },
+        "carbs_g_max": { "type": ["number", "null"] },
+        "fat_g_max": { "type": ["number", "null"] },
+        "budget_total_eur": { "type": "number", "exclusiveMinimum": 0, "description": "Limit for the whole meal, all servings, counted on whole packs bought. The budget check runs only when prices exist." },
+        "servings": { "type": "integer", "minimum": 1, "maximum": 8 },
+        "keep_leftovers_low": { "type": "boolean", "default": true },
+        "time_limit_min": { "type": ["integer", "null"] },
+        "gear": { "type": "array", "items": { "enum": ["microwave_only", "oven", "no_blender"] } },
+        "reheat_at_work": { "type": "boolean" },
+        "kitchen_profile_id": { "type": "string", "description": "Which saved profile (in the browser) wrote the prompt." }
+      },
+      "additionalProperties": false
+    },
+    "ChangeRequest": {
+      "description": "A problem found by code (pack or macro step) that the Recipe agent must fix on a rerun.",
+      "type": "object",
+      "required": ["from_agent", "ingredient", "reason"],
+      "properties": {
+        "from_agent": { "enum": ["pack", "macro"] },
+        "ingredient": { "type": ["string", "null"] },
+        "reason": { "enum": ["over_budget", "high_leftover", "misses_macros"] },
+        "hint": { "type": "string", "description": "e.g. 'use thighs', 'use the 1 kg pack fully', 'add 40 g protein'." }
+      }
+    }
+  }
+}

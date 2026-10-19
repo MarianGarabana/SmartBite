@@ -1,0 +1,245 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Menemen with eggs, tomato and pepper",
+    "one_line": "Turkish eggs stirred into soft onion, green pepper and tomato, ready in 20 minutes.",
+    "main_ingredients": [
+     "eggs",
+     "tomato",
+     "green bell pepper",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 380,
+     "protein_g": 28,
+     "carbs_g": 12,
+     "fat_g": 24
+    },
+    "image_prompt": "Menemen scrambled eggs with tomato and green pepper in a small skillet"
+   },
+   {
+    "idea_id": "2",
+    "name": "Cottage cheese vegetable frittata",
+    "one_line": "Eggs whisked with cottage cheese, set over spinach, mushrooms and red pepper in a skillet.",
+    "main_ingredients": [
+     "eggs",
+     "cottage cheese",
+     "spinach",
+     "mushrooms",
+     "red bell pepper"
+    ],
+    "rough_macros": {
+     "kcal": 380,
+     "protein_g": 35,
+     "carbs_g": 10,
+     "fat_g": 22
+    },
+    "image_prompt": "Vegetable frittata with spinach, mushrooms and red pepper in a skillet"
+   },
+   {
+    "idea_id": "3",
+    "name": "Spanakopita egg muffins",
+    "one_line": "Eggs mixed with spinach, feta and spring onion, baked in a muffin tin.",
+    "main_ingredients": [
+     "eggs",
+     "spinach",
+     "feta",
+     "spring onion"
+    ],
+    "rough_macros": {
+     "kcal": 390,
+     "protein_g": 30,
+     "carbs_g": 5,
+     "fat_g": 28
+    },
+    "image_prompt": "Baked spinach and feta egg muffins on a plate"
+   },
+   {
+    "idea_id": "4",
+    "name": "Quick shakshuka",
+    "one_line": "Eggs poached in a tomato and red pepper sauce with a little feta on top.",
+    "main_ingredients": [
+     "eggs",
+     "crushed tomatoes",
+     "red bell pepper",
+     "onion",
+     "feta"
+    ],
+    "rough_macros": {
+     "kcal": 390,
+     "protein_g": 28,
+     "carbs_g": 16,
+     "fat_g": 24
+    },
+    "image_prompt": "Shakshuka with poached eggs in tomato sauce topped with feta in a skillet"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Menemen with eggs, tomato and pepper",
+  "servings": 1,
+  "prep_time_min": 15,
+  "ingredients": [
+   {
+    "name": "eggs",
+    "grams_per_serving": 204,
+    "units_per_serving": 4,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "tomato",
+    "grams_per_serving": 150,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "green bell pepper",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Chop the onion, pepper and tomato.",
+   "Heat the oil in a small skillet. Cook the onion and pepper for 4 minutes.",
+   "Add the tomato, paprika and salt. Cook for 5 minutes until soft.",
+   "Beat the eggs and stir them into the pan for 2 to 3 minutes until just set.",
+   "Add black pepper and serve."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Menemen with eggs, tomato and pepper",
+   "servings": 1,
+   "prep_time_min": 15,
+   "ingredients": [
+    {
+     "name": "eggs",
+     "grams_per_serving": 204,
+     "units_per_serving": 4,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "tomato",
+     "grams_per_serving": 150,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "green bell pepper",
+     "grams_per_serving": 80,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 50,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "extra virgin olive oil",
+     "grams_per_serving": 5,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "black pepper",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "paprika",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Chop the onion, pepper and tomato.",
+    "Heat the oil in a small skillet. Cook the onion and pepper for 4 minutes.",
+    "Add the tomato, paprika and salt. Cook for 5 minutes until soft.",
+    "Beat the eggs and stir them into the pan for 2 to 3 minutes until just set.",
+    "Add black pepper and serve."
+   ]
+  }
+ ]
+}

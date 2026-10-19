@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "smartbite/idea.schema.json",
+  "title": "Idea agent (no tools)",
+  "description": "Returns 4 short meal ideas. Prompt: prompts/idea.md. Macros here are rough guesses for the idea cards only, never used for the result page.",
+  "$defs": {
+    "Input": {
+      "type": "object",
+      "required": ["form", "kitchen_profile"],
+      "properties": {
+        "form": { "$ref": "common.schema.json#/$defs/MealForm" },
+        "kitchen_profile": { "type": "string", "description": "Profile text, rendered from prompts/kitchen-profile.default.json or the user's own profile." },
+        "inspiration": { "type": "array", "items": { "type": "object" }, "description": "Real dishes picked by smartbite_engine.inspiration for this request." },
+        "known_ingredients": { "type": "array", "items": { "type": "string" }, "description": "English food keys (data/open/aliases.json)." }
+      }
+    },
+    "Output": {
+      "type": "object",
+      "required": ["ideas"],
+      "properties": {
+        "ideas": {
+          "type": "array", "minItems": 4, "maxItems": 4,
+          "items": { "$ref": "#/$defs/Idea" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "Idea": {
+      "type": "object",
+      "required": ["idea_id", "name", "one_line", "main_ingredients", "rough_macros", "image_prompt"],
+      "properties": {
+        "idea_id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 60 },
+        "one_line": { "type": "string", "maxLength": 140 },
+        "main_ingredients": {
+          "type": "array", "minItems": 2, "maxItems": 8, "items": { "type": "string", "maxLength": 60 },
+          "description": "The idea's main foods in English, names from known_ingredients when listed, no pantry items. The recipe must keep each one."
+        },
+        "rough_macros": { "$ref": "common.schema.json#/$defs/Macros" },
+        "image_prompt": { "type": "string", "description": "Short food photo description, copied by the user into an image tool." },
+        "changes": { "type": "string", "description": "The user's own edits from the idea preview, set by code after a revision. The recipe follows them." }
+      },
+      "additionalProperties": false
+    }
+  }
+}

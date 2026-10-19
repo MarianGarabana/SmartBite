@@ -1,0 +1,16 @@
+Typical pack sizes (packs.json, coverage.md) in this folder
+
+This database is made available under the Open Database License v1.0 (ODbL 1.0):
+https://opendatacommons.org/licenses/odbl/1-0/
+
+It is a derived database built from Open Food Facts (https://world.openfoodfacts.org),
+which is published under the same license. Individual contents of the Open Food Facts
+database are under the Database Contents License v1.0:
+https://opendatacommons.org/licenses/dbcl/1-0/
+
+You may share, create works from and adapt this database, as long as you:
+- attribute Open Food Facts and this project (see SOURCES.md),
+- share any adapted database under the ODbL 1.0,
+- keep the database open (no technical restrictions without an open copy).
+
+The rest of this repository is under its own license (see LICENSE at the repo root).

@@ -1,0 +1,163 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Chickpea and tuna salad with mustard dressing",
+    "one_line": "Chickpeas, flaked tuna, cherry tomatoes and spring onion over lettuce. Cold or reheated, no stove needed.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned chickpeas",
+     "cherry tomatoes",
+     "spring onion",
+     "lettuce"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 42,
+     "carbs_g": 35,
+     "fat_g": 10
+    },
+    "image_prompt": "Bowl of chickpea and flaked tuna salad with cherry tomatoes, spring onion and lettuce"
+   },
+   {
+    "idea_id": "2",
+    "name": "Greek yogurt tuna salad with chickpeas",
+    "one_line": "Tuna mixed with Greek yogurt and lemon instead of mayo, with chickpeas and cucumber on lettuce.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "greek yogurt 0%",
+     "canned chickpeas",
+     "cucumber",
+     "lemon",
+     "lettuce"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 44,
+     "carbs_g": 32,
+     "fat_g": 9
+    },
+    "image_prompt": "Creamy tuna and chickpea salad with cucumber slices on lettuce leaves in a lunch box"
+   },
+   {
+    "idea_id": "3",
+    "name": "Avocado stuffed with tuna and chickpeas",
+    "one_line": "Half an avocado filled with tuna, diced red pepper, chickpeas and lemon juice. Nothing to cook.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "avocado",
+     "red bell pepper",
+     "canned chickpeas",
+     "lemon"
+    ],
+    "rough_macros": {
+     "kcal": 460,
+     "protein_g": 41,
+     "carbs_g": 25,
+     "fat_g": 20
+    },
+    "image_prompt": "Halved avocado filled with tuna, diced red pepper and chickpeas on a plate"
+   },
+   {
+    "idea_id": "4",
+    "name": "Microwave chickpeas and spinach with tuna",
+    "one_line": "Spanish-style chickpeas and spinach with onion and garlic, cooked in the microwave, with flaked tuna on top.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned chickpeas",
+     "spinach",
+     "onion",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 430,
+     "protein_g": 42,
+     "carbs_g": 30,
+     "fat_g": 8
+    },
+    "image_prompt": "Bowl of chickpeas and wilted spinach with flaked tuna on top"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Chickpea and tuna salad with mustard dressing",
+  "servings": 5,
+  "prep_time_min": 25,
+  "ingredients": [
+   {
+    "name": "canned tuna in water",
+    "grams_per_serving": 130,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "canned chickpeas",
+    "grams_per_serving": 150,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cherry tomatoes",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spring onion",
+    "grams_per_serving": 20,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lettuce",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "mustard",
+    "grams_per_serving": 6,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lemon juice",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Drain the tuna and the chickpeas. Rinse the chickpeas.",
+   "Halve the cherry tomatoes, slice the spring onion and tear the lettuce.",
+   "Mix mustard, lemon juice and pepper into a dressing. Keep it in a small jar.",
+   "Store tuna, chickpeas and vegetables in 5 boxes. Add the dressing at work.",
+   "Eat cold, or warm the chickpeas and tuna in the microwave for 1 minute and add the lettuce after."
+  ]
+ }
+}

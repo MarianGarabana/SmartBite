@@ -1,0 +1,171 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Pollo al curry suave con espinacas y arroz",
+    "one_line": "Pollo en dados con cebolla y espinacas en una salsa suave de curry y yogur, con arroz basmati.",
+    "main_ingredients": [
+     "chicken breast",
+     "spinach",
+     "onion",
+     "greek yogurt 0%",
+     "basmati rice"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 46,
+     "carbs_g": 38,
+     "fat_g": 8
+    },
+    "image_prompt": "Mild yellow chicken curry with spinach and basmati rice in a bowl"
+   },
+   {
+    "idea_id": "2",
+    "name": "Pollo al chilindron con pimientos y tomate",
+    "one_line": "Pollo guisado despacio con pimiento rojo y verde, tomate, cebolla y ajo.",
+    "main_ingredients": [
+     "chicken breast",
+     "red bell pepper",
+     "green bell pepper",
+     "tomato",
+     "onion",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 420,
+     "protein_g": 48,
+     "carbs_g": 22,
+     "fat_g": 9
+    },
+    "image_prompt": "Chicken chilindron stew with red and green peppers and tomato"
+   },
+   {
+    "idea_id": "3",
+    "name": "Pollo y coliflor al horno con grana padano y limon",
+    "one_line": "Pollo y coliflor asados en una bandeja, con grana padano rallado y limon al final.",
+    "main_ingredients": [
+     "chicken breast",
+     "frozen cauliflower",
+     "grana padano",
+     "lemon"
+    ],
+    "rough_macros": {
+     "kcal": 400,
+     "protein_g": 50,
+     "carbs_g": 12,
+     "fat_g": 16
+    },
+    "image_prompt": "Roasted chicken breast and cauliflower florets with grated cheese on a tray"
+   },
+   {
+    "idea_id": "4",
+    "name": "Bol mexicano de pollo con arroz, maiz y aguacate",
+    "one_line": "Pollo especiado con maiz, servido sobre arroz con aguacate y tomate fresco.",
+    "main_ingredients": [
+     "chicken breast",
+     "rice",
+     "canned sweetcorn",
+     "avocado",
+     "tomato"
+    ],
+    "rough_macros": {
+     "kcal": 480,
+     "protein_g": 46,
+     "carbs_g": 48,
+     "fat_g": 11
+    },
+    "image_prompt": "Mexican chicken rice bowl with corn, avocado and tomato"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Pollo al curry suave con espinacas y arroz",
+  "servings": 4,
+  "prep_time_min": 45,
+  "ingredients": [
+   {
+    "name": "chicken breast",
+    "grams_per_serving": 190,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spinach",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "greek yogurt 0%",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "basmati rice",
+    "grams_per_serving": 45,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "curry powder",
+    "grams_per_serving": 3,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 3,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 3,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Cuece el arroz basmati, deja que se enfrie y guardalo en 4 raciones.",
+   "Corta el pollo en dados y la cebolla en cubitos.",
+   "Sofrie la cebolla y el ajo con el aceite 5 minutos. Anade el pollo y el curry y cocina 8 minutos.",
+   "Anade las espinacas y cocina 2 minutos hasta que se reduzcan. Apaga el fuego.",
+   "Mezcla el yogur con una cucharada de la salsa caliente y anadelo al pollo. Mezcla con el fuego apagado.",
+   "Reparte el pollo y el arroz en 4 tapers. Guarda en la nevera hasta 3 dias y recalienta en el microondas."
+  ]
+ }
+}

@@ -1,0 +1,163 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Pork loin stir-fry with broccoli and carrot over rice",
+    "one_line": "Sliced pork loin stir-fried with broccoli and carrot in a soy and ginger sauce, served over rice.",
+    "main_ingredients": [
+     "pork loin",
+     "broccoli",
+     "carrot",
+     "rice"
+    ],
+    "rough_macros": {
+     "kcal": 510,
+     "protein_g": 46,
+     "carbs_g": 48,
+     "fat_g": 12
+    },
+    "image_prompt": "Pork loin slices with broccoli and carrot over white rice in a bowl"
+   },
+   {
+    "idea_id": "2",
+    "name": "Pork fried rice with egg and peas",
+    "one_line": "Diced pork loin stir-fried with cold rice, scrambled egg and frozen peas, seasoned with soy sauce.",
+    "main_ingredients": [
+     "pork loin",
+     "rice",
+     "eggs",
+     "frozen peas",
+     "soy sauce"
+    ],
+    "rough_macros": {
+     "kcal": 520,
+     "protein_g": 47,
+     "carbs_g": 50,
+     "fat_g": 13
+    },
+    "image_prompt": "Pork fried rice with egg and green peas in a bowl"
+   },
+   {
+    "idea_id": "3",
+    "name": "Pork stir-fry with red pepper and green beans over rice",
+    "one_line": "Pork loin stir-fried with garlic, red pepper and green beans in a savory sauce, served over rice.",
+    "main_ingredients": [
+     "pork loin",
+     "red bell pepper",
+     "green beans",
+     "garlic",
+     "rice"
+    ],
+    "rough_macros": {
+     "kcal": 505,
+     "protein_g": 46,
+     "carbs_g": 47,
+     "fat_g": 12
+    },
+    "image_prompt": "Pork strips with red pepper and green beans over rice"
+   },
+   {
+    "idea_id": "4",
+    "name": "Pork lettuce wraps with carrot and teriyaki",
+    "one_line": "Finely diced pork loin stir-fried with spring onion and teriyaki sauce, spooned into lettuce leaves with a side of rice.",
+    "main_ingredients": [
+     "pork loin",
+     "lettuce",
+     "carrot",
+     "spring onion",
+     "teriyaki sauce",
+     "rice"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 45,
+     "carbs_g": 46,
+     "fat_g": 12
+    },
+    "image_prompt": "Pork lettuce wraps with carrot and spring onion next to a small bowl of rice"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Pork loin stir-fry with broccoli and carrot over rice",
+  "servings": 3,
+  "prep_time_min": 50,
+  "ingredients": [
+   {
+    "name": "pork loin",
+    "grams_per_serving": 220,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "broccoli",
+    "grams_per_serving": 120,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "carrot",
+    "grams_per_serving": 70,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "rice",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "soy sauce",
+    "grams_per_serving": 12,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "ground ginger",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Cook the rice in water, let it cool and store it in 3 portions.",
+   "Slice the pork loin thin. Cut the broccoli into small florets and the carrot into thin sticks.",
+   "Heat the oil in a large pan. Stir-fry the pork 4 to 5 minutes until cooked, then take it out.",
+   "Stir-fry the carrot 3 minutes, add the broccoli and garlic and cook 3 more minutes.",
+   "Return the pork, add the soy sauce and ginger, and cook 1 minute.",
+   "Fill 3 boxes with rice, pork and vegetables. Keep in the fridge up to 3 days and reheat in the microwave."
+  ]
+ }
+}

@@ -1,0 +1,211 @@
+{
+  "note": "English text for the demo meals, applied by data/build/build_demo_meals.py after the word edits. Keyed by the slug of the saved meal's original title. Whole fields: title (recipe.title), idea_name (picked_idea.name), one_line (picked_idea.one_line), steps (recipe.steps, same number of steps and the same numbers in each step). words: [old, new] pairs applied in order to every step and to one_line, for Spanish food words inside English text. Grams, units and quantities never change here.",
+  "meals": {
+    "bol-de-pavo-picado-con-boniato-y-espinaca": {
+      "title": "Ground turkey bowl with sweet potato and spinach",
+      "idea_name": "Roasted turkey with sweet potato and spinach",
+      "steps": [
+        "Heat the oven to 200 C. Peel the sweet potato and cut it into 2 cm cubes.",
+        "Toss the sweet potato with the paprika and a pinch of salt. Bake 25 minutes on baking paper, turning it halfway through.",
+        "Finely chop the garlic. Heat a large non-stick pan over medium-high heat, with no oil.",
+        "Add the ground turkey with salt. Cook it 8 minutes, breaking it up, until browned and no longer pink.",
+        "Add the garlic and cook 1 more minute. Lower the heat to medium.",
+        "Beat the 3 eggs in a glass with a pinch of salt. Pour them over the turkey and stir 2 minutes until set.",
+        "Put the fresh spinach in the pan and stir 1 minute until it wilts. Take the pan off the heat.",
+        "Divide the turkey with egg and spinach into 3 bowls and add the roasted sweet potato on top.",
+        "Store in containers. Reheat the bowl in the microwave for 2 minutes at work."
+      ],
+      "craving": "Ground turkey bowl with sweet potato."
+    },
+    "bol-de-pechuga-con-arroz-y-verduras": {
+      "title": "Chicken breast bowl with rice and vegetables",
+      "idea_name": "Chicken breast bowl with rice and vegetables",
+      "one_line": "Cooked chicken breast with rice, a fresh salad of cucumber, cherry tomato, red pepper and avocado, and a quark dressing",
+      "steps": [
+        "Preheat the oven to 200 degrees. Season the chicken breasts with paprika, oregano, salt and pepper.",
+        "Bake the chicken 20 to 25 minutes until it is cooked through. Let it cool a little and cut it into strips.",
+        "Cook the rice in salted water for about 12 minutes. Drain it and let it cool.",
+        "Mix the quark with a pinch of salt, pepper and oregano to make the dressing.",
+        "Wash the cucumber, the red pepper and the cherry tomatoes. Cut the cucumber and the pepper into pieces and halve the cherry tomatoes.",
+        "Divide the chicken and the rice into 8 containers. Keep the vegetables and the dressing apart.",
+        "Each day, cut the fresh avocado and add it with the vegetables and the dressing just before eating. The chicken and rice can be heated in the microwave."
+      ],
+      "craving": "Chicken bowl for the week with fresh vegetables: cucumber, cherry tomatoes, red bell pepper and avocado, with a whipped quark dressing."
+    },
+    "ensalada-de-atun-y-garbanzos-con-alino-de-skyr": {
+      "title": "Tuna and chickpea salad with skyr dressing",
+      "idea_name": "Classic tuna and chickpea salad",
+      "one_line": "Tuna, chickpeas, lettuce and tomato with a skyr dressing",
+      "steps": [
+        "Drain the tuna, the chickpeas and the roasted peppers well. Rinse the chickpeas with cold water and dry them.",
+        "In a bowl, mix the skyr, lemon juice, mustard, salt and pepper into a smooth cream. If it is too thick, add a tablespoon of water.",
+        "Wash the lettuce and tear it into pieces. Cut the roasted peppers into strips.",
+        "Divide the lettuce between two containers. Top with the chickpeas, the flaked tuna and the peppers.",
+        "Keep the dressing apart in a small jar. Pour it on just before eating and mix. Eat it cold, or warm it in the microwave without the dressing."
+      ],
+      "craving": "Tuna and chickpea salad with a skyr dressing."
+    },
+    "ensalada-de-pasta-integral-atun-y-rucula": {
+      "title": "Whole wheat pasta salad with tuna and arugula",
+      "idea_name": "Tuna and egg salad with yogurt",
+      "steps": [
+        "Cook the whole wheat pasta in salted water for about 10 minutes. Drain and cool it under the tap.",
+        "Drain the cans of tuna well.",
+        "Mix the cold pasta with the vinegar, the dried parsley and the pepper.",
+        "Divide the pasta between two containers and put the flaked tuna on top.",
+        "Keep the arugula apart and add it just before eating so it does not wilt. The rest can be heated in the microwave without the arugula."
+      ],
+      "craving": "A salad with parsley, canned tuna and arugula."
+    },
+    "frittata-de-atun-con-verduras": {
+      "title": "Tuna frittata with vegetables",
+      "idea_name": "Tuna frittata with vegetables",
+      "steps": [
+        "Heat the oven to 180 degrees with top and bottom heat.",
+        "Cut the 1000 g of zucchini, the pepper and the onion into small cubes.",
+        "Saute the vegetables in an ovenproof pan with the oil for 10 minutes, until they soften and release their water. Let them cool for 2 minutes.",
+        "Beat the 20 eggs with the salt and pepper in a large bowl.",
+        "Drain the 4 cans of tuna and flake the tuna. Mix it with the vegetables.",
+        "Pour the beaten eggs over the vegetables and tuna, and spread them evenly.",
+        "Bake 25 to 30 minutes, until the center is set and the top is golden.",
+        "Let it cool 10 minutes and cut it into 4 equal portions.",
+        "Store each portion in a container. To eat, heat it 1 minute in the microwave at work."
+      ],
+      "craving": "Egg frittata with vegetables."
+    },
+    "lentejas-estofadas-clasicas-con-garbanzos-y-pollo": {
+      "title": "Classic lentil stew with chickpeas and chicken",
+      "idea_name": "Classic lentil stew with chickpeas",
+      "one_line": "Lentil and chickpea stew with carrot, onion, tomato and red pepper. A vegetarian base that pairs with yogurt or eggs for more protein.",
+      "steps": [
+        "Dice the onion, red pepper, carrot and garlic small. Cut the chicken breast into 2 cm cubes.",
+        "In a large pot, heat the oil and fry the onion, garlic and pepper for 5 minutes. Add the chicken and brown it for 4 minutes.",
+        "Add the paprika, cumin and salt. Stir for 30 seconds, then add the crushed tomato and the carrot.",
+        "Add the dry lentils (no soaking), the textured soy and water to 3 fingers above them. Bring to a boil.",
+        "Lower the heat and cook covered for 30 minutes, stirring now and then. Add water if it gets dry.",
+        "Drain the cooked chickpeas, add them and cook 10 more minutes, until the lentils are tender. Taste and add salt if needed.",
+        "Let it cool and divide it into 8 containers. Keep 3 in the fridge for the first days and freeze the rest. Reheat in the microwave at work."
+      ],
+      "craving": "Lentil stew with vegetables for the whole week."
+    },
+    "pechuga-de-pollo-al-curry-suave-con-arroz": {
+      "title": "Mild chicken breast curry with rice",
+      "idea_name": "Mild chicken breast curry with basmati rice",
+      "steps": [
+        "Cut the chicken breast into 2 cm cubes and the onion into small pieces. Salt the chicken.",
+        "Cook the rice in salted water for about 12 minutes, drain it and set it aside.",
+        "In a non-stick pan with a splash of water, cook the onion over medium heat for 5 minutes until soft.",
+        "Add the chicken, the curry powder and the garlic powder. Cook 8 to 10 minutes, stirring, until the chicken is cooked through.",
+        "Turn off the heat and let it cool 1 minute. Mix the skyr with a little cooking water to make the sauce, add it to the chicken and stir without boiling.",
+        "Divide the rice and the chicken curry into 4 containers. It keeps in the fridge for up to 3 days and reheats in the microwave at work."
+      ],
+      "craving": "Mild chicken curry with rice."
+    },
+    "pollo-al-horno-con-calabacin-y-naranja": {
+      "title": "Oven-baked chicken with zucchini and orange",
+      "idea_name": "Oven-baked chicken with zucchini and orange",
+      "words": [
+        [
+          "pimentón",
+          "paprika"
+        ],
+        [
+          "orégano",
+          "oregano"
+        ]
+      ],
+      "craving": "Oven-baked chicken with vegetables and fruit, for the whole week."
+    },
+    "pollo-asado-con-patatas-al-horno": {
+      "title": "Roast chicken with roast potatoes",
+      "idea_name": "Roast chicken with roast potatoes",
+      "one_line": "Roast chicken breast with crispy potatoes, a classic recipe with plenty of protein.",
+      "words": [
+        [
+          "pimenton",
+          "paprika"
+        ],
+        [
+          "ajo en polvo",
+          "garlic powder"
+        ],
+        [
+          "pimienta negra",
+          "black pepper"
+        ]
+      ],
+      "craving": "A warm chicken meal."
+    },
+    "carrot-cake-overnight-oats-with-berries": {
+      "words": [
+        [
+          "fresón",
+          "strawberries"
+        ],
+        [
+          "arándanos",
+          "blueberries"
+        ]
+      ],
+      "craving": "Overnight oats with vanilla whey isolate protein powder (30 g scoop), oats and chia seeds. High fiber, high protein, high volume. I already have the protein powder, so leave it out of the budget.",
+      "changes": "Add some berries: fresh strawberries plus frozen blueberries, no other frozen berries or blackberries."
+    },
+    "chicken-salad-with-sweet-potato-walnuts-and-mustard-yogurt": {
+      "words": [
+        [
+          "pimentón",
+          "paprika"
+        ],
+        [
+          "the mostaza",
+          "the mustard"
+        ]
+      ],
+      "craving": "A chicken salad with sweet potato, pomegranate seeds, apple, peas, pecans, chicken breast and feta cheese, with a honey mustard and Greek yogurt dressing.",
+      "changes": "The pecans are missing."
+    },
+    "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix": {
+      "words": [
+        [
+          "cebolletas",
+          "spring onions"
+        ],
+        [
+          "cebolleta",
+          "spring onion"
+        ]
+      ],
+      "craving": "Beef with peas and rice for meal prep: high protein, budget friendly, high fiber. Brown rice mixed with quinoa and lentils adds fiber and protein. About 450 calories and 40+ g of protein. Other grain mixes that add protein and fiber are welcome."
+    },
+    "tuna-artichoke-whole-wheat-pasta-salad": {
+      "words": [
+        [
+          "pasta integral",
+          "whole wheat pasta"
+        ],
+        [
+          "cans of atún",
+          "cans of tuna"
+        ],
+        [
+          "corazones de alcachofa",
+          "artichoke hearts"
+        ],
+        [
+          "tomate cherry",
+          "cherry tomatoes"
+        ],
+        [
+          "perejil fresco",
+          "fresh parsley"
+        ],
+        [
+          "espinaca fresca",
+          "fresh spinach"
+        ]
+      ],
+      "craving": "Take my saved tuna artichoke salad and add whole wheat pasta, then adjust the recipe to meet my macros.",
+      "changes": "No yogurt dressing; add parsley and feta cheese. Spinach can replace the arugula. 7 servings from 5 cans of tuna (130 g each)."
+    }
+  }
+}

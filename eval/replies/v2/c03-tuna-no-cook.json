@@ -1,0 +1,184 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Greek yogurt tuna salad with cucumber and tomato",
+    "one_line": "Canned tuna mixed with yogurt, mustard and lemon, served on lettuce with cucumber and tomato.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "greek yogurt 0%",
+     "mustard",
+     "lemon juice",
+     "cucumber",
+     "tomato",
+     "lettuce"
+    ],
+    "rough_macros": {
+     "kcal": 300,
+     "protein_g": 46,
+     "carbs_g": 12,
+     "fat_g": 5
+    },
+    "image_prompt": "Tuna salad with yogurt dressing on lettuce with sliced cucumber and tomato"
+   },
+   {
+    "idea_id": "2",
+    "name": "Tonno e fagioli, tuna and white bean salad",
+    "one_line": "Flaked tuna with white beans, thin onion, parsley and lemon juice. Nothing to cook.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned white beans",
+     "onion",
+     "fresh parsley",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 400,
+     "protein_g": 46,
+     "carbs_g": 35,
+     "fat_g": 5
+    },
+    "image_prompt": "Tuna and white bean salad with red onion and parsley in a bowl"
+   },
+   {
+    "idea_id": "3",
+    "name": "Stuffed avocado with tuna and red pepper",
+    "one_line": "Tuna mixed with diced red pepper and lemon juice, spooned into avocado halves.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "avocado",
+     "red bell pepper",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 45,
+     "carbs_g": 12,
+     "fat_g": 24
+    },
+    "image_prompt": "Halved avocados filled with tuna and diced red pepper"
+   },
+   {
+    "idea_id": "4",
+    "name": "Chickpea and tuna salad with mustard dressing",
+    "one_line": "Chickpeas, flaked tuna, cherry tomatoes and spring onion over lettuce with a mustard dressing.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned chickpeas",
+     "cherry tomatoes",
+     "spring onion",
+     "lettuce",
+     "mustard"
+    ],
+    "rough_macros": {
+     "kcal": 410,
+     "protein_g": 46,
+     "carbs_g": 33,
+     "fat_g": 6
+    },
+    "image_prompt": "Chickpea and tuna salad with cherry tomatoes and spring onion on lettuce"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Greek yogurt tuna salad with cucumber and tomato",
+  "servings": 3,
+  "prep_time_min": 15,
+  "ingredients": [
+   {
+    "name": "canned tuna in water",
+    "grams_per_serving": 112,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "greek yogurt 0%",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "mustard",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "lemon juice",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cucumber",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "tomato",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "lettuce",
+    "grams_per_serving": 65,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "pita bread",
+    "grams_per_serving": 70,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Escurre el atún y desmenúzalo en un bol.",
+   "Mezcla con el yogur, la mostaza, el zumo de limón, sal y pimienta.",
+   "Corta el pepino y el tomate.",
+   "Reparte la lechuga en tres recipientes, pon encima la mezcla de atún, el pepino y el tomate.",
+   "Sirve con el pan de pita."
+  ]
+ }
+}

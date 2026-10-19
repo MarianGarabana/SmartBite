@@ -1,0 +1,27 @@
+{
+  "name": "smartbite-web",
+  "private": true,
+  "scripts": {
+    "prompts": "node scripts/copy-prompts.mjs",
+    "predev": "node scripts/copy-prompts.mjs",
+    "dev": "next dev --webpack -H 127.0.0.1 -p 3100",
+    "prebuild": "node scripts/copy-prompts.mjs",
+    "build": "next build --webpack",
+    "start": "next start -H 127.0.0.1 -p 3100",
+    "pretest": "node scripts/copy-prompts.mjs",
+    "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test \"test/*.test.mjs\"",
+    "e2e": "playwright test"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "6.4.0",
+    "autoprefixer": "10.6.1",
+    "next": "16.3.8",
+    "postcss": "8.5.28",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "tailwindcss": "3.4.19"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}

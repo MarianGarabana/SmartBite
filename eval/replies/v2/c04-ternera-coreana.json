@@ -1,0 +1,240 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Bowl coreano de ternera picada con arroz",
+    "one_line": "Ternera picada salteada con ajo y salsa de soja dulce, sobre arroz con cebolleta.",
+    "main_ingredients": [
+     "ground beef",
+     "rice",
+     "spring onion",
+     "garlic",
+     "soy sauce"
+    ],
+    "rough_macros": {
+     "kcal": 520,
+     "protein_g": 46,
+     "carbs_g": 50,
+     "fat_g": 14
+    },
+    "image_prompt": "Korean ground beef rice bowl with spring onion and sesame seeds"
+   },
+   {
+    "idea_id": "2",
+    "name": "Ternera picada con brócoli y arroz",
+    "one_line": "Ternera con brócoli salteado en salsa de soja y ajo, servida sobre arroz.",
+    "main_ingredients": [
+     "ground beef",
+     "broccoli",
+     "rice",
+     "garlic",
+     "soy sauce"
+    ],
+    "rough_macros": {
+     "kcal": 510,
+     "protein_g": 45,
+     "carbs_g": 52,
+     "fat_g": 13
+    },
+    "image_prompt": "Ground beef and broccoli stir-fry over white rice"
+   },
+   {
+    "idea_id": "3",
+    "name": "Pimientos rellenos de ternera y arroz",
+    "one_line": "Pimientos al horno rellenos de ternera picada, arroz y tomate triturado.",
+    "main_ingredients": [
+     "ground beef",
+     "red bell pepper",
+     "rice",
+     "crushed tomatoes",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 44,
+     "carbs_g": 50,
+     "fat_g": 13
+    },
+    "image_prompt": "Baked stuffed red peppers with beef and rice in tomato sauce"
+   },
+   {
+    "idea_id": "4",
+    "name": "Albóndigas de ternera en tomate con arroz",
+    "one_line": "Albóndigas de ternera con huevo y cebolla en salsa de tomate, con arroz.",
+    "main_ingredients": [
+     "ground beef",
+     "eggs",
+     "onion",
+     "crushed tomatoes",
+     "rice"
+    ],
+    "rough_macros": {
+     "kcal": 530,
+     "protein_g": 46,
+     "carbs_g": 48,
+     "fat_g": 16
+    },
+    "image_prompt": "Beef meatballs in tomato sauce served with rice"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Bowl coreano de ternera picada con arroz",
+  "servings": 5,
+  "prep_time_min": 40,
+  "ingredients": [
+   {
+    "name": "ground beef",
+    "grams_per_serving": 180,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "rice",
+    "grams_per_serving": 55,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "spring onion",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 8,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "soy sauce",
+    "grams_per_serving": 12,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "sugar",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "sesame seeds",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Cuece el arroz en agua con sal y guárdalo en 5 raciones.",
+   "Pica el ajo y la cebolleta. Separa el verde de la cebolleta para servir.",
+   "Sofríe la ternera picada en una sartén sin aceite hasta que se dore y suelte su grasa.",
+   "Añade el ajo, la parte blanca de la cebolleta, la soja, el azúcar y la pimienta. Cocina 3 minutos.",
+   "Reparte arroz y ternera en 5 tápers. Añade encima la cebolleta verde y el sésamo.",
+   "Calienta en el microondas en el trabajo."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Bowl coreano de ternera picada con arroz",
+   "servings": 5,
+   "prep_time_min": 40,
+   "ingredients": [
+    {
+     "name": "ground beef",
+     "grams_per_serving": 180,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "rice",
+     "grams_per_serving": 48,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": true
+    },
+    {
+     "name": "spring onion",
+     "grams_per_serving": 40,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "garlic",
+     "grams_per_serving": 8,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "soy sauce",
+     "grams_per_serving": 12,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "sesame seeds",
+     "grams_per_serving": 4,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "black pepper",
+     "grams_per_serving": 0.5,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Cuece el arroz en agua con sal y guárdalo en 5 raciones.",
+    "Pica el ajo y la cebolleta. Separa el verde de la cebolleta para servir.",
+    "Sofríe la ternera picada en una sartén sin aceite hasta que se dore y suelte su grasa.",
+    "Añade el ajo, la parte blanca de la cebolleta, la soja y la pimienta. Cocina 3 minutos.",
+    "Reparte arroz y ternera en 5 tápers. Añade encima la cebolleta verde y el sésamo.",
+    "Calienta en el microondas en el trabajo."
+   ]
+  }
+ ]
+}

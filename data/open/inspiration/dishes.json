@@ -1,0 +1,1125 @@
+{
+ "note": "Real dishes for the Idea agent. Code picks 12 per request (craving matches first, the rest at random, none with an excluded food): smartbite_engine/inspiration.py. core = main foods by their English key (data/open/aliases.json), pantry items left out; Spanish names resolve through the aliases. Researched from public recipe sites (source = the page); methods are short summaries in our own words.",
+ "dishes": [
+  {
+   "name": "Chicken thigh, potato and olive traybake",
+   "cuisine": "Mediterranean",
+   "style": "traybake",
+   "core": [
+    "chicken thigh",
+    "potato",
+    "kalamata olives",
+    "lemon",
+    "garlic"
+   ],
+   "method": "Roast thighs with potatoes, olives, lemon and whole garlic in one tin until the skin is crisp.",
+   "source": "https://bbcgoodfoodme.com/recipes/chicken-new-potato-traybake"
+  },
+  {
+   "name": "Greek chicken bowls",
+   "cuisine": "Greek",
+   "style": "bowl",
+   "core": [
+    "chicken breast",
+    "rice",
+    "cucumber",
+    "tomato",
+    "feta"
+   ],
+   "method": "Marinate and cook the chicken, then pack it over rice with chopped cucumber, tomato and feta, with a yogurt sauce on the side.",
+   "source": "https://livesimply.me/greek-chicken-bowls/"
+  },
+  {
+   "name": "Mexican chicken rice bowl",
+   "cuisine": "Mexican",
+   "style": "bowl",
+   "core": [
+    "chicken breast",
+    "rice",
+    "canned sweetcorn",
+    "avocado",
+    "tomato"
+   ],
+   "method": "Cook spiced chicken, warm it with corn, and serve over rice with avocado and fresh tomato.",
+   "source": "https://inmamamaggieskitchen.com/mexican-chicken-rice-bowl/"
+  },
+  {
+   "name": "Cobb salad with yogurt dressing",
+   "cuisine": "American",
+   "style": "salad",
+   "core": [
+    "chicken breast",
+    "eggs",
+    "avocado",
+    "tomato",
+    "lettuce"
+   ],
+   "method": "Arrange sliced cooked chicken, boiled egg, avocado and tomato over chopped lettuce; swap the oil dressing for yogurt and mustard.",
+   "source": "https://kristineskitchenblog.com/wprm_print/cobb-salad-recipe"
+  },
+  {
+   "name": "Moroccan chicken with couscous and chickpeas",
+   "cuisine": "Moroccan",
+   "style": "stew",
+   "core": [
+    "chicken breast",
+    "couscous",
+    "canned chickpeas",
+    "carrot",
+    "onion"
+   ],
+   "method": "Simmer spiced chicken with carrot, onion and chickpeas, then serve over couscous steeped in hot water.",
+   "source": "https://www.jocooks.com/wprm_print/moroccan-chicken-couscous"
+  },
+  {
+   "name": "Avgolemono (Greek lemon chicken soup)",
+   "cuisine": "Greek",
+   "style": "soup",
+   "core": [
+    "chicken breast",
+    "eggs",
+    "lemon",
+    "rice"
+   ],
+   "method": "Poach chicken in broth with rice, then thicken the soup with an egg and lemon mixture tempered with hot broth.",
+   "source": "https://nofrillskitchen.com/greek-chicken-soup-with-lemon-orzo/"
+  },
+  {
+   "name": "Healthy chicken tikka masala with chickpeas and spinach",
+   "cuisine": "Indian",
+   "style": "stew",
+   "core": [
+    "chicken breast",
+    "canned chickpeas",
+    "spinach",
+    "greek yogurt 0%",
+    "crushed tomatoes"
+   ],
+   "method": "Marinate chicken in yogurt and spices, then simmer it in a spiced tomato sauce with chickpeas and wilted spinach.",
+   "source": "https://biteswithbri.com/healthy-chicken-tikka-masala/"
+  },
+  {
+   "name": "Chicken shawarma quinoa bowls",
+   "cuisine": "Middle Eastern",
+   "style": "bowl",
+   "core": [
+    "chicken breast",
+    "quinoa",
+    "cucumber",
+    "tomato",
+    "hummus"
+   ],
+   "method": "Roast shawarma-spiced chicken and serve over quinoa with cucumber, tomato and a spoon of hummus.",
+   "source": "https://theforkedspoon.com/wprm_print/meal-prep-chicken-shawarma-quinoa-bowls-recipe"
+  },
+  {
+   "name": "Oyakodon (chicken and egg rice bowl)",
+   "cuisine": "Japanese",
+   "style": "bowl",
+   "core": [
+    "chicken thigh",
+    "eggs",
+    "spring onion",
+    "rice"
+   ],
+   "method": "Simmer chicken and spring onion in a soy-based stock, set beaten egg over the top, and slide it onto rice.",
+   "source": "https://www.justonecookbook.com/wprm_print/oyakodon-chicken-and-egg-rice-bowl"
+  },
+  {
+   "name": "Thai basil chicken (pad krapow gai)",
+   "cuisine": "Thai",
+   "style": "stir-fry",
+   "core": [
+    "chicken thigh",
+    "red bell pepper",
+    "green beans",
+    "garlic",
+    "rice"
+   ],
+   "method": "Stir-fry chicken with garlic, red pepper and green beans in a savory sauce and serve over rice.",
+   "source": "https://www.aspicyperspective.com/spicy-thai-basil-chicken-recipe-pad-krapow-gai/"
+  },
+  {
+   "name": "Chicken cacciatore",
+   "cuisine": "Italian",
+   "style": "stew",
+   "core": [
+    "chicken thigh",
+    "red bell pepper",
+    "mushrooms",
+    "crushed tomatoes",
+    "onion"
+   ],
+   "method": "Brown the chicken, then braise it with peppers, mushrooms and onion in a tomato sauce.",
+   "source": "https://themediterraneandish.com/chicken-cacciatore-recipe"
+  },
+  {
+   "name": "Pollo al chilindron",
+   "cuisine": "Spanish",
+   "style": "stew",
+   "core": [
+    "chicken breast",
+    "red bell pepper",
+    "green bell pepper",
+    "tomato",
+    "onion",
+    "garlic"
+   ],
+   "method": "Brown the chicken and cook it slowly in a sauce of red and green pepper, tomato, onion and garlic.",
+   "source": "https://www.spain.info/es/receta/pollo-al-chilindron/"
+  },
+  {
+   "name": "Parmesan roasted cauliflower and chicken sheet pan",
+   "cuisine": "American",
+   "style": "sheet-pan",
+   "core": [
+    "chicken breast",
+    "frozen cauliflower",
+    "grana padano",
+    "lemon"
+   ],
+   "method": "Roast chicken breasts and cauliflower florets on one tray, finishing with grated hard cheese and lemon.",
+   "source": "https://www.snixykitchen.com/wprm_print/sheet-pan-parmesan-roasted-cauliflower-and-chicken"
+  },
+  {
+   "name": "Sheet pan chicken with Brussels sprouts and sweet potato",
+   "cuisine": "American",
+   "style": "sheet-pan",
+   "core": [
+    "chicken breast",
+    "brussels sprouts",
+    "sweet potato"
+   ],
+   "method": "Roast chicken pieces, Brussels sprouts and sweet potato chunks together on one tray.",
+   "source": "https://www.everydaymaven.com/sheet-pan-chicken-dinner-with-brussels-sprouts-and-sweet-potatoes"
+  },
+  {
+   "name": "One-pot lemon artichoke chicken and rice",
+   "cuisine": "Mediterranean",
+   "style": "stir-fry",
+   "core": [
+    "chicken breast",
+    "artichoke hearts",
+    "rice",
+    "lemon",
+    "garlic"
+   ],
+   "method": "Brown chicken pieces, add garlic, artichokes, rice, stock and lemon, and simmer until the rice is cooked.",
+   "source": "https://www.budgetbytes.com/wprm_print/one-pot-lemon-artichoke-chicken-and-rice"
+  },
+  {
+   "name": "Teriyaki salmon rice bowl",
+   "cuisine": "Japanese",
+   "style": "bowl",
+   "core": [
+    "salmon",
+    "rice",
+    "cucumber",
+    "frozen edamame",
+    "teriyaki sauce"
+   ],
+   "method": "Bake salmon glazed with teriyaki and serve over rice with cucumber and edamame.",
+   "source": "https://www.purewow.com/recipes/teriyaki-salmon-bowls"
+  },
+  {
+   "name": "Sheet pan teriyaki salmon with sweet potato and broccoli",
+   "cuisine": "Japanese",
+   "style": "sheet-pan",
+   "core": [
+    "salmon",
+    "sweet potato",
+    "broccoli",
+    "teriyaki sauce"
+   ],
+   "method": "Roast sweet potato cubes first, then add salmon and broccoli to the same tray and bake with teriyaki sauce.",
+   "source": "https://andianne.com/wprm_print/sheet-pan-teriyaki-salmon-with-roasted-sweet-potato-and-broccoli"
+  },
+  {
+   "name": "Baked salmon quinoa bowl",
+   "cuisine": "Mediterranean",
+   "style": "bowl",
+   "core": [
+    "salmon",
+    "quinoa",
+    "arugula",
+    "cucumber",
+    "lemon"
+   ],
+   "method": "Bake lemon-seasoned salmon and serve over quinoa with arugula and sliced cucumber.",
+   "source": "https://simplyscratchmade.com/salmon-quinoa-bowl"
+  },
+  {
+   "name": "Sheet pan salmon and green beans with lemon",
+   "cuisine": "American",
+   "style": "sheet-pan",
+   "core": [
+    "salmon",
+    "green beans",
+    "lemon"
+   ],
+   "method": "Season salmon with lemon and herbs, surround it with green beans on a tray, and bake until the fish flakes.",
+   "source": "https://cravinghomecooked.com/salmon-and-green-beans-sheet-pan-dinner/"
+  },
+  {
+   "name": "Salmon fried rice",
+   "cuisine": "Chinese",
+   "style": "stir-fry",
+   "core": [
+    "salmon",
+    "rice",
+    "eggs",
+    "frozen peas",
+    "spring onion"
+   ],
+   "method": "Cook and flake salmon, then stir-fry cold rice with scrambled egg, peas and spring onion and fold the fish back in.",
+   "source": "https://www.justonecookbook.com/wprm_print/salmon-fried-rice"
+  },
+  {
+   "name": "Whole wheat pasta with salmon and spinach",
+   "cuisine": "Italian",
+   "style": "stir-fry",
+   "core": [
+    "salmon",
+    "wholemeal pasta",
+    "spinach",
+    "cherry tomatoes"
+   ],
+   "method": "Toss cooked pasta with flaked salmon, wilted spinach and cherry tomatoes in a light pan sauce.",
+   "source": "https://www.wcrf.org/living-well/eating-well/recipes/spaghetti-with-salmon-and-spinach/"
+  },
+  {
+   "name": "Salmon poke bowl",
+   "cuisine": "Japanese",
+   "style": "bowl",
+   "core": [
+    "salmon",
+    "rice",
+    "avocado",
+    "cucumber",
+    "frozen edamame"
+   ],
+   "method": "Marinate diced salmon in soy and sesame, then pile it on rice with avocado, cucumber and edamame.",
+   "source": "https://thebigmansworld.com/wprm_print/salmon-poke-bowl"
+  },
+  {
+   "name": "Greek yogurt tuna salad",
+   "cuisine": "American",
+   "style": "salad",
+   "core": [
+    "canned tuna in water",
+    "greek yogurt 0%",
+    "mustard",
+    "lemon"
+   ],
+   "method": "Mix drained tuna with yogurt, mustard and lemon instead of mayonnaise and eat it with salad leaves.",
+   "source": "https://ifoodreal.com/greek-yogurt-tuna-salad/"
+  },
+  {
+   "name": "Fresh tuna poke bowl",
+   "cuisine": "Japanese",
+   "style": "bowl",
+   "core": [
+    "fresh tuna",
+    "brown rice",
+    "frozen edamame",
+    "avocado"
+   ],
+   "method": "Marinate cubed tuna in soy, garlic and ginger and serve it over brown rice with edamame and avocado.",
+   "source": "https://www.onceuponachef.com/recipes/tuna-poke-bowls.html"
+  },
+  {
+   "name": "Ensalada de garbanzos y atun con vinagreta de mostaza",
+   "cuisine": "Spanish",
+   "style": "salad",
+   "core": [
+    "canned chickpeas",
+    "canned tuna in water",
+    "cherry tomatoes",
+    "spring onion",
+    "lettuce",
+    "mustard"
+   ],
+   "method": "Toss cooked chickpeas, flaked tuna, tomatoes and spring onion over lettuce with a mustard dressing.",
+   "source": "https://www.directoalpaladar.com/recetas-de-ensaladas/ensalada-de-garbanzos-y-atun-con-vinagreta-de-mostaza-receta"
+  },
+  {
+   "name": "Ensalada de pasta con atun",
+   "cuisine": "Spanish",
+   "style": "salad",
+   "core": [
+    "wholemeal pasta",
+    "canned tuna in water",
+    "canned sweetcorn",
+    "tomato"
+   ],
+   "method": "Cool cooked pasta and mix it with tuna, corn and diced tomato.",
+   "source": "https://www.vitonica.com/recetas-saludables/ensalada-de-pasta-y-atun-receta-saludable"
+  },
+  {
+   "name": "Salade nicoise",
+   "cuisine": "French",
+   "style": "salad",
+   "core": [
+    "canned tuna in water",
+    "eggs",
+    "green beans",
+    "potato",
+    "kalamata olives",
+    "tomato"
+   ],
+   "method": "Arrange tuna, boiled eggs, boiled potatoes, green beans, tomato and olives on a bed of leaves.",
+   "source": "https://feelgoodfoodie.net/recipe/tuna-nicoise-salad/"
+  },
+  {
+   "name": "Aguacate relleno de atun",
+   "cuisine": "Spanish",
+   "style": "salad",
+   "core": [
+    "canned tuna in water",
+    "avocado",
+    "lemon",
+    "red bell pepper"
+   ],
+   "method": "Mix tuna with diced red pepper and lime or lemon juice and spoon it into halved avocados.",
+   "source": "https://spainonafork.com/wprm_print/stuffed-avocados-with-tuna-salad"
+  },
+  {
+   "name": "Atun encebollado",
+   "cuisine": "Spanish",
+   "style": "stew",
+   "core": [
+    "fresh tuna",
+    "onion",
+    "garlic"
+   ],
+   "method": "Sear fresh tuna and serve it with onions and garlic slowly softened in a covered pan.",
+   "source": "https://www.directoalpaladar.com/recetas-de-pescados-y-mariscos/receta-atun-encebollado-a-andaluza/amp"
+  },
+  {
+   "name": "Tonno e fagioli (tuna and white bean salad)",
+   "cuisine": "Italian",
+   "style": "salad",
+   "core": [
+    "canned tuna in water",
+    "canned white beans",
+    "lemon",
+    "fresh parsley",
+    "onion"
+   ],
+   "method": "Combine drained white beans with flaked tuna, thin onion, parsley and lemon juice.",
+   "source": "https://www.tastingtable.com/2099720/tonno-e-fagioli-italian-tuna-bean-salad-recipe"
+  },
+  {
+   "name": "Korean ground beef rice bowl",
+   "cuisine": "Korean",
+   "style": "bowl",
+   "core": [
+    "ground beef",
+    "rice",
+    "spring onion",
+    "garlic"
+   ],
+   "method": "Brown ground beef with garlic in a sweet-savory soy sauce and serve it over rice with spring onion.",
+   "source": "https://thebigmansworld.com/korean-beef-bowl-recipe/"
+  },
+  {
+   "name": "Ground beef and broccoli",
+   "cuisine": "Chinese",
+   "style": "stir-fry",
+   "core": [
+    "ground beef",
+    "broccoli",
+    "rice",
+    "garlic"
+   ],
+   "method": "Brown the beef, stir-fry broccoli, then combine both in a thickened soy and garlic sauce over rice.",
+   "source": "https://www.wellplated.com/ground-beef-and-broccoli/"
+  },
+  {
+   "name": "Albondigas de ternera en salsa de tomate",
+   "cuisine": "Spanish",
+   "style": "stew",
+   "core": [
+    "ground beef",
+    "crushed tomatoes",
+    "onion",
+    "garlic",
+    "eggs"
+   ],
+   "method": "Shape seasoned beef into balls, brown them, and finish cooking in a tomato and onion sauce.",
+   "source": "https://www.directoalpaladar.com/recetas-de-carnes-y-aves/albondigas-ternera-cebolla-caramelizada-salsa-tomate-albahaca-receta-para-toda-familia"
+  },
+  {
+   "name": "Stuffed peppers with beef and rice",
+   "cuisine": "American",
+   "style": "baked",
+   "core": [
+    "ground beef",
+    "red bell pepper",
+    "rice",
+    "crushed tomatoes"
+   ],
+   "method": "Fill pepper halves with browned beef, rice and tomato, then bake covered until the peppers are soft.",
+   "source": "https://bakedbree.com/wprm_print/stuffed-peppers-with-rice"
+  },
+  {
+   "name": "Beef kofta with yogurt sauce",
+   "cuisine": "Middle Eastern",
+   "style": "baked",
+   "core": [
+    "ground beef",
+    "greek yogurt 0%",
+    "fresh parsley",
+    "onion",
+    "garlic"
+   ],
+   "method": "Mix beef with onion, parsley and spices, shape into fingers, bake, and serve with garlic yogurt.",
+   "source": "https://oryana.coop/recipe/beef-kofta-with-minty-yogurt-sauce/"
+  },
+  {
+   "name": "Healthy pasta bolognese",
+   "cuisine": "Italian",
+   "style": "stew",
+   "core": [
+    "ground beef",
+    "wholemeal pasta",
+    "crushed tomatoes",
+    "mushrooms"
+   ],
+   "method": "Simmer lean beef with mushrooms in tomato sauce and toss it with whole wheat pasta.",
+   "source": "https://preventcancer.org/article/healthy-recipe-quick-pasta-bolognese/"
+  },
+  {
+   "name": "Beef stuffed zucchini boats",
+   "cuisine": "Italian",
+   "style": "baked",
+   "core": [
+    "ground beef",
+    "zucchini",
+    "crushed tomatoes",
+    "light mozzarella"
+   ],
+   "method": "Scoop out zucchini halves, fill with a beef and tomato mixture, top with cheese and bake.",
+   "source": "https://gimmedelicious.com/beef-stuffed-zucchini-boats"
+  },
+  {
+   "name": "Turkey and vegetable stir-fry",
+   "cuisine": "American",
+   "style": "stir-fry",
+   "core": [
+    "turkey tenderloin",
+    "broccoli",
+    "green bell pepper",
+    "carrot",
+    "mushrooms"
+   ],
+   "method": "Stir-fry diced turkey with broccoli, pepper, carrot and mushrooms in a light soy-ginger sauce.",
+   "source": "https://thegardeningcook.com/turkey-stir-fry-with-fresh-vegetables/"
+  },
+  {
+   "name": "Turkey taco skillet",
+   "cuisine": "Mexican",
+   "style": "stir-fry",
+   "core": [
+    "turkey tenderloin",
+    "canned sweetcorn",
+    "green bell pepper",
+    "tomato",
+    "onion"
+   ],
+   "method": "Cook finely diced turkey with peppers, onion, corn and tomato in one skillet with taco spices.",
+   "source": "https://www.skinnytaste.com/turkey-taco-skillet"
+  },
+  {
+   "name": "Turkey scallopini with lemon",
+   "cuisine": "Italian",
+   "style": "stir-fry",
+   "core": [
+    "turkey tenderloin",
+    "lemon",
+    "garlic",
+    "fresh parsley"
+   ],
+   "method": "Pan-fry thin turkey cutlets and finish them in a quick garlic, lemon and stock sauce.",
+   "source": "https://bigflavorstinykitchen.com/turkey-scallopini-with-capers-and-lemon/"
+  },
+  {
+   "name": "Greek turkey rice bowls",
+   "cuisine": "Greek",
+   "style": "bowl",
+   "core": [
+    "turkey tenderloin",
+    "rice",
+    "cucumber",
+    "tomato",
+    "feta",
+    "greek yogurt 0%"
+   ],
+   "method": "Cook oregano-seasoned turkey and serve over rice with cucumber, tomato, feta and a yogurt sauce.",
+   "source": "https://greensnchocolate.com/greek-turkey-rice-bowls/"
+  },
+  {
+   "name": "Turkey and sweet potato skillet",
+   "cuisine": "American",
+   "style": "stir-fry",
+   "core": [
+    "turkey tenderloin",
+    "sweet potato",
+    "red bell pepper",
+    "onion"
+   ],
+   "method": "Brown diced turkey with onion and pepper, add sweet potato cubes, cover and cook until tender.",
+   "source": "https://www.primaverakitchen.com/wprm_print/ground-turkey-sweet-potato-skillet"
+  },
+  {
+   "name": "Turkey lettuce wraps",
+   "cuisine": "Chinese",
+   "style": "stir-fry",
+   "core": [
+    "turkey tenderloin",
+    "lettuce",
+    "carrot",
+    "spring onion",
+    "teriyaki sauce"
+   ],
+   "method": "Stir-fry finely diced turkey with garlic, ginger and spring onion in a savory sauce and spoon it into lettuce leaves.",
+   "source": "https://ifoodreal.com/asian-turkey-lettuce-wraps/"
+  },
+  {
+   "name": "Mexican turkey stuffed sweet potatoes",
+   "cuisine": "Mexican",
+   "style": "baked",
+   "core": [
+    "turkey tenderloin",
+    "sweet potato",
+    "canned sweetcorn",
+    "avocado"
+   ],
+   "method": "Bake sweet potatoes, then fill them with spiced turkey and corn and top with avocado.",
+   "source": "https://thedefineddish.com/enchilada-stuffed-sweet-potatoes"
+  },
+  {
+   "name": "Guiso de pavo con pimientos y champinones",
+   "cuisine": "Spanish",
+   "style": "stew",
+   "core": [
+    "turkey tenderloin",
+    "red bell pepper",
+    "green bell pepper",
+    "mushrooms",
+    "onion"
+   ],
+   "method": "Soften onion and peppers, add turkey strips and mushrooms, and cook everything together in a pan.",
+   "source": "https://www.directoalpaladar.com/recetas-de-carnes-y-aves/guiso-de-pavo-con-pimientos-y-champinones-receta"
+  },
+  {
+   "name": "Sheet pan pork tenderloin with potatoes and carrots",
+   "cuisine": "American",
+   "style": "sheet-pan",
+   "core": [
+    "pork loin",
+    "potato",
+    "carrot"
+   ],
+   "method": "Roast pork tenderloin on a tray with potatoes and carrots until the center is just cooked.",
+   "source": "https://anitalianinmykitchen.com/sheet-pan-pork-tenderloin/"
+  },
+  {
+   "name": "Lomo de cerdo con pimientos",
+   "cuisine": "Spanish",
+   "style": "stew",
+   "core": [
+    "pork loin",
+    "red bell pepper",
+    "tomato",
+    "onion",
+    "garlic"
+   ],
+   "method": "Sear pork loin pieces and stew them in a sauce of tomato, onion, garlic and roasted pepper.",
+   "source": "https://www.publico.es/culturas/recetas/receta-lomo-pimientos.html"
+  },
+  {
+   "name": "Pork loin stir-fry with broccoli and carrots",
+   "cuisine": "Chinese",
+   "style": "stir-fry",
+   "core": [
+    "pork loin",
+    "broccoli",
+    "carrot",
+    "rice"
+   ],
+   "method": "Stir-fry sliced pork loin with broccoli and carrot in a soy and ginger sauce and serve over rice.",
+   "source": "https://www.iowafoodandfamily.com/food/classic-pork-loin-stir-fry"
+  },
+  {
+   "name": "Pork souvlaki with tzatziki",
+   "cuisine": "Greek",
+   "style": "grilled",
+   "core": [
+    "pork loin",
+    "greek yogurt 0%",
+    "cucumber",
+    "garlic",
+    "lemon"
+   ],
+   "method": "Marinate pork cubes with lemon, garlic and herbs, grill them on skewers, and serve with cucumber yogurt sauce.",
+   "source": "https://www.mygreekdish.com/recipe/pork-souvlaki-skewers-with-tzatziki/print/254430/"
+  },
+  {
+   "name": "Pork fried rice",
+   "cuisine": "Chinese",
+   "style": "stir-fry",
+   "core": [
+    "pork loin",
+    "rice",
+    "eggs",
+    "frozen peas"
+   ],
+   "method": "Stir-fry diced pork, then cold rice with peas and scrambled egg, seasoned with soy or teriyaki sauce.",
+   "source": "https://www.triedandtruerecipe.com/easy-pork-fried-rice-recipe/"
+  },
+  {
+   "name": "Pork loin and mustard skewers",
+   "cuisine": "South American",
+   "style": "grilled",
+   "core": [
+    "pork loin",
+    "mustard",
+    "onion",
+    "lemon",
+    "garlic"
+   ],
+   "method": "Marinate pork cubes in mustard, lemon and garlic, thread them with onion, and grill.",
+   "source": "https://uruguaymeats.uy/en/receta/pork-tenderloin-and-mustard-skewers/"
+  },
+  {
+   "name": "Cottage cheese vegetable frittata",
+   "cuisine": "American",
+   "style": "frittata",
+   "core": [
+    "eggs",
+    "cottage cheese",
+    "spinach",
+    "mushrooms",
+    "red bell pepper"
+   ],
+   "method": "Cook the vegetables in a skillet, pour over eggs whisked with cottage cheese, and finish in the oven.",
+   "source": "https://www.twopeasandtheirpod.com/cottage-cheese-frittata/"
+  },
+  {
+   "name": "Shakshuka",
+   "cuisine": "Middle Eastern",
+   "style": "stew",
+   "core": [
+    "eggs",
+    "crushed tomatoes",
+    "red bell pepper",
+    "onion",
+    "feta"
+   ],
+   "method": "Simmer onion, pepper and tomato with spices, then poach eggs in wells in the sauce and top with feta.",
+   "source": "https://www.loveandlemons.com/wprm_print/shakshuka-recipe"
+  },
+  {
+   "name": "Tortilla de patatas",
+   "cuisine": "Spanish",
+   "style": "frittata",
+   "core": [
+    "eggs",
+    "potato",
+    "onion"
+   ],
+   "method": "Slowly cook potato and onion in a pan, mix with beaten eggs, and set the tortilla on both sides.",
+   "source": "https://doeatbetterexperience.com/es/blog/tortilla-espanola/"
+  },
+  {
+   "name": "Spanakopita egg muffins",
+   "cuisine": "Greek",
+   "style": "baked",
+   "core": [
+    "eggs",
+    "spinach",
+    "feta",
+    "spring onion"
+   ],
+   "method": "Mix eggs with spinach, feta and spring onion, pour into a muffin tin, and bake.",
+   "source": "https://www.themediterraneandish.com/spanakopita-egg-muffins"
+  },
+  {
+   "name": "Chinese tomato and egg stir-fry",
+   "cuisine": "Chinese",
+   "style": "stir-fry",
+   "core": [
+    "eggs",
+    "tomato",
+    "spring onion",
+    "rice"
+   ],
+   "method": "Scramble eggs briefly, stir-fry ripe tomato until juicy, combine, and serve over rice.",
+   "source": "https://www.goldthread2.com/food/how-make-chinese-tomato-and-egg-stir-fry/article/3092672"
+  },
+  {
+   "name": "Pisto manchego con huevos",
+   "cuisine": "Spanish",
+   "style": "stew",
+   "core": [
+    "eggs",
+    "tomato",
+    "zucchini",
+    "green bell pepper",
+    "onion"
+   ],
+   "method": "Cook onion, pepper, zucchini and tomato slowly into a soft stew and serve with eggs set on top.",
+   "source": "https://www.spain.info/es/receta/pisto-manchego-con-huevos/"
+  },
+  {
+   "name": "Zucchini frittata",
+   "cuisine": "Italian",
+   "style": "frittata",
+   "core": [
+    "eggs",
+    "zucchini",
+    "spring onion",
+    "grana padano"
+   ],
+   "method": "Saute zucchini and spring onion, add eggs and grated cheese, and finish the frittata in the oven.",
+   "source": "https://www.acedarspoon.com/?p=56604"
+  },
+  {
+   "name": "Revuelto de champinones",
+   "cuisine": "Spanish",
+   "style": "frittata",
+   "core": [
+    "eggs",
+    "mushrooms",
+    "garlic",
+    "fresh parsley"
+   ],
+   "method": "Saute mushrooms with garlic, then stir in beaten eggs until just set and finish with parsley.",
+   "source": "https://www.directoalpaladar.com/recetas-de-huevos-y-tortillas/revuelto-champinones-mejor-receta-solo-10-minutos"
+  },
+  {
+   "name": "Pea and ricotta frittata",
+   "cuisine": "Italian",
+   "style": "frittata",
+   "core": [
+    "eggs",
+    "ricotta",
+    "frozen peas",
+    "onion",
+    "grana padano"
+   ],
+   "method": "Soften onion with peas, mix eggs with ricotta-style cheese and grated cheese, and bake in a dish.",
+   "source": "https://www.cucinabyelena.com/wprm_print/italian-pea-onion-and-ricotta-frittata"
+  },
+  {
+   "name": "Greek yogurt egg salad",
+   "cuisine": "American",
+   "style": "salad",
+   "core": [
+    "eggs",
+    "greek yogurt 0%",
+    "mustard",
+    "cucumber"
+   ],
+   "method": "Chop hard-boiled eggs and mix with yogurt and mustard instead of mayonnaise.",
+   "source": "https://happihomemade.com/egg-salad-with-greek-yogurt/"
+  },
+  {
+   "name": "Menemen (Turkish eggs with tomato and pepper)",
+   "cuisine": "Turkish",
+   "style": "stew",
+   "core": [
+    "eggs",
+    "tomato",
+    "green bell pepper",
+    "onion"
+   ],
+   "method": "Cook onion, pepper and tomato down, then stir in beaten eggs until just set.",
+   "source": "https://www.themediterraneandish.com/wprm_print/menemen-recipe-turkish-scrambled-eggs-with-tomatoes"
+  },
+  {
+   "name": "Tortilla de espinacas y judias blancas",
+   "cuisine": "Spanish",
+   "style": "frittata",
+   "core": [
+    "eggs",
+    "frozen spinach",
+    "canned white beans",
+    "onion"
+   ],
+   "method": "Saute onion with spinach and white beans, mix with beaten eggs, and cook the tortilla slowly.",
+   "source": "https://www.directoalpaladar.com/recetas-de-huevos-y-tortillas/tortilla-de-espinacas-y-judias-blancas-receta"
+  },
+  {
+   "name": "Huevos a la flamenca",
+   "cuisine": "Spanish",
+   "style": "baked",
+   "core": [
+    "eggs",
+    "frozen peas",
+    "red bell pepper",
+    "crushed tomatoes",
+    "potato"
+   ],
+   "method": "Build a base of potato, peas, pepper and tomato in a dish, crack eggs on top, and bake until set.",
+   "source": "https://www.spain.info/es/receta/huevos-la-flamenca/"
+  },
+  {
+   "name": "Spinach egg drop soup",
+   "cuisine": "Chinese",
+   "style": "soup",
+   "core": [
+    "eggs",
+    "spinach",
+    "tomato",
+    "garlic"
+   ],
+   "method": "Simmer broth with tomato and garlic, add spinach, and swirl in beaten egg to form ribbons.",
+   "source": "https://noobcook.com/spinach-egg-drop-soup/"
+  },
+  {
+   "name": "Lentejas viudas (lentils with vegetables)",
+   "cuisine": "Spanish",
+   "style": "stew",
+   "core": [
+    "dried lentils",
+    "carrot",
+    "onion",
+    "green bell pepper",
+    "garlic"
+   ],
+   "method": "Simmer lentils with finely chopped vegetables, then stir in a quick garlic and paprika sofrito.",
+   "source": "https://www.hola.com/cocina/recetas/20260119876660/lentejas-con-verduras/"
+  },
+  {
+   "name": "Garbanzos con espinacas",
+   "cuisine": "Spanish",
+   "style": "stew",
+   "core": [
+    "canned chickpeas",
+    "spinach",
+    "onion",
+    "garlic"
+   ],
+   "method": "Saute onion and garlic with paprika and cumin, add chickpeas and broth, then wilt in the spinach.",
+   "source": "https://www.hola.com/cocina/recetas/20250416826522/garbanzos-con-espinacas/"
+  },
+  {
+   "name": "White bean and kale soup",
+   "cuisine": "Italian",
+   "style": "soup",
+   "core": [
+    "canned white beans",
+    "kale",
+    "onion",
+    "carrot",
+    "garlic"
+   ],
+   "method": "Soften onion, carrot and garlic, add beans and stock, and cook the kale in at the end.",
+   "source": "https://theclevermeal.com/white-bean-and-kale-soup/"
+  },
+  {
+   "name": "Mediterranean lentil soup",
+   "cuisine": "Mediterranean",
+   "style": "soup",
+   "core": [
+    "dried lentils",
+    "carrot",
+    "onion",
+    "garlic",
+    "lemon"
+   ],
+   "method": "Simmer lentils with carrot, onion, garlic and herbs and finish with lemon juice.",
+   "source": "https://bowl-me-over.com/wprm_print/mediterranean-lentil-soup-recipe"
+  },
+  {
+   "name": "Gigantes plaki (Greek baked beans)",
+   "cuisine": "Greek",
+   "style": "baked",
+   "core": [
+    "canned white beans",
+    "crushed tomatoes",
+    "onion",
+    "garlic",
+    "fresh parsley"
+   ],
+   "method": "Bake large white beans in a herby tomato and onion sauce until thick.",
+   "source": "https://www.mygreekdish.com/recipe/gigantes-plaki-greek-baked-giant-beans/"
+  },
+  {
+   "name": "Chana masala",
+   "cuisine": "Indian",
+   "style": "stew",
+   "core": [
+    "canned chickpeas",
+    "crushed tomatoes",
+    "onion",
+    "garlic"
+   ],
+   "method": "Cook onion, garlic and spices with tomato into a sauce and simmer the chickpeas in it.",
+   "source": "https://thebigmansworld.com/wprm_print/chana-masala-recipe"
+  },
+  {
+   "name": "Mujadara (lentils and rice with onions)",
+   "cuisine": "Middle Eastern",
+   "style": "stew",
+   "core": [
+    "dried lentils",
+    "rice",
+    "onion",
+    "greek yogurt 0%"
+   ],
+   "method": "Caramelize onions, cook lentils and rice together with cumin, and serve with plain yogurt.",
+   "source": "https://www.themediterraneandish.com/mujadara-lentils-and-rice/"
+  },
+  {
+   "name": "Pasta e fagioli",
+   "cuisine": "Italian",
+   "style": "soup",
+   "core": [
+    "canned white beans",
+    "wholemeal pasta",
+    "carrot",
+    "crushed tomatoes",
+    "onion"
+   ],
+   "method": "Build a vegetable base with tomato, add beans and stock, and cook small pasta in the pot.",
+   "source": "https://delishknowledge.com/healthy-pasta-fagioli"
+  },
+  {
+   "name": "Butternut squash and lentil stew",
+   "cuisine": "Mediterranean",
+   "style": "stew",
+   "core": [
+    "pumpkin",
+    "dried lentils",
+    "onion",
+    "crushed tomatoes",
+    "garlic"
+   ],
+   "method": "Simmer squash cubes and lentils with onion, garlic and tomato until both are tender.",
+   "source": "https://www.tinnedtomatoes.com/2023/10/vegan-butternut-squash-lentil-stew.html"
+  },
+  {
+   "name": "Ensalada de tomate, lentejas y huevo",
+   "cuisine": "Spanish",
+   "style": "salad",
+   "core": [
+    "dried lentils",
+    "eggs",
+    "tomato",
+    "spring onion"
+   ],
+   "method": "Mix cooled cooked lentils with diced tomato, spring onion and chopped boiled egg.",
+   "source": "https://www.directoalpaladar.com/recetas-de-ensaladas/ensalada-tomate-lentejas-huevo-plato-ligero-sabroso-rico-proteinas-minerales"
+  },
+  {
+   "name": "Ensalada de arroz y lentejas con aguacate y tomate",
+   "cuisine": "Spanish",
+   "style": "salad",
+   "core": [
+    "dried lentils",
+    "rice",
+    "avocado",
+    "tomato"
+   ],
+   "method": "Combine cooked rice and lentils with diced avocado and tomato and dress with lemon.",
+   "source": "https://www.vitonica.com/recetas-saludables/ensalada-de-arroz-y-lentejas-con-aguacate-y-tomate-receta-saludable"
+  },
+  {
+   "name": "Dal tadka (spiced red lentils)",
+   "cuisine": "Indian",
+   "style": "stew",
+   "core": [
+    "dried lentils",
+    "tomato",
+    "onion",
+    "garlic"
+   ],
+   "method": "Boil lentils with onion, tomato and spices, then pour a sizzling garlic and spice oil over the top.",
+   "source": "https://www.endofthefork.com/red-lentils-masoor-dal-tadka/"
+  },
+  {
+   "name": "Potaje de garbanzos majao",
+   "cuisine": "Spanish",
+   "style": "stew",
+   "core": [
+    "canned chickpeas",
+    "tomato",
+    "onion",
+    "green bell pepper",
+    "garlic"
+   ],
+   "method": "Cook chickpeas in a base of tomato, onion and pepper and finish with a cumin and garlic paste.",
+   "source": "https://www.directoalpaladar.com/recetas-de-legumbres-y-verduras/potaje-de-garbanzos-majao-receta-tradicional"
+  },
+  {
+   "name": "Sweet potato, chickpea and spinach curry",
+   "cuisine": "Indian",
+   "style": "stew",
+   "core": [
+    "sweet potato",
+    "canned chickpeas",
+    "spinach",
+    "crushed tomatoes",
+    "onion"
+   ],
+   "method": "Simmer sweet potato in a spiced tomato sauce, then add chickpeas and spinach until wilted.",
+   "source": "https://www.bhf.org.uk/informationsupport/support/healthy-living/healthy-eating/recipe-finder/sweet-potato-curry-with-spinach-and-chick-peas"
+  },
+  {
+   "name": "Mediterranean chickpea salad",
+   "cuisine": "Mediterranean",
+   "style": "salad",
+   "core": [
+    "canned chickpeas",
+    "cucumber",
+    "tomato",
+    "feta",
+    "onion"
+   ],
+   "method": "Toss chickpeas with diced cucumber, tomato, onion and feta in a lemon dressing.",
+   "source": "https://www.twopeasandtheirpod.com/wprm_print/mediterranean-chickpea-salad"
+  },
+  {
+   "name": "Merluza al horno con patatas panaderas",
+   "cuisine": "Spanish",
+   "style": "traybake",
+   "core": [
+    "frozen hake",
+    "potato",
+    "onion"
+   ],
+   "method": "Roast thin slices of potato and onion in one tray, then lay the hake on top and bake until it flakes.",
+   "source": "https://www.directoalpaladar.com/recetas-de-pescados-y-mariscos/merluza-al-horno-con-patatas-panaderas-receta-de-navidad"
+  },
+  {
+   "name": "Chicken saag (mild chicken and spinach curry)",
+   "cuisine": "Indian",
+   "style": "stew",
+   "core": [
+    "chicken breast",
+    "spinach",
+    "onion",
+    "crushed tomatoes",
+    "greek yogurt 0%"
+   ],
+   "method": "Simmer chicken in a mildly spiced onion and tomato sauce with plenty of wilted spinach, and stir in yogurt at the end.",
+   "source": "https://whereismyspoon.co/spinach-chicken-curry-healthy-chicken-saag/"
+  },
+  {
+   "name": "Creamy Greek yogurt chicken pasta",
+   "cuisine": "Mediterranean",
+   "style": "stir-fry",
+   "core": [
+    "chicken breast",
+    "wholemeal pasta",
+    "greek yogurt 0%",
+    "spinach"
+   ],
+   "method": "Toss whole wheat pasta with sliced cooked chicken and spinach in a sauce of yogurt, a little cheese, lemon and pasta water, off the heat.",
+   "source": "https://www.canyonranch.com/well-stated/recipe/creamy-greek-yogurt-chicken-pasta"
+  }
+ ]
+}

@@ -1,0 +1,263 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Creamy Greek yogurt chicken pasta",
+    "one_line": "Wholemeal pasta with chicken and spinach in a light yogurt, cheese and lemon sauce.",
+    "main_ingredients": [
+     "chicken breast",
+     "wholemeal pasta",
+     "greek yogurt 0%",
+     "spinach",
+     "grana padano",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 46,
+     "carbs_g": 50,
+     "fat_g": 10
+    },
+    "image_prompt": "Creamy wholemeal pasta with sliced chicken and spinach in a pale yogurt sauce"
+   },
+   {
+    "idea_id": "2",
+    "name": "Tuscan-style chicken pasta",
+    "one_line": "Pasta with chicken, cherry tomatoes and spinach in a light cream cheese sauce.",
+    "main_ingredients": [
+     "chicken breast",
+     "wholemeal pasta",
+     "light cream cheese",
+     "cherry tomatoes",
+     "spinach"
+    ],
+    "rough_macros": {
+     "kcal": 510,
+     "protein_g": 45,
+     "carbs_g": 52,
+     "fat_g": 11
+    },
+    "image_prompt": "Creamy pasta with chicken pieces, cherry tomatoes and spinach"
+   },
+   {
+    "idea_id": "3",
+    "name": "Chicken and broccoli alfredo-style pasta",
+    "one_line": "Pasta with chicken and broccoli in a creamy sauce of light cream cheese and grana padano.",
+    "main_ingredients": [
+     "chicken breast",
+     "wholemeal pasta",
+     "broccoli",
+     "light cream cheese",
+     "grana padano"
+    ],
+    "rough_macros": {
+     "kcal": 510,
+     "protein_g": 46,
+     "carbs_g": 50,
+     "fat_g": 12
+    },
+    "image_prompt": "Creamy pasta with chicken and broccoli florets and grated cheese"
+   },
+   {
+    "idea_id": "4",
+    "name": "Baked chicken macaroni with tomato and mozzarella",
+    "one_line": "Macaroni baked with chicken, crushed tomatoes and light mozzarella until golden.",
+    "main_ingredients": [
+     "chicken breast",
+     "macaroni",
+     "crushed tomatoes",
+     "light mozzarella",
+     "zucchini"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 47,
+     "carbs_g": 50,
+     "fat_g": 10
+    },
+    "image_prompt": "Baked macaroni with chicken and melted mozzarella in a dish"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Creamy Greek yogurt chicken pasta",
+  "servings": 4,
+  "prep_time_min": 35,
+  "ingredients": [
+   {
+    "name": "chicken breast",
+    "grams_per_serving": 125,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "wholemeal pasta",
+    "grams_per_serving": 65,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "greek yogurt 0%",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spinach",
+    "grams_per_serving": 75,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "grana padano",
+    "grams_per_serving": 12,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lemon juice",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "garlic powder",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Corta la pechuga en dados y sazónala con ajo en polvo, pimienta y sal.",
+   "Dora el pollo en una sartén antiadherente sin aceite hasta que esté hecho.",
+   "Cuece la pasta integral y guarda un vaso del agua de cocción.",
+   "Fuera del fuego, mezcla el yogur, el grana padano rallado, el zumo de limón y un poco de agua de cocción.",
+   "Añade la pasta, el pollo y las espinacas a la salsa. Remueve hasta que se ablanden las espinacas.",
+   "Reparte en 4 tápers y calienta en el microondas en el trabajo."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Creamy Greek yogurt chicken pasta",
+   "servings": 4,
+   "prep_time_min": 35,
+   "ingredients": [
+    {
+     "name": "chicken breast",
+     "grams_per_serving": 125,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "wholemeal pasta",
+     "grams_per_serving": 65,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": true
+    },
+    {
+     "name": "greek yogurt 0%",
+     "grams_per_serving": 60,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "spinach",
+     "grams_per_serving": 75,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "grana padano",
+     "grams_per_serving": 12,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "lemon juice",
+     "grams_per_serving": 10,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "black pepper",
+     "grams_per_serving": 0.5,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "garlic powder",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Corta la pechuga en dados y sazónala con ajo en polvo, pimienta y sal.",
+    "Dora el pollo en una sartén antiadherente sin aceite hasta que esté hecho.",
+    "Cuece la pasta integral y guarda un vaso del agua de cocción.",
+    "Fuera del fuego, mezcla el yogur, el grana padano rallado, el zumo de limón y un poco de agua de cocción.",
+    "Añade la pasta, el pollo y las espinacas a la salsa. Remueve hasta que se ablanden las espinacas.",
+    "Reparte en 4 tápers y calienta en el microondas en el trabajo."
+   ]
+  }
+ ]
+}

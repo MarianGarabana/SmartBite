@@ -1,0 +1,158 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Spanish lentil stew with vegetables",
+    "one_line": "Lentils simmered with carrot, pepper and garlic, finished with a paprika sofrito.",
+    "main_ingredients": [
+     "dried lentils",
+     "carrot",
+     "green bell pepper",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 30,
+     "carbs_g": 62,
+     "fat_g": 5
+    },
+    "image_prompt": "Bowl of Spanish lentil stew with carrot and pepper"
+   },
+   {
+    "idea_id": "2",
+    "name": "Mujadara with yogurt",
+    "one_line": "Lentils and rice with caramelized onions and cumin, topped with plain yogurt.",
+    "main_ingredients": [
+     "dried lentils",
+     "rice",
+     "onion",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 460,
+     "protein_g": 31,
+     "carbs_g": 70,
+     "fat_g": 4
+    },
+    "image_prompt": "Mujadara of lentils and rice with caramelized onions and a spoon of yogurt"
+   },
+   {
+    "idea_id": "3",
+    "name": "Pumpkin and lentil stew",
+    "one_line": "Warming stew of pumpkin cubes and lentils in tomato, garlic and onion.",
+    "main_ingredients": [
+     "pumpkin",
+     "dried lentils",
+     "crushed tomatoes",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 430,
+     "protein_g": 30,
+     "carbs_g": 64,
+     "fat_g": 3
+    },
+    "image_prompt": "Pumpkin and lentil stew in a bowl with tomato sauce"
+   },
+   {
+    "idea_id": "4",
+    "name": "Dal tadka with tomato",
+    "one_line": "Spiced lentils boiled with tomato and garlic, with a sizzling garlic topping.",
+    "main_ingredients": [
+     "dried lentils",
+     "tomato",
+     "garlic",
+     "spinach"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 31,
+     "carbs_g": 63,
+     "fat_g": 4
+    },
+    "image_prompt": "Bowl of yellow dal tadka with garlic topping"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Spanish lentil stew with vegetables",
+  "servings": 4,
+  "prep_time_min": 50,
+  "ingredients": [
+   {
+    "name": "dried lentils",
+    "grams_per_serving": 125,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "carrot",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "green bell pepper",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 2,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Rinse the lentils. Dice the carrot, pepper and onion small.",
+   "Put the lentils and vegetables in a large pot with water to cover. Simmer for 30 to 35 minutes until soft.",
+   "Warm the oil in a small pan. Add the chopped garlic and the paprika for 30 seconds.",
+   "Stir the sofrito into the stew and add salt.",
+   "Split into 4 containers and store in the fridge. Reheat in the microwave."
+  ]
+ }
+}

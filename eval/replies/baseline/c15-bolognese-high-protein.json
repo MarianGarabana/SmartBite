@@ -1,0 +1,168 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "High protein pasta bolognese",
+    "one_line": "Lean ground beef and mushrooms simmered in tomato sauce, tossed with wholemeal pasta.",
+    "main_ingredients": [
+     "ground beef",
+     "wholemeal pasta",
+     "crushed tomatoes",
+     "mushrooms",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 600,
+     "protein_g": 52,
+     "carbs_g": 55,
+     "fat_g": 18
+    },
+    "image_prompt": "Plate of wholemeal spaghetti with beef and mushroom bolognese sauce"
+   },
+   {
+    "idea_id": "2",
+    "name": "Wholemeal pasta with salmon and spinach",
+    "one_line": "Flaked salmon, wilted spinach and cherry tomatoes tossed with wholemeal pasta in a light pan sauce.",
+    "main_ingredients": [
+     "salmon",
+     "wholemeal pasta",
+     "spinach",
+     "cherry tomatoes"
+    ],
+    "rough_macros": {
+     "kcal": 610,
+     "protein_g": 50,
+     "carbs_g": 50,
+     "fat_g": 22
+    },
+    "image_prompt": "Wholemeal pasta with flaked salmon, spinach and halved cherry tomatoes"
+   },
+   {
+    "idea_id": "3",
+    "name": "Tuna pasta salad with sweetcorn and tomato",
+    "one_line": "Cooled wholemeal pasta mixed with tuna, sweetcorn and diced tomato. Easy to reheat or eat cold.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "wholemeal pasta",
+     "canned sweetcorn",
+     "tomato"
+    ],
+    "rough_macros": {
+     "kcal": 560,
+     "protein_g": 50,
+     "carbs_g": 65,
+     "fat_g": 8
+    },
+    "image_prompt": "Bowl of wholemeal pasta salad with tuna, sweetcorn and diced tomato"
+   },
+   {
+    "idea_id": "4",
+    "name": "Oyakodon, chicken and egg rice bowl",
+    "one_line": "Chicken thigh and spring onion simmered in soy stock, set with egg and served over rice.",
+    "main_ingredients": [
+     "chicken thigh",
+     "eggs",
+     "spring onion",
+     "rice",
+     "soy sauce"
+    ],
+    "rough_macros": {
+     "kcal": 600,
+     "protein_g": 52,
+     "carbs_g": 60,
+     "fat_g": 16
+    },
+    "image_prompt": "Rice bowl topped with simmered chicken, soft set egg and spring onion"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "High protein pasta bolognese",
+  "servings": 4,
+  "prep_time_min": 45,
+  "ingredients": [
+   {
+    "name": "ground beef",
+    "grams_per_serving": 180,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "wholemeal pasta",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "crushed tomatoes",
+    "grams_per_serving": 150,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "mushrooms",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "oregano",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Chop the onion and garlic. Slice the mushrooms.",
+   "Brown the beef in a dry pan with the onion and garlic. Break it up well.",
+   "Add the mushrooms, crushed tomatoes, oregano, salt and pepper. Simmer 20 minutes.",
+   "Cook the pasta in salted water as the pack says. Drain.",
+   "Mix sauce and pasta and store in 4 boxes. Reheat in the microwave at work."
+  ]
+ }
+}

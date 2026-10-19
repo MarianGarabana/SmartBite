@@ -1,0 +1,704 @@
+{
+ "date": "2026-10-05",
+ "form": {
+  "craving": "Chicken bowl for the week with fresh vegetables: cucumber, cherry tomatoes, red bell pepper and avocado, with a whipped quark dressing.",
+  "exclude": [],
+  "kcal_target": 450,
+  "protein_g_target": 45,
+  "budget_total_eur": 30,
+  "servings": 8,
+  "keep_leftovers_low": true,
+  "gear": [
+   "no_blender",
+   "oven"
+  ],
+  "reheat_at_work": true
+ },
+ "picked_idea": {
+  "idea_id": "1",
+  "name": "Chicken breast bowl with rice and vegetables",
+  "one_line": "Cooked chicken breast with rice, a fresh salad of cucumber, cherry tomato, red pepper and avocado, and a quark dressing",
+  "rough_macros": {
+   "kcal": 440,
+   "protein_g": 48,
+   "carbs_g": 52,
+   "fat_g": 12
+  },
+  "image_prompt": "Overhead view of a bowl with sliced grilled chicken breast, steamed white rice, fresh vegetables, and white cheese dressing",
+  "main_ingredients": [
+   "chicken breast",
+   "rice",
+   "cucumber",
+   "cherry tomatoes",
+   "red bell pepper",
+   "avocado",
+   "quark 0%"
+  ]
+ },
+ "recipe": {
+  "idea_id": "1",
+  "title": "Chicken breast bowl with rice and vegetables",
+  "servings": 8,
+  "prep_time_min": 75,
+  "ingredients": [
+   {
+    "name": "chicken breast",
+    "grams_per_serving": 150,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "rice",
+    "grams_per_serving": 22,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "cucumber",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cherry tomatoes",
+    "grams_per_serving": 62.5,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "red bell pepper",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "avocado",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "quark 0%",
+    "grams_per_serving": 62.5,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "oregano",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.3,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Preheat the oven to 200 degrees. Season the chicken breasts with paprika, oregano, salt and pepper.",
+   "Bake the chicken 20 to 25 minutes until it is cooked through. Let it cool a little and cut it into strips.",
+   "Cook the rice in salted water for about 12 minutes. Drain it and let it cool.",
+   "Mix the quark with a pinch of salt, pepper and oregano to make the dressing.",
+   "Wash the cucumber, the red pepper and the cherry tomatoes. Cut the cucumber and the pepper into pieces and halve the cherry tomatoes.",
+   "Divide the chicken and the rice into 8 containers. Keep the vegetables and the dressing apart.",
+   "Each day, cut the fresh avocado and add it with the vegetables and the dressing just before eating. The chicken and rice can be heated in the microwave."
+  ]
+ },
+ "evaluation": {
+  "status": "ok",
+  "recipe_title": "Chicken breast bowl with rice and vegetables",
+  "items": [
+   {
+    "name": "chicken breast",
+    "food": "chicken breast",
+    "grams_per_serving": 150,
+    "total_grams": 1200,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "rice",
+    "food": "rice",
+    "grams_per_serving": 22,
+    "total_grams": 176,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "cucumber",
+    "food": "cucumber",
+    "grams_per_serving": 100,
+    "total_grams": 800,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "cherry tomatoes",
+    "food": "cherry tomatoes",
+    "grams_per_serving": 62.5,
+    "total_grams": 500.0,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "red bell pepper",
+    "food": "red bell pepper",
+    "grams_per_serving": 100,
+    "total_grams": 800,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "avocado",
+    "food": "avocado",
+    "grams_per_serving": 60,
+    "total_grams": 480,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "quark 0%",
+    "food": "quark 0%",
+    "grams_per_serving": 62.5,
+    "total_grams": 500.0,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "paprika",
+    "food": "paprika",
+    "grams_per_serving": 1,
+    "total_grams": 8,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "oregano",
+    "food": "oregano",
+    "grams_per_serving": 0.5,
+    "total_grams": 4.0,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "salt",
+    "food": "salt",
+    "grams_per_serving": 1,
+    "total_grams": 8,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "black pepper",
+    "food": "black pepper",
+    "grams_per_serving": 0.3,
+    "total_grams": 2.4,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   }
+  ],
+  "pack": {
+   "lines": [
+    {
+     "ingredient": "chicken breast",
+     "grams_needed": 1200,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "chicken breast 400 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 3,
+     "grams_bought": 1200,
+     "grams_left": 0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 0.0,
+     "leftover_status": "none",
+     "food": "chicken breast"
+    },
+    {
+     "ingredient": "rice",
+     "grams_needed": 176,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "rice 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 824,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 82.4,
+     "leftover_status": "keeps",
+     "food": "rice"
+    },
+    {
+     "ingredient": "cucumber",
+     "grams_needed": 800,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "cucumber, loose (301 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 3,
+     "grams_bought": 903,
+     "grams_left": 103,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 11.406423034330011,
+     "leftover_status": "use_in_2_days",
+     "food": "cucumber"
+    },
+    {
+     "ingredient": "cherry tomatoes",
+     "grams_needed": 500.0,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "cherry tomatoes 500 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 500,
+     "grams_left": 0.0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 0.0,
+     "leftover_status": "none",
+     "food": "cherry tomatoes"
+    },
+    {
+     "ingredient": "red bell pepper",
+     "grams_needed": 800,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "red bell pepper, loose (119 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 7,
+     "grams_bought": 833,
+     "grams_left": 33,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 3.9615846338535414,
+     "leftover_status": "use_in_2_days",
+     "food": "red bell pepper"
+    },
+    {
+     "ingredient": "avocado",
+     "grams_needed": 480,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "avocado, loose (136 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 4,
+     "grams_bought": 544,
+     "grams_left": 64,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 11.764705882352942,
+     "leftover_status": "use_in_2_days",
+     "food": "avocado"
+    },
+    {
+     "ingredient": "quark 0%",
+     "grams_needed": 500.0,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "quark 0% 500 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 500,
+     "grams_left": 0.0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 0.0,
+     "leftover_status": "none",
+     "food": "quark 0%"
+    },
+    {
+     "ingredient": "paprika",
+     "grams_needed": 8,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "paprika 75 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 75,
+     "grams_left": 67,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 89.33333333333333,
+     "leftover_status": "keeps",
+     "food": "paprika"
+    },
+    {
+     "ingredient": "oregano",
+     "grams_needed": 4.0,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "oregano 8 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 8,
+     "grams_left": 4.0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 50.0,
+     "leftover_status": "keeps",
+     "food": "oregano"
+    },
+    {
+     "ingredient": "salt",
+     "grams_needed": 8,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "salt 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 992,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 99.2,
+     "leftover_status": "keeps",
+     "food": "salt"
+    },
+    {
+     "ingredient": "black pepper",
+     "grams_needed": 2.4,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "black pepper 65 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 65,
+     "grams_left": 62.6,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 96.3076923076923,
+     "leftover_status": "keeps",
+     "food": "black pepper"
+    }
+   ],
+   "cart_total_eur": 0,
+   "cost_per_serving_eur": 0.0,
+   "used_total_eur": 0,
+   "waste_grams": 1024,
+   "waste_eur": 0,
+   "within_budget": true,
+   "over_budget_eur": null,
+   "optional_total_eur": 0,
+   "budget_check_complete": false,
+   "unpriced": [
+    "chicken breast",
+    "rice",
+    "cucumber",
+    "cherry tomatoes",
+    "red bell pepper",
+    "avocado",
+    "quark 0%"
+   ],
+   "price_note": null,
+   "change_requests": []
+  },
+  "macros": {
+   "per_serving": {
+    "kcal": 469.82,
+    "protein_g": 44.92,
+    "carbs_g": 32.49,
+    "fat_g": 15.07
+   },
+   "total": {
+    "kcal": 3758.58,
+    "protein_g": 359.38,
+    "carbs_g": 259.92,
+    "fat_g": 120.53
+   },
+   "misses": [],
+   "missing_nutrition": [],
+   "unresolved": [],
+   "lines": [
+    {
+     "name": "chicken breast",
+     "food": "chicken breast",
+     "grams": 1200,
+     "source": "ciqual",
+     "source_id": "36017",
+     "amount": {
+      "kcal": 1320.0,
+      "protein_g": 280.8,
+      "carbs_g": 0.0,
+      "fat_g": 18.0
+     },
+     "missing": []
+    },
+    {
+     "name": "rice",
+     "food": "rice",
+     "grams": 176,
+     "source": "ciqual",
+     "source_id": "9100",
+     "amount": {
+      "kcal": 616.0,
+      "protein_g": 12.36,
+      "carbs_g": 136.4,
+      "fat_g": 1.39
+     },
+     "missing": []
+    },
+    {
+     "name": "cucumber",
+     "food": "cucumber",
+     "grams": 800,
+     "source": "ciqual",
+     "source_id": "20019",
+     "amount": {
+      "kcal": 134.4,
+      "protein_g": 5.2,
+      "carbs_g": 22.96,
+      "fat_g": 0.88
+     },
+     "missing": []
+    },
+    {
+     "name": "cherry tomatoes",
+     "food": "cherry tomatoes",
+     "grams": 500.0,
+     "source": "ciqual",
+     "source_id": "20172",
+     "amount": {
+      "kcal": 159.0,
+      "protein_g": 6.55,
+      "carbs_g": 28.1,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "red bell pepper",
+     "food": "red bell pepper",
+     "grams": 800,
+     "source": "ciqual",
+     "source_id": "20087",
+     "amount": {
+      "kcal": 268.8,
+      "protein_g": 8.48,
+      "carbs_g": 47.84,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "avocado",
+     "food": "avocado",
+     "grams": 480,
+     "source": "ciqual",
+     "source_id": "13004",
+     "amount": {
+      "kcal": 974.4,
+      "protein_g": 7.49,
+      "carbs_g": 0.0,
+      "fat_g": 98.88
+     },
+     "missing": []
+    },
+    {
+     "name": "quark 0%",
+     "food": "quark 0%",
+     "grams": 500.0,
+     "source": "ciqual",
+     "source_id": "19644",
+     "amount": {
+      "kcal": 242.0,
+      "protein_g": 36.7,
+      "carbs_g": 21.1,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "paprika",
+     "food": "paprika",
+     "grams": 8,
+     "source": "ciqual",
+     "source_id": "11049",
+     "amount": {
+      "kcal": 25.44,
+      "protein_g": 1.13,
+      "carbs_g": 1.5,
+      "fat_g": 1.03
+     },
+     "missing": []
+    },
+    {
+     "name": "oregano",
+     "food": "oregano",
+     "grams": 4.0,
+     "source": "ciqual",
+     "source_id": "11035",
+     "amount": {
+      "kcal": 10.6,
+      "protein_g": 0.36,
+      "carbs_g": 1.06,
+      "fat_g": 0.17
+     },
+     "missing": []
+    },
+    {
+     "name": "salt",
+     "food": "salt",
+     "grams": 8,
+     "source": "ciqual",
+     "source_id": "11017",
+     "amount": {
+      "kcal": 0.0,
+      "protein_g": 0.0,
+      "carbs_g": 0.0,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "black pepper",
+     "food": "black pepper",
+     "grams": 2.4,
+     "source": "ciqual",
+     "source_id": "11015",
+     "amount": {
+      "kcal": 7.94,
+      "protein_g": 0.32,
+      "carbs_g": 0.96,
+      "fat_g": 0.18
+     },
+     "missing": []
+    }
+   ]
+  },
+  "change_requests": []
+ },
+ "mfp": "SmartBite: Chicken breast bowl with rice and vegetables\nServings: 8\n\nchicken breast, 1200 g (raw)\nrice, 176 g (dry)\ncucumber, 800 g (raw)\ncherry tomatoes, 500 g (raw)\nred bell pepper, 800 g (raw)\navocado, 480 g\nquark 0%, 500 g\npaprika, 8 g\noregano, 4 g\nsalt, 8 g\nblack pepper, 2 g (raw)",
+ "slug": "chicken-breast-bowl-with-rice-and-vegetables",
+ "demo": true,
+ "photo": "/demo/images/chicken-breast-bowl-with-rice-and-vegetables.jpg",
+ "photo_ai_generated": true
+}

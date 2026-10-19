@@ -1,0 +1,167 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Bowl coreano de ternera picada con arroz",
+    "one_line": "Ternera picada salteada con ajo en salsa de soja dulce, sobre arroz y cebolleta.",
+    "main_ingredients": [
+     "ground beef",
+     "rice",
+     "spring onion",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 46,
+     "carbs_g": 50,
+     "fat_g": 14
+    },
+    "image_prompt": "Korean ground beef rice bowl with sliced spring onion on a dark plate"
+   },
+   {
+    "idea_id": "2",
+    "name": "Ternera picada con brócoli y arroz",
+    "one_line": "Ternera con brócoli salteado en salsa de soja y ajo, servida sobre arroz.",
+    "main_ingredients": [
+     "ground beef",
+     "broccoli",
+     "rice",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 46,
+     "carbs_g": 52,
+     "fat_g": 13
+    },
+    "image_prompt": "Ground beef and broccoli stir-fry over white rice"
+   },
+   {
+    "idea_id": "3",
+    "name": "Pimientos rellenos de ternera y arroz",
+    "one_line": "Pimientos rojos rellenos de ternera, arroz y tomate, horneados hasta quedar tiernos.",
+    "main_ingredients": [
+     "ground beef",
+     "red bell pepper",
+     "rice",
+     "crushed tomatoes"
+    ],
+    "rough_macros": {
+     "kcal": 490,
+     "protein_g": 45,
+     "carbs_g": 48,
+     "fat_g": 13
+    },
+    "image_prompt": "Baked red bell pepper halves stuffed with beef and rice in tomato sauce"
+   },
+   {
+    "idea_id": "4",
+    "name": "Albóndigas de ternera en salsa de tomate con arroz",
+    "one_line": "Albóndigas de ternera doradas y cocidas en salsa de tomate, con arroz.",
+    "main_ingredients": [
+     "ground beef",
+     "crushed tomatoes",
+     "rice",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 45,
+     "carbs_g": 50,
+     "fat_g": 14
+    },
+    "image_prompt": "Beef meatballs in tomato sauce next to white rice"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Bowl coreano de ternera picada con arroz",
+  "servings": 5,
+  "prep_time_min": 45,
+  "ingredients": [
+   {
+    "name": "ground beef",
+    "grams_per_serving": 210,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "rice",
+    "grams_per_serving": 55,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "spring onion",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 6,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "soy sauce",
+    "grams_per_serving": 12,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "sugar",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "sesame seeds",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "ground ginger",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Cuece el arroz y deja que se enfríe un poco.",
+   "Pica el ajo y la cebolleta. Guarda la parte verde de la cebolleta aparte.",
+   "Dora la ternera picada en una sartén, rompiéndola en trozos pequeños.",
+   "Añade el ajo, la salsa de soja, el azúcar, el jengibre y la pimienta. Cocina 3 minutos.",
+   "Reparte el arroz en 5 táperes, pon la ternera encima y añade la cebolleta y el sésamo.",
+   "Guarda en la nevera. Se calienta en el microondas en 2 minutos."
+  ]
+ }
+}

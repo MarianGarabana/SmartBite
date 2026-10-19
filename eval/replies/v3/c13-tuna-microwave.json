@@ -1,0 +1,219 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Chickpea and tuna salad with mustard dressing",
+    "one_line": "Spanish chickpea and tuna salad with tomato, spring onion and lettuce, cold or microwaved at work.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned chickpeas",
+     "cherry tomatoes",
+     "spring onion",
+     "lettuce",
+     "mustard"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 42,
+     "carbs_g": 32,
+     "fat_g": 12
+    },
+    "image_prompt": "Bowl of chickpea and tuna salad with cherry tomatoes, spring onion and lettuce, mustard dressing"
+   },
+   {
+    "idea_id": "2",
+    "name": "Tonno e fagioli with white beans and parsley",
+    "one_line": "Italian tuna and white bean salad with onion, parsley and lemon juice, ready in minutes with no cooking.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned white beans",
+     "onion",
+     "fresh parsley",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 430,
+     "protein_g": 42,
+     "carbs_g": 34,
+     "fat_g": 9
+    },
+    "image_prompt": "Italian tuna and white bean salad with thin red onion, parsley and lemon"
+   },
+   {
+    "idea_id": "3",
+    "name": "Greek yogurt tuna salad with cucumber",
+    "one_line": "Tuna mixed with Greek yogurt, mustard and lemon juice, served over lettuce with cucumber and tomato.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "greek yogurt 0%",
+     "mustard",
+     "lemon juice",
+     "lettuce",
+     "cucumber",
+     "tomato"
+    ],
+    "rough_macros": {
+     "kcal": 300,
+     "protein_g": 44,
+     "carbs_g": 14,
+     "fat_g": 6
+    },
+    "image_prompt": "Creamy yogurt tuna salad on lettuce leaves with sliced cucumber and tomato"
+   },
+   {
+    "idea_id": "4",
+    "name": "Tuna pasta salad with sweetcorn and tomato",
+    "one_line": "Wholemeal pasta cooked in the microwave, mixed with tuna, sweetcorn and diced tomato.",
+    "main_ingredients": [
+     "wholemeal pasta",
+     "canned tuna in water",
+     "canned sweetcorn",
+     "tomato"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 40,
+     "carbs_g": 48,
+     "fat_g": 7
+    },
+    "image_prompt": "Wholemeal pasta salad with flaked tuna, sweetcorn and diced tomato in a bowl"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Ensalada de garbanzos y atún con mostaza",
+  "servings": 5,
+  "prep_time_min": 20,
+  "ingredients": [
+   {
+    "name": "canned tuna in water",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "canned chickpeas",
+    "grams_per_serving": 200,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cherry tomatoes",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spring onion",
+    "grams_per_serving": 18,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lettuce",
+    "grams_per_serving": 110,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "mustard",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "microwave rice",
+    "grams_per_serving": 62,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Escurre los garbanzos y el atún.",
+   "Corta los tomates cherry, la cebolleta y la lechuga y guárdalos en tuppers.",
+   "Mezcla el atún, los garbanzos, el arroz y la mostaza en cada tupper.",
+   "Añade la lechuga justo antes de comer. Calienta el resto en el microondas si quieres."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Ensalada de garbanzos y atún con mostaza",
+   "servings": 5,
+   "prep_time_min": 20,
+   "ingredients": [
+    {
+     "name": "canned tuna in water",
+     "grams_per_serving": 100,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "canned chickpeas",
+     "grams_per_serving": 200,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "cherry tomatoes",
+     "grams_per_serving": 50,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "spring onion",
+     "grams_per_serving": 18,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "lettuce",
+     "grams_per_serving": 110,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "mustard",
+     "grams_per_serving": 10,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Escurre los garbanzos y el atún.",
+    "Corta los tomates cherry, la cebolleta y la lechuga y guárdalos en tuppers.",
+    "Mezcla el atún, los garbanzos y la mostaza en cada tupper.",
+    "Añade la lechuga justo antes de comer. Calienta el resto en el microondas si quieres."
+   ]
+  }
+ ]
+}

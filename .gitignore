@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.*
+node_modules/
+.next/
+.vercel/
+# Large downloads used to build data/open (rebuild with the scripts in data/build)
+data/raw/

@@ -1,0 +1,247 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Greek chicken rice bowl with yogurt sauce",
+    "one_line": "Oregano chicken over rice with cucumber, tomato and feta, with a Greek yogurt sauce on the side.",
+    "main_ingredients": [
+     "chicken breast",
+     "rice",
+     "cucumber",
+     "tomato",
+     "feta",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 455,
+     "protein_g": 47,
+     "carbs_g": 42,
+     "fat_g": 11
+    },
+    "image_prompt": "Greek chicken bowl with sliced oregano chicken, rice, diced cucumber, tomato and feta, yogurt sauce on the side"
+   },
+   {
+    "idea_id": "2",
+    "name": "Mild chicken saag with rice",
+    "one_line": "Chicken simmered in a mild onion and tomato sauce with wilted spinach, finished with yogurt, served on rice.",
+    "main_ingredients": [
+     "chicken breast",
+     "frozen spinach",
+     "onion",
+     "crushed tomatoes",
+     "greek yogurt 0%",
+     "basmati rice"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 46,
+     "carbs_g": 40,
+     "fat_g": 8
+    },
+    "image_prompt": "Bowl of green chicken saag with spinach and creamy yogurt swirl over basmati rice"
+   },
+   {
+    "idea_id": "3",
+    "name": "Pork souvlaki rice bowl with tzatziki",
+    "one_line": "Lemon and herb pork cubes baked on skewers, over rice with a cucumber yogurt sauce.",
+    "main_ingredients": [
+     "pork loin",
+     "rice",
+     "greek yogurt 0%",
+     "cucumber",
+     "garlic",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 460,
+     "protein_g": 45,
+     "carbs_g": 40,
+     "fat_g": 12
+    },
+    "image_prompt": "Pork souvlaki skewers on rice with cucumber tzatziki and lemon wedge"
+   },
+   {
+    "idea_id": "4",
+    "name": "Mexican chicken rice bowl",
+    "one_line": "Spiced chicken warmed with sweetcorn and served over rice with fresh tomato and a little avocado.",
+    "main_ingredients": [
+     "chicken breast",
+     "rice",
+     "canned sweetcorn",
+     "tomato",
+     "avocado"
+    ],
+    "rough_macros": {
+     "kcal": 470,
+     "protein_g": 46,
+     "carbs_g": 45,
+     "fat_g": 12
+    },
+    "image_prompt": "Mexican chicken rice bowl with sweetcorn, diced tomato and sliced avocado"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Greek chicken rice bowl with yogurt sauce",
+  "servings": 4,
+  "prep_time_min": 60,
+  "ingredients": [
+   {
+    "name": "chicken breast",
+    "grams_per_serving": 125,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "rice",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "cucumber",
+    "grams_per_serving": 75,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "tomato",
+    "grams_per_serving": 123,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "feta",
+    "grams_per_serving": 25,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "greek yogurt 0%",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "oregano",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Mezcla el pollo con orégano y sal y hornéalo a 200 C unos 25 minutos. Déjalo enfriar y córtalo en trozos.",
+   "Cuece el arroz y repártelo en 4 cajas.",
+   "Corta el pepino y el tomate en dados y repártelos en 4 recipientes.",
+   "Mezcla el yogur con una pizca de sal y orégano. Guárdalo en 4 botes pequeños.",
+   "Desmenuza la feta y repártela. Al servir, calienta el pollo con el arroz y añade el resto frío con la salsa."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Greek chicken rice bowl with yogurt sauce",
+   "servings": 4,
+   "prep_time_min": 60,
+   "ingredients": [
+    {
+     "name": "chicken breast",
+     "grams_per_serving": 125,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "rice",
+     "grams_per_serving": 50,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": true
+    },
+    {
+     "name": "cucumber",
+     "grams_per_serving": 75,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "tomato",
+     "grams_per_serving": 123,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "feta",
+     "grams_per_serving": 25,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "greek yogurt 0%",
+     "grams_per_serving": 100,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "oregano",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Mezcla el pollo con orégano y sal y hornéalo a 200 C unos 25 minutos. Déjalo enfriar y córtalo en trozos.",
+    "Cuece el arroz y repártelo en 4 cajas.",
+    "Corta el pepino y el tomate en dados y repártelos en 4 recipientes.",
+    "Mezcla el yogur con una pizca de sal y orégano. Guárdalo en 4 botes pequeños.",
+    "Desmenuza la feta y repártela. Al servir, calienta el pollo con el arroz y añade el resto frío con la salsa."
+   ]
+  }
+ ]
+}

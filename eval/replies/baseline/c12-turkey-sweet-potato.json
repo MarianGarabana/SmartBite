@@ -1,0 +1,169 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Mexican turkey stuffed sweet potatoes",
+    "one_line": "Baked sweet potato filled with spiced turkey and a little corn, topped with avocado.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "sweet potato",
+     "canned sweetcorn",
+     "avocado"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 46,
+     "carbs_g": 36,
+     "fat_g": 10
+    },
+    "image_prompt": "Baked sweet potato halves filled with spiced turkey, corn and avocado"
+   },
+   {
+    "idea_id": "2",
+    "name": "Turkey taco skillet with peppers and corn",
+    "one_line": "Finely diced turkey cooked with green pepper, onion, tomato and corn in one skillet with taco spices.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "canned sweetcorn",
+     "green bell pepper",
+     "tomato",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 400,
+     "protein_g": 47,
+     "carbs_g": 26,
+     "fat_g": 6
+    },
+    "image_prompt": "Turkey taco skillet with peppers, corn and tomato in a pan"
+   },
+   {
+    "idea_id": "3",
+    "name": "Mexican turkey and sweet potato skillet",
+    "one_line": "Diced turkey browned with onion and red pepper, then cooked with sweet potato cubes and smoked paprika.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "sweet potato",
+     "red bell pepper",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 430,
+     "protein_g": 46,
+     "carbs_g": 34,
+     "fat_g": 6
+    },
+    "image_prompt": "Skillet of diced turkey, sweet potato cubes and red pepper"
+   },
+   {
+    "idea_id": "4",
+    "name": "Turkey taco lettuce wraps with yogurt sauce",
+    "one_line": "Spiced turkey and a few sweet potato cubes in lettuce leaves with tomato and a yogurt sauce.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "lettuce",
+     "tomato",
+     "sweet potato",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 420,
+     "protein_g": 48,
+     "carbs_g": 30,
+     "fat_g": 6
+    },
+    "image_prompt": "Turkey taco lettuce wraps with tomato and yogurt sauce"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Mexican turkey stuffed sweet potatoes",
+  "servings": 4,
+  "prep_time_min": 60,
+  "ingredients": [
+   {
+    "name": "turkey tenderloin",
+    "grams_per_serving": 210,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "sweet potato",
+    "grams_per_serving": 130,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "canned sweetcorn",
+    "grams_per_serving": 30,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "avocado",
+    "grams_per_serving": 30,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cumin",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "smoked paprika",
+    "grams_per_serving": 2,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 3,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Heat the oven to 200 C. Prick the sweet potatoes and bake them 45 minutes until soft.",
+   "Dice the turkey very small and chop the onion.",
+   "Cook the onion in the oil 3 minutes, add the turkey, cumin, paprika and salt, and cook 7 minutes. Add the corn and cook 1 minute.",
+   "Cut the baked sweet potatoes in half and fill them with the turkey mix.",
+   "Store in 4 boxes. Cut the avocado in the same prep session and add it on top.",
+   "Keep in the fridge up to 3 days and reheat in the microwave."
+  ]
+ }
+}

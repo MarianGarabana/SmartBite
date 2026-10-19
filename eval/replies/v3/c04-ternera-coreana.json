@@ -1,0 +1,164 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Bowl coreano de ternera picada con arroz",
+    "one_line": "Ternera picada con ajo y salsa de soja dulce, sobre arroz con cebolleta y brócoli.",
+    "main_ingredients": [
+     "ground beef",
+     "rice",
+     "spring onion",
+     "garlic",
+     "soy sauce",
+     "broccoli"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 45,
+     "carbs_g": 45,
+     "fat_g": 14
+    },
+    "image_prompt": "Korean ground beef rice bowl with glazed beef, steamed rice, sliced spring onion and broccoli"
+   },
+   {
+    "idea_id": "2",
+    "name": "Ternera picada con brócoli y arroz (salteado)",
+    "one_line": "Ternera dorada y brócoli salteado con salsa de soja y ajo, sobre arroz.",
+    "main_ingredients": [
+     "ground beef",
+     "broccoli",
+     "rice",
+     "garlic",
+     "soy sauce"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 45,
+     "carbs_g": 42,
+     "fat_g": 14
+    },
+    "image_prompt": "Ground beef and broccoli stir-fry in glossy soy garlic sauce over white rice"
+   },
+   {
+    "idea_id": "3",
+    "name": "Pimientos rellenos de ternera y arroz",
+    "one_line": "Pimientos rojos rellenos de ternera, arroz y tomate triturado, al horno.",
+    "main_ingredients": [
+     "ground beef",
+     "red bell pepper",
+     "rice",
+     "crushed tomatoes",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 45,
+     "carbs_g": 40,
+     "fat_g": 15
+    },
+    "image_prompt": "Baked red bell pepper halves stuffed with ground beef, rice and tomato sauce"
+   },
+   {
+    "idea_id": "4",
+    "name": "Albóndigas de ternera en salsa de tomate con arroz",
+    "one_line": "Albóndigas de ternera con cebolla y ajo en salsa de tomate, con arroz.",
+    "main_ingredients": [
+     "ground beef",
+     "crushed tomatoes",
+     "onion",
+     "garlic",
+     "rice"
+    ],
+    "rough_macros": {
+     "kcal": 510,
+     "protein_g": 45,
+     "carbs_g": 42,
+     "fat_g": 16
+    },
+    "image_prompt": "Beef meatballs in tomato sauce served with white rice"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Bowl coreano de ternera picada con arroz",
+  "servings": 5,
+  "prep_time_min": 40,
+  "ingredients": [
+   {
+    "name": "ground beef",
+    "grams_per_serving": 180,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "rice",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "broccoli",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spring onion",
+    "grams_per_serving": 18,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 7,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "soy sauce",
+    "grams_per_serving": 15,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "ground ginger",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Cuece el arroz en agua con sal y deja enfriar.",
+   "Corta el brócoli en ramilletes y cuécelo al vapor 4 minutos.",
+   "Pica el ajo y la cebolleta. Guarda la cebolleta cruda para servir.",
+   "Dora la ternera picada en una sartén sin aceite, deshaciéndola con una cuchara.",
+   "Añade el ajo, el jengibre, la pimienta y la salsa de soja y cocina 3 minutos.",
+   "Reparte arroz, ternera y brócoli en 5 táperes y pon la cebolleta encima."
+  ]
+ }
+}

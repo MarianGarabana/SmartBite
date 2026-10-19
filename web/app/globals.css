@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Copied from the mockup <style> block (design freeze) */
+body {
+  background-color: #f9f8f3;
+  font-family: var(--font-jakarta), sans-serif;
+  color: #0f2d24;
+  overflow-x: hidden;
+}
+
+.font-serif { font-family: var(--font-playfair), serif; }
+.font-script { font-family: var(--font-caveat), cursive; }
+
+/* Desktop Canvas Constraint */
+.desktop-frame {
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  background-color: #f9f8f3;
+  min-height: 100vh;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f9f8f3; }
+::-webkit-scrollbar-thumb { background: #184236; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #70e000; }
+
+/* Skeleton loader animation */
+@keyframes pulseSkeleton {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-skeleton {
+  animation: pulseSkeleton 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

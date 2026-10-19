@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "smartbite/recipe.schema.json",
+  "title": "Recipe agent (no tools)",
+  "description": "Full recipe for the picked idea. Prompt: prompts/recipe.md. Runs only after the pick. Can run again with change requests from the pack or macro step. The model picks foods and grams only; packs, macros and cost are code.",
+  "$defs": {
+    "Input": {
+      "type": "object",
+      "required": ["idea", "form", "kitchen_profile"],
+      "properties": {
+        "idea": { "$ref": "idea.schema.json#/$defs/Idea" },
+        "form": { "$ref": "common.schema.json#/$defs/MealForm" },
+        "kitchen_profile": { "type": "string" },
+        "known_ingredients": { "type": "array", "items": { "type": "string" }, "description": "English food keys (data/open/aliases.json)." },
+        "pack_hints": { "type": "array", "items": { "type": "string" }, "description": "Typical pack sizes, e.g. 'chicken breast: 500 g pack'." },
+        "previous_recipe": { "$ref": "#/$defs/Output", "description": "Set on a rerun." },
+        "change_requests": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/ChangeRequest" } }
+      }
+    },
+    "Output": {
+      "type": "object",
+      "required": ["title", "servings", "prep_time_min", "ingredients", "steps"],
+      "properties": {
+        "idea_id": { "type": "string", "description": "Copied from the picked idea. Code rejects a recipe for another idea." },
+        "title": { "type": "string", "maxLength": 100 },
+        "servings": { "type": "integer", "minimum": 1, "maximum": 8 },
+        "prep_time_min": { "type": "integer", "minimum": 0 },
+        "ingredients": {
+          "type": "array", "minItems": 1,
+          "items": { "$ref": "#/$defs/Ingredient" }
+        },
+        "steps": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "note": { "type": "string", "maxLength": 200, "description": "Optional. One short line for the cook about the whole recipe." }
+      },
+      "additionalProperties": false
+    },
+    "Ingredient": {
+      "type": "object",
+      "required": ["name", "grams_per_serving", "units_per_serving", "storage", "pantry", "dry"],
+      "properties": {
+        "name": { "type": "string", "maxLength": 60, "description": "Plain English food name, the exact known_ingredients name when listed." },
+        "grams_per_serving": { "type": "number", "exclusiveMinimum": 0 },
+        "units_per_serving": { "type": "number", "minimum": 0, "description": "Eggs only (size M, 51 g each); 0 for everything else." },
+        "storage": { "enum": ["fresh", "keeps", "frozen"] },
+        "pantry": { "type": "boolean", "description": "Salt, pepper, dried spices and herbs, oil, vinegar: assumed at home, not bought, still counted in macros." },
+        "dry": { "type": "boolean", "description": "True for rice, pasta, quinoa and couscous, whose grams are dry (uncooked) weight." },
+        "note": { "type": "string", "maxLength": 80, "description": "Optional short note, e.g. 'dry weight' or 'drained'." },
+        "leftover_plan": { "enum": ["use_in_another_meal"], "description": "Optional. Accept a fresh leftover and use it in another meal instead of growing the portion." }
+      },
+      "additionalProperties": false
+    }
+  }
+}

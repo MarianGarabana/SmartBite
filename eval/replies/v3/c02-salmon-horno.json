@@ -1,0 +1,151 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Salmón al horno con judías verdes y patata",
+    "one_line": "Salmón con limón y hierbas en bandeja, con judías verdes y patata asadas.",
+    "main_ingredients": [
+     "salmon",
+     "green beans",
+     "potato",
+     "lemon"
+    ],
+    "rough_macros": {
+     "kcal": 510,
+     "protein_g": 38,
+     "carbs_g": 30,
+     "fat_g": 24
+    },
+    "image_prompt": "Sheet pan baked salmon fillet with green beans, roasted potato and lemon slices"
+   },
+   {
+    "idea_id": "2",
+    "name": "Salmón teriyaki con boniato y brócoli",
+    "one_line": "Boniato en dados al horno, y después salmón con teriyaki y brócoli en la misma bandeja.",
+    "main_ingredients": [
+     "salmon",
+     "sweet potato",
+     "broccoli",
+     "teriyaki sauce"
+    ],
+    "rough_macros": {
+     "kcal": 520,
+     "protein_g": 38,
+     "carbs_g": 35,
+     "fat_g": 24
+    },
+    "image_prompt": "Sheet pan teriyaki salmon with roasted sweet potato cubes and broccoli"
+   },
+   {
+    "idea_id": "3",
+    "name": "Bowl de salmón al horno con quinoa",
+    "one_line": "Salmón al horno con limón sobre quinoa, con rúcula y pepino en rodajas.",
+    "main_ingredients": [
+     "salmon",
+     "quinoa",
+     "arugula",
+     "cucumber",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 520,
+     "protein_g": 40,
+     "carbs_g": 32,
+     "fat_g": 24
+    },
+    "image_prompt": "Baked salmon over quinoa with arugula and sliced cucumber in a bowl"
+   },
+   {
+    "idea_id": "4",
+    "name": "Pasta integral con salmón, espinacas y tomate",
+    "one_line": "Salmón al horno desmigado con pasta integral, espinacas y tomates cherry en sartén.",
+    "main_ingredients": [
+     "salmon",
+     "wholemeal pasta",
+     "spinach",
+     "cherry tomatoes"
+    ],
+    "rough_macros": {
+     "kcal": 520,
+     "protein_g": 39,
+     "carbs_g": 40,
+     "fat_g": 20
+    },
+    "image_prompt": "Wholemeal pasta with flaked salmon, wilted spinach and cherry tomatoes"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Salmón al horno con judías verdes y patata",
+  "servings": 2,
+  "prep_time_min": 45,
+  "ingredients": [
+   {
+    "name": "salmon",
+    "grams_per_serving": 175,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "green beans",
+    "grams_per_serving": 110,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "potato",
+    "grams_per_serving": 106,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lemon",
+    "grams_per_serving": 29,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "oregano",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Precalienta el horno a 200 C. Corta la patata en rodajas finas y las judías en trozos.",
+   "Pon la patata en una bandeja con la mitad del aceite, sal y orégano. Hornea 15 minutos.",
+   "Añade las judías y el salmón con sal, orégano y rodajas de limón. Rocía el resto del aceite.",
+   "Hornea 12 a 15 minutos más, hasta que el salmón se separe en lascas.",
+   "Sirve en dos platos."
+  ]
+ }
+}

@@ -1,0 +1,161 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Potaje de garbanzos con espinacas",
+    "one_line": "Garbanzos secos cocidos con cebolla, ajo y pimentón, con espinacas al final.",
+    "main_ingredients": [
+     "dried chickpeas",
+     "spinach",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 460,
+     "protein_g": 29,
+     "carbs_g": 62,
+     "fat_g": 8
+    },
+    "image_prompt": "Bowl of chickpea and spinach stew with paprika"
+   },
+   {
+    "idea_id": "2",
+    "name": "Potaje de garbanzos majao con espinacas",
+    "one_line": "Garbanzos con tomate, cebolla y pimiento verde, majado de comino y ajo, y espinacas.",
+    "main_ingredients": [
+     "dried chickpeas",
+     "tomato",
+     "onion",
+     "green bell pepper",
+     "spinach"
+    ],
+    "rough_macros": {
+     "kcal": 455,
+     "protein_g": 29,
+     "carbs_g": 63,
+     "fat_g": 8
+    },
+    "image_prompt": "Spanish chickpea stew with tomato, green pepper and wilted spinach"
+   },
+   {
+    "idea_id": "3",
+    "name": "Curry de boniato, garbanzos y espinacas",
+    "one_line": "Boniato y garbanzos en salsa de tomate especiada, con espinacas hasta que se ablanden.",
+    "main_ingredients": [
+     "dried chickpeas",
+     "sweet potato",
+     "spinach",
+     "crushed tomatoes",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 470,
+     "protein_g": 28,
+     "carbs_g": 72,
+     "fat_g": 7
+    },
+    "image_prompt": "Sweet potato, chickpea and spinach curry in a bowl"
+   },
+   {
+    "idea_id": "4",
+    "name": "Pollo tikka masala ligero con espinacas",
+    "one_line": "Pollo marinado en yogur griego y especias, guisado en salsa de tomate con espinacas.",
+    "main_ingredients": [
+     "chicken breast",
+     "greek yogurt 0%",
+     "crushed tomatoes",
+     "spinach"
+    ],
+    "rough_macros": {
+     "kcal": 380,
+     "protein_g": 48,
+     "carbs_g": 15,
+     "fat_g": 8
+    },
+    "image_prompt": "Chicken tikka masala with spinach in a spiced tomato sauce"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Potaje de garbanzos con espinacas",
+  "servings": 6,
+  "prep_time_min": 120,
+  "ingredients": [
+   {
+    "name": "dried chickpeas",
+    "grams_per_serving": 110,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spinach",
+    "grams_per_serving": 200,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 70,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 3,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 2,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "cumin",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "note": "Los garbanzos solos dan unos 22 g de proteína por ración; con las espinacas se llega a unos 29 g. Las kcal quedan algo por encima de 450.",
+  "steps": [
+   "La noche anterior, pon los garbanzos en remojo con agua fría.",
+   "Escúrrelos y cuécelos en agua nueva unos 60 a 90 minutos, hasta que estén tiernos.",
+   "Pica la cebolla y el ajo y sofríelos con el aceite 8 minutos.",
+   "Añade el pimentón y el comino, y enseguida los garbanzos con un poco de su caldo.",
+   "Cocina 10 minutos, añade las espinacas y deja que se ablanden 3 minutos.",
+   "Ajusta de sal, reparte en 6 táperes y guarda en la nevera (para el microondas del trabajo)."
+  ]
+ }
+}

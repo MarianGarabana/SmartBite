@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "smartbite/meal.schema.json",
+  "title": "Meal result (engine output, web input)",
+  "description": "One finished meal: {form, picked_idea, recipe, evaluation: {pack, macros}}. Same fields as the personal app's saved meals, without store fields (counts, live_session, auto_matched). Pack lines come from smartbite_engine.pack.",
+  "$defs": {
+    "Output": {
+      "type": "object",
+      "required": ["form", "picked_idea", "recipe", "evaluation"],
+      "properties": {
+        "date": { "type": "string", "description": "YYYY-MM-DD." },
+        "run": { "type": "string" },
+        "form": { "$ref": "common.schema.json#/$defs/MealForm" },
+        "picked_idea": { "$ref": "idea.schema.json#/$defs/Idea" },
+        "recipe": { "$ref": "recipe.schema.json#/$defs/Output" },
+        "evaluation": { "$ref": "#/$defs/Evaluation" },
+        "attempts": { "type": "array", "items": { "type": "object" }, "description": "One short summary per recipe attempt." },
+        "mfp": { "type": "string", "description": "Plain 'ingredient, grams' block for a food diary app." },
+        "slug": { "type": "string", "description": "URL name of the meal, e.g. 'greek-chicken-bowl'." },
+        "demo": { "type": "boolean", "description": "True for the pre-built demo meals shown without an API key." },
+        "fixture": { "type": "boolean", "description": "True for hand-made test data, never shown as a real meal." },
+        "photo": { "type": "string", "description": "Path of the meal photo, e.g. '/demo/images/<slug>.jpg'." },
+        "photo_ai_generated": { "type": "boolean", "description": "True when the photo was made by an image model; the UI labels it." }
+      },
+      "additionalProperties": false
+    },
+    "Evaluation": {
+      "type": "object",
+      "required": ["pack", "macros"],
+      "properties": {
+        "attempt": { "type": "integer", "minimum": 0 },
+        "status": { "enum": ["ok", "issues"] },
+        "recipe_title": { "type": "string" },
+        "items": { "type": "array", "items": { "type": "object" }, "description": "Recipe ingredients scaled to all servings." },
+        "pack": { "$ref": "#/$defs/Pack" },
+        "macros": { "$ref": "#/$defs/MealMacros" },
+        "change_requests": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/ChangeRequest" } }
+      },
+      "additionalProperties": false
+    },
+    "Pack": {
+      "type": "object",
+      "required": ["lines", "cart_total_eur", "within_budget"],
+      "properties": {
+        "lines": { "type": "array", "items": { "$ref": "#/$defs/PackLine" } },
+        "cart_total_eur": { "type": "number", "minimum": 0 },
+        "cost_per_serving_eur": { "type": "number", "minimum": 0 },
+        "used_total_eur": { "type": "number", "minimum": 0 },
+        "waste_grams": { "type": "number", "minimum": 0 },
+        "waste_eur": { "type": "number" },
+        "within_budget": { "type": "boolean" },
+        "over_budget_eur": { "type": ["number", "null"] },
+        "optional_total_eur": { "type": "number", "minimum": 0 },
+        "budget_check_complete": { "type": "boolean", "description": "False when some bought line has no price." },
+        "unpriced": { "type": "array", "items": { "type": "string" } },
+        "price_note": { "type": ["string", "null"] },
+        "prices_estimated": { "type": "boolean", "description": "Only with a country in the request: true when any bought line counted in the cart total and budget has an estimated price (price_source 'estimate')." },
+        "estimate_source": {
+          "type": "object",
+          "description": "Only with a country in the request: where the estimated prices come from.",
+          "required": ["country", "currency", "source", "period_from", "period_to"],
+          "properties": {
+            "country": { "type": "string" },
+            "currency": { "type": "string" },
+            "source": { "type": "string", "description": "e.g. 'MAPA, Panel de consumo alimentario en hogares'." },
+            "period_from": { "type": "string", "description": "YYYY-MM, first month of the average." },
+            "period_to": { "type": "string", "description": "YYYY-MM, last month of the average." },
+            "built": { "type": "string", "description": "YYYY-MM-DD the price table was built." }
+          }
+        },
+        "change_requests": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/ChangeRequest" } }
+      }
+    },
+    "PackLine": {
+      "type": "object",
+      "required": ["ingredient", "grams_needed", "has_price"],
+      "properties": {
+        "ingredient": { "type": "string" },
+        "grams_needed": { "type": "number", "minimum": 0 },
+        "storage": { "enum": ["fresh", "keeps", "frozen", null] },
+        "optional": { "type": "boolean" },
+        "has_price": { "type": "boolean" },
+        "product_name": { "type": ["string", "null"] },
+        "product_url": { "type": ["string", "null"] },
+        "sold_by": { "enum": ["pack", "per_kg", "per_unit", null] },
+        "packs_to_buy": { "type": "integer", "minimum": 1 },
+        "units_needed": { "type": "integer", "minimum": 0 },
+        "units_bought": { "type": "integer", "minimum": 0 },
+        "grams_bought": { "type": "number", "minimum": 0 },
+        "grams_left": { "type": "number" },
+        "leftover_pct": { "type": "number" },
+        "leftover_status": { "enum": ["none", "keeps", "use_in_2_days", "use_in_another_meal"] },
+        "cost_bought_eur": { "type": ["number", "null"] },
+        "cost_used_eur": { "type": ["number", "null"] },
+        "price_date": { "type": ["string", "null"] },
+        "price_source": { "type": ["string", "null"], "description": "e.g. 'user' for a price the user typed, 'estimate' for a country's average price, 'typical' for a generic pack." },
+        "price_period": { "type": "string", "description": "Estimated prices only: months of the average, 'YYYY-MM/YYYY-MM'." }
+      }
+    },
+    "MealMacros": {
+      "type": "object",
+      "required": ["per_serving", "total", "misses"],
+      "properties": {
+        "per_serving": { "$ref": "common.schema.json#/$defs/Macros" },
+        "total": { "$ref": "common.schema.json#/$defs/Macros" },
+        "misses": { "type": "array", "items": { "type": "string" }, "description": "e.g. 'protein 38 g vs target 45 g'." },
+        "missing_nutrition": { "type": "array", "items": { "type": "string" } },
+        "lines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "grams", "amount"],
+            "properties": {
+              "name": { "type": "string" },
+              "grams": { "type": "number", "minimum": 0 },
+              "source": { "type": ["string", "null"], "description": "e.g. ciqual, usda, open_food_facts." },
+              "source_id": { "type": ["string", "null"] },
+              "amount": { "$ref": "common.schema.json#/$defs/Macros" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

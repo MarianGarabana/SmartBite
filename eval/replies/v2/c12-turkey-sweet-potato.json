@@ -1,0 +1,308 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Mexican turkey stuffed sweet potatoes",
+    "one_line": "Baked sweet potatoes filled with spiced turkey and corn, topped with avocado.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "sweet potato",
+     "canned sweetcorn",
+     "avocado"
+    ],
+    "rough_macros": {
+     "kcal": 460,
+     "protein_g": 45,
+     "carbs_g": 38,
+     "fat_g": 12
+    },
+    "image_prompt": "Baked sweet potato halves filled with spiced turkey, corn and sliced avocado"
+   },
+   {
+    "idea_id": "2",
+    "name": "Turkey and sweet potato skillet",
+    "one_line": "Diced turkey browned with onion and red pepper, then cooked with sweet potato cubes until tender.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "sweet potato",
+     "red bell pepper",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 430,
+     "protein_g": 45,
+     "carbs_g": 35,
+     "fat_g": 8
+    },
+    "image_prompt": "Skillet of diced turkey, sweet potato cubes and red pepper"
+   },
+   {
+    "idea_id": "3",
+    "name": "Turkey taco skillet with corn and peppers",
+    "one_line": "Finely diced turkey cooked with green pepper, onion, corn and tomato and taco spices.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "canned sweetcorn",
+     "green bell pepper",
+     "tomato",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 420,
+     "protein_g": 45,
+     "carbs_g": 30,
+     "fat_g": 8
+    },
+    "image_prompt": "Turkey taco skillet with corn, green pepper and tomato"
+   },
+   {
+    "idea_id": "4",
+    "name": "Spanish turkey stew with peppers and mushrooms",
+    "one_line": "Turkey strips cooked with onion, red and green pepper and mushrooms in one pan.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "red bell pepper",
+     "green bell pepper",
+     "mushrooms",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 380,
+     "protein_g": 45,
+     "carbs_g": 20,
+     "fat_g": 8
+    },
+    "image_prompt": "Spanish turkey stew with pepper strips and mushrooms in a pan"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Mexican turkey stuffed sweet potatoes",
+  "servings": 4,
+  "prep_time_min": 60,
+  "ingredients": [
+   {
+    "name": "turkey tenderloin",
+    "grams_per_serving": 150,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "sweet potato",
+    "grams_per_serving": 150,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "canned sweetcorn",
+    "grams_per_serving": 37,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "avocado",
+    "grams_per_serving": 75,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cumin",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "garlic powder",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Heat the oven to 200 C. Prick the sweet potatoes and bake them whole for 45 minutes.",
+   "Dice the turkey finely and cook it in a dry non-stick pan with cumin, paprika, garlic powder and salt for 8 minutes.",
+   "Drain the corn and mix it into the turkey.",
+   "Cut the baked sweet potatoes open and fill them with the turkey and corn.",
+   "Store in 4 containers. Slice the avocado fresh on the day you eat it, or cut it at prep and keep it with lemon juice."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Mexican turkey stuffed sweet potatoes",
+   "servings": 4,
+   "prep_time_min": 60,
+   "ingredients": [
+    {
+     "name": "turkey tenderloin",
+     "grams_per_serving": 150,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "sweet potato",
+     "grams_per_serving": 150,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "canned sweetcorn",
+     "grams_per_serving": 37,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "avocado",
+     "grams_per_serving": 65,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "cumin",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "paprika",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "garlic powder",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Heat the oven to 200 C. Prick the sweet potatoes and bake them whole for 45 minutes.",
+    "Dice the turkey finely and cook it in a dry non-stick pan with cumin, paprika, garlic powder and salt for 8 minutes.",
+    "Drain the corn and mix it into the turkey.",
+    "Cut the baked sweet potatoes open and fill them with the turkey and corn.",
+    "Store in 4 containers. Slice the avocado fresh on the day you eat it, or cut it at prep and keep it with lemon juice."
+   ]
+  },
+  {
+   "idea_id": "1",
+   "title": "Mexican turkey stuffed sweet potatoes",
+   "servings": 4,
+   "prep_time_min": 60,
+   "ingredients": [
+    {
+     "name": "turkey tenderloin",
+     "grams_per_serving": 150,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "sweet potato",
+     "grams_per_serving": 150,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "canned sweetcorn",
+     "grams_per_serving": 37,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "avocado",
+     "grams_per_serving": 65,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "greek yogurt 0%",
+     "grams_per_serving": 60,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "cumin",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "paprika",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "garlic powder",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Heat the oven to 200 C. Prick the sweet potatoes and bake them whole for 45 minutes.",
+    "Dice the turkey finely and cook it in a dry non-stick pan with cumin, paprika, garlic powder and salt for 8 minutes.",
+    "Drain the corn and mix it into the turkey.",
+    "Cut the baked sweet potatoes open and fill them with the turkey and corn.",
+    "Store in 4 containers. Top each with 60 g Greek yogurt and avocado slices on the day you eat it."
+   ]
+  }
+ ]
+}

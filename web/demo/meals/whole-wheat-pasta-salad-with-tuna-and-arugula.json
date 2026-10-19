@@ -1,0 +1,428 @@
+{
+ "date": "2026-10-05",
+ "form": {
+  "craving": "A salad with parsley, canned tuna and arugula.",
+  "exclude": [
+   "olive oil"
+  ],
+  "kcal_target": 450,
+  "protein_g_target": 45,
+  "budget_total_eur": 5.5,
+  "servings": 2,
+  "keep_leftovers_low": true,
+  "time_limit_min": 30,
+  "gear": [
+   "oven",
+   "no_blender"
+  ],
+  "reheat_at_work": true
+ },
+ "picked_idea": {
+  "idea_id": "1",
+  "name": "Tuna and egg salad with yogurt",
+  "one_line": "Tuna and egg salad with fresh arugula, potatoes, parsley and Greek yogurt dressing.",
+  "rough_macros": {
+   "kcal": 320,
+   "protein_g": 44,
+   "carbs_g": 19,
+   "fat_g": 7
+  },
+  "image_prompt": "Plated tuna salad with soft boiled egg halves, fresh arugula, boiled potatoes, parsley garnish, and creamy yogurt dressing, overhead view on dark plate, natural light",
+  "main_ingredients": [
+   "canned tuna in water",
+   "arugula",
+   "wholemeal pasta"
+  ]
+ },
+ "recipe": {
+  "idea_id": "1",
+  "title": "Whole wheat pasta salad with tuna and arugula",
+  "servings": 2,
+  "prep_time_min": 20,
+  "ingredients": [
+   {
+    "name": "canned tuna in water",
+    "grams_per_serving": 130,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "arugula",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "wholemeal pasta",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "dried parsley",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "vinegar",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Cook the whole wheat pasta in salted water for about 10 minutes. Drain and cool it under the tap.",
+   "Drain the cans of tuna well.",
+   "Mix the cold pasta with the vinegar, the dried parsley and the pepper.",
+   "Divide the pasta between two containers and put the flaked tuna on top.",
+   "Keep the arugula apart and add it just before eating so it does not wilt. The rest can be heated in the microwave without the arugula."
+  ]
+ },
+ "evaluation": {
+  "status": "ok",
+  "recipe_title": "Whole wheat pasta salad with tuna and arugula",
+  "items": [
+   {
+    "name": "canned tuna in water",
+    "food": "canned tuna in water",
+    "grams_per_serving": 130,
+    "total_grams": 260,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "arugula",
+    "food": "arugula",
+    "grams_per_serving": 50,
+    "total_grams": 100,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "wholemeal pasta",
+    "food": "wholemeal pasta",
+    "grams_per_serving": 80,
+    "total_grams": 160,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true,
+    "optional": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "dried parsley",
+    "food": "dried parsley",
+    "grams_per_serving": 1,
+    "total_grams": 2,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "vinegar",
+    "food": "vinegar",
+    "grams_per_serving": 10,
+    "total_grams": 20,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "black pepper",
+    "food": "black pepper",
+    "grams_per_serving": 1,
+    "total_grams": 2,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   }
+  ],
+  "pack": {
+   "lines": [
+    {
+     "ingredient": "canned tuna in water",
+     "grams_needed": 260,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "canned tuna in water 168 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 336,
+     "grams_left": 76,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 22.61904761904762,
+     "leftover_status": "keeps",
+     "food": "canned tuna in water"
+    },
+    {
+     "ingredient": "arugula",
+     "grams_needed": 100,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "arugula 100 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 100,
+     "grams_left": 0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 0.0,
+     "leftover_status": "none",
+     "food": "arugula"
+    },
+    {
+     "ingredient": "wholemeal pasta",
+     "grams_needed": 160,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "wholemeal pasta 500 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 500,
+     "grams_left": 340,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 68.0,
+     "leftover_status": "use_in_another_meal",
+     "food": "wholemeal pasta"
+    },
+    {
+     "ingredient": "dried parsley",
+     "grams_needed": 2,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "dried parsley 20 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 20,
+     "grams_left": 18,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 90.0,
+     "leftover_status": "keeps",
+     "food": "dried parsley"
+    },
+    {
+     "ingredient": "vinegar",
+     "grams_needed": 20,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "vinegar 250 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 250,
+     "grams_left": 230,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 92.0,
+     "leftover_status": "keeps",
+     "food": "vinegar"
+    },
+    {
+     "ingredient": "black pepper",
+     "grams_needed": 2,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "black pepper 65 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 65,
+     "grams_left": 63,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 96.92307692307692,
+     "leftover_status": "keeps",
+     "food": "black pepper"
+    }
+   ],
+   "cart_total_eur": 0,
+   "cost_per_serving_eur": 0.0,
+   "used_total_eur": 0,
+   "waste_grams": 416,
+   "waste_eur": 0,
+   "within_budget": true,
+   "over_budget_eur": null,
+   "optional_total_eur": 0,
+   "budget_check_complete": false,
+   "unpriced": [
+    "canned tuna in water",
+    "arugula",
+    "wholemeal pasta"
+   ],
+   "price_note": null,
+   "change_requests": []
+  },
+  "macros": {
+   "per_serving": {
+    "kcal": 469.92,
+    "protein_g": 43.4,
+    "carbs_g": 60.56,
+    "fat_g": 4.13
+   },
+   "total": {
+    "kcal": 939.84,
+    "protein_g": 86.79,
+    "carbs_g": 121.13,
+    "fat_g": 8.25
+   },
+   "misses": [],
+   "missing_nutrition": [],
+   "unresolved": [],
+   "lines": [
+    {
+     "name": "canned tuna in water",
+     "food": "canned tuna in water",
+     "grams": 260,
+     "source": "ciqual",
+     "source_id": "26181",
+     "amount": {
+      "kcal": 330.2,
+      "protein_g": 64.48,
+      "carbs_g": 9.54,
+      "fat_g": 3.8
+     },
+     "missing": []
+    },
+    {
+     "name": "arugula",
+     "food": "arugula",
+     "grams": 100,
+     "source": "ciqual",
+     "source_id": "20217",
+     "amount": {
+      "kcal": 27.9,
+      "protein_g": 2.58,
+      "carbs_g": 2.1,
+      "fat_g": 0.66
+     },
+     "missing": []
+    },
+    {
+     "name": "wholemeal pasta",
+     "food": "wholemeal pasta",
+     "grams": 160,
+     "source": "ciqual",
+     "source_id": "9870",
+     "amount": {
+      "kcal": 564.8,
+      "protein_g": 18.88,
+      "carbs_g": 108.16,
+      "fat_g": 3.52
+     },
+     "missing": []
+    },
+    {
+     "name": "dried parsley",
+     "food": "dried parsley",
+     "grams": 2,
+     "source": "ciqual",
+     "source_id": "11024",
+     "amount": {
+      "kcal": 5.82,
+      "protein_g": 0.58,
+      "carbs_g": 0.34,
+      "fat_g": 0.11
+     },
+     "missing": []
+    },
+    {
+     "name": "vinegar",
+     "food": "vinegar",
+     "grams": 20,
+     "source": "ciqual",
+     "source_id": "11018",
+     "amount": {
+      "kcal": 4.5,
+      "protein_g": 0.01,
+      "carbs_g": 0.19,
+      "fat_g": 0.02
+     },
+     "missing": []
+    },
+    {
+     "name": "black pepper",
+     "food": "black pepper",
+     "grams": 2,
+     "source": "ciqual",
+     "source_id": "11015",
+     "amount": {
+      "kcal": 6.62,
+      "protein_g": 0.27,
+      "carbs_g": 0.8,
+      "fat_g": 0.15
+     },
+     "missing": []
+    }
+   ]
+  },
+  "change_requests": []
+ },
+ "mfp": "SmartBite: Whole wheat pasta salad with tuna and arugula\nServings: 2\n\ncanned tuna in water, 260 g\narugula, 100 g (raw)\nwholemeal pasta, 160 g (dry)\ndried parsley, 2 g\nvinegar, 20 g\nblack pepper, 2 g (raw)",
+ "slug": "whole-wheat-pasta-salad-with-tuna-and-arugula",
+ "demo": true,
+ "photo": "/demo/images/whole-wheat-pasta-salad-with-tuna-and-arugula.jpg",
+ "photo_ai_generated": true
+}

@@ -1,0 +1,169 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Creamy chicken pasta with spinach",
+    "one_line": "Wholemeal pasta and chicken in a light cream cheese sauce with wilted spinach.",
+    "main_ingredients": [
+     "chicken breast",
+     "wholemeal pasta",
+     "spinach",
+     "light cream cheese"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 47,
+     "carbs_g": 52,
+     "fat_g": 10
+    },
+    "image_prompt": "Creamy chicken pasta with spinach in a bowl"
+   },
+   {
+    "idea_id": "2",
+    "name": "Lighter chicken Alfredo with broccoli",
+    "one_line": "Chicken and pasta in a yogurt and grana padano sauce, with broccoli.",
+    "main_ingredients": [
+     "chicken breast",
+     "wholemeal pasta",
+     "broccoli",
+     "greek yogurt 0%",
+     "grana padano"
+    ],
+    "rough_macros": {
+     "kcal": 510,
+     "protein_g": 48,
+     "carbs_g": 50,
+     "fat_g": 11
+    },
+    "image_prompt": "Chicken Alfredo pasta with broccoli florets"
+   },
+   {
+    "idea_id": "3",
+    "name": "Creamy tomato chicken macaroni with zucchini",
+    "one_line": "Macaroni and chicken in a tomato and ricotta sauce with zucchini.",
+    "main_ingredients": [
+     "chicken breast",
+     "macaroni",
+     "crushed tomatoes",
+     "ricotta",
+     "zucchini"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 46,
+     "carbs_g": 54,
+     "fat_g": 10
+    },
+    "image_prompt": "Macaroni with chicken in creamy tomato sauce and zucchini"
+   },
+   {
+    "idea_id": "4",
+    "name": "Lemon artichoke chicken pasta with yogurt",
+    "one_line": "Chicken, pasta and artichoke hearts in a lemon and Greek yogurt sauce.",
+    "main_ingredients": [
+     "chicken breast",
+     "wholemeal pasta",
+     "artichoke hearts",
+     "lemon",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 47,
+     "carbs_g": 52,
+     "fat_g": 9
+    },
+    "image_prompt": "Lemon chicken pasta with artichoke hearts and creamy sauce"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Creamy chicken pasta with spinach",
+  "servings": 4,
+  "prep_time_min": 40,
+  "ingredients": [
+   {
+    "name": "chicken breast",
+    "grams_per_serving": 200,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "wholemeal pasta",
+    "grams_per_serving": 55,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "spinach",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "light cream cheese",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "chicken broth",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "nutmeg",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Cook the pasta until al dente, drain and let it cool a little.",
+   "Cut the chicken into small pieces and brown it in a non-stick pan with the garlic, salt and pepper.",
+   "Add the broth and the light cream cheese. Stir until the sauce is smooth.",
+   "Add the spinach and the nutmeg and cook until the spinach wilts.",
+   "Mix with the pasta, split into 4 containers and store in the fridge. Reheat in the microwave."
+  ]
+ }
+}

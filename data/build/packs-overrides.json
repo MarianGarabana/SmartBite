@@ -1,0 +1,263 @@
+{
+  "note": "Hand-set pack sizes for foods where Open Food Facts is thin or wrong. Each entry replaces the OFF result and keeps its reason. share is null: these are not counts. portion: the USDA FoodData Central portion a loose unit is counted from (checked against data/raw/usda at build).",
+  "foods": {
+    "greek yogurt 0%": {
+      "sold_by": "pack",
+      "typical_packs": [
+        {
+          "grams": 1000,
+          "share": null
+        },
+        {
+          "grams": 750,
+          "share": null
+        },
+        {
+          "grams": 125,
+          "share": null
+        }
+      ],
+      "reason": "Set by hand: only 4 OFF products with a size (two 1 kg tubs, two 6 x 125 g packs); 125 g is the single pot of those packs. Same sizes as plain Greek yogurt."
+    },
+    "chicken breast": {
+      "sold_by": "pack",
+      "typical_packs": [
+        {
+          "grams": 500,
+          "share": null
+        },
+        {
+          "grams": 400,
+          "share": null
+        }
+      ],
+      "reason": "Set by hand: OFF name matches mix fresh trays with cold cuts and cans (no size above 11%). 500 g and 400 g are the top fresh tray sizes in the OFF chicken-breasts category (4 products each)."
+    },
+    "ground chicken": {
+      "sold_by": "pack",
+      "typical_packs": [
+        {
+          "grams": 400,
+          "share": null
+        }
+      ],
+      "reason": "Set by hand: 9 OFF products, none with a size. 400 g follows the minced turkey trays in OFF; edit it to match your shop."
+    },
+    "ground turkey": {
+      "sold_by": "pack",
+      "typical_packs": [
+        {
+          "grams": 400,
+          "share": null
+        },
+        {
+          "grams": 1000,
+          "share": null
+        }
+      ],
+      "reason": "Set by hand: only 2 OFF products with a size (400 g and 1 kg)."
+    },
+    "beef steak": {
+      "sold_by": "per_kg",
+      "typical_packs": [
+        {
+          "grams": 250,
+          "share": null
+        }
+      ],
+      "reason": "Set by hand: sold by weight at the meat counter. OFF sizes are variable weights or errors (4 with a size). Bought in 250 g steps at a price per kg."
+    },
+    "fresh tuna": {
+      "sold_by": "per_kg",
+      "typical_packs": [
+        {
+          "grams": 250,
+          "share": null
+        }
+      ],
+      "reason": "Set by hand: cut to order at the fish counter; 7 OFF products, none with a size. Bought in 250 g steps at a price per kg."
+    },
+    "frozen salmon": {
+      "sold_by": "pack",
+      "typical_packs": [
+        {
+          "grams": 250,
+          "share": null
+        },
+        {
+          "grams": 200,
+          "share": null
+        }
+      ],
+      "reason": "Set by hand: only 3 OFF products with a size (200, 250 and 700 g)."
+    },
+    "dried parsley": {
+      "sold_by": "pack",
+      "typical_packs": [
+        {
+          "grams": 20,
+          "share": null
+        },
+        {
+          "grams": 40,
+          "share": null
+        }
+      ],
+      "reason": "Set by hand: 7 OFF products, each a different jar size (8 to 60 g). A recipe uses a few grams."
+    },
+    "lemon juice": {
+      "sold_by": "pack",
+      "typical_packs": [
+        {
+          "grams": 250,
+          "share": null
+        },
+        {
+          "grams": 125,
+          "share": null
+        }
+      ],
+      "reason": "Set by hand: 4 OFF bottles with a size, all different (125, 250, 280 ml and 1 l). 1 ml counted as 1 g."
+    },
+    "lime juice": {
+      "sold_by": "pack",
+      "typical_packs": [
+        {
+          "grams": 250,
+          "share": null
+        },
+        {
+          "grams": 500,
+          "share": null
+        }
+      ],
+      "reason": "Set by hand: 1 OFF bottle with a size (500 ml); 250 ml follows bottled lemon juice. 1 ml counted as 1 g."
+    },
+    "garlic": {
+      "sold_by": "per_kg",
+      "typical_packs": [
+        {
+          "grams": 36,
+          "share": null
+        }
+      ],
+      "unit": "1 head",
+      "portion": {
+        "source": "usda_sr_legacy",
+        "fdc_id": 169230,
+        "food": "Garlic, raw",
+        "description": "1 clove",
+        "gram_weight": 3
+      },
+      "reason": "Set by hand: bought by the head. USDA has 1 clove = 3 g (Garlic, raw, fdc 169230) and no head weight; one head counted as 12 cloves = 36 g. The OFF sizes (250 g 22%) are bags of several heads."
+    },
+    "fresh parsley": {
+      "sold_by": "per_kg",
+      "typical_packs": [
+        {
+          "grams": 50,
+          "share": null
+        }
+      ],
+      "unit": "1 bunch",
+      "portion": {
+        "source": "usda_sr_legacy",
+        "fdc_id": 170416,
+        "food": "Parsley, fresh",
+        "description": "10 sprigs",
+        "gram_weight": 10
+      },
+      "reason": "Set by hand: bought by the bunch. USDA has 10 sprigs = 10 g (Parsley, fresh, fdc 170416) and no bunch weight; one bunch counted as 50 sprigs = 50 g. The OFF matches mix fresh bunches with jars of dried leaf."
+    },
+    "spring onion": {
+      "sold_by": "per_kg",
+      "typical_packs": [
+        {
+          "grams": 90,
+          "share": null
+        }
+      ],
+      "unit": "1 bunch",
+      "portion": {
+        "source": "usda_sr_legacy",
+        "fdc_id": 170005,
+        "food": "Onions, spring or scallions (includes tops and bulb), raw",
+        "description": "1 medium (4-1/8\" long)",
+        "gram_weight": 15
+      },
+      "reason": "Set by hand: bought by the bunch. USDA has 1 medium spring onion = 15 g (fdc 170005) and no bunch weight; one bunch counted as 6 = 90 g."
+    },
+    "pumpkin": {
+      "sold_by": "per_kg",
+      "typical_packs": [
+        {
+          "grams": 431,
+          "share": null
+        }
+      ],
+      "unit": "1 small squash",
+      "portion": {
+        "source": "usda_sr_legacy",
+        "fdc_id": 168472,
+        "food": "Squash, winter, acorn, raw",
+        "description": "1 squash (4 inch dia)",
+        "gram_weight": 431
+      },
+      "reason": "Set by hand: bought as one small whole squash. USDA Pumpkin, raw (fdc 168448) has cup portions only; 431 g is the USDA whole acorn squash (fdc 168472), the nearest whole winter squash with a weight."
+    },
+    "sweet potato": {
+      "sold_by": "per_kg",
+      "typical_packs": [
+        {
+          "grams": 300,
+          "share": null
+        }
+      ],
+      "unit": "1 piece",
+      "portion": {
+        "source": "usda_sr_legacy",
+        "fdc_id": 168482,
+        "food": "Sweet potato, raw, unprepared (Includes foods for USDA's Food Distribution Program)",
+        "description": "1 sweetpotato, 5\" long",
+        "gram_weight": 130
+      },
+      "reason": "Set by hand: USDA's 5-inch sweet potato (130 g) is small next to the loose sweet potatoes in Spanish supermarkets; set by hand to a typical piece of about 300 g (estimate, not weighed)."
+    },
+    "broccoli": {
+      "sold_by": "per_kg",
+      "typical_packs": [
+        {
+          "grams": 400,
+          "share": null
+        }
+      ],
+      "unit": "1 head",
+      "portion": {
+        "source": "usda_sr_legacy",
+        "fdc_id": 170379,
+        "food": "Broccoli, raw",
+        "description": "1 stalk",
+        "gram_weight": 151
+      },
+      "reason": "Set by hand: USDA has a 151 g stalk and a 608 g bunch, but no head; Spanish supermarkets sell loose broccoli by the head, set by hand to about 400 g (estimate, not weighed)."
+    },
+    "lettuce": {
+      "sold_by": "per_kg",
+      "typical_packs": [
+        {
+          "grams": 350,
+          "share": null
+        }
+      ],
+      "unit": "1 head",
+      "portion": {
+        "source": "usda_sr_legacy",
+        "fdc_id": 169247,
+        "food": "Lettuce, cos or romaine, raw",
+        "description": "1 head",
+        "gram_weight": 626
+      },
+      "reason": "Set by hand: USDA's romaine head is 626 g, larger than a typical loose romaine head in Spain; set by hand to about 350 g (estimate, not weighed)."
+    }
+  }
+}

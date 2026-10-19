@@ -1,0 +1,353 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Pumpkin and lentil stew",
+    "one_line": "Warming lentil stew with pumpkin, onion, garlic and tomato, topped with Greek yogurt.",
+    "main_ingredients": [
+     "dried lentils",
+     "pumpkin",
+     "onion",
+     "crushed tomatoes",
+     "garlic",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 31,
+     "carbs_g": 65,
+     "fat_g": 4
+    },
+    "image_prompt": "Bowl of orange pumpkin and lentil stew topped with a spoon of white yogurt"
+   },
+   {
+    "idea_id": "2",
+    "name": "Dal tadka with red lentils",
+    "one_line": "Spiced lentils simmered with tomato and onion, finished with a garlic and spice sizzle.",
+    "main_ingredients": [
+     "dried lentils",
+     "tomato",
+     "onion",
+     "garlic",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 31,
+     "carbs_g": 62,
+     "fat_g": 4
+    },
+    "image_prompt": "Bowl of yellow dal tadka with garlic and spices on top"
+   },
+   {
+    "idea_id": "3",
+    "name": "Mujadara with yogurt",
+    "one_line": "Lentils and rice cooked with cumin and sweet onions, served with plain yogurt.",
+    "main_ingredients": [
+     "dried lentils",
+     "rice",
+     "onion",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 470,
+     "protein_g": 30,
+     "carbs_g": 72,
+     "fat_g": 4
+    },
+    "image_prompt": "Plate of lentils and rice with caramelized onions and a spoon of yogurt"
+   },
+   {
+    "idea_id": "4",
+    "name": "Lentejas viudas with vegetables",
+    "one_line": "Spanish lentil stew with carrot, onion and green pepper, and a garlic and paprika sofrito.",
+    "main_ingredients": [
+     "dried lentils",
+     "carrot",
+     "onion",
+     "green bell pepper",
+     "garlic",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 30,
+     "carbs_g": 62,
+     "fat_g": 4
+    },
+    "image_prompt": "Rustic bowl of Spanish lentil stew with diced carrot and pepper"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Pumpkin and lentil stew",
+  "servings": 4,
+  "prep_time_min": 50,
+  "ingredients": [
+   {
+    "name": "dried lentils",
+    "grams_per_serving": 85,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "pumpkin",
+    "grams_per_serving": 250,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "crushed tomatoes",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 8,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "greek yogurt 0%",
+    "grams_per_serving": 125,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cumin",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "smoked paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Lava las lentillas. Corta la calabaza en cubos y pica la cebolla y el ajo.",
+   "Sofríe la cebolla y el ajo en una olla con un chorro de agua, sin aceite.",
+   "Añade las lentejas, la calabaza, el tomate triturado, el comino, el pimentón, la sal y 900 ml de agua.",
+   "Cuece 30 minutos a fuego medio hasta que las lentejas y la calabaza estén tiernas.",
+   "Reparte en 4 tápers. Pon 125 g de yogur griego en cada ración antes de comer."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Pumpkin and lentil stew",
+   "servings": 4,
+   "prep_time_min": 50,
+   "ingredients": [
+    {
+     "name": "dried lentils",
+     "grams_per_serving": 70,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "pumpkin",
+     "grams_per_serving": 285,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 115,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "crushed tomatoes",
+     "grams_per_serving": 115,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "garlic",
+     "grams_per_serving": 8,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "greek yogurt 0%",
+     "grams_per_serving": 90,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "cumin",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "smoked paprika",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Lava las lentillas. Corta la calabaza en cubos y pica la cebolla y el ajo.",
+    "Sofríe la cebolla y el ajo en una olla con un chorro de agua, sin aceite.",
+    "Añade las lentejas, la calabaza, el tomate triturado, el comino, el pimentón, la sal y 900 ml de agua.",
+    "Cuece 30 minutos a fuego medio hasta que las lentejas y la calabaza estén tiernas.",
+    "Reparte en 4 tápers. Pon 90 g de yogur griego en cada ración antes de comer."
+   ]
+  },
+  {
+   "idea_id": "1",
+   "title": "Pumpkin and lentil stew",
+   "servings": 4,
+   "prep_time_min": 50,
+   "ingredients": [
+    {
+     "name": "dried lentils",
+     "grams_per_serving": 70,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "pumpkin",
+     "grams_per_serving": 250,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 115,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "crushed tomatoes",
+     "grams_per_serving": 115,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "garlic",
+     "grams_per_serving": 8,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "greek yogurt 0%",
+     "grams_per_serving": 90,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "cumin",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "smoked paprika",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Lava las lentillas. Corta la calabaza en cubos y pica la cebolla y el ajo.",
+    "Sofríe la cebolla y el ajo en una olla con un chorro de agua, sin aceite.",
+    "Añade las lentejas, la calabaza, el tomate triturado, el comino, el pimentón, la sal y 900 ml de agua.",
+    "Cuece 30 minutos a fuego medio hasta que las lentejas y la calabaza estén tiernas.",
+    "Reparte en 4 tápers. Pon 90 g de yogur griego en cada ración antes de comer."
+   ]
+  }
+ ]
+}

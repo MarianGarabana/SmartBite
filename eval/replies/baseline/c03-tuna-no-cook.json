@@ -1,0 +1,155 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Greek yogurt tuna salad",
+    "one_line": "Drained tuna mixed with Greek yogurt, mustard and lemon, served on lettuce with cucumber.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "greek yogurt 0%",
+     "lettuce",
+     "cucumber",
+     "lemon"
+    ],
+    "rough_macros": {
+     "kcal": 330,
+     "protein_g": 50,
+     "carbs_g": 10,
+     "fat_g": 8
+    },
+    "image_prompt": "Overhead photo of a bowl of creamy tuna salad on lettuce leaves with sliced cucumber"
+   },
+   {
+    "idea_id": "2",
+    "name": "Tuna and white bean salad (tonno e fagioli)",
+    "one_line": "White beans, flaked tuna, thin onion, parsley and lemon juice.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned white beans",
+     "onion",
+     "fresh parsley",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 430,
+     "protein_g": 48,
+     "carbs_g": 30,
+     "fat_g": 8
+    },
+    "image_prompt": "Overhead photo of white bean and tuna salad with red onion, parsley and lemon"
+   },
+   {
+    "idea_id": "3",
+    "name": "Tuna-stuffed avocado",
+    "one_line": "Tuna mixed with diced red pepper and lemon, spooned into avocado halves.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "avocado",
+     "red bell pepper",
+     "lemon"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 46,
+     "carbs_g": 10,
+     "fat_g": 24
+    },
+    "image_prompt": "Halved avocados filled with tuna and diced red pepper on a plate"
+   },
+   {
+    "idea_id": "4",
+    "name": "Chickpea and tuna salad with mustard yogurt dressing",
+    "one_line": "Chickpeas, tuna, cherry tomatoes and spring onion over lettuce with a mustard yogurt dressing.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned chickpeas",
+     "cherry tomatoes",
+     "spring onion",
+     "lettuce",
+     "mustard",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 47,
+     "carbs_g": 30,
+     "fat_g": 9
+    },
+    "image_prompt": "Overhead photo of a chickpea and tuna salad on lettuce with cherry tomatoes"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Greek yogurt tuna salad",
+  "servings": 3,
+  "prep_time_min": 15,
+  "ingredients": [
+   {
+    "name": "canned tuna in water",
+    "grams_per_serving": 160,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "greek yogurt 0%",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "mustard",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lemon",
+    "grams_per_serving": 20,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lettuce",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cucumber",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "wholemeal sandwich bread",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Drain the tuna and flake it in a bowl.",
+   "Mix in the yogurt, mustard, the zest of the lemon and a squeeze of its juice.",
+   "Wash and tear the lettuce. Slice the cucumber.",
+   "Pack the tuna mix, lettuce, cucumber and bread in separate containers.",
+   "Serve the tuna on the lettuce with the cucumber and bread on the side."
+  ]
+ }
+}

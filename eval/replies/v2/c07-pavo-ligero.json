@@ -1,0 +1,263 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Sarten de pavo estilo taco",
+    "one_line": "Pavo en dados con pimiento, cebolla, tomate y maiz, hecho en una sarten con especias de taco.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "canned sweetcorn",
+     "green bell pepper",
+     "tomato",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 340,
+     "protein_g": 40,
+     "carbs_g": 28,
+     "fat_g": 6
+    },
+    "image_prompt": "Turkey taco skillet with diced turkey, corn, green pepper and tomato in a pan"
+   },
+   {
+    "idea_id": "2",
+    "name": "Guiso de pavo con pimientos y champinones",
+    "one_line": "Tiras de pavo con cebolla, pimiento rojo y verde y champinones, todo cocinado junto en una sarten.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "red bell pepper",
+     "green bell pepper",
+     "mushrooms",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 300,
+     "protein_g": 40,
+     "carbs_g": 18,
+     "fat_g": 5
+    },
+    "image_prompt": "Spanish turkey stew with red and green peppers and mushrooms in a pan"
+   },
+   {
+    "idea_id": "3",
+    "name": "Salteado de pavo con verduras",
+    "one_line": "Pavo en dados salteado con brocoli, pimiento, zanahoria y champinones en salsa suave de soja.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "broccoli",
+     "green bell pepper",
+     "carrot",
+     "mushrooms",
+     "soy sauce"
+    ],
+    "rough_macros": {
+     "kcal": 310,
+     "protein_g": 41,
+     "carbs_g": 20,
+     "fat_g": 5
+    },
+    "image_prompt": "Turkey and vegetable stir-fry with broccoli, carrot, pepper and mushrooms on a dark plate"
+   },
+   {
+    "idea_id": "4",
+    "name": "Escalopines de pavo al limon con judias verdes",
+    "one_line": "Filetes finos de pavo a la plancha con salsa de ajo, limon y perejil, con judias verdes al lado.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "lemon juice",
+     "garlic",
+     "fresh parsley",
+     "green beans"
+    ],
+    "rough_macros": {
+     "kcal": 280,
+     "protein_g": 42,
+     "carbs_g": 10,
+     "fat_g": 5
+    },
+    "image_prompt": "Pan-fried turkey cutlets with lemon garlic sauce, parsley and green beans"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Sarten de pavo estilo taco",
+  "servings": 3,
+  "prep_time_min": 30,
+  "ingredients": [
+   {
+    "name": "turkey tenderloin",
+    "grams_per_serving": 190,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "canned sweetcorn",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "green bell pepper",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "tomato",
+    "grams_per_serving": 120,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "cumin",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 2,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Corta el pavo en dados pequenos. Corta el pimiento, la cebolla y el tomate.",
+   "Calienta el aceite en una sarten grande y sofrie la cebolla y el pimiento 5 minutos.",
+   "Anade el pavo con comino, pimenton y sal. Cocina 8 minutos hasta que este hecho.",
+   "Anade el tomate y el maiz escurrido. Cocina 5 minutos mas.",
+   "Reparte en 3 raciones. Se come el mismo dia o se guarda en la nevera."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Sarten de pavo estilo taco",
+   "servings": 3,
+   "prep_time_min": 30,
+   "ingredients": [
+    {
+     "name": "turkey tenderloin",
+     "grams_per_serving": 160,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "canned sweetcorn",
+     "grams_per_serving": 50,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "green bell pepper",
+     "grams_per_serving": 100,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "tomato",
+     "grams_per_serving": 120,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 80,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "extra virgin olive oil",
+     "grams_per_serving": 5,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "cumin",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "paprika",
+     "grams_per_serving": 2,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Corta el pavo en dados pequenos. Corta el pimiento, la cebolla y el tomate.",
+    "Calienta el aceite en una sarten grande y sofrie la cebolla y el pimiento 5 minutos.",
+    "Anade el pavo con comino, pimenton y sal. Cocina 8 minutos hasta que este hecho.",
+    "Anade el tomate y el maiz escurrido. Cocina 5 minutos mas.",
+    "Reparte en 3 raciones. Se come el mismo dia o se guarda en la nevera."
+   ]
+  }
+ ]
+}

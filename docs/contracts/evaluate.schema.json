@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "smartbite/evaluate.schema.json",
+  "title": "Engine API: evaluate one recipe",
+  "description": "POST body and reply of the engine API. The web app sends the form, the Kitchen Profile, the picked idea and the recipe the model wrote; the engine returns the Meal result with packs, macros and leftovers computed in code. No model call happens here.",
+  "$defs": {
+    "Input": {
+      "description": "Request body.",
+      "type": "object",
+      "required": ["form", "picked_idea", "recipe"],
+      "properties": {
+        "form": { "$ref": "common.schema.json#/$defs/MealForm" },
+        "profile": { "$ref": "kitchen-profile.schema.json#/$defs/Output", "description": "The user's Kitchen Profile. Omitted: the default profile (prompts/kitchen-profile.default.json)." },
+        "picked_idea": { "$ref": "idea.schema.json#/$defs/Idea" },
+        "recipe": { "$ref": "recipe.schema.json#/$defs/Output" },
+        "prices": {
+          "description": "Optional prices the user typed (saved in their browser), one per food and pack size. Omitted or empty: no line has a price, the budget check is marked incomplete and the reply is the same as before prices existed. A price for a size that is not one of the food's typical packs is ignored. The same food and pack size twice is a 422.",
+          "type": "array",
+          "maxItems": 200,
+          "items": { "$ref": "#/$defs/Price" }
+        },
+        "country": {
+          "description": "Optional country for estimated prices. \"ES\": every line without a user price gets an estimated pack price from Spain's average prices (MAPA household panel, data/open/prices/es.json), with price_source \"estimate\"; the user's prices always win. Omitted: no estimates and the reply is the same as before estimates existed.",
+          "enum": ["ES"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Price": {
+      "description": "Price of one pack: food is the English food key of the pack line (line.food), pack_grams the weight of one pack as the line shows it (grams_bought / packs_to_buy; for eggs units x 51 g, e.g. 612 for 12; for loose items the unit, e.g. 1000).",
+      "type": "object",
+      "required": ["food", "pack_grams", "price_eur"],
+      "properties": {
+        "food": { "type": "string", "maxLength": 100 },
+        "pack_grams": { "type": "number", "exclusiveMinimum": 0, "maximum": 100000 },
+        "price_eur": { "type": "number", "minimum": 0, "maximum": 1000 }
+      },
+      "additionalProperties": false
+    },
+    "Output": {
+      "description": "Response body: one Meal result.",
+      "$ref": "meal.schema.json#/$defs/Output"
+    }
+  }
+}

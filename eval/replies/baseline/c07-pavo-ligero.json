@@ -1,0 +1,161 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Escalopines de pavo al limón con calabacín",
+    "one_line": "Filetes finos de pavo a la plancha con salsa de limón y ajo, y calabacín salteado.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "lemon",
+     "zucchini"
+    ],
+    "rough_macros": {
+     "kcal": 330,
+     "protein_g": 42,
+     "carbs_g": 12,
+     "fat_g": 6
+    },
+    "image_prompt": "Thin lemon turkey cutlets with sauteed zucchini slices on a white plate"
+   },
+   {
+    "idea_id": "2",
+    "name": "Guiso de pavo con pimientos y champiñones",
+    "one_line": "Tiras de pavo cocinadas con cebolla, pimientos y champiñones en una sola sartén.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "red bell pepper",
+     "green bell pepper",
+     "mushrooms",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 320,
+     "protein_g": 41,
+     "carbs_g": 16,
+     "fat_g": 5
+    },
+    "image_prompt": "Turkey strip stew with red and green peppers and mushrooms in a pan"
+   },
+   {
+    "idea_id": "3",
+    "name": "Salteado de pavo con brócoli y zanahoria",
+    "one_line": "Pavo en dados salteado con brócoli, zanahoria y champiñones en salsa ligera de soja.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "broccoli",
+     "carrot",
+     "mushrooms",
+     "soy sauce"
+    ],
+    "rough_macros": {
+     "kcal": 335,
+     "protein_g": 43,
+     "carbs_g": 15,
+     "fat_g": 5
+    },
+    "image_prompt": "Turkey and vegetable stir-fry with broccoli, carrot and mushrooms in a bowl"
+   },
+   {
+    "idea_id": "4",
+    "name": "Wraps de pavo en hojas de lechuga",
+    "one_line": "Pavo picado fino salteado con zanahoria y cebolleta, servido en hojas de lechuga.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "lettuce",
+     "carrot",
+     "spring onion",
+     "teriyaki sauce"
+    ],
+    "rough_macros": {
+     "kcal": 320,
+     "protein_g": 41,
+     "carbs_g": 14,
+     "fat_g": 5
+    },
+    "image_prompt": "Lettuce leaf wraps filled with diced turkey, carrot and spring onion"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Escalopines de pavo al limón con calabacín",
+  "servings": 3,
+  "prep_time_min": 35,
+  "ingredients": [
+   {
+    "name": "turkey tenderloin",
+    "grams_per_serving": 190,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "zucchini",
+    "grams_per_serving": 250,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lemon",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "dried parsley",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Corta el pavo en filetes finos y sazónalos con sal y pimienta.",
+   "Corta el calabacín en rodajas y pica el ajo. Ralla la piel del limón y corta el resto en rodajas.",
+   "Dora los filetes en una sartén con el aceite, 2 minutos por lado, y resérvalos.",
+   "En la misma sartén saltea el ajo y el calabacín 5 minutos.",
+   "Añade la ralladura y unas rodajas de limón y devuelve el pavo a la sartén 1 minuto.",
+   "Reparte en 3 táperes y guarda en la nevera."
+  ]
+ }
+}

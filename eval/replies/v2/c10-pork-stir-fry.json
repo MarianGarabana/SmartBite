@@ -1,0 +1,248 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Pork loin stir-fry with broccoli and carrot",
+    "one_line": "Sliced pork loin with broccoli and carrot in a soy and ginger sauce, served over rice.",
+    "main_ingredients": [
+     "pork loin",
+     "broccoli",
+     "carrot",
+     "rice"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 45,
+     "carbs_g": 50,
+     "fat_g": 10
+    },
+    "image_prompt": "Pork loin slices stir-fried with broccoli and carrot over white rice in a bowl"
+   },
+   {
+    "idea_id": "2",
+    "name": "Pork fried rice with egg and peas",
+    "one_line": "Diced pork stir-fried with cold rice, frozen peas and scrambled egg, seasoned with soy sauce.",
+    "main_ingredients": [
+     "pork loin",
+     "rice",
+     "eggs",
+     "frozen peas",
+     "soy sauce"
+    ],
+    "rough_macros": {
+     "kcal": 520,
+     "protein_g": 45,
+     "carbs_g": 52,
+     "fat_g": 13
+    },
+    "image_prompt": "Pork fried rice with scrambled egg and green peas in a bowl"
+   },
+   {
+    "idea_id": "3",
+    "name": "Thai-style pork with red pepper and green beans",
+    "one_line": "Pork loin stir-fried with garlic, red pepper and green beans, served over rice.",
+    "main_ingredients": [
+     "pork loin",
+     "red bell pepper",
+     "green beans",
+     "garlic",
+     "rice",
+     "soy sauce"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 45,
+     "carbs_g": 48,
+     "fat_g": 10
+    },
+    "image_prompt": "Thai-style stir-fried pork with red pepper strips and green beans over rice"
+   },
+   {
+    "idea_id": "4",
+    "name": "Teriyaki pork with mushrooms and zucchini over rice",
+    "one_line": "Pork loin strips with mushrooms and zucchini in a light teriyaki glaze, served over rice.",
+    "main_ingredients": [
+     "pork loin",
+     "mushrooms",
+     "zucchini",
+     "teriyaki sauce",
+     "rice"
+    ],
+    "rough_macros": {
+     "kcal": 510,
+     "protein_g": 45,
+     "carbs_g": 50,
+     "fat_g": 11
+    },
+    "image_prompt": "Teriyaki glazed pork strips with mushrooms and zucchini on rice"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Salteado de cerdo con brócoli, zanahoria y arroz",
+  "servings": 3,
+  "prep_time_min": 40,
+  "ingredients": [
+   {
+    "name": "pork loin",
+    "grams_per_serving": 180,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "broccoli",
+    "grams_per_serving": 200,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "carrot",
+    "grams_per_serving": 120,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "rice",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "soy sauce",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "ground ginger",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Cuece el arroz y deja que se enfríe.",
+   "Corta el cerdo en tiras finas, el brócoli en ramilletes y la zanahoria en bastones.",
+   "Saltea el cerdo con el ajo picado en una sartén caliente con el aceite, 5 minutos.",
+   "Añade la zanahoria y el brócoli y saltea 6 minutos.",
+   "Agrega la salsa de soja y el jengibre y mezcla.",
+   "Reparte en 3 táperes con el arroz y guarda en la nevera."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Salteado de cerdo con brócoli, zanahoria y arroz",
+   "servings": 3,
+   "prep_time_min": 40,
+   "ingredients": [
+    {
+     "name": "pork loin",
+     "grams_per_serving": 180,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "broccoli",
+     "grams_per_serving": 200,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "carrot",
+     "grams_per_serving": 120,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "rice",
+     "grams_per_serving": 40,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": true
+    },
+    {
+     "name": "soy sauce",
+     "grams_per_serving": 10,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "garlic",
+     "grams_per_serving": 5,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "ground ginger",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "extra virgin olive oil",
+     "grams_per_serving": 2,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Cuece el arroz y deja que se enfríe.",
+    "Corta el cerdo en tiras finas, el brócoli en ramilletes y la zanahoria en bastones.",
+    "Saltea el cerdo con el ajo picado en una sartén caliente con el aceite, 5 minutos.",
+    "Añade la zanahoria y el brócoli y saltea 6 minutos.",
+    "Agrega la salsa de soja y el jengibre y mezcla.",
+    "Reparte en 3 táperes con el arroz y guarda en la nevera."
+   ]
+  }
+ ]
+}

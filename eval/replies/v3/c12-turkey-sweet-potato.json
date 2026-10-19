@@ -1,0 +1,153 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Mexican turkey stuffed sweet potatoes",
+    "one_line": "Baked sweet potato filled with spiced turkey and corn, topped with avocado.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "sweet potato",
+     "canned sweetcorn",
+     "avocado"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 45,
+     "carbs_g": 38,
+     "fat_g": 12
+    },
+    "image_prompt": "Baked sweet potato stuffed with spiced turkey, corn and avocado"
+   },
+   {
+    "idea_id": "2",
+    "name": "Turkey and sweet potato skillet",
+    "one_line": "Diced turkey browned with onion and red pepper, with sweet potato cubes cooked until tender.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "sweet potato",
+     "red bell pepper",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 430,
+     "protein_g": 46,
+     "carbs_g": 36,
+     "fat_g": 7
+    },
+    "image_prompt": "Skillet of diced turkey, sweet potato cubes and red pepper"
+   },
+   {
+    "idea_id": "3",
+    "name": "Turkey taco skillet",
+    "one_line": "Finely diced turkey cooked with peppers, onion, corn and tomato with taco spices.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "canned sweetcorn",
+     "green bell pepper",
+     "tomato",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 400,
+     "protein_g": 46,
+     "carbs_g": 30,
+     "fat_g": 6
+    },
+    "image_prompt": "Turkey taco skillet with peppers, corn and tomato"
+   },
+   {
+    "idea_id": "4",
+    "name": "Spanish turkey stew with peppers and mushrooms",
+    "one_line": "Turkey strips cooked with onion, red and green pepper and mushrooms in one pan.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "red bell pepper",
+     "green bell pepper",
+     "mushrooms",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 330,
+     "protein_g": 46,
+     "carbs_g": 15,
+     "fat_g": 5
+    },
+    "image_prompt": "Turkey stew with red and green peppers and mushrooms in a pan"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Mexican turkey stuffed sweet potatoes",
+  "servings": 4,
+  "prep_time_min": 60,
+  "ingredients": [
+   {
+    "name": "turkey tenderloin",
+    "grams_per_serving": 200,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "sweet potato",
+    "grams_per_serving": 130,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "canned sweetcorn",
+    "grams_per_serving": 37,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "avocado",
+    "grams_per_serving": 34,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cumin",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "smoked paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Hornea las batatas enteras a 200 C durante 45 minutos.",
+   "Pica el pavo en dados pequeños y dóralo con el aceite, el comino y el pimentón 8 minutos.",
+   "Añade el maíz escurrido y cocina 2 minutos.",
+   "Abre las batatas y rellénalas con el pavo. Guarda en 4 táperes.",
+   "Corta el aguacate en el momento de comer y ponlo por encima."
+  ]
+ }
+}

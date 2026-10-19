@@ -1,0 +1,70 @@
+{
+  "id": "default",
+  "version": 1,
+  "name": "Default kitchen",
+  "note": "Default Kitchen Profile. Every field is one editable line in the profile editor; smartbite_engine.prompts.render_profile turns it into prompt text. An empty value leaves the line out. Schema: docs/contracts/kitchen-profile.schema.json.",
+  "sections": [
+    {
+      "id": "about",
+      "label": "About you",
+      "plain": true,
+      "fields": [
+        {"id": "who", "label": "Who you cook for", "type": "text",
+         "value": "You help plan single meals for one person who cooks at home and buys groceries at a supermarket."}
+      ]
+    },
+    {
+      "id": "targets",
+      "label": "Targets",
+      "fields": [
+        {"id": "kcal_target", "label": "Calories per meal", "type": "number", "unit": "kcal", "value": 450,
+         "line": "About {value} kcal per meal unless the form says otherwise."},
+        {"id": "protein_g_target", "label": "Protein per meal", "type": "number", "unit": "g", "value": 45,
+         "line": "About {value} g protein per meal unless the form says otherwise."}
+      ]
+    },
+    {
+      "id": "budget",
+      "label": "Budget",
+      "fields": [
+        {"id": "everyday", "label": "Kind of ingredients", "type": "text",
+         "value": "Cheap, everyday ingredients."},
+        {"id": "full_packs", "label": "Packs", "type": "text",
+         "value": "Prefer using whole packs. Loose fruit and vegetables are often sold per kg."}
+      ]
+    },
+    {
+      "id": "kitchen",
+      "label": "Kitchen",
+      "fields": [
+        {"id": "fridge", "label": "Fridge", "type": "text",
+         "value": "Small fridge with very little space. Prefer shelf-stable items (canned tuna, canned corn, legumes in jars or cans)."},
+        {"id": "freezer", "label": "Freezer", "type": "text",
+         "value": "Frozen fruit and vegetables are fine and often cheaper, but the freezer is small, so only a few frozen packs per meal. If a meal must have no frozen food, the form says so."},
+        {"id": "gear", "label": "Gear", "type": "text",
+         "value": "No blender."},
+        {"id": "reheat", "label": "Reheating", "type": "text",
+         "value": "Lunch is reheated in a microwave at work."},
+        {"id": "prep_session", "label": "Prep time", "type": "text",
+         "value": "One prep session of 2 to 3 hours per week."}
+      ]
+    },
+    {
+      "id": "style",
+      "label": "Style",
+      "fields": [
+        {"id": "component_prep", "label": "Prep style", "type": "text",
+         "value": "Component prep, not fully assembled meals. Batch-cook the slow parts (chicken, potato, sweet potato). Cut the fresh items (cucumber, tomato) in the same prep session, so everything is ready."},
+        {"id": "dressings", "label": "Dressings", "type": "text",
+         "value": "No olive oil or mayonnaise in salads. Use skyr or Greek yogurt dressings."},
+        {"id": "whole_foods", "label": "Whole foods", "type": "text",
+         "value": "Whole foods: prefer the least processed products with the fewest ingredients. Some processed food is fine; long ingredient lists are not."},
+        {"id": "proteins", "label": "Proteins you like", "type": "list", "value": [],
+         "line": "Proteins I like: {value}.",
+         "help": "Optional, e.g. chicken, canned tuna, eggs, lentils."},
+        {"id": "language", "label": "Writing", "type": "text",
+         "value": "Plain, short language."}
+      ]
+    }
+  ]
+}

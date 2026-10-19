@@ -1,0 +1,625 @@
+{
+ "date": "2026-10-03",
+ "form": {
+  "craving": "Tuna and chickpea salad with a skyr dressing.",
+  "exclude": [],
+  "kcal_target": 450,
+  "protein_g_target": 45,
+  "budget_total_eur": 10,
+  "servings": 2,
+  "keep_leftovers_low": true,
+  "gear": [
+   "no_blender"
+  ],
+  "reheat_at_work": true
+ },
+ "picked_idea": {
+  "idea_id": "1",
+  "name": "Classic tuna and chickpea salad",
+  "one_line": "Tuna, chickpeas, lettuce and tomato with a skyr dressing",
+  "rough_macros": {
+   "kcal": 450,
+   "protein_g": 48,
+   "carbs_g": 26,
+   "fat_g": 8
+  },
+  "image_prompt": "White lettuce bowl with flaked tuna, white chickpeas, red tomato, cucumber slices, and creamy white skyr dressing",
+  "main_ingredients": [
+   "canned tuna in water",
+   "canned chickpeas",
+   "skyr",
+   "roasted red peppers",
+   "lettuce",
+   "lemon"
+  ]
+ },
+ "recipe": {
+  "title": "Tuna and chickpea salad with skyr dressing",
+  "servings": 2,
+  "prep_time_min": 15,
+  "ingredients": [
+   {
+    "name": "canned tuna in water",
+    "grams_per_serving": 150,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "canned chickpeas",
+    "grams_per_serving": 200,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "skyr",
+    "grams_per_serving": 150,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "roasted red peppers",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lettuce",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lemon",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "mustard",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Drain the tuna, the chickpeas and the roasted peppers well. Rinse the chickpeas with cold water and dry them.",
+   "In a bowl, mix the skyr, lemon juice, mustard, salt and pepper into a smooth cream. If it is too thick, add a tablespoon of water.",
+   "Wash the lettuce and tear it into pieces. Cut the roasted peppers into strips.",
+   "Divide the lettuce between two containers. Top with the chickpeas, the flaked tuna and the peppers.",
+   "Keep the dressing apart in a small jar. Pour it on just before eating and mix. Eat it cold, or warm it in the microwave without the dressing."
+  ]
+ },
+ "evaluation": {
+  "status": "issues",
+  "recipe_title": "Tuna and chickpea salad with skyr dressing",
+  "items": [
+   {
+    "name": "canned tuna in water",
+    "food": "canned tuna in water",
+    "grams_per_serving": 150,
+    "total_grams": 300,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "canned chickpeas",
+    "food": "canned chickpeas",
+    "grams_per_serving": 200,
+    "total_grams": 400,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "skyr",
+    "food": "skyr",
+    "grams_per_serving": 150,
+    "total_grams": 300,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "roasted red peppers",
+    "food": "roasted red peppers",
+    "grams_per_serving": 50,
+    "total_grams": 100,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "lettuce",
+    "food": "lettuce",
+    "grams_per_serving": 60,
+    "total_grams": 120,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "lemon",
+    "food": "lemon",
+    "grams_per_serving": 10,
+    "total_grams": 20,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "mustard",
+    "food": "mustard",
+    "grams_per_serving": 5,
+    "total_grams": 10,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "salt",
+    "food": "salt",
+    "grams_per_serving": 1,
+    "total_grams": 2,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "black pepper",
+    "food": "black pepper",
+    "grams_per_serving": 0.5,
+    "total_grams": 1.0,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   }
+  ],
+  "pack": {
+   "lines": [
+    {
+     "ingredient": "canned tuna in water",
+     "grams_needed": 300,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "canned tuna in water 168 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 336,
+     "grams_left": 36,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 10.714285714285714,
+     "leftover_status": "keeps",
+     "food": "canned tuna in water"
+    },
+    {
+     "ingredient": "canned chickpeas",
+     "grams_needed": 400,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "canned chickpeas 500 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 500,
+     "grams_left": 100,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 20.0,
+     "leftover_status": "keeps",
+     "food": "canned chickpeas"
+    },
+    {
+     "ingredient": "skyr",
+     "grams_needed": 300,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "skyr 150 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 300,
+     "grams_left": 0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 0.0,
+     "leftover_status": "none",
+     "food": "skyr"
+    },
+    {
+     "ingredient": "roasted red peppers",
+     "grams_needed": 100,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "roasted red peppers 290 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 290,
+     "grams_left": 190,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 65.51724137931035,
+     "leftover_status": "keeps",
+     "food": "roasted red peppers"
+    },
+    {
+     "ingredient": "lettuce",
+     "grams_needed": 120,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "lettuce, loose (350 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 350,
+     "grams_left": 230,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 65.71428571428571,
+     "leftover_status": "use_in_2_days",
+     "food": "lettuce"
+    },
+    {
+     "ingredient": "lemon",
+     "grams_needed": 20,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "lemon, loose (58 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 58,
+     "grams_left": 38,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 65.51724137931035,
+     "leftover_status": "use_in_2_days",
+     "food": "lemon"
+    },
+    {
+     "ingredient": "mustard",
+     "grams_needed": 10,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "mustard 300 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 300,
+     "grams_left": 290,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 96.66666666666667,
+     "leftover_status": "keeps",
+     "food": "mustard"
+    },
+    {
+     "ingredient": "salt",
+     "grams_needed": 2,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "salt 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 998,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 99.8,
+     "leftover_status": "keeps",
+     "food": "salt"
+    },
+    {
+     "ingredient": "black pepper",
+     "grams_needed": 1.0,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "black pepper 65 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 65,
+     "grams_left": 64.0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 98.46153846153847,
+     "leftover_status": "keeps",
+     "food": "black pepper"
+    }
+   ],
+   "cart_total_eur": 0,
+   "cost_per_serving_eur": 0.0,
+   "used_total_eur": 0,
+   "waste_grams": 594,
+   "waste_eur": 0,
+   "within_budget": true,
+   "over_budget_eur": null,
+   "optional_total_eur": 0,
+   "budget_check_complete": false,
+   "unpriced": [
+    "canned tuna in water",
+    "canned chickpeas",
+    "skyr",
+    "roasted red peppers",
+    "lettuce",
+    "lemon"
+   ],
+   "price_note": null,
+   "change_requests": [
+    {
+     "from_agent": "pack",
+     "ingredient": "lettuce",
+     "reason": "high_leftover",
+     "hint": "Buying 350 g but using 120 g (66% left, spoils fast). Do not grow the portion: grams may change at most 15% from the first recipe. Use a different ingredient, or mark the leftover to use in another meal (leftover_plan \"use_in_another_meal\")."
+    },
+    {
+     "from_agent": "pack",
+     "ingredient": "lemon",
+     "reason": "high_leftover",
+     "hint": "Buying 58 g but using 20 g (66% left, spoils fast). Do not grow the portion: grams may change at most 15% from the first recipe. Use a different ingredient, or mark the leftover to use in another meal (leftover_plan \"use_in_another_meal\")."
+    }
+   ]
+  },
+  "macros": {
+   "per_serving": {
+    "kcal": 559.6,
+    "protein_g": 67.86,
+    "carbs_g": 44.52,
+    "fat_g": 8.92
+   },
+   "total": {
+    "kcal": 1119.21,
+    "protein_g": 135.72,
+    "carbs_g": 89.04,
+    "fat_g": 17.84
+   },
+   "misses": [
+    "kcal 560 vs target 450",
+    "protein 68 g is more than 20% over target 45 g: cut the protein ingredient"
+   ],
+   "missing_nutrition": [],
+   "unresolved": [],
+   "lines": [
+    {
+     "name": "canned tuna in water",
+     "food": "canned tuna in water",
+     "grams": 300,
+     "source": "ciqual",
+     "source_id": "26181",
+     "amount": {
+      "kcal": 381.0,
+      "protein_g": 74.4,
+      "carbs_g": 11.01,
+      "fat_g": 4.38
+     },
+     "missing": []
+    },
+    {
+     "name": "canned chickpeas",
+     "food": "canned chickpeas",
+     "grams": 400,
+     "source": "ciqual",
+     "source_id": "20532",
+     "amount": {
+      "kcal": 488.0,
+      "protein_g": 26.96,
+      "carbs_g": 60.0,
+      "fat_g": 10.72
+     },
+     "missing": []
+    },
+    {
+     "name": "skyr",
+     "food": "skyr",
+     "grams": 300,
+     "source": "usda",
+     "source_id": "330137",
+     "amount": {
+      "kcal": 183.0,
+      "protein_g": 30.9,
+      "carbs_g": 10.92,
+      "fat_g": 1.11
+     },
+     "missing": []
+    },
+    {
+     "name": "roasted red peppers",
+     "food": "roasted red peppers",
+     "grams": 100,
+     "source": "ciqual",
+     "source_id": "20275",
+     "amount": {
+      "kcal": 26.3,
+      "protein_g": 0.96,
+      "carbs_g": 4.5,
+      "fat_g": 0.2
+     },
+     "missing": []
+    },
+    {
+     "name": "lettuce",
+     "food": "lettuce",
+     "grams": 120,
+     "source": "ciqual",
+     "source_id": "20031",
+     "amount": {
+      "kcal": 17.64,
+      "protein_g": 1.62,
+      "carbs_g": 1.46,
+      "fat_g": 0.24
+     },
+     "missing": []
+    },
+    {
+     "name": "lemon",
+     "food": "lemon",
+     "grams": 20,
+     "source": "ciqual",
+     "source_id": "13009",
+     "amount": {
+      "kcal": 4.86,
+      "protein_g": 0.05,
+      "carbs_g": 0.31,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "mustard",
+     "food": "mustard",
+     "grams": 10,
+     "source": "ciqual",
+     "source_id": "11013",
+     "amount": {
+      "kcal": 15.1,
+      "protein_g": 0.69,
+      "carbs_g": 0.43,
+      "fat_g": 1.12
+     },
+     "missing": []
+    },
+    {
+     "name": "salt",
+     "food": "salt",
+     "grams": 2,
+     "source": "ciqual",
+     "source_id": "11017",
+     "amount": {
+      "kcal": 0.0,
+      "protein_g": 0.0,
+      "carbs_g": 0.0,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "black pepper",
+     "food": "black pepper",
+     "grams": 1.0,
+     "source": "ciqual",
+     "source_id": "11015",
+     "amount": {
+      "kcal": 3.31,
+      "protein_g": 0.13,
+      "carbs_g": 0.4,
+      "fat_g": 0.07
+     },
+     "missing": []
+    }
+   ]
+  },
+  "change_requests": [
+   {
+    "from_agent": "pack",
+    "ingredient": "lettuce",
+    "reason": "high_leftover",
+    "hint": "Buying 350 g but using 120 g (66% left, spoils fast). Do not grow the portion: grams may change at most 15% from the first recipe. Use a different ingredient, or mark the leftover to use in another meal (leftover_plan \"use_in_another_meal\")."
+   },
+   {
+    "from_agent": "pack",
+    "ingredient": "lemon",
+    "reason": "high_leftover",
+    "hint": "Buying 58 g but using 20 g (66% left, spoils fast). Do not grow the portion: grams may change at most 15% from the first recipe. Use a different ingredient, or mark the leftover to use in another meal (leftover_plan \"use_in_another_meal\")."
+   },
+   {
+    "from_agent": "macro",
+    "ingredient": null,
+    "reason": "misses_macros",
+    "hint": "Per serving: kcal 560 vs target 450; protein 68 g is more than 20% over target 45 g: cut the protein ingredient. Adjust grams or swap ingredients."
+   }
+  ]
+ },
+ "mfp": "SmartBite: Tuna and chickpea salad with skyr dressing\nServings: 2\n\ncanned tuna in water, 300 g\ncanned chickpeas, 400 g\nskyr, 300 g\nroasted red peppers, 100 g\nlettuce, 120 g (raw)\nlemon, 20 g\nmustard, 10 g\nsalt, 2 g\nblack pepper, 1 g (raw)",
+ "slug": "tuna-and-chickpea-salad-with-skyr-dressing",
+ "demo": true,
+ "photo": "/demo/images/tuna-and-chickpea-salad-with-skyr-dressing.jpg",
+ "photo_ai_generated": true
+}

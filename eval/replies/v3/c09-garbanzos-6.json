@@ -1,0 +1,243 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Potaje de garbanzos con espinacas",
+    "one_line": "Garbanzos de bote con espinacas, cebolla y ajo, con pimentón y comino. Para toda la semana.",
+    "main_ingredients": [
+     "canned chickpeas",
+     "spinach",
+     "onion",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 28,
+     "carbs_g": 58,
+     "fat_g": 10
+    },
+    "image_prompt": "Chickpea and spinach stew in a dark bowl, overhead"
+   },
+   {
+    "idea_id": "2",
+    "name": "Potaje de garbanzos majao con tomate",
+    "one_line": "Garbanzos con tomate, cebolla y pimiento verde, con majado de comino y ajo.",
+    "main_ingredients": [
+     "canned chickpeas",
+     "tomato",
+     "onion",
+     "green bell pepper",
+     "garlic"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 27,
+     "carbs_g": 60,
+     "fat_g": 9
+    },
+    "image_prompt": "Spanish chickpea potaje with tomato and green pepper in a bowl, overhead"
+   },
+   {
+    "idea_id": "3",
+    "name": "Tikka masala ligero de pollo con garbanzos",
+    "one_line": "Pollo marinado en yogur con salsa de tomate especiada, garbanzos y espinacas.",
+    "main_ingredients": [
+     "chicken breast",
+     "canned chickpeas",
+     "spinach",
+     "greek yogurt 0%",
+     "crushed tomatoes"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 38,
+     "carbs_g": 32,
+     "fat_g": 9
+    },
+    "image_prompt": "Chicken tikka masala with chickpeas and spinach in a bowl, overhead"
+   },
+   {
+    "idea_id": "4",
+    "name": "Pollo marroquí con cuscús y garbanzos",
+    "one_line": "Pollo especiado con zanahoria, cebolla y garbanzos sobre cuscús.",
+    "main_ingredients": [
+     "chicken breast",
+     "couscous",
+     "canned chickpeas",
+     "carrot",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 480,
+     "protein_g": 40,
+     "carbs_g": 45,
+     "fat_g": 8
+    },
+    "image_prompt": "Moroccan chicken with chickpeas and couscous, overhead"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Potaje de garbanzos con espinacas",
+  "servings": 6,
+  "prep_time_min": 35,
+  "ingredients": [
+   {
+    "name": "canned chickpeas",
+    "grams_per_serving": 333,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spinach",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 55,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 6,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "cumin",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Escurre y enjuaga los garbanzos. Pica la cebolla y el ajo.",
+   "Sofríe la cebolla y el ajo con el aceite 8 minutos. Añade el pimentón, el comino y la sal.",
+   "Agrega los garbanzos y 400 ml de agua. Cocina 15 minutos a fuego medio.",
+   "Añade las espinacas y cocina 2 minutos hasta que se reduzcan.",
+   "Reparte en 6 recipientes y guarda en la nevera."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Potaje de garbanzos con espinacas",
+   "servings": 6,
+   "prep_time_min": 35,
+   "ingredients": [
+    {
+     "name": "canned chickpeas",
+     "grams_per_serving": 300,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "spinach",
+     "grams_per_serving": 50,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 55,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "garlic",
+     "grams_per_serving": 6,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "egg whites",
+     "grams_per_serving": 80,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "paprika",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "cumin",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Escurre y enjuaga los garbanzos. Pica la cebolla y el ajo.",
+    "Cocina la cebolla y el ajo en una olla con un poco de agua 8 minutos. Añade el pimentón, el comino y la sal.",
+    "Agrega los garbanzos y 400 ml de agua. Cocina 15 minutos a fuego medio.",
+    "Añade las espinacas y cocina 2 minutos.",
+    "Vierte las claras en hilo y remueve 2 minutos hasta que cuajen.",
+    "Reparte en 6 recipientes y guarda en la nevera."
+   ]
+  }
+ ]
+}

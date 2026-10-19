@@ -1,0 +1,609 @@
+{
+ "date": "2026-10-13",
+ "form": {
+  "craving": "Overnight oats with vanilla whey isolate protein powder (30 g scoop), oats and chia seeds. High fiber, high protein, high volume. I already have the protein powder, so leave it out of the budget.",
+  "exclude": [],
+  "kcal_target": 450,
+  "protein_g_target": 40,
+  "carbs_g_max": 40,
+  "budget_total_eur": 12,
+  "servings": 8,
+  "keep_leftovers_low": true,
+  "time_limit_min": 30,
+  "gear": [
+   "oven",
+   "no_blender"
+  ],
+  "reheat_at_work": true
+ },
+ "picked_idea": {
+  "idea_id": "2",
+  "name": "Carrot cake overnight oats with berries",
+  "one_line": "Grated carrot, oats, chia and whey with walnuts, cinnamon and red berries, like carrot cake in a jar. Warms well at work.",
+  "main_ingredients": [
+   "rolled oats",
+   "carrot",
+   "vanilla whey protein",
+   "greek yogurt 0%",
+   "chia seeds",
+   "strawberries",
+   "blueberries",
+   "walnuts"
+  ],
+  "rough_macros": {
+   "kcal": 450,
+   "protein_g": 44,
+   "carbs_g": 38,
+   "fat_g": 12
+  },
+  "image_prompt": "jar of carrot cake overnight oats with grated carrot, red berries, walnuts and cinnamon, overhead photo",
+  "changes": "Add some berries: fresh strawberries plus frozen blueberries, no other frozen berries or blackberries."
+ },
+ "recipe": {
+  "idea_id": "2",
+  "title": "Carrot cake overnight oats with berries",
+  "servings": 8,
+  "prep_time_min": 20,
+  "ingredients": [
+   {
+    "name": "vanilla whey protein",
+    "grams_per_serving": 30,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "rolled oats",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "greek yogurt 0%",
+    "grams_per_serving": 125,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "carrot",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "chia seeds",
+    "grams_per_serving": 8,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "strawberries",
+    "grams_per_serving": 30,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "blueberries",
+    "grams_per_serving": 30,
+    "units_per_serving": 0,
+    "storage": "frozen",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "walnuts",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cinnamon",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Grate all the carrot with a box grater. Wash and slice the strawberries. Chop the walnuts roughly with a knife.",
+   "Set out 8 jars or containers. In each one, stir together the oats, whey, chia, cinnamon and yogurt with a splash of water until smooth and thick.",
+   "Add the grated carrot to each jar and stir in.",
+   "Top each jar with the sliced strawberries, the frozen blueberries and the chopped walnuts. Close the lids.",
+   "Keep the jars in the fridge overnight, or up to 4 days. The blueberries thaw and color the oats as they sit.",
+   "At work, eat cold, or warm in the microwave for 1 to 2 minutes and stir."
+  ]
+ },
+ "evaluation": {
+  "status": "issues",
+  "recipe_title": "Carrot cake overnight oats with berries",
+  "items": [
+   {
+    "name": "vanilla whey protein",
+    "food": "vanilla whey protein",
+    "grams_per_serving": 30,
+    "total_grams": 240,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "rolled oats",
+    "food": "rolled oats",
+    "grams_per_serving": 40,
+    "total_grams": 320,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "greek yogurt 0%",
+    "food": "greek yogurt 0%",
+    "grams_per_serving": 125,
+    "total_grams": 1000,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "carrot",
+    "food": "carrot",
+    "grams_per_serving": 50,
+    "total_grams": 400,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "chia seeds",
+    "food": "chia seeds",
+    "grams_per_serving": 8,
+    "total_grams": 64,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "strawberries",
+    "food": "strawberries",
+    "grams_per_serving": 30,
+    "total_grams": 240,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": "use_in_another_meal"
+   },
+   {
+    "name": "blueberries",
+    "food": "blueberries",
+    "grams_per_serving": 30,
+    "total_grams": 240,
+    "units_total": null,
+    "storage": "frozen",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "walnuts",
+    "food": "walnuts",
+    "grams_per_serving": 10,
+    "total_grams": 80,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "cinnamon",
+    "food": "cinnamon",
+    "grams_per_serving": 1,
+    "total_grams": 8,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   }
+  ],
+  "pack": {
+   "lines": [
+    {
+     "ingredient": "vanilla whey protein",
+     "grams_needed": 240,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "vanilla whey protein 2000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 2000,
+     "grams_left": 1760,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 88.0,
+     "leftover_status": "keeps",
+     "food": "vanilla whey protein"
+    },
+    {
+     "ingredient": "rolled oats",
+     "grams_needed": 320,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "rolled oats 500 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 500,
+     "grams_left": 180,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 36.0,
+     "leftover_status": "keeps",
+     "food": "rolled oats"
+    },
+    {
+     "ingredient": "greek yogurt 0%",
+     "grams_needed": 1000,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "greek yogurt 0% 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 0,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 0.0,
+     "leftover_status": "none",
+     "food": "greek yogurt 0%"
+    },
+    {
+     "ingredient": "carrot",
+     "grams_needed": 400,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "carrot, loose (61 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 7,
+     "grams_bought": 427,
+     "grams_left": 27,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 6.323185011709602,
+     "leftover_status": "use_in_2_days",
+     "food": "carrot"
+    },
+    {
+     "ingredient": "chia seeds",
+     "grams_needed": 64,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "chia seeds 250 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 250,
+     "grams_left": 186,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 74.4,
+     "leftover_status": "keeps",
+     "food": "chia seeds"
+    },
+    {
+     "ingredient": "strawberries",
+     "grams_needed": 240,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "strawberries 250 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 250,
+     "grams_left": 10,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 4.0,
+     "leftover_status": "use_in_another_meal",
+     "food": "strawberries"
+    },
+    {
+     "ingredient": "blueberries",
+     "grams_needed": 240,
+     "storage": "frozen",
+     "optional": false,
+     "has_price": false,
+     "product_name": "blueberries 125 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 250,
+     "grams_left": 10,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 4.0,
+     "leftover_status": "keeps",
+     "food": "blueberries"
+    },
+    {
+     "ingredient": "walnuts",
+     "grams_needed": 80,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "walnuts 200 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 200,
+     "grams_left": 120,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 60.0,
+     "leftover_status": "keeps",
+     "food": "walnuts"
+    },
+    {
+     "ingredient": "cinnamon",
+     "grams_needed": 8,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "cinnamon 40 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 40,
+     "grams_left": 32,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 80.0,
+     "leftover_status": "keeps",
+     "food": "cinnamon"
+    }
+   ],
+   "cart_total_eur": 0,
+   "cost_per_serving_eur": 0.0,
+   "used_total_eur": 0,
+   "waste_grams": 533,
+   "waste_eur": 0,
+   "within_budget": true,
+   "over_budget_eur": null,
+   "optional_total_eur": 0,
+   "budget_check_complete": false,
+   "unpriced": [
+    "rolled oats",
+    "greek yogurt 0%",
+    "carrot",
+    "chia seeds",
+    "strawberries",
+    "blueberries",
+    "walnuts"
+   ],
+   "price_note": null,
+   "change_requests": []
+  },
+  "macros": {
+   "per_serving": {
+    "kcal": 486.04,
+    "protein_g": 45.1,
+    "carbs_g": 42.65,
+    "fat_g": 12.84
+   },
+   "total": {
+    "kcal": 3888.32,
+    "protein_g": 360.83,
+    "carbs_g": 341.24,
+    "fat_g": 102.69
+   },
+   "misses": [
+    "carbs 43 g over max 40 g"
+   ],
+   "missing_nutrition": [],
+   "unresolved": [],
+   "lines": [
+    {
+     "name": "vanilla whey protein",
+     "food": "vanilla whey protein",
+     "grams": 240,
+     "source": "usda",
+     "source_id": "173180",
+     "amount": {
+      "kcal": 844.8,
+      "protein_g": 187.51,
+      "carbs_g": 15.0,
+      "fat_g": 3.74
+     },
+     "missing": []
+    },
+    {
+     "name": "rolled oats",
+     "food": "rolled oats",
+     "grams": 320,
+     "source": "usda",
+     "source_id": "173904",
+     "amount": {
+      "kcal": 1212.8,
+      "protein_g": 42.08,
+      "carbs_g": 216.64,
+      "fat_g": 20.86
+     },
+     "missing": []
+    },
+    {
+     "name": "greek yogurt 0%",
+     "food": "greek yogurt 0%",
+     "grams": 1000,
+     "source": "usda",
+     "source_id": "330137",
+     "amount": {
+      "kcal": 610.0,
+      "protein_g": 103.0,
+      "carbs_g": 36.4,
+      "fat_g": 3.7
+     },
+     "missing": []
+    },
+    {
+     "name": "carrot",
+     "food": "carrot",
+     "grams": 400,
+     "source": "ciqual",
+     "source_id": "20009",
+     "amount": {
+      "kcal": 120.8,
+      "protein_g": 3.12,
+      "carbs_g": 20.64,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "chia seeds",
+     "food": "chia seeds",
+     "grams": 64,
+     "source": "ciqual",
+     "source_id": "15047",
+     "amount": {
+      "kcal": 290.56,
+      "protein_g": 10.56,
+      "carbs_g": 4.94,
+      "fat_g": 19.65
+     },
+     "missing": []
+    },
+    {
+     "name": "strawberries",
+     "food": "strawberries",
+     "grams": 240,
+     "source": "ciqual",
+     "source_id": "13014",
+     "amount": {
+      "kcal": 84.24,
+      "protein_g": 1.51,
+      "carbs_g": 14.47,
+      "fat_g": 0.0
+     },
+     "missing": []
+    },
+    {
+     "name": "blueberries",
+     "food": "blueberries",
+     "grams": 240,
+     "source": "ciqual",
+     "source_id": "13028",
+     "amount": {
+      "kcal": 138.48,
+      "protein_g": 2.09,
+      "carbs_g": 25.44,
+      "fat_g": 0.79
+     },
+     "missing": []
+    },
+    {
+     "name": "walnuts",
+     "food": "walnuts",
+     "grams": 80,
+     "source": "ciqual",
+     "source_id": "15005",
+     "amount": {
+      "kcal": 567.2,
+      "protein_g": 10.64,
+      "carbs_g": 5.5,
+      "fat_g": 53.84
+     },
+     "missing": []
+    },
+    {
+     "name": "cinnamon",
+     "food": "cinnamon",
+     "grams": 8,
+     "source": "ciqual",
+     "source_id": "11025",
+     "amount": {
+      "kcal": 19.44,
+      "protein_g": 0.32,
+      "carbs_g": 2.2,
+      "fat_g": 0.1
+     },
+     "missing": []
+    }
+   ]
+  },
+  "change_requests": [
+   {
+    "from_agent": "macro",
+    "ingredient": null,
+    "reason": "misses_macros",
+    "hint": "Per serving: carbs 43 g over max 40 g. Adjust grams or swap ingredients."
+   }
+  ]
+ },
+ "mfp": "SmartBite: Carrot cake overnight oats with berries\nServings: 8\n\nvanilla whey protein, 240 g\nrolled oats, 320 g (dry)\ngreek yogurt 0%, 1000 g\ncarrot, 400 g (raw)\nchia seeds, 64 g\nstrawberries, 240 g\nblueberries, 240 g\nwalnuts, 80 g\ncinnamon, 8 g",
+ "slug": "carrot-cake-overnight-oats-with-berries",
+ "demo": true,
+ "photo": "/demo/images/carrot-cake-overnight-oats-with-berries.jpg",
+ "photo_ai_generated": true
+}

@@ -1,0 +1,247 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Spanish chickpea and tuna salad with mustard dressing",
+    "one_line": "Chickpeas, flaked tuna, cherry tomatoes and spring onion on lettuce with a mustard and lemon dressing. No cooking.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned chickpeas",
+     "cherry tomatoes",
+     "spring onion",
+     "lettuce",
+     "mustard",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 42,
+     "carbs_g": 35,
+     "fat_g": 9
+    },
+    "image_prompt": "Bowl of chickpea and tuna salad with cherry tomatoes, spring onion and lettuce"
+   },
+   {
+    "idea_id": "2",
+    "name": "Greek yogurt tuna and chickpea salad",
+    "one_line": "Tuna mixed with Greek yogurt, mustard and lemon, tossed with chickpeas and cucumber. Served cold or at room temperature.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "greek yogurt 0%",
+     "mustard",
+     "lemon juice",
+     "canned chickpeas",
+     "cucumber"
+    ],
+    "rough_macros": {
+     "kcal": 430,
+     "protein_g": 44,
+     "carbs_g": 32,
+     "fat_g": 8
+    },
+    "image_prompt": "Creamy tuna and chickpea salad with diced cucumber in a bowl"
+   },
+   {
+    "idea_id": "3",
+    "name": "Tonno e fagioli with chickpeas",
+    "one_line": "Italian tuna and bean salad made with chickpeas, thin onion, parsley and lemon juice.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned chickpeas",
+     "onion",
+     "fresh parsley",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 42,
+     "carbs_g": 38,
+     "fat_g": 9
+    },
+    "image_prompt": "Italian tuna and chickpea salad with red onion and parsley on a dark plate"
+   },
+   {
+    "idea_id": "4",
+    "name": "Warm chickpea and spinach stew with tuna",
+    "one_line": "Chickpeas with spinach, tomato and paprika heated in the microwave, with tuna stirred in at the end.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned chickpeas",
+     "frozen spinach",
+     "crushed tomatoes",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 41,
+     "carbs_g": 37,
+     "fat_g": 8
+    },
+    "image_prompt": "Bowl of chickpea and spinach stew with flaked tuna on top"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Ensalada de garbanzos y at\u00fan con mostaza",
+  "servings": 5,
+  "prep_time_min": 20,
+  "ingredients": [
+   {
+    "name": "canned tuna in water",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "canned chickpeas",
+    "grams_per_serving": 200,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cherry tomatoes",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spring onion",
+    "grams_per_serving": 20,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lettuce",
+    "grams_per_serving": 40,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "mustard",
+    "grams_per_serving": 15,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lemon juice",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Escurre los garbanzos y el at\u00fan.",
+   "Corta los tomates cherry por la mitad y la cebolleta en rodajas finas.",
+   "Mezcla mostaza, zumo de lim\u00f3n y pimienta para el ali\u00f1o.",
+   "Reparte en 5 t\u00e1peres: lechuga, garbanzos, at\u00fan, tomate y cebolleta. Guarda el ali\u00f1o aparte.",
+   "Al comer, a\u00f1ade el ali\u00f1o. Si quieres, calienta los garbanzos y el at\u00fan 1 minuto en el microondas."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Ensalada de garbanzos y at\u00fan con mostaza",
+   "servings": 5,
+   "prep_time_min": 20,
+   "ingredients": [
+    {
+     "name": "canned tuna in water",
+     "grams_per_serving": 100,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "canned chickpeas",
+     "grams_per_serving": 200,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "cherry tomatoes",
+     "grams_per_serving": 50,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "spring onion",
+     "grams_per_serving": 20,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "lettuce",
+     "grams_per_serving": 40,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "mustard",
+     "grams_per_serving": 15,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "lemon juice",
+     "grams_per_serving": 10,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "black pepper",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Escurre los garbanzos y el at\u00fan.",
+    "Corta los tomates cherry por la mitad y la cebolleta en rodajas finas.",
+    "Mezcla mostaza, zumo de lim\u00f3n y pimienta para el ali\u00f1o.",
+    "Reparte en 5 t\u00e1peres: lechuga, garbanzos, at\u00fan, tomate y cebolleta. Guarda el ali\u00f1o aparte.",
+    "Al comer, a\u00f1ade el ali\u00f1o. Si quieres, calienta los garbanzos y el at\u00fan 1 minuto en el microondas."
+   ]
+  }
+ ]
+}

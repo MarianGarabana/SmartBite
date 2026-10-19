@@ -1,0 +1,164 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Ensalada de atún con yogur griego y pita",
+    "one_line": "Atún al natural con yogur griego, mostaza y limón, con pepino y pan de pita.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "greek yogurt 0%",
+     "mustard",
+     "lemon juice",
+     "cucumber",
+     "pita bread"
+    ],
+    "rough_macros": {
+     "kcal": 440,
+     "protein_g": 48,
+     "carbs_g": 36,
+     "fat_g": 7
+    },
+    "image_prompt": "Tuna and Greek yogurt salad with cucumber and pita bread on a plate"
+   },
+   {
+    "idea_id": "2",
+    "name": "Tonno e fagioli: atún y alubias blancas",
+    "one_line": "Alubias blancas con atún, cebolla fina, perejil y zumo de limón.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned white beans",
+     "onion",
+     "fresh parsley",
+     "lemon juice"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 50,
+     "carbs_g": 38,
+     "fat_g": 6
+    },
+    "image_prompt": "Tuna and white bean salad with thin red onion and parsley"
+   },
+   {
+    "idea_id": "3",
+    "name": "Ensalada de garbanzos y atún con mostaza",
+    "one_line": "Garbanzos, atún, tomates cherry y cebolleta sobre lechuga con vinagreta de mostaza.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "canned chickpeas",
+     "cherry tomatoes",
+     "spring onion",
+     "lettuce",
+     "mustard"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 46,
+     "carbs_g": 38,
+     "fat_g": 8
+    },
+    "image_prompt": "Chickpea and tuna salad with cherry tomatoes over lettuce"
+   },
+   {
+    "idea_id": "4",
+    "name": "Aguacate relleno de atún",
+    "one_line": "Atún con pimiento rojo y zumo de limón, servido en aguacate partido, con un poco de pita.",
+    "main_ingredients": [
+     "canned tuna in water",
+     "avocado",
+     "red bell pepper",
+     "lemon juice",
+     "pita bread"
+    ],
+    "rough_macros": {
+     "kcal": 470,
+     "protein_g": 46,
+     "carbs_g": 28,
+     "fat_g": 20
+    },
+    "image_prompt": "Avocado halves filled with tuna and diced red pepper"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Ensalada de atún con yogur griego y pita",
+  "servings": 3,
+  "prep_time_min": 10,
+  "ingredients": [
+   {
+    "name": "canned tuna in water",
+    "grams_per_serving": 140,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "greek yogurt 0%",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "mustard",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "lemon juice",
+    "grams_per_serving": 10,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "cucumber",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "pita bread",
+    "grams_per_serving": 75,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "black pepper",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 0.5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Escurre el atún y ponlo en un bol.",
+   "Mezcla el yogur con la mostaza, el zumo de limón, sal y pimienta.",
+   "Corta el pepino en dados.",
+   "Junta el atún con la salsa y el pepino.",
+   "Sirve con el pan de pita al lado."
+  ]
+ }
+}

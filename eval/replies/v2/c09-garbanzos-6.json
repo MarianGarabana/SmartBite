@@ -1,0 +1,254 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Garbanzos con espinacas",
+    "one_line": "Potaje de garbanzos con cebolla, ajo, pimenton y comino, con espinacas y un toque de yogur griego.",
+    "main_ingredients": [
+     "canned chickpeas",
+     "spinach",
+     "onion",
+     "garlic",
+     "greek yogurt 0%"
+    ],
+    "rough_macros": {
+     "kcal": 470,
+     "protein_g": 30,
+     "carbs_g": 55,
+     "fat_g": 8
+    },
+    "image_prompt": "Spanish chickpea and spinach stew in a bowl with a spoon of yogurt"
+   },
+   {
+    "idea_id": "2",
+    "name": "Potaje de garbanzos majao",
+    "one_line": "Garbanzos cocinados con tomate, cebolla y pimiento verde, con majado de comino y ajo.",
+    "main_ingredients": [
+     "canned chickpeas",
+     "tomato",
+     "onion",
+     "green bell pepper",
+     "garlic",
+     "spinach"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 28,
+     "carbs_g": 58,
+     "fat_g": 6
+    },
+    "image_prompt": "Spanish chickpea potaje with tomato and green pepper in a rustic bowl"
+   },
+   {
+    "idea_id": "3",
+    "name": "Curry de batata, garbanzos y espinacas",
+    "one_line": "Batata en salsa de tomate especiada, con garbanzos y espinacas al final.",
+    "main_ingredients": [
+     "canned chickpeas",
+     "sweet potato",
+     "spinach",
+     "crushed tomatoes",
+     "onion"
+    ],
+    "rough_macros": {
+     "kcal": 460,
+     "protein_g": 27,
+     "carbs_g": 70,
+     "fat_g": 6
+    },
+    "image_prompt": "Sweet potato chickpea and spinach curry in a bowl"
+   },
+   {
+    "idea_id": "4",
+    "name": "Pollo tikka masala con garbanzos y espinacas",
+    "one_line": "Pollo marinado en yogur y especias, en salsa de tomate con garbanzos y espinacas.",
+    "main_ingredients": [
+     "chicken breast",
+     "canned chickpeas",
+     "spinach",
+     "greek yogurt 0%",
+     "crushed tomatoes"
+    ],
+    "rough_macros": {
+     "kcal": 450,
+     "protein_g": 40,
+     "carbs_g": 35,
+     "fat_g": 8
+    },
+    "image_prompt": "Chicken tikka masala with chickpeas and spinach in a bowl"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Garbanzos con espinacas",
+  "servings": 6,
+  "prep_time_min": 40,
+  "ingredients": [
+   {
+    "name": "canned chickpeas",
+    "grams_per_serving": 250,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "spinach",
+    "grams_per_serving": 100,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 80,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 6,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "greek yogurt 0%",
+    "grams_per_serving": 125,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "paprika",
+    "grams_per_serving": 2,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "cumin",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Corta la cebolla y el ajo. Escurre y enjuaga los garbanzos.",
+   "Sofrie la cebolla en el aceite 8 minutos. Anade el ajo, el pimenton y el comino 1 minuto.",
+   "Anade los garbanzos y agua hasta cubrir. Cocina 15 minutos a fuego bajo.",
+   "Anade las espinacas y cocina 3 minutos hasta que se reduzcan. Salpimenta.",
+   "Reparte en 6 envases. Guarda el yogur aparte y ponlo encima al servir."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Garbanzos con espinacas",
+   "servings": 6,
+   "prep_time_min": 40,
+   "ingredients": [
+    {
+     "name": "canned chickpeas",
+     "grams_per_serving": 250,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "spinach",
+     "grams_per_serving": 100,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "onion",
+     "grams_per_serving": 80,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "garlic",
+     "grams_per_serving": 6,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false,
+     "leftover_plan": "use_in_another_meal"
+    },
+    {
+     "name": "greek yogurt 0%",
+     "grams_per_serving": 125,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "paprika",
+     "grams_per_serving": 2,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "cumin",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "salt",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Corta la cebolla y el ajo. Escurre y enjuaga los garbanzos.",
+    "Cocina la cebolla en una cacerola antiadherente con un chorro de agua 8 minutos. Anade el ajo, el pimenton y el comino 1 minuto.",
+    "Anade los garbanzos y agua hasta cubrir. Cocina 15 minutos a fuego bajo.",
+    "Anade las espinacas y cocina 3 minutos hasta que se reduzcan. Salpimenta.",
+    "Reparte en 6 envases. Guarda el yogur aparte y ponlo encima al servir."
+   ]
+  }
+ ]
+}

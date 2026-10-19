@@ -1,0 +1,488 @@
+{
+ "date": "2026-10-03",
+ "form": {
+  "craving": "Mild chicken curry with rice.",
+  "exclude": [],
+  "kcal_target": 450,
+  "protein_g_target": 45,
+  "budget_total_eur": 20,
+  "servings": 4,
+  "keep_leftovers_low": true,
+  "gear": [
+   "no_blender"
+  ],
+  "reheat_at_work": true
+ },
+ "picked_idea": {
+  "idea_id": "1",
+  "name": "Mild chicken breast curry with basmati rice",
+  "one_line": "Mild chicken breast curry with basmati rice and yogurt sauce",
+  "rough_macros": {
+   "kcal": 450,
+   "protein_g": 45,
+   "carbs_g": 50,
+   "fat_g": 8
+  },
+  "image_prompt": "Pale yellow curry sauce over fluffy white basmati rice with tender chicken pieces, garnished with fresh cilantro on a white plate",
+  "main_ingredients": [
+   "chicken breast",
+   "rice",
+   "onion",
+   "skyr"
+  ]
+ },
+ "recipe": {
+  "title": "Mild chicken breast curry with rice",
+  "servings": 4,
+  "prep_time_min": 35,
+  "ingredients": [
+   {
+    "name": "chicken breast",
+    "grams_per_serving": 190,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "rice",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "onion",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "skyr",
+    "grams_per_serving": 60,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "curry powder",
+    "grams_per_serving": 3,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "garlic powder",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "salt",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Cut the chicken breast into 2 cm cubes and the onion into small pieces. Salt the chicken.",
+   "Cook the rice in salted water for about 12 minutes, drain it and set it aside.",
+   "In a non-stick pan with a splash of water, cook the onion over medium heat for 5 minutes until soft.",
+   "Add the chicken, the curry powder and the garlic powder. Cook 8 to 10 minutes, stirring, until the chicken is cooked through.",
+   "Turn off the heat and let it cool 1 minute. Mix the skyr with a little cooking water to make the sauce, add it to the chicken and stir without boiling.",
+   "Divide the rice and the chicken curry into 4 containers. It keeps in the fridge for up to 3 days and reheats in the microwave at work."
+  ]
+ },
+ "evaluation": {
+  "status": "issues",
+  "recipe_title": "Mild chicken breast curry with rice",
+  "items": [
+   {
+    "name": "chicken breast",
+    "food": "chicken breast",
+    "grams_per_serving": 190,
+    "total_grams": 760,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "rice",
+    "food": "rice",
+    "grams_per_serving": 50,
+    "total_grams": 200,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "onion",
+    "food": "onion",
+    "grams_per_serving": 60,
+    "total_grams": 240,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "skyr",
+    "food": "skyr",
+    "grams_per_serving": 60,
+    "total_grams": 240,
+    "units_total": null,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "optional": false,
+    "leftover_plan": null
+   },
+   {
+    "name": "curry powder",
+    "food": "curry powder",
+    "grams_per_serving": 3,
+    "total_grams": 12,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "garlic powder",
+    "food": "garlic powder",
+    "grams_per_serving": 1,
+    "total_grams": 4,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   },
+   {
+    "name": "salt",
+    "food": "salt",
+    "grams_per_serving": 1,
+    "total_grams": 4,
+    "units_total": null,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "optional": true,
+    "leftover_plan": null
+   }
+  ],
+  "pack": {
+   "lines": [
+    {
+     "ingredient": "chicken breast",
+     "grams_needed": 760,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "chicken breast 400 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 800,
+     "grams_left": 40,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 5.0,
+     "leftover_status": "use_in_2_days",
+     "food": "chicken breast"
+    },
+    {
+     "ingredient": "rice",
+     "grams_needed": 200,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "rice 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 800,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 80.0,
+     "leftover_status": "keeps",
+     "food": "rice"
+    },
+    {
+     "ingredient": "onion",
+     "grams_needed": 240,
+     "storage": "keeps",
+     "optional": false,
+     "has_price": false,
+     "product_name": "onion, loose (110 g)",
+     "product_url": null,
+     "sold_by": "per_kg",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 3,
+     "grams_bought": 330,
+     "grams_left": 90,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 27.272727272727273,
+     "leftover_status": "keeps",
+     "food": "onion"
+    },
+    {
+     "ingredient": "skyr",
+     "grams_needed": 240,
+     "storage": "fresh",
+     "optional": false,
+     "has_price": false,
+     "product_name": "skyr 150 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 2,
+     "grams_bought": 300,
+     "grams_left": 60,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 20.0,
+     "leftover_status": "use_in_2_days",
+     "food": "skyr"
+    },
+    {
+     "ingredient": "curry powder",
+     "grams_needed": 12,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "curry powder 42 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 42,
+     "grams_left": 30,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 71.42857142857143,
+     "leftover_status": "keeps",
+     "food": "curry powder"
+    },
+    {
+     "ingredient": "garlic powder",
+     "grams_needed": 4,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "garlic powder 60 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 60,
+     "grams_left": 56,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 93.33333333333333,
+     "leftover_status": "keeps",
+     "food": "garlic powder"
+    },
+    {
+     "ingredient": "salt",
+     "grams_needed": 4,
+     "storage": "keeps",
+     "optional": true,
+     "has_price": false,
+     "product_name": "salt 1000 g",
+     "product_url": null,
+     "sold_by": "pack",
+     "cost_bought_eur": null,
+     "cost_used_eur": null,
+     "packs_to_buy": 1,
+     "grams_bought": 1000,
+     "grams_left": 996,
+     "price_source": "typical",
+     "price_date": null,
+     "leftover_pct": 99.6,
+     "leftover_status": "keeps",
+     "food": "salt"
+    }
+   ],
+   "cart_total_eur": 0,
+   "cost_per_serving_eur": 0.0,
+   "used_total_eur": 0,
+   "waste_grams": 990,
+   "waste_eur": 0,
+   "within_budget": true,
+   "over_budget_eur": null,
+   "optional_total_eur": 0,
+   "budget_check_complete": false,
+   "unpriced": [
+    "chicken breast",
+    "rice",
+    "onion",
+    "skyr"
+   ],
+   "price_note": null,
+   "change_requests": []
+  },
+  "macros": {
+   "per_serving": {
+    "kcal": 456.49,
+    "protein_g": 55.41,
+    "carbs_g": 45.4,
+    "fat_g": 4.27
+   },
+   "total": {
+    "kcal": 1825.96,
+    "protein_g": 221.64,
+    "carbs_g": 181.6,
+    "fat_g": 17.07
+   },
+   "misses": [
+    "protein 55 g is more than 20% over target 45 g: cut the protein ingredient"
+   ],
+   "missing_nutrition": [],
+   "unresolved": [],
+   "lines": [
+    {
+     "name": "chicken breast",
+     "food": "chicken breast",
+     "grams": 760,
+     "source": "ciqual",
+     "source_id": "36017",
+     "amount": {
+      "kcal": 836.0,
+      "protein_g": 177.84,
+      "carbs_g": 0.0,
+      "fat_g": 11.4
+     },
+     "missing": []
+    },
+    {
+     "name": "rice",
+     "food": "rice",
+     "grams": 200,
+     "source": "ciqual",
+     "source_id": "9100",
+     "amount": {
+      "kcal": 700.0,
+      "protein_g": 14.04,
+      "carbs_g": 155.0,
+      "fat_g": 1.58
+     },
+     "missing": []
+    },
+    {
+     "name": "onion",
+     "food": "onion",
+     "grams": 240,
+     "source": "ciqual",
+     "source_id": "20034",
+     "amount": {
+      "kcal": 93.6,
+      "protein_g": 2.64,
+      "carbs_g": 15.0,
+      "fat_g": 1.49
+     },
+     "missing": []
+    },
+    {
+     "name": "skyr",
+     "food": "skyr",
+     "grams": 240,
+     "source": "usda",
+     "source_id": "330137",
+     "amount": {
+      "kcal": 146.4,
+      "protein_g": 24.72,
+      "carbs_g": 8.74,
+      "fat_g": 0.89
+     },
+     "missing": []
+    },
+    {
+     "name": "curry powder",
+     "food": "curry powder",
+     "grams": 12,
+     "source": "ciqual",
+     "source_id": "11005",
+     "amount": {
+      "kcal": 36.12,
+      "protein_g": 1.74,
+      "carbs_g": 0.32,
+      "fat_g": 1.68
+     },
+     "missing": []
+    },
+    {
+     "name": "garlic powder",
+     "food": "garlic powder",
+     "grams": 4,
+     "source": "ciqual",
+     "source_id": "11023",
+     "amount": {
+      "kcal": 13.84,
+      "protein_g": 0.66,
+      "carbs_g": 2.55,
+      "fat_g": 0.03
+     },
+     "missing": []
+    },
+    {
+     "name": "salt",
+     "food": "salt",
+     "grams": 4,
+     "source": "ciqual",
+     "source_id": "11017",
+     "amount": {
+      "kcal": 0.0,
+      "protein_g": 0.0,
+      "carbs_g": 0.0,
+      "fat_g": 0.0
+     },
+     "missing": []
+    }
+   ]
+  },
+  "change_requests": [
+   {
+    "from_agent": "macro",
+    "ingredient": null,
+    "reason": "misses_macros",
+    "hint": "Per serving: protein 55 g is more than 20% over target 45 g: cut the protein ingredient. Adjust grams or swap ingredients."
+   }
+  ]
+ },
+ "mfp": "SmartBite: Mild chicken breast curry with rice\nServings: 4\n\nchicken breast, 760 g (raw)\nrice, 200 g (dry)\nonion, 240 g (raw)\nskyr, 240 g\ncurry powder, 12 g\ngarlic powder, 4 g\nsalt, 4 g",
+ "slug": "mild-chicken-breast-curry-with-rice",
+ "demo": true,
+ "photo": "/demo/images/mild-chicken-breast-curry-with-rice.jpg",
+ "photo_ai_generated": true
+}

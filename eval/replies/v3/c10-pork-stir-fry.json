@@ -1,0 +1,245 @@
+{
+ "ideas": {
+  "ideas": [
+   {
+    "idea_id": "1",
+    "name": "Pork loin stir-fry with broccoli and carrot",
+    "one_line": "Sliced pork loin with broccoli and carrot in a soy and ginger sauce, over rice.",
+    "main_ingredients": [
+     "pork loin",
+     "broccoli",
+     "carrot",
+     "rice",
+     "soy sauce"
+    ],
+    "rough_macros": {
+     "kcal": 500,
+     "protein_g": 45,
+     "carbs_g": 50,
+     "fat_g": 10
+    },
+    "image_prompt": "Pork stir-fry with broccoli and carrot slices over white rice in a bowl"
+   },
+   {
+    "idea_id": "2",
+    "name": "Pork fried rice with egg and peas",
+    "one_line": "Diced pork stir-fried with cold rice, peas and scrambled egg, seasoned with teriyaki.",
+    "main_ingredients": [
+     "pork loin",
+     "rice",
+     "eggs",
+     "frozen peas",
+     "teriyaki sauce"
+    ],
+    "rough_macros": {
+     "kcal": 510,
+     "protein_g": 45,
+     "carbs_g": 52,
+     "fat_g": 13
+    },
+    "image_prompt": "Pork fried rice with peas and egg in a bowl"
+   },
+   {
+    "idea_id": "3",
+    "name": "Turkey and vegetable stir-fry with rice",
+    "one_line": "Diced turkey with broccoli, green pepper, carrot and mushrooms in a light soy-ginger sauce, over rice.",
+    "main_ingredients": [
+     "turkey tenderloin",
+     "broccoli",
+     "green bell pepper",
+     "carrot",
+     "mushrooms",
+     "rice"
+    ],
+    "rough_macros": {
+     "kcal": 480,
+     "protein_g": 46,
+     "carbs_g": 50,
+     "fat_g": 7
+    },
+    "image_prompt": "Turkey and vegetable stir-fry with broccoli and peppers over rice"
+   },
+   {
+    "idea_id": "4",
+    "name": "Thai basil chicken with green beans and rice",
+    "one_line": "Chicken thigh stir-fried with garlic, red pepper and green beans in a savory sauce, over rice.",
+    "main_ingredients": [
+     "chicken thigh",
+     "red bell pepper",
+     "green beans",
+     "garlic",
+     "rice",
+     "soy sauce"
+    ],
+    "rough_macros": {
+     "kcal": 520,
+     "protein_g": 45,
+     "carbs_g": 48,
+     "fat_g": 14
+    },
+    "image_prompt": "Thai basil chicken with red pepper and green beans over rice"
+   }
+  ]
+ },
+ "picked_idea_id": "1",
+ "recipe": {
+  "idea_id": "1",
+  "title": "Pork loin stir-fry with broccoli and carrot",
+  "servings": 3,
+  "prep_time_min": 40,
+  "ingredients": [
+   {
+    "name": "pork loin",
+    "grams_per_serving": 170,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "broccoli",
+    "grams_per_serving": 151,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "carrot",
+    "grams_per_serving": 61,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "rice",
+    "grams_per_serving": 50,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": true
+   },
+   {
+    "name": "soy sauce",
+    "grams_per_serving": 15,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "garlic",
+    "grams_per_serving": 5,
+    "units_per_serving": 0,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "name": "ground ginger",
+    "grams_per_serving": 1,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "name": "extra virgin olive oil",
+    "grams_per_serving": 4,
+    "units_per_serving": 0,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Cook the rice in water and let it cool. Store in 3 portions.",
+   "Slice the pork loin into thin strips. Cut the broccoli into florets and slice the carrot thin.",
+   "Stir-fry the pork in a hot pan with the oil for 4 minutes. Take it out.",
+   "Stir-fry the carrot and broccoli with the garlic for 5 minutes, then add the pork, soy sauce and ginger.",
+   "Store the stir-fry and rice in 3 boxes. Reheat in the microwave at work."
+  ]
+ },
+ "reruns": [
+  {
+   "idea_id": "1",
+   "title": "Pork loin stir-fry with broccoli and carrot",
+   "servings": 3,
+   "prep_time_min": 40,
+   "ingredients": [
+    {
+     "name": "pork loin",
+     "grams_per_serving": 170,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "broccoli",
+     "grams_per_serving": 151,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "carrot",
+     "grams_per_serving": 61,
+     "units_per_serving": 0,
+     "storage": "fresh",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "rice",
+     "grams_per_serving": 50,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": true
+    },
+    {
+     "name": "soy sauce",
+     "grams_per_serving": 15,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": false,
+     "dry": false
+    },
+    {
+     "name": "garlic powder",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "ground ginger",
+     "grams_per_serving": 1,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    },
+    {
+     "name": "extra virgin olive oil",
+     "grams_per_serving": 4,
+     "units_per_serving": 0,
+     "storage": "keeps",
+     "pantry": true,
+     "dry": false
+    }
+   ],
+   "steps": [
+    "Cook the rice in water and let it cool. Store in 3 portions.",
+    "Slice the pork loin into thin strips. Cut the broccoli into florets and slice the carrot thin.",
+    "Stir-fry the pork in a hot pan with the oil for 4 minutes. Take it out.",
+    "Stir-fry the carrot and broccoli with the garlic powder for 5 minutes, then add the pork, soy sauce and ginger.",
+    "Store the stir-fry and rice in 3 boxes. Reheat in the microwave at work."
+   ]
+  }
+ ]
+}

@@ -1,0 +1,2701 @@
+{
+ "note": "Typical pack sizes per food. Built from Open Food Facts (ODbL 1.0, see LICENSE and SOURCES.md), USDA FoodData Central portion weights for loose produce (CC0) and overrides. Prices are never included: users add their own.",
+ "export_date": "2026-10-18",
+ "foods": {
+  "feta": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 200,
+     "share": 0.48
+    },
+    {
+     "grams": 150,
+     "share": 0.22
+    },
+    {
+     "grams": 180,
+     "share": 0.13
+    }
+   ],
+   "default_grams": 200,
+   "n_products": 23,
+   "note": "Most common sizes among 23 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "chicken breast": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": null
+    },
+    {
+     "grams": 400,
+     "share": null
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 39,
+   "note": "Set by hand: OFF name matches mix fresh trays with cold cuts and cans (no size above 11%). 500 g and 400 g are the top fresh tray sizes in the OFF chicken-breasts category (4 products each).",
+   "source": "override"
+  },
+  "chicken thigh": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.22
+    },
+    {
+     "grams": 550,
+     "share": 0.22
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 9,
+   "note": "Most common sizes among 9 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "ground chicken": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 400,
+     "share": null
+    }
+   ],
+   "default_grams": 400,
+   "n_products": 0,
+   "note": "Set by hand: 9 OFF products, none with a size. 400 g follows the minced turkey trays in OFF; edit it to match your shop.",
+   "source": "override"
+  },
+  "ground turkey": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 400,
+     "share": null
+    },
+    {
+     "grams": 1000,
+     "share": null
+    }
+   ],
+   "default_grams": 400,
+   "n_products": 2,
+   "note": "Set by hand: only 2 OFF products with a size (400 g and 1 kg).",
+   "source": "override"
+  },
+  "turkey tenderloin": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 600,
+     "share": 0.25
+    },
+    {
+     "grams": 300,
+     "share": 0.25
+    }
+   ],
+   "default_grams": 600,
+   "n_products": 8,
+   "note": "Most common sizes among 8 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "ground beef": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 300,
+     "share": 0.29
+    },
+    {
+     "grams": 400,
+     "share": 0.29
+    }
+   ],
+   "default_grams": 300,
+   "n_products": 7,
+   "note": "Most common sizes among 7 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "beef steak": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": null
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 4,
+   "note": "Set by hand: sold by weight at the meat counter. OFF sizes are variable weights or errors (4 with a size). Bought in 250 g steps at a price per kg.",
+   "source": "override"
+  },
+  "pork loin": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 300,
+     "share": 0.19
+    },
+    {
+     "grams": 480,
+     "share": 0.12
+    },
+    {
+     "grams": 500,
+     "share": 0.12
+    }
+   ],
+   "default_grams": 300,
+   "n_products": 16,
+   "note": "Most common sizes among 16 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "salmon": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 100,
+     "share": 0.18
+    },
+    {
+     "grams": 250,
+     "share": 0.13
+    },
+    {
+     "grams": 300,
+     "share": 0.11
+    }
+   ],
+   "default_grams": 100,
+   "n_products": 38,
+   "note": "Most common sizes among 38 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "frozen salmon": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": null
+    },
+    {
+     "grams": 200,
+     "share": null
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 3,
+   "note": "Set by hand: only 3 OFF products with a size (200, 250 and 700 g).",
+   "source": "override"
+  },
+  "fresh tuna": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": null
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 0,
+   "note": "Set by hand: cut to order at the fish counter; 7 OFF products, none with a size. Bought in 250 g steps at a price per kg.",
+   "source": "override"
+  },
+  "frozen hake": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 400,
+     "share": 0.31
+    },
+    {
+     "grams": 600,
+     "share": 0.17
+    },
+    {
+     "grams": 500,
+     "share": 0.14
+    }
+   ],
+   "default_grams": 400,
+   "n_products": 36,
+   "note": "Most common sizes among 36 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "frozen shrimp": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 400,
+     "share": 0.33
+    },
+    {
+     "grams": 500,
+     "share": 0.22
+    },
+    {
+     "grams": 450,
+     "share": 0.22
+    }
+   ],
+   "default_grams": 400,
+   "n_products": 9,
+   "note": "Most common sizes among 9 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "canned tuna in water": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 168,
+     "share": 0.17
+    },
+    {
+     "grams": 480,
+     "share": 0.12
+    },
+    {
+     "grams": 336,
+     "share": 0.12
+    }
+   ],
+   "default_grams": 168,
+   "n_products": 24,
+   "note": "Most common sizes among 24 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "canned tuna in oil": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 240,
+     "share": 0.18
+    }
+   ],
+   "default_grams": 240,
+   "n_products": 308,
+   "note": "Most common sizes among 308 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "canned sardines": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 120,
+     "share": 0.24
+    },
+    {
+     "grams": 88,
+     "share": 0.1
+    }
+   ],
+   "default_grams": 120,
+   "n_products": 247,
+   "note": "Most common sizes among 247 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "canned mackerel": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 120,
+     "share": 0.26
+    },
+    {
+     "grams": 85,
+     "share": 0.14
+    },
+    {
+     "grams": 180,
+     "share": 0.11
+    }
+   ],
+   "default_grams": 120,
+   "n_products": 66,
+   "note": "Most common sizes among 66 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "eggs": {
+   "sold_by": "per_unit",
+   "typical_packs": [
+    {
+     "grams": 612,
+     "units": 12,
+     "share": 0.47
+    },
+    {
+     "grams": 306,
+     "units": 6,
+     "share": 0.34
+    },
+    {
+     "grams": 1224,
+     "units": 24,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 612,
+   "n_products": 53,
+   "units_per_pack": 12,
+   "note": "Most common sizes among 53 Open Food Facts products sold in Spain. Counted in eggs, size M (51 g edible).",
+   "source": "off"
+  },
+  "egg whites": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.36
+    },
+    {
+     "grams": 500,
+     "share": 0.36
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 11,
+   "note": "Most common sizes among 11 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 1 g.",
+   "source": "off"
+  },
+  "greek yogurt 0%": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": null
+    },
+    {
+     "grams": 750,
+     "share": null
+    },
+    {
+     "grams": 125,
+     "share": null
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 4,
+   "note": "Set by hand: only 4 OFF products with a size (two 1 kg tubs, two 6 x 125 g packs); 125 g is the single pot of those packs. Same sizes as plain Greek yogurt.",
+   "source": "override"
+  },
+  "greek yogurt": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.21
+    },
+    {
+     "grams": 125,
+     "share": 0.19
+    },
+    {
+     "grams": 500,
+     "share": 0.18
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 68,
+   "note": "Most common sizes among 68 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 1 g.",
+   "source": "off"
+  },
+  "plain yogurt 0%": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.53
+    },
+    {
+     "grams": 125,
+     "share": 0.18
+    },
+    {
+     "grams": 750,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 34,
+   "note": "Most common sizes among 34 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 1 g.",
+   "source": "off"
+  },
+  "skyr": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 150,
+     "share": 0.28
+    },
+    {
+     "grams": 400,
+     "share": 0.28
+    },
+    {
+     "grams": 100,
+     "share": 0.14
+    }
+   ],
+   "default_grams": 150,
+   "n_products": 36,
+   "note": "Most common sizes among 36 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 1 g.",
+   "source": "off"
+  },
+  "quark 0%": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.5
+    },
+    {
+     "grams": 250,
+     "share": 0.11
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 38,
+   "note": "Most common sizes among 38 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 1 g.",
+   "source": "off"
+  },
+  "cottage cheese": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 200,
+     "share": 0.5
+    },
+    {
+     "grams": 300,
+     "share": 0.14
+    },
+    {
+     "grams": 454,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 200,
+   "n_products": 22,
+   "note": "Most common sizes among 22 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "ricotta": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": 0.35
+    },
+    {
+     "grams": 200,
+     "share": 0.31
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 26,
+   "note": "Most common sizes among 26 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "light fresh cheese": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": 0.45
+    },
+    {
+     "grams": 500,
+     "share": 0.3
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 56,
+   "note": "Most common sizes among 56 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "firm tofu": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": 0.27
+    },
+    {
+     "grams": 200,
+     "share": 0.21
+    },
+    {
+     "grams": 400,
+     "share": 0.11
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 105,
+   "note": "Most common sizes among 105 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "sliced turkey breast": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 200,
+     "share": 0.17
+    },
+    {
+     "grams": 400,
+     "share": 0.1
+    },
+    {
+     "grams": 100,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 200,
+   "n_products": 200,
+   "note": "Most common sizes among 200 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "mozzarella": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 125,
+     "share": 0.24
+    },
+    {
+     "grams": 200,
+     "share": 0.21
+    },
+    {
+     "grams": 150,
+     "share": 0.14
+    }
+   ],
+   "default_grams": 125,
+   "n_products": 87,
+   "note": "Most common sizes among 87 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "light mozzarella": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 220,
+     "share": 0.4
+    },
+    {
+     "grams": 125,
+     "share": 0.4
+    }
+   ],
+   "default_grams": 220,
+   "n_products": 5,
+   "note": "Most common sizes among 5 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "vanilla whey protein": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 2000,
+     "share": 0.13
+    },
+    {
+     "grams": 1000,
+     "share": 0.1
+    }
+   ],
+   "default_grams": 2000,
+   "n_products": 145,
+   "note": "Most common sizes among 145 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "canned chickpeas": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.2
+    },
+    {
+     "grams": 400,
+     "share": 0.19
+    },
+    {
+     "grams": 570,
+     "share": 0.14
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 132,
+   "note": "Most common sizes among 132 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "dried chickpeas": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.65
+    },
+    {
+     "grams": 500,
+     "share": 0.18
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 49,
+   "note": "Most common sizes among 49 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "canned lentils": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 400,
+     "share": 0.19
+    },
+    {
+     "grams": 570,
+     "share": 0.15
+    },
+    {
+     "grams": 540,
+     "share": 0.08
+    }
+   ],
+   "default_grams": 400,
+   "n_products": 59,
+   "note": "Most common sizes among 59 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "dried lentils": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.45
+    },
+    {
+     "grams": 500,
+     "share": 0.43
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 84,
+   "note": "Most common sizes among 84 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "canned white beans": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 400,
+     "share": 0.33
+    },
+    {
+     "grams": 570,
+     "share": 0.18
+    },
+    {
+     "grams": 540,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 400,
+   "n_products": 33,
+   "note": "Most common sizes among 33 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "canned red kidney beans": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 400,
+     "share": 0.29
+    },
+    {
+     "grams": 540,
+     "share": 0.12
+    },
+    {
+     "grams": 340,
+     "share": 0.12
+    }
+   ],
+   "default_grams": 400,
+   "n_products": 17,
+   "note": "Most common sizes among 17 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "frozen edamame": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.25
+    },
+    {
+     "grams": 100,
+     "share": 0.19
+    },
+    {
+     "grams": 400,
+     "share": 0.12
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 16,
+   "note": "Most common sizes among 16 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "textured soy protein": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": 0.38
+    },
+    {
+     "grams": 200,
+     "share": 0.17
+    },
+    {
+     "grams": 350,
+     "share": 0.14
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 29,
+   "note": "Most common sizes among 29 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "hummus": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 200,
+     "share": 0.22
+    },
+    {
+     "grams": 240,
+     "share": 0.17
+    },
+    {
+     "grams": 150,
+     "share": 0.08
+    }
+   ],
+   "default_grams": 200,
+   "n_products": 195,
+   "note": "Most common sizes among 195 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "rice": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.73
+    },
+    {
+     "grams": 500,
+     "share": 0.15
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 126,
+   "note": "Most common sizes among 126 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "brown rice": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.63
+    },
+    {
+     "grams": 250,
+     "share": 0.13
+    },
+    {
+     "grams": 500,
+     "share": 0.13
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 63,
+   "note": "Most common sizes among 63 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "basmati rice": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.42
+    },
+    {
+     "grams": 500,
+     "share": 0.27
+    },
+    {
+     "grams": 250,
+     "share": 0.15
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 52,
+   "note": "Most common sizes among 52 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "microwave rice": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": 0.5
+    },
+    {
+     "grams": 1002,
+     "share": 0.17
+    },
+    {
+     "grams": 125,
+     "share": 0.08
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 24,
+   "note": "Most common sizes among 24 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "wholemeal pasta": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.71
+    },
+    {
+     "grams": 250,
+     "share": 0.15
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 101,
+   "note": "Most common sizes among 101 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "macaroni": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.6
+    },
+    {
+     "grams": 1000,
+     "share": 0.15
+    },
+    {
+     "grams": 250,
+     "share": 0.13
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 52,
+   "note": "Most common sizes among 52 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "couscous": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.37
+    },
+    {
+     "grams": 1000,
+     "share": 0.23
+    },
+    {
+     "grams": 300,
+     "share": 0.1
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 83,
+   "note": "Most common sizes among 83 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "quinoa": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.29
+    },
+    {
+     "grams": 250,
+     "share": 0.25
+    },
+    {
+     "grams": 400,
+     "share": 0.11
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 120,
+   "note": "Most common sizes among 120 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "cooked quinoa": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": 0.5
+    },
+    {
+     "grams": 210,
+     "share": 0.17
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 12,
+   "note": "Most common sizes among 12 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "rolled oats": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.55
+    },
+    {
+     "grams": 1000,
+     "share": 0.17
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 145,
+   "note": "Most common sizes among 145 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "wholemeal sandwich bread": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 460,
+     "share": 0.26
+    },
+    {
+     "grams": 820,
+     "share": 0.18
+    },
+    {
+     "grams": 500,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 460,
+   "n_products": 65,
+   "note": "Most common sizes among 65 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "wheat tortillas": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 320,
+     "share": 0.27
+    },
+    {
+     "grams": 370,
+     "share": 0.15
+    }
+   ],
+   "default_grams": 320,
+   "n_products": 66,
+   "note": "Most common sizes among 66 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "gnocchi": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.52
+    },
+    {
+     "grams": 400,
+     "share": 0.26
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 42,
+   "note": "Most common sizes among 42 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "pita bread": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 400,
+     "share": 0.43
+    },
+    {
+     "grams": 260,
+     "share": 0.17
+    },
+    {
+     "grams": 320,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 400,
+   "n_products": 23,
+   "note": "Most common sizes among 23 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "potato": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 213,
+     "share": null
+    }
+   ],
+   "default_grams": 213,
+   "n_products": 0,
+   "unit": "1 medium",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 170026,
+    "food": "Potatoes, flesh and skin, raw",
+    "description": "1 Potato medium (2-1/4\" to 3-1/4\" dia)",
+    "gram_weight": 213
+   },
+   "note": "Loose, bought by the piece: 1 medium = 213 g edible weight (USDA FoodData Central, Potatoes, flesh and skin, raw, fdc 170026, 1 Potato medium (2-1/4\" to 3-1/4\" dia)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "sweet potato": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 300,
+     "share": null
+    }
+   ],
+   "unit": "1 piece",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 168482,
+    "food": "Sweet potato, raw, unprepared (Includes foods for USDA's Food Distribution Program)",
+    "description": "1 sweetpotato, 5\" long",
+    "gram_weight": 130
+   },
+   "default_grams": 300,
+   "n_products": 0,
+   "note": "Set by hand: USDA's 5-inch sweet potato (130 g) is small next to the loose sweet potatoes in Spanish supermarkets; set by hand to a typical piece of about 300 g (estimate, not weighed).",
+   "source": "override"
+  },
+  "frozen broccoli": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.57
+    },
+    {
+     "grams": 750,
+     "share": 0.11
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 28,
+   "note": "Most common sizes among 28 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "frozen spinach": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 400,
+     "share": 0.37
+    },
+    {
+     "grams": 1000,
+     "share": 0.3
+    },
+    {
+     "grams": 450,
+     "share": 0.1
+    }
+   ],
+   "default_grams": 400,
+   "n_products": 30,
+   "note": "Most common sizes among 30 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "frozen green beans": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.52
+    },
+    {
+     "grams": 400,
+     "share": 0.23
+    },
+    {
+     "grams": 750,
+     "share": 0.16
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 31,
+   "note": "Most common sizes among 31 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "frozen peas": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.38
+    },
+    {
+     "grams": 750,
+     "share": 0.19
+    },
+    {
+     "grams": 300,
+     "share": 0.12
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 26,
+   "note": "Most common sizes among 26 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "frozen cauliflower": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.64
+    },
+    {
+     "grams": 450,
+     "share": 0.18
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 11,
+   "note": "Most common sizes among 11 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "frozen mixed berries": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 300,
+     "share": 0.44
+    },
+    {
+     "grams": 500,
+     "share": 0.12
+    }
+   ],
+   "default_grams": 300,
+   "n_products": 16,
+   "note": "Most common sizes among 16 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "frozen stir-fry vegetables": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 600,
+     "share": 0.21
+    },
+    {
+     "grams": 450,
+     "share": 0.21
+    },
+    {
+     "grams": 400,
+     "share": 0.14
+    }
+   ],
+   "default_grams": 600,
+   "n_products": 70,
+   "note": "Most common sizes among 70 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "roasted red peppers": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 290,
+     "share": 0.11
+    },
+    {
+     "grams": 250,
+     "share": 0.1
+    },
+    {
+     "grams": 500,
+     "share": 0.1
+    }
+   ],
+   "default_grams": 290,
+   "n_products": 61,
+   "note": "Most common sizes among 61 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "crushed tomatoes": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 400,
+     "share": 0.29
+    },
+    {
+     "grams": 800,
+     "share": 0.27
+    },
+    {
+     "grams": 390,
+     "share": 0.17
+    }
+   ],
+   "default_grams": 400,
+   "n_products": 66,
+   "note": "Most common sizes among 66 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "tomato sauce": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 350,
+     "share": 0.2
+    }
+   ],
+   "default_grams": 350,
+   "n_products": 240,
+   "note": "Most common sizes among 240 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "canned sliced mushrooms": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 185,
+     "share": 0.24
+    },
+    {
+     "grams": 250,
+     "share": 0.19
+    },
+    {
+     "grams": 355,
+     "share": 0.14
+    }
+   ],
+   "default_grams": 185,
+   "n_products": 37,
+   "note": "Most common sizes among 37 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "artichoke hearts": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 240,
+     "share": 0.15
+    },
+    {
+     "grams": 390,
+     "share": 0.11
+    },
+    {
+     "grams": 400,
+     "share": 0.1
+    }
+   ],
+   "default_grams": 240,
+   "n_products": 103,
+   "note": "Most common sizes among 103 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "canned sweetcorn": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 150,
+     "share": 0.29
+    },
+    {
+     "grams": 140,
+     "share": 0.09
+    },
+    {
+     "grams": 340,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 150,
+   "n_products": 66,
+   "note": "Most common sizes among 66 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "kalamata olives": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 200,
+     "share": 0.27
+    },
+    {
+     "grams": 150,
+     "share": 0.18
+    }
+   ],
+   "default_grams": 200,
+   "n_products": 11,
+   "note": "Most common sizes among 11 Open Food Facts products sold in Spain. Drained weight where the label gives it.",
+   "source": "off"
+  },
+  "cucumber": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 301,
+     "share": null
+    }
+   ],
+   "default_grams": 301,
+   "n_products": 0,
+   "unit": "1 piece",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 168409,
+    "food": "Cucumber, with peel, raw",
+    "description": "1 cucumber (8-1/4\")",
+    "gram_weight": 301
+   },
+   "note": "Loose, bought by the piece: 1 piece = 301 g edible weight (USDA FoodData Central, Cucumber, with peel, raw, fdc 168409, 1 cucumber (8-1/4\")). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "red bell pepper": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 119,
+     "share": null
+    }
+   ],
+   "default_grams": 119,
+   "n_products": 0,
+   "unit": "1 medium",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 170108,
+    "food": "Peppers, sweet, red, raw",
+    "description": "1 medium (approx 2-3/4\" long, 2-1/2 dia.)",
+    "gram_weight": 119
+   },
+   "note": "Loose, bought by the piece: 1 medium = 119 g edible weight (USDA FoodData Central, Peppers, sweet, red, raw, fdc 170108, 1 medium (approx 2-3/4\" long, 2-1/2 dia.)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "green bell pepper": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 119,
+     "share": null
+    }
+   ],
+   "default_grams": 119,
+   "n_products": 0,
+   "unit": "1 medium",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 170427,
+    "food": "Peppers, sweet, green, raw",
+    "description": "1 medium (approx 2-3/4\" long, 2-1/2\" dia)",
+    "gram_weight": 119
+   },
+   "note": "Loose, bought by the piece: 1 medium = 119 g edible weight (USDA FoodData Central, Peppers, sweet, green, raw, fdc 170427, 1 medium (approx 2-3/4\" long, 2-1/2\" dia)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "tomato": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 123,
+     "share": null
+    }
+   ],
+   "default_grams": 123,
+   "n_products": 0,
+   "unit": "1 medium",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 170457,
+    "food": "Tomatoes, red, ripe, raw, year round average",
+    "description": "1 medium whole (2-3/5\" dia)",
+    "gram_weight": 123
+   },
+   "note": "Loose, bought by the piece: 1 medium = 123 g edible weight (USDA FoodData Central, Tomatoes, red, ripe, raw, year round average, fdc 170457, 1 medium whole (2-3/5\" dia)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "broccoli": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 400,
+     "share": null
+    }
+   ],
+   "unit": "1 head",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 170379,
+    "food": "Broccoli, raw",
+    "description": "1 stalk",
+    "gram_weight": 151
+   },
+   "default_grams": 400,
+   "n_products": 0,
+   "note": "Set by hand: USDA has a 151 g stalk and a 608 g bunch, but no head; Spanish supermarkets sell loose broccoli by the head, set by hand to about 400 g (estimate, not weighed).",
+   "source": "override"
+  },
+  "pumpkin": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 431,
+     "share": null
+    }
+   ],
+   "unit": "1 small squash",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 168472,
+    "food": "Squash, winter, acorn, raw",
+    "description": "1 squash (4 inch dia)",
+    "gram_weight": 431
+   },
+   "default_grams": 431,
+   "n_products": 0,
+   "note": "Set by hand: bought as one small whole squash. USDA Pumpkin, raw (fdc 168448) has cup portions only; 431 g is the USDA whole acorn squash (fdc 168472), the nearest whole winter squash with a weight.",
+   "source": "override"
+  },
+  "zucchini": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 196,
+     "share": null
+    }
+   ],
+   "default_grams": 196,
+   "n_products": 0,
+   "unit": "1 medium",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 169291,
+    "food": "Squash, summer, zucchini, includes skin, raw",
+    "description": "1 medium",
+    "gram_weight": 196
+   },
+   "note": "Loose, bought by the piece: 1 medium = 196 g edible weight (USDA FoodData Central, Squash, summer, zucchini, includes skin, raw, fdc 169291, 1 medium). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "onion": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 110,
+     "share": null
+    }
+   ],
+   "default_grams": 110,
+   "n_products": 0,
+   "unit": "1 medium",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 170000,
+    "food": "Onions, raw",
+    "description": "1 medium (2-1/2\" dia)",
+    "gram_weight": 110
+   },
+   "note": "Loose, bought by the piece: 1 medium = 110 g edible weight (USDA FoodData Central, Onions, raw, fdc 170000, 1 medium (2-1/2\" dia)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "carrot": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 61,
+     "share": null
+    }
+   ],
+   "default_grams": 61,
+   "n_products": 0,
+   "unit": "1 medium",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 170393,
+    "food": "Carrots, raw",
+    "description": "1 medium",
+    "gram_weight": 61
+   },
+   "note": "Loose, bought by the piece: 1 medium = 61 g edible weight (USDA FoodData Central, Carrots, raw, fdc 170393, 1 medium). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "green beans": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 55,
+     "share": null
+    }
+   ],
+   "default_grams": 55,
+   "n_products": 0,
+   "unit": "10 beans",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 169961,
+    "food": "Beans, snap, green, raw",
+    "description": "10 beans (4\" long)",
+    "gram_weight": 55
+   },
+   "note": "Loose, bought by the piece: 10 beans = 55 g edible weight (USDA FoodData Central, Beans, snap, green, raw, fdc 169961, 10 beans (4\" long)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "eggplant": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 548,
+     "share": null
+    }
+   ],
+   "default_grams": 548,
+   "n_products": 0,
+   "unit": "1 piece",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 169228,
+    "food": "Eggplant, raw",
+    "description": "1 eggplant, unpeeled (approx 1-1/4 lb)",
+    "gram_weight": 548
+   },
+   "note": "Loose, bought by the piece: 1 piece = 548 g edible weight (USDA FoodData Central, Eggplant, raw, fdc 169228, 1 eggplant, unpeeled (approx 1-1/4 lb)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "cauliflower": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 588,
+     "share": null
+    }
+   ],
+   "default_grams": 588,
+   "n_products": 0,
+   "unit": "1 head",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 169986,
+    "food": "Cauliflower, raw",
+    "description": "1 head medium (5-6\" dia.)",
+    "gram_weight": 588
+   },
+   "note": "Loose, bought by the piece: 1 head = 588 g edible weight (USDA FoodData Central, Cauliflower, raw, fdc 169986, 1 head medium (5-6\" dia.)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "brussels sprouts": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 19,
+     "share": null
+    }
+   ],
+   "default_grams": 19,
+   "n_products": 0,
+   "unit": "1 sprout",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 170383,
+    "food": "Brussels sprouts, raw",
+    "description": "1 sprout",
+    "gram_weight": 19
+   },
+   "note": "Loose, bought by the piece: 1 sprout = 19 g edible weight (USDA FoodData Central, Brussels sprouts, raw, fdc 170383, 1 sprout). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "avocado": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 136,
+     "share": null
+    }
+   ],
+   "default_grams": 136,
+   "n_products": 0,
+   "unit": "1 fruit",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 171706,
+    "food": "Avocados, raw, California",
+    "description": "1 fruit, without skin and seed",
+    "gram_weight": 136
+   },
+   "note": "Loose, bought by the piece: 1 fruit = 136 g edible weight (USDA FoodData Central, Avocados, raw, California, fdc 171706, 1 fruit, without skin and seed). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "lemon": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 58,
+     "share": null
+    }
+   ],
+   "default_grams": 58,
+   "n_products": 0,
+   "unit": "1 fruit",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 167746,
+    "food": "Lemons, raw, without peel",
+    "description": "1 fruit (2-1/8\" dia)",
+    "gram_weight": 58
+   },
+   "note": "Loose, bought by the piece: 1 fruit = 58 g edible weight (USDA FoodData Central, Lemons, raw, without peel, fdc 167746, 1 fruit (2-1/8\" dia)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "lime": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 67,
+     "share": null
+    }
+   ],
+   "default_grams": 67,
+   "n_products": 0,
+   "unit": "1 fruit",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 168155,
+    "food": "Limes, raw",
+    "description": "1 fruit (2\" dia)",
+    "gram_weight": 67
+   },
+   "note": "Loose, bought by the piece: 1 fruit = 67 g edible weight (USDA FoodData Central, Limes, raw, fdc 168155, 1 fruit (2\" dia)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "cherry tomatoes": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": 0.43
+    },
+    {
+     "grams": 500,
+     "share": 0.23
+    },
+    {
+     "grams": 300,
+     "share": 0.13
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 30,
+   "note": "Most common sizes among 30 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "spinach": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 300,
+     "share": 0.32
+    },
+    {
+     "grams": 660,
+     "share": 0.17
+    },
+    {
+     "grams": 100,
+     "share": 0.1
+    }
+   ],
+   "default_grams": 300,
+   "n_products": 41,
+   "note": "Most common sizes among 41 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "arugula": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 100,
+     "share": 0.44
+    },
+    {
+     "grams": 50,
+     "share": 0.28
+    }
+   ],
+   "default_grams": 100,
+   "n_products": 18,
+   "note": "Most common sizes among 18 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "kale": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 200,
+     "share": 0.25
+    },
+    {
+     "grams": 300,
+     "share": 0.12
+    },
+    {
+     "grams": 120,
+     "share": 0.12
+    }
+   ],
+   "default_grams": 200,
+   "n_products": 24,
+   "note": "Most common sizes among 24 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "lettuce": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 350,
+     "share": null
+    }
+   ],
+   "unit": "1 head",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 169247,
+    "food": "Lettuce, cos or romaine, raw",
+    "description": "1 head",
+    "gram_weight": 626
+   },
+   "default_grams": 350,
+   "n_products": 0,
+   "note": "Set by hand: USDA's romaine head is 626 g, larger than a typical loose romaine head in Spain; set by hand to about 350 g (estimate, not weighed).",
+   "source": "override"
+  },
+  "fresh parsley": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 50,
+     "share": null
+    }
+   ],
+   "unit": "1 bunch",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 170416,
+    "food": "Parsley, fresh",
+    "description": "10 sprigs",
+    "gram_weight": 10
+   },
+   "default_grams": 50,
+   "n_products": 34,
+   "note": "Set by hand: bought by the bunch. USDA has 10 sprigs = 10 g (Parsley, fresh, fdc 170416) and no bunch weight; one bunch counted as 50 sprigs = 50 g. The OFF matches mix fresh bunches with jars of dried leaf.",
+   "source": "override"
+  },
+  "spring onion": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 90,
+     "share": null
+    }
+   ],
+   "unit": "1 bunch",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 170005,
+    "food": "Onions, spring or scallions (includes tops and bulb), raw",
+    "description": "1 medium (4-1/8\" long)",
+    "gram_weight": 15
+   },
+   "default_grams": 90,
+   "n_products": 0,
+   "note": "Set by hand: bought by the bunch. USDA has 1 medium spring onion = 15 g (fdc 170005) and no bunch weight; one bunch counted as 6 = 90 g.",
+   "source": "override"
+  },
+  "mushrooms": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": 0.36
+    },
+    {
+     "grams": 185,
+     "share": 0.13
+    },
+    {
+     "grams": 355,
+     "share": 0.12
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 67,
+   "note": "Most common sizes among 67 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "garlic": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 36,
+     "share": null
+    }
+   ],
+   "unit": "1 head",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 169230,
+    "food": "Garlic, raw",
+    "description": "1 clove",
+    "gram_weight": 3
+   },
+   "default_grams": 36,
+   "n_products": 46,
+   "note": "Set by hand: bought by the head. USDA has 1 clove = 3 g (Garlic, raw, fdc 169230) and no head weight; one head counted as 12 cloves = 36 g. The OFF sizes (250 g 22%) are bags of several heads.",
+   "source": "override"
+  },
+  "blueberries": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 125,
+     "share": 0.27
+    },
+    {
+     "grams": 225,
+     "share": 0.25
+    },
+    {
+     "grams": 500,
+     "share": 0.12
+    }
+   ],
+   "default_grams": 125,
+   "n_products": 51,
+   "note": "Most common sizes among 51 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "raspberries": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 125,
+     "share": 0.38
+    },
+    {
+     "grams": 170,
+     "share": 0.29
+    },
+    {
+     "grams": 250,
+     "share": 0.1
+    }
+   ],
+   "default_grams": 125,
+   "n_products": 21,
+   "note": "Most common sizes among 21 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "strawberries": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.37
+    },
+    {
+     "grams": 1000,
+     "share": 0.2
+    },
+    {
+     "grams": 250,
+     "share": 0.14
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 35,
+   "note": "Most common sizes among 35 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "pomegranate": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 282,
+     "share": null
+    }
+   ],
+   "default_grams": 282,
+   "n_products": 0,
+   "unit": "1 fruit",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 169134,
+    "food": "Pomegranates, raw",
+    "description": "1 pomegranate (4\" dia)",
+    "gram_weight": 282
+   },
+   "note": "Loose, bought by the piece: 1 fruit = 282 g edible weight (USDA FoodData Central, Pomegranates, raw, fdc 169134, 1 pomegranate (4\" dia)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "banana": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 118,
+     "share": null
+    }
+   ],
+   "default_grams": 118,
+   "n_products": 0,
+   "unit": "1 medium",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 173944,
+    "food": "Bananas, raw",
+    "description": "1 medium (7\" to 7-7/8\" long)",
+    "gram_weight": 118
+   },
+   "note": "Loose, bought by the piece: 1 medium = 118 g edible weight (USDA FoodData Central, Bananas, raw, fdc 173944, 1 medium (7\" to 7-7/8\" long)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "apple": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 182,
+     "share": null
+    }
+   ],
+   "default_grams": 182,
+   "n_products": 0,
+   "unit": "1 medium",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 171688,
+    "food": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+    "description": "1 medium (3\" dia)",
+    "gram_weight": 182
+   },
+   "note": "Loose, bought by the piece: 1 medium = 182 g edible weight (USDA FoodData Central, Apples, raw, with skin (Includes foods for USDA's Food Distribution Program), fdc 171688, 1 medium (3\" dia)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "orange": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 131,
+     "share": null
+    }
+   ],
+   "default_grams": 131,
+   "n_products": 0,
+   "unit": "1 fruit",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 169097,
+    "food": "Oranges, raw, all commercial varieties",
+    "description": "1 fruit (2-5/8\" dia)",
+    "gram_weight": 131
+   },
+   "note": "Loose, bought by the piece: 1 fruit = 131 g edible weight (USDA FoodData Central, Oranges, raw, all commercial varieties, fdc 169097, 1 fruit (2-5/8\" dia)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "kiwi": {
+   "sold_by": "per_kg",
+   "typical_packs": [
+    {
+     "grams": 69,
+     "share": null
+    }
+   ],
+   "default_grams": 69,
+   "n_products": 0,
+   "unit": "1 fruit",
+   "portion": {
+    "source": "usda_sr_legacy",
+    "fdc_id": 168153,
+    "food": "Kiwifruit, green, raw",
+    "description": "1 fruit (2\" dia)",
+    "gram_weight": 69
+   },
+   "note": "Loose, bought by the piece: 1 fruit = 69 g edible weight (USDA FoodData Central, Kiwifruit, green, raw, fdc 168153, 1 fruit (2\" dia)). Edit the unit if yours differ.",
+   "source": "usda_portion"
+  },
+  "semi-skimmed milk": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1030,
+     "share": 0.76
+    },
+    {
+     "grams": 1545,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 1030,
+   "n_products": 118,
+   "note": "Most common sizes among 118 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 1.03 g.",
+   "source": "off"
+  },
+  "kefir": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.37
+    },
+    {
+     "grams": 250,
+     "share": 0.13
+    },
+    {
+     "grams": 420,
+     "share": 0.11
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 95,
+   "note": "Most common sizes among 95 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 1 g.",
+   "source": "off"
+  },
+  "soy milk": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.83
+    },
+    {
+     "grams": 250,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 35,
+   "note": "Most common sizes among 35 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 1 g.",
+   "source": "off"
+  },
+  "grated cheese": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 200,
+     "share": 0.37
+    },
+    {
+     "grams": 150,
+     "share": 0.24
+    },
+    {
+     "grams": 100,
+     "share": 0.15
+    }
+   ],
+   "default_grams": 200,
+   "n_products": 123,
+   "note": "Most common sizes among 123 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "grana padano": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 200,
+     "share": 0.31
+    },
+    {
+     "grams": 100,
+     "share": 0.24
+    },
+    {
+     "grams": 250,
+     "share": 0.1
+    }
+   ],
+   "default_grams": 200,
+   "n_products": 29,
+   "note": "Most common sizes among 29 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "light cream cheese": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 300,
+     "share": 0.33
+    },
+    {
+     "grams": 250,
+     "share": 0.2
+    },
+    {
+     "grams": 200,
+     "share": 0.13
+    }
+   ],
+   "default_grams": 300,
+   "n_products": 15,
+   "note": "Most common sizes among 15 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "peanut butter": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 500,
+     "share": 0.26
+    },
+    {
+     "grams": 1000,
+     "share": 0.11
+    },
+    {
+     "grams": 350,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 500,
+   "n_products": 101,
+   "note": "Most common sizes among 101 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "walnuts": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 200,
+     "share": 0.2
+    },
+    {
+     "grams": 150,
+     "share": 0.17
+    },
+    {
+     "grams": 600,
+     "share": 0.08
+    }
+   ],
+   "default_grams": 200,
+   "n_products": 60,
+   "note": "Most common sizes among 60 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "sesame seeds": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": 0.44
+    },
+    {
+     "grams": 500,
+     "share": 0.12
+    },
+    {
+     "grams": 150,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 32,
+   "note": "Most common sizes among 32 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "chia seeds": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": 0.41
+    },
+    {
+     "grams": 500,
+     "share": 0.14
+    },
+    {
+     "grams": 200,
+     "share": 0.08
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 49,
+   "note": "Most common sizes among 49 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "extra virgin olive oil": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 460,
+     "share": 0.34
+    },
+    {
+     "grams": 690,
+     "share": 0.15
+    },
+    {
+     "grams": 230,
+     "share": 0.15
+    }
+   ],
+   "default_grams": 460,
+   "n_products": 364,
+   "note": "Most common sizes among 364 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 0.92 g.",
+   "source": "off"
+  },
+  "paprika": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 75,
+     "share": 0.19
+    }
+   ],
+   "default_grams": 75,
+   "n_products": 70,
+   "note": "Most common sizes among 70 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "smoked paprika": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 75,
+     "share": 0.47
+    },
+    {
+     "grams": 70,
+     "share": 0.22
+    },
+    {
+     "grams": 250,
+     "share": 0.08
+    }
+   ],
+   "default_grams": 75,
+   "n_products": 36,
+   "note": "Most common sizes among 36 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "cumin": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 30,
+     "share": 0.14
+    },
+    {
+     "grams": 32,
+     "share": 0.14
+    }
+   ],
+   "default_grams": 30,
+   "n_products": 14,
+   "note": "Most common sizes among 14 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "curry powder": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 42,
+     "share": 0.1
+    },
+    {
+     "grams": 45,
+     "share": 0.1
+    }
+   ],
+   "default_grams": 42,
+   "n_products": 31,
+   "note": "Most common sizes among 31 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "oregano": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 8,
+     "share": 0.12
+    },
+    {
+     "grams": 12,
+     "share": 0.12
+    }
+   ],
+   "default_grams": 8,
+   "n_products": 26,
+   "note": "Most common sizes among 26 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "garlic powder": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 60,
+     "share": 0.25
+    },
+    {
+     "grams": 85,
+     "share": 0.12
+    },
+    {
+     "grams": 70,
+     "share": 0.08
+    }
+   ],
+   "default_grams": 60,
+   "n_products": 24,
+   "note": "Most common sizes among 24 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "onion powder": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 50,
+     "share": 0.15
+    },
+    {
+     "grams": 60,
+     "share": 0.15
+    }
+   ],
+   "default_grams": 50,
+   "n_products": 13,
+   "note": "Most common sizes among 13 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "black pepper": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 65,
+     "share": 0.12
+    },
+    {
+     "grams": 35,
+     "share": 0.12
+    },
+    {
+     "grams": 50,
+     "share": 0.12
+    }
+   ],
+   "default_grams": 65,
+   "n_products": 26,
+   "note": "Most common sizes among 26 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "salt": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.37
+    },
+    {
+     "grams": 250,
+     "share": 0.16
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 134,
+   "note": "Most common sizes among 134 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "sugar": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.34
+    },
+    {
+     "grams": 500,
+     "share": 0.18
+    },
+    {
+     "grams": 250,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 104,
+   "note": "Most common sizes among 104 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "cinnamon": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 40,
+     "share": 0.12
+    }
+   ],
+   "default_grams": 40,
+   "n_products": 40,
+   "note": "Most common sizes among 40 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "nutmeg": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 40,
+     "share": 0.13
+    },
+    {
+     "grams": 60,
+     "share": 0.13
+    },
+    {
+     "grams": 50,
+     "share": 0.13
+    }
+   ],
+   "default_grams": 40,
+   "n_products": 15,
+   "note": "Most common sizes among 15 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "ground ginger": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 40,
+     "share": 0.13
+    },
+    {
+     "grams": 45,
+     "share": 0.09
+    },
+    {
+     "grams": 100,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 40,
+   "n_products": 23,
+   "note": "Most common sizes among 23 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "thyme": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 18,
+     "share": 0.16
+    },
+    {
+     "grams": 25,
+     "share": 0.11
+    },
+    {
+     "grams": 15,
+     "share": 0.11
+    }
+   ],
+   "default_grams": 18,
+   "n_products": 19,
+   "note": "Most common sizes among 19 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "dried parsley": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 20,
+     "share": null
+    },
+    {
+     "grams": 40,
+     "share": null
+    }
+   ],
+   "default_grams": 20,
+   "n_products": 7,
+   "note": "Set by hand: 7 OFF products, each a different jar size (8 to 60 g). A recipe uses a few grams.",
+   "source": "override"
+  },
+  "chili flakes": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 40,
+     "share": 0.17
+    }
+   ],
+   "default_grams": 40,
+   "n_products": 12,
+   "note": "Most common sizes among 12 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "mustard": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 300,
+     "share": 0.2
+    },
+    {
+     "grams": 200,
+     "share": 0.18
+    }
+   ],
+   "default_grams": 300,
+   "n_products": 71,
+   "note": "Most common sizes among 71 Open Food Facts products sold in Spain.",
+   "source": "off"
+  },
+  "teriyaki sauce": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": 0.33
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 27,
+   "note": "Most common sizes among 27 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 1 g.",
+   "source": "off"
+  },
+  "soy sauce": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 150,
+     "share": 0.31
+    },
+    {
+     "grams": 250,
+     "share": 0.24
+    },
+    {
+     "grams": 500,
+     "share": 0.09
+    }
+   ],
+   "default_grams": 150,
+   "n_products": 58,
+   "note": "Most common sizes among 58 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 1 g.",
+   "source": "off"
+  },
+  "chicken broth": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 1000,
+     "share": 0.71
+    }
+   ],
+   "default_grams": 1000,
+   "n_products": 59,
+   "note": "Most common sizes among 59 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 1 g.",
+   "source": "off"
+  },
+  "vinegar": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": 0.32
+    },
+    {
+     "grams": 500,
+     "share": 0.3
+    },
+    {
+     "grams": 1000,
+     "share": 0.14
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 192,
+   "note": "Most common sizes among 192 Open Food Facts products sold in Spain. Liquid: 1 ml counted as 1 g.",
+   "source": "off"
+  },
+  "lemon juice": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": null
+    },
+    {
+     "grams": 125,
+     "share": null
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 4,
+   "note": "Set by hand: 4 OFF bottles with a size, all different (125, 250, 280 ml and 1 l). 1 ml counted as 1 g.",
+   "source": "override"
+  },
+  "lime juice": {
+   "sold_by": "pack",
+   "typical_packs": [
+    {
+     "grams": 250,
+     "share": null
+    },
+    {
+     "grams": 500,
+     "share": null
+    }
+   ],
+   "default_grams": 250,
+   "n_products": 2,
+   "note": "Set by hand: 1 OFF bottle with a size (500 ml); 250 ml follows bottled lemon juice. 1 ml counted as 1 g.",
+   "source": "override"
+  }
+ }
+}
