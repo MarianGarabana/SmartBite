@@ -12,7 +12,7 @@ Live demo: <!-- DEMO_URL -->
 
 Most meal planning apps write a plan first and send a list of generic food names to the store. The store then picks the products. Instacart's own API guide, for example, asks apps to send a generic product name with no weight, quantity or brand ([Instacart docs](https://docs.instacart.com/developer_platform_api/guide/how_to/specify_preferred_brands)). Once the product is chosen after the plan, the app cannot know the pack size you pay for or what is left over.
 
-In real life you buy whole packs, and the grams in a recipe decide how many. Take canned tuna in 130 g cans for 7 servings: 93 g per serving is 651 g and buys a 6th can, while 92 g per serving fits in 5 cans. Among the meal apps reviewed for this project in October 2026, none plans around packs like this.
+In real life you buy whole packs, and the grams in a recipe decide how many. Take canned tuna in 130 g cans for 7 servings: 93 g per serving is 651 g and buys a 6th can, while 92 g per serving fits in 5 cans. Among the meal apps reviewed for this project in October 2026, none was found that plans around packs like this (for two of them, Eat This Much and Prospre, no source covered it).
 
 SmartBite does it the other way round:
 
@@ -38,8 +38,8 @@ flowchart LR
 - You bring your own API key. The browser calls the model provider directly, and the key never reaches the SmartBite server.
 - The model writes 4 meal ideas, then the full recipe for the one you pick. The recipe prompt tells it to write foods and grams per serving only, and never kcal or protein.
 - The engine (`smartbite_engine`, served by FastAPI at `/api/evaluate`) maps each food to open nutrition values and typical pack sizes. It rounds up to whole packs and returns leftovers, macros per serving and, for Spain, an estimated price per pack.
-- When the macros miss their range (kcal within 10% of target, protein 90% to 120% of target) or a fresh food leaves more than 25% of what was bought unused, the browser sends the engine's numbers back to the model for a corrected recipe. That is at most 2 reruns, and a bought food can grow at most 15% over the first recipe.
-- "Adjust leftovers to meals" runs in the browser, also as code with no model. It moves grams by up to 15% or tries 1 to 8 servings so whole packs get used, while protein stays at or above 90% of the target.
+- When the macros miss their range (kcal within 10% of target, protein 90% to 120% of target) or a fresh food leaves more than 25% of what was bought unused, the browser sends the engine's numbers back to the model for a corrected recipe. That is at most 2 reruns. The rerun prompt gives the model a limit for each bought food of 15% over the first recipe; the reply is not checked against it in code.
+- "Adjust leftovers to meals" runs in the browser, also as code with no model. It first tries 1 to 8 servings of the main protein with grams that fill whole packs (cutting more than 15% only while protein stays at or above the target), then moves grams by up to 15% while protein stays at or above 90% of the target, then tries 1 to 8 servings for what is left.
 
 ## Results
 
@@ -57,15 +57,17 @@ The one meal outside 10% on both is the tuna and chickpea salad with skyr dressi
 
 ### Recipe quality eval
 
-15 golden cravings, 11 code checks each (165 checks): valid JSON, 4 ideas, idea names of 60 characters or less, the right number of servings, the recipe keeps the idea's main foods, no excluded food, rice and pasta in dry grams, eggs in units, grams for every ingredient, and macros inside the target range. The checks are code only. Baseline and v2 scored on 2026-10-19, v3 re-scored on 2026-10-20 after the nutrition fix ([baseline](eval/results/baseline.md), [v2](eval/results/v2.md), [v3](eval/results/v3.md)).
+15 golden cravings, 11 code checks each (165 checks): valid JSON, 4 ideas, idea names of 60 characters or less, the right number of servings, the recipe keeps the idea's main foods, no excluded food, rice and pasta in dry grams, eggs in units, grams for every ingredient, and macros inside the target range. The checks are code only. Replies for baseline and v2 were written on 2026-10-19. All three runs were re-scored on 2026-10-20 with the same checks, after the nutrition fix ([baseline](eval/results/baseline.md), [v2](eval/results/v2.md), [v3](eval/results/v3.md)).
 
 | Run | Checks passed | macros_vs_target |
 |---|---|---|
-| baseline | 152/165 (92.1%) | 3/15 |
+| baseline | 153/165 (92.7%) | 3/15 |
 | v2 | 164/165 (99.4%) | 14/15 |
 | v3 | 165/165 (100.0%) | 15/15 |
 
-What changed from baseline to v2:
+The baseline first scored 152/165. One baseline recipe added a short top-level "note" that the recipe contract did not allow at the time. The contract now allows an optional note of up to 200 characters, so the same reply passes and all three runs are scored against the same contract.
+
+What changed from baseline to v2 (from the project notes; the baseline prompt was not kept in the repo):
 
 1. The recipe prompt now gives the OK ranges for each macro and tells the model how to hit them: size the main protein for about 75% of the protein target, and fix kcal with the carb and fat foods.
 2. The rerun loop: the engine's computed macros and leftovers go back to the model, as in the web app. With the new prompt alone, 6 of 15 first recipes passed the macro check. After reruns, 14 of 15 did. 13 of 15 cases used a rerun (15 reruns in all).
@@ -89,7 +91,7 @@ The one remaining miss is a turkey and sweet potato meal at 502 kcal against a 4
 | Typical pack sizes | Open Food Facts, products sold in Spain (export of 2026-10-18) | ODbL 1.0, with its own `LICENSE` in the folder | `data/open/packs/` |
 | Estimated prices, Spain | MAPA, Panel de consumo alimentario en hogares, Aug 2025 to Jul 2026 | Reuse under Ley 37/2007 with attribution (not a named open licence) | `data/open/prices/` |
 
-The nutrition table has 138 foods (125 from Ciqual, 13 from USDA). Pack sizes cover 139 foods. Estimated prices exist for 76 of them, the ones with an exact or close match in the MAPA panel. Each folder has a `SOURCES.md` with download dates, fields used and how the files were built.
+The nutrition table has 138 foods (125 from Ciqual, 13 from USDA). Pack sizes cover 139 foods (102 from Open Food Facts, 20 from USDA portion weights, 17 set by hand with a reason in data/build/packs-overrides.json). Estimated prices exist for 76 of them, the ones with an exact or close match in the MAPA panel. Each folder has a `SOURCES.md` with download dates, fields used and how the files were built.
 
 BEDCA, the Spanish food composition database, is not used: its terms do not allow non-personal electronic use without written permission from AESAN.
 
@@ -125,7 +127,7 @@ One Vercel project with two services: the FastAPI engine and the Next.js web app
 
 - **Your key stays in your browser.** It is kept in this browser's localStorage and sent only to the provider you chose. The engine request has no key in it.
 - **No accounts.** Your Kitchen Profile, cart and saved meals live in your browser.
-- **The engine keeps nothing.** `api/index.py` reads the request, computes the meal and returns it. The engine code has no database, writes no files and has no logging, and it makes no outside calls while it evaluates a meal. Vercel, as the host, has its own request logs, which this code does not control.
+- **The engine keeps nothing.** `api/index.py` reads the request, computes the meal and returns it. The engine has no database, writes no files and makes no outside calls while it evaluates a meal. When the engine fails, it logs one line to stderr with an error id, the error type, code locations and the request's size and counts, never the request body, its values, headers or a key. Vercel, as the host, has its own request logs, which this code does not control.
 - **What goes where.** Your craving, form and Kitchen Profile go from your browser to the model provider, under that provider's terms. The form, profile, picked idea and recipe go to the engine.
 - **AI labels.** Ideas, recipes and the demo photos are labeled AI-generated in the app.
 - **Providers.** Anthropic is the tested provider (Claude Sonnet 5.5 by default, Claude Haiku 5.5 as an option). An OpenAI-compatible adapter (OpenAI, OpenRouter, Gemini, Ollama on your own computer) is marked experimental: it was evaluated with Claude only.
