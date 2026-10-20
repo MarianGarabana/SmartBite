@@ -11,14 +11,16 @@ The engine (`smartbite_engine`) runs as a FastAPI app in `api/index.py` with two
 ```
 vercel.json          services "engine" (root ./, FastAPI) and "web" (root web/, Next.js), public rewrites
 api/index.py         FastAPI app (entrypoint api.index:app); reads smartbite_engine, data/open, docs/contracts
-requirements.txt     pinned runtime packages (FastAPI and its dependencies)
-pyproject.toml       must list the same runtime dependency (see "Needed change" below)
+requirements.txt     pinned runtime packages for local installs
+pyproject.toml       the same pins; Vercel installs from this file (see "pyproject.toml for Vercel" below)
+.python-version      3.13 (Vercel's default is 3.12; tests run on 3.13)
+.vercelignore        keeps .env, data/raw, eval, tests, caches and docs/images out of the upload
 web/                 Next.js app, unchanged
 ```
 
 `vercel.json` routes `/api/evaluate` and `/api/health` to the engine and every other path to the web app. The
 engine receives the full path (`/api/evaluate`, not `/evaluate`), so the FastAPI routes keep the `/api` prefix.
-`excludeFiles` keeps `web/`, `tests/`, `eval/`, `data/raw/` and `data/build/` out of the Python bundle.
+`excludeFiles` keeps `.env*`, `web/`, `tests/`, `eval/`, `data/raw/` and `data/build/` out of the Python bundle.
 
 Why this layout:
 
@@ -61,10 +63,31 @@ dependencies = ["fastapi==0.147.0"]
 packages = ["smartbite_engine"]
 ```
 
-Keep the FastAPI pin in `pyproject.toml` equal to the one in `requirements.txt`.
+Since 2026-10-20 `dependencies` lists every pin from `requirements.txt` (FastAPI and its dependencies), so Vercel
+installs the same versions as local. Checked in a clean Python 3.13 venv: `pip install .`, `pip check` clean,
+`api.index` imports. Keep both lists equal.
 
-Not tested: a full `vercel dev` with the web service too (it starts its own Next.js dev server, and the web app is
-owned by another agent right now), and a real deploy.
+Not tested: a full `vercel dev` with the web service too, and a real deploy.
+
+## Keys and private files stay out of the upload
+
+The Vercel CLI uploads the working folder, not what git tracks, and its default ignore list skips `.env.local` but
+not `.env`. `.vercelignore` at the repo root lists `.env`, `.env.*`, `data/raw/`, `eval/`, `tests/`, the caches and
+`docs/images/`; `vercel.json` also puts `.env*` in the engine's `excludeFiles`. After the first deploy, open the
+deployment's Source tab and check that none of these are there.
+
+## First deploy
+
+From the repo root, after `npx vercel login`:
+
+1. `npx vercel`: set up and deploy, personal scope, new project, code directory `./` (the repo root, not `web`).
+2. In the build log, the web prebuild prints "139 food names, 83 dishes and 139 pack sizes".
+3. Source tab: no `.env`, `data/raw` or `eval`.
+4. `curl -s https://<preview-url>/api/health` returns `{"status":"ok"}`; on the site, open a demo meal and its cart.
+5. `npx vercel --prod`.
+
+Not checked: whether the project's Framework Preset must be set to "Services". If the first deploy builds only
+Next.js, check Project Settings.
 
 ## Local development
 
@@ -76,9 +99,9 @@ Engine on port 8100 (never 3000, 3100 or 3101):
 curl http://127.0.0.1:8100/api/health
 ```
 
-The Next.js dev server (port 3100) needs a rewrite so the browser's `fetch("/api/evaluate")` reaches the engine.
-Add to `web/next.config.mjs`, inside `nextConfig`, for development only (on Vercel the `vercel.json` rewrites send
-`/api/evaluate` to the engine before Next.js sees it):
+The Next.js dev server (port 3100) uses a rewrite so the browser's `fetch("/api/evaluate")` reaches the engine.
+It is in `web/next.config.mjs`, for development only (on Vercel the `vercel.json` rewrites send `/api/evaluate` to
+the engine before Next.js sees it):
 
 ```js
   async rewrites() {

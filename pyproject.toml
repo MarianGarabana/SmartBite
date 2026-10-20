@@ -4,7 +4,20 @@ version = "0.1.0"
 description = "Meal planning engine: recipe grams to whole packs, leftovers and macros, all in code"
 license = "AGPL-3.0-only"
 requires-python = ">=3.11"
-dependencies = ["fastapi==0.147.0"]
+# Vercel installs from here (requirements.txt is ignored when pyproject.toml exists); keep equal to requirements.txt
+dependencies = [
+    "fastapi==0.147.0",
+    "starlette==1.9.0",
+    "pydantic==2.14.1",
+    "pydantic-core==2.50.1",
+    "annotated-doc==0.0.5",
+    "annotated-types==0.8.0",
+    "anyio==4.15.1",
+    "idna==3.20",
+    "opentelemetry-api==1.45.1",
+    "typing-extensions==4.16.0",
+    "typing-inspection==0.4.4",
+]
 
 [tool.setuptools]
 packages = ["smartbite_engine"]
