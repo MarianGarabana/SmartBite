@@ -9,3 +9,5 @@ node_modules/
 .vercel/
 # Large downloads used to build data/open (rebuild with the scripts in data/build)
 data/raw/
+.vercel
+.env*

@@ -4,7 +4,7 @@
 
 SmartBite turns one craving into one recipe in grams, a shopping list in whole packs, macros per serving and a plan for the leftovers. A language model picks the foods and the grams. Every number after that comes from code: pack sizes, leftovers, macros and estimated prices are plain Python with tests, built on open nutrition and pack data.
 
-Live demo: <!-- DEMO_URL -->
+Live demo: https://smartbite-steel.vercel.app
 
 <!-- ![Demo](docs/images/demo.gif) -->
 
