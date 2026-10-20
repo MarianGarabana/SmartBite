@@ -6,7 +6,7 @@ SmartBite turns one craving into one recipe in grams, a shopping list in whole p
 
 Live demo: https://smartbite-steel.vercel.app
 
-<!-- ![Demo](docs/images/demo.gif) -->
+![Demo](docs/images/demo.gif)
 
 ## The problem
 
