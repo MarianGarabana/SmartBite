@@ -7,7 +7,7 @@
       "entrypoint": "api.index:app",
       "functions": {
         "api/index.py": {
-          "excludeFiles": "{web/**,data/raw/**,data/build/**,tests/**,eval/**,prompts/**,.venv/**,**/__pycache__/**}"
+          "excludeFiles": "{.env*,web/**,data/raw/**,data/build/**,tests/**,eval/**,prompts/**,.venv/**,**/__pycache__/**}"
         }
       }
     },

@@ -10,7 +10,7 @@ Error = (open - reference) / reference. "Within 10%" counts meals with an absolu
 
 | Meals | n | kcal mean abs error | kcal max | kcal within 10% | protein mean abs error | protein max | protein within 10% |
 |---|---|---|---|---|---|---|---|
-| All | 13 | 5.7% | 22.2% | 12 of 13 | 5.1% | 12.6% | 12 of 13 |
+| All | 13 | 5.8% | 22.2% | 12 of 13 | 5.3% | 12.6% | 12 of 13 |
 
 ## Per meal
 
@@ -23,7 +23,7 @@ Error = (open - reference) / reference. "Within 10%" counts meals with an absolu
 | Mild chicken breast curry with rice | 483 | 456 | -5.6% | 52.3 | 55.4 | +5.9% | - |
 | Roast chicken with roast potatoes | 479 | 485 | +1.2% | 57.3 | 60.4 | +5.3% | - |
 | Oven-baked chicken with zucchini and orange | 447 | 443 | -0.9% | 52.3 | 52.6 | +0.7% | - |
-| Chicken breast bowl with rice and vegetables | 443 | 470 | +6.0% | 45.2 | 44.9 | -0.7% | - |
+| Chicken breast bowl with rice and vegetables | 443 | 475 | +7.1% | 45.2 | 46.5 | +2.8% | - |
 | Whole wheat pasta salad with tuna and arugula | 439 | 470 | +7.0% | 47.4 | 43.4 | -8.5% | - |
 | Tuna Artichoke Whole Wheat Pasta Salad | 416 | 457 | +9.7% | 43.1 | 39.1 | -9.2% | - |
 | Chicken salad with sweet potato, walnuts and mustard yogurt | 487 | 484 | -0.7% | 44.9 | 45.5 | +1.4% | - |

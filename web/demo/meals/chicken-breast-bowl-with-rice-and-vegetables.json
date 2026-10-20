@@ -523,16 +523,16 @@
   },
   "macros": {
    "per_serving": {
-    "kcal": 469.82,
-    "protein_g": 44.92,
-    "carbs_g": 32.49,
-    "fat_g": 15.07
+    "kcal": 474.89,
+    "protein_g": 46.52,
+    "carbs_g": 32.48,
+    "fat_g": 15.13
    },
    "total": {
-    "kcal": 3758.58,
-    "protein_g": 359.38,
-    "carbs_g": 259.92,
-    "fat_g": 120.53
+    "kcal": 3799.08,
+    "protein_g": 372.18,
+    "carbs_g": 259.82,
+    "fat_g": 121.03
    },
    "misses": [],
    "missing_nutrition": [],
@@ -627,12 +627,12 @@
      "food": "quark 0%",
      "grams": 500.0,
      "source": "ciqual",
-     "source_id": "19644",
+     "source_id": "19663",
      "amount": {
-      "kcal": 242.0,
-      "protein_g": 36.7,
-      "carbs_g": 21.1,
-      "fat_g": 0.0
+      "kcal": 282.5,
+      "protein_g": 49.5,
+      "carbs_g": 21.0,
+      "fat_g": 0.5
      },
      "missing": []
     },

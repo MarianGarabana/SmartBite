@@ -566,7 +566,7 @@
   "frozen edamame": {
    "kcal": 109.0,
    "protein_g": 11.22,
-   "carbs_g": 7.61,
+   "carbs_g": 2.81,
    "fat_g": 4.73,
    "source": "usda",
    "source_id": "168410",
@@ -600,7 +600,7 @@
   "frozen mixed berries": {
    "kcal": 56.0,
    "protein_g": 1.15,
-   "carbs_g": 12.55,
+   "carbs_g": 8.25,
    "fat_g": 0.81,
    "source": "usda",
    "source_id": "168209",
@@ -1023,7 +1023,7 @@
   "onion powder": {
    "kcal": 341.0,
    "protein_g": 10.41,
-   "carbs_g": 79.12,
+   "carbs_g": 63.92,
    "fat_g": 1.04,
    "source": "usda",
    "source_id": "171327",
@@ -1143,15 +1143,15 @@
    "match_note": "Raw pumpkin."
   },
   "quark 0%": {
-   "kcal": 48.4,
-   "protein_g": 7.34,
-   "carbs_g": 4.22,
-   "fat_g": 0.0,
+   "kcal": 56.5,
+   "protein_g": 9.9,
+   "carbs_g": 4.2,
+   "fat_g": 0.1,
    "source": "ciqual",
-   "source_id": "19644",
-   "source_name": "Quark, plain, 0% fat",
+   "source_id": "19663",
+   "source_name": "Fresh cream cheese, petit-suisse type, plain, 0% fat",
    "state": "raw",
-   "match_note": "Plain quark, 0% fat."
+   "match_note": "Fresh cheese, petit-suisse type, 0% fat: closer to the high protein queso fresco batido 0% sold in Spain than plain quark."
   },
   "quinoa": {
    "kcal": 358.0,
@@ -1206,7 +1206,7 @@
    "source_id": "12071",
    "source_name": "Brousse (uncured cheese from ewes' milk)",
    "state": "raw",
-   "match_note": "Brousse, a fresh whey cheese like requeson."
+   "match_note": "Brousse, a fresh whey cheese like Italian ricotta."
   },
   "roasted red peppers": {
    "kcal": 26.3,
@@ -1222,7 +1222,7 @@
   "rolled oats": {
    "kcal": 379.0,
    "protein_g": 13.15,
-   "carbs_g": 67.7,
+   "carbs_g": 57.6,
    "fat_g": 6.52,
    "source": "usda",
    "source_id": "173904",
@@ -1345,7 +1345,7 @@
   "spring onion": {
    "kcal": 32.0,
    "protein_g": 1.83,
-   "carbs_g": 7.34,
+   "carbs_g": 4.74,
    "fat_g": 0.19,
    "source": "usda",
    "source_id": "170005",
@@ -1401,7 +1401,7 @@
   "textured soy protein": {
    "kcal": 327.0,
    "protein_g": 51.46,
-   "carbs_g": 33.92,
+   "carbs_g": 16.42,
    "fat_g": 1.22,
    "source": "usda",
    "source_id": "174275",
@@ -1457,7 +1457,7 @@
   "vanilla whey protein": {
    "kcal": 352.0,
    "protein_g": 78.13,
-   "carbs_g": 6.25,
+   "carbs_g": 3.15,
    "fat_g": 1.56,
    "source": "usda",
    "source_id": "173180",

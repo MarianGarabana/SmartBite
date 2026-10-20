@@ -47,26 +47,23 @@ All numbers below are copied from the result files in `eval/results/`.
 
 ### Macros: open tables vs label-based values
 
-> **To be re-verified.** This comparison will be re-run after a fix to the pack data.
-> <!-- TODO: re-run eval/macro_compare.py after the pack data fix and update this table and its date. -->
-
-The 13 demo meals were computed twice: once by this engine with generic open tables (Ciqual 2025, USDA FoodData Central), and once by the author's personal app, which uses the labels of the products actually bought plus a national food table. The personal values are a reference, not ground truth. Error = (open - reference) / reference, per serving. Built on 2026-10-19 by `eval/macro_compare.py` ([full table](eval/results/macro-compare.md)).
+The 13 demo meals were computed twice: once by this engine with generic open tables (Ciqual 2025, USDA FoodData Central), and once by the author's personal app, which uses the labels of the products actually bought plus a national food table. The personal values are a reference, not ground truth. Error = (open - reference) / reference, per serving. Built on 2026-10-19 by `eval/macro_compare.py` and re-run on 2026-10-20 after fixes to the pack and nutrition data ([full table](eval/results/macro-compare.md)).
 
 | Meals | kcal mean abs error | kcal max error | kcal within 10% | protein mean abs error | protein max error | protein within 10% |
 |---|---|---|---|---|---|---|
-| 13 | 5.7% | 22.2% | 12 of 13 | 5.1% | 12.6% | 12 of 13 |
+| 13 | 5.8% | 22.2% | 12 of 13 | 5.3% | 12.6% | 12 of 13 |
 
 The one meal outside 10% on both is the tuna and chickpea salad with skyr dressing (kcal +22.2%, protein +12.6%).
 
 ### Recipe quality eval
 
-15 golden cravings, 11 code checks each (165 checks): valid JSON, 4 ideas, idea names of 60 characters or less, the right number of servings, the recipe keeps the idea's main foods, no excluded food, rice and pasta in dry grams, eggs in units, grams for every ingredient, and macros inside the target range. The checks are code only. Runs scored on 2026-10-19 ([baseline](eval/results/baseline.md), [v2](eval/results/v2.md)).
+15 golden cravings, 11 code checks each (165 checks): valid JSON, 4 ideas, idea names of 60 characters or less, the right number of servings, the recipe keeps the idea's main foods, no excluded food, rice and pasta in dry grams, eggs in units, grams for every ingredient, and macros inside the target range. The checks are code only. Baseline and v2 scored on 2026-10-19, v3 re-scored on 2026-10-20 after the nutrition fix ([baseline](eval/results/baseline.md), [v2](eval/results/v2.md), [v3](eval/results/v3.md)).
 
 | Run | Checks passed | macros_vs_target |
 |---|---|---|
 | baseline | 152/165 (92.1%) | 3/15 |
 | v2 | 164/165 (99.4%) | 14/15 |
-| v3 | <!-- TODO: v3 score --> | <!-- TODO: v3 macros_vs_target --> |
+| v3 | 165/165 (100.0%) | 15/15 |
 
 What changed from baseline to v2:
 
@@ -75,7 +72,7 @@ What changed from baseline to v2:
 
 The one remaining miss is a turkey and sweet potato meal at 502 kcal against a 450 kcal target, after 3 attempts.
 
-**Caveat.** The model replies in both runs came from Claude Code subagents acting as the model, given the same prompts by hand (`eval/run.py prompt`). They were not calls to the production API from the web app. The scoring is the same code either way.
+**Caveat.** The model replies in all three runs came from Claude Code subagents acting as the model, given the same prompts by hand (`eval/run.py prompt`). They were not calls to the production API from the web app. The scoring is the same code either way.
 
 ### Cost and model comparison
 

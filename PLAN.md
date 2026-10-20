@@ -28,6 +28,10 @@ Added 2026-10-19 (P25-P27): demo meals are Marian's 13 saved meals (store data r
 | 6 | README with measured numbers: generic macros vs label on Marian's 10 meals (aggregates only), cost per meal from one real API run (Marian's OK, key with a $5 limit) | verifier agent passes |
 | 7 | Deploy demo, push public repo (Marian's OK), LinkedIn post | live URL works; Marian approves post |
 
+## After v1: region and supermarket (added 2026-10-20)
+
+v1 stays general: open nutrition tables and typical packs. The author's personal app is the specific version (her store catalog, her labels, her profile) and stays private. More depth comes when a user sets a region and a supermarket, from open sources or the user only: (1) the user's own labels and prices, entered once and used for that food from then on; (2) Open Food Facts products filtered by country and store tag, or found by barcode, for real pack sizes and nutrition per 100 g; (3) Open Food Facts Open Prices by location for reported prices. No store scraping.
+
 ## Open questions (decide in the phase named)
 
 - Phase 4: leftovers adjust stays client side in JS for v1 (it already works in the browser); port to Python only if the API needs it.

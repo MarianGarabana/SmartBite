@@ -125,6 +125,9 @@ test("errors never show the key; refusals and network errors are plain messages"
   assert.ok(!err.message.includes("SECRET"), err.message);
   assert.equal(redact("key sk-abc123456789 here", ""), "key [key] here");
 
+  mockFetch([{ status: 429, json: [{ error: { code: 429, message: "Quota exceeded for metric: free_tier_requests" } }] }]);
+  await assert.rejects(generateIdeas({ form: FORM, profile: null, llm: OPENAI }), /\(429\).*Quota exceeded/);
+
   mockFetch([anthropicReply(IDEAS, { stop_reason: "refusal" })]);
   await assert.rejects(generateIdeas({ form: FORM, profile: null, llm: ANTHROPIC }), /declined/);
 

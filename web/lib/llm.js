@@ -69,7 +69,8 @@ async function post(url, headers, body, llm) {
     data = await res.json();
   } catch {}
   if (!res.ok) {
-    const detail = redact(data?.error?.message || data?.message || res.statusText || "", llm.apiKey);
+    const err = Array.isArray(data) ? data[0] : data; // Gemini wraps errors in a list
+    const detail = redact(err?.error?.message || err?.message || res.statusText || "", llm.apiKey);
     const lead = res.status === 401 || res.status === 403
       ? `The provider did not accept the key (${res.status}). Check it in Settings.`
       : res.status === 429 ? "The provider says too many requests (429). Wait a moment and try again."

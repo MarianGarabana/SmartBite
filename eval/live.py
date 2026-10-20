@@ -360,6 +360,8 @@ class Runner:
         self.calls.append(record)
         if not ok:
             detail = ""
+            if isinstance(data, list) and data and isinstance(data[0], dict):  # Gemini wraps errors in a list
+                data = data[0]
             if isinstance(data, dict):
                 err = data.get("error")
                 detail = (err.get("message") if isinstance(err, dict) else err) or data.get("message") or ""

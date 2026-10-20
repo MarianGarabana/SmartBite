@@ -129,7 +129,7 @@
   ]
  },
  "evaluation": {
-  "status": "issues",
+  "status": "ok",
   "recipe_title": "Carrot cake overnight oats with berries",
   "items": [
    {
@@ -449,18 +449,16 @@
    "per_serving": {
     "kcal": 486.04,
     "protein_g": 45.1,
-    "carbs_g": 42.65,
+    "carbs_g": 37.68,
     "fat_g": 12.84
    },
    "total": {
     "kcal": 3888.32,
     "protein_g": 360.83,
-    "carbs_g": 341.24,
+    "carbs_g": 301.48,
     "fat_g": 102.69
    },
-   "misses": [
-    "carbs 43 g over max 40 g"
-   ],
+   "misses": [],
    "missing_nutrition": [],
    "unresolved": [],
    "lines": [
@@ -473,7 +471,7 @@
      "amount": {
       "kcal": 844.8,
       "protein_g": 187.51,
-      "carbs_g": 15.0,
+      "carbs_g": 7.56,
       "fat_g": 3.74
      },
      "missing": []
@@ -487,7 +485,7 @@
      "amount": {
       "kcal": 1212.8,
       "protein_g": 42.08,
-      "carbs_g": 216.64,
+      "carbs_g": 184.32,
       "fat_g": 20.86
      },
      "missing": []
@@ -592,14 +590,7 @@
     }
    ]
   },
-  "change_requests": [
-   {
-    "from_agent": "macro",
-    "ingredient": null,
-    "reason": "misses_macros",
-    "hint": "Per serving: carbs 43 g over max 40 g. Adjust grams or swap ingredients."
-   }
-  ]
+  "change_requests": []
  },
  "mfp": "SmartBite: Carrot cake overnight oats with berries\nServings: 8\n\nvanilla whey protein, 240 g\nrolled oats, 320 g (dry)\ngreek yogurt 0%, 1000 g\ncarrot, 400 g (raw)\nchia seeds, 64 g\nstrawberries, 240 g\nblueberries, 240 g\nwalnuts, 80 g\ncinnamon, 8 g",
  "slug": "carrot-cake-overnight-oats-with-berries",

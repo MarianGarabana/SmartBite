@@ -528,17 +528,17 @@
    "per_serving": {
     "kcal": 485.5,
     "protein_g": 40.22,
-    "carbs_g": 45.03,
+    "carbs_g": 44.3,
     "fat_g": 12.81
    },
    "total": {
     "kcal": 3883.98,
     "protein_g": 321.8,
-    "carbs_g": 360.21,
+    "carbs_g": 354.39,
     "fat_g": 102.52
    },
    "misses": [
-    "carbs 45 g over max 40 g"
+    "carbs 44 g over max 40 g"
    ],
    "missing_nutrition": [],
    "unresolved": [],
@@ -608,7 +608,7 @@
      "amount": {
       "kcal": 71.68,
       "protein_g": 4.1,
-      "carbs_g": 16.44,
+      "carbs_g": 10.62,
       "fat_g": 0.43
      },
      "missing": []
@@ -704,7 +704,7 @@
     "from_agent": "macro",
     "ingredient": null,
     "reason": "misses_macros",
-    "hint": "Per serving: carbs 45 g over max 40 g. Adjust grams or swap ingredients."
+    "hint": "Per serving: carbs 44 g over max 40 g. Adjust grams or swap ingredients."
    }
   ]
  },

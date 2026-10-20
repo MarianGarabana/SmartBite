@@ -315,6 +315,14 @@ def test_failed_rerun_ends_the_loop_and_keeps_the_best(monkeypatch):
     assert KEY not in json.dumps(r.calls) and "[key]" in r.calls[-1]["error"]
 
 
+def test_gemini_error_in_a_list_keeps_its_message():
+    err = (429, json.dumps([{"error": {"code": 429, "message": f"Quota exceeded for {KEY}"}}]).encode())
+    r = runner(FakeTransport([err]), "gemini")
+    _, summary = r.run_case(CASE)
+    assert summary["status"] == "error" and "HTTP 429: Quota exceeded" in summary["error"]
+    assert KEY not in json.dumps(r.calls)
+
+
 def test_refusal_and_cut_off_fail_the_stage(monkeypatch):
     t = FakeTransport([anthropic_reply("", stop="refusal")])
     _, summary = runner(t).run_case(CASE)

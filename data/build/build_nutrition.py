@@ -26,8 +26,10 @@ CIQUAL_COMPO = "compo_2025_11_03.xml"
 
 # USDA nutrient ids in order of preference. Foundation Foods often has no 1008 Energy,
 # only the Atwater values, and some records give carbs by summation or NLEA fat only.
+# 1005 (carbs by difference) includes fiber; Ciqual and EU labels leave it out, so fiber (1079) is subtracted.
 USDA_IDS = {"kcal": ("1008", "2048", "2047"), "protein_g": ("1003",),
             "carbs_g": ("1005", "1050"), "fat_g": ("1004", "1085")}
+USDA_FIBER = "1079"
 USDA_FILES = {"usda_foundation": ("FoodData_Central_foundation_food_csv_2026-04-30.zip", "foundation_food"),
               "usda_sr_legacy": ("FoodData_Central_sr_legacy_food_csv_2018-04.zip", "sr_legacy_food")}
 
@@ -70,7 +72,7 @@ def _csv_rows(archive, name):
 
 def load_usda(zip_path, data_type):
     """{fdc_id: {name, values}} for one FDC bulk CSV zip, only foods of data_type."""
-    wanted = {i for ids in USDA_IDS.values() for i in ids}
+    wanted = {i for ids in USDA_IDS.values() for i in ids} | {USDA_FIBER}
     with zipfile.ZipFile(zip_path) as archive:
         foods = {row["fdc_id"]: {"name": row["description"], "amounts": {}}
                  for row in _csv_rows(archive, "food.csv") if row["data_type"] == data_type}
@@ -82,6 +84,8 @@ def load_usda(zip_path, data_type):
         amounts = food.pop("amounts")
         food["values"] = {field: next((amounts[i] for i in ids if i in amounts), None)
                           for field, ids in USDA_IDS.items()}
+        if "1005" in amounts:
+            food["values"]["carbs_g"] = max(0.0, amounts["1005"] - amounts.get(USDA_FIBER, 0.0))
     return foods
 
 

@@ -573,13 +573,13 @@
    "per_serving": {
     "kcal": 457.23,
     "protein_g": 49.86,
-    "carbs_g": 42.27,
+    "carbs_g": 39.64,
     "fat_g": 6.65
    },
    "total": {
     "kcal": 3657.8,
     "protein_g": 398.87,
-    "carbs_g": 338.13,
+    "carbs_g": 317.13,
     "fat_g": 53.18
    },
    "misses": [],
@@ -637,7 +637,7 @@
      "amount": {
       "kcal": 392.4,
       "protein_g": 61.75,
-      "carbs_g": 40.7,
+      "carbs_g": 19.7,
       "fat_g": 1.46
      },
      "missing": []

@@ -1,0 +1,9 @@
+# The Vercel CLI uploads the working folder, not git: keep keys and local-only files out.
+.env
+.env.*
+data/raw/
+eval/
+tests/
+.pytest_cache/
+.ruff_cache/
+docs/images/
