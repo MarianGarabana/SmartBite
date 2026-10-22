@@ -9,18 +9,21 @@ totals and listed in missing_nutrition) and no pack size.
 
 With a country (only "ES" for now), lines the user did not price get an estimated price from that country's
 average prices (estimated_prices.py), for the same pack size the line buys without a price. The user's price wins.
+
+A product the user saved for a food (request products, picked by the browser for their store) is that food's only
+pack option; its price wins over everything else and its label replaces the nutrition table.
 """
 import math
 import re
 import unicodedata
 from dataclasses import asdict, fields
 
-from .calc import EGG_GRAMS, per_serving, total
+from .calc import EGG_GRAMS, Nutrition, per_serving, scale, total
 from .estimated_prices import load_estimates, pack_estimate, period
 from .form import MealForm
 from .generic_packs import buy_unpriced, load_packs, pack_entry, product_option
 from .names import canonical, plain
-from .nutrition import ingredient_macros, load_table
+from .nutrition import IngredientMacros, ingredient_macros, load_table
 from .pack import EGG_SIZE, HIGH_LEFTOVER_PCT, pack_line, pack_meal
 
 MACRO_TOLERANCE = 0.10  # kcal within 10% of target, protein at least 90% of target
@@ -137,14 +140,24 @@ def items_for(recipe, servings):
     return out
 
 
-def price_errors(prices):
-    """Rules the API's JSON Schema cannot express for the list form: one price per food and pack size."""
+def product_errors(products):
+    """Rules the API's JSON Schema cannot express for products: one per food, the pack field that matches sold_by,
+    barcode digits and the price date format."""
     seen, errors = set(), []
-    for i, p in enumerate(prices or []):
-        key = (p["food"].strip().lower(), float(p["pack_grams"]))
-        if key in seen:
-            errors.append(f"prices[{i}]: second price for {p['food']} {p['pack_grams']:g} g; send one per pack size")
-        seen.add(key)
+    for i, p in enumerate(products or []):
+        food = p["food"].strip().lower()
+        if food in seen:
+            errors.append(f"products[{i}]: second product for {p['food']}; send one per food")
+        seen.add(food)
+        if p["sold_by"] == "per_unit":
+            if "units_per_pack" not in p or "pack_grams" in p:
+                errors.append(f"products[{i}]: sold per unit needs units_per_pack and no pack_grams")
+        elif "pack_grams" not in p or "units_per_pack" in p:
+            errors.append(f"products[{i}]: sold {p['sold_by']} needs pack_grams and no units_per_pack")
+        if "barcode" in p and not re.fullmatch(r"\d{8,14}", p["barcode"]):
+            errors.append(f"products[{i}]: barcode must be 8 to 14 digits")
+        if "price_date" in p and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", p["price_date"]):
+            errors.append(f"products[{i}]: price_date must be YYYY-MM-DD")
     return errors
 
 
@@ -244,14 +257,48 @@ def _estimated_line(item, key, entry, keep_leftovers_low, estimates, common):
     return {**line, "price_period": period(estimates), "food": key}
 
 
-def _pack_line(item, packs, keep_leftovers_low, prices, estimates=None):
+def _products_by_food(products):
+    """The API's products list as {food key: product}."""
+    return {p["food"].strip().lower(): p for p in products or []}
+
+
+def _product_line(item, key, product, keep_leftovers_low, estimates, common):
+    """Cart line from the user's saved product: its pack size is the only option (always: never swapped), its price
+    prices the line. With no price, a country's estimate for that pack size prices it, else it is unpriced."""
+    sold_by, grams, units = product["sold_by"], product.get("pack_grams"), product.get("units_per_pack")
+    price, source, date, extra = product.get("price_eur"), "user", product.get("price_date"), {}
+    record = (estimates or {}).get("foods", {}).get(key)
+    if price is None and record:
+        price = pack_estimate(record, units=units) if sold_by == "per_unit" else pack_estimate(record, grams=grams)
+        if price is not None:
+            source, date, extra = "estimate", estimates["period_to"], {"price_period": period(estimates)}
+    priced = price is not None
+    option = {"name": product["name"], "link": None, "sold_by": sold_by, "pack_grams": grams, "units_per_pack": units,
+              "price_eur": price, "price_per_kg_eur": price / grams * 1000 if priced and sold_by == "per_kg" else None,
+              "other_options": [], "always": True, "price_date": date if priced else None,
+              "price_source": source if priced else None}
+    line = pack_line(item["name"], item["total_grams"], option, main_word=key,
+                     prefer_less_leftover=keep_leftovers_low, **common)
+    if not priced:
+        bought = buy_unpriced(item["total_grams"], option, item["units_total"])
+        line.update(bought, price_source=None, price_date=None,
+                    leftover_pct=100 * bought["grams_left"] / bought["grams_bought"] if bought["grams_bought"] else 0.0,
+                    leftover_status=_leftover_status(bought["grams_left"], item["storage"], item["leftover_plan"]))
+    return {**line, **extra, "food": key, "user_product": True}
+
+
+def _pack_line(item, packs, keep_leftovers_low, prices, estimates=None, products=None):
     """Cart line for one item, or None for a pantry item with no pack size (assumed at home, no line).
-    estimates: a country's price table (estimated_prices.load_estimates) for lines the user did not price."""
+    estimates: a country's price table (estimated_prices.load_estimates) for lines the user did not price.
+    products: the user's saved products by food key (_products_by_food); a product wins over typical packs."""
     found = pack_entry(item["food"], packs) if item["food"] else None
-    if found is None and item["pantry"]:
-        return None
     common = dict(units_needed=item["units_total"], storage=item["storage"], leftover_plan=item["leftover_plan"],
                   optional=item["optional"])
+    key = found[0] if found else item["food"]
+    if key and key in (products or {}):
+        return _product_line(item, key, products[key], keep_leftovers_low, estimates, common)
+    if found is None and item["pantry"]:
+        return None
     if found is None:  # unknown food: listed, no pack size, no price
         return {**pack_line(item["name"], item["total_grams"], None, **common), "food": item["food"]}
     key, entry = found
@@ -291,14 +338,24 @@ def _unpriced_leftover_requests(lines):
     return out
 
 
-def _macro_lines(items, table):
+def _label_macros(food, grams, product):
+    """Macros from the label on the user's saved product (source "label"): it wins over the nutrition table."""
+    label = Nutrition(**{f: product["per_100g"][f] for f in MACRO_FIELDS})
+    return IngredientMacros(food, grams, label, scale(label, grams), "label", product.get("barcode"), ())
+
+
+def _macro_lines(items, table, products=None):
     lines, missing = [], []
     for it in items:
         if it["food"] is None:
             missing.append(f"{it['name']}: unknown food, left out of the totals")
             continue
+        product = (products or {}).get(it["food"])
         try:
-            got = ingredient_macros(it["food"], it["total_grams"], table=table)
+            if product and product.get("per_100g"):
+                got = _label_macros(it["food"], it["total_grams"], product)
+            else:
+                got = ingredient_macros(it["food"], it["total_grams"], table=table)
         except LookupError:
             missing.append(f"{it['name']}: no nutrition record, left out of the totals")
             continue
@@ -309,8 +366,8 @@ def _macro_lines(items, table):
     return lines, missing
 
 
-def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None, *, table=None, packs=None,
-             estimates=None):
+def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None, products=None, *, table=None,
+             packs=None, estimates=None):
     """Meal result for one recipe. form: dict or MealForm; servings come from the form.
 
     profile: the user's Kitchen Profile; accepted for the API contract, the math does not depend on it.
@@ -320,10 +377,14 @@ def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None,
     country: optional, "ES": lines without a user price get an estimated price (price_source "estimate"); the pack
     then says whether the budget counts estimates (prices_estimated) and where they come from (estimate_source).
     Without a country the reply is the same as before estimates existed.
+    products: optional saved products, the API's list form (docs/contracts/evaluate.schema.json Product), at most
+    one per food. A product is the only pack option for its food (line user_product true), its price wins over
+    prices and estimates, and its label (per_100g) replaces the nutrition table (macro line source "label").
     table, packs: nutrition and pack data (default: data/open). estimates: a price table in place of the country's.
     """
     if isinstance(prices, list):
         prices = _prices_by_food(prices)
+    products = _products_by_food(products)
     meal_form = to_form(form)
     table = load_table() if table is None else table
     packs = load_packs() if packs is None else packs
@@ -332,7 +393,8 @@ def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None,
 
     if country and estimates is None:
         estimates = load_estimates(country)
-    lines = [l for l in (_pack_line(it, packs, meal_form.keep_leftovers_low, prices, estimates) for it in items) if l]
+    lines = [l for l in (_pack_line(it, packs, meal_form.keep_leftovers_low, prices, estimates, products)
+                         for it in items) if l]
     pack = pack_meal(lines, servings=servings, budget_total_eur=meal_form.budget_total_eur,
                      keep_leftovers_low=meal_form.keep_leftovers_low)
     if meal_form.keep_leftovers_low:
@@ -347,7 +409,7 @@ def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None,
         pack["estimate_source"] = {k: estimates[k] for k in ("country", "currency", "source", "period_from",
                                                             "period_to", "built")}
 
-    macro_lines, missing = _macro_lines(items, table)
+    macro_lines, missing = _macro_lines(items, table, products)
     meal_total = total(l["amount"] for l in macro_lines)
     per = per_serving(meal_total, servings)
     misses = macro_check(per, meal_form)

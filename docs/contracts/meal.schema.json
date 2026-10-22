@@ -94,7 +94,8 @@
         "cost_used_eur": { "type": ["number", "null"] },
         "price_date": { "type": ["string", "null"] },
         "price_source": { "type": ["string", "null"], "description": "e.g. 'user' for a price the user typed, 'estimate' for a country's average price, 'typical' for a generic pack." },
-        "price_period": { "type": "string", "description": "Estimated prices only: months of the average, 'YYYY-MM/YYYY-MM'." }
+        "price_period": { "type": "string", "description": "Estimated prices only: months of the average, 'YYYY-MM/YYYY-MM'." },
+        "user_product": { "type": "boolean", "description": "Only on lines from a product the user saved (request products): its pack size is the only option; price_source is 'user', 'estimate' (no price on the product, a country's estimate for its pack size) or null (unpriced)." }
       }
     },
     "MealMacros": {
@@ -113,7 +114,7 @@
             "properties": {
               "name": { "type": "string" },
               "grams": { "type": "number", "minimum": 0 },
-              "source": { "type": ["string", "null"], "description": "e.g. ciqual, usda, open_food_facts." },
+              "source": { "type": ["string", "null"], "description": "e.g. ciqual, usda, open_food_facts, or label (nutrition from the user's saved product)." },
               "source_id": { "type": ["string", "null"] },
               "amount": { "$ref": "common.schema.json#/$defs/Macros" }
             }

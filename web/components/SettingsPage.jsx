@@ -7,8 +7,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DEFAULT_PROFILE, setField } from "../lib/profile";
 import { ANTHROPIC, ANTHROPIC_MODELS, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, presetAvailable, presetById } from "../lib/providers";
-import { COUNTRIES, DEFAULT_COUNTRY, clearApiKey, clearOpenAiKey, readApiKey, readCountry, readLlmSettings, readOpenAiKey,
-  readProfile, resetProfile, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeProfile } from "../lib/store";
+import { COUNTRIES, DEFAULT_COUNTRY, NO_STORE, STORES, clearApiKey, clearOpenAiKey, exportProducts, importProducts, okStore,
+  onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readProfile, readStore, resetProfile,
+  storeLabel, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeProfile, writeStore } from "../lib/store";
 import { PageShell, useToast } from "./Chrome";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
@@ -98,6 +99,49 @@ export default function SettingsPage({ demoMeals }) {
   const pickCountry = (id) => {
     setCountry(id);
     showToast(writeCountry(id) ? (id === "none" ? "Estimated prices off." : "Country saved in this browser.") : "Not saved: this browser blocks storage.");
+  };
+
+  // Supermarket: saved as soon as it changes ("Other" waits for a name). Products: counted on every storage change.
+  const [store, setStore] = useState(NO_STORE);
+  const [otherName, setOtherName] = useState("");
+  const [products, setProducts] = useState({});
+  useEffect(() => {
+    const s = readStore();
+    setStore(s.startsWith("other:") ? "other" : s);
+    setOtherName(s.startsWith("other:") ? s.slice(6) : "");
+    const read = () => setProducts(readProducts());
+    read();
+    return onStoreChange(read);
+  }, []);
+  const saveStore = (id) => showToast(writeStore(id)
+    ? (id === NO_STORE ? "No store: your products for any store are used." : `Shopping at ${storeLabel(okStore(id))}.`)
+    : "Not saved: this browser blocks storage.");
+  const pickStore = (id) => {
+    setStore(id);
+    if (id !== "other") saveStore(id);
+    else if (otherName.trim()) saveStore(`other:${otherName}`);
+  };
+  const storeId = store === "other" ? okStore(`other:${otherName}`) : store;
+  const counts = Object.keys(products).reduce((c, k) => {
+    const s = k.slice(0, k.lastIndexOf("|"));
+    return { ...c, [s]: (c[s] || 0) + 1 };
+  }, {});
+  const total = Object.keys(products).length;
+  const download = () => {
+    const url = URL.createObjectURL(new Blob([exportProducts()], { type: "application/json" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `smartbite-products-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+  const upload = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (file.size > 1_000_000) return showToast("This file is too big for a products file.");
+    const out = importProducts(await file.text());
+    showToast(out.ok ? `Added ${out.added} product${out.added === 1 ? "" : "s"}${out.skipped ? `, ${out.skipped} skipped` : ""}.` : out.error);
   };
 
   const saveProfile = () => showToast(writeProfile(profile) ? "Profile saved in this browser." : "Not saved: this browser blocks storage.");
@@ -262,8 +306,8 @@ export default function SettingsPage({ demoMeals }) {
             </div>
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
               <div>
-                <span className="font-script text-2xl text-forest font-bold">What things cost</span>
-                <h2 className="font-serif font-bold text-xl text-forest">Estimated prices</h2>
+                <span className="font-script text-2xl text-forest font-bold">Where you shop</span>
+                <h2 className="font-serif font-bold text-xl text-forest">Region and supermarket</h2>
               </div>
               <div>
                 <label htmlFor="price-country" className={label}>Country</label>
@@ -275,6 +319,37 @@ export default function SettingsPage({ demoMeals }) {
                     ? "Only the prices you type count. The budget check waits for a price on every item."
                     : "Items you have not priced get the average price households paid in Spain over the latest 12 months published (MAPA household consumption panel). They show as est. on the recipe page; a price you type always wins."}
                 </span>
+              </div>
+              <div>
+                <label htmlFor="store" className={label}>Supermarket</label>
+                <select id="store" value={store} onChange={(e) => pickStore(e.target.value)} className={input}>
+                  <option value={NO_STORE}>No store</option>
+                  {Object.values(STORES).flat().map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
+                  <option value="other">Other</option>
+                </select>
+                {store === "other" && (
+                  <input aria-label="Supermarket name" value={otherName} maxLength={40} placeholder="Supermarket name"
+                    onChange={(e) => setOtherName(e.target.value)} onBlur={() => otherName.trim() && saveStore(`other:${otherName}`)}
+                    className={`${input} mt-2`} />
+                )}
+                <span className="block text-[11px] text-forest/60 mt-1">
+                  Prices and products you save go to this store. Foods you have no product for at this store use the ones you saved with no store, then the typical pack. SmartBite never contacts the store.
+                </span>
+              </div>
+              <div className="space-y-2">
+                <span className={label}>Your products</span>
+                <p className="text-xs text-forest/80">
+                  {total === 0 ? "None yet. Use Edit product on a shopping line, or type a price there."
+                    : `${total} saved in this browser${counts[storeId] ? `, ${counts[storeId]} for ${storeLabel(storeId)}` : ""}.`}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <button onClick={download} disabled={!total} className="bg-forest text-cream hover:bg-forest/90 disabled:opacity-40 font-bold text-xs px-4 py-2 rounded-xl transition-colors">Export products</button>
+                  <label className="bg-cream-dark text-forest hover:bg-cream-dark/70 font-bold text-xs px-4 py-2 rounded-xl transition-colors cursor-pointer">
+                    Import products
+                    <input type="file" accept="application/json,.json" onChange={upload} className="sr-only" />
+                  </label>
+                </div>
+                <span className="block text-[11px] text-forest/60">A file to keep your products, or move them to another browser.</span>
               </div>
             </div>
             <div className="bg-cream-card rounded-3xl p-6 border border-cream-dark flex items-start gap-4">

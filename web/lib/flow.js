@@ -3,6 +3,7 @@
 // again with the RERUN block (attempt number, macros computed in code, the problems, the previous grams and the 15%
 // cap; rerunInfo in lib/prompts.js). Up to 2 reruns, then the attempt with the fewest problems is kept. Same idea as
 // the rerun loop of the personal app. The model still picks foods and grams only: every number here comes from code.
+import { productsFor } from "./cartmath.js";
 import { evaluateMeal } from "./engine.js";
 import { writeRecipe } from "./llm.js";
 import { MAX_ATTEMPTS, rerunInfo } from "./prompts.js";
@@ -33,12 +34,13 @@ export function bestAttempt(attempts) {
 }
 
 // Runs the loop. recipe: a recipe already written for this idea (e.g. "Try again" after the engine failed); then the
-// first write is skipped. prices and country go to every engine call (country "ES": estimated prices, so the budget
-// check and its over_budget request use them). onProgress gets {stage: "recipe" | "evaluate" | "rerun", attempt, total}.
+// first write is skipped. products ({ food key: product } for the user's store, lib/store.js activeProducts) and
+// country go to every engine call: product packs, prices and labels, and estimated prices (country "ES"), so the
+// budget check, macros and their change requests use them. onProgress gets {stage: "recipe" | "evaluate" | "rerun", attempt, total}.
 // Returns {meal, recipe, attempt, attempts: [{attempt, problems, misses, error?}]}.
 // Errors on the first attempt are thrown as they are; an engine error carries the written recipe as error.recipe.
 // A failed rerun (model or engine) ends the loop and keeps the best attempt so far.
-export async function makeMeal({ idea, form, profile, llm, prices, country = null, recipe: given = null,
+export async function makeMeal({ idea, form, profile, llm, products = {}, country = null, recipe: given = null,
   maxReruns = MAX_RERUNS, onProgress = () => {} }) {
   const total = maxReruns + 1;
   const attempts = [];
@@ -56,7 +58,8 @@ export async function makeMeal({ idea, form, profile, llm, prices, country = nul
       first = first || recipe;
       onProgress({ stage: "evaluate", attempt, total });
       try {
-        meal = await evaluateMeal({ form, profile, picked_idea: idea, recipe, prices, country });
+        meal = await evaluateMeal({ form, profile, picked_idea: idea, recipe, products: productsFor(recipe, products),
+          country });
       } catch (e) {
         if (attempt === 1) e.recipe = recipe;
         throw e;

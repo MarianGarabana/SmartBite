@@ -13,27 +13,47 @@
         "profile": { "$ref": "kitchen-profile.schema.json#/$defs/Output", "description": "The user's Kitchen Profile. Omitted: the default profile (prompts/kitchen-profile.default.json)." },
         "picked_idea": { "$ref": "idea.schema.json#/$defs/Idea" },
         "recipe": { "$ref": "recipe.schema.json#/$defs/Output" },
-        "prices": {
-          "description": "Optional prices the user typed (saved in their browser), one per food and pack size. Omitted or empty: no line has a price, the budget check is marked incomplete and the reply is the same as before prices existed. A price for a size that is not one of the food's typical packs is ignored. The same food and pack size twice is a 422.",
+        "products": {
+          "description": "Optional products the user saved (in their browser), at most one per food. A product is the only pack option for its food: its pack size replaces the typical packs, its price (when set) prices the line, and its label (per_100g, when set) replaces the nutrition table for that food. Foods with no product use typical packs and, with a country, estimated prices. The browser picks the product for the user's store (that store's product, else their no-store product), so the request never names a store. Rules the schema cannot express are checked in code (422): one product per food; sold_by per_unit needs units_per_pack and no pack_grams, the others need pack_grams and no units_per_pack; barcode is 8 to 14 digits; price_date is YYYY-MM-DD.",
           "type": "array",
           "maxItems": 200,
-          "items": { "$ref": "#/$defs/Price" }
+          "items": { "$ref": "#/$defs/Product" }
         },
         "country": {
-          "description": "Optional country for estimated prices. \"ES\": every line without a user price gets an estimated pack price from Spain's average prices (MAPA household panel, data/open/prices/es.json), with price_source \"estimate\"; the user's prices always win. Omitted: no estimates and the reply is the same as before estimates existed.",
+          "description": "Optional country for estimated prices. \"ES\": every line without a product price gets an estimated pack price from Spain's average prices (MAPA household panel, data/open/prices/es.json), with price_source \"estimate\"; a product's price always wins. Omitted: no estimates and the reply is the same as before estimates existed.",
           "enum": ["ES"]
         }
       },
       "additionalProperties": false
     },
-    "Price": {
-      "description": "Price of one pack: food is the English food key of the pack line (line.food), pack_grams the weight of one pack as the line shows it (grams_bought / packs_to_buy; for eggs units x 51 g, e.g. 612 for 12; for loose items the unit, e.g. 1000).",
+    "Product": {
+      "description": "One product the user saved for a food. food is the English food key of the pack line (line.food). For loose items (per_kg) pack_grams is the unit the store sells, e.g. 1000; for eggs (per_unit) units_per_pack is the eggs per box.",
       "type": "object",
-      "required": ["food", "pack_grams", "price_eur"],
+      "required": ["food", "name", "sold_by"],
       "properties": {
         "food": { "type": "string", "maxLength": 100 },
+        "name": { "type": "string", "maxLength": 120, "description": "Product name as the user wrote it or as Open Food Facts gave it." },
+        "sold_by": { "enum": ["pack", "per_kg", "per_unit"] },
         "pack_grams": { "type": "number", "exclusiveMinimum": 0, "maximum": 100000 },
-        "price_eur": { "type": "number", "minimum": 0, "maximum": 1000 }
+        "units_per_pack": { "type": "integer", "minimum": 1, "maximum": 100 },
+        "price_eur": { "type": "number", "minimum": 0, "maximum": 1000, "description": "Price of one pack (loose items: of one unit of pack_grams). Omitted: the line has no user price." },
+        "price_date": { "type": "string", "maxLength": 10, "description": "YYYY-MM-DD, the day the user saw the price." },
+        "barcode": { "type": "string", "maxLength": 14, "description": "EAN or UPC, 8 to 14 digits." },
+        "per_100g": { "$ref": "#/$defs/Label" }
+      },
+      "additionalProperties": false
+    },
+    "Label": {
+      "description": "Nutrition per 100 g from the product label, as the user typed it or Open Food Facts gave it (EU labels: carbs already exclude fiber).",
+      "type": "object",
+      "required": ["kcal", "protein_g", "carbs_g", "fat_g"],
+      "properties": {
+        "kcal": { "type": "number", "minimum": 0, "maximum": 900 },
+        "protein_g": { "type": "number", "minimum": 0, "maximum": 100 },
+        "carbs_g": { "type": "number", "minimum": 0, "maximum": 100 },
+        "fat_g": { "type": "number", "minimum": 0, "maximum": 100 },
+        "fiber_g": { "type": "number", "minimum": 0, "maximum": 100 },
+        "salt_g": { "type": "number", "minimum": 0, "maximum": 100 }
       },
       "additionalProperties": false
     },

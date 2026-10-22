@@ -9,9 +9,10 @@ import { makeMeal, progressText } from "../lib/flow";
 import { generateIdeas, reviseIdea } from "../lib/llm";
 import { estimateTitle, periodText, toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
-import { engineCountry, llmReady, readCountry, readLlm, readProfile, saveLocalMeal } from "../lib/store";
+import { engineCountry, llmReady, readActiveProducts, readCountry, readLlm, readProfile, saveLocalMeal } from "../lib/store";
 import { AddButton, AiLabel, Footer, Header, MealImage, Toast, eur, grams, useCart, useMeals, usePrices, useToast }
   from "./Chrome";
+import { ProductCell, ProductDialog } from "./ProductDialog";
 import { PriceInput } from "./RecipePage";
 
 // Price cell of a Cart row: a typed price as text; no price or an estimate (grey, "est.", as on the recipe page) as
@@ -55,6 +56,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
   // Prices can be typed in the Cart too (same field as the recipe page); a typed price prices every meal's lines
   const prices = usePrices();
   const priceBlocked = () => showToast("Not saved: this browser blocks storage.");
+  const [editing, setEditing] = useState(null); // Cart row whose product is being edited
   const haveRows = cart.rows.filter((r) => r.have);
   // A row priced with an estimate that counts in the total, for the note under the list
   const estRow = cart.rows.find((r) => r.estimate && r.hasPrice && !r.have && (!r.optional || r.included));
@@ -331,7 +333,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                         item.packSize ? (
                           <tr key={item.key}>
                             <td className="p-3 font-semibold text-forest">{item.ingredient}</td>
-                            <td className="p-3 text-forest/70">{item.product || "Typical pack"}</td>
+                            <td className="p-3 text-forest/70"><ProductCell row={item} onEdit={setEditing} /></td>
                             <td className="p-3 text-forest/70">{grams(item.packSize)}</td>
                             <td className="p-3 font-bold text-forest">{item.packs}</td>
                             <td className="p-3 text-forest/70">{grams(item.needed)}</td>
@@ -542,6 +544,8 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
       {/* FOOTER */}
       <Footer onNavigate={switchTab} />
 
+      {editing && <ProductDialog row={editing} onClose={() => setEditing(null)} showToast={showToast} />}
+
       {/* Toast Feedback Overlay */}
       <Toast toast={toast} />
     </div>
@@ -646,7 +650,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
     let out;
     try {
       out = await makeMeal({ idea, form: base.form, profile: readProfile(), llm: readLlm(), recipe: given,
-        country: engineCountry(readCountry()), onProgress: setProgress });
+        products: readActiveProducts(), country: engineCountry(readCountry()), onProgress: setProgress });
     } catch (e) {
       setProgress(null);
       const recipe = e.recipe || given;

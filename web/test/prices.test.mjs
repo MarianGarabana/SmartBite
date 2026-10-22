@@ -1,6 +1,6 @@
-// User prices (decision P16): typed per food and pack weight, kept in localStorage, shared by every meal. Checks the
-// storage helpers, the cart totals with prices, the list sent to /api/evaluate, and that a request without prices
-// is unchanged. fetch and localStorage are mocked; no server is called.
+// User prices (decision P16): typed on a line for the pack it shows, kept in localStorage as a product for the user's
+// store (since 2026-10-21), shared by every meal. Checks the storage helpers, the cart totals with prices, the
+// products sent to /api/evaluate, and that a request without products is unchanged. fetch and localStorage are mocked; no server is called.
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { register } from "node:module";
@@ -17,7 +17,7 @@ export async function resolve(specifier, context, next) {
   }
 }`));
 
-const { priceKey, pricesFor, withPrices } = await import("../lib/cartmath.js");
+const { priceKey, productsFor, withPrices } = await import("../lib/cartmath.js");
 const { estimateTitle, periodText, toMeal } = await import("../lib/meal.js");
 const { consolidate } = await import("../lib/cart.js");
 const { evaluateMeal } = await import("../lib/engine.js");
@@ -61,43 +61,59 @@ test("withPrices prices matching lines only and returns the same meal when nothi
   assert.equal(priced.lines.filter((l) => l.hasPrice).length, 1);
 });
 
-test("pricesFor sends every stored size of the meal's foods and nothing else", () => {
+test("productsFor sends the user's product of each food the recipe uses and nothing else", () => {
   const meal = load(TUNA);
-  const list = pricesFor(meal, { "canned tuna in water|168": 1.25, "canned tuna in water|480": 3.5, "feta|200": 2, "lemon|1000": 2.2 });
-  assert.deepEqual(list, [
-    { food: "canned tuna in water", pack_grams: 168, price_eur: 1.25 },
-    { food: "canned tuna in water", pack_grams: 480, price_eur: 3.5 },
-    { food: "lemon", pack_grams: 1000, price_eur: 2.2 },
-  ]);
-  assert.deepEqual(pricesFor(meal, {}), []);
+  const tuna = { food: "canned tuna in water", name: "Atun 3 x 80 g", sold_by: "pack", pack_grams: 240, price_eur: 2.9 };
+  const lemon = { food: "lemon", name: "Limon", sold_by: "per_kg", pack_grams: 1000, price_eur: 2.2 };
+  const feta = { food: "feta", name: "Feta 200 g", sold_by: "pack", pack_grams: 200, price_eur: 2 };
+  assert.deepEqual(productsFor(meal.source.recipe, { lemon, feta, "canned tuna in water": tuna }), [tuna, lemon]);
+  assert.deepEqual(productsFor(meal.source.recipe, {}), []);
+  // Food keys of the shopping lines count too, for names the browser does not know
+  assert.deepEqual(productsFor({ ingredients: [] }, { feta }, [{ foodKey: "feta" }]), [feta]);
 });
 
-test("prices persist under their own key, bad values are dropped, and the cart never stores them", () => {
+test("a price typed on a line saves a product for that pack, and the cart never stores products", () => {
   const data = fakeWindow();
+  const meal = load(TUNA);
+  const tuna = meal.lines.find((l) => l.food === "canned tuna in water");
+  const lemon = meal.lines.find((l) => l.food === "lemon");
   assert.deepEqual(store.readPrices(), {});
-  assert.equal(store.setPrice("canned tuna in water", 168, 1.25), true);
-  assert.equal(store.setPrice("lemon", 1000, 2.2), true);
-  assert.deepEqual(store.readPrices(), { "canned tuna in water|168": 1.25, "lemon|1000": 2.2 });
-  store.setPrice("lemon", 1000, null);
-  assert.deepEqual(store.readPrices(), { "canned tuna in water|168": 1.25 });
-  store.setPrice("feta", 200, -1);
-  store.setPrice("feta", 200, 5000);
-  assert.deepEqual(Object.keys(store.readPrices()), ["canned tuna in water|168"]);
-  data[store.KEYS.prices] = JSON.stringify({ "eggs|612": "3", nokey: 1, "feta|200": 2 });
-  assert.deepEqual(store.readPrices(), { "feta|200": 2 });
-  data[store.KEYS.prices] = "{broken";
-  assert.deepEqual(store.readPrices(), {});
+  assert.equal(store.setLinePrice(tuna, 1.25), true);
+  assert.equal(store.setLinePrice(lemon, 0.3), true);
+  assert.deepEqual(store.readPrices(), { [tuna.priceKey]: 1.25, [lemon.priceKey]: 0.3 });
+  const saved = store.readProducts()["none|canned tuna in water"];
+  assert.deepEqual({ ...saved, price_date: "x" }, { food: "canned tuna in water", name: tuna.product, sold_by: "pack",
+    pack_grams: tuna.packSize, price_eur: 1.25, price_date: "x" });
+  assert.equal(store.readProducts()["none|lemon"].sold_by, "per_kg");
+  // An empty field removes the price; a product that was only a price goes
+  store.setLinePrice(lemon, null);
+  assert.deepEqual(store.readPrices(), { [tuna.priceKey]: 1.25 });
+  assert.equal(store.readProducts()["none|lemon"], undefined);
+  assert.equal(store.setLinePrice(tuna, -1), false);
+  assert.equal(store.setLinePrice(tuna, 5000), false);
+  assert.deepEqual(store.readPrices(), { [tuna.priceKey]: 1.25 });
 
-  store.setPrice("feta", 200, 2);
   const cart = store.readCart();
-  assert.deepEqual(cart.prices, { "feta|200": 2 });
+  assert.deepEqual(cart.prices, { [tuna.priceKey]: 1.25 });
+  assert.deepEqual(Object.keys(cart.products), ["canned tuna in water"]);
   store.writeCart({ ...cart, meals: [{ slug: TUNA }] });
   assert.deepEqual(JSON.parse(data[store.KEYS.cart]), { meals: [{ slug: TUNA }], optional: [], have: [] });
 });
 
-test("blocked storage: setPrice says so and reading still works", () => {
+test("eggs: a price typed on the egg line saves a box of that many eggs", () => {
+  fakeWindow();
+  const eggs = load(FRITTATA).lines.find((l) => l.food === "eggs");
+  assert.equal(store.setLinePrice(eggs, 5.4), true);
+  const saved = store.readProducts()["none|eggs"];
+  assert.equal(saved.sold_by, "per_unit");
+  assert.equal(saved.units_per_pack, 24);
+  assert.deepEqual(store.readPrices(), { "eggs|1224": 5.4 });
+});
+
+test("blocked storage: setLinePrice says so and reading still works", () => {
   fakeWindow({ blocked: true });
-  assert.equal(store.setPrice("feta", 200, 2), false);
+  const tuna = load(TUNA).lines.find((l) => l.food === "canned tuna in water");
+  assert.equal(store.setLinePrice(tuna, 2), false);
   assert.deepEqual(store.readPrices(), {});
   delete globalThis.window;
   assert.deepEqual(store.readPrices(), {});
@@ -141,21 +157,22 @@ function mockFetch(reply) {
   return calls;
 }
 
-test("evaluateMeal sends prices only when there are some", async () => {
+test("evaluateMeal sends products only when there are some", async () => {
   const doc = JSON.parse(fs.readFileSync(path.join(DEMO, `${TUNA}.json`), "utf8"));
   const input = { form: doc.form, picked_idea: doc.picked_idea, recipe: doc.recipe };
   let calls = mockFetch({ json: doc });
-  await evaluateMeal({ ...input, prices: [] });
+  await evaluateMeal({ ...input, products: [] });
   await evaluateMeal(input);
   assert.deepEqual(Object.keys(calls[0].body), ["form", "picked_idea", "recipe"]);
   assert.deepEqual(calls[0].body, calls[1].body);
-  const prices = [{ food: "lemon", pack_grams: 1000, price_eur: 2.2 }];
+  const products = [{ food: "lemon", name: "Limon", sold_by: "per_kg", pack_grams: 1000, price_eur: 2.2 }];
   calls = mockFetch({ json: doc });
-  await evaluateMeal({ ...input, prices });
-  assert.deepEqual(calls[0].body.prices, prices);
+  await evaluateMeal({ ...input, products });
+  assert.deepEqual(calls[0].body.products, products);
+  assert.equal("prices" in calls[0].body, false);
 
-  mockFetch({ status: 422, json: { errors: ["prices[0].price_eur: must be >= 0"] } });
-  await assert.rejects(evaluateMeal({ ...input, prices }), /must be >= 0/);
+  mockFetch({ status: 422, json: { errors: ["products[0].price_eur: must be >= 0"] } });
+  await assert.rejects(evaluateMeal({ ...input, products }), /must be >= 0/);
 });
 
 // Estimated prices (decision P28): Settings country, sent to the engine, shown as est. lines that a typed price replaces

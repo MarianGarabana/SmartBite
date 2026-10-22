@@ -220,3 +220,45 @@ def test_kitchen_profile_field_rules(bad):
     profile = {"id": "p", "version": 1, "name": "Mine", "sections": [{"id": "s", "label": "S", "fields": [
         {"id": "f", "label": "F", "type": "text", "value": "No blender.", **bad}]}]}
     assert validate_output(profile, "kitchen-profile.schema.json")
+
+
+def product(**extra):
+    return {"food": "chicken breast", "name": "Pechuga de pollo 500 g", "sold_by": "pack", "pack_grams": 500,
+            "price_eur": 4.2, "price_date": "2026-10-21", "barcode": "1234567890128",
+            "per_100g": {"kcal": 110, "protein_g": 23, "carbs_g": 0, "fat_g": 2}, **extra}
+
+
+def test_evaluate_request_takes_products():
+    eggs = {"food": "eggs", "name": "Huevos camperos L 12 uds", "sold_by": "per_unit", "units_per_pack": 12}
+    loose = {"food": "tomato", "name": "Tomate pera", "sold_by": "per_kg", "pack_grams": 1000}
+    request = evaluate_request(products=[product(), eggs, loose])
+    assert validate_output(request, "evaluate.schema.json", "Input") == []
+
+
+@pytest.mark.parametrize("bad, message", [
+    ({"sold_by": "box"}, "sold_by: must be one of"),
+    ({"pack_grams": 0}, "pack_grams: must be > 0"),
+    ({"units_per_pack": 2.5}, "units_per_pack: must be integer"),
+    ({"price_eur": 1001}, "price_eur: must be <= 1000"),
+    ({"barcode": "8" * 15}, "barcode"),
+    ({"per_100g": {"kcal": 950, "protein_g": 1, "carbs_g": 1, "fat_g": 1}}, "kcal: must be <= 900"),
+    ({"per_100g": {"kcal": 100, "protein_g": 1, "carbs_g": 1}}, "missing required field fat_g"),
+    ({"per_100g": {"kcal": 100, "protein_g": 1, "carbs_g": 1, "fat_g": 1, "sugar_g": 1}}, "unexpected field sugar_g"),
+    ({"link": "https://x/p"}, "unexpected field link"),
+])
+def test_product_field_rules(bad, message):
+    errors = validate_output(evaluate_request(products=[product(**bad)]), "evaluate.schema.json", "Input")
+    assert any(message in e for e in errors), errors
+
+
+def test_product_needs_food_name_and_sold_by():
+    errors = validate_output(evaluate_request(products=[{"pack_grams": 500}]), "evaluate.schema.json", "Input")
+    for field in ("food", "name", "sold_by"):
+        assert any(f"missing required field {field}" in e for e in errors), field
+
+
+@pytest.mark.parametrize("field", ["prices", "store"])
+def test_evaluate_request_has_no_prices_or_store_field(field):
+    """Prices live on products (decided 2026-10-21), and the browser picks products for the store."""
+    errors = validate_output(evaluate_request(**{field: []}), "evaluate.schema.json", "Input")
+    assert any(f"unexpected field {field}" in e for e in errors), errors

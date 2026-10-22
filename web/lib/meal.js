@@ -33,6 +33,8 @@ export function toMeal(slug, doc, { kind = "demo", saved = false } = {}) {
   const all = doc.recipe.ingredients;
   const pantry = all.filter((it) => it.pantry);
   const item = (it) => ({ name: it.name, grams: it.grams_per_serving, food: it.name, dry: it.dry, note: it.note || null });
+  // Where each food's macros come from: ciqual, usda, open_food_facts, or label (the user's product)
+  const nutrition = Object.fromEntries((ev.macros.lines || []).filter((m) => m.food).map((m) => [norm(m.food), m.source]));
   return {
     slug,
     kind, // "demo": ships with the site; "local": made in this browser
@@ -73,6 +75,12 @@ export function toMeal(slug, doc, { kind = "demo", saved = false } = {}) {
       return {
         key: lineKey(l.ingredient, packSize),
         priceKey: packSize && l.food ? priceKey(l.food, packSize) : null, // English food key + pack weight
+        foodKey: l.food || null, // English food key: a price typed here saves a product for it (lib/store.js)
+        soldBy: l.sold_by || null,
+        unitsPerPack: l.units_bought && l.packs_to_buy ? l.units_bought / l.packs_to_buy : null, // eggs per box
+        userProduct: !!l.user_product, // from a product the user saved
+        nutritionSource: (l.food && nutrition[norm(l.food)]) || null,
+        priceDate: l.price_source === "user" ? l.price_date || null : null,
         ingredient: l.ingredient,
         food: l.ingredient,
         optional: !!l.optional, // spices, oil, sauces, juice: ticked in the cart

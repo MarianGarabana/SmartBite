@@ -1,7 +1,7 @@
 // The meal engine (Python, smartbite_engine behind /api/evaluate) turns a recipe into a Meal result: packs,
-// macros and leftovers computed in code. Request {form, profile, picked_idea, recipe, prices?, country?}; contract
-// docs/contracts/evaluate.schema.json. prices ([{food, pack_grams, price_eur}], typed by the user) is sent only
-// when there is at least one, and country ("ES": estimated prices for the other lines) only when given, so a request
+// macros and leftovers computed in code. Request {form, profile, picked_idea, recipe, products?, country?}; contract
+// docs/contracts/evaluate.schema.json. products (the user's saved products: pack, price, label) is sent only when
+// there is at least one, and country ("ES": estimated prices for the other lines) only when given, so a request
 // without them is the same as before. The API key is never part of it.
 export const EVALUATE_URL = "/api/evaluate";
 
@@ -14,13 +14,13 @@ export class EngineError extends Error {
 
 const isMeal = (d) => d && typeof d === "object" && d.form && d.picked_idea && d.recipe && d.evaluation?.pack && d.evaluation?.macros;
 
-export async function evaluateMeal({ form, profile, picked_idea, recipe, prices, country }) {
+export async function evaluateMeal({ form, profile, picked_idea, recipe, products, country }) {
   let res;
   try {
     res = await fetch(EVALUATE_URL, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ form, profile, picked_idea, recipe, ...(prices?.length ? { prices } : {}),
+      body: JSON.stringify({ form, profile, picked_idea, recipe, ...(products?.length ? { products } : {}),
         ...(country ? { country } : {}) }),
     });
   } catch {

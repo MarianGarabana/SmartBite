@@ -1,8 +1,9 @@
 "use client";
 // Recipe page: the "Your meal" layout from step 3 of Make Your Meal in the mockup, copied 1:1; the steps section
 // shows for meals that have steps. Servings scale the ingredients, the shopping table and the MyFitnessPal block;
-// macro tiles stay per serving. Prices the user types (EUR per pack, kept in this browser) price the shopping table at
-// once in the browser; the meal engine then runs the meal again with them for the budget check. With a country set
+// macro tiles stay per serving. Prices the user types (EUR per pack, kept in this browser as products for their
+// store) price the shopping table at once in the browser; the meal engine then runs the meal again with the products
+// for the budget check. With a country set
 // in Settings (Spain by default), the engine fills the other lines with estimated prices, shown grey with "est.".
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -11,9 +12,10 @@ import { estimateTitle, periodText, toMeal } from "../lib/meal";
 import { mfpBlock } from "../lib/mfp";
 import { packRow, totals } from "../lib/packs";
 import { MAX_PHOTO_BYTES, deletePhoto, putPhoto, usePhoto } from "../lib/photos";
-import { COUNTRIES, MAX_PRICE_EUR, deleteLocalMeal, setPrice, setSaved } from "../lib/store";
+import { COUNTRIES, MAX_PRICE_EUR, deleteLocalMeal, setLinePrice, setSaved } from "../lib/store";
 import { AiLabel, Footer, Header, MealImage, Toast, eur, grams, useCart, useCountry, useEvaluations, useMeals, usePrices,
-  useToast } from "./Chrome";
+  useProducts, useToast } from "./Chrome";
+import { ProductCell, ProductDialog } from "./ProductDialog";
 
 // Demo meals come from the server; meals made in this browser are looked up in its storage
 export default function RecipePage({ slug, demoMeals }) {
@@ -34,12 +36,11 @@ export function PriceInput({ row, prices, onBlocked, onFocus, onBlur }) {
     setDraft((d) => (parse(d) === (value ?? null) ? d : value == null ? "" : String(value)));
   }, [value]);
   if (!row.priceKey) return null;
-  const [food, packGrams] = [row.priceKey.split("|")[0], row.packSize];
   const change = (text) => {
     setDraft(text);
     const price = parse(text);
     if (price === undefined) return; // not a price yet: keep the last one
-    if (!setPrice(food, packGrams, price)) onBlocked?.();
+    if (!setLinePrice(row, price)) onBlocked?.();
   };
   return (
     <input type="text" inputMode="decimal" value={draft} onChange={(e) => change(e.target.value)} onFocus={onFocus} onBlur={onBlur}
@@ -58,11 +59,11 @@ function parse(text) {
   return Number.isFinite(n) && n <= MAX_PRICE_EUR ? n : undefined;
 }
 
-// The meal run again by the engine with the user's prices and country (estimates), for the servings shown, always:
+// The meal run again by the engine with the user's products and country (estimates), for the servings shown, always:
 // the saved meal's packs are picked for its own servings. The same evaluation as the Cart (Chrome.jsx
 // useEvaluations); while a new reply loads, the last one stays.
-function usePricedEvaluation(meal, servings, prices, country) {
-  const replies = useEvaluations(meal.source ? [{ id: "recipe", meal, servings }] : [], prices, country);
+function usePricedEvaluation(meal, servings, products, country) {
+  const replies = useEvaluations(meal.source ? [{ id: "recipe", meal, servings }] : [], products, country);
   return replies.recipe || null;
 }
 
@@ -95,6 +96,7 @@ function MissingMeal({ meals, ready, router }) {
 function RecipeView({ meal, meals, router }) {
   const [servings, setServings] = useState(1);
   const [copied, setCopied] = useState(false);
+  const [editing, setEditing] = useState(null); // shopping row whose product is being edited
   const { toast, showToast } = useToast();
   const { cart, add } = useCart(showToast, meals);
   const go = (tab) => router.push(tab === "home" ? "/" : `/?tab=${tab}`);
@@ -103,8 +105,9 @@ function RecipeView({ meal, meals, router }) {
   // reply wins over the saved meal and stays while a newer one loads (the table never falls back to the saved
   // meal's packs); the user's prices are applied in the browser at once.
   const prices = usePrices();
+  const products = useProducts();
   const country = useCountry();
-  const priced = usePricedEvaluation(meal, servings, prices, country);
+  const priced = usePricedEvaluation(meal, servings, products, country);
   const shown = priced?.doc ? { meal: toMeal(meal.slug, priced.doc), servings: priced.servings } : { meal, servings: meal.servings };
   const rows = withPrices(shown.meal, prices).lines.map((l) => packRow(l, (l.needed * servings) / shown.servings));
   const t = totals(rows);
@@ -337,7 +340,7 @@ function RecipeView({ meal, meals, router }) {
                       r.packSize ? (
                         <tr key={r.key}>
                           <td className="p-3 font-semibold text-forest">{r.ingredient}</td>
-                          <td className="p-3 text-forest/70">{r.product || "Typical pack"}</td>
+                          <td className="p-3 text-forest/70"><ProductCell row={r} onEdit={setEditing} /></td>
                           <td className="p-3 text-forest/70">{grams(r.packSize)}</td>
                           <td className="p-3 font-bold text-forest">{r.packs}</td>
                           <td className="p-3 text-forest/70">{grams(r.needed)}</td>
@@ -472,6 +475,7 @@ function RecipeView({ meal, meals, router }) {
       </main>
 
       <Footer onNavigate={go} />
+      {editing && <ProductDialog row={editing} onClose={() => setEditing(null)} showToast={showToast} />}
       <Toast toast={toast} />
     </div>
   );

@@ -20,7 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo root, so sm
 
 from smartbite_engine.contracts import validate_output  # noqa: E402
 from smartbite_engine.generic_packs import load_packs  # noqa: E402
-from smartbite_engine.meal import evaluate, price_errors  # noqa: E402
+from smartbite_engine.meal import evaluate, product_errors  # noqa: E402
 from smartbite_engine.nutrition import load_table  # noqa: E402
 
 CONTRACT = "evaluate.schema.json"
@@ -73,16 +73,17 @@ async def evaluate_meal(request: Request):
         body = json.loads(raw)
     except (UnicodeDecodeError, json.JSONDecodeError) as e:
         return _error(422, [f"request body is not valid JSON: {e}"])
-    errors = validate_output(body, CONTRACT, "Input") or price_errors(body.get("prices"))
+    errors = validate_output(body, CONTRACT, "Input") or product_errors(body.get("products"))
     if errors:
         return _error(422, errors)
     shape = {"body_bytes": len(raw), "servings": body["form"].get("servings"),
-             "ingredients": len(body["recipe"]["ingredients"]), "prices": len(body.get("prices") or []),
+             "ingredients": len(body["recipe"]["ingredients"]), "products": len(body.get("products") or []),
              "country": body.get("country")}
     try:
         table, packs = _data()
         meal = evaluate(body["form"], body["picked_idea"], body["recipe"], body.get("profile"),
-                        prices=body.get("prices") or None, country=body.get("country"), table=table, packs=packs)
+                        country=body.get("country"), products=body.get("products") or None, table=table,
+                        packs=packs)
     except ValueError as e:  # form rules the schema cannot express
         return _error(422, [f"form: {e}"])
     except Exception as e:  # a bug: logged without the body, answered as JSON the site can show

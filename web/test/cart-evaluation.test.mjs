@@ -1,4 +1,4 @@
-// The Cart uses the same engine evaluation as the recipe page (same servings, prices, country), so packs, estimates,
+// The Cart uses the same engine evaluation as the recipe page (same servings, products, country), so packs, estimates,
 // totals and Adjust leftovers match it. The engine reply is a fixture here (the Korean beef bowl run for 1 serving
 // with Spain estimates, values from smartbite_engine.meal.evaluate); no server is called.
 import assert from "node:assert/strict";
@@ -52,11 +52,11 @@ const recipeRows = (meal, prices, servings) =>
 test("the recipe page and the Cart send the same engine request for a meal and servings", () => {
   const jobs = cartJobs(stored([{ slug: KOREAN, servings: 1 }]), [saved]);
   assert.deepEqual(jobs.map((j) => [j.id, j.meal.slug, j.servings]), [[`${KOREAN}#1`, KOREAN, 1]]);
-  const prices = { "ground beef|300": 4.99 };
-  const fromCart = mealRequest(jobs[0].meal, jobs[0].servings, prices, "ES");
-  assert.deepEqual(fromCart, mealRequest(saved, 1, prices, "ES"));
+  const beef = { food: "ground beef", name: "ground beef 300 g", sold_by: "pack", pack_grams: 300, price_eur: 4.99 };
+  const fromCart = mealRequest(jobs[0].meal, jobs[0].servings, { "ground beef": beef }, "ES");
+  assert.deepEqual(fromCart, mealRequest(saved, 1, { "ground beef": beef }, "ES"));
   assert.equal(fromCart.form.servings, 1);
-  assert.deepEqual(fromCart.prices, [{ food: "ground beef", pack_grams: 300, price_eur: 4.99 }]);
+  assert.deepEqual(fromCart.products, [beef]);
   assert.equal(fromCart.country, "ES");
   // An entry without servings runs for the meal's own
   assert.equal(cartJobs(stored([{ slug: KOREAN }]), [saved])[0].servings, 8);

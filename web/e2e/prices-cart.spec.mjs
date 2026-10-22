@@ -38,8 +38,11 @@ test("a price typed key by key keeps every keystroke and the table never flashes
   await input.pressSequentially("4.99", { delay: 120 });
   await expect(input).toBeFocused();
   await expect(input).toHaveValue("4.99");
-  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("smartbite.prices") || "{}")))
-    .toEqual({ "ground beef|300": 4.99 });
+  // The price is saved as a product for the 300 g pack the line shows (no store picked: the no-store product)
+  await expect.poll(() => page.evaluate(() => {
+    const p = JSON.parse(localStorage.getItem("smartbite.products") || "{}")["none|ground beef"];
+    return p && { pack_grams: p.pack_grams, price_eur: p.price_eur };
+  })).toEqual({ pack_grams: 300, price_eur: 4.99 });
   await expect(beef).toContainText("€4.99");
   await page.waitForLoadState("networkidle");
   await expect(input).toBeFocused();

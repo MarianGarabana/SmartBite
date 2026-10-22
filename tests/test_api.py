@@ -66,7 +66,8 @@ def test_an_engine_crash_is_a_json_500_logged_without_the_body(monkeypatch, capl
 
     monkeypatch.setattr(api, "evaluate", boom)
     body, _ = demo_input()
-    body["prices"] = [{"food": "ground beef", "pack_grams": 300, "price_eur": 4.99}]
+    body["products"] = [{"food": "ground beef", "name": "beef 300 g", "sold_by": "pack", "pack_grams": 300,
+                         "price_eur": 4.99}]
     r = client.post("/api/evaluate", json=body, headers={"x-api-key": "sk-ant-test-key"})
     assert r.status_code == 500
     error = r.json()["errors"][0]
@@ -75,8 +76,9 @@ def test_an_engine_crash_is_a_json_500_logged_without_the_body(monkeypatch, capl
     record = json.loads(logged[-1])
     assert record["event"] == "evaluate_failed" and record["error"] == "KeyError"
     assert record["error_id"] in error
-    assert record["servings"] == body["form"]["servings"] and record["prices"] == 1
+    assert record["servings"] == body["form"]["servings"] and record["products"] == 1
     assert any("boom" in w for w in record["where"])
     text = logged[-1]
-    for secret in ("secret-value", "sk-ant", "4.99", body["recipe"]["title"], body["form"]["craving"][:20]):
+    for secret in ("secret-value", "sk-ant", "4.99", "beef 300 g", body["recipe"]["title"],
+                   body["form"]["craving"][:20]):
         assert secret not in text
