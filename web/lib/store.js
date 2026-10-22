@@ -21,6 +21,8 @@ export const KEYS = {
   store: "smartbite.store", // supermarket id (STORES), "other:<name>", or "none"
   country: "smartbite.country", // ISO country code ("none" before 2026-10-22: Spain, estimates off)
   region: "smartbite.region", // estimated prices: "national", "off" or a region code such as "ES-MD"
+  currency: "smartbite.currency", // ISO 4217 code shown with prices (symbol only, no conversion); unset: the country's
+  name: "smartbite.name", // display name on the Profile page and in the profile menu, optional
 };
 const CHANGED = "smartbite-storage";
 
@@ -363,9 +365,63 @@ export function readRegion(country = readCountry()) {
 export const writeRegion = (id) => writeJson(KEYS.region,
   id === ESTIMATES_OFF || Object.values(REGIONS).flat().some((x) => x.id === id) ? id : NATIONAL);
 
+// Currency (decided 2026-10-22): follows the country unless the user picks another; it only changes the symbol shown,
+// nothing is converted. Estimated prices are in the country's own currency, so they apply only when the user's matches.
+const EURO = ("AD AT BE BG CY DE EE ES FI FR GR HR IE IT LT LU LV MC ME MT NL PT SI SK SM VA AX GF GP MQ RE YT PM BL MF")
+  .split(" ");
+const COUNTRY_CURRENCY = { ...Object.fromEntries(EURO.map((c) => [c, "EUR"])), GB: "GBP", US: "USD", CH: "CHF", LI: "CHF",
+  SE: "SEK", NO: "NOK", DK: "DKK", IS: "ISK", PL: "PLN", CZ: "CZK", HU: "HUF", RO: "RON", RS: "RSD", TR: "TRY", UA: "UAH",
+  CA: "CAD", MX: "MXN", BR: "BRL", AR: "ARS", CL: "CLP", CO: "COP", PE: "PEN", UY: "UYU", EC: "USD", PA: "USD", SV: "USD",
+  AU: "AUD", NZ: "NZD", JP: "JPY", CN: "CNY", HK: "HKD", TW: "TWD", KR: "KRW", SG: "SGD", IN: "INR", IL: "ILS", AE: "AED",
+  SA: "SAR", ZA: "ZAR", MA: "MAD", EG: "EGP", NG: "NGN", KE: "KES", TH: "THB", MY: "MYR", ID: "IDR", PH: "PHP", VN: "VND" };
+export const ESTIMATE_CURRENCY = { ES: "EUR" }; // data/open/prices/<country>.json "currency"
+export const DEFAULT_CURRENCY = "EUR";
+export const currencyFor = (country) => COUNTRY_CURRENCY[country] || null;
+const okCurrency = (c) => typeof c === "string" && /^[A-Z]{3}$/.test(c) && currencySymbol(c) !== null;
+
+// "€", "£", "$", "CHF"; null for a code the browser does not know
+export function currencySymbol(code) {
+  try {
+    return new Intl.NumberFormat("en", { style: "currency", currency: code }).formatToParts(1)
+      .find((p) => p.type === "currency")?.value ?? null;
+  } catch {
+    return null;
+  }
+}
+
+// Every currency the browser knows, as { id, label }, sorted by name
+export function currencies() {
+  let codes;
+  try {
+    codes = Intl.supportedValuesOf("currency");
+  } catch {
+    codes = [...new Set(Object.values(COUNTRY_CURRENCY))];
+  }
+  const names = (() => { try { return new Intl.DisplayNames(["en"], { type: "currency" }); } catch { return null; } })();
+  return codes.map((id) => ({ id, label: `${names?.of(id) || id} (${currencySymbol(id) || id})` }))
+    .sort((a, b) => a.label.localeCompare(b.label, "en"));
+}
+
+// The saved currency, else the country's, else EUR
+export function readCurrency(country = readCountry()) {
+  const c = readJson(KEYS.currency, null);
+  return okCurrency(c) ? c : currencyFor(country) || DEFAULT_CURRENCY;
+}
+
+export const writeCurrency = (code) => writeJson(KEYS.currency, okCurrency(code) ? code : DEFAULT_CURRENCY);
+
+const MAX_NAME = 40;
+export const readName = () => {
+  const n = readJson(KEYS.name, "");
+  return typeof n === "string" ? n.trim().slice(0, MAX_NAME) : "";
+};
+export const writeName = (name) => writeJson(KEYS.name, String(name || "").trim().slice(0, MAX_NAME));
+
 // What /api/evaluate takes: { country, region } with null for none (no estimates, or the national average)
-export function engineEstimates(country = readCountry(), region = readRegion(country)) {
-  if (!hasEstimates(country) || region === ESTIMATES_OFF) return { country: null, region: null };
+export function engineEstimates(country = readCountry(), region = readRegion(country), currency = readCurrency(country)) {
+  if (!hasEstimates(country) || region === ESTIMATES_OFF || ESTIMATE_CURRENCY[country] !== currency) {
+    return { country: null, region: null };
+  }
   return { country, region: (REGIONS[country] || []).some((x) => x.id === region) ? region : null };
 }
 

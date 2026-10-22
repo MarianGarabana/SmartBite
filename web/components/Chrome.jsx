@@ -1,6 +1,6 @@
 "use client";
 // Header, footer, toast, meal image and add button from the mockup (design freeze), shared by the main page,
-// the recipe page and the settings and privacy pages. Markup and classes copied 1:1.
+// the recipe page and the profile and privacy pages. Markup and classes copied 1:1.
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { adjustApply, adjustInfo, adjustPreview, adjustReset, cartJobs, consolidate } from "../lib/cart";
@@ -8,8 +8,8 @@ import { mealRequest } from "../lib/cartmath";
 import { cachedReply, evaluateCached, requestKey } from "../lib/engine";
 import { toMeal } from "../lib/meal";
 import { usePhoto } from "../lib/photos";
-import { engineEstimates, onStoreChange, readActiveProducts, readCart, readLocalMeals, readPrices, readSaved,
-  writeCart } from "../lib/store";
+import { DEFAULT_CURRENCY, currencySymbol, engineEstimates, onStoreChange, readActiveProducts, readCart, readCurrency,
+  readLocalMeals, readPrices, readSaved, writeCart } from "../lib/store";
 
 export const TABS = [
   { id: "home", label: "Home" },
@@ -20,7 +20,21 @@ export const TABS = [
 ];
 export const EMPTY_CART = { meals: [], rows: [], totals: { bought: 0, used: 0, wasteGrams: 0, wasteCost: 0, unpriced: 0, priced: 0, optional: 0 },
   leftovers: [], leftoverRecipes: [] };
-export const eur = (v) => `€${v.toFixed(2)}`;
+// Money in the user's currency (Profile): "€4.99", "£4.99", "CHF 4.99". Only the symbol changes, nothing is converted.
+// The symbol comes from useCurrency, called at the top of each page; the server render and first paint show €.
+let symbol = "€";
+export const money = (v) => `${symbol}${symbol.length > 1 ? " " : ""}${v.toFixed(2)}`;
+export const moneySymbol = () => symbol;
+export function useCurrency() {
+  const [currency, setCurrency] = useState(DEFAULT_CURRENCY);
+  useEffect(() => {
+    const read = () => setCurrency(readCurrency());
+    read();
+    return onStoreChange(read);
+  }, []);
+  symbol = currencySymbol(currency) || "€";
+  return { currency, symbol };
+}
 export const grams = (v) => `${Math.round(v)}g`;
 
 // Demo meals (from the server) plus the meals made and saved in this browser
@@ -293,9 +307,9 @@ export function Header({ active, onNavigate, cartCount }) {
         </nav>
 
         <div className="flex items-center gap-4">
-          <Link href="/settings" aria-label="Profile and settings" title="Profile and settings"
-            className={`w-9 h-9 rounded-full flex items-center justify-center hover:text-forest hover:bg-forest/5 transition-all ${active === "settings" ? "bg-forest/5 text-forest" : "text-forest/70"}`}>
-            <i className="fa-solid fa-sliders text-sm"></i>
+          <Link href="/profile" aria-label="Profile" title="Profile"
+            className={`w-9 h-9 rounded-full flex items-center justify-center hover:text-forest hover:bg-forest/5 transition-all ${active === "profile" ? "bg-forest/5 text-forest" : "text-forest/70"}`}>
+            <i className="fa-solid fa-user text-sm"></i>
           </Link>
           <button onClick={() => onNavigate("cart")} className="relative px-4 py-2 rounded-full bg-forest text-cream hover:bg-forest-light transition-all flex items-center gap-2.5 shadow-sm">
             <i className="fa-solid fa-basket-shopping text-lime text-sm"></i>
@@ -324,7 +338,7 @@ export function Footer({ onNavigate }) {
           {TABS.map((t) => (
             <button key={t.id} onClick={() => onNavigate(t.id)} className="hover:text-lime transition-colors">{t.label}</button>
           ))}
-          <Link href="/settings" className="hover:text-lime transition-colors">Settings</Link>
+          <Link href="/profile" className="hover:text-lime transition-colors">Profile</Link>
           <Link href="/privacy" className="hover:text-lime transition-colors">Privacy</Link>
         </nav>
         <p className="text-[11px] text-cream/40">© 2026 SmartBite. Whole-pack meal planner. Open source, AGPL-3.0.</p>
@@ -344,7 +358,7 @@ export function Toast({ toast }) {
   );
 }
 
-// Shell for the pages outside the tabs (settings, privacy): same header, footer and toast
+// Shell for the pages outside the tabs (profile, privacy): same header, footer and toast
 export function PageShell({ active, demoMeals, router, children, toastState }) {
   const { meals } = useMeals(demoMeals);
   const { cart } = useCart(toastState.showToast, meals);

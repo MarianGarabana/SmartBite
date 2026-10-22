@@ -13,12 +13,13 @@ import { mfpBlock } from "../lib/mfp";
 import { packRow, totals } from "../lib/packs";
 import { MAX_PHOTO_BYTES, deletePhoto, putPhoto, usePhoto } from "../lib/photos";
 import { COUNTRIES, MAX_PRICE_EUR, deleteLocalMeal, setLinePrice, setSaved } from "../lib/store";
-import { AiLabel, Footer, Header, MealImage, Toast, eur, grams, useCart, useEstimates, useEvaluations, useMeals, usePrices,
+import { AiLabel, Footer, Header, MealImage, Toast, money, moneySymbol, grams, useCart, useCurrency, useEstimates, useEvaluations, useMeals, usePrices,
   useProducts, useToast } from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
 
 // Demo meals come from the server; meals made in this browser are looked up in its storage
 export default function RecipePage({ slug, demoMeals }) {
+  useCurrency();
   const router = useRouter();
   const { meals, ready } = useMeals(demoMeals);
   const meal = meals.find((m) => m.slug === slug);
@@ -26,7 +27,7 @@ export default function RecipePage({ slug, demoMeals }) {
   return <MissingMeal meals={meals} ready={ready} router={router} />;
 }
 
-// Small "EUR per pack" field for a shopping row with a pack size; an empty field removes the price. Also meant for
+// Small "price per pack" field for a shopping row with a pack size; an empty field removes the price. Also meant for
 // the Cart's "no price" cell. An estimated price shows as the placeholder until the user types one.
 export function PriceInput({ row, prices, onBlocked, onFocus, onBlur }) {
   const value = row.priceKey ? prices[row.priceKey] : undefined;
@@ -44,8 +45,8 @@ export function PriceInput({ row, prices, onBlocked, onFocus, onBlur }) {
   };
   return (
     <input type="text" inputMode="decimal" value={draft} onChange={(e) => change(e.target.value)} onFocus={onFocus} onBlur={onBlur}
-      placeholder={row.estimate ? row.packPrice.toFixed(2) : "€ / pack"} title={row.estimate ? estimateTitle(row.pricePeriod, row.priceRegion) : undefined}
-      aria-label={`Price in euros for one pack of ${row.product || row.ingredient}${row.estimate ? ` (estimated ${eur(row.packPrice)})` : ""}`}
+      placeholder={row.estimate ? row.packPrice.toFixed(2) : `${moneySymbol()} / pack`} title={row.estimate ? estimateTitle(row.pricePeriod, row.priceRegion) : undefined}
+      aria-label={`Price for one pack of ${row.product || row.ingredient}${row.estimate ? ` (estimated ${money(row.packPrice)})` : ""}`}
       className="w-20 bg-cream/50 border border-cream-dark rounded-xl px-2 py-1 text-xs text-forest text-right font-normal placeholder-forest/40 focus:outline-none focus:border-forest" />
   );
 }
@@ -358,9 +359,9 @@ function RecipeView({ meal, meals, router }) {
                               <PriceInput row={r} prices={prices} onBlocked={() => showToast("Not saved: this browser blocks storage.")} />
                               {r.hasPrice && r.estimate ? (
                                 <span className="min-w-[3.25rem] text-right font-normal text-forest/60" title={estimateTitle(r.pricePeriod, r.priceRegion)}>
-                                  {eur(r.price)} <span className="text-[10px]">est.</span>
+                                  {money(r.price)} <span className="text-[10px]">est.</span>
                                 </span>
-                              ) : r.hasPrice ? <span className="min-w-[3.25rem] text-right">{eur(r.price)}</span> : null}
+                              ) : r.hasPrice ? <span className="min-w-[3.25rem] text-right">{money(r.price)}</span> : null}
                             </span>
                           </td>
                         </tr>
@@ -387,7 +388,7 @@ function RecipeView({ meal, meals, router }) {
                   <span className="font-bold text-forest">Optional, you may already have these:</span>{" "}
                   {optionalRows.map((r, i) => (
                     <span key={r.key} title={r.estimate ? estimateTitle(r.pricePeriod, r.priceRegion) : undefined}>
-                      {i ? " · " : ""}{r.ingredient}{r.hasPrice ? ` ${eur(r.price)}${r.estimate ? " est." : ""}` : ""}
+                      {i ? " · " : ""}{r.ingredient}{r.hasPrice ? ` ${money(r.price)}${r.estimate ? " est." : ""}` : ""}
                     </span>
                   ))}
                   . Not counted in the costs below; tick them in your cart if you need to buy them.
@@ -398,7 +399,7 @@ function RecipeView({ meal, meals, router }) {
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-4 border-t border-cream-dark bg-cream-card/50 p-4 rounded-2xl">
                 <div>
                   <span className="text-[11px] text-forest/60 block">Cost of what you use:</span>
-                  <span id="summary-used-cost" className="font-bold text-sm text-forest">{noPrices ? "No prices yet" : eur(t.used)}</span>
+                  <span id="summary-used-cost" className="font-bold text-sm text-forest">{noPrices ? "No prices yet" : money(t.used)}</span>
                 </div>
                 <div>
                   <span className="text-[11px] text-forest/60 block">
@@ -406,16 +407,16 @@ function RecipeView({ meal, meals, router }) {
                       ? `Partial total (${t.unpriced} ${t.unpriced === 1 ? "item has" : "items have"} no price yet):`
                       : "Cost of purchase:"}
                   </span>
-                  <span id="summary-bought-cost" className="font-bold text-sm text-forest">{noPrices ? "No prices yet" : eur(t.bought)}</span>
+                  <span id="summary-bought-cost" className="font-bold text-sm text-forest">{noPrices ? "No prices yet" : money(t.bought)}</span>
                 </div>
                 {/* Cost of what one serving uses, so it does not change with the servings chosen */}
                 <div>
                   <span className="text-[11px] text-forest/60 block">{t.unpriced && !noPrices ? "Cost per serving (partial):" : "Cost per serving:"}</span>
-                  <span id="summary-serving-cost" className="font-bold text-sm text-forest">{noPrices ? "No prices yet" : eur(t.used / servings)}</span>
+                  <span id="summary-serving-cost" className="font-bold text-sm text-forest">{noPrices ? "No prices yet" : money(t.used / servings)}</span>
                 </div>
                 <div>
                   <span className="text-[11px] text-forest/60 block">Total waste/leftover:</span>
-                  <span id="summary-waste-metrics" className="font-bold text-sm text-forest">{grams(t.wasteGrams)}{noPrices ? "" : ` (${eur(t.wasteCost)})`}</span>
+                  <span id="summary-waste-metrics" className="font-bold text-sm text-forest">{grams(t.wasteGrams)}{noPrices ? "" : ` (${money(t.wasteCost)})`}</span>
                 </div>
               </div>
 
@@ -429,10 +430,10 @@ function RecipeView({ meal, meals, router }) {
                       {budget.unpriced.length} {budget.unpriced.length === 1 ? "item has" : "items have"} no price yet.
                     </>
                   : budget.within_budget ? <>
-                      <span className="font-bold text-forest">Within budget{est ? " (estimated)" : ""}:</span> {eur(budget.cart_total_eur)} of your {eur(priced.budget)} for {servings} {servings === 1 ? "serving" : "servings"}.
+                      <span className="font-bold text-forest">Within budget{est ? " (estimated)" : ""}:</span> {money(budget.cart_total_eur)} of your {money(priced.budget)} for {servings} {servings === 1 ? "serving" : "servings"}.
                     </>
                   : <>
-                      <span className="font-bold text-amber-900">Over budget{est ? " (estimated)" : ""}</span> by {eur(budget.over_budget_eur)}: {eur(budget.cart_total_eur)} for a budget of {eur(priced.budget)} for {servings} {servings === 1 ? "serving" : "servings"}.
+                      <span className="font-bold text-amber-900">Over budget{est ? " (estimated)" : ""}</span> by {money(budget.over_budget_eur)}: {money(budget.cart_total_eur)} for a budget of {money(priced.budget)} for {servings} {servings === 1 ? "serving" : "servings"}.
                     </>}
                 {est ? <> Prices marked est. are estimates ({estLabel}). Type your store&apos;s price to replace one.</> : null}
               </p>

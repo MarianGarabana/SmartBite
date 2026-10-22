@@ -6,6 +6,10 @@ const nextConfig = {
   devIndicators: false, // keeps the dev badge out of the comparison screenshots
   outputFileTracingRoot: path.dirname(fileURLToPath(import.meta.url)), // this folder is the app root
   outputFileTracingIncludes: { "/*": ["./demo/meals/*.json"] },
+  // Settings became Profile (2026-10-22): old links still work
+  async redirects() {
+    return [{ source: "/settings", destination: "/profile", permanent: true }];
+  },
   // Dev only: the Python engine runs on 8100 (on Vercel, vercel.json routes /api/* to the engine service)
   async rewrites() {
     if (process.env.NODE_ENV !== "development") return [];

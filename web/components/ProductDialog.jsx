@@ -7,6 +7,7 @@
 import { useState } from "react";
 import { EGG_GRAMS } from "../lib/cartmath";
 import { LookupError, lookupBarcode } from "../lib/off";
+import { moneySymbol } from "./Chrome";
 import { NO_STORE, deleteProduct, okProduct, readProducts, readStore, regionLabel, saveProduct, storeLabel } from "../lib/store";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
@@ -191,7 +192,7 @@ export function ProductDialog({ row, onClose, showToast }) {
               </>
             )}
             <div>
-              <label htmlFor="product-price" className={label}>Price (€){form.sold_by === "per_kg" ? " per unit" : " per pack"}</label>
+              <label htmlFor="product-price" className={label}>Price ({moneySymbol()}){form.sold_by === "per_kg" ? " per unit" : " per pack"}</label>
               <input id="product-price" inputMode="decimal" value={form.price} onChange={set("price")} placeholder="optional" className={input} />
             </div>
             <div>

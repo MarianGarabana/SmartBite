@@ -1,5 +1,5 @@
 // The only module that talks to a language model. Calls go from the browser straight to the provider the user
-// picked in Settings, with the user's own key: Anthropic (tested) or one OpenAI-compatible endpoint (experimental).
+// picked in the Profile, with the user's own key: Anthropic (tested) or one OpenAI-compatible endpoint (experimental).
 // No SmartBite server sees the key or the prompts. The key goes only into the request header for that provider,
 // is never logged, and is removed from any error text shown to the user.
 //
@@ -38,11 +38,11 @@ export function redact(text, key) {
 }
 
 function checkSettings(llm) {
-  if (!llm || (llm.provider !== ANTHROPIC && llm.provider !== OPENAI_COMPATIBLE)) throw new LlmError("Pick a provider in Settings first.");
-  if (llm.provider === ANTHROPIC && !llm.apiKey) throw new LlmError("Add your Anthropic API key in Settings first.");
+  if (!llm || (llm.provider !== ANTHROPIC && llm.provider !== OPENAI_COMPATIBLE)) throw new LlmError("Pick a provider in your Profile first.");
+  if (llm.provider === ANTHROPIC && !llm.apiKey) throw new LlmError("Add your Anthropic API key in your Profile first.");
   if (llm.provider === OPENAI_COMPATIBLE) {
-    if (!/^https?:\/\/[^\s]+$/i.test(llm.baseUrl || "")) throw new LlmError("Add the provider's base URL in Settings first.");
-    if (!llm.model) throw new LlmError("Add the model name in Settings first.");
+    if (!/^https?:\/\/[^\s]+$/i.test(llm.baseUrl || "")) throw new LlmError("Add the provider's base URL in your Profile first.");
+    if (!llm.model) throw new LlmError("Add the model name in your Profile first.");
   }
 }
 
@@ -72,7 +72,7 @@ async function post(url, headers, body, llm) {
     const err = Array.isArray(data) ? data[0] : data; // Gemini wraps errors in a list
     const detail = redact(err?.error?.message || err?.message || res.statusText || "", llm.apiKey);
     const lead = res.status === 401 || res.status === 403
-      ? `The provider did not accept the key (${res.status}). Check it in Settings.`
+      ? `The provider did not accept the key (${res.status}). Check it in your Profile.`
       : res.status === 429 ? "The provider says too many requests (429). Wait a moment and try again."
         : `The provider answered with an error (${res.status}).`;
     throw new LlmError(detail ? `${lead} ${detail}` : lead);

@@ -9,7 +9,7 @@ const POINTS = [
   ["fa-laptop", "Your data stays in your browser",
     "Your Kitchen Profile, cart, saved meals and photos are kept in this browser's storage (localStorage and IndexedDB). They are not sent to a SmartBite server. Clearing your browser data deletes them."],
   ["fa-key", "Your API key",
-    "Your API key is stored only in this browser. It never leaves the browser except to the provider you chose in Settings (api.anthropic.com for Anthropic), when you make a meal."],
+    "Your API key is stored only in this browser. It never leaves the browser except to the provider you chose in your Profile (api.anthropic.com for Anthropic), when you make a meal."],
   ["fa-wand-magic-sparkles", "What goes to the AI provider",
     "When you make a meal, your craving, form and Kitchen Profile are sent from your browser to the provider you chose (Anthropic by default) to write the ideas and the recipe. That provider's own terms apply to that request."],
   ["fa-gears", "What goes to the SmartBite engine",
@@ -44,7 +44,7 @@ export default function PrivacyPage({ demoMeals }) {
             </div>
           ))}
           <p className="text-xs text-forest/60 text-center pt-2">
-            Change your profile or remove your key in <Link href="/settings" className="font-bold underline hover:text-lime-hover">Settings</Link>.
+            Change your profile or remove your key in your <Link href="/profile" className="font-bold underline hover:text-lime-hover">Profile</Link>.
           </p>
         </div>
       </section>

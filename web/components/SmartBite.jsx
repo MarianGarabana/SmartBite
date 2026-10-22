@@ -10,7 +10,7 @@ import { generateIdeas, reviseIdea } from "../lib/llm";
 import { estimatePlace, estimateTitle, periodText, toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
 import { engineEstimates, llmReady, readActiveProducts, readLlm, readProfile, saveLocalMeal } from "../lib/store";
-import { AddButton, AiLabel, Footer, Header, MealImage, Toast, eur, grams, useCart, useMeals, usePrices, useToast }
+import { AddButton, AiLabel, Footer, Header, MealImage, Toast, money, moneySymbol, grams, useCart, useCurrency, useMeals, usePrices, useToast }
   from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
 import { PriceInput } from "./RecipePage";
@@ -19,13 +19,13 @@ import { PriceInput } from "./RecipePage";
 // the price field. The field stays while it has focus, so typing "4.99" is not cut off once the "4" is a price.
 function CartPrice({ item, prices, onBlocked, priceClass }) {
   const [editing, setEditing] = useState(false);
-  if (item.hasPrice && !item.estimate && !editing) return <span className={priceClass}>{eur(item.price)}</span>;
+  if (item.hasPrice && !item.estimate && !editing) return <span className={priceClass}>{money(item.price)}</span>;
   return (
     <span className="inline-flex items-center justify-end gap-2">
       <PriceInput row={item} prices={prices} onBlocked={onBlocked} onFocus={() => setEditing(true)} onBlur={() => setEditing(false)} />
       {item.hasPrice ? (
         <span className={`min-w-[3.25rem] text-right whitespace-nowrap${item.estimate ? " font-normal text-forest/60" : ""}`} title={item.estimate ? estimateTitle(item.pricePeriod, item.priceRegion) : undefined}>
-          {eur(item.price)}{item.estimate ? <> <span className="text-[10px]">est.</span></> : null}
+          {money(item.price)}{item.estimate ? <> <span className="text-[10px]">est.</span></> : null}
         </span>
       ) : null}
     </span>
@@ -45,6 +45,7 @@ const kcal = (m) => `${m.approx ? "~" : ""}${m.kcal} kcal`;
 const protein = (m) => `${m.approx ? "~" : ""}${m.protein}g`;
 
 export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" }) {
+  useCurrency();
   const [tab, setTab] = useState(initialTab);
   const [category, setCategory] = useState("All");
   const [query, setQuery] = useState("");
@@ -72,7 +73,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
     setAdjust({ ...adjust, picked, after: previewAdjust(picked) });
   };
   // Leftovers before and after: in money when prices exist, else in grams
-  const leftValue = (sum) => (sum.priced ? eur(sum.leftCost) : grams(sum.wasteGrams));
+  const leftValue = (sum) => (sum.priced ? money(sum.leftCost) : grams(sum.wasteGrams));
   const pct = (from, to) => `${to > from ? "+" : ""}${Math.round(((to - from) / from) * 100)}%`;
   const bySlug = Object.fromEntries(meals.map((m) => [m.slug, m]));
 
@@ -341,7 +342,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                             <td className="p-3 text-forest/70">{grams(item.bought)}</td>
                             <td className="p-3">
                               <span className="font-bold text-forest">{grams(item.left)}</span>{" "}
-                              {item.hasPrice ? <span className="text-[10px] text-forest/60">({eur(item.leftCost)})</span> : null}
+                              {item.hasPrice ? <span className="text-[10px] text-forest/60">({money(item.leftCost)})</span> : null}
                             </td>
                             <td className="p-3 text-right font-bold text-forest"><CartPrice item={item} prices={prices} onBlocked={priceBlocked} /></td>
                             <td className="p-3 text-right">
@@ -419,15 +420,15 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                         ? `Partial total (${cart.totals.unpriced} ${cart.totals.unpriced === 1 ? "item has" : "items have"} no price yet):`
                         : "Total Purchase Cost:"}
                     </span>
-                    <span id="cart-total-bought" className="font-bold text-lime text-sm">{cart.totals.priced ? eur(cart.totals.bought) : "No prices yet"}</span>
+                    <span id="cart-total-bought" className="font-bold text-lime text-sm">{cart.totals.priced ? money(cart.totals.bought) : "No prices yet"}</span>
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="text-cream/70">Cost of Ingredients Consumed:</span>
-                    <span id="cart-total-used" className="font-bold text-white">{cart.totals.priced ? eur(cart.totals.used) : "No prices yet"}</span>
+                    <span id="cart-total-used" className="font-bold text-white">{cart.totals.priced ? money(cart.totals.used) : "No prices yet"}</span>
                   </div>
                   <div className="flex justify-between text-xs border-t border-cream/10 pt-2">
                     <span className="text-cream/70">Total Leftovers Waste:</span>
-                    <span id="cart-total-waste" className="font-bold text-amber-300">{grams(cart.totals.wasteGrams)}{cart.totals.priced ? ` (${eur(cart.totals.wasteCost)})` : ""}</span>
+                    <span id="cart-total-waste" className="font-bold text-amber-300">{grams(cart.totals.wasteGrams)}{cart.totals.priced ? ` (${money(cart.totals.wasteCost)})` : ""}</span>
                   </div>
                 </div>
               </div>
@@ -469,7 +470,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                           ))}
                           <p className="text-xs text-forest">
                             Leftovers <span className="font-bold">{leftValue(adjust.before)} → {leftValue(adjust.after)}</span>
-                            {adjust.before.priced ? <>{" · "}Cart <span className="font-bold">{eur(adjust.before.bought)} → {eur(adjust.after.bought)}</span></> : null}
+                            {adjust.before.priced ? <>{" · "}Cart <span className="font-bold">{money(adjust.before.bought)} → {money(adjust.after.bought)}</span></> : null}
                           </p>
                         </>
                       )}
@@ -485,7 +486,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                     {cart.leftovers.map((l) => (
                       <span key={l.key} className="inline-flex items-center gap-1.5 bg-cream-dark text-forest text-xs px-3 py-1 rounded-full font-medium">
                         <span className="font-bold">{l.ingredient}</span> {grams(l.left)}
-                        <span className="text-[10px] text-forest/60">({l.leftCost != null ? `${eur(l.leftCost)}, ` : ""}{l.status})</span>
+                        <span className="text-[10px] text-forest/60">({l.leftCost != null ? `${money(l.leftCost)}, ` : ""}{l.status})</span>
                       </span>
                     ))}
                   </div>
@@ -782,9 +783,9 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
               <input type="number" id="input-fat" value={fatMax} onChange={(e) => setFatMax(e.target.value)} placeholder="Optional" className="w-full bg-cream/50 border border-cream-dark rounded-xl p-2.5 text-xs text-forest" />
             </div>
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-1.5">Total budget (€)</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-1.5">Total budget ({moneySymbol()})</label>
               <input type="number" step="0.5" id="input-budget" value={budget} onChange={(e) => setBudget(e.target.value)} className="w-full bg-cream/50 border border-cream-dark rounded-xl p-2.5 text-xs text-forest font-bold" />
-              <span id="budget-per-serving" className="block text-[11px] text-forest/60 mt-1">{eur(perServing)} per serving</span>
+              <span id="budget-per-serving" className="block text-[11px] text-forest/60 mt-1">{money(perServing)} per serving</span>
             </div>
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-1.5">Servings</label>
@@ -858,7 +859,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
             {run.demo && (
               <div id="demo-note" className="bg-cream-card rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
                 <span className="font-bold text-forest">Demo mode.</span> These are pre-built example meals, not made from your craving.
-                To make your own, add your API key in <Link href="/settings" className="font-bold underline hover:text-lime-hover">Settings</Link>.
+                To make your own, add your API key in your <Link href="/profile" className="font-bold underline hover:text-lime-hover">Profile</Link>.
               </div>
             )}
             <div id="ideas-card-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -914,7 +915,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
                     <label htmlFor="idea-changes" className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Want to change something?</label>
                     <div className="flex items-start gap-2">
                       <textarea id="idea-changes" rows={2} maxLength={300} value={changes} onChange={(e) => setChanges(e.target.value)}
-                        disabled={run.demo} placeholder={run.demo ? "Needs your API key (Settings)" : "e.g. no potatoes, add cucumber"}
+                        disabled={run.demo} placeholder={run.demo ? "Needs your API key (Profile)" : "e.g. no potatoes, add cucumber"}
                         className="flex-1 bg-cream/50 border border-cream-dark rounded-xl px-4 py-2.5 text-xs text-forest placeholder-forest/40 focus:outline-none focus:border-forest disabled:cursor-not-allowed"></textarea>
                       <button disabled={run.demo || revising || !changes.trim()} onClick={() => revise(preview)}
                         className="bg-forest text-cream font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-forest-light disabled:opacity-40 disabled:cursor-not-allowed">

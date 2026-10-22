@@ -1,15 +1,16 @@
 "use client";
-// Profile and settings: every Kitchen Profile field (prompts/kitchen-profile.default.json) and the AI provider with
-// the user's own key. Both stay in this browser (lib/store.js). Same cards, inputs and buttons as the Make Your
+// Profile (was Settings until 2026-10-22): display name, every Kitchen Profile field
+// (prompts/kitchen-profile.default.json), the AI provider with the user's own key, and where they shop (country,
+// currency, region, supermarket, products). All of it stays in this browser (lib/store.js). Same cards, inputs and buttons as the Make Your
 // Meal form.
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DEFAULT_PROFILE, setField } from "../lib/profile";
 import { ANTHROPIC, ANTHROPIC_MODELS, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, presetAvailable, presetById } from "../lib/providers";
-import { COUNTRIES, DEFAULT_COUNTRY, ESTIMATES_OFF, NATIONAL, NO_STORE, REGIONS, STORES, clearApiKey, clearOpenAiKey, exportProducts, importProducts, okStore,
-  onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readProfile, readRegion, readStore, resetProfile,
-  storeLabel, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeProfile, writeRegion, writeStore } from "../lib/store";
+import { COUNTRIES, DEFAULT_COUNTRY, DEFAULT_CURRENCY, ESTIMATE_CURRENCY, ESTIMATES_OFF, NATIONAL, NO_STORE, REGIONS, STORES, clearApiKey, currencies, currencyFor, clearOpenAiKey, exportProducts, importProducts, okStore,
+  onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readCurrency, readName, readProfile, readRegion, readStore, resetProfile,
+  storeLabel, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeCurrency, writeName, writeProfile, writeRegion, writeStore } from "../lib/store";
 import { PageShell, useToast } from "./Chrome";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
@@ -73,7 +74,7 @@ function Field({ field, onChange }) {
   );
 }
 
-export default function SettingsPage({ demoMeals }) {
+export default function ProfilePage({ demoMeals }) {
   const router = useRouter();
   const toastState = useToast();
   const { showToast } = toastState;
@@ -87,9 +88,21 @@ export default function SettingsPage({ demoMeals }) {
   // Country (supermarket list, estimated prices) and region for estimated prices: saved as soon as they change
   const [country, setCountry] = useState(DEFAULT_COUNTRY);
   const [region, setRegion] = useState(NATIONAL);
+  const [currency, setCurrency] = useState(DEFAULT_CURRENCY);
+  // Country and currency names come from the browser's Intl data, which can differ from the server's (e.g. "Falkland
+  // Islands"): the full lists are filled in after the first render, so the server and the first paint match
+  const [countryList, setCountryList] = useState([]);
+  const [currencyList, setCurrencyList] = useState([]);
+  const [name, setName] = useState(""); // the field
+  const [readyName, setReadyName] = useState(""); // the saved name, for the heading
   useEffect(() => {
     setCountry(readCountry());
     setRegion(readRegion());
+    setCurrency(readCurrency());
+    setCountryList(COUNTRIES);
+    setCurrencyList(currencies());
+    setName(readName());
+    setReadyName(readName());
     setProfile(readProfile());
     setLlm(readLlmSettings());
     const k = { [ANTHROPIC]: readApiKey(), [OPENAI_COMPATIBLE]: readOpenAiKey() };
@@ -98,10 +111,26 @@ export default function SettingsPage({ demoMeals }) {
     setHostname(window.location.hostname);
   }, []);
 
+  // A new country brings its currency (when SmartBite knows it); the user can pick another after
   const pickCountry = (id) => {
     setCountry(id);
     setRegion(readRegion(id));
+    const own = currencyFor(id);
+    if (own) {
+      setCurrency(own);
+      writeCurrency(own);
+    }
     showToast(writeCountry(id) ? "Country saved in this browser." : "Not saved: this browser blocks storage.");
+  };
+  const pickCurrency = (code) => {
+    setCurrency(code);
+    showToast(writeCurrency(code) ? "Currency saved in this browser." : "Not saved: this browser blocks storage.");
+  };
+  const saveName = () => {
+    if (name.trim() === readName()) return;
+    if (!writeName(name)) return showToast("Not saved: this browser blocks storage.");
+    setReadyName(readName());
+    showToast(name.trim() ? "Name saved in this browser." : "Name removed.");
   };
   const pickRegion = (id) => {
     setRegion(id);
@@ -201,11 +230,11 @@ export default function SettingsPage({ demoMeals }) {
   })();
 
   return (
-    <PageShell active="settings" demoMeals={demoMeals} router={router} toastState={toastState}>
-      <section id="settings-page" className="tab-page space-y-8 max-w-[1360px] mx-auto px-8">
+    <PageShell active="profile" demoMeals={demoMeals} router={router} toastState={toastState}>
+      <section id="profile-page" className="tab-page space-y-8 max-w-[1360px] mx-auto px-8">
         <div>
           <span className="font-script text-3xl text-forest font-bold">Your Kitchen</span>
-          <h1 className="font-serif text-4xl font-bold text-forest">Profile &amp; Settings</h1>
+          <h1 className="font-serif text-4xl font-bold text-forest">{readyName ? `${readyName}'s profile` : "Your profile"}</h1>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -236,8 +265,20 @@ export default function SettingsPage({ demoMeals }) {
             </div>
           </div>
 
-          {/* API key */}
+          {/* About you, API key, where you shop */}
           <div className="lg:col-span-5 space-y-6">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
+              <div>
+                <span className="font-script text-2xl text-forest font-bold">On this page</span>
+                <h2 className="font-serif font-bold text-xl text-forest">Your name</h2>
+              </div>
+              <div>
+                <label htmlFor="profile-name" className={label}>Display name</label>
+                <input id="profile-name" value={name} maxLength={40} placeholder="Optional" onChange={(e) => setName(e.target.value)}
+                  onBlur={saveName} onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }} className={input} />
+                <span className="block text-[11px] text-forest/60 mt-1">Shown on this page only. It stays in this browser.</span>
+              </div>
+            </div>
             <div className="bg-forest text-cream rounded-3xl p-6 sm:p-8 shadow-card space-y-5">
               <div className="flex items-center gap-2">
                 <i className="fa-solid fa-key text-lime text-lg"></i>
@@ -323,7 +364,7 @@ export default function SettingsPage({ demoMeals }) {
               <div>
                 <label htmlFor="price-country" className={label}>Country</label>
                 <select id="price-country" value={country} onChange={(e) => pickCountry(e.target.value)} className={input}>
-                  {COUNTRIES.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
+                  {(countryList.length ? countryList : COUNTRIES.filter((c) => c.id === country)).map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
                 </select>
                 {regions.length === 0 && (
                   <span className="block text-[11px] text-forest/60 mt-1">
@@ -331,7 +372,17 @@ export default function SettingsPage({ demoMeals }) {
                   </span>
                 )}
               </div>
-              {regions.length > 0 && (
+              <div>
+                <label htmlFor="currency" className={label}>Currency</label>
+                <select id="currency" value={currency} onChange={(e) => pickCurrency(e.target.value)} className={input}>
+                  {(currencyList.length ? currencyList : [{ id: currency, label: currency }]).map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
+                </select>
+                <span className="block text-[11px] text-forest/60 mt-1">
+                  Shown next to every price. Nothing is converted: type prices in this currency.
+                  {regions.length > 0 && ESTIMATE_CURRENCY[country] !== currency ? ` Estimated prices for ${countryLabel} are in ${ESTIMATE_CURRENCY[country]}, so they are off while your currency is ${currency}.` : ""}
+                </span>
+              </div>
+              {regions.length > 0 && ESTIMATE_CURRENCY[country] === currency && (
                 <div>
                   <label htmlFor="price-region" className={label}>Estimated prices</label>
                   <select id="price-region" value={region} onChange={(e) => pickRegion(e.target.value)} className={input}>
