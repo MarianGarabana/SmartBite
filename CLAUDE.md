@@ -25,7 +25,7 @@ Public, open-source version of Marian's personal SmartBite. Plan and phases: `PL
 - The LLM picks foods and grams only. All math (macros, packs, cost, leftovers) is code.
 - Rice, pasta, quinoa and couscous in dry grams. Eggs in units (S 42, M 51, L 60, XL 69 g edible).
 - Design: same look as the personal SmartBite mockup (forest `#0f2d24`, lime `#70e000`, cream `#f9f8f3`, Playfair Display, Caveat, Plus Jakarta Sans). Look changes only come from Marian.
-- Profiles live in the browser (localStorage). No accounts, no server storage of health data.
+- Profiles live in the browser (localStorage). No accounts, no server storage of health data. A profile file (decided 2026-10-22) is made and opened in the browser, never uploaded; API keys go in it only when the user ticks "include my key".
 - Label ideas and recipes as AI-generated in the UI.
 - Never push, create a remote, or change visibility without asking Marian. Local commits only when she asks.
 

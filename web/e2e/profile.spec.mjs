@@ -51,3 +51,45 @@ test("a country's currency shows on prices, and Spain's estimates need euros", a
   await page.goto(`/?tab=make-meal`);
   await expect(page.getByText("Total budget (€)")).toBeVisible();
 });
+
+test("a profile file saved in one browser opens in another, after a confirm and a backup download", async ({ browser }, testInfo) => {
+  // Browser A: a name, a price on a line (a product) and a saved currency, then Save profile file
+  const a = await browser.newPage();
+  await a.goto("/profile");
+  await a.locator("#profile-name").fill("Marta");
+  await a.locator("#profile-name").press("Enter");
+  await a.locator("#price-region").selectOption("ES-CN");
+  await a.goto(`/recipes/${KOREAN}`);
+  const beef = a.locator("#pack-table-body tr").filter({ hasText: "ground beef" });
+  await beef.locator("input").fill("4.99");
+  await expect(beef).toContainText("€4.99");
+  await a.goto("/profile");
+  const [saved] = await Promise.all([a.waitForEvent("download"), a.getByRole("button", { name: "Save profile file" }).click()]);
+  expect(saved.suggestedFilename()).toMatch(/^smartbite-profile-\d{4}-\d{2}-\d{2}\.json$/);
+  const file = testInfo.outputPath("profile.json"); // a download is deleted when its page closes
+  await saved.saveAs(file);
+  const text = await (await import("node:fs/promises")).readFile(file, "utf8");
+  expect(JSON.parse(text).data).not.toHaveProperty("apiKey");
+  await a.close();
+
+  // Browser B (fresh storage): its own name, then Open profile file
+  const context = await browser.newContext();
+  const b = await context.newPage();
+  await b.goto("/profile");
+  await b.locator("#profile-name").fill("Other");
+  await b.locator("#profile-name").press("Enter");
+  await b.locator("#profile-file-open").setInputFiles(file);
+  const confirm = b.getByRole("alertdialog");
+  await expect(confirm).toContainText("Replace this browser's profile with Marta's");
+  await expect(confirm).toContainText("1 product");
+  await expect(confirm).toContainText("your API key stays as it is");
+  const [backup] = await Promise.all([b.waitForEvent("download"), confirm.getByRole("button", { name: "Replace" }).click()]);
+  expect(backup.suggestedFilename()).toMatch(/^smartbite-profile-backup-/);
+  const old = JSON.parse(await (await import("node:fs/promises")).readFile(await backup.path(), "utf8"));
+  expect(old.data.name).toBe("Other");
+  await expect(b.getByRole("heading", { level: 1 })).toHaveText("Marta's profile");
+  await expect(b.locator("#price-region")).toHaveValue("ES-CN");
+  await b.goto(`/recipes/${KOREAN}`);
+  await expect(b.locator("#pack-table-body tr").filter({ hasText: "ground beef" })).toContainText("€4.99");
+  await context.close();
+});

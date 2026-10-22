@@ -80,3 +80,57 @@ test("display name is optional, trimmed and at most 40 characters", () => {
   data[store.KEYS.name] = JSON.stringify({ not: "a name" });
   assert.equal(store.readName(), "");
 });
+
+// Profile file (decided 2026-10-22): everything but photos; keys only when asked; opening replaces
+test("a profile file holds the profile, shop, products, meals and cart, and the key only when asked", () => {
+  const data = fakeWindow();
+  store.writeName("Marta");
+  store.writeCountry("GB");
+  store.writeApiKey("sk-ant-test");
+  data[store.KEYS.meals] = JSON.stringify({ "my-bowl": { form: {} } });
+  data[store.KEYS.saved] = JSON.stringify(["my-bowl"]);
+  data[store.KEYS.cart] = JSON.stringify({ meals: [{ slug: "my-bowl", servings: 2 }] });
+  const file = JSON.parse(store.exportProfile());
+  assert.equal(file.app, "SmartBite");
+  assert.equal(file.kind, "profile");
+  assert.equal(file.version, 1);
+  assert.deepEqual(Object.keys(file.data).sort(), ["cart", "country", "meals", "name", "saved"]);
+  assert.equal("apiKey" in file.data, false);
+  const withKey = JSON.parse(store.exportProfile({ withKeys: true }));
+  assert.equal(withKey.data.apiKey, "sk-ant-test");
+});
+
+test("opening a profile file replaces each part, clears missing ones, and keeps the key unless the file has one", () => {
+  const data = fakeWindow();
+  store.writeName("Old");
+  store.writeRegion("ES-MD");
+  store.writeApiKey("sk-ant-old");
+  const text = JSON.stringify({ app: "SmartBite", kind: "profile", version: 1, data: { name: "Marta", country: "FR",
+    meals: { a: {}, b: {} }, products: { "none|skyr": {} } } });
+  const read = store.readProfileFile(text);
+  assert.equal(read.ok, true);
+  assert.deepEqual(read.summary, { name: "Marta", meals: 2, products: 1, keys: false });
+  assert.equal(store.openProfile(read.data), true);
+  assert.equal(store.readName(), "Marta");
+  assert.equal(store.readCountry(), "FR");
+  assert.equal(data[store.KEYS.region], undefined); // not in the file: cleared
+  assert.equal(store.readApiKey(), "sk-ant-old"); // no key in the file: kept
+  const keyed = store.readProfileFile(JSON.stringify({ app: "SmartBite", kind: "profile", version: 1, data: { apiKey: "sk-ant-new" } }));
+  assert.equal(keyed.summary.keys, true);
+  store.openProfile(keyed.data);
+  assert.equal(store.readApiKey(), "sk-ant-new");
+});
+
+test("only SmartBite profile files of this version, with parts of the right shape, open", () => {
+  fakeWindow();
+  assert.match(store.readProfileFile("not json").error, /not JSON/);
+  assert.match(store.readProfileFile(JSON.stringify({ app: "SmartBite", kind: "products", products: {} })).error, /not a SmartBite profile/);
+  assert.match(store.readProfileFile(JSON.stringify({ app: "SmartBite", kind: "profile", version: 2, data: {} })).error, /newer SmartBite/);
+  assert.match(store.readProfileFile(JSON.stringify({ app: "SmartBite", kind: "profile", version: 1,
+    data: { saved: "x", cart: [] } })).error, /damaged \(saved, cart\)/);
+  // Parts SmartBite does not know are ignored
+  const out = store.readProfileFile(JSON.stringify({ app: "SmartBite", kind: "profile", version: 1, data: { other: 1 } }));
+  assert.equal(out.ok, true);
+  store.openProfile(out.data);
+  assert.equal(globalThis.window.localStorage.getItem("smartbite.other"), null);
+});

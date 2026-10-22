@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DEFAULT_PROFILE, setField } from "../lib/profile";
 import { ANTHROPIC, ANTHROPIC_MODELS, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, presetAvailable, presetById } from "../lib/providers";
-import { COUNTRIES, DEFAULT_COUNTRY, DEFAULT_CURRENCY, ESTIMATE_CURRENCY, ESTIMATES_OFF, NATIONAL, NO_STORE, REGIONS, STORES, clearApiKey, currencies, currencyFor, clearOpenAiKey, exportProducts, importProducts, okStore,
+import { COUNTRIES, DEFAULT_COUNTRY, DEFAULT_CURRENCY, ESTIMATE_CURRENCY, ESTIMATES_OFF, NATIONAL, NO_STORE, REGIONS, STORES, clearApiKey, currencies, currencyFor, clearOpenAiKey, exportProducts, exportProfile, importProducts, okStore, MAX_PROFILE_FILE, openProfile, readProfileFile,
   onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readCurrency, readName, readProfile, readRegion, readStore, resetProfile,
   storeLabel, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeCurrency, writeName, writeProfile, writeRegion, writeStore } from "../lib/store";
 import { PageShell, useToast } from "./Chrome";
@@ -95,7 +95,8 @@ export default function ProfilePage({ demoMeals }) {
   const [currencyList, setCurrencyList] = useState([]);
   const [name, setName] = useState(""); // the field
   const [readyName, setReadyName] = useState(""); // the saved name, for the heading
-  useEffect(() => {
+  // Everything on this page from storage: on the first render, and again after a profile file is opened
+  const load = () => {
     setCountry(readCountry());
     setRegion(readRegion());
     setCurrency(readCurrency());
@@ -108,6 +109,9 @@ export default function ProfilePage({ demoMeals }) {
     const k = { [ANTHROPIC]: readApiKey(), [OPENAI_COMPATIBLE]: readOpenAiKey() };
     setSavedKeys(k);
     setKeys(k);
+  };
+  useEffect(() => {
+    load();
     setHostname(window.location.hostname);
   }, []);
 
@@ -167,14 +171,40 @@ export default function ProfilePage({ demoMeals }) {
     return { ...c, [s]: (c[s] || 0) + 1 };
   }, {});
   const total = Object.keys(products).length;
-  const download = () => {
-    const url = URL.createObjectURL(new Blob([exportProducts()], { type: "application/json" }));
+  const saveFile = (text, name) => {
+    const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = `smartbite-products-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `${name}-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };
+  const download = () => saveFile(exportProducts(), "smartbite-products");
+
+  // Profile file: save one, or open one in place of this browser's profile (after a confirm and a backup download)
+  const [withKey, setWithKey] = useState(false);
+  const [pending, setPending] = useState(null); // { fileName, data, summary } waiting for the confirm
+  const saveProfileFile = () => {
+    saveFile(exportProfile({ withKeys: withKey }), "smartbite-profile");
+    showToast(withKey ? "Profile file saved, with your key. Keep it private." : "Profile file saved.");
+  };
+  const pickProfileFile = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (file.size > MAX_PROFILE_FILE) return showToast("This file is too big for a profile file.");
+    const out = readProfileFile(await file.text());
+    if (!out.ok) return showToast(out.error);
+    setPending({ fileName: file.name, ...out });
+  };
+  const confirmOpen = () => {
+    saveFile(exportProfile(), "smartbite-profile-backup");
+    const ok = openProfile(pending.data);
+    setPending(null);
+    load();
+    showToast(ok ? "Profile opened. Your previous one was downloaded as a backup." : "Not saved: this browser blocks storage.");
+  };
+  const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
   const upload = async (e) => {
     const file = e.target.files?.[0];
     e.target.value = "";
@@ -429,6 +459,44 @@ export default function ProfilePage({ demoMeals }) {
                 </div>
                 <span className="block text-[11px] text-forest/60">A file to keep your products, or move them to another browser.</span>
               </div>
+            </div>
+            <div id="profile-file" className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
+              <div>
+                <span className="font-script text-2xl text-forest font-bold">Keep it or move it</span>
+                <h2 className="font-serif font-bold text-xl text-forest">Profile file</h2>
+              </div>
+              <p className="text-xs text-forest/80 leading-relaxed">
+                One file with your Kitchen Profile, where you shop, your products, saved meals and cart. Open it in another browser to pick up where you left off. Photos are not included.
+              </p>
+              <label className="flex items-start gap-2 text-xs font-bold text-forest">
+                <input id="profile-file-key" type="checkbox" checked={withKey} onChange={(e) => setWithKey(e.target.checked)} className="accent-lime w-4 h-4 mt-0.5" />
+                <span>Include my API key</span>
+              </label>
+              {withKey && (
+                <div role="status" className="bg-amber-100 text-amber-900 text-xs rounded-xl p-3">
+                  Anyone who has this file can use your key and spend on your account. Keep the file private.
+                </div>
+              )}
+              <div className="flex flex-wrap gap-3">
+                <button onClick={saveProfileFile} className="bg-forest text-cream hover:bg-forest/90 font-bold text-xs px-4 py-2 rounded-xl transition-colors">Save profile file</button>
+                <label className="bg-cream-dark text-forest hover:bg-cream-dark/70 font-bold text-xs px-4 py-2 rounded-xl transition-colors cursor-pointer">
+                  Open profile file
+                  <input id="profile-file-open" type="file" accept="application/json,.json" onChange={pickProfileFile} className="sr-only" />
+                </label>
+              </div>
+              {pending && (
+                <div role="alertdialog" aria-labelledby="profile-file-confirm" className="bg-cream rounded-xl p-4 space-y-3 border border-cream-dark">
+                  <p id="profile-file-confirm" className="text-xs text-forest leading-relaxed">
+                    <span className="font-bold">Replace this browser&apos;s profile with {pending.summary.name ? `${pending.summary.name}'s profile` : "the profile"} ({pending.fileName})?</span>{" "}
+                    It has {plural(pending.summary.meals, "saved meal")} and {plural(pending.summary.products, "product")}{pending.summary.keys ? ", and an API key" : ""}.
+                    Your current profile downloads first as a backup{pending.summary.keys ? "" : "; your API key stays as it is"}.
+                  </p>
+                  <div className="flex gap-3">
+                    <button onClick={confirmOpen} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-4 py-2 rounded-xl transition-colors">Replace</button>
+                    <button onClick={() => setPending(null)} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2">Cancel</button>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="bg-cream-card rounded-3xl p-6 border border-cream-dark flex items-start gap-4">
               <div className="w-10 h-10 rounded-full bg-lime text-forest flex items-center justify-center shrink-0 font-bold text-lg">

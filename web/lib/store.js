@@ -308,6 +308,60 @@ export function importProducts(text) {
   return { ok, added: ok ? Object.keys(add).length : 0, skipped, ...(ok ? {} : { error: "This browser blocks storage." }) };
 }
 
+// Profile file (decided 2026-10-22): what this browser keeps for SmartBite, in one file to keep or to move to another
+// browser. Not in it: photos (IndexedDB, MBs each) and the API keys, unless the user ticks "include my key". Opening a
+// file replaces each part below (missing parts are cleared); the keys are replaced only when the file has them.
+// Each part is checked for its shape here; the readers check the details when they read it.
+const PROFILE_PARTS = { profile: isObject, llm: isObject, country: (v) => typeof v === "string",
+  region: (v) => typeof v === "string", currency: (v) => typeof v === "string", store: (v) => typeof v === "string",
+  name: (v) => typeof v === "string", products: isObject, meals: isObject, saved: Array.isArray, cart: isObject };
+const KEY_PARTS = { apiKey: (v) => typeof v === "string", openaiKey: (v) => typeof v === "string" };
+export const MAX_PROFILE_FILE = 4_000_000; // bytes; localStorage holds about 5 MB per site
+
+export function exportProfile({ withKeys = false } = {}) {
+  const parts = { ...PROFILE_PARTS, ...(withKeys ? KEY_PARTS : {}) };
+  const data = {};
+  for (const part of Object.keys(parts)) {
+    const value = readJson(KEYS[part], undefined);
+    if (value !== undefined && value !== "") data[part] = value;
+  }
+  return JSON.stringify({ app: "SmartBite", kind: "profile", version: 1, exported: today(), data }, null, 1);
+}
+
+// What a profile file holds, before opening it: { ok, error?, data, summary: { name, meals, products, keys } }
+export function readProfileFile(text) {
+  let file;
+  try {
+    file = JSON.parse(text);
+  } catch {
+    return { ok: false, error: "This file is not JSON." };
+  }
+  if (!isObject(file) || file.app !== "SmartBite" || file.kind !== "profile" || !isObject(file.data)) {
+    return { ok: false, error: "This is not a SmartBite profile file." };
+  }
+  if (file.version !== 1) return { ok: false, error: "This profile file is from a newer SmartBite. Update the page and try again." };
+  const parts = { ...PROFILE_PARTS, ...KEY_PARTS };
+  const bad = Object.entries(file.data).filter(([part, v]) => parts[part] && !parts[part](v)).map(([part]) => part);
+  if (bad.length) return { ok: false, error: `This profile file is damaged (${bad.join(", ")}).` };
+  const d = file.data;
+  return { ok: true, data: d, summary: { name: typeof d.name === "string" ? d.name : "",
+    meals: isObject(d.meals) ? Object.keys(d.meals).length : 0, products: isObject(d.products) ? Object.keys(d.products).length : 0,
+    keys: Object.keys(KEY_PARTS).some((k) => typeof d[k] === "string" && d[k]) } };
+}
+
+// Replaces this browser's profile with a file read by readProfileFile. false when the browser refused to store it.
+export function openProfile(data) {
+  let ok = true;
+  for (const part of Object.keys(PROFILE_PARTS)) {
+    if (part in data) ok = writeJson(KEYS[part], data[part]) && ok;
+    else remove(KEYS[part]);
+  }
+  for (const part of Object.keys(KEY_PARTS)) {
+    if (typeof data[part] === "string" && data[part]) ok = writeJson(KEYS[part], data[part]) && ok;
+  }
+  return ok;
+}
+
 // Country (any): picks the supermarket list and, where SmartBite has them, estimated prices (engine,
 // docs/contracts/evaluate.schema.json "country"): average prices paid fill the lines the user did not price. Only
 // Spain has them (MAPA), nationally or per comunidad autonoma. Labels come from the browser (Intl), in English.

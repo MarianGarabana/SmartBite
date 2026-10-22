@@ -8,6 +8,8 @@ const POINTS = [
   ["fa-user-slash", "No accounts", "There is no sign-up and no login. SmartBite does not know who you are."],
   ["fa-laptop", "Your data stays in your browser",
     "Your Kitchen Profile, cart, saved meals and photos are kept in this browser's storage (localStorage and IndexedDB). They are not sent to a SmartBite server. Clearing your browser data deletes them."],
+  ["fa-file-arrow-down", "Profile files",
+    "Save profile file makes a file on your device with your Kitchen Profile, where you shop, your products, saved meals and cart. It is made in your browser and never uploaded. Your API key goes in only if you tick it. Open profile file reads one back, in this browser only."],
   ["fa-key", "Your API key",
     "Your API key is stored only in this browser. It never leaves the browser except to the provider you chose in your Profile (api.anthropic.com for Anthropic), when you make a meal."],
   ["fa-wand-magic-sparkles", "What goes to the AI provider",
