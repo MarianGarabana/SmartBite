@@ -9,9 +9,9 @@ import { useEffect, useState } from "react";
 import { DEFAULT_PROFILE, setField } from "../lib/profile";
 import { ANTHROPIC, ANTHROPIC_MODELS, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, presetAvailable, presetById } from "../lib/providers";
 import { COUNTRIES, DEFAULT_COUNTRY, DEFAULT_CURRENCY, ESTIMATE_CURRENCY, ESTIMATES_OFF, NATIONAL, NO_STORE, REGIONS, STORES, clearApiKey, currencies, currencyFor, clearOpenAiKey, exportProducts, exportProfile, importProducts, okStore, MAX_PROFILE_FILE, openProfile, readProfileFile,
-  onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readCurrency, readName, readProfile, readRegion, readStore, resetProfile,
-  storeLabel, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeCurrency, writeName, writeProfile, writeRegion, writeStore } from "../lib/store";
-import { PageShell, useToast } from "./Chrome";
+  onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readBudget, readCurrency, readName, readProfile, readRegion, readStore, resetProfile,
+  storeLabel, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeBudget, writeCurrency, writeName, writeProfile, writeRegion, writeStore } from "../lib/store";
+import { PageShell, downloadJson, useToast } from "./Chrome";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
 const input = "w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest";
@@ -95,6 +95,7 @@ export default function ProfilePage({ demoMeals }) {
   const [currencyList, setCurrencyList] = useState([]);
   const [name, setName] = useState(""); // the field
   const [readyName, setReadyName] = useState(""); // the saved name, for the heading
+  const [budget, setBudget] = useState(""); // budget per meal, the Make Your Meal starting value
   // Everything on this page from storage: on the first render, and again after a profile file is opened
   const load = () => {
     setCountry(readCountry());
@@ -104,6 +105,7 @@ export default function ProfilePage({ demoMeals }) {
     setCurrencyList(currencies());
     setName(readName());
     setReadyName(readName());
+    setBudget(readBudget().toFixed(2));
     setProfile(readProfile());
     setLlm(readLlmSettings());
     const k = { [ANTHROPIC]: readApiKey(), [OPENAI_COMPATIBLE]: readOpenAiKey() };
@@ -129,6 +131,12 @@ export default function ProfilePage({ demoMeals }) {
   const pickCurrency = (code) => {
     setCurrency(code);
     showToast(writeCurrency(code) ? "Currency saved in this browser." : "Not saved: this browser blocks storage.");
+  };
+  const saveBudget = () => {
+    const b = Number(String(budget).trim().replace(",", "."));
+    if (!(b > 0 && b <= 1000)) return showToast("Budget per meal: a number above 0.");
+    if (b === readBudget()) return;
+    showToast(writeBudget(b) ? "Budget saved in this browser." : "Not saved: this browser blocks storage.");
   };
   const saveName = () => {
     if (name.trim() === readName()) return;
@@ -171,14 +179,7 @@ export default function ProfilePage({ demoMeals }) {
     return { ...c, [s]: (c[s] || 0) + 1 };
   }, {});
   const total = Object.keys(products).length;
-  const saveFile = (text, name) => {
-    const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${name}-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
+  const saveFile = downloadJson;
   const download = () => saveFile(exportProducts(), "smartbite-products");
 
   // Profile file: save one, or open one in place of this browser's profile (after a confirm and a backup download)
@@ -411,6 +412,12 @@ export default function ProfilePage({ demoMeals }) {
                   Shown next to every price. Nothing is converted: type prices in this currency.
                   {regions.length > 0 && ESTIMATE_CURRENCY[country] !== currency ? ` Estimated prices for ${countryLabel} are in ${ESTIMATE_CURRENCY[country]}, so they are off while your currency is ${currency}.` : ""}
                 </span>
+              </div>
+              <div>
+                <label htmlFor="profile-budget" className={label}>Budget per meal</label>
+                <input id="profile-budget" inputMode="decimal" value={budget} onChange={(e) => setBudget(e.target.value)} onBlur={saveBudget}
+                  onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }} className={input} />
+                <span className="block text-[11px] text-forest/60 mt-1">For one serving. Make Your Meal starts from this; it is not sent to the AI.</span>
               </div>
               {regions.length > 0 && ESTIMATE_CURRENCY[country] === currency && (
                 <div>

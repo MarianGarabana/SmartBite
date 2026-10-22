@@ -9,7 +9,9 @@ import { makeMeal, progressText } from "../lib/flow";
 import { generateIdeas, reviseIdea } from "../lib/llm";
 import { estimatePlace, estimateTitle, periodText, toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
-import { engineEstimates, llmReady, readActiveProducts, readLlm, readProfile, saveLocalMeal } from "../lib/store";
+import { DEFAULT_BUDGET, engineEstimates, llmReady, needsSetup, readActiveProducts, readBudget, readLlm, readProfile,
+  saveLocalMeal } from "../lib/store";
+import { SETUP_DONE_EVENT, openSetup } from "./SetupDialog";
 import { AddButton, AiLabel, Footer, Header, MealImage, Toast, money, moneySymbol, grams, useCart, useCurrency, useMeals, usePrices, useToast }
   from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
@@ -581,8 +583,8 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
   const [tagInput, setTagInput] = useState("");
   const [servings, setServings] = useState(1);
   const [budget, setBudget] = useState("5.50");
-  // The profile lives in this browser, so it is read after the first render
-  useEffect(() => {
+  // The profile lives in this browser, so it is read after the first render (and again after Create profile)
+  const loadDefaults = () => {
     const profile = readProfile();
     const kcal = fieldValue(profile, "kcal_target");
     const protein = fieldValue(profile, "protein_g_target");
@@ -592,6 +594,16 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
     if (g.length) setGear({ microwave: hasGear(g, "microwave"), stove: hasGear(g, "stove"), oven: hasGear(g, "oven"),
       noBlender: hasGear(g, "no blender") });
     setTags(toList(fieldValue(profile, "exclude", [])));
+    const b = readBudget();
+    if (b !== DEFAULT_BUDGET) setBudget((b * servings).toFixed(2));
+  };
+  useEffect(() => {
+    loadDefaults();
+    // The form is mounted while hidden: Create profile from the menu must reach it too
+    window.addEventListener(SETUP_DONE_EVENT, loadDefaults);
+    return () => window.removeEventListener(SETUP_DONE_EVENT, loadDefaults);
+    // loadDefaults reads only storage and the servings at the time
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const addTag = () => {
     const val = tagInput.trim();
@@ -624,6 +636,14 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
 
   const saveRequest = async () => {
     if (!craving.trim()) return showToast("Tell us what you are craving first.");
+    // First time, with nothing set up: Create profile opens once (decided 2026-10-22). Skip carries on with the
+    // request; after the setup the form takes the new targets and the user sends it again.
+    if (needsSetup()) {
+      return openSetup((state, opts) => {
+        if (state !== "done") return saveRequest(); // the defaults are reloaded on SETUP_DONE_EVENT
+        if (!opts?.profile) showToast("Profile saved. Check the form, then show me 4 ideas.");
+      });
+    }
     const { form, errors } = checkForm({
       craving, exclude: tags, kcal_target: kcalTarget, protein_g_target: proteinTarget,
       carbs_g_max: carbsMax, fat_g_max: fatMax, budget_total_eur: budget, servings, time_limit_min: time,

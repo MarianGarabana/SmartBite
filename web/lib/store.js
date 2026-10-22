@@ -23,6 +23,8 @@ export const KEYS = {
   region: "smartbite.region", // estimated prices: "national", "off" or a region code such as "ES-MD"
   currency: "smartbite.currency", // ISO 4217 code shown with prices (symbol only, no conversion); unset: the country's
   name: "smartbite.name", // display name on the Profile page and in the profile menu, optional
+  budget: "smartbite.budget", // budget per meal (one serving) in the user's currency: the Make Your Meal starting value
+  setup: "smartbite.setup", // "done" or "skipped": the Create profile setup was finished or skipped once
 };
 const CHANGED = "smartbite-storage";
 
@@ -314,7 +316,8 @@ export function importProducts(text) {
 // Each part is checked for its shape here; the readers check the details when they read it.
 const PROFILE_PARTS = { profile: isObject, llm: isObject, country: (v) => typeof v === "string",
   region: (v) => typeof v === "string", currency: (v) => typeof v === "string", store: (v) => typeof v === "string",
-  name: (v) => typeof v === "string", products: isObject, meals: isObject, saved: Array.isArray, cart: isObject };
+  name: (v) => typeof v === "string", budget: (v) => typeof v === "number", products: isObject, meals: isObject,
+  saved: Array.isArray, cart: isObject };
 const KEY_PARTS = { apiKey: (v) => typeof v === "string", openaiKey: (v) => typeof v === "string" };
 export const MAX_PROFILE_FILE = 4_000_000; // bytes; localStorage holds about 5 MB per site
 
@@ -470,6 +473,26 @@ export const readName = () => {
   return typeof n === "string" ? n.trim().slice(0, MAX_NAME) : "";
 };
 export const writeName = (name) => writeJson(KEYS.name, String(name || "").trim().slice(0, MAX_NAME));
+
+// Budget per meal (decided 2026-10-22): only the Make Your Meal starting value (x servings); never in a prompt
+export const DEFAULT_BUDGET = 5.5;
+const MAX_BUDGET = 1000;
+export function readBudget() {
+  const b = readJson(KEYS.budget, null);
+  return typeof b === "number" && b > 0 && b <= MAX_BUDGET ? b : DEFAULT_BUDGET;
+}
+export const writeBudget = (b) => (typeof b === "number" && b > 0 && b <= MAX_BUDGET ? writeJson(KEYS.budget, b) : false);
+
+// Create profile (decided 2026-10-22): a browser "has a profile" once the setup was finished or it holds the user's
+// own things (a Kitchen Profile, a name, a key). The setup opens on the first "Show me 4 ideas" only when it has
+// none and the setup was never finished or skipped.
+export const SETUP_DONE = "done";
+export const SETUP_SKIPPED = "skipped";
+const hasValue = (key) => { const v = readJson(key, null); return v !== null && v !== ""; };
+export const hasProfile = () => readJson(KEYS.setup, null) === SETUP_DONE
+  || [KEYS.profile, KEYS.name, KEYS.apiKey, KEYS.openaiKey].some(hasValue);
+export const needsSetup = () => !hasProfile() && readJson(KEYS.setup, null) !== SETUP_SKIPPED;
+export const markSetup = (state) => writeJson(KEYS.setup, state === SETUP_DONE ? SETUP_DONE : SETUP_SKIPPED);
 
 // What /api/evaluate takes: { country, region } with null for none (no estimates, or the national average)
 export function engineEstimates(country = readCountry(), region = readRegion(country), currency = readCurrency(country)) {

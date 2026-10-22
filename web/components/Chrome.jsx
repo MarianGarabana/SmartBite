@@ -8,8 +8,9 @@ import { mealRequest } from "../lib/cartmath";
 import { cachedReply, evaluateCached, requestKey } from "../lib/engine";
 import { toMeal } from "../lib/meal";
 import { usePhoto } from "../lib/photos";
-import { DEFAULT_CURRENCY, currencySymbol, engineEstimates, onStoreChange, readActiveProducts, readCart, readCurrency,
-  readLocalMeals, readPrices, readSaved, writeCart } from "../lib/store";
+import { DEFAULT_CURRENCY, currencySymbol, engineEstimates, exportProfile, hasProfile, onStoreChange, readActiveProducts,
+  readCart, readCurrency, readLocalMeals, readName, readPrices, readSaved, writeCart } from "../lib/store";
+import { SetupHost, openSetup } from "./SetupDialog";
 
 export const TABS = [
   { id: "home", label: "Home" },
@@ -266,21 +267,119 @@ export function AddButton({ onAdd, className, children }) {
   );
 }
 
+// Saves a JSON text as a file the browser downloads, named "<name>-<YYYY-MM-DD>.json"
+export function downloadJson(text, name) {
+  const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${name}-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// A menu that closes on a click outside it or on Escape: [open, setOpen, ref for the element holding button and menu]
+function useMenu() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!open) return;
+    const away = (e) => ref.current && !ref.current.contains(e.target) && setOpen(false);
+    const esc = (e) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("mousedown", away);
+    window.addEventListener("keydown", esc);
+    return () => {
+      document.removeEventListener("mousedown", away);
+      window.removeEventListener("keydown", esc);
+    };
+  }, [open]);
+  return [open, setOpen, ref];
+}
+
+const menuItem = "block w-full text-left px-4 py-2.5 text-sm text-forest hover:bg-forest/5 rounded-xl transition-colors";
+
+// Profile menu (decided 2026-10-22): no accounts, so no "Log in". Without a profile: Create profile, Open profile
+// file. With one: Profile, Save profile file, Open profile file, under the display name if there is one.
+function ProfileMenu({ active, onNavigate }) {
+  const [open, setOpen, ref] = useMenu();
+  const [me, setMe] = useState({ has: false, name: "" });
+  useEffect(() => {
+    const read = () => setMe({ has: hasProfile(), name: readName() });
+    read();
+    return onStoreChange(read);
+  }, []);
+  const create = () => {
+    setOpen(false);
+    openSetup((state, opts) => state === "done" && !opts?.profile && onNavigate("make-meal"));
+  };
+  const save = () => {
+    setOpen(false);
+    downloadJson(exportProfile(), "smartbite-profile");
+  };
+  return (
+    <div ref={ref} className="relative">
+      <button onClick={() => setOpen((o) => !o)} aria-label="Profile menu" aria-haspopup="menu" aria-expanded={open} title="Profile"
+        className={`w-9 h-9 rounded-full flex items-center justify-center hover:text-forest hover:bg-forest/5 transition-all ${active === "profile" || open ? "bg-forest/5 text-forest" : "text-forest/70"}`}>
+        <i className="fa-solid fa-user text-sm"></i>
+      </button>
+      {open && (
+        <div role="menu" className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-card border border-cream-dark p-2 z-50">
+          {me.name && <p className="px-4 pt-2 pb-1 text-xs font-bold text-forest/60 truncate">{me.name}</p>}
+          {me.has ? (
+            <>
+              <Link role="menuitem" href="/profile" onClick={() => setOpen(false)} className={menuItem}>Profile</Link>
+              <button role="menuitem" onClick={save} className={menuItem}>Save profile file</button>
+            </>
+          ) : (
+            <button role="menuitem" onClick={create} className={menuItem}>Create profile</button>
+          )}
+          <Link role="menuitem" href="/profile#profile-file" onClick={() => setOpen(false)} className={menuItem}>Open profile file</Link>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Phone and tablet (under 1024 px, decided 2026-10-22): the tab links move into this menu; desktop is unchanged
+function TabsMenu({ active, onNavigate }) {
+  const [open, setOpen, ref] = useMenu();
+  return (
+    <div ref={ref} className="relative lg:hidden">
+      <button onClick={() => setOpen((o) => !o)} aria-label="Menu" aria-haspopup="menu" aria-expanded={open}
+        className={`w-9 h-9 rounded-full flex items-center justify-center hover:text-forest hover:bg-forest/5 transition-all ${open ? "bg-forest/5 text-forest" : "text-forest/70"}`}>
+        <i className={`fa-solid ${open ? "fa-xmark" : "fa-bars"} text-sm`}></i>
+      </button>
+      {open && (
+        <div role="menu" className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-card border border-cream-dark p-2 z-50">
+          {TABS.map((t) => (
+            <button key={t.id} role="menuitem" onClick={() => { setOpen(false); onNavigate(t.id); }}
+              className={`${menuItem} flex items-center gap-1.5 ${active === t.id ? "font-semibold bg-forest/5" : ""}`}>
+              {t.label}
+              {t.id === "make-meal" && <span className="w-2 h-2 rounded-full bg-lime"></span>}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function Header({ active, onNavigate, cartCount }) {
   return (
     <header className="sticky top-0 z-50 bg-cream/95 backdrop-blur-md border-b border-forest/10 transition-all">
-      <div className="max-w-[1360px] mx-auto px-8 h-20 flex items-center justify-between">
+      <SetupHost />
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-3">
+
         <a href="/" onClick={(e) => { e.preventDefault(); onNavigate("home"); }} className="flex items-center gap-2.5 group">
           <div className="w-10 h-10 rounded-full bg-forest flex items-center justify-center text-lime group-hover:bg-lime group-hover:text-forest transition-colors shadow-sm">
             <i className="fa-solid fa-leaf text-base"></i>
           </div>
-          <span className="font-serif text-2xl font-bold tracking-tight text-forest">
+          <span className="font-serif text-2xl font-bold tracking-tight text-forest whitespace-nowrap">
             Smart<span className="font-normal italic">Bite</span>{" "}
             <span className="inline-block w-2 h-2 rounded-full bg-lime ml-0.5"></span>
           </span>
         </a>
 
-        <nav className="flex items-center gap-2 font-medium text-sm">
+        <nav className="hidden lg:flex items-center gap-2 font-medium text-sm">
           {TABS.map((t) => {
             const isActive = active === t.id;
             const extra = t.id === "make-meal" ? " flex items-center gap-1.5" : t.id === "cart" ? " relative" : "";
@@ -306,14 +405,12 @@ export function Header({ active, onNavigate, cartCount }) {
           })}
         </nav>
 
-        <div className="flex items-center gap-4">
-          <Link href="/profile" aria-label="Profile" title="Profile"
-            className={`w-9 h-9 rounded-full flex items-center justify-center hover:text-forest hover:bg-forest/5 transition-all ${active === "profile" ? "bg-forest/5 text-forest" : "text-forest/70"}`}>
-            <i className="fa-solid fa-user text-sm"></i>
-          </Link>
-          <button onClick={() => onNavigate("cart")} className="relative px-4 py-2 rounded-full bg-forest text-cream hover:bg-forest-light transition-all flex items-center gap-2.5 shadow-sm">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <TabsMenu active={active} onNavigate={onNavigate} />
+          <ProfileMenu active={active} onNavigate={onNavigate} />
+          <button onClick={() => onNavigate("cart")} aria-label="Cart" className="relative px-4 py-2 rounded-full bg-forest text-cream hover:bg-forest-light transition-all flex items-center gap-2.5 shadow-sm">
             <i className="fa-solid fa-basket-shopping text-lime text-sm"></i>
-            <span className="text-xs font-bold">Cart</span>
+            <span className="text-xs font-bold hidden sm:inline">Cart</span>
             <span id="cart-badge" className="bg-lime text-forest font-bold text-[11px] px-2 py-0.5 rounded-full min-w-[20px] text-center">{cartCount}</span>
           </button>
         </div>

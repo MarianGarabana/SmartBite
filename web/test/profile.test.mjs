@@ -134,3 +134,36 @@ test("only SmartBite profile files of this version, with parts of the right shap
   store.openProfile(out.data);
   assert.equal(globalThis.window.localStorage.getItem("smartbite.other"), null);
 });
+
+// Create profile (decided 2026-10-22): asked once, only in a browser with nothing of the user's
+test("the setup is needed only in a browser with no profile, key or name, until done or skipped", () => {
+  const data = fakeWindow();
+  assert.equal(store.hasProfile(), false);
+  assert.equal(store.needsSetup(), true);
+  store.markSetup(store.SETUP_SKIPPED);
+  assert.equal(store.needsSetup(), false);
+  assert.equal(store.hasProfile(), false); // skipped is not a profile: the menu still offers Create profile
+  store.markSetup(store.SETUP_DONE);
+  assert.equal(store.hasProfile(), true);
+  for (const k of ["apiKey", "name", "profile"]) {
+    const d = fakeWindow();
+    d[store.KEYS[k]] = JSON.stringify(k === "profile" ? { sections: [] } : "x");
+    assert.equal(store.needsSetup(), false, k);
+    assert.equal(store.hasProfile(), true, k);
+  }
+  assert.equal(data[store.KEYS.setup], JSON.stringify("done"));
+});
+
+test("budget per meal: a positive number, else the default", () => {
+  const data = fakeWindow();
+  assert.equal(store.readBudget(), store.DEFAULT_BUDGET);
+  assert.equal(store.writeBudget(6), true);
+  assert.equal(store.readBudget(), 6);
+  assert.equal(store.writeBudget(0), false);
+  assert.equal(store.writeBudget(5000), false);
+  data[store.KEYS.budget] = JSON.stringify("7");
+  assert.equal(store.readBudget(), store.DEFAULT_BUDGET);
+  // It travels in the profile file
+  store.writeBudget(6.5);
+  assert.equal(JSON.parse(store.exportProfile()).data.budget, 6.5);
+});
