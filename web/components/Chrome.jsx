@@ -8,7 +8,7 @@ import { mealRequest } from "../lib/cartmath";
 import { cachedReply, evaluateCached, requestKey } from "../lib/engine";
 import { toMeal } from "../lib/meal";
 import { usePhoto } from "../lib/photos";
-import { engineCountry, onStoreChange, readActiveProducts, readCart, readCountry, readLocalMeals, readPrices, readSaved,
+import { engineEstimates, onStoreChange, readActiveProducts, readCart, readLocalMeals, readPrices, readSaved,
   writeCart } from "../lib/store";
 
 export const TABS = [
@@ -66,27 +66,30 @@ export function usePrices() {
   return prices;
 }
 
-// Country for estimated prices ("ES", or null for none), read after the first render and on every storage change.
-// undefined until read, so the page does not ask the engine before it knows.
-export function useCountry() {
-  const [country, setCountry] = useState(undefined);
+// Estimated prices for the engine ({ country, region }, lib/store.js engineEstimates), read after the first render
+// and on every storage change. undefined until read, so the page does not ask the engine before it knows.
+export function useEstimates() {
+  const [estimates, setEstimates] = useState(undefined);
   useEffect(() => {
-    const read = () => setCountry(engineCountry(readCountry()));
+    const read = () => {
+      const e = engineEstimates();
+      setEstimates((old) => (old && old.country === e.country && old.region === e.region ? old : e));
+    };
     read();
     return onStoreChange(read);
   }, []);
-  return country;
+  return estimates;
 }
 
 // Saved meals run again by the engine (lib/cartmath.js mealRequest) for some servings with the user's products and
-// country: jobs [{ id, meal, servings }], the id stays the same while servings or products change. Per id the reply is
+// estimates (useEstimates): jobs [{ id, meal, servings }], the id stays the same while servings or products change. Per id the reply is
 // { slug, doc, docKey, servings, budget, pending, error }: while a new reply loads, the last one for that meal stays
 // (doc, its request key and the servings it was for), so the page never falls back to the saved meal meanwhile.
 // A reply to an older request never replaces a newer one. Asks after a short pause (typing), at once when the reply
 // is cached or nothing is shown yet.
-export function useEvaluations(jobs, products, country) {
-  const wanted = country === undefined ? [] : jobs.map((j) => {
-    const request = mealRequest(j.meal, j.servings, products, country);
+export function useEvaluations(jobs, products, estimates) {
+  const wanted = estimates === undefined ? [] : jobs.map((j) => {
+    const request = mealRequest(j.meal, j.servings, products, estimates);
     return { id: j.id, slug: j.meal.slug, servings: j.servings, request, key: requestKey(request),
       budget: request.form.budget_total_eur };
   });
@@ -131,8 +134,8 @@ export function useCart(showToast, meals, { evaluate = false } = {}) {
     read();
     return onStoreChange(read);
   }, []);
-  const country = useCountry();
-  const replies = useEvaluations(evaluate && stored ? cartJobs(stored, meals) : [], stored?.products, country);
+  const estimates = useEstimates();
+  const replies = useEvaluations(evaluate && stored ? cartJobs(stored, meals) : [], stored?.products, estimates);
   const replySig = Object.entries(replies).map(([id, r]) => `${id} ${r.docKey}`).join("\n");
   // { entry ref: Meal } from the engine replies (lib/cart.js cartJobs)
   const evaluated = useMemo(() => Object.fromEntries(Object.entries(replies).filter(([, r]) => r.doc)

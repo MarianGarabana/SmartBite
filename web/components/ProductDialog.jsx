@@ -5,7 +5,7 @@
 // that food. Styles from the idea preview dialog and the Settings fields (design freeze).
 import { useState } from "react";
 import { EGG_GRAMS } from "../lib/cartmath";
-import { NO_STORE, deleteProduct, okProduct, readProducts, readStore, saveProduct, storeLabel } from "../lib/store";
+import { NO_STORE, deleteProduct, okProduct, readProducts, readStore, regionLabel, saveProduct, storeLabel } from "../lib/store";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
 const input = "w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest";
@@ -22,7 +22,7 @@ const dayText = (d) => {
 export function sourceText(row) {
   const macros = NUTRITION[row.nutritionSource] || null;
   const date = dayText(row.priceDate);
-  const price = row.estimate ? "estimate (MAPA)" : row.hasPrice ? `yours${date ? `, ${date}` : ""}` : "none yet";
+  const price = row.estimate ? `estimate (MAPA${row.priceRegion ? `, ${regionLabel(row.priceRegion)}` : ""})` : row.hasPrice ? `yours${date ? `, ${date}` : ""}` : "none yet";
   return [macros && `Macros: ${macros}`, `Price: ${price}`].filter(Boolean).join(" · ");
 }
 

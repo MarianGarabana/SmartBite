@@ -74,16 +74,18 @@ async def evaluate_meal(request: Request):
     except (UnicodeDecodeError, json.JSONDecodeError) as e:
         return _error(422, [f"request body is not valid JSON: {e}"])
     errors = validate_output(body, CONTRACT, "Input") or product_errors(body.get("products"))
+    if not errors and body.get("region") and not body.get("country"):
+        errors = ["region: needs country"]
     if errors:
         return _error(422, errors)
     shape = {"body_bytes": len(raw), "servings": body["form"].get("servings"),
              "ingredients": len(body["recipe"]["ingredients"]), "products": len(body.get("products") or []),
-             "country": body.get("country")}
+             "country": body.get("country"), "region": body.get("region")}
     try:
         table, packs = _data()
         meal = evaluate(body["form"], body["picked_idea"], body["recipe"], body.get("profile"),
-                        country=body.get("country"), products=body.get("products") or None, table=table,
-                        packs=packs)
+                        country=body.get("country"), products=body.get("products") or None,
+                        region=body.get("region"), table=table, packs=packs)
     except ValueError as e:  # form rules the schema cannot express
         return _error(422, [f"form: {e}"])
     except Exception as e:  # a bug: logged without the body, answered as JSON the site can show

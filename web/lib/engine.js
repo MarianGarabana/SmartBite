@@ -14,14 +14,14 @@ export class EngineError extends Error {
 
 const isMeal = (d) => d && typeof d === "object" && d.form && d.picked_idea && d.recipe && d.evaluation?.pack && d.evaluation?.macros;
 
-export async function evaluateMeal({ form, profile, picked_idea, recipe, products, country }) {
+export async function evaluateMeal({ form, profile, picked_idea, recipe, products, country, region }) {
   let res;
   try {
     res = await fetch(EVALUATE_URL, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ form, profile, picked_idea, recipe, ...(products?.length ? { products } : {}),
-        ...(country ? { country } : {}) }),
+        ...(country ? { country } : {}), ...(country && region ? { region } : {}) }),
     });
   } catch {
     throw new EngineError("Could not reach the meal engine that computes packs and macros.");

@@ -19,7 +19,8 @@ export const KEYS = {
   prices: "smartbite.prices",
   products: "smartbite.products", // { "<store id>|<food key>": product (docs/contracts/evaluate.schema.json Product) }
   store: "smartbite.store", // supermarket id (STORES), "other:<name>", or "none"
-  country: "smartbite.country", // "ES" or "none": estimated prices for lines without a typed price
+  country: "smartbite.country", // ISO country code ("none" before 2026-10-22: Spain, estimates off)
+  region: "smartbite.region", // estimated prices: "national", "off" or a region code such as "ES-MD"
 };
 const CHANGED = "smartbite-storage";
 
@@ -304,24 +305,68 @@ export function importProducts(text) {
   return { ok, added: ok ? Object.keys(add).length : 0, skipped, ...(ok ? {} : { error: "This browser blocks storage." }) };
 }
 
-// Estimated prices (engine, docs/contracts/evaluate.schema.json "country"): average prices paid in a country fill
-// the lines the user did not price. Spain unless the user picks none.
-export const COUNTRIES = [
-  { id: "ES", label: "Spain", source: "MAPA" },
-  { id: "none", label: "None (no estimates)" },
-];
+// Country (any): picks the supermarket list and, where SmartBite has them, estimated prices (engine,
+// docs/contracts/evaluate.schema.json "country"): average prices paid fill the lines the user did not price. Only
+// Spain has them (MAPA), nationally or per comunidad autonoma. Labels come from the browser (Intl), in English.
+const ISO_COUNTRIES = ("AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR " +
+  "BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET " +
+  "FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ " +
+  "IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML " +
+  "MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS " +
+  "PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL " +
+  "TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW").split(" ");
+const countryName = (code) => {
+  try {
+    return new Intl.DisplayNames(["en"], { type: "region" }).of(code) || code;
+  } catch {
+    return code;
+  }
+};
+export const COUNTRIES = ISO_COUNTRIES.map((id) => ({ id, label: countryName(id), ...(id === "ES" ? { source: "MAPA" } : {}) }))
+  .sort((a, b) => a.label.localeCompare(b.label, "en"));
 export const DEFAULT_COUNTRY = "ES";
 
-// "ES" or "none"; anything else in storage gives the default
+// Regions with their own estimated prices (data/open/prices/es.json "regions", ISO 3166-2; the engine's region enum)
+export const REGIONS = {
+  ES: [
+    { id: "ES-AN", label: "Andalucía" }, { id: "ES-AR", label: "Aragón" }, { id: "ES-AS", label: "Asturias" },
+    { id: "ES-CN", label: "Canarias" }, { id: "ES-CB", label: "Cantabria" }, { id: "ES-CM", label: "Castilla-La Mancha" },
+    { id: "ES-CL", label: "Castilla y León" }, { id: "ES-CT", label: "Cataluña" }, { id: "ES-MD", label: "Comunidad de Madrid" },
+    { id: "ES-VC", label: "Comunitat Valenciana" }, { id: "ES-EX", label: "Extremadura" }, { id: "ES-GA", label: "Galicia" },
+    { id: "ES-IB", label: "Illes Balears" }, { id: "ES-RI", label: "La Rioja" }, { id: "ES-NC", label: "Navarra" },
+    { id: "ES-PV", label: "País Vasco" }, { id: "ES-MC", label: "Región de Murcia" },
+  ],
+};
+export const NATIONAL = "national"; // the country's average
+export const ESTIMATES_OFF = "off"; // only the prices the user types
+export const hasEstimates = (country) => !!REGIONS[country];
+export const regionLabel = (id) => Object.values(REGIONS).flat().find((r) => r.id === id)?.label || null;
+
+const okCountry = (id) => COUNTRIES.some((x) => x.id === id);
+
+// A country code; anything else in storage gives the default. Before 2026-10-22 "none" meant Spain with no estimates.
 export function readCountry() {
   const c = readJson(KEYS.country, DEFAULT_COUNTRY);
-  return COUNTRIES.some((x) => x.id === c) ? c : DEFAULT_COUNTRY;
+  return okCountry(c) ? c : DEFAULT_COUNTRY;
 }
 
-export const writeCountry = (id) => writeJson(KEYS.country, COUNTRIES.some((x) => x.id === id) ? id : DEFAULT_COUNTRY);
+export const writeCountry = (id) => writeJson(KEYS.country, okCountry(id) ? id : DEFAULT_COUNTRY);
 
-// What /api/evaluate takes: the country code, or null for no estimates
-export const engineCountry = (id) => (id && id !== "none" && COUNTRIES.some((x) => x.id === id) ? id : null);
+// "national", "off" or one of the country's regions; the old country "none" reads as "off"
+export function readRegion(country = readCountry()) {
+  const r = readJson(KEYS.region, null);
+  if (r === NATIONAL || r === ESTIMATES_OFF || (REGIONS[country] || []).some((x) => x.id === r)) return r;
+  return readJson(KEYS.country, null) === "none" ? ESTIMATES_OFF : NATIONAL;
+}
+
+export const writeRegion = (id) => writeJson(KEYS.region,
+  id === ESTIMATES_OFF || Object.values(REGIONS).flat().some((x) => x.id === id) ? id : NATIONAL);
+
+// What /api/evaluate takes: { country, region } with null for none (no estimates, or the national average)
+export function engineEstimates(country = readCountry(), region = readRegion(country)) {
+  if (!hasEstimates(country) || region === ESTIMATES_OFF) return { country: null, region: null };
+  return { country, region: (REGIONS[country] || []).some((x) => x.id === region) ? region : null };
+}
 
 export const readSaved = () => list(readJson(KEYS.saved, []));
 

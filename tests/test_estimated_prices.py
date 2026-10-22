@@ -79,7 +79,7 @@ def test_sources_note_cites_mapa_and_the_period():
 
 def _xlsx(path, sheets):
     """Minimal XLSX with inline strings. sheets: {name: [[cell, ...], ...]} with columns A, B, ..."""
-    cols = "ABCDEFG"
+    cols = "ABCDEFGHIJKLM"
     with zipfile.ZipFile(path, "w") as z:
         z.writestr("xl/workbook.xml", '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" '
                    'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>'
@@ -147,6 +147,51 @@ def test_build_keys_on_section_and_row_and_weights_by_volume(tmp_path):
     assert foods["eggs"]["price_per_unit_eur"] == pytest.approx(0.3)
     assert foods["canned tuna in water"]["price_per_kg_eur"] == pytest.approx((6 * 300 + 6 * 100) / 120)
     assert all(r["months"] == 12 for r in foods.values())
+
+
+def test_build_prices_each_region_only_with_as_many_months_as_spain(tmp_path):
+    head = [["CONSUMO HOGARES"], ["MES", "T.ESPAÑA", None, None, None, None, None, "COMUNIDAD DE MADRID"],
+            [None, *HEAD[2][1:], *HEAD[2][1:]]]
+    full = lambda name, es, md: [*_row(name, *es), 1, 1, 1, None, *md]
+    gap = head + [full(".TOTAL ALIMENTACION", (1, 1), (1, 1)), full("T.HORTALIZAS FRESCAS", (1, 1), (1, 1)),
+                  full("BROCOLI", (30, 10), (40, 10)), full("CALABACIN", (20, 10), (None, None))]
+    ok = head + [full(".TOTAL ALIMENTACION", (1, 1), (1, 1)), full("T.HORTALIZAS FRESCAS", (1, 1), (1, 1)),
+                 full("BROCOLI", (30, 10), (40, 10)), full("CALABACIN", (20, 10), (30, 10))]
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    names = ("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre",
+             "Noviembre", "Diciembre")
+    _xlsx(raw / "a.xlsx", {f"{m} 2025": (gap if m == "Enero" else ok) for m in names})
+    mapping = {"broccoli": {"match": "exact", "section": "T.HORTALIZAS FRESCAS", "row": "BROCOLI", "unit": "kg"},
+               "zucchini": {"match": "exact", "section": "T.HORTALIZAS FRESCAS", "row": "CALABACIN", "unit": "kg"}}
+    map_path = tmp_path / "map.json"
+    map_path.write_text(json.dumps({"foods": mapping}), encoding="utf-8")
+    packs = tmp_path / "packs.json"
+    packs.write_text(json.dumps({"foods": {}}), encoding="utf-8")
+    doc = bp.build(raw=raw, map_path=map_path, packs_path=packs)
+    assert doc["foods"]["broccoli"]["price_per_kg_eur"] == pytest.approx(3.0)  # national, column T.ESPAÑA
+    md = doc["regions"]["ES-MD"]
+    assert md["name"] == "Comunidad de Madrid" and md["mapa_name"] == "COMUNIDAD DE MADRID"
+    assert md["foods"] == {"broccoli": {"months": 12, "price_per_kg_eur": 4.0}}  # zucchini: 11 of 12 months
+
+
+def test_build_refuses_an_unknown_region_column(tmp_path):
+    rows = [["CONSUMO HOGARES"], ["MES", "T.ESPAÑA", None, None, None, None, None, "CEUTA"],
+            [None, *HEAD[2][1:], *HEAD[2][1:]], _row(".TOTAL ALIMENTACION", 1, 1)]
+    _xlsx(tmp_path / "a.xlsx", {"Enero 2025": rows})
+    z, strings, sheets = bp._sheets(tmp_path / "a.xlsx")
+    with pytest.raises(SystemExit, match="Unknown region column 'CEUTA'"):
+        bp.read_sheet(z, strings, sheets[0][1])
+
+
+def test_region_table_covers_every_comunidad_with_prices_near_spain():
+    assert len(ES["regions"]) == 17 and set(ES["regions"]) == {c for c, _ in bp.REGIONS.values()}
+    for code, region in ES["regions"].items():
+        assert set(region["foods"]) <= set(ES["foods"]), code
+        for food, rec in region["foods"].items():
+            assert rec["months"] >= ES["foods"][food]["months"], (code, food)
+            key = "price_per_unit_eur" if "price_per_unit_eur" in ES["foods"][food] else "price_per_kg_eur"
+            assert 0.5 < rec[key] / ES["foods"][food][key] < 2, (code, food)
 
 
 def test_build_needs_twelve_consecutive_months(tmp_path):
@@ -234,6 +279,54 @@ def test_all_user_prices_means_not_estimated():
     assert by_food({"evaluation": {"pack": pack}})["salt"]["price_source"] == "estimate"
 
 
+@pytest.mark.parametrize("region", ["ES-MD", "ES-RI"])
+def test_region_prices_its_foods_and_the_rest_stay_national(region):
+    body, meal = demo(TUNA)
+    out = evaluate(**body, country="ES", region=region)
+    regional = ES["regions"][region]["foods"]
+    plain = by_food(meal)
+    kinds = set()
+    for food, line in by_food(out).items():
+        assert (line.get("packs_to_buy"), line.get("grams_bought")) == (
+            plain[food].get("packs_to_buy"), plain[food].get("grams_bought")), food
+        if food not in ES["foods"]:
+            assert line["price_source"] == "typical" and "price_region" not in line, food
+            continue
+        rec = regional.get(food, ES["foods"][food])
+        assert line["price_source"] == "estimate", food
+        assert line.get("price_region") == (region if food in regional else None), food
+        expected = round_price(rec["price_per_kg_eur"] * pack_size(line) / 1000)
+        assert line["cost_bought_eur"] == pytest.approx(expected * line["packs_to_buy"]), food
+        kinds.add(food in regional)
+    assert True in kinds
+    src = out["evaluation"]["pack"]["estimate_source"]
+    assert src["region"] == region and src["region_name"] == ES["regions"][region]["name"]
+
+
+def test_region_without_a_regional_price_falls_back_to_spain():
+    body, _ = demo(TUNA)
+    national = by_food(evaluate(**body, country="ES"))
+    missing = {f for f in ES["foods"] if f not in ES["regions"]["ES-RI"]["foods"]} & set(national)
+    assert missing  # La Rioja has no full-year price for some of this meal's foods
+    rioja = by_food(evaluate(**body, country="ES", region="ES-RI"))
+    for food in missing:
+        assert rioja[food]["cost_bought_eur"] == national[food]["cost_bought_eur"] and "price_region" not in rioja[food]
+
+
+def test_region_needs_a_country_and_must_be_known():
+    body, _ = demo(TUNA)
+    with pytest.raises(ValueError, match="region needs a country"):
+        evaluate(**body, region="ES-MD")
+    with pytest.raises(ValueError, match="no estimated prices for region"):
+        evaluate(**body, country="ES", region="ES-CE")
+
+
+def test_without_region_estimate_source_names_no_region():
+    body, _ = demo(TUNA)
+    src = evaluate(**body, country="ES")["evaluation"]["pack"]["estimate_source"]
+    assert "region" not in src and "region_name" not in src
+
+
 def test_without_country_nothing_changes():
     body, meal = demo(FRITTATA)
     out = evaluate(**body)
@@ -258,6 +351,28 @@ def test_api_without_country_is_byte_identical():
     a = client.post("/api/evaluate", json=body)
     b = client.post("/api/evaluate", json=body)
     assert a.content == b.content and "prices_estimated" not in a.json()["evaluation"]["pack"]
+
+
+def test_api_region_gives_regional_estimates_and_a_valid_reply():
+    body, _ = demo(FRITTATA)
+    r = client.post("/api/evaluate", json={**body, "country": "ES", "region": "ES-MD"})
+    data = r.json()
+    assert r.status_code == 200 and validate_output(data, "evaluate.schema.json", "Output") == []
+    assert data["evaluation"]["pack"]["estimate_source"]["region_name"] == "Comunidad de Madrid"
+    assert any(l.get("price_region") == "ES-MD" for l in data["evaluation"]["pack"]["lines"])
+
+
+def test_api_region_enum_matches_the_price_table():
+    schema = json.loads((ROOT / "docs" / "contracts" / "evaluate.schema.json").read_text(encoding="utf-8"))
+    assert schema["$defs"]["Input"]["properties"]["region"]["enum"] == sorted(ES["regions"])
+
+
+@pytest.mark.parametrize("extra", [{"region": "ES-MD"}, {"country": "ES", "region": "ES-CE"},
+                                   {"country": "ES", "region": "MD"}, {"country": "ES", "region": None}])
+def test_api_rejects_a_region_without_country_or_unknown(extra):
+    body, _ = demo(TUNA)
+    r = client.post("/api/evaluate", json={**body, **extra})
+    assert r.status_code == 422
 
 
 @pytest.mark.parametrize("country", ["FR", "es", "", None, 1])

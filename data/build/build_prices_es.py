@@ -6,7 +6,9 @@ and volume (thousand kg, litres or eggs) bought by households. The price of a fo
 over the latest 12 months found: sum(value) / sum(volume), per kg, per litre or per egg.
 
 Foods map to rows by hand in data/build/prices-map-es.json (section + row, because row names repeat across groups).
-Only exact and close matches get a price. Standard library only: an XLSX file is a zip of XML.
+Only exact and close matches get a price. The same files have one column group per region (comunidad autonoma): each
+region gets its own price per food, kept only when it has data in as many months as the national price (small
+regional samples with gaps gave prices far off, e.g. 0.58x the national one); other foods use the national price. Standard library only: an XLSX file is a zip of XML.
 
 Run from the repo root, with the monthly files in data/raw/mapa/ (gitignored):
   .venv/bin/python data/build/build_prices_es.py
@@ -41,6 +43,17 @@ MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agost
           "noviembre", "diciembre"]
 PRICED = ("exact", "close")
 SPAIN = "T.ESPAÑA"
+# MAPA column name -> ISO 3166-2 code and display name. Ceuta and Melilla have no column (national price).
+REGIONS = {
+    "ANDALUCÍA": ("ES-AN", "Andalucía"), "ARAGÓN": ("ES-AR", "Aragón"),
+    "PRINCIPADO DE ASTURIAS": ("ES-AS", "Asturias"), "ILLES BALEARS": ("ES-IB", "Illes Balears"),
+    "CANARIAS": ("ES-CN", "Canarias"), "CANTABRIA": ("ES-CB", "Cantabria"),
+    "CASTILLA Y LEÓN": ("ES-CL", "Castilla y León"), "CASTILLA - LA MANCHA": ("ES-CM", "Castilla-La Mancha"),
+    "CATALUÑA": ("ES-CT", "Cataluña"), "EXTREMADURA": ("ES-EX", "Extremadura"), "GALICIA": ("ES-GA", "Galicia"),
+    "LA RIOJA": ("ES-RI", "La Rioja"), "COMUNIDAD DE MADRID": ("ES-MD", "Comunidad de Madrid"),
+    "REGIÓN DE MURCIA": ("ES-MC", "Región de Murcia"), "C. FORAL DE NAVARRA": ("ES-NC", "Navarra"),
+    "PAIS VASCO": ("ES-PV", "País Vasco"), "COMUNITAT VALENCIANA": ("ES-VC", "Comunitat Valenciana"),
+}
 MAX_GAP = 60  # a product row sits at most this many rows under its section row
 TOP = ".TOTAL ALIMENTACION"  # first row of each sheet; rows mapped under it have no smaller group
 MIN_MONTHS = 6  # fewer months with data: no estimate
@@ -83,21 +96,28 @@ def _cells(row, strings):
 
 
 def read_sheet(z, strings, target):
-    """[(row name, value thousand EUR, volume thousand units)] for T.ESPANA, in sheet order."""
+    """{column name: [(row name, value thousand EUR, volume thousand units)]} for T.ESPANA and each region, in sheet
+    order. Column A of the region row holds the month, not a region."""
     rows = [_cells(r, strings) for r in ET.fromstring(z.read(target)).iter(M + "row")]
     region = next(i for i, r in enumerate(rows) if SPAIN in r.values())
-    spain_col = next(k for k, v in rows[region].items() if v == SPAIN)
     header = rows[region + 1]
     order = sorted(header, key=lambda k: (len(k), k))
-    after = order[order.index(spain_col):]
-    value_col = next(k for k in after if (header[k] or "").upper().startswith("VALOR"))
-    volume_col = next(k for k in after if (header[k] or "").upper().startswith("VOLUMEN"))
-    out = []
+    cols = {}
+    for col, name in rows[region].items():
+        if col == "A" or not name:
+            continue
+        if name != SPAIN and name not in REGIONS:
+            raise SystemExit(f"Unknown region column {name!r}: add it to REGIONS.")
+        after = order[order.index(col):]
+        cols[name] = (next(k for k in after if (header[k] or "").upper().startswith("VALOR")),
+                      next(k for k in after if (header[k] or "").upper().startswith("VOLUMEN")))
+    out = {name: [] for name in cols}
     for r in rows[region + 2:]:
         name = (r.get("A") or "").strip()
         if name:
             num = lambda k: float(r[k]) if r.get(k) not in (None, "") else None
-            out.append((name, num(value_col), num(volume_col)))
+            for col_name, (value_col, volume_col) in cols.items():
+                out[col_name].append((name, num(value_col), num(volume_col)))
     return out
 
 
@@ -171,39 +191,52 @@ def densities(packs_path=PACKS):
     return out
 
 
+def _price(unit, price, density):
+    """Price fields of one food: per egg, per kg (liquids also per litre) from value / volume."""
+    if unit == "unit":
+        return {"price_per_unit_eur": round(price, 4)}
+    if unit == "l":
+        return {"price_per_kg_eur": round(price / density, 3), "price_per_litre_eur": round(price, 3)}
+    return {"price_per_kg_eur": round(price, 3)}
+
+
 def build(raw=RAW, map_path=MAP, packs_path=PACKS, today=None):
     mapping = json.loads(map_path.read_text(encoding="utf-8"))["foods"]
     months = latest_months(raw)
     dens = densities(packs_path)
-    sums = {}
+    sums = {}  # {column name: {food: [value, volume, months]}}
     for (z, strings, target, _file) in months.values():
-        rows = read_sheet(z, strings, target)
-        for food, m in mapping.items():
-            if m["match"] not in PRICED:
-                continue
-            got = month_value(rows, m)
-            s = sums.setdefault(food, [0.0, 0.0, 0])
-            if got:
-                s[0] += got[0]
-                s[1] += got[1]
-                s[2] += 1
-    short = {f: s[2] for f, s in sums.items() if s[2] < MIN_MONTHS}
+        for col_name, rows in read_sheet(z, strings, target).items():
+            col_sums = sums.setdefault(col_name, {})
+            for food, m in mapping.items():
+                if m["match"] not in PRICED:
+                    continue
+                got = month_value(rows, m)
+                s = col_sums.setdefault(food, [0.0, 0.0, 0])
+                if got:
+                    s[0] += got[0]
+                    s[1] += got[1]
+                    s[2] += 1
+    national = sums[SPAIN]
+    short = {f: s[2] for f, s in national.items() if s[2] < MIN_MONTHS}
     if short:
         raise SystemExit(f"Fewer than {MIN_MONTHS} months with data: {short}")
     foods = {}
-    for food, (value, volume, n) in sorted(sums.items()):
+    for food, (value, volume, n) in sorted(national.items()):
         m = mapping[food]
-        price = value / volume
         rec = {"match": m["match"], "mapa_section": m["section"], "mapa_row": m["row"], "months": n}
-        if m["unit"] == "unit":
-            rec["price_per_unit_eur"] = round(price, 4)
-        elif m["unit"] == "l":
-            density = dens.get(food, 1.0)
-            rec.update(price_per_kg_eur=round(price / density, 3), price_per_litre_eur=round(price, 3),
-                       grams_per_ml=density)
-        else:
-            rec["price_per_kg_eur"] = round(price, 3)
+        rec.update(_price(m["unit"], value / volume, dens.get(food, 1.0)))
+        if m["unit"] == "l":
+            rec["grams_per_ml"] = dens.get(food, 1.0)
         foods[food] = rec
+    regions = {}
+    for col_name in sorted(c for c in sums if c != SPAIN):
+        code, name = REGIONS[col_name]
+        region_foods = {}
+        for food, (value, volume, n) in sorted(sums[col_name].items()):
+            if n >= national[food][2] and volume:
+                region_foods[food] = {"months": n, **_price(mapping[food]["unit"], value / volume, dens.get(food, 1.0))}
+        regions[code] = {"name": name, "mapa_name": col_name, "foods": region_foods}
     (y0, m0), (y1, m1) = min(months), max(months)
     return {
         "country": "ES",
@@ -217,8 +250,11 @@ def build(raw=RAW, map_path=MAP, packs_path=PACKS, today=None):
         "built": (today or date.today()).isoformat(),
         "note": ("Average price paid by households in Spain, volume-weighted over the period (total value / total "
                  "volume, T.ESPANA). Averages over brands, pack sizes, shops and promotions; not a shop price. "
-                 "Liquids sold per litre are converted to per kg with the density used for the pack sizes."),
+                 "Liquids sold per litre are converted to per kg with the density used for the pack sizes. "
+                 "regions: the same average per comunidad autonoma (ISO 3166-2 code), only for foods with data in "
+                 "as many months as the national price; other foods use the national price."),
         "foods": foods,
+        "regions": dict(sorted(regions.items())),
     }
 
 
@@ -231,6 +267,8 @@ def main():
     for food, rec in doc["foods"].items():
         if rec["months"] < doc["months"]:
             print(f"  {food}: {rec['months']} months with data")
+    for code, region in doc["regions"].items():
+        print(f"  {code} {region['name']}: {len(region['foods'])} of {len(doc['foods'])} foods with a regional price")
     return 0
 
 

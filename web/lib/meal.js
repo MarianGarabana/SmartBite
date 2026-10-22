@@ -1,6 +1,7 @@
 // A Meal result ({form, picked_idea, recipe, evaluation: {pack, macros}}, docs/contracts/meal.schema.json) as the
 // shape the pages use. Pure: runs on the server for demo meals and in the browser for meals made there.
 import { norm, priceKey } from "./cartmath";
+import { regionLabel } from "./store";
 
 export const SLUG = /^[a-z0-9-]+$/;
 
@@ -20,8 +21,12 @@ export function periodText(from, to) {
   return x && y ? `${x} to ${y}` : null;
 }
 
+// Where an estimated price comes from: the region's name (line price_region) or "Spain"
+export const estimatePlace = (region) => regionLabel(region) || "Spain";
+
 // Tooltip of an estimated price
-export const estimateTitle = (period) => `Estimated: Spain average price paid, MAPA, ${periodText(period) || "latest 12 months"}`;
+export const estimateTitle = (period, region) =>
+  `Estimated: ${estimatePlace(region)} average price paid, MAPA, ${periodText(period) || "latest 12 months"}`;
 
 // Only a path on this site: no other host, no protocol-relative URL
 const sitePhoto = (p) => typeof p === "string" && /^\/(?!\/)[\w\-./]+\.(jpe?g|png|webp)$/i.test(p);
@@ -93,6 +98,7 @@ export function toMeal(slug, doc, { kind = "demo", saved = false } = {}) {
         // "estimate": a country's average price (engine, request with country); a typed price replaces it
         estimate: packPrice != null && l.price_source === "estimate",
         pricePeriod: l.price_period || null,
+        priceRegion: l.price_region || null, // estimate from this region's average, else the country's
       };
     }),
   };

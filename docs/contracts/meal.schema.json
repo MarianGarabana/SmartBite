@@ -65,7 +65,9 @@
             "source": { "type": "string", "description": "e.g. 'MAPA, Panel de consumo alimentario en hogares'." },
             "period_from": { "type": "string", "description": "YYYY-MM, first month of the average." },
             "period_to": { "type": "string", "description": "YYYY-MM, last month of the average." },
-            "built": { "type": "string", "description": "YYYY-MM-DD the price table was built." }
+            "built": { "type": "string", "description": "YYYY-MM-DD the price table was built." },
+            "region": { "type": "string", "description": "Only with a region in the request: its code, e.g. 'ES-MD'." },
+            "region_name": { "type": "string", "description": "Only with a region in the request: e.g. 'Comunidad de Madrid'." }
           }
         },
         "change_requests": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/ChangeRequest" } }
@@ -95,6 +97,7 @@
         "price_date": { "type": ["string", "null"] },
         "price_source": { "type": ["string", "null"], "description": "e.g. 'user' for a price the user typed, 'estimate' for a country's average price, 'typical' for a generic pack." },
         "price_period": { "type": "string", "description": "Estimated prices only: months of the average, 'YYYY-MM/YYYY-MM'." },
+        "price_region": { "type": "string", "description": "Estimated prices only, with a region in the request: the region whose average priced this line (e.g. 'ES-MD'). Absent: the national average." },
         "user_product": { "type": "boolean", "description": "Only on lines from a product the user saved (request products): its pack size is the only option; price_source is 'user', 'estimate' (no price on the product, a country's estimate for its pack size) or null (unpriced)." }
       }
     },

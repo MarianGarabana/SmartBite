@@ -53,11 +53,15 @@ test("the recipe page and the Cart send the same engine request for a meal and s
   const jobs = cartJobs(stored([{ slug: KOREAN, servings: 1 }]), [saved]);
   assert.deepEqual(jobs.map((j) => [j.id, j.meal.slug, j.servings]), [[`${KOREAN}#1`, KOREAN, 1]]);
   const beef = { food: "ground beef", name: "ground beef 300 g", sold_by: "pack", pack_grams: 300, price_eur: 4.99 };
-  const fromCart = mealRequest(jobs[0].meal, jobs[0].servings, { "ground beef": beef }, "ES");
-  assert.deepEqual(fromCart, mealRequest(saved, 1, { "ground beef": beef }, "ES"));
+  const where = { country: "ES", region: "ES-MD" };
+  const fromCart = mealRequest(jobs[0].meal, jobs[0].servings, { "ground beef": beef }, where);
+  assert.deepEqual(fromCart, mealRequest(saved, 1, { "ground beef": beef }, where));
   assert.equal(fromCart.form.servings, 1);
   assert.deepEqual(fromCart.products, [beef]);
   assert.equal(fromCart.country, "ES");
+  assert.equal(fromCart.region, "ES-MD");
+  const national = mealRequest(saved, 1, {}, { country: "ES", region: null });
+  assert.equal("region" in national, false); // same request (and cache key) as before regions existed
   // An entry without servings runs for the meal's own
   assert.equal(cartJobs(stored([{ slug: KOREAN }]), [saved])[0].servings, 8);
 });

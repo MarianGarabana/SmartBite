@@ -35,12 +35,13 @@ export function bestAttempt(attempts) {
 
 // Runs the loop. recipe: a recipe already written for this idea (e.g. "Try again" after the engine failed); then the
 // first write is skipped. products ({ food key: product } for the user's store, lib/store.js activeProducts) and
-// country go to every engine call: product packs, prices and labels, and estimated prices (country "ES"), so the
+// country and region go to every engine call: product packs, prices and labels, and estimated prices (country "ES",
+// region e.g. "ES-MD"), so the
 // budget check, macros and their change requests use them. onProgress gets {stage: "recipe" | "evaluate" | "rerun", attempt, total}.
 // Returns {meal, recipe, attempt, attempts: [{attempt, problems, misses, error?}]}.
 // Errors on the first attempt are thrown as they are; an engine error carries the written recipe as error.recipe.
 // A failed rerun (model or engine) ends the loop and keeps the best attempt so far.
-export async function makeMeal({ idea, form, profile, llm, products = {}, country = null, recipe: given = null,
+export async function makeMeal({ idea, form, profile, llm, products = {}, country = null, region = null, recipe: given = null,
   maxReruns = MAX_RERUNS, onProgress = () => {} }) {
   const total = maxReruns + 1;
   const attempts = [];
@@ -59,7 +60,7 @@ export async function makeMeal({ idea, form, profile, llm, products = {}, countr
       onProgress({ stage: "evaluate", attempt, total });
       try {
         meal = await evaluateMeal({ form, profile, picked_idea: idea, recipe, products: productsFor(recipe, products),
-          country });
+          country, region });
       } catch (e) {
         if (attempt === 1) e.recipe = recipe;
         throw e;

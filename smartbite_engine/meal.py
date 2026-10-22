@@ -19,7 +19,7 @@ import unicodedata
 from dataclasses import asdict, fields
 
 from .calc import EGG_GRAMS, Nutrition, per_serving, scale, total
-from .estimated_prices import load_estimates, pack_estimate, period
+from .estimated_prices import for_region, load_estimates, pack_estimate, period
 from .form import MealForm
 from .generic_packs import buy_unpriced, load_packs, pack_entry, product_option
 from .names import canonical, plain
@@ -254,7 +254,12 @@ def _estimated_line(item, key, entry, keep_leftovers_low, estimates, common):
               "price_source": "estimate", "price_date": estimates["period_to"]}
     line = pack_line(item["name"], item["total_grams"], option, main_word=key,
                      prefer_less_leftover=keep_leftovers_low, **common)
-    return {**line, "price_period": period(estimates), "food": key}
+    return {**line, **_estimate_fields(estimates, record), "food": key}
+
+
+def _estimate_fields(estimates, record):
+    """Line fields of an estimated price: its months, and its region when the price is regional."""
+    return {"price_period": period(estimates), **({"price_region": record["region"]} if "region" in record else {})}
 
 
 def _products_by_food(products):
@@ -271,7 +276,7 @@ def _product_line(item, key, product, keep_leftovers_low, estimates, common):
     if price is None and record:
         price = pack_estimate(record, units=units) if sold_by == "per_unit" else pack_estimate(record, grams=grams)
         if price is not None:
-            source, date, extra = "estimate", estimates["period_to"], {"price_period": period(estimates)}
+            source, date, extra = "estimate", estimates["period_to"], _estimate_fields(estimates, record)
     priced = price is not None
     option = {"name": product["name"], "link": None, "sold_by": sold_by, "pack_grams": grams, "units_per_pack": units,
               "price_eur": price, "price_per_kg_eur": price / grams * 1000 if priced and sold_by == "per_kg" else None,
@@ -366,8 +371,8 @@ def _macro_lines(items, table, products=None):
     return lines, missing
 
 
-def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None, products=None, *, table=None,
-             packs=None, estimates=None):
+def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None, products=None, *, region=None,
+             table=None, packs=None, estimates=None):
     """Meal result for one recipe. form: dict or MealForm; servings come from the form.
 
     profile: the user's Kitchen Profile; accepted for the API contract, the math does not depend on it.
@@ -377,6 +382,8 @@ def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None,
     country: optional, "ES": lines without a user price get an estimated price (price_source "estimate"); the pack
     then says whether the budget counts estimates (prices_estimated) and where they come from (estimate_source).
     Without a country the reply is the same as before estimates existed.
+    region: optional, with a country only, e.g. "ES-MD": foods with a regional average use it (line price_region)
+    and estimate_source names the region; the other foods keep the national estimate.
     products: optional saved products, the API's list form (docs/contracts/evaluate.schema.json Product), at most
     one per food. A product is the only pack option for its food (line user_product true), its price wins over
     prices and estimates, and its label (per_100g) replaces the nutrition table (macro line source "label").
@@ -391,8 +398,10 @@ def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None,
     servings = meal_form.servings
     items = items_for(recipe, servings)
 
+    if region and not country:
+        raise ValueError("region needs a country")
     if country and estimates is None:
-        estimates = load_estimates(country)
+        estimates = for_region(load_estimates(country), region)
     lines = [l for l in (_pack_line(it, packs, meal_form.keep_leftovers_low, prices, estimates, products)
                          for it in items) if l]
     pack = pack_meal(lines, servings=servings, budget_total_eur=meal_form.budget_total_eur,
@@ -407,7 +416,8 @@ def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None,
         pack["prices_estimated"] = any(l["has_price"] and l.get("price_source") == "estimate"
                                        for l in lines if not l.get("optional"))
         pack["estimate_source"] = {k: estimates[k] for k in ("country", "currency", "source", "period_from",
-                                                            "period_to", "built")}
+                                                            "period_to", "built", "region", "region_name")
+                                   if k in estimates}
 
     macro_lines, missing = _macro_lines(items, table, products)
     meal_total = total(l["amount"] for l in macro_lines)

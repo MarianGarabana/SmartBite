@@ -7,9 +7,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DEFAULT_PROFILE, setField } from "../lib/profile";
 import { ANTHROPIC, ANTHROPIC_MODELS, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, presetAvailable, presetById } from "../lib/providers";
-import { COUNTRIES, DEFAULT_COUNTRY, NO_STORE, STORES, clearApiKey, clearOpenAiKey, exportProducts, importProducts, okStore,
-  onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readProfile, readStore, resetProfile,
-  storeLabel, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeProfile, writeStore } from "../lib/store";
+import { COUNTRIES, DEFAULT_COUNTRY, ESTIMATES_OFF, NATIONAL, NO_STORE, REGIONS, STORES, clearApiKey, clearOpenAiKey, exportProducts, importProducts, okStore,
+  onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readProfile, readRegion, readStore, resetProfile,
+  storeLabel, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeProfile, writeRegion, writeStore } from "../lib/store";
 import { PageShell, useToast } from "./Chrome";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
@@ -84,10 +84,12 @@ export default function SettingsPage({ demoMeals }) {
   const [savedKeys, setSavedKeys] = useState({ [ANTHROPIC]: "", [OPENAI_COMPATIBLE]: "" });
   const [showKey, setShowKey] = useState(false);
   const [hostname, setHostname] = useState("");
-  // Country for estimated prices: saved as soon as it changes
+  // Country (supermarket list, estimated prices) and region for estimated prices: saved as soon as they change
   const [country, setCountry] = useState(DEFAULT_COUNTRY);
+  const [region, setRegion] = useState(NATIONAL);
   useEffect(() => {
     setCountry(readCountry());
+    setRegion(readRegion());
     setProfile(readProfile());
     setLlm(readLlmSettings());
     const k = { [ANTHROPIC]: readApiKey(), [OPENAI_COMPATIBLE]: readOpenAiKey() };
@@ -98,8 +100,17 @@ export default function SettingsPage({ demoMeals }) {
 
   const pickCountry = (id) => {
     setCountry(id);
-    showToast(writeCountry(id) ? (id === "none" ? "Estimated prices off." : "Country saved in this browser.") : "Not saved: this browser blocks storage.");
+    setRegion(readRegion(id));
+    showToast(writeCountry(id) ? "Country saved in this browser." : "Not saved: this browser blocks storage.");
   };
+  const pickRegion = (id) => {
+    setRegion(id);
+    showToast(!writeRegion(id) ? "Not saved: this browser blocks storage."
+      : id === ESTIMATES_OFF ? "Estimated prices off." : "Estimated prices saved in this browser.");
+  };
+  const regions = REGIONS[country] || [];
+  const countryLabel = COUNTRIES.find((c) => c.id === country)?.label || country;
+  const regionName = regions.find((r) => r.id === region)?.label;
 
   // Supermarket: saved as soon as it changes ("Other" waits for a name). Products: counted on every storage change.
   const [store, setStore] = useState(NO_STORE);
@@ -314,17 +325,33 @@ export default function SettingsPage({ demoMeals }) {
                 <select id="price-country" value={country} onChange={(e) => pickCountry(e.target.value)} className={input}>
                   {COUNTRIES.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
                 </select>
-                <span className="block text-[11px] text-forest/60 mt-1">
-                  {country === "none"
-                    ? "Only the prices you type count. The budget check waits for a price on every item."
-                    : "Items you have not priced get the average price households paid in Spain over the latest 12 months published (MAPA household consumption panel). They show as est. on the recipe page; a price you type always wins."}
-                </span>
+                {regions.length === 0 && (
+                  <span className="block text-[11px] text-forest/60 mt-1">
+                    No estimated prices for {countryLabel} yet: only the prices you type count. The budget check waits for a price on every item.
+                  </span>
+                )}
               </div>
+              {regions.length > 0 && (
+                <div>
+                  <label htmlFor="price-region" className={label}>Estimated prices</label>
+                  <select id="price-region" value={region} onChange={(e) => pickRegion(e.target.value)} className={input}>
+                    <option value={NATIONAL}>{countryLabel} average</option>
+                    {regions.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
+                    <option value={ESTIMATES_OFF}>Off: only my prices</option>
+                  </select>
+                  <span className="block text-[11px] text-forest/60 mt-1">
+                    {region === ESTIMATES_OFF
+                      ? "Only the prices you type count. The budget check waits for a price on every item."
+                      : `Items you have not priced get the average price households paid ${regionName ? `in ${regionName} (the ${countryLabel} average where the region has too little data)` : `in ${countryLabel}`} over the latest 12 months published (MAPA household consumption panel). They show as est. on the recipe page; a price you type always wins.`}
+                  </span>
+                </div>
+              )}
               <div>
                 <label htmlFor="store" className={label}>Supermarket</label>
                 <select id="store" value={store} onChange={(e) => pickStore(e.target.value)} className={input}>
                   <option value={NO_STORE}>No store</option>
-                  {Object.values(STORES).flat().map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
+                  {[...(STORES[country] || []), ...Object.values(STORES).flat().filter((s) => s.id === store && !(STORES[country] || []).includes(s))]
+                    .map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
                   <option value="other">Other</option>
                 </select>
                 {store === "other" && (

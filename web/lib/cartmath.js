@@ -29,13 +29,15 @@ export function productsFor(recipe, products, lines = []) {
 }
 
 // The /api/evaluate request (lib/engine.js) that runs a saved meal again for some servings with the user's products
-// and country. The recipe page and the Cart both build it here, so the same meal, servings, products and country
-// always give the same packs, prices and estimates. The budget scales with the servings (the form's is for its own).
-export function mealRequest(meal, servings, products, country) {
+// and estimates ({ country, region }, lib/store.js engineEstimates). The recipe page and the Cart both build it here,
+// so the same meal, servings, products and estimates always give the same packs and prices. The budget scales with
+// the servings (the form's is for its own).
+export function mealRequest(meal, servings, products, estimates) {
   const form = meal.source.form;
   const budget = Math.round((form.budget_total_eur * servings / form.servings) * 100) / 100;
   return { form: { ...form, servings, budget_total_eur: Math.max(budget, 0.01) }, picked_idea: meal.idea,
-    recipe: meal.source.recipe, products: productsFor(meal.source.recipe, products, meal.lines), country: country || null };
+    recipe: meal.source.recipe, products: productsFor(meal.source.recipe, products, meal.lines),
+    country: estimates?.country || null, ...(estimates?.country && estimates.region ? { region: estimates.region } : {}) };
 }
 
 // Grams of one line this cart item needs: the adjusted grams per serving if any, else the meal's own

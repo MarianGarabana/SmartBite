@@ -10,8 +10,8 @@
  "period_from": "2025-08",
  "period_to": "2026-07",
  "months": 12,
- "built": "2026-10-19",
- "note": "Average price paid by households in Spain, volume-weighted over the period (total value / total volume, T.ESPANA). Averages over brands, pack sizes, shops and promotions; not a shop price. Liquids sold per litre are converted to per kg with the density used for the pack sizes.",
+ "built": "2026-10-22",
+ "note": "Average price paid by households in Spain, volume-weighted over the period (total value / total volume, T.ESPANA). Averages over brands, pack sizes, shops and promotions; not a shop price. Liquids sold per litre are converted to per kg with the density used for the pack sizes. regions: the same average per comunidad autonoma (ISO 3166-2 code), only for foods with data in as many months as the national price; other foods use the national price.",
  "foods": {
   "apple": {
    "match": "exact",
@@ -552,6 +552,5218 @@
    "mapa_row": "CALABACINES",
    "months": 12,
    "price_per_kg_eur": 1.866
+  }
+ },
+ "regions": {
+  "ES-AN": {
+   "name": "Andalucía",
+   "mapa_name": "ANDALUCÍA",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 1.967
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 5.615
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 4.709
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.743
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 15.03
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 12.851
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.508
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.689
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.653
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.716
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 10.96
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.653
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 11.402
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.296
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.127
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 9.205
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 9.205
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.653
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.409
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.815
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.671
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.611
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.508
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 1.838
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.608
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.333
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.073
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2705
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 5.544,
+     "price_per_litre_eur": 5.1
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 13.712
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.166
+    },
+    "frozen cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.27
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.757
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 9.386
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.696
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 2.103
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 18.795
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 12.613
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.437
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 6.012
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 4.46
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.592
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.168
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.46
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.519
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 3.12
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 4.391
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.074
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.668
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 5.562
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.853
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.451
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.062
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.435
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.137
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.984
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 14.766
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.592
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.696
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 5.408
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 14.218
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.64
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.919,
+     "price_per_litre_eur": 0.947
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 10.479
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.178,
+     "price_per_litre_eur": 1.178
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 4.252
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.325
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.24
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.16
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 1.924
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 7.742
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 1.051,
+     "price_per_litre_eur": 1.051
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 13.674
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.074
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 2.168
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.809
+    }
+   }
+  },
+  "ES-AR": {
+   "name": "Aragón",
+   "mapa_name": "ARAGÓN",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 1.916
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 5.297
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 5.016
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.782
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 15.33
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 12.592
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.433
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.712
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.726
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.748
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 10.998
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.726
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 11.977
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.514
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 3.762
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 9.615
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 9.615
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.726
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.367
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.646
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.828
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.671
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.77
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 1.997
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.884
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.468
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.271
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2571
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 5.592,
+     "price_per_litre_eur": 5.145
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 14.096
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.1
+    },
+    "frozen cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.099
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.718
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 9.523
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.559
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 1.963
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 20.632
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 12.185
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.703
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 6.328
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 4.222
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.821
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.348
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.839
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.525
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 2.967
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 4.811
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.17
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.851
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 5.606
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.896
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.512
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.3
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.908
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.146
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.47
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 15.275
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.821
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.691
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 4.915
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 13.663
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.792
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.924,
+     "price_per_litre_eur": 0.952
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 10.614
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.179,
+     "price_per_litre_eur": 1.179
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.797
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.036
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.365
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.504
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 1.923
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 8.116
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.912,
+     "price_per_litre_eur": 0.912
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 13.429
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.17
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 2.406
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.855
+    }
+   }
+  },
+  "ES-AS": {
+   "name": "Asturias",
+   "mapa_name": "PRINCIPADO DE ASTURIAS",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 1.931
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 5.318
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 4.908
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.825
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 15.375
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 12.811
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.769
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.77
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.885
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.691
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 16.108
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.885
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 12.536
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.661
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.876
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 11.215
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 11.215
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.885
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.443
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.003
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.333
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.349
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.979
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 1.917
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 3.295
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.529
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.268
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2766
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 5.901,
+     "price_per_litre_eur": 5.429
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 12.377
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.18
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.933
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 10.372
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.626
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 2.338
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 18.072
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 11.966
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 3.23
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 6.277
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 4.337
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.992
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 4.147
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.471
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.565
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 3.372
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 5.256
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.036
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.894
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 6.128
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.853
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.403
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.22
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.655
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.116
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.642
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.992
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.547
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 5.207
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 12.35
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.653
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.942,
+     "price_per_litre_eur": 0.97
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 12.404
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.138,
+     "price_per_litre_eur": 1.138
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 4.368
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.508
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.169
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.645
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.133
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 8.5
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.942,
+     "price_per_litre_eur": 0.942
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 12.877
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.036
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 2.7
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.858
+    }
+   }
+  },
+  "ES-CB": {
+   "name": "Cantabria",
+   "mapa_name": "CANTABRIA",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 2.1
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 4.942
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.712
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 14.448
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 11.954
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.613
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.668
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.385
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.865
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 14.651
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 2.385
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 13.58
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.717
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.045
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 9.913
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 9.913
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 2.385
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.429
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.177
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.743
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.303
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.853
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 2.141
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.68
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.327
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.111
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2644
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 6.175,
+     "price_per_litre_eur": 5.681
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.328
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.526
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 9.646
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.911
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 2.367
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 12.141
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 7.043
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 4.936
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.976
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.513
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.928
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.564
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 3.426
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 3.532
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 1.934
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 6.625
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 6.142
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.922
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.423
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.04
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.475
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.232
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 2.092
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 17.322
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.976
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.58
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 5.623
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 12.974
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.668
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.922,
+     "price_per_litre_eur": 0.95
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 10.91
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.081,
+     "price_per_litre_eur": 1.081
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 6.446
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.312
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.305
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.687
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.3
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 7.926
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.723,
+     "price_per_litre_eur": 0.723
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 12.286
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 1.934
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 2.125
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.951
+    }
+   }
+  },
+  "ES-CL": {
+   "name": "Castilla y León",
+   "mapa_name": "CASTILLA Y LEÓN",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 1.864
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 5.208
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 4.824
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.797
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 14.721
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 12.531
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.328
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.673
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.663
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.785
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 11.408
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.663
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 12.059
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.553
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.035
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 9.688
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 9.688
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.663
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.367
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.855
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.498
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.504
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.543
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 1.953
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.84
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.515
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.173
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2621
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 5.532,
+     "price_per_litre_eur": 5.089
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 12.044
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.22
+    },
+    "frozen cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.232
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.698
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 9.845
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.573
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 2.231
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 18.933
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 12.026
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.41
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 5.762
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 4.073
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.835
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.526
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.201
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.497
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 3.096
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 4.627
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.008
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.628
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 5.41
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.854
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.431
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.03
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.874
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.09
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.628
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 15.27
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.835
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.617
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 4.987
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 13.259
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.654
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.925,
+     "price_per_litre_eur": 0.952
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 11.094
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.104,
+     "price_per_litre_eur": 1.104
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 3.982
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.121
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.115
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.46
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.094
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 8.05
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.884,
+     "price_per_litre_eur": 0.884
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 13.87
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.008
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 2.001
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.774
+    }
+   }
+  },
+  "ES-CM": {
+   "name": "Castilla-La Mancha",
+   "mapa_name": "CASTILLA - LA MANCHA",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 2.059
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 5.437
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 4.637
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.787
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 15.102
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 13.036
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.397
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.673
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.654
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.754
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 10.926
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.654
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 11.981
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.429
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.315
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 9.565
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 9.565
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.654
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.428
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.771
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.418
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.417
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.539
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 1.942
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.684
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.3
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.034
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2655
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 5.661,
+     "price_per_litre_eur": 5.208
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 12.647
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.052
+    },
+    "frozen cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.184
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.581
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 9.207
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.759
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 1.979
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 19.888
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 12.61
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.622
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 5.824
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 4.71
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.501
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.006
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.452
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.348
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 3.231
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 4.149
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.009
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.383
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 5.166
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.876
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.459
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 1.978
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.516
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.11
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.718
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 15.577
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.501
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.628
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 5.178
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 12.441
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.62
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.921,
+     "price_per_litre_eur": 0.948
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 10.835
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.086,
+     "price_per_litre_eur": 1.086
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 3.188
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.035
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.258
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.293
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.112
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 8.04
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.784,
+     "price_per_litre_eur": 0.784
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 14.217
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.009
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 1.82
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.875
+    }
+   }
+  },
+  "ES-CN": {
+   "name": "Canarias",
+   "mapa_name": "CANARIAS",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 2.152
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 5.674
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 5.551
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.975
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 13.486
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 13.497
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 3.164
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.578
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.732
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.595
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 12.197
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.732
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 10.472
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.175
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 3.893
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 9.158
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 9.158
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.732
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.617
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.518
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 8.073
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 6.229
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.782
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 2.137
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.652
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.328
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.354
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2933
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 6.408,
+     "price_per_litre_eur": 5.896
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 12.667
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.275
+    },
+    "frozen cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.149
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.712
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 9.33
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.546
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 2.309
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 18.993
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 11.269
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.513
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 6.078
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 5.565
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 3.025
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.437
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.664
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.486
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 4.294
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 4.81
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.269
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.246
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 5.102
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.825
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.449
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.445
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.255
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.37
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.963
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 16.339
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 3.025
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.557
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 4.74
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 14.734
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.855
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.959,
+     "price_per_litre_eur": 0.988
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 11.573
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.257,
+     "price_per_litre_eur": 1.257
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 5.586
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 6.06
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.464
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.333
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 1.941
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 8.179
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.921,
+     "price_per_litre_eur": 0.921
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 13.672
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.269
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 2.657
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 2.32
+    }
+   }
+  },
+  "ES-CT": {
+   "name": "Cataluña",
+   "mapa_name": "CATALUÑA",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 2.026
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 5.981
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 5.058
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.849
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 15.69
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 12.905
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.193
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.751
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.063
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.083
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 12.155
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 2.063
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 11.767
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 4.804
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.053
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 10.375
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 10.375
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 2.063
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.62
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.743
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.891
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.909
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.669
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 1.923
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.871
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.478
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.159
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2791
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 6.194,
+     "price_per_litre_eur": 5.698
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 14.929
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.186
+    },
+    "frozen cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.345
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.969
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 10.224
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.635
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 2.477
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 23.54
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 13.964
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.496
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 6.7
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 5.288
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.78
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.792
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.703
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.595
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 3.427
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 4.795
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.177
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.998
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 6.473
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.957
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.515
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.501
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.867
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.272
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.807
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 15.929
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.78
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.567
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 5.519
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 14.376
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.82
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.963,
+     "price_per_litre_eur": 0.992
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 12.146
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.207,
+     "price_per_litre_eur": 1.207
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 3.889
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.69
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.319
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.746
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.27
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 8.062
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.973,
+     "price_per_litre_eur": 0.973
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 14.327
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.177
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 2.114
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.92
+    }
+   }
+  },
+  "ES-EX": {
+   "name": "Extremadura",
+   "mapa_name": "EXTREMADURA",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 1.961
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 4.994
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 5.015
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.666
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 14.738
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 13.298
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.224
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.734
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.583
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.673
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 12.024
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.583
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 11.314
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.085
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.002
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 9.166
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 9.166
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.583
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.384
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.717
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.298
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.276
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.524
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 1.975
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.725
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.435
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.203
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2645
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 5.402,
+     "price_per_litre_eur": 4.97
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 13.856
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.048
+    },
+    "frozen cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.15
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.687
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 9.043
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.682
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 2.617
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 14.677
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 11.15
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.191
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 6.31
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 4.111
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.572
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.089
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.38
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.425
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 2.98
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 4.17
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 1.965
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.431
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 5.811
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.79
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.505
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 1.958
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.533
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.126
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.65
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 15.179
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.572
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.664
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 4.608
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 13.849
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.573
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.89,
+     "price_per_litre_eur": 0.917
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 9.414
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.323,
+     "price_per_litre_eur": 1.323
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 3.09
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.425
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.174
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.458
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 1.784
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 8.09
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 1.127,
+     "price_per_litre_eur": 1.127
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 13.315
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 1.965
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.81
+    }
+   }
+  },
+  "ES-GA": {
+   "name": "Galicia",
+   "mapa_name": "GALICIA",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 1.992
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 5.308
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 4.823
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.912
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 14.762
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 12.021
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.436
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.733
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.71
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.591
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 13.483
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.71
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 13.004
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.548
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.174
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 10.228
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 10.228
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.71
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.444
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.909
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.423
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.146
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.921
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 2.04
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.866
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.539
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.145
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2827
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 6.054,
+     "price_per_litre_eur": 5.57
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.032
+    },
+    "frozen cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.225
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.739
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 10.663
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.428
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 2.013
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 17.064
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 11.809
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.397
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 6.628
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 4.504
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.98
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.99
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.148
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.564
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 2.901
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 5.1
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.178
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 6.06
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 5.472
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.9
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.441
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.191
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.162
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.147
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.564
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 14.595
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.98
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.743
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 5.253
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 12.903
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.67
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.971,
+     "price_per_litre_eur": 1.0
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 11.154
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.18,
+     "price_per_litre_eur": 1.18
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 3.663
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.78
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.122
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.628
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.237
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 8.079
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 1.08,
+     "price_per_litre_eur": 1.08
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 12.996
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.178
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 1.547
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.842
+    }
+   }
+  },
+  "ES-IB": {
+   "name": "Illes Balears",
+   "mapa_name": "ILLES BALEARS",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 2.163
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 5.549
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 5.162
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.739
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 14.921
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 13.173
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.926
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.865
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.679
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.985
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 12.918
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.679
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 14.393
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.68
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.009
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 11.0
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 11.0
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.679
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.472
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.781
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 8.188
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.385
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.533
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 1.962
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.813
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.483
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.063
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2698
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 6.233,
+     "price_per_litre_eur": 5.734
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 14.377
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.004
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.736
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 9.573
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.723
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 2.217
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 21.395
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 13.438
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.559
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 6.999
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 4.284
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.757
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 4.25
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.818
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.63
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 3.307
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 5.562
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.056
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 6.598
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 5.682
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 2.041
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.483
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.117
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.87
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.254
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 2.035
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 15.636
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.757
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.46
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 5.26
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 15.112
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.876
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.97,
+     "price_per_litre_eur": 0.999
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 10.967
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.091,
+     "price_per_litre_eur": 1.091
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 4.747
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.832
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.252
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.485
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.071
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 7.744
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.871,
+     "price_per_litre_eur": 0.871
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 13.346
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.056
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.975
+    }
+   }
+  },
+  "ES-MC": {
+   "name": "Región de Murcia",
+   "mapa_name": "REGIÓN DE MURCIA",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 1.919
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 5.97
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 4.654
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.766
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 15.096
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 13.422
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.372
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.746
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.72
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.752
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 11.051
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.72
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 11.687
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.665
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.173
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 9.475
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 9.475
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.72
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.355
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.702
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.996
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.563
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.559
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 1.83
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.441
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.204
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.031
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2739
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 5.442,
+     "price_per_litre_eur": 5.007
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 13.761
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.088
+    },
+    "frozen cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.277
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.563
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 9.418
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.709
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 1.836
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 16.239
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 13.018
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.429
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 6.161
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 4.667
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.557
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.1
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.674
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.317
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 2.974
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 5.416
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.14
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.877
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 6.842
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.822
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.401
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.168
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.601
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.129
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 2.027
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 15.352
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.557
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.54
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 5.297
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 14.331
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.754
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.972,
+     "price_per_litre_eur": 1.001
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 10.433
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.194,
+     "price_per_litre_eur": 1.194
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 3.939
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.359
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.186
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.357
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.517
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 7.686
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.781,
+     "price_per_litre_eur": 0.781
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 14.005
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.14
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 2.406
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.788
+    }
+   }
+  },
+  "ES-MD": {
+   "name": "Comunidad de Madrid",
+   "mapa_name": "COMUNIDAD DE MADRID",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 2.043
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 5.781
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 4.805
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.777
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 15.07
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 12.899
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.618
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.689
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.718
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.765
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 11.92
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.718
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 11.678
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.529
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.096
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 9.792
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 9.792
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.718
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.382
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.769
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.544
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.392
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.675
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 1.797
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.651
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.382
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.025
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2651
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 5.512,
+     "price_per_litre_eur": 5.071
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 13.421
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.07
+    },
+    "frozen cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.176
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.667
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 9.57
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.764
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 1.97
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 21.382
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 12.915
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.406
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 5.894
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 3.579
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.59
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.458
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.382
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.363
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 3.614
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 4.722
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.038
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.434
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 6.037
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.846
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.464
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.093
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.534
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.146
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.829
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 16.42
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.59
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.594
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 5.162
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 13.652
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.752
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.923,
+     "price_per_litre_eur": 0.95
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 11.582
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.161,
+     "price_per_litre_eur": 1.161
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 4.347
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.251
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.247
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.359
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.021
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 8.07
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.964,
+     "price_per_litre_eur": 0.964
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 13.211
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.038
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 2.236
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.761
+    }
+   }
+  },
+  "ES-NC": {
+   "name": "Navarra",
+   "mapa_name": "C. FORAL DE NAVARRA",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 2.13
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 5.211
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.993
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 16.122
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 12.649
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.084
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.747
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.301
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.896
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 9.133
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 2.301
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 12.276
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.512
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 11.018
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 11.018
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 2.301
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.553
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.831
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 8.314
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 6.11
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.415
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 2.116
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 3.596
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 3.007
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.423
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2713
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 6.491,
+     "price_per_litre_eur": 5.972
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 13.216
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 11.928
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.438
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 1.798
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 13.097
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 7.163
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 4.99
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.573
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.082
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.854
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.619
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 2.698
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 4.346
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.346
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.192
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 7.884
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 2.082
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.608
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 1.957
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 8.197
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.15
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.472
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.573
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.92
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 4.852
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 12.84
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.677
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.91,
+     "price_per_litre_eur": 0.937
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 10.733
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.244,
+     "price_per_litre_eur": 1.244
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 3.462
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 3.951
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.118
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.551
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.201
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 8.432
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.899,
+     "price_per_litre_eur": 0.899
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 13.856
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.346
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 2.693
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.866
+    }
+   }
+  },
+  "ES-PV": {
+   "name": "País Vasco",
+   "mapa_name": "PAIS VASCO",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 1.929
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 6.374
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 4.888
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.901
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 16.013
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 12.633
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.467
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.84
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.889
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.871
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 11.482
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.889
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 12.833
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.709
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.27
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 11.563
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 11.563
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.889
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.355
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.984
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 8.315
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.863
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.796
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 2.16
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.978
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.486
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.044
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2737
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 5.863,
+     "price_per_litre_eur": 5.394
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 13.523
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.026
+    },
+    "frozen cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.18
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.645
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 10.199
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.276
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 2.01
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 17.894
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 12.256
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.474
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 6.729
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 4.366
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.667
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.684
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.344
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.509
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 3.185
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 4.593
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.182
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 6.328
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 5.939
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.987
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.541
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.085
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 8.022
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.167
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.964
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 16.902
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.667
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.728
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 5.358
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 14.164
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 1.038
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.945,
+     "price_per_litre_eur": 0.973
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 12.748
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.176,
+     "price_per_litre_eur": 1.176
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 3.487
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.64
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.43
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.67
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.116
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 8.445
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.857,
+     "price_per_litre_eur": 0.857
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 13.601
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.182
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 1.866
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.752
+    }
+   }
+  },
+  "ES-RI": {
+   "name": "La Rioja",
+   "mapa_name": "LA RIOJA",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 2.063
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 4.904
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.906
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 15.344
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.558
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.903
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.744
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 12.315
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.903
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 11.15
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.244
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.188
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 10.298
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 10.298
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.903
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.32
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.992
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.723
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.499
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 1.847
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.973
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.739
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.081
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2648
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 5.66,
+     "price_per_litre_eur": 5.207
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.51
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 9.821
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 2.143
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 12.187
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 7.493
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 5.097
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.865
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.809
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 5.541
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.796
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 3.212
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 4.216
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.164
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.618
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 2.183
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.791
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.557
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.927
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.334
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 1.75
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.865
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.64
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 5.488
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 11.704
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.618
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.919,
+     "price_per_litre_eur": 0.946
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 10.639
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.105,
+     "price_per_litre_eur": 1.105
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 3.238
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.308
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.272
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.555
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.327
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 8.591
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.814,
+     "price_per_litre_eur": 0.814
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 11.533
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.164
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.986
+    }
+   }
+  },
+  "ES-VC": {
+   "name": "Comunitat Valenciana",
+   "mapa_name": "COMUNITAT VALENCIANA",
+   "foods": {
+    "apple": {
+     "months": 12,
+     "price_per_kg_eur": 1.995
+    },
+    "artichoke hearts": {
+     "months": 12,
+     "price_per_kg_eur": 5.496
+    },
+    "avocado": {
+     "months": 12,
+     "price_per_kg_eur": 4.761
+    },
+    "banana": {
+     "months": 12,
+     "price_per_kg_eur": 1.748
+    },
+    "beef steak": {
+     "months": 12,
+     "price_per_kg_eur": 14.756
+    },
+    "blueberries": {
+     "months": 12,
+     "price_per_kg_eur": 13.291
+    },
+    "broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.387
+    },
+    "brussels sprouts": {
+     "months": 12,
+     "price_per_kg_eur": 1.84
+    },
+    "canned chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 1.7
+    },
+    "canned lentils": {
+     "months": 12,
+     "price_per_kg_eur": 1.724
+    },
+    "canned mackerel": {
+     "months": 12,
+     "price_per_kg_eur": 11.116
+    },
+    "canned red kidney beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.7
+    },
+    "canned sardines": {
+     "months": 12,
+     "price_per_kg_eur": 10.695
+    },
+    "canned sliced mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 3.402
+    },
+    "canned sweetcorn": {
+     "months": 12,
+     "price_per_kg_eur": 4.061
+    },
+    "canned tuna in oil": {
+     "months": 12,
+     "price_per_kg_eur": 9.431
+    },
+    "canned tuna in water": {
+     "months": 12,
+     "price_per_kg_eur": 9.431
+    },
+    "canned white beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.7
+    },
+    "carrot": {
+     "months": 12,
+     "price_per_kg_eur": 1.448
+    },
+    "cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 1.776
+    },
+    "chicken breast": {
+     "months": 12,
+     "price_per_kg_eur": 7.717
+    },
+    "chicken thigh": {
+     "months": 12,
+     "price_per_kg_eur": 5.57
+    },
+    "crushed tomatoes": {
+     "months": 12,
+     "price_per_kg_eur": 1.57
+    },
+    "cucumber": {
+     "months": 12,
+     "price_per_kg_eur": 1.857
+    },
+    "dried chickpeas": {
+     "months": 12,
+     "price_per_kg_eur": 2.575
+    },
+    "dried lentils": {
+     "months": 12,
+     "price_per_kg_eur": 2.314
+    },
+    "eggplant": {
+     "months": 12,
+     "price_per_kg_eur": 2.139
+    },
+    "eggs": {
+     "months": 12,
+     "price_per_unit_eur": 0.2695
+    },
+    "extra virgin olive oil": {
+     "months": 12,
+     "price_per_kg_eur": 5.569,
+     "price_per_litre_eur": 5.123
+    },
+    "fresh tuna": {
+     "months": 12,
+     "price_per_kg_eur": 14.002
+    },
+    "frozen broccoli": {
+     "months": 12,
+     "price_per_kg_eur": 2.182
+    },
+    "frozen cauliflower": {
+     "months": 12,
+     "price_per_kg_eur": 2.429
+    },
+    "frozen green beans": {
+     "months": 12,
+     "price_per_kg_eur": 1.644
+    },
+    "frozen hake": {
+     "months": 12,
+     "price_per_kg_eur": 9.257
+    },
+    "frozen mixed berries": {
+     "months": 12,
+     "price_per_kg_eur": 6.814
+    },
+    "frozen peas": {
+     "months": 12,
+     "price_per_kg_eur": 2.043
+    },
+    "frozen salmon": {
+     "months": 12,
+     "price_per_kg_eur": 18.569
+    },
+    "frozen shrimp": {
+     "months": 12,
+     "price_per_kg_eur": 14.11
+    },
+    "frozen spinach": {
+     "months": 12,
+     "price_per_kg_eur": 2.326
+    },
+    "garlic": {
+     "months": 12,
+     "price_per_kg_eur": 6.673
+    },
+    "green beans": {
+     "months": 12,
+     "price_per_kg_eur": 5.121
+    },
+    "green bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.665
+    },
+    "kefir": {
+     "months": 7,
+     "price_per_kg_eur": 3.487
+    },
+    "kiwi": {
+     "months": 12,
+     "price_per_kg_eur": 4.415
+    },
+    "lemon": {
+     "months": 12,
+     "price_per_kg_eur": 2.537
+    },
+    "lettuce": {
+     "months": 12,
+     "price_per_kg_eur": 3.321
+    },
+    "light fresh cheese": {
+     "months": 12,
+     "price_per_kg_eur": 4.981
+    },
+    "macaroni": {
+     "months": 12,
+     "price_per_kg_eur": 2.044
+    },
+    "mushrooms": {
+     "months": 12,
+     "price_per_kg_eur": 5.679
+    },
+    "mustard": {
+     "months": 12,
+     "price_per_kg_eur": 5.85
+    },
+    "onion": {
+     "months": 12,
+     "price_per_kg_eur": 1.885
+    },
+    "orange": {
+     "months": 12,
+     "price_per_kg_eur": 1.425
+    },
+    "plain yogurt 0%": {
+     "months": 12,
+     "price_per_kg_eur": 2.211
+    },
+    "pork loin": {
+     "months": 12,
+     "price_per_kg_eur": 7.435
+    },
+    "potato": {
+     "months": 12,
+     "price_per_kg_eur": 1.212
+    },
+    "pumpkin": {
+     "months": 12,
+     "price_per_kg_eur": 2.02
+    },
+    "raspberries": {
+     "months": 12,
+     "price_per_kg_eur": 15.512
+    },
+    "red bell pepper": {
+     "months": 12,
+     "price_per_kg_eur": 2.665
+    },
+    "rice": {
+     "months": 12,
+     "price_per_kg_eur": 1.539
+    },
+    "roasted red peppers": {
+     "months": 12,
+     "price_per_kg_eur": 4.757
+    },
+    "salmon": {
+     "months": 12,
+     "price_per_kg_eur": 13.858
+    },
+    "salt": {
+     "months": 12,
+     "price_per_kg_eur": 0.701
+    },
+    "semi-skimmed milk": {
+     "months": 12,
+     "price_per_kg_eur": 0.953,
+     "price_per_litre_eur": 0.982
+    },
+    "sliced turkey breast": {
+     "months": 12,
+     "price_per_kg_eur": 10.968
+    },
+    "soy milk": {
+     "months": 12,
+     "price_per_kg_eur": 1.193,
+     "price_per_litre_eur": 1.193
+    },
+    "spinach": {
+     "months": 12,
+     "price_per_kg_eur": 4.213
+    },
+    "strawberries": {
+     "months": 12,
+     "price_per_kg_eur": 4.576
+    },
+    "sugar": {
+     "months": 12,
+     "price_per_kg_eur": 1.234
+    },
+    "tomato": {
+     "months": 12,
+     "price_per_kg_eur": 2.383
+    },
+    "tomato sauce": {
+     "months": 12,
+     "price_per_kg_eur": 2.215
+    },
+    "turkey tenderloin": {
+     "months": 12,
+     "price_per_kg_eur": 7.986
+    },
+    "vinegar": {
+     "months": 12,
+     "price_per_kg_eur": 0.755,
+     "price_per_litre_eur": 0.755
+    },
+    "walnuts": {
+     "months": 12,
+     "price_per_kg_eur": 13.408
+    },
+    "wholemeal pasta": {
+     "months": 12,
+     "price_per_kg_eur": 2.044
+    },
+    "wholemeal sandwich bread": {
+     "months": 12,
+     "price_per_kg_eur": 1.975
+    },
+    "zucchini": {
+     "months": 12,
+     "price_per_kg_eur": 1.854
+    }
+   }
   }
  }
 }

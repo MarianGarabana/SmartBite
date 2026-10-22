@@ -1,7 +1,8 @@
 // Recipe page prices and the Cart on the running dev server (3100) with the real engine (8100). No model runs.
 // 1. Typing a price key by key keeps every keystroke and the table never falls back to the stored meal meanwhile.
 // 2. The Cart uses the same engine evaluation as the recipe page: same packs, same estimates, same total.
-// 3. The steps note and the MyFitnessPal block at 1 serving of a meal written for 8.
+// 3. A region picked in Settings changes the estimates; Off removes them.
+// 4. The steps note and the MyFitnessPal block at 1 serving of a meal written for 8.
 import { expect, test } from "@playwright/test";
 
 const KOREAN = "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix";
@@ -72,6 +73,30 @@ test("the Cart shows the recipe page's packs, estimates and total", async ({ pag
   const cartRows = await read(cartBody.locator("tr"));
   expect(cartRows).toEqual(recipeRows);
   await expect(page.locator("#cart-total-bought")).toHaveText(recipeTotal);
+});
+
+test("a region picked in Settings prices the recipe with that region's averages", async ({ page }) => {
+  await openKorean(page);
+  await page.waitForLoadState("networkidle");
+  const national = await page.locator("#summary-bought-cost").innerText();
+  const est = table(page).locator("[title^='Estimated:']").first();
+  await expect(est).toHaveAttribute("title", /^Estimated: Spain average/);
+
+  await page.goto("/settings");
+  await page.locator("#price-region").selectOption("ES-CN");
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("smartbite.region")))).toBe("ES-CN");
+  await openKorean(page);
+  await expect(est).toHaveAttribute("title", /^Estimated: Canarias average/);
+  await page.waitForLoadState("networkidle");
+  await expect(page.locator("#summary-bought-cost")).not.toHaveText(national);
+
+  // Off: no estimates at all
+  await page.goto("/settings");
+  await page.locator("#price-region").selectOption("off");
+  await page.goto(`/recipes/${KOREAN}`);
+  await page.waitForLoadState("networkidle");
+  await expect(table(page)).toContainText("ground beef");
+  await expect(table(page).getByText("est.")).toHaveCount(0);
 });
 
 test("steps say which servings they are written for, and MyFitnessPal has no 0 g lines", async ({ page }) => {

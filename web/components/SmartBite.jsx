@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import { checkForm } from "../lib/form";
 import { makeMeal, progressText } from "../lib/flow";
 import { generateIdeas, reviseIdea } from "../lib/llm";
-import { estimateTitle, periodText, toMeal } from "../lib/meal";
+import { estimatePlace, estimateTitle, periodText, toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
-import { engineCountry, llmReady, readActiveProducts, readCountry, readLlm, readProfile, saveLocalMeal } from "../lib/store";
+import { engineEstimates, llmReady, readActiveProducts, readLlm, readProfile, saveLocalMeal } from "../lib/store";
 import { AddButton, AiLabel, Footer, Header, MealImage, Toast, eur, grams, useCart, useMeals, usePrices, useToast }
   from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
@@ -24,7 +24,7 @@ function CartPrice({ item, prices, onBlocked, priceClass }) {
     <span className="inline-flex items-center justify-end gap-2">
       <PriceInput row={item} prices={prices} onBlocked={onBlocked} onFocus={() => setEditing(true)} onBlur={() => setEditing(false)} />
       {item.hasPrice ? (
-        <span className={`min-w-[3.25rem] text-right whitespace-nowrap${item.estimate ? " font-normal text-forest/60" : ""}`} title={item.estimate ? estimateTitle(item.pricePeriod) : undefined}>
+        <span className={`min-w-[3.25rem] text-right whitespace-nowrap${item.estimate ? " font-normal text-forest/60" : ""}`} title={item.estimate ? estimateTitle(item.pricePeriod, item.priceRegion) : undefined}>
           {eur(item.price)}{item.estimate ? <> <span className="text-[10px]">est.</span></> : null}
         </span>
       ) : null}
@@ -60,6 +60,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
   const haveRows = cart.rows.filter((r) => r.have);
   // A row priced with an estimate that counts in the total, for the note under the list
   const estRow = cart.rows.find((r) => r.estimate && r.hasPrice && !r.have && (!r.optional || r.included));
+  const estRegion = cart.rows.find((r) => r.estimate && r.priceRegion)?.priceRegion;
   // "Adjust leftovers to meals": suggestions from code, previewed before anything changes
   const [adjust, setAdjust] = useState(null);
   const openAdjust = () => {
@@ -369,7 +370,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                 {/* Estimated prices count in the total, as on the recipe page */}
                 {estRow && (
                   <p id="cart-estimates" className="text-xs text-forest/70">
-                    Prices marked est. are estimates (Spain average price paid, MAPA, {periodText(estRow.pricePeriod) || "latest 12 months"}). Type your store&apos;s price to replace one.
+                    Prices marked est. are estimates ({estimatePlace(estRegion)} average price paid, MAPA, {periodText(estRow.pricePeriod) || "latest 12 months"}). Type your store&apos;s price to replace one.
                   </p>
                 )}
                 {/* Already at home: out of the total and leftovers; Restore buys it again */}
@@ -650,7 +651,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
     let out;
     try {
       out = await makeMeal({ idea, form: base.form, profile: readProfile(), llm: readLlm(), recipe: given,
-        products: readActiveProducts(), country: engineCountry(readCountry()), onProgress: setProgress });
+        products: readActiveProducts(), ...engineEstimates(), onProgress: setProgress });
     } catch (e) {
       setProgress(null);
       const recipe = e.recipe || given;

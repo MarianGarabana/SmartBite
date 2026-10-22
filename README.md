@@ -37,7 +37,7 @@ flowchart LR
 
 - You bring your own API key. The browser calls the model provider directly, and the key never reaches the SmartBite server.
 - The model writes 4 meal ideas, then the full recipe for the one you pick. The recipe prompt tells it to write foods and grams per serving only, and never kcal or protein.
-- The engine (`smartbite_engine`, served by FastAPI at `/api/evaluate`) maps each food to open nutrition values and typical pack sizes. It rounds up to whole packs and returns leftovers, macros per serving and, for Spain, an estimated price per pack.
+- The engine (`smartbite_engine`, served by FastAPI at `/api/evaluate`) maps each food to open nutrition values and typical pack sizes. It rounds up to whole packs and returns leftovers, macros per serving and, for Spain, an estimated price per pack (national, or for the user's comunidad autónoma).
 - When the macros miss their range (kcal within 10% of target, protein 90% to 120% of target) or a fresh food leaves more than 25% of what was bought unused, the browser sends the engine's numbers back to the model for a corrected recipe. That is at most 2 reruns. The rerun prompt gives the model a limit for each bought food of 15% over the first recipe; the reply is not checked against it in code.
 - "Adjust leftovers to meals" runs in the browser, also as code with no model. It first tries 1 to 8 servings of the main protein with grams that fill whole packs (cutting more than 15% only while protein stays at or above the target), then moves grams by up to 15% while protein stays at or above 90% of the target, then tries 1 to 8 servings for what is left.
 
@@ -91,7 +91,7 @@ The one remaining miss is a turkey and sweet potato meal at 502 kcal against a 4
 | Typical pack sizes | Open Food Facts, products sold in Spain (export of 2026-10-18) | ODbL 1.0, with its own `LICENSE` in the folder | `data/open/packs/` |
 | Estimated prices, Spain | MAPA, Panel de consumo alimentario en hogares, Aug 2025 to Jul 2026 | Reuse under Ley 37/2007 with attribution (not a named open licence) | `data/open/prices/` |
 
-The nutrition table has 138 foods (125 from Ciqual, 13 from USDA). Pack sizes cover 139 foods (102 from Open Food Facts, 20 from USDA portion weights, 17 set by hand with a reason in data/build/packs-overrides.json). Estimated prices exist for 76 of them, the ones with an exact or close match in the MAPA panel. Each folder has a `SOURCES.md` with download dates, fields used and how the files were built.
+The nutrition table has 138 foods (125 from Ciqual, 13 from USDA). Pack sizes cover 139 foods (102 from Open Food Facts, 20 from USDA portion weights, 17 set by hand with a reason in data/build/packs-overrides.json). Estimated prices exist for 76 of them, the ones with an exact or close match in the MAPA panel. Each of the 17 comunidades autónomas has its own price for 63 to 76 of those foods (only foods with data in every month the national price has); the rest use the national price. Each folder has a `SOURCES.md` with download dates, fields used and how the files were built.
 
 BEDCA, the Spanish food composition database, is not used: its terms do not allow non-personal electronic use without written permission from AESAN.
 
@@ -134,7 +134,7 @@ One Vercel project with two services: the FastAPI engine and the Next.js web app
 
 ## Limitations
 
-- Estimated prices are national averages over all brands, shops and promotions, not prices from any one store.
+- Estimated prices are national or regional averages over all brands, shops and promotions, not prices from any one store. Regional samples are smaller, so a regional price can be further off for a single food.
 - Canned and jarred foods may get low price estimates. SmartBite pack sizes use drained weight, while the MAPA panel probably counts net weight.
 - Nutrition comes from generic food tables, not from the label of the product you buy.
 - The UI is in English only for now.

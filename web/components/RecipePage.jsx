@@ -13,7 +13,7 @@ import { mfpBlock } from "../lib/mfp";
 import { packRow, totals } from "../lib/packs";
 import { MAX_PHOTO_BYTES, deletePhoto, putPhoto, usePhoto } from "../lib/photos";
 import { COUNTRIES, MAX_PRICE_EUR, deleteLocalMeal, setLinePrice, setSaved } from "../lib/store";
-import { AiLabel, Footer, Header, MealImage, Toast, eur, grams, useCart, useCountry, useEvaluations, useMeals, usePrices,
+import { AiLabel, Footer, Header, MealImage, Toast, eur, grams, useCart, useEstimates, useEvaluations, useMeals, usePrices,
   useProducts, useToast } from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
 
@@ -44,7 +44,7 @@ export function PriceInput({ row, prices, onBlocked, onFocus, onBlur }) {
   };
   return (
     <input type="text" inputMode="decimal" value={draft} onChange={(e) => change(e.target.value)} onFocus={onFocus} onBlur={onBlur}
-      placeholder={row.estimate ? row.packPrice.toFixed(2) : "€ / pack"} title={row.estimate ? estimateTitle(row.pricePeriod) : undefined}
+      placeholder={row.estimate ? row.packPrice.toFixed(2) : "€ / pack"} title={row.estimate ? estimateTitle(row.pricePeriod, row.priceRegion) : undefined}
       aria-label={`Price in euros for one pack of ${row.product || row.ingredient}${row.estimate ? ` (estimated ${eur(row.packPrice)})` : ""}`}
       className="w-20 bg-cream/50 border border-cream-dark rounded-xl px-2 py-1 text-xs text-forest text-right font-normal placeholder-forest/40 focus:outline-none focus:border-forest" />
   );
@@ -62,8 +62,8 @@ function parse(text) {
 // The meal run again by the engine with the user's products and country (estimates), for the servings shown, always:
 // the saved meal's packs are picked for its own servings. The same evaluation as the Cart (Chrome.jsx
 // useEvaluations); while a new reply loads, the last one stays.
-function usePricedEvaluation(meal, servings, products, country) {
-  const replies = useEvaluations(meal.source ? [{ id: "recipe", meal, servings }] : [], products, country);
+function usePricedEvaluation(meal, servings, products, estimates) {
+  const replies = useEvaluations(meal.source ? [{ id: "recipe", meal, servings }] : [], products, estimates);
   return replies.recipe || null;
 }
 
@@ -106,8 +106,8 @@ function RecipeView({ meal, meals, router }) {
   // meal's packs); the user's prices are applied in the browser at once.
   const prices = usePrices();
   const products = useProducts();
-  const country = useCountry();
-  const priced = usePricedEvaluation(meal, servings, products, country);
+  const estimates = useEstimates();
+  const priced = usePricedEvaluation(meal, servings, products, estimates);
   const shown = priced?.doc ? { meal: toMeal(meal.slug, priced.doc), servings: priced.servings } : { meal, servings: meal.servings };
   const rows = withPrices(shown.meal, prices).lines.map((l) => packRow(l, (l.needed * servings) / shown.servings));
   const t = totals(rows);
@@ -161,7 +161,9 @@ function RecipeView({ meal, meals, router }) {
   const noPrices = t.priced === 0;
   // Estimates in the budget: where they come from, for the note under the table
   const est = lastPack?.prices_estimated ? lastPack.estimate_source : null;
-  const estLabel = est ? `${COUNTRIES.find((c) => c.id === est.country)?.label || est.country} average price paid, MAPA, ${periodText(est.period_from, est.period_to)}` : null;
+  const estPlace = est?.region_name ? `${est.region_name} average price paid (${COUNTRIES.find((c) => c.id === est.country)?.label || est.country}'s where the region has none)`
+    : est ? `${COUNTRIES.find((c) => c.id === est.country)?.label || est.country} average price paid` : null;
+  const estLabel = est ? `${estPlace}, MAPA, ${periodText(est.period_from, est.period_to)}` : null;
 
   return (
     <div className="desktop-frame flex flex-col justify-between">
@@ -355,7 +357,7 @@ function RecipeView({ meal, meals, router }) {
                             <span className="inline-flex items-center justify-end gap-2">
                               <PriceInput row={r} prices={prices} onBlocked={() => showToast("Not saved: this browser blocks storage.")} />
                               {r.hasPrice && r.estimate ? (
-                                <span className="min-w-[3.25rem] text-right font-normal text-forest/60" title={estimateTitle(r.pricePeriod)}>
+                                <span className="min-w-[3.25rem] text-right font-normal text-forest/60" title={estimateTitle(r.pricePeriod, r.priceRegion)}>
                                   {eur(r.price)} <span className="text-[10px]">est.</span>
                                 </span>
                               ) : r.hasPrice ? <span className="min-w-[3.25rem] text-right">{eur(r.price)}</span> : null}
@@ -384,7 +386,7 @@ function RecipeView({ meal, meals, router }) {
                 <p id="recipe-optional" className="text-xs text-forest/70">
                   <span className="font-bold text-forest">Optional, you may already have these:</span>{" "}
                   {optionalRows.map((r, i) => (
-                    <span key={r.key} title={r.estimate ? estimateTitle(r.pricePeriod) : undefined}>
+                    <span key={r.key} title={r.estimate ? estimateTitle(r.pricePeriod, r.priceRegion) : undefined}>
                       {i ? " · " : ""}{r.ingredient}{r.hasPrice ? ` ${eur(r.price)}${r.estimate ? " est." : ""}` : ""}
                     </span>
                   ))}

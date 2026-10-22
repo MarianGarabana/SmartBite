@@ -22,6 +22,10 @@
         "country": {
           "description": "Optional country for estimated prices. \"ES\": every line without a product price gets an estimated pack price from Spain's average prices (MAPA household panel, data/open/prices/es.json), with price_source \"estimate\"; a product's price always wins. Omitted: no estimates and the reply is the same as before estimates existed.",
           "enum": ["ES"]
+        },
+        "region": {
+          "description": "Optional region inside the country, ISO 3166-2 (Spain: comunidad autonoma, e.g. \"ES-MD\"), only with a country (422 otherwise). Foods with a regional average price (MAPA region columns, data/open/prices/es.json regions) use it and their lines carry price_region; the other foods keep the national estimate. Omitted: national estimates only.",
+          "enum": ["ES-AN", "ES-AR", "ES-AS", "ES-CB", "ES-CL", "ES-CM", "ES-CN", "ES-CT", "ES-EX", "ES-GA", "ES-IB", "ES-MC", "ES-MD", "ES-NC", "ES-PV", "ES-RI", "ES-VC"]
         }
       },
       "additionalProperties": false

@@ -43,6 +43,16 @@ CONS.PESCADO/MOLUSCO instead of CONS.ATUN under T.PESCADO/MARISCO CONSERVADO). T
 rows; their monthly prices were checked against the new rows and match within a few percent. Kefir has no row
 in those sheets and is empty in August 2025, so its price uses 7 months (January to July 2026).
 
+### Regions
+
+The same files have one column group per comunidad autónoma (17; Ceuta and Melilla have no column). `es.json`
+`regions` holds a price per food for each one, keyed by ISO 3166-2 code (for example `ES-MD`), made the same way
+from that region's value and volume columns. A regional price is kept only when the region has data in as many
+months as the national price for that food: regional samples are small, and the prices from months with gaps were
+the furthest off (for example 0.58x and 1.78x the national price). With that rule each region has a price for 63
+(La Rioja) to 76 of the 76 foods, between 0.72x and 1.66x the national price. A food with no regional price uses
+the national one, and the line says which one priced it.
+
 In the app, a pack's estimated price = price per kg x pack weight (eggs: price per egg x eggs per pack), rounded
 to 0.05 EUR. A price the user types always wins.
 
@@ -50,7 +60,7 @@ to 0.05 EUR. A price the user types always wins.
 
 - Averages over all brands, pack sizes, shops, discounters and promotions. A cart of own-brand products can cost
   well under the estimate; premium products cost more.
-- National average, not a price from any one shop or region.
+- National or regional average, not a price from any one shop. Regional prices rest on smaller samples.
 - Prices paid by households for home use, not shelf prices.
 - Canned and jarred foods: SmartBite pack sizes are drained weight; the panel volume is probably net weight (not
   checked in the methodology). Estimates for these foods can be low.

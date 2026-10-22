@@ -1,7 +1,8 @@
 """Estimated pack prices per country (data/open/prices/<country>.json). Pure code, no store.
 
 Spain (ES): average price paid by households, MAPA Panel de consumo alimentario en hogares, volume-weighted over
-12 months (data/open/prices/SOURCES.md). Only foods with an exact or close panel row have one. A pack's estimate is
+12 months (data/open/prices/SOURCES.md). Only foods with an exact or close panel row have one. With a region
+(comunidad autonoma, e.g. "ES-MD"), foods with a regional price use it and the rest the national one. A pack's estimate is
 price per kg x pack weight (eggs: price per egg x eggs), rounded to 0.05 EUR; a price the user types always wins.
 """
 import json
@@ -20,6 +21,19 @@ def load_estimates(country):
         raise ValueError(f"no estimated prices for country {country!r}; known: {', '.join(COUNTRIES)}")
     with open(PRICES_DIR / f"{country.lower()}.json", encoding="utf-8") as f:
         return json.load(f)
+
+
+def for_region(table, region):
+    """The price table with a region's prices in place of the national ones for the foods it has (those records get
+    "region"), plus region and region_name. No region: the table as it is. ValueError for a region it does not have."""
+    if region is None:
+        return table
+    found = table.get("regions", {}).get(region)
+    if found is None:
+        raise ValueError(f"no estimated prices for region {region!r} in {table['country']}")
+    regional = found["foods"]
+    foods = {f: ({**rec, **regional[f], "region": region} if f in regional else rec) for f, rec in table["foods"].items()}
+    return {**table, "foods": foods, "region": region, "region_name": found["name"]}
 
 
 def round_price(eur):

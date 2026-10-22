@@ -181,29 +181,62 @@ const estimatedDoc = (doc) => ({ ...doc, evaluation: { ...doc.evaluation, pack: 
     ? { ...l, has_price: true, cost_bought_eur: 2.5, cost_used_eur: 0.5, price_source: "estimate", price_date: "2026-07",
       price_period: "2025-08/2026-07" } : l)) } } });
 
-test("country is Spain by default, can be none, and bad values fall back", () => {
+test("country is Spain by default, any country can be picked, and bad values fall back", () => {
   const data = fakeWindow();
   assert.equal(store.readCountry(), "ES");
-  assert.equal(store.engineCountry(store.readCountry()), "ES");
-  assert.equal(store.writeCountry("none"), true);
-  assert.equal(store.readCountry(), "none");
-  assert.equal(store.engineCountry("none"), null);
-  data[store.KEYS.country] = JSON.stringify("FR");
+  assert.deepEqual(store.engineEstimates(), { country: "ES", region: null });
+  assert.equal(store.writeCountry("FR"), true);
+  assert.equal(store.readCountry(), "FR");
+  assert.deepEqual(store.engineEstimates(), { country: null, region: null }); // no estimates for France
+  data[store.KEYS.country] = JSON.stringify("XX");
   assert.equal(store.readCountry(), "ES");
   store.writeCountry("XX");
   assert.equal(JSON.parse(data[store.KEYS.country]), "ES");
+  assert.equal(store.COUNTRIES.length, 249);
+  assert.equal(store.COUNTRIES.find((c) => c.id === "ES").label, "Spain");
   delete globalThis.window;
   assert.equal(store.readCountry(), "ES");
 });
 
-test("evaluateMeal sends country only when given", async () => {
+test("region: national by default, a Spanish region or off; the old country none reads as off", () => {
+  const data = fakeWindow();
+  assert.equal(store.readRegion(), "national");
+  assert.equal(store.writeRegion("ES-MD"), true);
+  assert.equal(store.readRegion(), "ES-MD");
+  assert.deepEqual(store.engineEstimates(), { country: "ES", region: "ES-MD" });
+  store.writeRegion("off");
+  assert.deepEqual(store.engineEstimates(), { country: null, region: null });
+  store.writeRegion("ES-XX");
+  assert.equal(JSON.parse(data[store.KEYS.region]), "national");
+  // A region of another country, or for a country with no regions, reads as national
+  data[store.KEYS.region] = JSON.stringify("ES-MD");
+  assert.equal(store.readRegion("FR"), "national");
+  // Before 2026-10-22 "none" was a country: Spain with estimates off
+  delete data[store.KEYS.region];
+  data[store.KEYS.country] = JSON.stringify("none");
+  assert.equal(store.readCountry(), "ES");
+  assert.equal(store.readRegion(), "off");
+  assert.deepEqual(store.engineEstimates(), { country: null, region: null });
+  assert.equal(store.regionLabel("ES-MD"), "Comunidad de Madrid");
+});
+
+test("the browser's regions are the engine's regions", () => {
+  const es = JSON.parse(fs.readFileSync(path.resolve(DEMO, "..", "..", "..", "data", "open", "prices", "es.json"), "utf8"));
+  assert.deepEqual(Object.fromEntries(store.REGIONS.ES.map((r) => [r.id, r.label])),
+    Object.fromEntries(Object.entries(es.regions).map(([id, r]) => [id, r.name])));
+});
+
+test("evaluateMeal sends country and region only when given", async () => {
   const doc = JSON.parse(fs.readFileSync(path.join(DEMO, `${TUNA}.json`), "utf8"));
   const input = { form: doc.form, picked_idea: doc.picked_idea, recipe: doc.recipe };
   const calls = mockFetch({ json: doc });
   await evaluateMeal({ ...input, country: "ES" });
-  await evaluateMeal({ ...input, country: null });
+  await evaluateMeal({ ...input, country: null, region: "ES-MD" });
+  await evaluateMeal({ ...input, country: "ES", region: "ES-MD" });
   assert.equal(calls[0].body.country, "ES");
+  assert.equal("region" in calls[0].body, false);
   assert.deepEqual(Object.keys(calls[1].body), ["form", "picked_idea", "recipe"]);
+  assert.equal(calls[2].body.region, "ES-MD");
 });
 
 test("estimated lines are marked and a typed price replaces the estimate", () => {
@@ -214,6 +247,7 @@ test("estimated lines are marked and a typed price replaces the estimate", () =>
   assert.equal(lemon.estimate, true);
   assert.equal(lemon.packPrice, 2.5);
   assert.equal(lemon.pricePeriod, "2025-08/2026-07");
+  assert.equal(lemon.priceRegion, null);
   assert.equal(meal.lines.filter((l) => l.estimate).length, 1);
   const typed = withPrices(meal, { [lemon.priceKey]: 3.1 }).lines.find((l) => l.food === "lemon");
   assert.equal(typed.estimate, false);
@@ -227,4 +261,6 @@ test("estimate tooltip names the source and the period", () => {
   assert.equal(periodText("2025-08", "2026-07"), "Aug 2025 to Jul 2026");
   assert.equal(periodText("bad"), null);
   assert.equal(estimateTitle("2025-08/2026-07"), "Estimated: Spain average price paid, MAPA, Aug 2025 to Jul 2026");
+  assert.equal(estimateTitle("2025-08/2026-07", "ES-MD"),
+    "Estimated: Comunidad de Madrid average price paid, MAPA, Aug 2025 to Jul 2026");
 });
