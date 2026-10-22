@@ -2,9 +2,11 @@
 // The product cell of a shopping row (recipe page and Cart) and the "Edit product" dialog (decided 2026-10-21).
 // A product is what the user buys for one food at their store: name, pack size, price and, if they want, the label
 // per 100 g. It is kept in this browser (lib/store.js) and replaces the typical pack and the nutrition table for
-// that food. Styles from the idea preview dialog and the Settings fields (design freeze).
+// that food. A barcode can fill name, pack size and label from Open Food Facts (lib/off.js); the user then ticks that
+// the pack size is right before saving. Styles from the idea preview dialog and the Settings fields (design freeze).
 import { useState } from "react";
 import { EGG_GRAMS } from "../lib/cartmath";
+import { LookupError, lookupBarcode } from "../lib/off";
 import { NO_STORE, deleteProduct, okProduct, readProducts, readStore, regionLabel, saveProduct, storeLabel } from "../lib/store";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
@@ -90,7 +92,36 @@ export function ProductDialog({ row, onClose, showToast }) {
     name: p.name, sold_by: p.sold_by, size: str(eggs ? p.units_per_pack : p.pack_grams), price: str(p.price_eur),
     barcode: str(p.barcode), ...Object.fromEntries(LABEL_FIELDS.map(([k]) => [k, str(p.per_100g?.[k])])),
   });
-  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  // Label filled by Open Food Facts and not edited since; pack size filled by it and not yet checked by the user
+  const [fromOff, setFromOff] = useState(p.label_source === "open_food_facts");
+  const [packCheck, setPackCheck] = useState(null); // null: nothing to check; false: to tick; true: ticked
+  const [lookup, setLookup] = useState(null); // { loading } | { found, text, url, note } | { error }
+  const set = (k) => (e) => {
+    setForm((f) => ({ ...f, [k]: e.target.value }));
+    if (LABEL_FIELDS.some(([f]) => f === k)) setFromOff(false);
+    if (k === "size" && packCheck === false) setPackCheck(true); // typing the size is checking it
+  };
+  const findBarcode = async () => {
+    setLookup({ loading: true });
+    let got;
+    try {
+      got = await lookupBarcode(form.barcode);
+    } catch (e) {
+      return setLookup({ error: e instanceof LookupError ? e.message : "The lookup failed. Fill the fields by hand." });
+    }
+    if (!got) return setLookup({ error: "This barcode is not on Open Food Facts. Fill the fields by hand." });
+    const size = eggs ? got.eggs : got.packGrams;
+    const hasLabelData = REQUIRED.every((k) => got.per_100g[k] != null);
+    setForm((f) => ({ ...f, name: got.name || f.name, size: size != null ? str(size) : f.size,
+      ...(hasLabelData ? Object.fromEntries(LABEL_FIELDS.map(([k]) => [k, str(got.per_100g[k])])) : {}) }));
+    setFromOff(hasLabelData);
+    setPackCheck(false);
+    const note = size == null ? (eggs ? "It does not say how many eggs: add the eggs per box." : "It has no pack size: add it in grams.")
+      : got.packFromMl ? `The pack is ${got.packGrams} ml: change it to grams if your food is heavier or lighter than water.`
+      : null;
+    setLookup({ found: true, url: `https://world.openfoodfacts.org/product/${form.barcode.trim()}`, note,
+      text: `Found${got.name ? ` "${got.name}"` : ""}${got.quantity ? `, ${got.quantity}` : ""}.${hasLabelData ? "" : " No full label there: fill it from your pack."}` });
+  };
   const label100 = Object.fromEntries(LABEL_FIELDS.map(([k]) => [k, num(form[k])]));
   const hasLabel = REQUIRED.some((k) => label100[k] != null);
   const warnings = hasLabel ? labelWarnings(label100) : [];
@@ -100,6 +131,7 @@ export function ProductDialog({ row, onClose, showToast }) {
     const price = num(form.price);
     if (!form.name.trim()) return showToast("Add the product name first.");
     if (!(size > 0)) return showToast(eggs ? "Add how many eggs come in one box." : "Add the pack size in grams.");
+    if (packCheck === false) return showToast(eggs ? "Check the eggs per box against your pack, then tick the box." : "Check the pack size against your pack, then tick the box.");
     if (Number.isNaN(price)) return showToast("The price is not a number.");
     if (form.barcode.trim() && !/^\d{8,14}$/.test(form.barcode.trim())) return showToast("A barcode has 8 to 14 digits.");
     if (hasLabel && !REQUIRED.every((k) => label100[k] != null && !Number.isNaN(label100[k]))) {
@@ -110,7 +142,8 @@ export function ProductDialog({ row, onClose, showToast }) {
       ...(eggs ? { units_per_pack: size } : { pack_grams: size }),
       ...(price != null ? { price_eur: price, price_date: price === p.price_eur && p.price_date ? p.price_date
         : new Date().toISOString().slice(0, 10) } : {}),
-      ...(form.barcode.trim() ? { barcode: form.barcode.trim() } : {}), ...(per100 ? { per_100g: per100 } : {}) };
+      ...(form.barcode.trim() ? { barcode: form.barcode.trim() } : {}), ...(per100 ? { per_100g: per100 } : {}),
+      ...(per100 && fromOff ? { label_source: "open_food_facts" } : {}) };
     if (!okProduct(product)) return showToast("Some numbers are out of range. Check the pack size, price and label.");
     if (!saveProduct(store, product)) return showToast("Not saved: this browser blocks storage.");
     showToast(`Product saved for ${store === NO_STORE ? "every store" : storeLabel(store)}.`);
@@ -164,8 +197,29 @@ export function ProductDialog({ row, onClose, showToast }) {
             <div>
               <label htmlFor="product-barcode" className={label}>Barcode</label>
               <input id="product-barcode" inputMode="numeric" value={form.barcode} onChange={set("barcode")} placeholder="optional" maxLength={14} className={input} />
+              <button type="button" onClick={findBarcode} disabled={!/^\d{8,14}$/.test(form.barcode.trim()) || lookup?.loading}
+                className="text-[11px] font-bold text-forest/70 hover:text-lime-hover disabled:text-forest/30 mt-1">
+                <i className="fa-solid fa-barcode mr-1"></i>{lookup?.loading ? "Looking up..." : "Look up on Open Food Facts"}
+              </button>
             </div>
           </div>
+          {lookup && !lookup.loading && (
+            <div role="status" className={`text-xs rounded-xl p-3 space-y-1 ${lookup.error ? "bg-amber-100 text-amber-900" : "bg-cream text-forest"}`}>
+              {lookup.error ? <span className="block">{lookup.error}</span> : (
+                <>
+                  <span className="block font-bold">{lookup.text}</span>
+                  {lookup.note && <span className="block">{lookup.note}</span>}
+                  <span className="block">Check the pack size and the label against your pack. Data from <a href={lookup.url} target="_blank" rel="noopener noreferrer" className="underline">Open Food Facts</a>, ODbL.</span>
+                </>
+              )}
+            </div>
+          )}
+          {packCheck !== null && (
+            <label className="flex items-center gap-2 text-xs font-bold text-forest">
+              <input id="product-pack-check" type="checkbox" checked={packCheck} onChange={(e) => setPackCheck(e.target.checked)} className="accent-lime w-4 h-4" />
+              {eggs ? "The eggs per box match my pack" : "The pack size matches my pack"}
+            </label>
+          )}
           <div>
             <span className={label}>Label, per 100 g</span>
             <div className="grid grid-cols-3 gap-3">
@@ -176,7 +230,8 @@ export function ProductDialog({ row, onClose, showToast }) {
                 </div>
               ))}
             </div>
-            <span className={small}>Optional. Fill kcal, protein, carbs and fat to use your label instead of the nutrition table; fiber and salt can stay empty.</span>
+            <span className={small}>{fromOff && hasLabel ? "From Open Food Facts. Edit any number to make it your own label."
+              : "Optional. Fill kcal, protein, carbs and fat to use your label instead of the nutrition table; fiber and salt can stay empty."}</span>
             {warnings.length > 0 && (
               <div role="status" className="mt-3 bg-amber-100 text-amber-900 text-xs rounded-xl p-3 space-y-1">
                 <span className="block font-bold">Check the label</span>

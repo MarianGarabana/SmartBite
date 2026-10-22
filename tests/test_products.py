@@ -112,6 +112,19 @@ def test_label_replaces_the_nutrition_table_for_that_food_only():
     assert macro(data, "canned chickpeas") == macro(plain, "canned chickpeas")  # product with no label: table
 
 
+def test_label_from_open_food_facts_is_named_as_the_macro_source():
+    label = {"kcal": 60, "protein_g": 11, "carbs_g": 3.5, "fat_g": 0.2}
+    skyr = {"food": "skyr", "name": "Skyr natural 500 g", "sold_by": "pack", "pack_grams": 500,
+            "barcode": "12345670", "per_100g": label, "label_source": "open_food_facts"}
+    got = macro(post(TUNA, products=[skyr]), "skyr")
+    assert (got["source"], got["source_id"]) == ("open_food_facts", "12345670")
+    assert got["amount"]["protein_g"] == 33
+    typed = macro(post(TUNA, products=[{**skyr, "label_source": "user"}]), "skyr")
+    assert typed["source"] == "label"
+    r = client.post("/api/evaluate", json={**demo(TUNA), "products": [{**skyr, "label_source": "store"}]})
+    assert r.status_code == 422
+
+
 def test_egg_product_counts_units_per_box():
     eggs = {"food": "eggs", "name": "Huevos camperos M 6 uds", "sold_by": "per_unit", "units_per_pack": 6,
             "price_eur": 2.0}

@@ -160,6 +160,7 @@ export function okProduct(p) {
     const label = okLabel(p.per_100g);
     if (!label) return null;
     out.per_100g = label;
+    if (p.label_source === "open_food_facts") out.label_source = p.label_source; // else typed by the user
   }
   return out;
 }

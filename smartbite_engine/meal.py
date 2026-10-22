@@ -344,9 +344,11 @@ def _unpriced_leftover_requests(lines):
 
 
 def _label_macros(food, grams, product):
-    """Macros from the label on the user's saved product (source "label"): it wins over the nutrition table."""
+    """Macros from the label on the user's saved product (source "label", or "open_food_facts" when a barcode lookup
+    filled it): it wins over the nutrition table."""
     label = Nutrition(**{f: product["per_100g"][f] for f in MACRO_FIELDS})
-    return IngredientMacros(food, grams, label, scale(label, grams), "label", product.get("barcode"), ())
+    source = "open_food_facts" if product.get("label_source") == "open_food_facts" else "label"
+    return IngredientMacros(food, grams, label, scale(label, grams), source, product.get("barcode"), ())
 
 
 def _macro_lines(items, table, products=None):

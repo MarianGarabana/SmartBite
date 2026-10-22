@@ -43,7 +43,8 @@
         "price_eur": { "type": "number", "minimum": 0, "maximum": 1000, "description": "Price of one pack (loose items: of one unit of pack_grams). Omitted: the line has no user price." },
         "price_date": { "type": "string", "maxLength": 10, "description": "YYYY-MM-DD, the day the user saw the price." },
         "barcode": { "type": "string", "maxLength": 14, "description": "EAN or UPC, 8 to 14 digits." },
-        "per_100g": { "$ref": "#/$defs/Label" }
+        "per_100g": { "$ref": "#/$defs/Label" },
+        "label_source": { "enum": ["user", "open_food_facts"], "description": "Where per_100g comes from: typed by the user, or filled by a barcode lookup on Open Food Facts (ODbL) and not edited since. The macro line source follows it (label or open_food_facts). Omitted: user." }
       },
       "additionalProperties": false
     },

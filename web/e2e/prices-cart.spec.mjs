@@ -2,7 +2,8 @@
 // 1. Typing a price key by key keeps every keystroke and the table never falls back to the stored meal meanwhile.
 // 2. The Cart uses the same engine evaluation as the recipe page: same packs, same estimates, same total.
 // 3. A region picked in Settings changes the estimates; Off removes them.
-// 4. The steps note and the MyFitnessPal block at 1 serving of a meal written for 8.
+// 4. A barcode lookup (Open Food Facts mocked) fills the Edit product dialog; the pack size must be ticked.
+// 5. The steps note and the MyFitnessPal block at 1 serving of a meal written for 8.
 import { expect, test } from "@playwright/test";
 
 const KOREAN = "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix";
@@ -97,6 +98,41 @@ test("a region picked in Settings prices the recipe with that region's averages"
   await page.waitForLoadState("networkidle");
   await expect(table(page)).toContainText("ground beef");
   await expect(table(page).getByText("est.")).toHaveCount(0);
+});
+
+test("a barcode looked up on Open Food Facts fills the product; the pack size must be ticked", async ({ page }) => {
+  // Open Food Facts is mocked: no request leaves the machine
+  const asked = [];
+  await page.route("https://world.openfoodfacts.org/api/v2/product/**", (route) => {
+    asked.push({ url: route.request().url(), agent: route.request().headers()["x-user-agent"] });
+    return route.fulfill({ status: 200, contentType: "application/json", headers: { "access-control-allow-origin": "*" },
+      body: JSON.stringify({ status: 1, product: { product_name: "Lentejas pardinas", brands: "Marca Uno", quantity: "500 g",
+        product_quantity: 500, product_quantity_unit: "g",
+        nutriments: { "energy-kcal_100g": 314, proteins_100g: 24, carbohydrates_100g: 45, fat_100g: 1.5, fiber_100g: 13 } } }) });
+  });
+  await openKorean(page);
+  await page.getByRole("button", { name: "Edit product for dried lentils" }).click();
+  const dialog = page.getByRole("dialog");
+  await dialog.locator("#product-barcode").fill("12345670");
+  await dialog.getByRole("button", { name: "Look up on Open Food Facts" }).click();
+  await expect(dialog.getByText('Found "Lentejas pardinas, Marca Uno", 500 g.')).toBeVisible();
+  expect(asked).toEqual([{ url: expect.stringMatching(/\/product\/12345670\.json\?fields=/), agent: "SmartBite" }]);
+  await expect(dialog.locator("#product-name")).toHaveValue("Lentejas pardinas, Marca Uno");
+  await expect(dialog.locator("#product-size")).toHaveValue("500");
+  await expect(dialog.locator("#product-protein_g")).toHaveValue("24");
+
+  await dialog.getByRole("button", { name: "Save product" }).click();
+  await expect(page.getByText("Check the pack size against your pack, then tick the box.")).toBeVisible();
+  await dialog.locator("#product-pack-check").check();
+  await dialog.getByRole("button", { name: "Save product" }).click();
+  await expect(dialog).toHaveCount(0);
+  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("smartbite.products"))["none|dried lentils"]);
+  expect(saved).toMatchObject({ pack_grams: 500, barcode: "12345670", label_source: "open_food_facts",
+    per_100g: { kcal: 314, protein_g: 24, carbs_g: 45, fat_g: 1.5, fiber_g: 13 } });
+  const lentils = row(page, "dried lentils");
+  await expect(lentils).toContainText("Your product");
+  await expect(lentils).toContainText("Macros: Open Food Facts");
+  await expect(lentils.locator("td").nth(2)).toHaveText("500g");
 });
 
 test("steps say which servings they are written for, and MyFitnessPal has no 0 g lines", async ({ page }) => {

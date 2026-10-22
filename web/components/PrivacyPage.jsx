@@ -14,6 +14,8 @@ const POINTS = [
     "When you make a meal, your craving, form and Kitchen Profile are sent from your browser to the provider you chose (Anthropic by default) to write the ideas and the recipe. That provider's own terms apply to that request."],
   ["fa-gears", "What goes to the SmartBite engine",
     "The form, your Kitchen Profile, the picked idea and the recipe go to the SmartBite engine to compute packs, macros and leftovers. It sends the result back and keeps nothing. Your key is never sent there."],
+  ["fa-barcode", "Barcode lookups",
+    "When you press Look up in Edit product, your browser asks Open Food Facts for that one barcode. Only the barcode is sent, with your IP address and browser details like any web request. Nothing about you, your profile or your meals goes there. Open Food Facts data is under the ODbL licence."],
   ["fa-calculator", "Math in code",
     "Ideas and recipes are AI-generated. Packs, macros and leftovers are computed in code, not by the model."],
 ];
