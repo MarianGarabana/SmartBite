@@ -18,7 +18,7 @@
  },
  "picked_idea": {
   "idea_id": "1",
-  "name": "Tuna Artichoke Whole Wheat Pasta Salad",
+  "name": "Tuna artichoke whole wheat pasta salad",
   "one_line": "Your tuna artichoke salad with whole wheat pasta, fresh spinach, cherry tomato, feta and fresh parsley. No dressing.",
   "main_ingredients": [
    "canned tuna in water",
@@ -40,7 +40,7 @@
  },
  "recipe": {
   "idea_id": "1",
-  "title": "Tuna Artichoke Whole Wheat Pasta Salad",
+  "title": "Tuna artichoke whole wheat pasta salad",
   "servings": 7,
   "prep_time_min": 25,
   "ingredients": [
@@ -132,7 +132,7 @@
  },
  "evaluation": {
   "status": "issues",
-  "recipe_title": "Tuna Artichoke Whole Wheat Pasta Salad",
+  "recipe_title": "Tuna artichoke whole wheat pasta salad",
   "items": [
    {
     "name": "canned tuna in water",
@@ -617,7 +617,7 @@
    }
   ]
  },
- "mfp": "SmartBite: Tuna Artichoke Whole Wheat Pasta Salad\nServings: 7\n\ncanned tuna in water, 644 g\nartichoke hearts, 560 g\nwholemeal pasta, 245 g (dry)\ncherry tomatoes, 350 g (raw)\nspinach, 294 g (raw)\nfeta, 392 g\nfresh parsley, 105 g\nsalt, 7 g\nblack pepper, 4 g (raw)",
+ "mfp": "SmartBite: Tuna artichoke whole wheat pasta salad\nServings: 7\n\ncanned tuna in water, 644 g\nartichoke hearts, 560 g\nwholemeal pasta, 245 g (dry)\ncherry tomatoes, 350 g (raw)\nspinach, 294 g (raw)\nfeta, 392 g\nfresh parsley, 105 g\nsalt, 7 g\nblack pepper, 4 g (raw)",
  "slug": "tuna-artichoke-whole-wheat-pasta-salad",
  "demo": true,
  "photo": "/demo/images/tuna-artichoke-whole-wheat-pasta-salad.jpg",

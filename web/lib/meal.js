@@ -83,7 +83,9 @@ export function toMeal(slug, doc, { kind = "demo", saved = false } = {}) {
   const servings = doc.form.servings;
   const all = doc.recipe.ingredients;
   const pantry = all.filter((it) => it.pantry);
-  const item = (it) => ({ name: it.name, grams: it.grams_per_serving, food: it.name, dry: it.dry, note: it.note || null });
+  // units: eggs per serving (the recipe contract counts only eggs in units), 0 for the rest
+  const item = (it) => ({ name: it.name, grams: it.grams_per_serving, units: it.units_per_serving || 0, food: it.name, dry: it.dry,
+    note: it.note || null });
   // Where each food's macros come from: ciqual, usda, open_food_facts, or label (the user's product)
   const nutrition = Object.fromEntries((ev.macros.lines || []).filter((m) => m.food).map((m) => [norm(m.food), m.source]));
   return {

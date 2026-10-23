@@ -12,7 +12,7 @@ import { fieldValue } from "../lib/profile";
 import { DEFAULT_BUDGET, engineEstimates, llmReady, needsSetup, readActiveProducts, readBudget, readLlm, readProfile,
   saveLocalMeal } from "../lib/store";
 import { SETUP_DONE_EVENT, openSetup } from "./SetupDialog";
-import { AddButton, AiLabel, Footer, Header, MealImage, CART_TABLE as T, Toast, money, moneySymbol, grams, useCart, useCurrency, useMeals, usePrices, useToast }
+import { AddButton, AiLabel, Footer, Header, MealImage, CART_TABLE as T, TABS, Toast, money, moneySymbol, grams, useCart, useCurrency, useMeals, usePrices, useToast }
   from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
 import { PriceInput } from "./RecipePage";
@@ -79,10 +79,21 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
   const pct = (from, to) => `${to > from ? "+" : ""}${Math.round(((to - from) / from) * 100)}%`;
   const bySlug = Object.fromEntries(meals.map((m) => [m.slug, m]));
 
+  // The address shows the tab (/?tab=cart, as the other pages link back), so Back and shared links work
   const switchTab = (id) => {
     setTab(id);
+    const url = id === "home" ? "/" : `/?tab=${id}`;
+    if (window.location.pathname + window.location.search !== url) window.history.pushState(null, "", url);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  useEffect(() => {
+    const onBack = () => {
+      const id = new URLSearchParams(window.location.search).get("tab");
+      setTab(TABS.some((t) => t.id === id) ? id : "home");
+    };
+    window.addEventListener("popstate", onBack);
+    return () => window.removeEventListener("popstate", onBack);
+  }, []);
   const openCategory = (name) => {
     switchTab("recipes");
     setCategory(name);
@@ -119,7 +130,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                     and your budget.
                   </h1>
                   <p className="text-cream/80 text-base sm:text-lg max-w-xl font-light leading-relaxed">
-                    Generate balanced single-serving or batch meal plans aligned with exact caloric requirements while keeping food waste low, with whole packs from any store.
+                    Tell SmartBite what you feel like eating. It writes a recipe in grams and a shopping list in whole packs, with the macros worked out in code.
                   </p>
                   <div className="pt-2 flex items-center gap-4">
                     <button onClick={() => switchTab("make-meal")} className="bg-lime hover:bg-lime-hover text-forest font-bold text-base px-8 py-4 rounded-full transition-all duration-300 shadow-glow flex items-center gap-3">
@@ -183,7 +194,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                     <div className="mt-3 pt-2 border-t border-cream-dark flex items-center justify-between">
                       <span className="text-xs font-bold text-forest">Protein: {protein(m)}</span>
                       <AddButton onAdd={() => addToCart(m)} className="relative z-10 bg-cream-card hover:bg-lime text-forest font-bold px-3 py-1.5 rounded-xl text-xs transition-colors">
-                        Add
+                        Add to cart
                       </AddButton>
                     </div>
                   </div>
@@ -196,9 +207,9 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
             <div className="bg-cream-card rounded-3xl p-8 border border-cream-dark flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="space-y-2">
                 <span className="text-xs font-bold uppercase tracking-widest text-forest/60">How SmartBite Works</span>
-                <h3 className="font-serif text-2xl font-bold text-forest">5-Step Custom Idea Engine &amp; Grocery Optimizer</h3>
+                <h3 className="font-serif text-2xl font-bold text-forest">From craving to shopping list in 5 steps</h3>
                 <p className="text-xs text-forest/70 max-w-2xl">
-                  Input your cravings and target macros. AI writes the recipe, code matches the ingredients to typical pack sizes, works out macros and leftovers, and gives you a MyFitnessPal text list.
+                  Type a craving and your targets. AI writes the recipe; code matches each ingredient to a typical pack size, works out macros and leftovers, and gives you a MyFitnessPal list.
                 </p>
               </div>
               <button onClick={() => switchTab("how-it-works")} className="bg-forest hover:bg-forest-light text-lime font-bold text-xs px-6 py-3 rounded-full transition-all whitespace-nowrap">
@@ -424,16 +435,16 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                     <span className="text-cream/70">
                       {cart.totals.unpriced && cart.totals.priced
                         ? `Partial total (${cart.totals.unpriced} ${cart.totals.unpriced === 1 ? "item has" : "items have"} no price yet):`
-                        : "Total Purchase Cost:"}
+                        : "Cost of purchase:"}
                     </span>
                     <span id="cart-total-bought" className="font-bold text-lime text-sm">{cart.totals.priced ? money(cart.totals.bought) : "No prices yet"}</span>
                   </div>
                   <div className="flex justify-between text-xs">
-                    <span className="text-cream/70">Cost of Ingredients Consumed:</span>
+                    <span className="text-cream/70">Cost of what you use:</span>
                     <span id="cart-total-used" className="font-bold text-white">{cart.totals.priced ? money(cart.totals.used) : "No prices yet"}</span>
                   </div>
                   <div className="flex justify-between text-xs border-t border-cream/10 pt-2">
-                    <span className="text-cream/70">Total Leftovers Waste:</span>
+                    <span className="text-cream/70">Total waste/leftover:</span>
                     <span id="cart-total-waste" className="font-bold text-amber-300">{grams(cart.totals.wasteGrams)}{cart.totals.priced ? ` (${money(cart.totals.wasteCost)})` : ""}</span>
                   </div>
                 </div>
@@ -516,17 +527,17 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
         {/* TAB 5: HOW IT WORKS */}
         <section id="tab-how-it-works" className={`tab-page space-y-10 max-w-[1360px] mx-auto px-8${tab === "how-it-works" ? "" : " hidden"}`}>
           <div className="text-center max-w-xl mx-auto space-y-2">
-            <span className="font-script text-3xl text-forest font-bold">Smart Meal Architecture</span>
+            <span className="font-script text-3xl text-forest font-bold">From craving to cart</span>
             <h1 className="font-serif text-4xl font-bold text-forest">How SmartBite Works</h1>
-            <p className="text-xs text-forest/70">Designed for precise fitness goals, accurate macro tracking, and minimal food waste.</p>
+            <p className="text-xs text-forest/70">AI picks the foods and grams; code does all the math. Bring your own AI key, or try the demo without one.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
             {[
-              ["Tell us your craving", "Specify what you want to eat, foods you dislike, calorie targets, and budget limits."],
-              ["Pick 1 of 4 ideas", "Select your preferred option from four AI-generated meal ideas balanced for your macros."],
-              ["Whole-Pack Match", "We map ingredients to typical pack sizes to work out what you buy and what is left over."],
-              ["Exact Macro Sync", "Calories and macros are computed for the exact portion consumed, excluding leftover pack weight."],
-              ["Cart & MyFitnessPal", "Consolidate grocery items in your cart and copy ingredient text directly into MyFitnessPal."],
+              ["Tell us your craving", "Say what you want to eat, foods to leave out, your targets and your budget."],
+              ["Pick 1 of 4 ideas", "Pick one of four AI meal ideas made for your targets."],
+              ["Whole packs", "Each ingredient gets a typical pack size, so you see what you buy and what is left over."],
+              ["Real macros", "Calories and macros are worked out in code for what you eat, not for the leftovers."],
+              ["Cart & MyFitnessPal", "Add meals to one cart that merges the same foods, and copy the ingredients into MyFitnessPal."],
             ].map(([title, text], i) => (
               <div key={title} className="bg-white rounded-3xl p-6 shadow-soft border border-cream-dark space-y-3 flex flex-col items-center text-center">
                 <div className="w-12 h-12 rounded-2xl bg-forest text-lime font-bold flex items-center justify-center text-lg">{i + 1}</div>
@@ -540,9 +551,9 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
               <i className="fa-solid fa-leaf"></i>
             </div>
             <div className="space-y-1">
-              <h4 className="font-serif font-bold text-lg text-forest">Optimized Leftovers Strategy</h4>
+              <h4 className="font-serif font-bold text-lg text-forest">Leftovers you can use</h4>
               <p className="text-xs text-forest/80 leading-relaxed">
-                We try to keep leftovers low, because stores sell fixed packs and fruit and vegetables often come per kg. When leftover ingredients occur, we mark whether they can be stored long-term or should be used within 2 days.
+                We try to keep leftovers low, because stores sell fixed packs and fruit and vegetables often come per kg. Each leftover is marked: it keeps, or use it within 2 days.
               </p>
             </div>
           </div>
@@ -748,7 +759,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
 
       <div id="make-step-1" className={`bg-white rounded-3xl p-8 sm:p-10 shadow-soft border border-cream-dark max-w-4xl mx-auto space-y-8${step !== 1 ? " hidden" : ""}`}>
         <div>
-          <span className="font-script text-2xl text-forest font-bold">Custom Single Run Generator</span>
+          <span className="font-script text-2xl text-forest font-bold">Step 1 of 3</span>
           <h2 className="font-serif text-3xl font-bold text-forest">Define Your Next Meal</h2>
         </div>
 
@@ -836,7 +847,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
                 <label className="flex items-center gap-2"><input type="checkbox" checked={gear.microwave} onChange={() => toggleGear("microwave")} className="accent-forest" /> Microwave</label>
                 <label className="flex items-center gap-2"><input type="checkbox" checked={gear.stove} onChange={() => toggleGear("stove")} className="accent-forest" /> Stove</label>
                 <label className="flex items-center gap-2"><input type="checkbox" checked={gear.oven} onChange={() => toggleGear("oven")} className="accent-forest" /> Oven</label>
-                <label className="flex items-center gap-2"><input type="checkbox" checked={gear.noBlender} onChange={() => toggleGear("noBlender")} className="accent-forest" /> No blender</label>
+                <label className="flex items-center gap-2"><input type="checkbox" checked={!gear.noBlender} onChange={() => toggleGear("noBlender")} className="accent-forest" /> Blender</label>
               </div>
             </div>
           </div>

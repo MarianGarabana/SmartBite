@@ -55,6 +55,9 @@ WORD_EDITS = (
     ("2026-10-03-bol-de-pavo-picado-con-boniato", "steps", "en la oficina", "en el trabajo"),
     ("2026-10-03-pechuga-de-pollo-al-curry-suave", "steps", "en la oficina", "en el trabajo"),
     ("2026-10-04-pollo-al-horno-con-calabacin-y", "picked_idea.one_line", "at the office", "at work"),
+    # The saved step counted the personal app's small cans; the typical pack here is a 168 g can, 2 of them
+    ("2026-10-03-frittata-de-atun-con-verduras", "steps", "las 4 latas de atun y desmenuzalas. Mezclalas",
+     "el atun (208 g de las 2 latas) y desmenuzalo. Mezclalo"),
 )
 
 # Whole-field rewrites where the old text held a brand, a product name or a pasted label, or ran over the

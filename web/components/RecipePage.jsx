@@ -290,7 +290,10 @@ function RecipeView({ meal, meals, router }) {
                         <span className="font-semibold text-forest">{ing.name}</span>
                         {ing.note ? <span className="text-[11px] text-forest/60 ml-1.5">{ing.note}</span> : null}
                       </span>
-                      <span className="text-forest/70">{ing.est ? "~" : ""}{grams(ing.grams * servings)}</span>
+                      <span className="text-forest/70">
+                        {ing.units ? `${ing.units * servings} ${ing.units * servings === 1 ? "egg" : "eggs"} (` : ""}
+                        {ing.est ? "~" : ""}{grams(ing.grams * servings)}{ing.units ? ")" : ""}
+                      </span>
                     </li>
                   ))}
                 </ul>

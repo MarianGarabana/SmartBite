@@ -126,6 +126,27 @@ test("demo meals open at the servings they were made for, and none is over budge
   }
 });
 
+test("tabs show in the address, and Back goes to the tab before", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#nav-cart").click();
+  await expect(page).toHaveURL(/\/\?tab=cart$/);
+  await expect(page.locator("#tab-cart")).toBeVisible();
+  await page.locator("#nav-recipes").click();
+  await expect(page).toHaveURL(/\/\?tab=recipes$/);
+  await page.goBack();
+  await expect(page).toHaveURL(/\/\?tab=cart$/);
+  await expect(page.locator("#tab-cart")).toBeVisible();
+  await page.goBack();
+  await expect(page.locator("#tab-home")).toBeVisible();
+});
+
+test("eggs are counted on the recipe page, and the form asks about a blender", async ({ page }) => {
+  await page.goto("/recipes/tuna-frittata-with-vegetables");
+  await expect(page.getByText("20 eggs (1020g)")).toBeVisible(); // 4 servings of 5 eggs, as the steps say
+  await page.goto("/?tab=make-meal");
+  await expect(page.getByLabel("Blender", { exact: true })).not.toBeChecked(); // the Kitchen Profile says no blender
+});
+
 test("Settings shows the Kitchen Profile and the provider fields", async ({ page }) => {
   await page.goto("/settings");
   await expect(page.getByRole("heading", { name: "Kitchen Profile" })).toBeVisible();

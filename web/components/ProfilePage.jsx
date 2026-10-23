@@ -57,8 +57,10 @@ function Field({ field, onChange }) {
     return (
       <div>
         <label htmlFor={`field-${field.id}`} className={label}>{field.label}</label>
-        <textarea id={`field-${field.id}`} rows={2} value={field.value ?? ""} onChange={(e) => onChange(e.target.value)}
-          placeholder="Empty: this line is left out" className={textArea}></textarea>
+        {/* Tall enough for its text (about 60 characters a line); browsers with field-sizing grow it as you type */}
+        <textarea id={`field-${field.id}`} rows={Math.min(8, Math.max(2, Math.ceil(String(field.value ?? "").length / 60)))}
+          value={field.value ?? ""} onChange={(e) => onChange(e.target.value)}
+          placeholder="Empty: this line is left out" className={`${textArea} [field-sizing:content] min-h-[4.5rem]`}></textarea>
         {field.help && <span className="block text-[11px] text-forest/60 mt-1">{field.help}</span>}
       </div>
     );
