@@ -18,7 +18,7 @@ export async function resolve(specifier, context, next) {
 }`));
 
 const { priceKey, productsFor, withPrices } = await import("../lib/cartmath.js");
-const { estimateTitle, periodText, toMeal } = await import("../lib/meal.js");
+const { categoriesOf, demoIdea, estimateTitle, periodText, toMeal } = await import("../lib/meal.js");
 const { consolidate } = await import("../lib/cart.js");
 const { evaluateMeal } = await import("../lib/engine.js");
 const store = await import("../lib/store.js");
@@ -263,4 +263,24 @@ test("estimate tooltip names the source and the period", () => {
   assert.equal(estimateTitle("2025-08/2026-07"), "Estimated: Spain average price paid, MAPA, Aug 2025 to Jul 2026");
   assert.equal(estimateTitle("2025-08/2026-07", "ES-MD"),
     "Estimated: Comunidad de Madrid average price paid, MAPA, Aug 2025 to Jul 2026");
+});
+
+test("every demo meal has a category, and each category has a demo meal", () => {
+  const meals = fs.readdirSync(DEMO).map((f) => load(f.replace(/\.json$/, "")));
+  const names = ["Breakfast", "Lunch", "Dinner", "Salads", "Warm Meals"];
+  for (const name of names) assert.ok(meals.some((m) => m.categories.includes(name)), name);
+  for (const m of meals) assert.equal(m.category, m.categories[0]);
+  assert.deepEqual(categoriesOf("Carrot cake overnight oats with berries"), ["Breakfast"]);
+  assert.deepEqual(categoriesOf("Tuna and chickpea salad with skyr dressing"), ["Salads", "Lunch", "Dinner"]);
+  assert.deepEqual(categoriesOf("Mild chicken breast curry with rice"), ["Warm Meals", "Lunch", "Dinner"]);
+});
+
+test("a demo idea card shows the meal, not the idea it started from", () => {
+  const stew = load("classic-lentil-stew-with-chickpeas-and-chicken");
+  assert.equal(stew.idea.name, "Classic lentil stew with chickpeas"); // the saved idea drifted from the recipe
+  const card = demoIdea(stew);
+  assert.equal(card.name, stew.name);
+  assert.deepEqual(card.rough_macros, stew.perServing);
+  assert.deepEqual(card.main_ingredients, stew.ingredients.map((it) => it.name));
+  assert.match(card.one_line, /^Dried lentils, .* and [a-z ]+\.$/);
 });

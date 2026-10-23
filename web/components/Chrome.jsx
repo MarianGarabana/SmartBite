@@ -431,7 +431,7 @@ export function Footer({ onNavigate }) {
             Smart<span className="font-normal italic">Bite</span>
           </span>
         </a>
-        <nav className="flex items-center gap-6 text-xs text-cream/70 font-medium">
+        <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs text-cream/70 font-medium">
           {TABS.map((t) => (
             <button key={t.id} onClick={() => onNavigate(t.id)} className="hover:text-lime transition-colors">{t.label}</button>
           ))}

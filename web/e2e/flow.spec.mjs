@@ -88,6 +88,30 @@ test("demo meal page shows the photo and the AI labels", async ({ page }) => {
   await expect(page.locator("#picked-steps-list li").first()).toContainText("Heat the oven to 180 degrees");
 });
 
+test("each recipe category lists its demo meals", async ({ page }) => {
+  await page.goto("/?tab=recipes");
+  const cards = page.locator("#tab-recipes a[href^='/recipes/']:visible");
+  for (const [name, min] of [["Breakfast", 1], ["Lunch", 10], ["Dinner", 10], ["Salads", 3], ["Warm Meals", 5]]) {
+    await page.locator("#recipe-filter-chips").getByRole("button", { name, exact: true }).click();
+    expect(await cards.count(), name).toBeGreaterThanOrEqual(min);
+  }
+});
+
+test("a demo idea shows its meal's own name and macros, in a preview that covers the page", async ({ page }) => {
+  await page.goto("/?tab=make-meal");
+  await page.locator("#input-craving").fill("lentils");
+  await page.getByRole("button", { name: "Show me 4 ideas" }).click();
+  const skip = page.getByRole("button", { name: "Skip setup" });
+  await skip.or(page.locator("#demo-note")).first().waitFor(); // a fresh browser opens the setup first
+  if (await skip.isVisible()) await skip.click();
+  await page.locator("#ideas-card-grid h3", { hasText: "Classic lentil stew" }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toContainText("Classic lentil stew with chickpeas and chicken"); // the recipe, not the first idea
+  await expect(dialog).toContainText("~50g");
+  const top = await dialog.evaluate((d) => d.parentElement.getBoundingClientRect().top);
+  expect(top).toBe(0);
+});
+
 test("Settings shows the Kitchen Profile and the provider fields", async ({ page }) => {
   await page.goto("/settings");
   await expect(page.getByRole("heading", { name: "Kitchen Profile" })).toBeVisible();

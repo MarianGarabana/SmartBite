@@ -28,6 +28,27 @@ export const estimatePlace = (region) => regionLabel(region) || "Spain";
 export const estimateTitle = (period, region) =>
   `Estimated: ${estimatePlace(region)} average price paid, MAPA, ${periodText(period) || "latest 12 months"}`;
 
+// Recipe categories come from the title, in code (no AI): breakfast foods make a Breakfast; any other meal is a
+// Lunch and a Dinner, and a Salad or a Warm Meal. The first one is the label on the meal's card.
+const BREAKFAST = /\b(oats|porridge|pancakes?|granola|muesli|toast|smoothie)\b/i;
+export function categoriesOf(title) {
+  if (BREAKFAST.test(title)) return ["Breakfast"];
+  return [/\bsalad\b/i.test(title) ? "Salads" : "Warm Meals", "Lunch", "Dinner"];
+}
+
+// A demo meal as an idea card: name, macros and foods of the meal itself, not of the idea it started from
+// (the recipe can drift from its idea when changes were asked)
+export function demoIdea(meal) {
+  const foods = meal.ingredients.map((it) => it.name);
+  const list = foods.length > 1 ? `${foods.slice(0, -1).join(", ")} and ${foods.at(-1)}` : foods.join("");
+  return {
+    name: meal.name,
+    one_line: `${list.charAt(0).toUpperCase()}${list.slice(1)}.`,
+    main_ingredients: foods,
+    rough_macros: { ...meal.perServing },
+  };
+}
+
 // Only a path on this site: no other host, no protocol-relative URL
 const sitePhoto = (p) => typeof p === "string" && /^\/(?!\/)[\w\-./]+\.(jpe?g|png|webp)$/i.test(p);
 
@@ -46,6 +67,8 @@ export function toMeal(slug, doc, { kind = "demo", saved = false } = {}) {
     saved, // local meals show in My Recipes only after "Save in my recipes"
     fixture: !!doc.fixture, // hand-made test data, labelled on the page
     name: doc.recipe.title,
+    categories: categoriesOf(doc.recipe.title),
+    category: categoriesOf(doc.recipe.title)[0],
     date: doc.date || null,
     servings,
     time: doc.recipe.prep_time_min,

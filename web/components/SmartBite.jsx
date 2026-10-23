@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { checkForm } from "../lib/form";
 import { makeMeal, progressText } from "../lib/flow";
 import { generateIdeas, reviseIdea } from "../lib/llm";
-import { estimatePlace, estimateTitle, periodText, toMeal } from "../lib/meal";
+import { demoIdea, estimatePlace, estimateTitle, periodText, toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
 import { DEFAULT_BUDGET, engineEstimates, llmReady, needsSetup, readActiveProducts, readBudget, readLlm, readProfile,
   saveLocalMeal } from "../lib/store";
@@ -93,7 +93,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
   const shown = meals.filter(
     (m) =>
       (m.kind === "demo" || m.saved) &&
-      (category === "All" || (m.category || "").toLowerCase() === category.toLowerCase()) &&
+      (category === "All" || m.categories.includes(category)) &&
       (!q || m.name.toLowerCase().includes(q) || m.ingredients.some((i) => i.name.toLowerCase().includes(q)))
   );
 
@@ -317,7 +317,8 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                     <p className="text-xs text-forest/60">Identical ingredients across all cart meals are automatically merged into single store packs.</p>
                   </div>
                 </div>
-                <div className="overflow-x-auto">
+                {/* relative: the sr-only header label is absolute and would widen the page past this scroll box */}
+                <div className="overflow-x-auto relative">
                   <table className="w-full text-left text-xs border-collapse">
                     <thead>
                       <tr className="border-b border-cream-dark bg-cream/60 text-forest/70 uppercase text-[10px] font-bold">
@@ -404,12 +405,15 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                     </div>
                     <div className="space-y-2">
                       {optionalRows.map((item) => (
-                        <label key={item.key} className="flex items-center gap-3 text-xs text-forest cursor-pointer">
+                        <label key={item.key} className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-forest cursor-pointer">
                           <input type="checkbox" checked={!!item.included} onChange={(e) => setOptional(item.key, e.target.checked)} className="w-4 h-4 accent-forest" />
-                          <span className="font-semibold w-36 shrink-0">{item.ingredient}</span>
-                          <span className="flex-1">{item.product || "Typical pack"}</span>
-                          <span className="text-forest/60">{item.packs > 1 ? `${item.packs} x ` : ""}{grams(item.packSize)}</span>
-                          <CartPrice item={item} prices={prices} onBlocked={priceBlocked} priceClass="font-bold w-14 text-right" />
+                          <span className="font-semibold sm:w-36 shrink-0">{item.ingredient}</span>
+                          {/* On phones the product, then pack size and price, wrap to their own lines */}
+                          <span className="flex-1 min-w-[9rem]">{item.product || "Typical pack"}</span>
+                          <span className="ml-auto flex items-center gap-3">
+                            <span className="text-forest/60">{item.packs > 1 ? `${item.packs} x ` : ""}{grams(item.packSize)}</span>
+                            <CartPrice item={item} prices={prices} onBlocked={priceBlocked} priceClass="font-bold w-14 text-right" />
+                          </span>
                         </label>
                       ))}
                     </div>
@@ -626,7 +630,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
   }, [preview]);
   const step = run.step;
   const demoIdeas = demoMeals.filter((m) => m.idea).slice(0, 4)
-    .map((m, i) => ({ ...m.idea, idea_id: String(i + 1), slug: m.slug }));
+    .map((m, i) => ({ ...m.idea, ...demoIdea(m), idea_id: String(i + 1), slug: m.slug }));
   const showDemo = () => { setPreview(null); setRun({ step: 2, demo: true, ideas: demoIdeas }); };
   const startOver = () => { setPreview(null); setRun({ step: 1 }); };
   const indicator = (n) => (step >= n
@@ -898,8 +902,9 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
                 </div>
               ))}
             </div>
+            {/* !mt-0: the parent's space-y-6 margin would push this fixed layer 24px down */}
             {preview && (
-              <div className="fixed inset-0 z-50 bg-forest/40 flex items-center justify-center p-4" onClick={() => setPreview(null)}>
+              <div className="fixed inset-0 !mt-0 z-50 bg-forest/40 flex items-center justify-center p-4" onClick={() => setPreview(null)}>
                 <div role="dialog" aria-modal="true" aria-labelledby="idea-preview-title" onClick={(e) => e.stopPropagation()}
                   className="bg-white rounded-3xl p-8 shadow-card border border-cream-dark max-w-lg w-full space-y-6">
                   <div>

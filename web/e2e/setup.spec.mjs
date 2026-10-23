@@ -92,6 +92,16 @@ test.describe("phone", () => {
     await expect(page.locator("#cart-empty-state")).toBeVisible(); // the main page switches tabs in place
     await expect(page.getByRole("menu")).toHaveCount(0);
   });
+  test("the Cart with optional items and the footer stay inside the screen", async ({ page }) => {
+    await page.goto("/recipes/classic-lentil-stew-with-chickpeas-and-chicken"); // has optional oil and spices
+    await page.getByRole("button", { name: "Add to my cart" }).click();
+    await page.goto("/?tab=cart");
+    await expect(page.locator("#cart-consolidated-tbody tr").first()).toBeVisible();
+    const width = await page.evaluate(() => document.documentElement.scrollWidth);
+    expect(width).toBeLessThanOrEqual(390);
+    const links = await page.locator("footer nav > *").evaluateAll((els) => els.map((e) => e.getBoundingClientRect()));
+    for (const r of links) expect(r.left >= 0 && r.right <= 390).toBe(true);
+  });
 });
 
 test("desktop keeps the tab bar and has no tabs menu", async ({ page }) => {
