@@ -12,7 +12,7 @@ import { fieldValue } from "../lib/profile";
 import { DEFAULT_BUDGET, engineEstimates, llmReady, needsSetup, readActiveProducts, readBudget, readLlm, readProfile,
   saveLocalMeal } from "../lib/store";
 import { SETUP_DONE_EVENT, openSetup } from "./SetupDialog";
-import { AddButton, AiLabel, Footer, Header, MealImage, Toast, money, moneySymbol, grams, useCart, useCurrency, useMeals, usePrices, useToast }
+import { AddButton, AiLabel, Footer, Header, MealImage, CART_TABLE as T, Toast, money, moneySymbol, grams, useCart, useCurrency, useMeals, usePrices, useToast }
   from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
 import { PriceInput } from "./RecipePage";
@@ -319,52 +319,52 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                 </div>
                 {/* relative: the sr-only header label is absolute and would widen the page past this scroll box */}
                 <div className="overflow-x-auto relative">
-                  <table className="w-full text-left text-xs border-collapse">
-                    <thead>
+                  <table className={T.table}>
+                    <thead className={T.head}>
                       <tr className="border-b border-cream-dark bg-cream/60 text-forest/70 uppercase text-[10px] font-bold">
-                        <th className="p-3">Ingredient</th>
-                        <th className="p-3">Product</th>
-                        <th className="p-3">Pack Size</th>
-                        <th className="p-3">Packs</th>
-                        <th className="p-3">Used</th>
-                        <th className="p-3">Bought</th>
-                        <th className="p-3">Leftover</th>
-                        <th className="p-3 text-right">Price</th>
-                        <th className="p-3"><span className="sr-only">Already have</span></th>
+                        <th className={T.th}>Ingredient</th>
+                        <th className={T.th}>Product</th>
+                        <th className={T.thNum}>Pack Size</th>
+                        <th className={T.thNum}>Packs</th>
+                        <th className={T.thNum}>Used</th>
+                        <th className={T.thNum}>Bought</th>
+                        <th className={T.thNum}>Leftover</th>
+                        <th className={`${T.thNum} text-right`}>Price</th>
+                        <th className={T.thNum}><span className="sr-only">Already have</span></th>
                       </tr>
                     </thead>
-                    <tbody id="cart-consolidated-tbody" className="divide-y divide-cream-dark/60">
+                    <tbody id="cart-consolidated-tbody" className={T.body}>
                       {cart.rows.filter((r) => !r.optional && !r.have).map((item) =>
                         item.packSize ? (
-                          <tr key={item.key}>
-                            <td className="p-3 font-semibold text-forest">{item.ingredient}</td>
-                            <td className="p-3 text-forest/70"><ProductCell row={item} onEdit={setEditing} /></td>
-                            <td className="p-3 text-forest/70">{grams(item.packSize)}</td>
-                            <td className="p-3 font-bold text-forest">{item.packs}</td>
-                            <td className="p-3 text-forest/70">{grams(item.needed)}</td>
-                            <td className="p-3 text-forest/70">{grams(item.bought)}</td>
-                            <td className="p-3">
+                          <tr key={item.key} className={T.row}>
+                            <td className={T.ingredient}>{item.ingredient}</td>
+                            <td className={T.product}><ProductCell row={item} onEdit={setEditing} /></td>
+                            <td data-label="Pack" className={`${T.num} text-forest/70`}>{grams(item.packSize)}</td>
+                            <td data-label="Packs" className={`${T.num} font-bold text-forest`}>{item.packs}</td>
+                            <td data-label="Used" className={`${T.num} text-forest/70`}>{grams(item.needed)}</td>
+                            <td data-label="Bought" className={`${T.num} text-forest/70`}>{grams(item.bought)}</td>
+                            <td data-label="Leftover" className={T.num}>
                               <span className="font-bold text-forest">{grams(item.left)}</span>{" "}
                               {item.hasPrice ? <span className="text-[10px] text-forest/60">({money(item.leftCost)})</span> : null}
                             </td>
-                            <td className="p-3 text-right font-bold text-forest"><CartPrice item={item} prices={prices} onBlocked={priceBlocked} /></td>
-                            <td className="p-3 text-right">
+                            <td className={T.price}><CartPrice item={item} prices={prices} onBlocked={priceBlocked} /></td>
+                            <td className={T.action}>
                               <button onClick={() => setHave(item.key, true, item.ingredient)} title="I already have this" aria-label={`I already have ${item.ingredient}`} className="text-forest/40 hover:text-red-600 p-1 text-sm">
                                 <i className="fa-solid fa-trash-can"></i>
                               </button>
                             </td>
                           </tr>
                         ) : (
-                          <tr key={item.key}>
-                            <td className="p-3 font-semibold text-forest">{item.ingredient}</td>
-                            <td className="p-3 text-forest/70">no pack size yet</td>
-                            <td className="p-3 text-forest/70"></td>
-                            <td className="p-3 font-bold text-forest"></td>
-                            <td className="p-3 text-forest/70">{grams(item.needed)}</td>
-                            <td className="p-3 text-forest/70"></td>
-                            <td className="p-3"></td>
-                            <td className="p-3 text-right font-bold text-forest"></td>
-                            <td className="p-3"></td>
+                          <tr key={item.key} className={T.row}>
+                            <td className={T.ingredient}>{item.ingredient}</td>
+                            <td className={T.product}>no pack size yet</td>
+                            <td data-label="Pack" className={`${T.num} text-forest/70`}></td>
+                            <td data-label="Packs" className={`${T.num} font-bold text-forest`}></td>
+                            <td data-label="Used" className={`${T.num} text-forest/70`}>{grams(item.needed)}</td>
+                            <td data-label="Bought" className={`${T.num} text-forest/70`}></td>
+                            <td data-label="Leftover" className={T.num}></td>
+                            <td className={T.price}></td>
+                            <td className={T.action}></td>
                           </tr>
                         )
                       )}

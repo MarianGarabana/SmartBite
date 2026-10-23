@@ -38,6 +38,39 @@ export function useCurrency() {
 }
 export const grams = (v) => `${Math.round(v)}g`;
 
+// Shopping tables (recipe page and Cart). Wide enough (about 730px for the table), a table: numbers do not wrap
+// and get less padding, so the product column has room. Narrower, each row is a card: ingredient, price and action
+// on top, then the product, then the numbers with their column name (data-label); empty cells hide. The recipe
+// page is a table from lg up; the Cart, which shares its row with the added meals, from xl up. Tailwind needs the
+// class names written out, hence the two sets.
+const PACK_CELLS = {
+  th: "p-3",
+  thNum: "px-2 py-3",
+};
+export const RECIPE_TABLE = {
+  ...PACK_CELLS,
+  table: "w-full text-left text-xs border-collapse block lg:table",
+  head: "hidden lg:table-header-group",
+  body: "block lg:table-row-group divide-y divide-cream-dark/60",
+  row: "flex flex-wrap items-center gap-x-4 gap-y-1 py-3 lg:table-row lg:py-0",
+  ingredient: "order-1 flex-1 lg:p-3 font-semibold text-forest",
+  product: "order-4 basis-full lg:p-3 lg:min-w-[9rem] text-forest/70 empty:hidden lg:empty:table-cell",
+  num: "order-5 lg:px-2 lg:py-3 whitespace-nowrap empty:hidden lg:empty:table-cell before:content-[attr(data-label)] before:mr-1 before:font-normal before:text-forest/50 lg:before:content-none",
+  price: "order-2 lg:px-2 lg:py-3 text-right font-bold text-forest empty:hidden lg:empty:table-cell",
+};
+export const CART_TABLE = {
+  ...PACK_CELLS,
+  table: "w-full text-left text-xs border-collapse block xl:table",
+  head: "hidden xl:table-header-group",
+  body: "block xl:table-row-group divide-y divide-cream-dark/60",
+  row: "flex flex-wrap items-center gap-x-4 gap-y-1 py-3 xl:table-row xl:py-0",
+  ingredient: "order-1 flex-1 xl:p-3 font-semibold text-forest",
+  product: "order-4 basis-full xl:p-3 xl:min-w-[9rem] text-forest/70 empty:hidden xl:empty:table-cell",
+  num: "order-5 xl:px-2 xl:py-3 whitespace-nowrap empty:hidden xl:empty:table-cell before:content-[attr(data-label)] before:mr-1 before:font-normal before:text-forest/50 xl:before:content-none",
+  price: "order-2 xl:px-2 xl:py-3 text-right font-bold text-forest empty:hidden xl:empty:table-cell",
+  action: "order-3 xl:px-2 xl:py-3 text-right empty:hidden xl:empty:table-cell",
+};
+
 // Demo meals (from the server) plus the meals made and saved in this browser
 export function useMeals(demoMeals) {
   const [local, setLocal] = useState({ ready: false, docs: {}, saved: [] });

@@ -104,6 +104,24 @@ test.describe("phone", () => {
   });
 });
 
+test("the shopping tables fit their card at every width, with no sideways scroll inside", async ({ page }) => {
+  await page.goto("/recipes/classic-lentil-stew-with-chickpeas-and-chicken");
+  await page.getByRole("button", { name: "Add to my cart" }).click();
+  const fits = (sel) => page.locator(sel).evaluate((b) => {
+    const t = b.closest("table");
+    return t.getBoundingClientRect().width <= t.parentElement.getBoundingClientRect().width + 1;
+  });
+  for (const width of [390, 768, 1024, 1280, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/recipes/classic-lentil-stew-with-chickpeas-and-chicken");
+    await expect(page.locator("#pack-table-body tr").first()).toBeVisible();
+    expect(await fits("#pack-table-body"), `recipe at ${width}`).toBe(true);
+    await page.goto("/?tab=cart");
+    await expect(page.locator("#cart-consolidated-tbody tr").first()).toBeVisible();
+    expect(await fits("#cart-consolidated-tbody"), `cart at ${width}`).toBe(true);
+  }
+});
+
 test("desktop keeps the tab bar and has no tabs menu", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("#nav-cart")).toBeVisible();

@@ -13,7 +13,7 @@ import { mfpBlock } from "../lib/mfp";
 import { packRow, totals } from "../lib/packs";
 import { MAX_PHOTO_BYTES, deletePhoto, putPhoto, usePhoto } from "../lib/photos";
 import { COUNTRIES, MAX_PRICE_EUR, deleteLocalMeal, setLinePrice, setSaved } from "../lib/store";
-import { AiLabel, Footer, Header, MealImage, Toast, money, moneySymbol, grams, useCart, useCurrency, useEstimates, useEvaluations, useMeals, usePrices,
+import { AiLabel, Footer, Header, MealImage, RECIPE_TABLE as T, Toast, money, moneySymbol, grams, useCart, useCurrency, useEstimates, useEvaluations, useMeals, usePrices,
   useProducts, useToast } from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
 
@@ -326,36 +326,36 @@ function RecipeView({ meal, meals, router }) {
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs border-collapse">
-                  <thead>
+                <table className={T.table}>
+                  <thead className={T.head}>
                     <tr className="border-b border-cream-dark bg-cream/60 text-forest/70 uppercase text-[10px] font-bold">
-                      <th className="p-3">Ingredient</th>
-                      <th className="p-3">Product</th>
-                      <th className="p-3">Pack Size</th>
-                      <th className="p-3">Packs</th>
-                      <th className="p-3">Needed</th>
-                      <th className="p-3">Bought</th>
-                      <th className="p-3">Leftover</th>
-                      <th className="p-3 text-right">Price</th>
+                      <th className={T.th}>Ingredient</th>
+                      <th className={T.th}>Product</th>
+                      <th className={T.thNum}>Pack Size</th>
+                      <th className={T.thNum}>Packs</th>
+                      <th className={T.thNum}>Needed</th>
+                      <th className={T.thNum}>Bought</th>
+                      <th className={T.thNum}>Leftover</th>
+                      <th className={`${T.thNum} text-right`}>Price</th>
                     </tr>
                   </thead>
-                  <tbody id="pack-table-body" className="divide-y divide-cream-dark/60">
+                  <tbody id="pack-table-body" className={T.body}>
                     {rows.filter((r) => !r.optional).map((r) =>
                       r.packSize ? (
-                        <tr key={r.key}>
-                          <td className="p-3 font-semibold text-forest">{r.ingredient}</td>
-                          <td className="p-3 text-forest/70"><ProductCell row={r} onEdit={setEditing} /></td>
-                          <td className="p-3 text-forest/70">{grams(r.packSize)}</td>
-                          <td className="p-3 font-bold text-forest">{r.packs}</td>
-                          <td className="p-3 text-forest/70">{grams(r.needed)}</td>
-                          <td className="p-3 text-forest/70">{grams(r.bought)}</td>
-                          <td className="p-3">
+                        <tr key={r.key} className={T.row}>
+                          <td className={T.ingredient}>{r.ingredient}</td>
+                          <td className={T.product}><ProductCell row={r} onEdit={setEditing} /></td>
+                          <td data-label="Pack" className={`${T.num} text-forest/70`}>{grams(r.packSize)}</td>
+                          <td data-label="Packs" className={`${T.num} font-bold text-forest`}>{r.packs}</td>
+                          <td data-label="Needed" className={`${T.num} text-forest/70`}>{grams(r.needed)}</td>
+                          <td data-label="Bought" className={`${T.num} text-forest/70`}>{grams(r.bought)}</td>
+                          <td data-label="Leftover" className={T.num}>
                             <span className="font-bold text-forest">{grams(r.left)}</span>
                             {r.status ? (
                               <span className={`ml-1 text-[10px] ${r.status === "Keeps" ? "bg-lime-soft text-forest font-bold" : "bg-amber-100 text-amber-900"} px-1.5 py-0.5 rounded`}>{r.status}</span>
                             ) : null}
                           </td>
-                          <td className="p-3 text-right font-bold text-forest">
+                          <td className={T.price}>
                             <span className="inline-flex items-center justify-end gap-2">
                               <PriceInput row={r} prices={prices} onBlocked={() => showToast("Not saved: this browser blocks storage.")} />
                               {r.hasPrice && r.estimate ? (
@@ -367,15 +367,15 @@ function RecipeView({ meal, meals, router }) {
                           </td>
                         </tr>
                       ) : (
-                        <tr key={r.key}>
-                          <td className="p-3 font-semibold text-forest">{r.ingredient}</td>
-                          <td className="p-3 text-forest/70">no pack size yet</td>
-                          <td className="p-3 text-forest/70"></td>
-                          <td className="p-3 font-bold text-forest"></td>
-                          <td className="p-3 text-forest/70">{grams(r.needed)}</td>
-                          <td className="p-3 text-forest/70"></td>
-                          <td className="p-3"></td>
-                          <td className="p-3 text-right font-bold text-forest"></td>
+                        <tr key={r.key} className={T.row}>
+                          <td className={T.ingredient}>{r.ingredient}</td>
+                          <td className={T.product}>no pack size yet</td>
+                          <td data-label="Pack" className={`${T.num} text-forest/70`}></td>
+                          <td data-label="Packs" className={`${T.num} font-bold text-forest`}></td>
+                          <td data-label="Needed" className={`${T.num} text-forest/70`}>{grams(r.needed)}</td>
+                          <td data-label="Bought" className={`${T.num} text-forest/70`}></td>
+                          <td data-label="Leftover" className={T.num}></td>
+                          <td className={T.price}></td>
                         </tr>
                       )
                     )}
