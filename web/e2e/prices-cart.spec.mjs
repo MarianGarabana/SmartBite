@@ -10,9 +10,20 @@ const KOREAN = "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix";
 const table = (page) => page.locator("#pack-table-body");
 const row = (page, food) => table(page).locator("tr").filter({ hasText: food });
 
+// Recipe pages open at the meal's own servings (8 here); these checks are for 1 serving
+async function toOneServing(page) {
+  const count = page.locator("#servings-count");
+  const minus = page.locator("button", { hasText: /^-$/ }).first();
+  const reply = page.waitForResponse((r) => r.url().includes("/api/evaluate")
+    && /"servings":1[,}]/.test(r.request().postData() || "")); // the engine's packs for 1 serving
+  while ((await count.innerText()) !== "1") await minus.click();
+  await reply;
+}
+
 // The recipe page has its engine reply (Spain estimates) once an "est." price shows
 async function openKorean(page) {
   await page.goto(`/recipes/${KOREAN}`);
+  await toOneServing(page);
   await expect(table(page).getByText("est.").first()).toBeVisible();
 }
 
@@ -136,6 +147,9 @@ test("a barcode looked up on Open Food Facts fills the product; the pack size mu
 });
 
 test("steps say which servings they are written for, and MyFitnessPal has no 0 g lines", async ({ page }) => {
+  await page.goto(`/recipes/${KOREAN}`);
+  await expect(page.locator("#servings-count")).toHaveText("8"); // opens at the servings the meal was made for
+  await expect(page.locator("#steps-servings-note")).toHaveCount(0);
   await openKorean(page);
   await expect(page.locator("#servings-count")).toHaveText("1");
   await expect(page.locator("#steps-servings-note")).toHaveText(

@@ -23,7 +23,7 @@ export default function RecipePage({ slug, demoMeals }) {
   const router = useRouter();
   const { meals, ready } = useMeals(demoMeals);
   const meal = meals.find((m) => m.slug === slug);
-  if (meal) return <RecipeView meal={meal} meals={meals} router={router} />;
+  if (meal) return <RecipeView key={meal.slug} meal={meal} meals={meals} router={router} />;
   return <MissingMeal meals={meals} ready={ready} router={router} />;
 }
 
@@ -95,7 +95,8 @@ function MissingMeal({ meals, ready, router }) {
 }
 
 function RecipeView({ meal, meals, router }) {
-  const [servings, setServings] = useState(1);
+  // Opens at the servings the meal was made for: its steps, packs and budget are for those (1 to 8, the stepper's range)
+  const [servings, setServings] = useState(Math.min(8, Math.max(1, meal.servings || 1)));
   const [copied, setCopied] = useState(false);
   const [editing, setEditing] = useState(null); // shopping row whose product is being edited
   const { toast, showToast } = useToast();

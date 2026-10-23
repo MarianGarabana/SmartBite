@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { checkForm } from "../lib/form";
 import { makeMeal, progressText } from "../lib/flow";
 import { generateIdeas, reviseIdea } from "../lib/llm";
-import { demoIdea, estimatePlace, estimateTitle, periodText, toMeal } from "../lib/meal";
+import { demoIdea, demoPicks, estimatePlace, estimateTitle, periodText, toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
 import { DEFAULT_BUDGET, engineEstimates, llmReady, needsSetup, readActiveProducts, readBudget, readLlm, readProfile,
   saveLocalMeal } from "../lib/store";
@@ -629,9 +629,9 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [preview]);
   const step = run.step;
-  const demoIdeas = demoMeals.filter((m) => m.idea).slice(0, 4)
+  const demoIdeas = () => demoPicks(demoMeals.filter((m) => m.idea), craving, tags)
     .map((m, i) => ({ ...m.idea, ...demoIdea(m), idea_id: String(i + 1), slug: m.slug }));
-  const showDemo = () => { setPreview(null); setRun({ step: 2, demo: true, ideas: demoIdeas }); };
+  const showDemo = () => { setPreview(null); setRun({ step: 2, demo: true, ideas: demoIdeas() }); };
   const startOver = () => { setPreview(null); setRun({ step: 1 }); };
   const indicator = (n) => (step >= n
     ? ["flex items-center gap-2 font-bold text-xs text-forest", "w-7 h-7 rounded-full bg-lime text-forest flex items-center justify-center font-extrabold text-xs"]
@@ -882,7 +882,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
             </div>
             {run.demo && (
               <div id="demo-note" className="bg-cream-card rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
-                <span className="font-bold text-forest">Demo mode.</span> These are pre-built example meals, not made from your craving.
+                <span className="font-bold text-forest">Demo mode.</span> These are the pre-built example meals closest to your craving, not made from it.
                 To make your own, add your API key in your <Link href="/profile" className="font-bold underline hover:text-lime-hover">Profile</Link>.
               </div>
             )}

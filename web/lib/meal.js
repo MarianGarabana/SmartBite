@@ -49,6 +49,31 @@ export function demoIdea(meal) {
   };
 }
 
+// Lower-case words of a text, without filler words of a craving
+const FILLER = new Set(["with", "and", "the", "for", "some", "something", "want", "like", "meal", "meals", "food", "very"]);
+const words = (text) => String(text || "").toLowerCase().split(/[^a-zà-ÿ]+/).filter((w) => w.length > 2 && !FILLER.has(w));
+// Same word, or one is the other plus an ending ("tomato", "tomatoes"); short words only when equal
+const sameWord = (a, b) => a === b || (Math.min(a.length, b.length) >= 4 && (a.startsWith(b) || b.startsWith(a)));
+
+// Demo mode picks: the demo meals closest to the craving first (a word in the name counts double, then foods and
+// categories), none with a food the user does not want; ties keep the list order. Code only, no model.
+export function demoPicks(meals, craving, exclude = [], count = 4) {
+  const foods = (m) => [...m.ingredients, ...(m.mfpExtra || [])].map((it) => it.name);
+  const has = (list, w) => list.some((x) => sameWord(x, w));
+  const wanted = words(craving);
+  const allowed = meals.filter((m) => !exclude.some((food) => {
+    const ws = words(food);
+    return ws.length > 0 && foods(m).some((name) => ws.every((w) => has(words(name), w)));
+  }));
+  const score = (m) => {
+    const name = words(m.name);
+    const rest = [...foods(m).flatMap(words), ...(m.categories || []).flatMap(words)];
+    return wanted.reduce((sum, w) => sum + (has(name, w) ? 2 : has(rest, w) ? 1 : 0), 0);
+  };
+  return (allowed.length ? allowed : meals).map((m) => [m, score(m)]).sort((a, b) => b[1] - a[1]).slice(0, count)
+    .map(([m]) => m);
+}
+
 // Only a path on this site: no other host, no protocol-relative URL
 const sitePhoto = (p) => typeof p === "string" && /^\/(?!\/)[\w\-./]+\.(jpe?g|png|webp)$/i.test(p);
 

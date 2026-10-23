@@ -5,6 +5,16 @@ import { expect, test } from "@playwright/test";
 
 const KOREAN = "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix";
 
+// Recipe pages open at the meal's own servings (8 here); these checks are for 1 serving
+async function toOneServing(page) {
+  const count = page.locator("#servings-count");
+  const minus = page.locator("button", { hasText: /^-$/ }).first();
+  const reply = page.waitForResponse((r) => r.url().includes("/api/evaluate")
+    && /"servings":1[,}]/.test(r.request().postData() || "")); // the engine's packs for 1 serving
+  while ((await count.innerText()) !== "1") await minus.click();
+  await reply;
+}
+
 test("the old Settings link opens the Profile, and the name shows in its heading", async ({ page }) => {
   // Country names differ between the server's and the browser's Intl data: no hydration error may come of it
   const errors = [];
@@ -24,6 +34,7 @@ test("the old Settings link opens the Profile, and the name shows in its heading
 
 test("a country's currency shows on prices, and Spain's estimates need euros", async ({ page }) => {
   await page.goto(`/recipes/${KOREAN}`);
+  await toOneServing(page);
   await expect(page.locator("#pack-table-body").getByText("est.").first()).toBeVisible();
   await expect(page.locator("#summary-bought-cost")).toContainText("€");
 
@@ -31,6 +42,7 @@ test("a country's currency shows on prices, and Spain's estimates need euros", a
   await page.locator("#price-country").selectOption("GB");
   await expect(page.locator("#currency")).toHaveValue("GBP");
   await page.goto(`/recipes/${KOREAN}`);
+  await toOneServing(page);
   await page.waitForLoadState("networkidle");
   await expect(page.locator("#pack-table-body").getByText("est.")).toHaveCount(0); // estimates are in EUR
   await expect(page.locator("#summary-bought-cost")).toHaveText("No prices yet");
@@ -60,6 +72,7 @@ test("a profile file saved in one browser opens in another, after a confirm and 
   await a.locator("#profile-name").press("Enter");
   await a.locator("#price-region").selectOption("ES-CN");
   await a.goto(`/recipes/${KOREAN}`);
+  await toOneServing(a);
   const beef = a.locator("#pack-table-body tr").filter({ hasText: "ground beef" });
   await beef.locator("input").fill("4.99");
   await expect(beef).toContainText("€4.99");
@@ -90,6 +103,7 @@ test("a profile file saved in one browser opens in another, after a confirm and 
   await expect(b.getByRole("heading", { level: 1 })).toHaveText("Marta's profile");
   await expect(b.locator("#price-region")).toHaveValue("ES-CN");
   await b.goto(`/recipes/${KOREAN}`);
+  await toOneServing(b);
   await expect(b.locator("#pack-table-body tr").filter({ hasText: "ground beef" })).toContainText("€4.99");
   await context.close();
 });

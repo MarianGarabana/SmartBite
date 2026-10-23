@@ -18,7 +18,7 @@ export async function resolve(specifier, context, next) {
 }`));
 
 const { priceKey, productsFor, withPrices } = await import("../lib/cartmath.js");
-const { categoriesOf, demoIdea, estimateTitle, periodText, toMeal } = await import("../lib/meal.js");
+const { categoriesOf, demoIdea, demoPicks, estimateTitle, periodText, toMeal } = await import("../lib/meal.js");
 const { consolidate } = await import("../lib/cart.js");
 const { evaluateMeal } = await import("../lib/engine.js");
 const store = await import("../lib/store.js");
@@ -283,4 +283,17 @@ test("a demo idea card shows the meal, not the idea it started from", () => {
   assert.deepEqual(card.rough_macros, stew.perServing);
   assert.deepEqual(card.main_ingredients, stew.ingredients.map((it) => it.name));
   assert.match(card.one_line, /^Dried lentils, .* and [a-z ]+\.$/);
+});
+
+test("demo mode picks the demo meals closest to the craving, without foods the user does not want", () => {
+  const meals = fs.readdirSync(DEMO).sort().map((f) => load(f.replace(/\.json$/, "")));
+  const names = (craving, exclude) => demoPicks(meals, craving, exclude).map((m) => m.name);
+  assert.deepEqual(names("something warm with chicken and rice").slice(0, 2),
+    ["Chicken breast bowl with rice and vegetables", "Mild chicken breast curry with rice"]);
+  assert.ok(names("tuna salads").slice(0, 3).every((n) => /tuna/i.test(n) && /salad/i.test(n)));
+  const noChicken = demoPicks(meals, "chicken bowl", ["chicken"]);
+  assert.equal(noChicken.length, 4);
+  assert.ok(noChicken.every((m) => !m.ingredients.some((it) => /chicken/i.test(it.name))));
+  // No word matches: the list order, as before
+  assert.deepEqual(names("salmon sushi"), meals.slice(0, 4).map((m) => m.name));
 });

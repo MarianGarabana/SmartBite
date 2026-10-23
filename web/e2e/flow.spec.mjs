@@ -104,12 +104,26 @@ test("a demo idea shows its meal's own name and macros, in a preview that covers
   const skip = page.getByRole("button", { name: "Skip setup" });
   await skip.or(page.locator("#demo-note")).first().waitFor(); // a fresh browser opens the setup first
   if (await skip.isVisible()) await skip.click();
+  await expect(page.locator("#ideas-card-grid h3").first()).toHaveText(/lentil/i); // closest to the craving first
   await page.locator("#ideas-card-grid h3", { hasText: "Classic lentil stew" }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toContainText("Classic lentil stew with chickpeas and chicken"); // the recipe, not the first idea
   await expect(dialog).toContainText("~50g");
   const top = await dialog.evaluate((d) => d.parentElement.getBoundingClientRect().top);
   expect(top).toBe(0);
+});
+
+test("demo meals open at the servings they were made for, and none is over budget", async ({ page }) => {
+  await page.goto("/recipes/tuna-frittata-with-vegetables");
+  await expect(page.locator("#servings-count")).toHaveText("4");
+  await expect(page.locator("#budget-status")).toContainText("Within budget"); // Spain estimates, the default
+  await page.goto("/?tab=recipes");
+  const slugs = await page.locator("#tab-recipes a[href^='/recipes/']").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
+  for (const href of slugs) {
+    await page.goto(href);
+    await expect(page.locator("#budget-status")).toContainText(/Within budget|Over budget|incomplete/); // checked
+    await expect(page.locator("#budget-status"), href).not.toContainText("Over budget");
+  }
 });
 
 test("Settings shows the Kitchen Profile and the provider fields", async ({ page }) => {
