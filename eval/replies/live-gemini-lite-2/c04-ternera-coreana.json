@@ -1,0 +1,34 @@
+{
+ "ideas": "{\"ideas\": [{\"idea_id\": \"1\", \"name\": \"Bol de Ternera Estilo Coreano con Arroz\", \"one_line\": \"Ternera picada salteada en salsa agridulce de soja sobre arroz blanco con cebollino fresco.\", \"main_ingredients\": [\"ground beef\", \"rice\", \"spring onion\", \"garlic\", \"soy sauce\"], \"rough_macros\": {\"kcal\": 490, \"protein_g\": 43, \"carbs_g\": 52, \"fat_g\": 12}, \"image_prompt\": \"A bowl of white rice topped with seasoned Korean-style ground beef and chopped spring onions, food photography.\"}, {\"idea_id\": \"2\", \"name\": \"Ternera Picada Salteada con Brócoli y Arroz\", \"one_line\": \"Ternera y brócoli crujiente en salsa de ajo y soja, servido sobre una base de arroz.\", \"main_ingredients\": [\"ground beef\", \"broccoli\", \"rice\", \"garlic\", \"soy sauce\"], \"rough_macros\": {\"kcal\": 485, \"protein_g\": 46, \"carbs_g\": 48, \"fat_g\": 13}, \"image_prompt\": \"A close-up of ground beef and vibrant green broccoli stir-fry served over steamed rice in a bowl.\"}, {\"idea_id\": \"3\", \"name\": \"Ternera Coreana con Arroz y Edamame\", \"one_line\": \"Ternera picada agridulce con judías edamame y arroz, ideal para llevar y recalentar.\", \"main_ingredients\": [\"ground beef\", \"rice\", \"frozen edamame\", \"spring onion\", \"soy sauce\"], \"rough_macros\": {\"kcal\": 510, \"protein_g\": 48, \"carbs_g\": 50, \"fat_g\": 14}, \"image_prompt\": \"Korean beef bowl with edamame beans and spring onions over rice, shot from above, natural lighting.\"}, {\"idea_id\": \"4\", \"name\": \"Arroz Frito con Ternera y Huevo Estilo Asiático\", \"one_line\": \"Arroz salteado con ternera picada, huevo revuelto, guisantes y cebollino.\", \"main_ingredients\": [\"ground beef\", \"rice\", \"eggs\", \"frozen peas\", \"spring onion\"], \"rough_macros\": {\"kcal\": 495, \"protein_g\": 45, \"carbs_g\": 53, \"fat_g\": 12}, \"image_prompt\": \"Asiatic fried rice with ground beef, green peas, and egg pieces in a dark bowl, restaurant style.\"}]}",
+ "picked_idea_id": "1",
+ "recipe": "{\"idea_id\": \"1\", \"title\": \"Bol de Ternera Estilo Coreano con Arroz\", \"servings\": 5, \"prep_time_min\": 25, \"ingredients\": [{\"name\": \"ground beef\", \"grams_per_serving\": 100, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"rice\", \"grams_per_serving\": 70, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": true}, {\"name\": \"spring onion\", \"grams_per_serving\": 18, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"garlic\", \"grams_per_serving\": 7, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"soy sauce\", \"grams_per_serving\": 20, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": false}], \"steps\": [\"Cuece el arroz en agua hirviendo con sal y divídelo en cinco porciones en recipientes para llevar al trabajo.\", \"Pica finamente el ajo y la cebolleta.\", \"Saltea la ternera picada en una sartén grande hasta que esté dorada, añade el ajo y cocina un minuto más.\", \"Incorpora la salsa de soja a la carne y mezcla bien durante dos minutos.\", \"Reparte la ternera sobre las bases de arroz y esparce la cebolleta por encima antes de cerrar los recipientes.\"]}",
+ "reruns": [
+  "{\"idea_id\": \"1\", \"title\": \"Bol de Ternera Estilo Coreano con Arroz\", \"servings\": 5, \"prep_time_min\": 25, \"ingredients\": [{\"name\": \"ground beef\", \"grams_per_serving\": 175, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"rice\", \"grams_per_serving\": 75, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": true}, {\"name\": \"spring onion\", \"grams_per_serving\": 18, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"garlic\", \"grams_per_serving\": 7, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"soy sauce\", \"grams_per_serving\": 23, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": false}], \"steps\": [\"Cuece el arroz en agua hirviendo con sal y div\\u00eddelo en cinco porciones en recipientes para llevar al trabajo.\", \"Pica finamente el ajo y la cebolleta.\", \"Saltea la ternera picada en una sart\\u00e9n grande hasta que est\\u00e9 dorada, a\\u00f1ade el ajo y cocina un minuto m\\u00e1s.\", \"Incorpora la salsa de soja a la carne y mezcla bien durante dos minutos.\", \"Reparte la ternera sobre las bases de arroz y esparce la cebolleta por encima antes de cerrar los recipientes.\"]}",
+  "{\"idea_id\": \"1\", \"title\": \"Bol de Ternera Estilo Coreano con Arroz\", \"servings\": 5, \"prep_time_min\": 25, \"ingredients\": [{\"name\": \"ground beef\", \"grams_per_serving\": 115, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"rice\", \"grams_per_serving\": 70, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": true}, {\"name\": \"spring onion\", \"grams_per_serving\": 18, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"garlic\", \"grams_per_serving\": 7, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"soy sauce\", \"grams_per_serving\": 20, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": false}], \"steps\": [\"Cuece el arroz en agua hirviendo con sal y divídelo en cinco porciones en recipientes para llevar al trabajo.\", \"Pica finamente el ajo y la cebolleta.\", \"Saltea la ternera picada en una sartén grande hasta que esté dorada, añade el ajo y cocina un minuto más.\", \"Incorpora la salsa de soja a la carne y mezcla bien durante dos minutos.\", \"Reparte la ternera sobre las bases de arroz y esparce la cebolleta por encima antes de cerrar los recipientes.\"]}"
+ ],
+ "kept_attempt": 3,
+ "attempts": [
+  {
+   "attempt": 1,
+   "problems": 2,
+   "misses": [
+    "kcal 436 vs target 500",
+    "protein 27 g vs target 45 g"
+   ]
+  },
+  {
+   "attempt": 2,
+   "problems": 1,
+   "misses": [
+    "kcal 583 vs target 500"
+   ]
+  },
+  {
+   "attempt": 3,
+   "problems": 1,
+   "misses": [
+    "protein 30 g vs target 45 g"
+   ]
+  }
+ ]
+}

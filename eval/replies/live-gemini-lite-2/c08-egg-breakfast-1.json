@@ -1,0 +1,35 @@
+{
+ "ideas": "{\"ideas\": [{\"idea_id\": \"1\", \"name\": \"Cottage Cheese Veggie Frittata\", \"one_line\": \"Quick skillet frittata with eggs, cottage cheese, spinach and mushrooms.\", \"main_ingredients\": [\"eggs\", \"cottage cheese\", \"spinach\", \"mushrooms\", \"red bell pepper\"], \"rough_macros\": {\"kcal\": 410, \"protein_g\": 32, \"carbs_g\": 12, \"fat_g\": 24}, \"image_prompt\": \"A slice of golden brown frittata loaded with spinach and mushrooms on a simple plate, food photography.\"}, {\"idea_id\": \"2\", \"name\": \"Turkish Menemen\", \"one_line\": \"Savoury Turkish-style eggs cooked in a rich tomato and green pepper stew.\", \"main_ingredients\": [\"eggs\", \"tomato\", \"green bell pepper\", \"onion\"], \"rough_macros\": {\"kcal\": 380, \"protein_g\": 28, \"carbs_g\": 16, \"fat_g\": 22}, \"image_prompt\": \"A small cast-iron pan filled with soft scrambled eggs in a thick tomato and pepper sauce, top-down view.\"}, {\"idea_id\": \"3\", \"name\": \"Spanakopita Egg Muffins\", \"one_line\": \"Baked egg muffins packed with fresh spinach, salty feta and spring onion.\", \"main_ingredients\": [\"eggs\", \"spinach\", \"feta\", \"spring onion\"], \"rough_macros\": {\"kcal\": 395, \"protein_g\": 30, \"carbs_g\": 8, \"fat_g\": 26}, \"image_prompt\": \"Two golden baked egg muffins studded with green spinach and white feta crumbles, close-up shot.\"}, {\"idea_id\": \"4\", \"name\": \"Pea and Ricotta Frittata\", \"one_line\": \"Simple baked frittata using eggs, smooth ricotta and sweet green peas.\", \"main_ingredients\": [\"eggs\", \"ricotta\", \"frozen peas\", \"onion\"], \"rough_macros\": {\"kcal\": 420, \"protein_g\": 29, \"carbs_g\": 18, \"fat_g\": 25}, \"image_prompt\": \"A portion of thick baked frittata showing green peas and creamy ricotta pockets, elegant minimalist plate.\"}]}",
+ "picked_idea_id": "1",
+ "recipe": "{\"idea_id\": \"1\", \"title\": \"Cottage Cheese Veggie Frittata\", \"servings\": 1, \"prep_time_min\": 20, \"ingredients\": [{\"name\": \"eggs\", \"grams_per_serving\": 102, \"units_per_serving\": 2, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"cottage cheese\", \"grams_per_serving\": 200, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"spinach\", \"grams_per_serving\": 150, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"mushrooms\", \"grams_per_serving\": 125, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"red bell pepper\", \"grams_per_serving\": 119, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"salt\", \"grams_per_serving\": 2, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}, {\"name\": \"black pepper\", \"grams_per_serving\": 1, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}], \"steps\": [\"Slice the mushrooms and red bell pepper, and wash the spinach.\", \"Heat a small skillet, add the vegetables, and cook for 5 minutes until soft.\", \"In a bowl, whisk the eggs with cottage cheese, salt, and black pepper.\", \"Pour the egg mixture over the vegetables in the skillet, cook on medium-low until set, then slide onto a plate.\"]}",
+ "reruns": [
+  "{\"idea_id\": \"1\", \"title\": \"Cottage Cheese Veggie Frittata\", \"servings\": 1, \"prep_time_min\": 20, \"ingredients\": [{\"name\": \"eggs\", \"grams_per_serving\": 102, \"units_per_serving\": 2, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false, \"leftover_plan\": \"use_in_another_meal\"}, {\"name\": \"cottage cheese\", \"grams_per_serving\": 140, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"spinach\", \"grams_per_serving\": 150, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"mushrooms\", \"grams_per_serving\": 125, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false, \"leftover_plan\": \"use_in_another_meal\"}, {\"name\": \"red bell pepper\", \"grams_per_serving\": 119, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"salt\", \"grams_per_serving\": 2, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}, {\"name\": \"black pepper\", \"grams_per_serving\": 1, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}], \"steps\": [\"Slice the mushrooms and red bell pepper, and wash the spinach.\", \"Heat a small skillet, add the vegetables, and cook for 5 minutes until soft.\", \"In a bowl, whisk the eggs with cottage cheese, salt, and black pepper.\", \"Pour the egg mixture over the vegetables in the skillet, cook on medium-low until set, then slide onto a plate.\"]}",
+  "{\"idea_id\": \"1\", \"title\": \"Cottage Cheese Veggie Frittata\", \"servings\": 1, \"prep_time_min\": 20, \"ingredients\": [{\"name\": \"eggs\", \"grams_per_serving\": 102, \"units_per_serving\": 2, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false, \"leftover_plan\": \"use_in_another_meal\"}, {\"name\": \"cottage cheese\", \"grams_per_serving\": 200, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"spinach\", \"grams_per_serving\": 150, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"mushrooms\", \"grams_per_serving\": 125, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false, \"leftover_plan\": \"use_in_another_meal\"}, {\"name\": \"red bell pepper\", \"grams_per_serving\": 119, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"salt\", \"grams_per_serving\": 2, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}, {\"name\": \"black pepper\", \"grams_per_serving\": 1, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}], \"steps\": [\"Slice the mushrooms and red bell pepper, and wash the spinach.\", \"Heat a small skillet, add the vegetables, and cook for 5 minutes until soft.\", \"In a bowl, whisk the eggs with cottage cheese, salt, and black pepper.\", \"Pour the egg mixture over the vegetables in the skillet, cook on medium-low until set, then slide onto a plate.\"]}"
+ ],
+ "kept_attempt": 3,
+ "attempts": [
+  {
+   "attempt": 1,
+   "problems": 4,
+   "misses": [
+    "kcal 471 vs target 400",
+    "protein 44 g is more than 20% over target 30 g: cut the protein ingredient"
+   ]
+  },
+  {
+   "attempt": 2,
+   "problems": 2,
+   "misses": [
+    "protein 37 g is more than 20% over target 30 g: cut the protein ingredient"
+   ]
+  },
+  {
+   "attempt": 3,
+   "problems": 2,
+   "misses": [
+    "kcal 471 vs target 400",
+    "protein 44 g is more than 20% over target 30 g: cut the protein ingredient"
+   ]
+  }
+ ]
+}

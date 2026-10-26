@@ -1,0 +1,724 @@
+{
+ "run": "live-gemini-lite",
+ "provider": "gemini",
+ "model": "gemini-3.5-flash-lite",
+ "max_usd": 2.0,
+ "finished": "2026-10-26T09:44:09+00:00",
+ "stopped": null,
+ "prices": {
+  "gemini-3.5-flash-lite": {
+   "input": 0.3,
+   "output": 2.5,
+   "cache_write": null,
+   "cache_read": 0.03,
+   "source": "https://ai.google.dev/gemini-api/docs/pricing (updated 2026-10-22), read 2026-10-26",
+   "valid_until": null
+  }
+ },
+ "calls": 28,
+ "failed_calls": 11,
+ "contract_retries": 0,
+ "input_tokens": 47091,
+ "output_tokens": 9991,
+ "cache_write_tokens": 0,
+ "cache_read_tokens": 0,
+ "total_cost_usd": 0.039104,
+ "meals": 4,
+ "cost_per_meal_mean_usd": 0.009246,
+ "cost_per_meal_max_usd": 0.010329,
+ "latency_mean_s": 1.978,
+ "reruns": 8,
+ "cases_with_reruns": 4,
+ "kept_not_last": [],
+ "cases": [
+  {
+   "case": "c01-greek-chicken",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 2,
+     "misses": [
+      "kcal 639 vs target 450",
+      "protein 58 g is more than 20% over target 45 g: cut the protein ingredient"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": 1,
+     "misses": []
+    },
+    {
+     "attempt": 3,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 3,
+   "calls": 4,
+   "cost_usd": 0.010329,
+   "has_recipe": true
+  },
+  {
+   "case": "c02-salmon-horno",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 1,
+     "misses": [
+      "kcal 659 vs target 500"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": 2,
+     "misses": [
+      "kcal 402 vs target 500",
+      "protein 30 g vs target 40 g"
+     ]
+    },
+    {
+     "attempt": 3,
+     "problems": 1,
+     "misses": [
+      "kcal 606 vs target 500"
+     ]
+    }
+   ],
+   "kept_attempt": 3,
+   "calls": 4,
+   "cost_usd": 0.008973,
+   "has_recipe": true
+  },
+  {
+   "case": "c03-tuna-no-cook",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 2,
+     "misses": [
+      "kcal 524 vs target 450",
+      "protein 68 g is more than 20% over target 45 g: cut the protein ingredient"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": 2,
+     "misses": [
+      "kcal 391 vs target 450"
+     ]
+    },
+    {
+     "attempt": 3,
+     "problems": 1,
+     "misses": [
+      "protein 60 g is more than 20% over target 45 g: cut the protein ingredient"
+     ]
+    }
+   ],
+   "kept_attempt": 3,
+   "calls": 4,
+   "cost_usd": 0.008617,
+   "has_recipe": true
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 2,
+     "misses": [
+      "kcal 712 vs target 500",
+      "protein 56 g is more than 20% over target 45 g: cut the protein ingredient"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": 2,
+     "misses": [
+      "kcal 559 vs target 500",
+      "protein 38 g vs target 45 g"
+     ]
+    },
+    {
+     "attempt": 3,
+     "problems": 1,
+     "misses": [
+      "protein 33 g vs target 45 g"
+     ]
+    }
+   ],
+   "kept_attempt": 3,
+   "calls": 4,
+   "cost_usd": 0.009065,
+   "has_recipe": true
+  },
+  {
+   "case": "c05-vegetarian-lentils",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c06-chicken-pasta-exclude",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c07-pavo-ligero",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 2,
+   "cost_usd": 0.00212,
+   "has_recipe": false
+  },
+  {
+   "case": "c08-egg-breakfast-1",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c14-merluza-patatas",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c15-bolognese-high-protein",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  }
+ ],
+ "call_log": [
+  {
+   "case": "c01-greek-chicken",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 2107,
+   "output_tokens": 613,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 2.291,
+   "cost_usd": 0.002165,
+   "error": null
+  },
+  {
+   "case": "c01-greek-chicken",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 2332,
+   "output_tokens": 635,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 2.239,
+   "cost_usd": 0.002287,
+   "error": null
+  },
+  {
+   "case": "c01-greek-chicken",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 3599,
+   "output_tokens": 837,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 2.36,
+   "cost_usd": 0.003172,
+   "error": null
+  },
+  {
+   "case": "c01-greek-chicken",
+   "stage": "rerun",
+   "attempt": 3,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 3618,
+   "output_tokens": 648,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 1.769,
+   "cost_usd": 0.002705,
+   "error": null
+  },
+  {
+   "case": "c02-salmon-horno",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 2060,
+   "output_tokens": 611,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 1.932,
+   "cost_usd": 0.002145,
+   "error": null
+  },
+  {
+   "case": "c02-salmon-horno",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 2295,
+   "output_tokens": 586,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 2.023,
+   "cost_usd": 0.002154,
+   "error": null
+  },
+  {
+   "case": "c02-salmon-horno",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 3376,
+   "output_tokens": 534,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 1.591,
+   "cost_usd": 0.002348,
+   "error": null
+  },
+  {
+   "case": "c02-salmon-horno",
+   "stage": "rerun",
+   "attempt": 3,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 3304,
+   "output_tokens": 534,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 1.549,
+   "cost_usd": 0.002326,
+   "error": null
+  },
+  {
+   "case": "c03-tuna-no-cook",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 2039,
+   "output_tokens": 561,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 2.085,
+   "cost_usd": 0.002014,
+   "error": null
+  },
+  {
+   "case": "c03-tuna-no-cook",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 2317,
+   "output_tokens": 505,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 2.107,
+   "cost_usd": 0.001958,
+   "error": null
+  },
+  {
+   "case": "c03-tuna-no-cook",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 3374,
+   "output_tokens": 504,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 1.837,
+   "cost_usd": 0.002272,
+   "error": null
+  },
+  {
+   "case": "c03-tuna-no-cook",
+   "stage": "rerun",
+   "attempt": 3,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 3425,
+   "output_tokens": 538,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 1.762,
+   "cost_usd": 0.002373,
+   "error": null
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 2056,
+   "output_tokens": 571,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 2.314,
+   "cost_usd": 0.002044,
+   "error": null
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 2298,
+   "output_tokens": 572,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 2.044,
+   "cost_usd": 0.002119,
+   "error": null
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 3410,
+   "output_tokens": 572,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 1.759,
+   "cost_usd": 0.002453,
+   "error": null
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "stage": "rerun",
+   "attempt": 3,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 3398,
+   "output_tokens": 572,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 1.681,
+   "cost_usd": 0.002449,
+   "error": null
+  },
+  {
+   "case": "c05-vegetarian-lentils",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.226,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  },
+  {
+   "case": "c06-chicken-pasta-exclude",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.256,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  },
+  {
+   "case": "c07-pavo-ligero",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 200,
+   "input_tokens": 2083,
+   "output_tokens": 598,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 2.283,
+   "cost_usd": 0.00212,
+   "error": null
+  },
+  {
+   "case": "c07-pavo-ligero",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.311,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  },
+  {
+   "case": "c08-egg-breakfast-1",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.262,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.261,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.268,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.244,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.201,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.26,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  },
+  {
+   "case": "c14-merluza-patatas",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.255,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  },
+  {
+   "case": "c15-bolognese-high-protein",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.5-flash-lite",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.248,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  }
+ ]
+}

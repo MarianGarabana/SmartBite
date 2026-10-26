@@ -1,0 +1,31 @@
+{
+ "ideas": "{\"ideas\": [{\"idea_id\": \"1\", \"name\": \"Greek yogurt tuna and white bean salad\", \"one_line\": \"Flaked tuna and white beans tossed with onion and parsley, dressed with Greek yogurt and lemon.\", \"main_ingredients\": [\"canned tuna in water\", \"canned white beans\", \"onion\", \"fresh parsley\", \"greek yogurt 0%\", \"lemon juice\"], \"rough_macros\": {\"kcal\": 460, \"protein_g\": 48, \"carbs_g\": 38, \"fat_g\": 12}, \"image_prompt\": \"A fresh tuna and white bean salad in a bowl, mixed with chopped parsley, onion, and a creamy yogurt dressing.\"}, {\"idea_id\": \"2\", \"name\": \"Mediterranean tuna pasta salad\", \"one_line\": \"Wholemeal pasta mixed with canned tuna, sweetcorn, and diced tomato for a quick meal.\", \"main_ingredients\": [\"wholemeal pasta\", \"canned tuna in water\", \"canned sweetcorn\", \"tomato\", \"greek yogurt 0%\", \"lemon juice\"], \"rough_macros\": {\"kcal\": 470, \"protein_g\": 46, \"carbs_g\": 52, \"fat_g\": 10}, \"image_prompt\": \"A bowl of wholemeal pasta mixed with tuna, corn, tomato chunks, and a light yogurt dressing.\"}, {\"idea_id\": \"3\", \"name\": \"Chickpea and tuna salad with mustard\", \"one_line\": \"Canned chickpeas and flaked tuna tossed with cherry tomatoes and spring onion over lettuce.\", \"main_ingredients\": [\"canned chickpeas\", \"canned tuna in water\", \"cherry tomatoes\", \"spring onion\", \"lettuce\", \"mustard\"], \"rough_macros\": {\"kcal\": 445, \"protein_g\": 43, \"carbs_g\": 45, \"fat_g\": 11}, \"image_prompt\": \"A colorful chickpea and tuna salad served on a bed of fresh lettuce with cherry tomatoes.\"}, {\"idea_id\": \"4\", \"name\": \"Stuffed avocado with tuna and bell pepper\", \"one_line\": \"Creamy avocado halves stuffed with tuna, red bell pepper, and a tangy lemon dressing.\", \"main_ingredients\": [\"canned tuna in water\", \"avocado\", \"red bell pepper\", \"lemon juice\", \"mustard\", \"lettuce\"], \"rough_macros\": {\"kcal\": 455, \"protein_g\": 42, \"carbs_g\": 22, \"fat_g\": 23}, \"image_prompt\": \"Halved avocados stuffed with a tuna and red bell pepper mix, placed on crisp lettuce leaves.\"}]}",
+ "picked_idea_id": "1",
+ "recipe": "{\"idea_id\": \"1\", \"title\": \"Greek yogurt tuna and white bean salad\", \"servings\": 3, \"prep_time_min\": 15, \"ingredients\": [{\"name\": \"canned tuna in water\", \"grams_per_serving\": 112, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": false}, {\"name\": \"canned white beans\", \"grams_per_serving\": 133, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": false}, {\"name\": \"onion\", \"grams_per_serving\": 37, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"fresh parsley\", \"grams_per_serving\": 17, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"greek yogurt 0%\", \"grams_per_serving\": 333, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"lemon juice\", \"grams_per_serving\": 15, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": false}, {\"name\": \"salt\", \"grams_per_serving\": 2, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}, {\"name\": \"black pepper\", \"grams_per_serving\": 1, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}], \"steps\": [\"Drain and flake the canned tuna in water into a large mixing bowl.\", \"Rinse and drain the canned white beans, then add them to the bowl.\", \"Finely dice the onion and chop the fresh parsley, and add both to the mixture.\", \"In a small container, whisk together the greek yogurt 0%, lemon juice, salt, and black pepper to create the dressing.\", \"Pour the yogurt dressing over the tuna and bean mixture, and toss gently until well combined.\", \"Divide the salad evenly into 3 meal prep containers and seal tightly for storage.\"]}",
+ "reruns": [
+  "{\"idea_id\": \"1\", \"title\": \"Greek yogurt tuna and white bean salad\", \"servings\": 3, \"prep_time_min\": 15, \"ingredients\": [{\"name\": \"canned tuna in water\", \"grams_per_serving\": 70, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": false}, {\"name\": \"canned white beans\", \"grams_per_serving\": 133, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": false}, {\"name\": \"onion\", \"grams_per_serving\": 37, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false, \"leftover_plan\": \"use_in_another_meal\"}, {\"name\": \"fresh parsley\", \"grams_per_serving\": 17, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false, \"leftover_plan\": \"use_in_another_meal\"}, {\"name\": \"greek yogurt 0%\", \"grams_per_serving\": 200, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"lemon juice\", \"grams_per_serving\": 15, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": false}, {\"name\": \"salt\", \"grams_per_serving\": 2, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}, {\"name\": \"black pepper\", \"grams_per_serving\": 1, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}], \"steps\": [\"Drain and flake the canned tuna in water into a large mixing bowl.\", \"Rinse and drain the canned white beans, then add them to the bowl.\", \"Finely dice the onion and chop the fresh parsley, and add both to the mixture.\", \"In a small container, whisk together the greek yogurt 0%, lemon juice, salt, and black pepper to create the dressing.\", \"Pour the yogurt dressing over the tuna and bean mixture, and toss gently until well combined.\", \"Divide the salad evenly into 3 meal prep containers and seal tightly for storage.\"]}"
+ ],
+ "kept_attempt": 2,
+ "attempts": [
+  {
+   "attempt": 1,
+   "problems": 3,
+   "misses": [
+    "protein 71 g is more than 20% over target 45 g: cut the protein ingredient"
+   ]
+  },
+  {
+   "attempt": 2,
+   "problems": 1,
+   "misses": [
+    "kcal 354 vs target 450"
+   ]
+  },
+  {
+   "attempt": 3,
+   "problems": null,
+   "misses": [],
+   "error": "4 model calls used for this case"
+  }
+ ]
+}

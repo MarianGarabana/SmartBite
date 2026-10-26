@@ -1,7 +1,8 @@
 """Live eval run: the golden cravings through a real model, the same way the browser does it. Paid: run it only
 after Marian confirms. Standard library only (urllib), no SDK.
 
-    .venv/bin/python -m eval.live --provider anthropic|gemini --run <name> [--cases c01,c02] [--dry-run] [--max-usd 2.00]
+    .venv/bin/python -m eval.live --provider anthropic|gemini --run <name> [--model <id>] [--cases c01,c02] [--dry-run]
+        [--max-usd 2.00] [--min-gap <seconds>]
 
 Per case, like web/lib/flow.js and web/lib/llm.js: ideas -> pick the first idea -> recipe -> meal.evaluate -> up to 2
 reruns while code finds macro misses or high_leftover lines, then the attempt with the fewest problems is kept (a tie
@@ -63,12 +64,15 @@ GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai"
 COUNTRY = "ES"  # web/lib/store.js DEFAULT_COUNTRY
 
 PROVIDERS = {
-    "anthropic": {"model": "claude-sonnet-5-5", "env_key": "ANTHROPIC_API_KEY", "url": ANTHROPIC_URL,
+    "anthropic": {"model": "claude-sonnet-5-5", "models": ("claude-sonnet-5-5", "claude-haiku-5-5"),
+                  "env_key": "ANTHROPIC_API_KEY", "url": ANTHROPIC_URL,
                   # the browser sends max_tokens 16000, so no reply is longer
                   "max_output_tokens": MAX_TOKENS},
-    "gemini": {"model": "gemini-3.8-flash", "env_key": "GEMINI_API_KEY", "url": f"{GEMINI_BASE_URL}/chat/completions",
+    "gemini": {"model": "gemini-3.8-flash", "models": ("gemini-3.8-flash", "gemini-3.5-flash-lite"),
+               "env_key": "GEMINI_API_KEY", "url": f"{GEMINI_BASE_URL}/chat/completions",
                # the browser sends no max_tokens: the model's own output limit, 65,536
-               # (https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash, page updated 2026-09-02, read 2026-10-19)
+               # (https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash, page updated 2026-09-02, read 2026-10-19;
+               # gemini-3.5-flash-lite: outputTokenLimit 65536 in the API's models list, read 2026-10-26)
                "max_output_tokens": 65536},
 }
 
@@ -93,6 +97,12 @@ PRICES = {
     "gemini-3.8-flash": {"input": 0.75, "output": 3.75, "cache_write": None, "cache_read": 0.075,
                          "source": "https://ai.google.dev/gemini-api/docs/pricing (updated 2026-10-16), read 2026-10-19",
                          "valid_until": "2026-12-31"},
+    # gemini-3.5-flash-lite, paid tier Standard: input $0.30, output (thinking included) $2.50, context caching $0.03.
+    # No end date listed. Source: https://ai.google.dev/gemini-api/docs/pricing (page "Last updated 2026-10-22 UTC"),
+    # read 2026-10-26. No prompt-size tiers listed.
+    "gemini-3.5-flash-lite": {"input": 0.30, "output": 2.50, "cache_write": None, "cache_read": 0.03,
+                              "source": "https://ai.google.dev/gemini-api/docs/pricing (updated 2026-10-22), read 2026-10-26",
+                              "valid_until": None},
 }
 
 MAX_CALLS_PER_CASE = 4
@@ -325,6 +335,9 @@ class Runner:
     packs: dict = None
     calls: list = field(default_factory=list)
     spent: float = 0.0
+    min_gap_s: float = 0.0  # seconds between call starts, for per-minute rate limits (15 a minute -> 4 s or more)
+    sleep: object = time.sleep
+    last_start: float = None
 
     def __post_init__(self):
         self.model = self.model or PROVIDERS[self.provider]["model"]
@@ -341,7 +354,11 @@ class Runner:
                              f"could cost up to ${worst:.4f}, limit ${self.max_usd:.2f}")
         budget["calls"] += 1
         url, headers, body = build_request(self.provider, self.model, self.key, step, system, messages)
-        start = self.clock()
+        if self.min_gap_s and self.last_start is not None:
+            wait = self.last_start + self.min_gap_s - self.clock()
+            if wait > 0:
+                self.sleep(wait)
+        start = self.last_start = self.clock()
         try:
             status, raw = self.transport(url, headers, json.dumps(body, ensure_ascii=False).encode("utf-8"))
         except Exception as e:  # connection problems: record, no tokens billed
@@ -559,9 +576,9 @@ def _tokens(prompt):
     return math.ceil(len(prompt["system"] + prompt["user"]) / CHARS_PER_TOKEN)
 
 
-def dry_run(provider, cases, max_usd, replies=REPLIES, root=ROOT, packs=None):
+def dry_run(provider, cases, max_usd, replies=REPLIES, root=ROOT, packs=None, model=None):
     """Build every prompt, estimate calls and cost. No network, no key. Returns the report text."""
-    model = PROVIDERS[provider]["model"]
+    model = model or PROVIDERS[provider]["model"]
     p = PRICES[model]
     packs = load_packs() if packs is None else packs
     known = foods()
@@ -639,13 +656,14 @@ def check_prices_valid(model, today=None):
 
 
 def run_live(provider, run, cases, max_usd, key, *, transport=urllib_transport, replies=REPLIES, results=RESULTS,
-             log=print, clock=time.monotonic, packs=None, table=None):
+             log=print, clock=time.monotonic, packs=None, table=None, model=None, min_gap_s=0.0):
     """The paid run. Writes the reply files as each case ends, then the usage files. Returns the usage summary."""
     folder = Path(replies) / run
     if folder.exists() and any(folder.iterdir()):
         raise LiveError(f"refusing to start: {folder} already has replies; pick a new --run name")
     folder.mkdir(parents=True, exist_ok=True)
-    runner = Runner(provider, key, max_usd, transport=transport, log=log, clock=clock, packs=packs, table=table)
+    runner = Runner(provider, key, max_usd, transport=transport, model=model, log=log, clock=clock, packs=packs,
+                    table=table, min_gap_s=min_gap_s)
     summaries, stopped = [], None
     for case in cases:
         log(f"{case['id']}:")
@@ -673,24 +691,32 @@ def main(argv=None, *, transport=urllib_transport, root=ROOT, replies=REPLIES, r
     parser = argparse.ArgumentParser(prog="eval.live", description="Paid live eval run (see the module doc).")
     parser.add_argument("--provider", choices=sorted(PROVIDERS), required=True)
     parser.add_argument("--run", required=True, help="name for eval/replies/<run>/ and eval/results/<run>-usage.*")
+    parser.add_argument("--model", help="a model of that provider with prices in PRICES (default: the web app's)")
     parser.add_argument("--cases", help="comma-separated case ids or prefixes, e.g. c01,c02 (default: all)")
     parser.add_argument("--dry-run", action="store_true", help="build prompts and estimate cost, no network")
     parser.add_argument("--max-usd", type=float, default=2.00, help="hard spend limit for the run (default 2.00)")
+    parser.add_argument("--min-gap", type=float, default=0.0,
+                        help="seconds between call starts, for a per-minute rate limit (default 0)")
     args = parser.parse_args(argv)
     try:
         if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", args.run):
             raise LiveError("--run may use letters, digits, '.', '_' and '-' only")
         if args.max_usd <= 0:
             raise LiveError("--max-usd must be above 0")
+        if args.min_gap < 0:
+            raise LiveError("--min-gap must be 0 or more")
+        model = args.model or PROVIDERS[args.provider]["model"]
+        if model not in PROVIDERS[args.provider]["models"] or model not in PRICES:
+            raise LiveError(f"--model {model!r} is not a priced {args.provider} model "
+                            f"({', '.join(PROVIDERS[args.provider]['models'])})")
         cases = select_cases(load_cases(), args.cases)
         if args.dry_run:
-            print(dry_run(args.provider, cases, args.max_usd, replies=replies, root=root))
+            print(dry_run(args.provider, cases, args.max_usd, replies=replies, root=root, model=model))
             return 0
-        model = PROVIDERS[args.provider]["model"]
         check_prices_valid(model)
         key = load_key(root, PROVIDERS[args.provider]["env_key"])
         summary = run_live(args.provider, args.run, cases, args.max_usd, key, transport=transport, replies=replies,
-                           results=results)
+                           results=results, model=model, min_gap_s=args.min_gap)
     except LiveError as e:
         print(f"eval.live: {e}", file=sys.stderr)
         return 2

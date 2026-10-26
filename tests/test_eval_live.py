@@ -94,7 +94,8 @@ def test_settings_match_the_web_app():
     assert "Your reply did not pass the checks:" in llm
     assert "Reply again with ONLY the corrected JSON object, no other text." in llm
     for p in live.PROVIDERS.values():
-        assert p["model"] in live.PRICES
+        assert p["model"] in p["models"]
+        assert all(m in live.PRICES for m in p["models"])
 
 
 # ---------------------------------------------------------------- request shape
@@ -437,6 +438,48 @@ def test_main_refuses_without_env(tmp_path, capsys):
                      replies=tmp_path / "r", results=tmp_path / "res")
     assert code == 2 and "refusing to start" in capsys.readouterr().err
     assert not (tmp_path / "r").exists()
+
+
+def test_main_refuses_an_unpriced_or_wrong_provider_model(tmp_path, capsys):
+    for model in ("gemini-9-ultra", "claude-sonnet-5-5"):
+        code = live.main(["--provider", "gemini", "--model", model, "--run", "x", "--dry-run"],
+                         transport=FakeTransport([]), root=tmp_path, results=tmp_path / "res")
+        assert code == 2 and "is not a priced gemini model" in capsys.readouterr().err
+
+
+def test_model_option_reaches_requests_and_usage(tmp_path, monkeypatch):
+    patch_evaluate(monkeypatch, [])
+    git_repo(tmp_path)
+    (tmp_path / ".env").write_text(f"GEMINI_API_KEY={KEY}\n")
+    (tmp_path / ".gitignore").write_text(".env\n")
+    t = FakeTransport([gemini_reply(IDEAS), gemini_reply(RECIPE)])
+    code = live.main(["--provider", "gemini", "--model", "gemini-3.5-flash-lite", "--run", "lite", "--cases", "c01"],
+                     transport=t, root=tmp_path, replies=tmp_path / "r", results=tmp_path / "res")
+    assert code == 0 and [r["body"]["model"] for r in t.requests] == ["gemini-3.5-flash-lite"] * 2
+    usage = json.loads((tmp_path / "res" / "lite-usage.json").read_text())
+    assert usage["model"] == "gemini-3.5-flash-lite" and {c["model"] for c in usage["call_log"]} == {"gemini-3.5-flash-lite"}
+
+
+def test_min_gap_waits_between_call_starts(monkeypatch):
+    patch_evaluate(monkeypatch, [])
+    ticks, sleeps = iter(range(1000)), []
+    r = live.Runner("gemini", KEY, 2.0, transport=FakeTransport([gemini_reply(IDEAS), gemini_reply(RECIPE)]),
+                    log=QUIET, clock=ticks.__next__, min_gap_s=4.5, sleep=sleeps.append)
+    r.run_case(CASE)
+    # call 1 starts at 0 and ends at 1; the gap check reads 2, so it waits 2.5 s and call 2 starts at 3
+    assert sleeps == [2.5] and len(r.calls) == 2
+
+
+def test_main_refuses_a_negative_min_gap(tmp_path, capsys):
+    code = live.main(["--provider", "gemini", "--run", "x", "--dry-run", "--min-gap", "-1"],
+                     transport=FakeTransport([]), root=tmp_path, results=tmp_path / "res")
+    assert code == 2 and "--min-gap must be 0 or more" in capsys.readouterr().err
+
+
+def test_flash_lite_cost_math():
+    usage = {"input_tokens": 1_000_000, "output_tokens": 1_000_000, "cache_read_tokens": 1_000_000,
+             "cache_write_tokens": 0}
+    assert live.cost_usd("gemini-3.5-flash-lite", usage) == pytest.approx(0.30 + 2.50 + 0.03)
 
 
 # ---------------------------------------------------------------- dry run
