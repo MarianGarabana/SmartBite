@@ -78,8 +78,28 @@ The one remaining miss is a turkey and sweet potato meal at 502 kcal against a 4
 
 ### Cost and model comparison
 
-- Cost per meal, measured on one real API run: <!-- TODO: cost per meal (one real API run, tokens and USD) -->
-- Claude vs Gemini on the golden set: <!-- TODO: Claude vs Gemini table (same 15 cravings, same checks) -->
+SmartBite runs on the user's own key, so the cost of a meal is its model calls: one for the 4 ideas, one for the recipe, and one more for each rerun.
+
+**Cost per meal, measured on Gemini.** Live calls to the Gemini API (`gemini-3.8-flash`, through Google's OpenAI-compatible endpoint, the same route as the web app's experimental adapter), in five runs from 2026-10-20 to 2026-10-26 (four of them produced meals), on 10 of the 15 golden cravings. The other 5 did not finish: the free tier answered with 503 (high demand) and 429 (quota exceeded) errors, or dropped the connection. The key was on the free tier, so nothing was billed. The costs below are estimated at Google's paid prices: $0.75 per million input tokens and $3.75 per million output tokens (read 2026-10-19).
+
+| Measure | 10 meals |
+|---|---|
+| Cost per meal, mean (median) | $0.039 ($0.033) |
+| Cost per meal, lowest to highest | $0.021 to $0.071 |
+| Model calls per meal, mean | 2.7 (3 of the 27 calls failed and cost nothing) |
+| Tokens per meal, mean | 5,726 in, 9,335 out |
+| Time per meal, mean | 409 s (168 s per answered call on the free tier) |
+
+Extra calls drive the cost. The four meals with no rerun cost $0.021 to $0.036. The three whose kept recipe came from a rerun cost $0.041 to $0.071. The turkey and sweet potato meal cost $0.069: its first recipe reply broke the reply format and was asked for again. Per-meal detail: [run 1](eval/results/live-gemini-v3-usage.md) (c02, c03), [run 2](eval/results/live-gemini-v3b-usage.md) (c01, c04, c05, c15), [run 3](eval/results/live-gemini-v3d-usage.md) (c14) and [run 4](eval/results/live-gemini-v3e-usage.md) (c07, c10, c12). The cost with Claude, the app's default model, has not been measured with a real API run.
+
+**Claude and Gemini on the golden set.**
+
+| Run | Model and route | Cravings | Checks passed | macros_vs_target |
+|---|---|---|---|---|
+| v3 | Claude, replies written by Claude Code subagents from the same prompts (not the API) | 15 | 165/165 | 15/15 |
+| live-gemini | `gemini-3.8-flash`, live API calls | 10 of 15 | 108/110 | 8/10 |
+
+This is not a like-for-like comparison: the two runs reached the model by different routes, and Gemini covers 10 cravings. Gemini's two misses are both macros: the high-protein Bolognese at 691 kcal against a 600 kcal target, and the turkey and sweet potato meal at 40 g protein against a 45 g target. Both rerun calls failed (a 429 quota error, then a 503 high demand error), so no second recipe was written. The [results file](eval/results/live-gemini.md) scores all 15 cravings and counts the 5 without a reply as failed (108/165).
 
 ## Data and licenses
 
@@ -130,7 +150,7 @@ One Vercel project with two services: the FastAPI engine and the Next.js web app
 - **The engine keeps nothing.** `api/index.py` reads the request, computes the meal and returns it. The engine has no database, writes no files and makes no outside calls while it evaluates a meal. When the engine fails, it logs one line to stderr with an error id, the error type, code locations and the request's size and counts, never the request body, its values, headers or a key. Vercel, as the host, has its own request logs, which this code does not control.
 - **What goes where.** Your craving, form and Kitchen Profile go from your browser to the model provider, under that provider's terms. The form, profile, picked idea and recipe go to the engine.
 - **AI labels.** Ideas, recipes and the demo photos are labeled AI-generated in the app.
-- **Providers.** Anthropic is the tested provider (Claude Sonnet 5.5 by default, Claude Haiku 5.5 as an option). An OpenAI-compatible adapter (OpenAI, OpenRouter, Gemini, Ollama on your own computer) is marked experimental: it was evaluated with Claude only.
+- **Providers.** Anthropic is the tested provider (Claude Sonnet 5.5 by default, Claude Haiku 5.5 as an option). An OpenAI-compatible adapter (OpenAI, OpenRouter, Gemini, Ollama on your own computer) is marked experimental: Gemini has been run through it on 10 of the 15 golden cravings (above); other models have not been tested.
 
 ## Limitations
 

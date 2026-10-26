@@ -22,7 +22,7 @@ export const ANTHROPIC_MODELS = [
 ];
 export const DEFAULT_ANTHROPIC_MODEL = ANTHROPIC_MODELS[0].id;
 
-export const EXPERIMENTAL_LABEL = "Experimental: evaluated with Claude only.";
+export const EXPERIMENTAL_LABEL = "Experimental: tested with Gemini on 10 of 15 sample meals.";
 
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "0.0.0.0", "[::1]"]);
 export const isLocalSite = (hostname) => LOCAL_HOSTS.has(String(hostname || "").toLowerCase());

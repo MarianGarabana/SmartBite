@@ -9,7 +9,7 @@ Public, open-source version of Marian's personal SmartBite. Plan and phases: `PL
 - Exception (decided 2026-10-19): Marian's 13 saved meals and their Gemini photos ship as demo meals, with all store data removed and macros and packs recomputed by this engine. Photos carry an "AI-generated photo" label.
 - No Alcampo or other store data (product names, prices, links, labels, EANs collected from store pages). No scrapers.
 - No BEDCA values (AESAN terms forbid non-personal electronic use without written permission).
-- No API keys. Users bring their own key; it stays in their browser. Providers: Anthropic (tested) and any OpenAI-compatible endpoint (OpenAI, OpenRouter, Gemini, Ollama), labeled "experimental: evaluated with Claude only".
+- No API keys. Users bring their own key; it stays in their browser. Providers: Anthropic (tested) and any OpenAI-compatible endpoint (OpenAI, OpenRouter, Gemini, Ollama), labeled "experimental: tested with Gemini on 10 of 15 sample meals".
 - Small hand-made test fixtures are fine (fake links like `https://x/...`).
 
 ## Data and licenses

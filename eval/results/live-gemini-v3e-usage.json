@@ -1,0 +1,402 @@
+{
+ "run": "live-gemini-v3e",
+ "provider": "gemini",
+ "model": "gemini-3.8-flash",
+ "max_usd": 2.0,
+ "finished": "2026-10-26T09:06:54+00:00",
+ "stopped": null,
+ "prices": {
+  "gemini-3.8-flash": {
+   "input": 0.75,
+   "output": 3.75,
+   "cache_write": null,
+   "cache_read": 0.075,
+   "source": "https://ai.google.dev/gemini-api/docs/pricing (updated 2026-10-16), read 2026-10-19",
+   "valid_until": "2026-12-31"
+  }
+ },
+ "calls": 15,
+ "failed_calls": 7,
+ "contract_retries": 1,
+ "input_tokens": 19745,
+ "output_tokens": 33392,
+ "cache_write_tokens": 0,
+ "cache_read_tokens": 0,
+ "total_cost_usd": 0.140028,
+ "meals": 3,
+ "cost_per_meal_mean_usd": 0.046676,
+ "cost_per_meal_max_usd": 0.068658,
+ "latency_mean_s": 250.893,
+ "reruns": 3,
+ "cases_with_reruns": 3,
+ "kept_not_last": [
+  "c10-pork-stir-fry",
+  "c12-turkey-sweet-potato"
+ ],
+ "cases": [
+  {
+   "case": "c06-chicken-pasta-exclude",
+   "status": "error",
+   "error": "HTTP None: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1028)>",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c07-pavo-ligero",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 2,
+     "misses": [
+      "fat 10 g over max 10 g"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 2,
+   "calls": 3,
+   "cost_usd": 0.045837,
+   "has_recipe": true
+  },
+  {
+   "case": "c08-egg-breakfast-1",
+   "status": "error",
+   "error": "HTTP None: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1028)>",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "status": "error",
+   "error": "HTTP None: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1028)>",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 1,
+     "misses": []
+    },
+    {
+     "attempt": 2,
+     "problems": null,
+     "misses": [],
+     "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 3,
+   "cost_usd": 0.025533,
+   "has_recipe": true
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "status": "error",
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 1,
+     "misses": [
+      "protein 40 g vs target 45 g"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": null,
+     "misses": [],
+     "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 4,
+   "cost_usd": 0.068658,
+   "has_recipe": true
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "status": "error",
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  }
+ ],
+ "call_log": [
+  {
+   "case": "c06-chicken-pasta-exclude",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": null,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 10.123,
+   "cost_usd": 0.0,
+   "error": "HTTP None: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1028)>"
+  },
+  {
+   "case": "c07-pavo-ligero",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 2083,
+   "output_tokens": 2900,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 222.816,
+   "cost_usd": 0.012437,
+   "error": null
+  },
+  {
+   "case": "c07-pavo-ligero",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 2324,
+   "output_tokens": 4494,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 504.912,
+   "cost_usd": 0.018596,
+   "error": null
+  },
+  {
+   "case": "c07-pavo-ligero",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 3534,
+   "output_tokens": 3241,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 254.058,
+   "cost_usd": 0.014804,
+   "error": null
+  },
+  {
+   "case": "c08-egg-breakfast-1",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": null,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 10.023,
+   "cost_usd": 0.0,
+   "error": "HTTP None: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1028)>"
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": null,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 10.119,
+   "cost_usd": 0.0,
+   "error": "HTTP None: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1028)>"
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 2077,
+   "output_tokens": 1889,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 25.839,
+   "cost_usd": 0.008641,
+   "error": null
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 2283,
+   "output_tokens": 4048,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 147.498,
+   "cost_usd": 0.016892,
+   "error": null
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 23.722,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 31.723,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 2074,
+   "output_tokens": 2479,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 182.646,
+   "cost_usd": 0.010852,
+   "error": null
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 2310,
+   "output_tokens": 12852,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 305.459,
+   "cost_usd": 0.049927,
+   "error": null,
+   "contract_errors": [
+    "reply is not valid JSON (Expecting property name enclosed in double quotes at character 873). Reply with ONLY the JSON object."
+   ]
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 2,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 3060,
+   "output_tokens": 1489,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 363.918,
+   "cost_usd": 0.007879,
+   "error": null
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 40.63,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 6.0,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  }
+ ]
+}
