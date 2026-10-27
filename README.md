@@ -80,27 +80,27 @@ The one remaining miss is a turkey and sweet potato meal at 502 kcal against a 4
 
 SmartBite runs on the user's own key, so the cost of a meal is its model calls: one for the 4 ideas, one for the recipe, and one more for each rerun.
 
-**Cost per meal, measured on Gemini.** Live calls to the Gemini API through Google's OpenAI-compatible endpoint, the same route as the web app's experimental adapter, with two models. `gemini-3.8-flash`, the app's Gemini default, ran in five runs from 2026-10-20 to 2026-10-26 (four of them produced meals) and finished 10 of the 15 golden cravings. The other 5 did not finish: the free tier answered with 503 (high demand) and 429 (quota exceeded) errors, or dropped the connection. `gemini-3.5-flash-lite`, a cheaper model a user can type in the Model field, finished all 15 in one run on 2026-10-26, with 5 s between calls to stay under the free tier's 15 requests per minute (a first run without the gap hit that limit after 16 calls and is not used). The key was on the free tier, so nothing was billed. The costs below are estimated at Google's paid prices per million input and output tokens: $0.75 and $3.75 for 3.8 Flash (read 2026-10-19), $0.30 and $2.50 for 3.5 Flash-Lite (read 2026-10-26).
+**Cost per meal, measured on Gemini.** Live calls to the Gemini API through Google's OpenAI-compatible endpoint, the same route as the web app's experimental adapter, with two models. `gemini-3.8-flash`, the app's Gemini default, ran in six runs from 2026-10-20 to 2026-10-27 (five of them produced meals) and finished 12 of the 15 golden cravings. The other 3 did not finish: the free tier answered with 503 (high demand) and 429 (quota exceeded) errors, or the connection failed. `gemini-3.5-flash-lite`, a cheaper model a user can type in the Model field, finished all 15 in one run on 2026-10-26, with 5 s between calls to stay under the free tier's 15 requests per minute (a first run without the gap hit that limit after 16 calls and is not used). The key was on the free tier, so nothing was billed. The costs below are estimated at Google's paid prices per million input and output tokens: $0.75 and $3.75 for 3.8 Flash (read 2026-10-19), $0.30 and $2.50 for 3.5 Flash-Lite (read 2026-10-26).
 
-| Measure | 3.8 Flash, 10 meals | 3.5 Flash-Lite, 15 meals |
+| Measure | 3.8 Flash, 12 meals | 3.5 Flash-Lite, 15 meals |
 |---|---|---|
-| Cost per meal, mean (median) | $0.039 ($0.033) | $0.008 ($0.008) |
+| Cost per meal, mean (median) | $0.038 ($0.031) | $0.008 ($0.008) |
 | Cost per meal, lowest to highest | $0.021 to $0.071 | $0.004 to $0.010 |
-| Model calls per meal, mean | 2.7 (3 of the 27 calls failed and cost nothing) | 3.5 (none failed) |
-| Tokens per meal, mean | 5,726 in, 9,335 out | 9,339 in, 1,992 out |
-| Time per meal, mean | 409 s (168 s per answered call on the free tier) | 7 s (2 s per call, not counting the 5 s gaps) |
+| Model calls per meal, mean | 2.6 (3 of the 31 calls failed and cost nothing) | 3.5 (none failed) |
+| Tokens per meal, mean | 5,508 in, 9,013 out | 9,339 in, 1,992 out |
+| Time per meal, mean | 452 s (192 s per answered call on the free tier) | 7 s (2 s per call, not counting the 5 s gaps) |
 
-With 3.8 Flash, extra calls drive the cost. The four meals with no rerun cost $0.021 to $0.036. The three whose kept recipe came from a rerun cost $0.041 to $0.071. The turkey and sweet potato meal cost $0.069: its first recipe reply broke the reply format and was asked for again. Per-meal detail: [run 1](eval/results/live-gemini-v3-usage.md) (c02, c03), [run 2](eval/results/live-gemini-v3b-usage.md) (c01, c04, c05, c15), [run 3](eval/results/live-gemini-v3d-usage.md) (c14) and [run 4](eval/results/live-gemini-v3e-usage.md) (c07, c10, c12). Flash-Lite costs about a fifth as much per meal although it makes more calls: its replies are short (1,992 output tokens per meal against 9,335), and 14 of its 15 meals needed a rerun. Per-meal detail: [Flash-Lite run](eval/results/live-gemini-lite-2-usage.md). The cost with Claude, the app's default model, has not been measured with a real API run.
+With 3.8 Flash, extra calls drive the cost. The six meals with no rerun cost $0.021 to $0.036. The three whose kept recipe came from a rerun cost $0.041 to $0.071. The turkey and sweet potato meal cost $0.069: its first recipe reply broke the reply format and was asked for again. Per-meal detail: [run 1](eval/results/live-gemini-v3-usage.md) (c02, c03), [run 2](eval/results/live-gemini-v3b-usage.md) (c01, c04, c05, c15), [run 3](eval/results/live-gemini-v3d-usage.md) (c14), [run 4](eval/results/live-gemini-v3e-usage.md) (c07, c10, c12) and [run 5](eval/results/live-gemini-v3f-usage.md) (c09, c11). Flash-Lite costs about a fifth as much per meal although it makes more calls: its replies are short (1,992 output tokens per meal against 9,013), and 14 of its 15 meals needed a rerun. Per-meal detail: [Flash-Lite run](eval/results/live-gemini-lite-2-usage.md). The cost with Claude, the app's default model, has not been measured with a real API run.
 
 **Claude and Gemini on the golden set.**
 
 | Run | Model and route | Cravings | Checks passed | macros_vs_target |
 |---|---|---|---|---|
 | v3 | Claude, replies written by Claude Code subagents from the same prompts (not the API) | 15 | 165/165 | 15/15 |
-| live-gemini | `gemini-3.8-flash`, live API calls | 10 of 15 | 108/110 | 8/10 |
+| live-gemini | `gemini-3.8-flash`, live API calls | 12 of 15 | 130/132 | 10/12 |
 | live-gemini-lite-2 | `gemini-3.5-flash-lite`, live API calls | 15 of 15 | 157/165 | 7/15 |
 
-This is not a like-for-like comparison: the two runs reached the model by different routes, and Gemini covers 10 cravings. Gemini's two misses are both macros: the high-protein Bolognese at 691 kcal against a 600 kcal target, and the turkey and sweet potato meal at 40 g protein against a 45 g target. Both rerun calls failed (a 429 quota error, then a 503 high demand error), so no second recipe was written. The [results file](eval/results/live-gemini.md) scores all 15 cravings and counts the 5 without a reply as failed (108/165).
+This is not a like-for-like comparison: the two runs reached the model by different routes, and Gemini covers 12 cravings. Gemini's two misses are both macros: the high-protein Bolognese at 691 kcal against a 600 kcal target, and the turkey and sweet potato meal at 40 g protein against a 45 g target. Both rerun calls failed (a 429 quota error, then a 503 high demand error), so no second recipe was written. The [results file](eval/results/live-gemini.md) scores all 15 cravings and counts the 3 without a reply as failed (130/165).
 
 Flash-Lite passes every format and food check but misses the macro targets on 8 of 15 meals. Its first recipe hit the targets in 2 of 15 meals, and its reruns often overshoot the other way: the chicken pasta went from 737 kcal to on target, then back to 654 kcal against a 500 kcal target. The scorer checks the last recipe. For that chicken pasta the app would show the second recipe, the one with the fewest problems, so by what the app shows Flash-Lite hits the macros in 8 of 15. [Results file](eval/results/live-gemini-lite-2.md).
 
@@ -153,7 +153,7 @@ One Vercel project with two services: the FastAPI engine and the Next.js web app
 - **The engine keeps nothing.** `api/index.py` reads the request, computes the meal and returns it. The engine has no database, writes no files and makes no outside calls while it evaluates a meal. When the engine fails, it logs one line to stderr with an error id, the error type, code locations and the request's size and counts, never the request body, its values, headers or a key. Vercel, as the host, has its own request logs, which this code does not control.
 - **What goes where.** Your craving, form and Kitchen Profile go from your browser to the model provider, under that provider's terms. The form, profile, picked idea and recipe go to the engine.
 - **AI labels.** Ideas, recipes and the demo photos are labeled AI-generated in the app.
-- **Providers.** Anthropic is the tested provider (Claude Sonnet 5.5 by default, Claude Haiku 5.5 as an option). An OpenAI-compatible adapter (OpenAI, OpenRouter, Gemini, Ollama on your own computer) is marked experimental: Gemini has been run through it (3.8 Flash on 10 of the 15 golden cravings, 3.5 Flash-Lite on all 15, above); other models have not been tested.
+- **Providers.** Anthropic is the tested provider (Claude Sonnet 5.5 by default, Claude Haiku 5.5 as an option). An OpenAI-compatible adapter (OpenAI, OpenRouter, Gemini, Ollama on your own computer) is marked experimental: Gemini has been run through it (3.8 Flash on 12 of the 15 golden cravings, 3.5 Flash-Lite on all 15, above); other models have not been tested.
 
 ## Limitations
 

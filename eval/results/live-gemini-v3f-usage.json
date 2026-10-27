@@ -1,0 +1,211 @@
+{
+ "run": "live-gemini-v3f",
+ "provider": "gemini",
+ "model": "gemini-3.8-flash",
+ "max_usd": 2.0,
+ "finished": "2026-10-27T12:26:55+00:00",
+ "stopped": null,
+ "prices": {
+  "gemini-3.8-flash": {
+   "input": 0.75,
+   "output": 3.75,
+   "cache_write": null,
+   "cache_read": 0.075,
+   "source": "https://ai.google.dev/gemini-api/docs/pricing (updated 2026-10-16), read 2026-10-19",
+   "valid_until": "2026-12-31"
+  }
+ },
+ "calls": 7,
+ "failed_calls": 3,
+ "contract_retries": 0,
+ "input_tokens": 8834,
+ "output_tokens": 14802,
+ "cache_write_tokens": 0,
+ "cache_read_tokens": 0,
+ "total_cost_usd": 0.062132,
+ "meals": 2,
+ "cost_per_meal_mean_usd": 0.031066,
+ "cost_per_meal_max_usd": 0.032182,
+ "latency_mean_s": 334.795,
+ "reruns": 0,
+ "cases_with_reruns": 0,
+ "kept_not_last": [],
+ "cases": [
+  {
+   "case": "c06-chicken-pasta-exclude",
+   "status": "error",
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c08-egg-breakfast-1",
+   "status": "error",
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 2,
+   "cost_usd": 0.02995,
+   "has_recipe": true
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 2,
+   "cost_usd": 0.032182,
+   "has_recipe": true
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "status": "error",
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  }
+ ],
+ "call_log": [
+  {
+   "case": "c06-chicken-pasta-exclude",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 2.268,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c08-egg-breakfast-1",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 2.952,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 2079,
+   "output_tokens": 3349,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 156.964,
+   "cost_usd": 0.014118,
+   "error": null
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 2330,
+   "output_tokens": 3756,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 366.201,
+   "cost_usd": 0.015832,
+   "error": null
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 2088,
+   "output_tokens": 2411,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 241.451,
+   "cost_usd": 0.010607,
+   "error": null
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 2337,
+   "output_tokens": 5286,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 574.563,
+   "cost_usd": 0.021575,
+   "error": null
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 14.412,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  }
+ ]
+}
