@@ -68,11 +68,12 @@ PROVIDERS = {
                   "env_key": "ANTHROPIC_API_KEY", "url": ANTHROPIC_URL,
                   # the browser sends max_tokens 16000, so no reply is longer
                   "max_output_tokens": MAX_TOKENS},
-    "gemini": {"model": "gemini-3.8-flash", "models": ("gemini-3.8-flash", "gemini-3.5-flash-lite"),
+    "gemini": {"model": "gemini-3.8-flash", "models": ("gemini-3.8-flash", "gemini-3.5-flash-lite", "gemini-3.6-flash"),
                "env_key": "GEMINI_API_KEY", "url": f"{GEMINI_BASE_URL}/chat/completions",
                # the browser sends no max_tokens: the model's own output limit, 65,536
                # (https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash, page updated 2026-09-02, read 2026-10-19;
-               # gemini-3.5-flash-lite: outputTokenLimit 65536 in the API's models list, read 2026-10-26)
+               # gemini-3.5-flash-lite: outputTokenLimit 65536 in the API's models list, read 2026-10-26;
+               # gemini-3.6-flash: outputTokenLimit 65536 in the API's models list, read 2026-10-27)
                "max_output_tokens": 65536},
 }
 
@@ -103,6 +104,12 @@ PRICES = {
     "gemini-3.5-flash-lite": {"input": 0.30, "output": 2.50, "cache_write": None, "cache_read": 0.03,
                               "source": "https://ai.google.dev/gemini-api/docs/pricing (updated 2026-10-22), read 2026-10-26",
                               "valid_until": None},
+    # gemini-3.6-flash, paid tier Standard: input $0.75, output (thinking included) $3.75, context caching $0.075
+    # through 2026-12-31; from 2027-01-01 $1.50 / $7.50 / $0.15. Source: https://ai.google.dev/gemini-api/docs/pricing
+    # (page "Last updated 2026-10-27 UTC"), read 2026-10-27. No prompt-size tiers listed.
+    "gemini-3.6-flash": {"input": 0.75, "output": 3.75, "cache_write": None, "cache_read": 0.075,
+                         "source": "https://ai.google.dev/gemini-api/docs/pricing (updated 2026-10-27), read 2026-10-27",
+                         "valid_until": "2026-12-31"},
 }
 
 MAX_CALLS_PER_CASE = 4

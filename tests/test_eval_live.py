@@ -482,6 +482,14 @@ def test_flash_lite_cost_math():
     assert live.cost_usd("gemini-3.5-flash-lite", usage) == pytest.approx(0.30 + 2.50 + 0.03)
 
 
+def test_flash_36_cost_math_and_end_date():
+    usage = {"input_tokens": 1_000_000, "output_tokens": 1_000_000, "cache_read_tokens": 1_000_000,
+             "cache_write_tokens": 0}
+    assert live.cost_usd("gemini-3.6-flash", usage) == pytest.approx(0.75 + 3.75 + 0.075)
+    assert live.PRICES["gemini-3.6-flash"]["valid_until"] == "2026-12-31"
+    assert "gemini-3.6-flash" in live.PROVIDERS["gemini"]["models"]
+
+
 # ---------------------------------------------------------------- dry run
 
 @pytest.mark.parametrize("provider", ["anthropic", "gemini"])
