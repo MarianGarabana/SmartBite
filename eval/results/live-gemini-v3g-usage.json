@@ -1,0 +1,150 @@
+{
+ "run": "live-gemini-v3g",
+ "provider": "gemini",
+ "model": "gemini-3.8-flash",
+ "max_usd": 2.0,
+ "finished": "2026-10-27T12:55:38+00:00",
+ "stopped": null,
+ "prices": {
+  "gemini-3.8-flash": {
+   "input": 0.75,
+   "output": 3.75,
+   "cache_write": null,
+   "cache_read": 0.075,
+   "source": "https://ai.google.dev/gemini-api/docs/pricing (updated 2026-10-16), read 2026-10-19",
+   "valid_until": "2026-12-31"
+  }
+ },
+ "calls": 5,
+ "failed_calls": 3,
+ "contract_retries": 1,
+ "input_tokens": 4162,
+ "output_tokens": 6238,
+ "cache_write_tokens": 0,
+ "cache_read_tokens": 0,
+ "total_cost_usd": 0.026515,
+ "meals": 0,
+ "cost_per_meal_mean_usd": null,
+ "cost_per_meal_max_usd": null,
+ "latency_mean_s": 331.029,
+ "reruns": 0,
+ "cases_with_reruns": 0,
+ "kept_not_last": [],
+ "cases": [
+  {
+   "case": "c06-chicken-pasta-exclude",
+   "status": "error",
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 2,
+   "cost_usd": 0.014417,
+   "has_recipe": false
+  },
+  {
+   "case": "c08-egg-breakfast-1",
+   "status": "error",
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "status": "error",
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 2,
+   "cost_usd": 0.012098,
+   "has_recipe": false
+  }
+ ],
+ "call_log": [
+  {
+   "case": "c06-chicken-pasta-exclude",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 2082,
+   "output_tokens": 3428,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 333.717,
+   "cost_usd": 0.014417,
+   "error": null,
+   "contract_errors": [
+    "reply is not valid JSON (Expecting ',' delimiter at character 2226). Reply with ONLY the JSON object."
+   ]
+  },
+  {
+   "case": "c06-chicken-pasta-exclude",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 2,
+   "model": "gemini-3.8-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 1.548,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c08-egg-breakfast-1",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 1.113,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 200,
+   "input_tokens": 2080,
+   "output_tokens": 2810,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 328.342,
+   "cost_usd": 0.012098,
+   "error": null
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.8-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 30.473,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  }
+ ]
+}
