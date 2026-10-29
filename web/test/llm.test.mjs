@@ -163,6 +163,20 @@ test("Ollama preset is offered only when the site runs on this computer", async 
   assert.equal(presetAvailable(presetById("openai"), "smartbite.example.app"), true);
 });
 
+test("the hosted site calls only the listed model hosts or this computer; a local copy calls any", async () => {
+  const { HOSTED_LLM_ORIGINS, endpointAllowed } = await import("../lib/providers.js");
+  assert.deepEqual(HOSTED_LLM_ORIGINS, ["https://api.anthropic.com", "https://api.openai.com", "https://openrouter.ai",
+    "https://generativelanguage.googleapis.com"]);
+  const site = "smartbite.example.app";
+  assert.equal(endpointAllowed("https://openrouter.ai/api/v1", site), true);
+  assert.equal(endpointAllowed("http://localhost:11434/v1", site), true);
+  assert.equal(endpointAllowed("http://127.0.0.1:1234/v1", site), true);
+  assert.equal(endpointAllowed("https://api.together.xyz/v1", site), false);
+  assert.equal(endpointAllowed("https://api.openai.com.evil.example/v1", site), false);
+  assert.equal(endpointAllowed("not a url", site), false);
+  assert.equal(endpointAllowed("https://api.together.xyz/v1", "localhost"), true);
+});
+
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 const PYTHON = path.join(ROOT, ".venv", "bin", "python");
 const ing = (name) => ({ name, grams_per_serving: 100, units_per_serving: 0, storage: "fresh", pantry: false, dry: false });

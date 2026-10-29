@@ -61,3 +61,25 @@ test("footer links to the source code and says it is not medical advice", async 
   await expect(footer).toContainText("Not medical advice.");
   await expect(page.getByRole("heading", { name: "Hosting and logs" })).toBeVisible();
 });
+
+test("security headers are set, and with the CSP on no page breaks a rule", async ({ page }) => {
+  const violations = [];
+  await page.addInitScript(() => {
+    document.addEventListener("securitypolicyviolation", (e) => console.error(`CSP violation: ${e.violatedDirective} ${e.blockedURI}`));
+  });
+  page.on("console", (m) => { if (m.text().startsWith("CSP violation")) violations.push(m.text()); });
+  const res = await page.goto("/");
+  const headers = res.headers();
+  expect(headers["x-content-type-options"]).toBe("nosniff");
+  expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
+  expect(headers["x-powered-by"]).toBeUndefined();
+  const csp = headers["content-security-policy"] || headers["content-security-policy-report-only"];
+  test.skip(!csp, "dev server runs without SMARTBITE_CSP: start it with SMARTBITE_CSP=enforce to check the policy");
+  expect(csp).toContain("connect-src 'self' https://api.anthropic.com");
+  expect(csp).toContain("frame-ancestors 'none'");
+  for (const path of ["/?tab=recipes", "/?tab=make-meal", "/?tab=cart", "/profile", "/privacy", `/recipes/${DEMO_SLUG}`]) {
+    await page.goto(path);
+    await page.waitForLoadState("networkidle");
+  }
+  expect(violations).toEqual([]);
+});

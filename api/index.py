@@ -59,6 +59,21 @@ def _error(status, errors):
     return JSONResponse({"errors": errors}, status_code=status)
 
 
+# JSON only: nothing here may be framed, sniffed as another type or run as a page
+SECURITY_HEADERS = {
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "no-referrer",
+    "Content-Security-Policy": "default-src 'none'; frame-ancestors 'none'",
+}
+
+
+@app.middleware("http")
+async def security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers.update(SECURITY_HEADERS)
+    return response
+
+
 @app.get("/api/health")
 def health():
     return {"status": "ok"}

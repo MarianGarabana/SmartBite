@@ -39,10 +39,23 @@ export const OPENAI_PRESETS = [
     localOnly: true,
     cors: "Works when SmartBite itself runs on this computer (localhost). Ollama blocks browser calls from other sites unless you start it with OLLAMA_ORIGINS set to this site's address." },
   { id: "custom", label: "Other OpenAI-compatible endpoint", baseUrl: "", model: "", keyNeeded: false,
-    cors: "Works only if that endpoint allows calls from a browser (CORS)." },
+    cors: "Works only if that endpoint allows calls from a browser (CORS). The hosted site reaches only the endpoints above and your own computer (localhost); for any other, run SmartBite on your computer." },
 ];
 
 export const presetById = (id) => OPENAI_PRESETS.find((p) => p.id === id) || OPENAI_PRESETS[0];
 
 // A preset is offered only where the browser can reach it: Ollama only when this site runs on localhost
 export const presetAvailable = (preset, hostname) => !preset.localOnly || isLocalSite(hostname);
+
+// The only model hosts the hosted site's Content-Security-Policy lets the browser call (next.config.mjs reads this),
+// besides the user's own computer. A copy running on localhost has no such policy.
+export const HOSTED_LLM_ORIGINS = ["https://api.anthropic.com", ...OPENAI_PRESETS.filter((p) => p.baseUrl && !p.localOnly)
+  .map((p) => new URL(p.baseUrl).origin)];
+
+// Can this site call that base URL? Always on localhost; elsewhere only the hosts above or the user's own computer
+export function endpointAllowed(baseUrl, hostname) {
+  if (isLocalSite(hostname)) return true;
+  let url;
+  try { url = new URL(String(baseUrl || "").trim()); } catch { return false; }
+  return HOSTED_LLM_ORIGINS.includes(url.origin) || (url.protocol === "http:" && isLocalSite(url.hostname));
+}

@@ -22,7 +22,9 @@ const POINTS = [
   ["fa-calculator", "Math in code",
     "Ideas and recipes are AI-generated. Packs, macros and leftovers are computed in code, not by the model."],
   ["fa-server", "Hosting and logs",
-    "SmartBite is hosted on Vercel. Like any web host, Vercel keeps short-lived request logs (IP address, page, time) to run and protect the service. Images and fonts are served from the same site. When the engine fails, it logs an error id and the request's size, never what you sent."],
+    "SmartBite is hosted on Vercel; the engine runs in Frankfurt, in the EU. Like any web host, Vercel keeps short-lived request logs (IP address, page, time) to run and protect the service. Images and fonts are served from the same site. When the engine fails, it logs an error id and the request's size, never what you sent."],
+  ["fa-chart-simple", "Visit counts",
+    "SmartBite counts page views with Vercel Web Analytics. It sets no cookies: a visitor is a hash of the request that resets every day, so no one can follow you across days or sites. A meal you made is counted as one page, without its name."],
   ["fa-scale-balanced", "Your rights",
     "SmartBite keeps no data about you, so there is nothing to look up or delete on our side. To delete your own data, clear this site's storage in your browser. For Vercel's logs, see Vercel's privacy policy."],
 ];

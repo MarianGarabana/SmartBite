@@ -21,6 +21,13 @@ def test_health():
     assert r.status_code == 200 and r.json() == {"status": "ok"}
 
 
+def test_replies_carry_security_headers_also_on_errors():
+    for r in (client.get("/api/health"), client.post("/api/evaluate", content=b"not json")):
+        assert r.headers["x-content-type-options"] == "nosniff"
+        assert r.headers["content-security-policy"] == "default-src 'none'; frame-ancestors 'none'"
+        assert r.headers["referrer-policy"] == "no-referrer"
+
+
 def test_evaluate_returns_a_valid_meal_equal_to_the_demo_meal():
     body, meal = demo_input()
     r = client.post("/api/evaluate", json=body)

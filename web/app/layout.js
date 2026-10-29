@@ -1,6 +1,8 @@
 import { Caveat, Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./globals.css";
+import SiteAnalytics from "../components/SiteAnalytics";
+import { loadDemoMeals } from "../lib/demo";
 import { SITE_URL } from "../lib/site";
 
 const caveat = Caveat({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-caveat" });
@@ -23,7 +25,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${caveat.variable} ${playfair.variable} ${jakarta.variable}`}>
-      <body className="bg-cream text-forest selection:bg-lime selection:text-forest">{children}</body>
+      <body className="bg-cream text-forest selection:bg-lime selection:text-forest">
+        {children}
+        {/* Only on Vercel: a copy run elsewhere has no analytics endpoint */}
+        {process.env.VERCEL ? <SiteAnalytics demoSlugs={loadDemoMeals().map((m) => m.slug)} /> : null}
+      </body>
     </html>
   );
 }

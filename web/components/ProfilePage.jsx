@@ -7,7 +7,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DEFAULT_PROFILE, setField } from "../lib/profile";
-import { ANTHROPIC, ANTHROPIC_MODELS, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, presetAvailable, presetById } from "../lib/providers";
+import { ANTHROPIC, ANTHROPIC_MODELS, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, endpointAllowed, presetAvailable, presetById }
+  from "../lib/providers";
 import { COUNTRIES, DEFAULT_COUNTRY, DEFAULT_CURRENCY, ESTIMATE_CURRENCY, ESTIMATES_OFF, NATIONAL, NO_STORE, REGIONS, STORES, clearApiKey, currencies, currencyFor, clearOpenAiKey, exportProducts, exportProfile, importProducts, okStore, MAX_PROFILE_FILE, openProfile, readProfileFile,
   onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readBudget, readCurrency, readName, readProfile, readRegion, readStore, resetProfile,
   storeLabel, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeBudget, writeCurrency, writeName, writeProfile, writeRegion, writeStore } from "../lib/store";
@@ -241,6 +242,9 @@ export default function ProfilePage({ demoMeals }) {
     } else {
       if (!presetAvailable(preset, hostname)) return showToast("Ollama is not reachable from this site. Pick another endpoint.");
       if (!/^https?:\/\/\S+$/i.test(llm.openai.baseUrl.trim())) return showToast("Add the base URL first (it starts with https://).");
+      if (!endpointAllowed(llm.openai.baseUrl, hostname)) {
+        return showToast("This site can only reach the listed endpoints and your own computer. For others, run SmartBite on your computer.");
+      }
       if (!llm.openai.model.trim()) return showToast("Add the model name first.");
       if (preset.keyNeeded && !k) return showToast("Paste your key first.");
     }

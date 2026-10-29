@@ -14,8 +14,9 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.4.0",
+    "@vercel/analytics": "2.0.1",
     "autoprefixer": "10.6.1",
-    "next": "16.3.8",
+    "next": "16.4.3",
     "postcss": "8.5.28",
     "react": "19.3.0",
     "react-dom": "19.3.0",
