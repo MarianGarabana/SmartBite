@@ -52,10 +52,10 @@ export default function PrivacyPage({ demoMeals }) {
               </div>
             </div>
           ))}
-          <p className="text-xs text-forest/60 text-center pt-2">
+          <p className="text-xs text-forest/70 text-center pt-2">
             Change your profile or remove your key in your <Link href="/profile" className="font-bold underline hover:text-lime-hover">Profile</Link>.
           </p>
-          <p className="text-xs text-forest/60 text-center">
+          <p className="text-xs text-forest/70 text-center">
             SmartBite is an open-source project by Marian Garabana. Questions go to the <a href={`${REPO_URL}/issues`} target="_blank" rel="noopener noreferrer" className="font-bold underline hover:text-lime-hover">issues page on GitHub</a>.
           </p>
         </div>

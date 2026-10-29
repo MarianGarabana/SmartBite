@@ -15,7 +15,7 @@ import { COUNTRIES, DEFAULT_COUNTRY, ESTIMATE_CURRENCY, NATIONAL, NO_STORE, REGI
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
 const input = "w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest";
-const small = "block text-[11px] text-forest/60 mt-1";
+const small = "block text-[11px] text-forest/70 mt-1";
 const STEPS = ["Where you shop", "Your targets", "Your AI key"];
 const SETUP_EVENT = "smartbite-setup";
 export const SETUP_DONE_EVENT = "smartbite-setup-done"; // after the setup is finished: forms re-read their defaults
@@ -120,7 +120,7 @@ function SetupDialog({ onClose }) {
             <h2 id="setup-title" className="font-serif text-3xl font-bold text-forest leading-snug">{step < STEPS.length ? STEPS[step] : "You're set"}</h2>
           </div>
           {step < STEPS.length && (
-            <button onClick={() => onClose(SETUP_SKIPPED)} className="text-xs font-bold text-forest/50 hover:text-forest whitespace-nowrap pt-2">Skip setup</button>
+            <button onClick={() => onClose(SETUP_SKIPPED)} className="text-xs font-bold text-forest/70 hover:text-forest whitespace-nowrap pt-2">Skip setup</button>
           )}
         </div>
 
@@ -202,7 +202,7 @@ function SetupDialog({ onClose }) {
           {step === 2 && <button onClick={saveKey} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">{key.trim() ? "Save key" : "Next"}</button>}
           {step === 3 && <button onClick={() => onClose(SETUP_DONE)} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Make Your Meal</button>}
           {step > 0 && step < 3 && <button onClick={() => { setError(""); setStep((s) => s - 1); }} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2.5">Back</button>}
-          {step < 3 && <button onClick={next} className="text-xs font-bold text-forest/50 hover:text-forest px-3 py-2.5 ml-auto">Skip this step</button>}
+          {step < 3 && <button onClick={next} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2.5 ml-auto">Skip this step</button>}
         </div>
       </div>
     </div>

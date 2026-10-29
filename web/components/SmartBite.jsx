@@ -27,7 +27,7 @@ function CartPrice({ item, prices, onBlocked, priceClass }) {
     <span className="inline-flex items-center justify-end gap-2">
       <PriceInput row={item} prices={prices} onBlocked={onBlocked} onFocus={() => setEditing(true)} onBlur={() => setEditing(false)} />
       {item.hasPrice ? (
-        <span className={`min-w-[3.25rem] text-right whitespace-nowrap${item.estimate ? " font-normal text-forest/60" : ""}`} title={item.estimate ? estimateTitle(item.pricePeriod, item.priceRegion) : undefined}>
+        <span className={`min-w-[3.25rem] text-right whitespace-nowrap${item.estimate ? " font-normal text-forest/70" : ""}`} title={item.estimate ? estimateTitle(item.pricePeriod, item.priceRegion) : undefined}>
           {money(item.price)}{item.estimate ? <> <span className="text-[10px]">est.</span></> : null}
         </span>
       ) : null}
@@ -160,7 +160,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
           <div className="max-w-[1360px] mx-auto px-8">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-forest/50">Recipe Collection</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-forest/70">Recipe Collection</span>
                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-forest">Explore Categories</h2>
               </div>
             </div>
@@ -196,7 +196,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                   </div>
                   <div className="p-4 flex-1 flex flex-col justify-between">
                     <div>
-                      <span className="text-[10px] font-bold uppercase text-forest/50 block">{label(m)}</span>
+                      <span className="text-[10px] font-bold uppercase text-forest/70 block">{label(m)}</span>
                       <h4 className="font-serif font-bold text-sm text-forest leading-snug line-clamp-2 mt-0.5"><Link href={`/recipes/${m.slug}`} className="after:absolute after:inset-0">{m.name}</Link></h4>
                     </div>
                     <div className="mt-3 pt-2 border-t border-cream-dark flex items-center justify-between">
@@ -214,7 +214,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
           <div className="max-w-[1360px] mx-auto px-8 pt-6">
             <div className="bg-cream-card rounded-3xl p-8 border border-cream-dark flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-widest text-forest/60">How SmartBite Works</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-forest/70">How SmartBite Works</span>
                 <h3 className="font-serif text-2xl font-bold text-forest">From craving to shopping list in 5 steps</h3>
                 <p className="text-xs text-forest/70 max-w-2xl">
                   Type a craving and your targets. AI writes the recipe; code matches each ingredient to a typical pack size, works out macros and leftovers, and gives you a MyFitnessPal list.
@@ -257,7 +257,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                 </div>
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-forest/50">{label(m)}</span>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-forest/70">{label(m)}</span>
                     <h3 className="font-serif font-bold text-base text-forest mt-0.5 leading-snug"><Link href={`/recipes/${m.slug}`} className="after:absolute after:inset-0">{m.name}</Link></h3>
                   </div>
                   <div className="pt-3 border-t border-cream-dark flex items-center justify-between">
@@ -289,7 +289,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
               <i className="fa-solid fa-basket-shopping"></i>
             </div>
             <h3 className="font-serif font-bold text-xl text-forest">Your cart is empty</h3>
-            <p className="text-xs text-forest/60">Generate your first custom meal plan or select from the demo meals to build your shopping list.</p>
+            <p className="text-xs text-forest/70">Generate your first custom meal plan or select from the demo meals to build your shopping list.</p>
             <button onClick={() => switchTab("make-meal")} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all">
               Make your first meal
             </button>
@@ -300,7 +300,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
               <div className="flex items-center justify-between">
                 <h3 className="font-serif font-bold text-xl text-forest">Added Meals</h3>
                 {cart.meals.some((m) => m.adjusted) && (
-                  <button onClick={resetAdjust} className="text-xs font-bold text-forest/60 hover:text-forest">Undo adjustments</button>
+                  <button onClick={resetAdjust} className="text-xs font-bold text-forest/70 hover:text-forest">Undo adjustments</button>
                 )}
               </div>
               <div id="cart-meals-container" className="space-y-4">
@@ -313,7 +313,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                       <MealImage meal={meal} className="w-16 h-16 rounded-xl object-cover" textClass="text-[8px]" />
                       <div className="flex-1">
                         <h4 className="font-serif font-bold text-sm text-forest">{meal.name}</h4>
-                        <span className="text-xs text-forest/60">
+                        <span className="text-xs text-forest/70">
                           {entry.macros ? `${Math.round(entry.macros.kcal)} kcal • Protein: ${Math.round(entry.macros.protein_g)}g` : `${kcal(meal)} • Protein: ${protein(meal)}`}
                           {" • "}{entry.servings} {entry.servings === 1 ? "serving" : "servings"}
                         </span>
@@ -333,7 +333,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-cream-dark pb-4">
                   <div>
                     <h3 className="font-serif font-bold text-xl text-forest">Consolidated Shopping List</h3>
-                    <p className="text-xs text-forest/60">Identical ingredients across all cart meals are automatically merged into single store packs.</p>
+                    <p className="text-xs text-forest/70">Identical ingredients across all cart meals are automatically merged into single store packs.</p>
                   </div>
                   <div id="cart-list-actions" className="flex gap-2 print:hidden">
                     {[
@@ -376,7 +376,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                             <td data-label="Bought" className={`${T.num} text-forest/70`}>{grams(item.bought)}</td>
                             <td data-label="Leftover" className={T.num}>
                               <span className="font-bold text-forest">{grams(item.left)}</span>{" "}
-                              {item.hasPrice ? <span className="text-[10px] text-forest/60">({money(item.leftCost)})</span> : null}
+                              {item.hasPrice ? <span className="text-[10px] text-forest/70">({money(item.leftCost)})</span> : null}
                             </td>
                             <td className={T.price}><CartPrice item={item} prices={prices} onBlocked={priceBlocked} /></td>
                             <td className={T.action}>
@@ -413,14 +413,14 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                   <div id="cart-have" className="bg-cream/50 border border-cream-dark rounded-2xl p-4 space-y-3">
                     <div>
                       <h4 className="text-xs font-bold uppercase tracking-wider text-forest/70">Already at home</h4>
-                      <p className="text-[11px] text-forest/60">Not bought and not in the total. Restore one to buy it again.</p>
+                      <p className="text-[11px] text-forest/70">Not bought and not in the total. Restore one to buy it again.</p>
                     </div>
                     <div className="space-y-2">
                       {haveRows.map((item) => (
                         <div key={item.key} className="flex items-center gap-3 text-xs text-forest">
                           <span className="font-semibold w-36 shrink-0">{item.ingredient}</span>
-                          <span className="flex-1 text-forest/60">{item.product || "Typical pack"}</span>
-                          <span className="text-forest/60">{grams(item.needed)} needed</span>
+                          <span className="flex-1 text-forest/70">{item.product || "Typical pack"}</span>
+                          <span className="text-forest/70">{grams(item.needed)} needed</span>
                           <button onClick={() => setHave(item.key, false, item.ingredient)} className="font-bold underline hover:text-lime-hover">Restore</button>
                         </div>
                       ))}
@@ -432,7 +432,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                   <div id="cart-optional" className="bg-cream/50 border border-cream-dark rounded-2xl p-4 space-y-3">
                     <div>
                       <h4 className="text-xs font-bold uppercase tracking-wider text-forest/70">Optional: you may already have these</h4>
-                      <p className="text-[11px] text-forest/60">They last for weeks. Tick the ones you need to buy and they are added to the total.</p>
+                      <p className="text-[11px] text-forest/70">They last for weeks. Tick the ones you need to buy and they are added to the total.</p>
                     </div>
                     <div className="space-y-2">
                       {optionalRows.map((item) => (
@@ -442,7 +442,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                           {/* On phones the product, then pack size and price, wrap to their own lines */}
                           <span className="flex-1 min-w-[9rem]">{item.product || "Typical pack"}</span>
                           <span className="ml-auto flex items-center gap-3">
-                            <span className="text-forest/60">{item.packs > 1 ? `${item.packs} x ` : ""}{grams(item.packSize)}</span>
+                            <span className="text-forest/70">{item.packs > 1 ? `${item.packs} x ` : ""}{grams(item.packSize)}</span>
                             <CartPrice item={item} prices={prices} onBlocked={priceBlocked} priceClass="font-bold w-14 text-right" />
                           </span>
                         </label>
@@ -475,7 +475,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                 <div id="cart-leftovers" className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-5">
                   <div className="border-b border-cream-dark pb-4">
                     <h3 className="font-serif font-bold text-xl text-forest">Your Leftovers</h3>
-                    <p className="text-xs text-forest/60">What the meals in your cart leave over. Use them in another meal and the packs above cover it, so you buy less.</p>
+                    <p className="text-xs text-forest/70">What the meals in your cart leave over. Use them in another meal and the packs above cover it, so you buy less.</p>
                     {!adjust && (
                       <button onClick={openAdjust} className="mt-3 bg-forest hover:bg-forest-light text-lime font-bold text-xs px-5 py-2.5 rounded-full transition-all inline-flex items-center gap-2">
                         <i className="fa-solid fa-scale-balanced"></i><span>Adjust leftovers to meals</span>
@@ -515,7 +515,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                         {adjust.suggestions.length > 0 && (
                           <button onClick={() => { applyAdjust(adjust.picked); setAdjust(null); }} disabled={!adjust.picked.length} className="bg-lime hover:bg-lime-hover disabled:opacity-50 text-forest font-bold text-xs px-5 py-2 rounded-full transition-all">Apply</button>
                         )}
-                        <button onClick={() => setAdjust(null)} className="text-xs font-bold text-forest/60 hover:text-forest px-3 py-2">{adjust.suggestions.length ? "Cancel" : "Close"}</button>
+                        <button onClick={() => setAdjust(null)} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2">{adjust.suggestions.length ? "Cancel" : "Close"}</button>
                       </div>
                     </div>
                   )}
@@ -523,7 +523,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                     {cart.leftovers.map((l) => (
                       <span key={l.key} className="inline-flex items-center gap-1.5 bg-cream-dark text-forest text-xs px-3 py-1 rounded-full font-medium">
                         <span className="font-bold">{l.ingredient}</span> {grams(l.left)}
-                        <span className="text-[10px] text-forest/60">({l.leftCost != null ? `${money(l.leftCost)}, ` : ""}{l.status})</span>
+                        <span className="text-[10px] text-forest/70">({l.leftCost != null ? `${money(l.leftCost)}, ` : ""}{l.status})</span>
                       </span>
                     ))}
                   </div>
@@ -533,7 +533,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                       {cart.leftoverRecipes.map((r) => (
                         <Link key={r.slug} href={`/recipes/${r.slug}`} className="flex items-center justify-between gap-4 bg-cream/50 border border-cream-dark rounded-2xl px-4 py-3 hover:border-forest transition-colors">
                           <span className="font-serif font-bold text-sm text-forest">{r.name}</span>
-                          <span className="text-xs text-forest/60 text-right">uses {r.uses.join(", ")}</span>
+                          <span className="text-xs text-forest/70 text-right">uses {r.uses.join(", ")}</span>
                         </Link>
                       ))}
                     </div>
@@ -666,7 +666,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
   const startOver = () => { setPreview(null); setRun({ step: 1 }); };
   const indicator = (n) => (step >= n
     ? ["flex items-center gap-2 font-bold text-xs text-forest", "w-7 h-7 rounded-full bg-lime text-forest flex items-center justify-center font-extrabold text-xs"]
-    : ["flex items-center gap-2 font-semibold text-xs text-forest/40", "w-7 h-7 rounded-full bg-cream-dark text-forest/60 flex items-center justify-center text-xs"]);
+    : ["flex items-center gap-2 font-semibold text-xs text-forest/70", "w-7 h-7 rounded-full bg-cream-dark text-forest/70 flex items-center justify-center text-xs"]);
   const toggleGear = (key) => setGear({ ...gear, [key]: !gear[key] });
 
   const saveRequest = async () => {
@@ -840,7 +840,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-1.5">Total budget ({moneySymbol()})</label>
               <input type="number" step="0.5" id="input-budget" value={budget} onChange={(e) => setBudget(e.target.value)} className="w-full bg-cream/50 border border-cream-dark rounded-xl p-2.5 text-xs text-forest font-bold" />
-              <span id="budget-per-serving" className="block text-[11px] text-forest/60 mt-1">{money(perServing)} per serving</span>
+              <span id="budget-per-serving" className="block text-[11px] text-forest/70 mt-1">{money(perServing)} per serving</span>
             </div>
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-1.5">Servings</label>
@@ -876,14 +876,14 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-xs font-bold text-forest block">I can reheat at work</span>
-                <span className="text-[11px] text-forest/60">Optimizes for microwave batch meals</span>
+                <span className="text-[11px] text-forest/70">Optimizes for microwave batch meals</span>
               </div>
               <input type="checkbox" id="toggle-reheat" checked={reheat} onChange={() => setReheat(!reheat)} className="accent-lime w-4 h-4 cursor-pointer" />
             </div>
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-xs font-bold text-forest block">Keep leftovers low</span>
-                <span className="text-[11px] text-forest/60">Stores sell fixed pack sizes, so we try to buy only what you will use.</span>
+                <span className="text-[11px] text-forest/70">Stores sell fixed pack sizes, so we try to buy only what you will use.</span>
               </div>
               <input type="checkbox" id="toggle-leftovers" checked={lowLeftovers} onChange={() => setLowLeftovers(!lowLeftovers)} className="accent-lime w-4 h-4 cursor-pointer" />
             </div>
@@ -961,12 +961,12 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
                     {[["kcal", preview.rough_macros?.kcal, ""], ["Protein", preview.rough_macros?.protein_g, "g"],
                       ["Carbs", preview.rough_macros?.carbs_g, "g"], ["Fat", preview.rough_macros?.fat_g, "g"]].map(([label, v, unit]) => (
                       <div key={label} className="bg-cream/50 border border-cream-dark rounded-2xl p-3">
-                        <span className="block text-[11px] font-bold uppercase tracking-wider text-forest/60">{label}</span>
+                        <span className="block text-[11px] font-bold uppercase tracking-wider text-forest/70">{label}</span>
                         <span className="block text-sm font-bold text-forest mt-0.5">~{Math.round(v)}{unit}</span>
                       </div>
                     ))}
                   </div>
-                  <p className="text-[11px] text-forest/60">Quick estimate per serving. The real macros come with the recipe.</p>
+                  <p className="text-[11px] text-forest/70">Quick estimate per serving. The real macros come with the recipe.</p>
                   <div>
                     <label htmlFor="idea-changes" className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Want to change something?</label>
                     <div className="flex items-start gap-2">

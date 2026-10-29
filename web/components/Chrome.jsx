@@ -56,7 +56,7 @@ export const RECIPE_TABLE = {
   row: "flex flex-wrap items-center gap-x-4 gap-y-1 py-3 lg:table-row lg:py-0",
   ingredient: "order-1 flex-1 lg:p-3 font-semibold text-forest",
   product: "order-4 basis-full lg:p-3 lg:min-w-[9rem] text-forest/70 empty:hidden lg:empty:table-cell",
-  num: "order-5 lg:px-2 lg:py-3 whitespace-nowrap empty:hidden lg:empty:table-cell before:content-[attr(data-label)] before:mr-1 before:font-normal before:text-forest/50 lg:before:content-none",
+  num: "order-5 lg:px-2 lg:py-3 whitespace-nowrap empty:hidden lg:empty:table-cell before:content-[attr(data-label)] before:mr-1 before:font-normal before:text-forest/70 lg:before:content-none",
   price: "order-2 lg:px-2 lg:py-3 text-right font-bold text-forest empty:hidden lg:empty:table-cell",
 };
 export const CART_TABLE = {
@@ -67,7 +67,7 @@ export const CART_TABLE = {
   row: "flex flex-wrap items-center gap-x-4 gap-y-1 py-3 xl:table-row xl:py-0",
   ingredient: "order-1 flex-1 xl:p-3 font-semibold text-forest",
   product: "order-4 basis-full xl:p-3 xl:min-w-[9rem] text-forest/70 empty:hidden xl:empty:table-cell",
-  num: "order-5 xl:px-2 xl:py-3 whitespace-nowrap empty:hidden xl:empty:table-cell before:content-[attr(data-label)] before:mr-1 before:font-normal before:text-forest/50 xl:before:content-none",
+  num: "order-5 xl:px-2 xl:py-3 whitespace-nowrap empty:hidden xl:empty:table-cell before:content-[attr(data-label)] before:mr-1 before:font-normal before:text-forest/70 xl:before:content-none",
   price: "order-2 xl:px-2 xl:py-3 text-right font-bold text-forest empty:hidden xl:empty:table-cell",
   action: "order-3 xl:px-2 xl:py-3 text-right empty:hidden xl:empty:table-cell",
 };
@@ -274,7 +274,7 @@ export function MealImage({ meal, className, textClass = "text-sm", label = fals
 // Ideas and recipes come from a language model: always labelled
 export function AiLabel({ className = "" }) {
   return (
-    <span className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-forest/60 bg-cream-card border border-cream-dark px-2 py-0.5 rounded-full ${className}`}>
+    <span className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-forest/70 bg-cream-card border border-cream-dark px-2 py-0.5 rounded-full ${className}`}>
       <i className="fa-solid fa-wand-magic-sparkles text-[9px]"></i>AI-generated
     </span>
   );
@@ -283,7 +283,7 @@ export function AiLabel({ className = "" }) {
 // Small label on demo photos made with an image model; same look as AiLabel
 export function PhotoLabel() {
   return (
-    <span className="absolute bottom-2.5 left-2.5 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-forest/60 bg-cream-card border border-cream-dark px-2 py-0.5 rounded-full">
+    <span className="absolute bottom-2.5 left-2.5 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-forest/70 bg-cream-card border border-cream-dark px-2 py-0.5 rounded-full">
       <i className="fa-solid fa-wand-magic-sparkles text-[9px]"></i>AI-generated photo
     </span>
   );
@@ -359,7 +359,7 @@ function ProfileMenu({ active, onNavigate }) {
       </button>
       {open && (
         <div role="menu" className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-card border border-cream-dark p-2 z-50">
-          {me.name && <p className="px-4 pt-2 pb-1 text-xs font-bold text-forest/60 truncate">{me.name}</p>}
+          {me.name && <p className="px-4 pt-2 pb-1 text-xs font-bold text-forest/70 truncate">{me.name}</p>}
           {me.has ? (
             <>
               <Link role="menuitem" href="/profile" onClick={() => setOpen(false)} className={menuItem}>Profile</Link>
@@ -475,7 +475,7 @@ export function Footer({ onNavigate }) {
           <Link href="/privacy" className="hover:text-lime transition-colors">Privacy</Link>
           <a href={REPO_URL} target="_blank" rel="noopener noreferrer" className="hover:text-lime transition-colors">Source code</a>
         </nav>
-        <div className="text-[11px] text-cream/40 text-center sm:text-right space-y-1">
+        <div className="text-[11px] text-cream/60 text-center sm:text-right space-y-1">
           <p>© 2026 SmartBite. Whole-pack meal planner. Open source, AGPL-3.0.</p>
           <p>Not medical advice. For a health condition, ask a doctor or dietitian.</p>
         </div>

@@ -80,7 +80,7 @@ function MissingMeal({ meals, ready, router }) {
           <section className="tab-page max-w-[1360px] mx-auto px-8">
             <div className="bg-white rounded-3xl p-12 text-center border border-cream-dark space-y-4 max-w-xl mx-auto my-12">
               <h3 className="font-serif font-bold text-xl text-forest">This meal is not here</h3>
-              <p className="text-xs text-forest/60">It may have been deleted, or it was made in another browser. Meals you make stay in the browser that made them.</p>
+              <p className="text-xs text-forest/70">It may have been deleted, or it was made in another browser. Meals you make stay in the browser that made them.</p>
               <button onClick={() => go("recipes")} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all">
                 Back to recipes
               </button>
@@ -194,7 +194,7 @@ function RecipeView({ meal, meals, router }) {
               </div>
               <div className="md:col-span-7 space-y-4">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-bold uppercase tracking-widest text-lime-hover bg-lime-soft px-3 py-1 rounded-full">{meal.kind === "demo" ? "Demo Meal" : "Chosen Custom Recipe"}</span>
+                  <span className="text-xs font-bold uppercase tracking-widest text-forest bg-lime-soft px-3 py-1 rounded-full">{meal.kind === "demo" ? "Demo Meal" : "Chosen Custom Recipe"}</span>
                   <AiLabel />
                   {meal.fixture && (
                     <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full">Test fixture</span>
@@ -219,27 +219,27 @@ function RecipeView({ meal, meals, router }) {
                 {/* 4 Macro Tiles (per serving) */}
                 <div className="grid grid-cols-4 gap-3 pt-2">
                   <div className="bg-cream-card p-3 rounded-2xl text-center border border-cream-dark">
-                    <span className="text-[10px] uppercase font-bold text-forest/60 block">Calories</span>
+                    <span className="text-[10px] uppercase font-bold text-forest/70 block">Calories</span>
                     <span id="tile-kcal" className="font-bold text-base text-forest">{meal.macros.kcal}</span>{" "}
-                    <span className="text-[10px] text-forest/50">kcal</span>
+                    <span className="text-[10px] text-forest/70">kcal</span>
                   </div>
                   <div className="bg-lime-soft p-3 rounded-2xl text-center border border-lime/30">
                     <span className="text-[10px] uppercase font-bold text-forest/70 block">Protein</span>
                     <span id="tile-protein" className="font-bold text-base text-forest">{meal.macros.protein}</span>{" "}
-                    <span className="text-[10px] text-forest/50">grams</span>
+                    <span className="text-[10px] text-forest/70">grams</span>
                   </div>
                   <div className="bg-cream-card p-3 rounded-2xl text-center border border-cream-dark">
-                    <span className="text-[10px] uppercase font-bold text-forest/60 block">Carbs</span>
+                    <span className="text-[10px] uppercase font-bold text-forest/70 block">Carbs</span>
                     <span id="tile-carbs" className="font-bold text-base text-forest">{meal.macros.carbs}</span>{" "}
-                    <span className="text-[10px] text-forest/50">grams</span>
+                    <span className="text-[10px] text-forest/70">grams</span>
                   </div>
                   <div className="bg-cream-card p-3 rounded-2xl text-center border border-cream-dark">
-                    <span className="text-[10px] uppercase font-bold text-forest/60 block">Fat</span>
+                    <span className="text-[10px] uppercase font-bold text-forest/70 block">Fat</span>
                     <span id="tile-fat" className="font-bold text-base text-forest">{meal.macros.fat}</span>{" "}
-                    <span className="text-[10px] text-forest/50">grams</span>
+                    <span className="text-[10px] text-forest/70">grams</span>
                   </div>
                 </div>
-                <p className="text-[11px] text-forest/60">AI picked the foods and grams. Macros and packs are computed in code.</p>
+                <p className="text-[11px] text-forest/70">AI picked the foods and grams. Macros and packs are computed in code.</p>
               </div>
             </div>
 
@@ -273,7 +273,7 @@ function RecipeView({ meal, meals, router }) {
                   className={`flex flex-col items-center justify-center gap-2 h-40 rounded-2xl border-2 border-dashed cursor-pointer transition-colors ${dragging ? "border-lime bg-lime-soft" : "border-cream-dark bg-cream/50 hover:bg-cream-card"}`}>
                   <i className={`fa-solid ${uploading ? "fa-circle-notch fa-spin" : "fa-image"} text-2xl text-forest/50`}></i>
                   <span className="text-xs font-bold text-forest">{uploading ? "Saving the photo..." : "Drop image here"}</span>
-                  <span className="text-[11px] text-forest/50">PNG, JPEG or WebP</span>
+                  <span className="text-[11px] text-forest/70">PNG, JPEG or WebP</span>
                   <input type="file" accept="image/*" className="hidden" onChange={(e) => uploadPhoto(e.target.files[0])} />
                 </label>
               </div>
@@ -288,7 +288,7 @@ function RecipeView({ meal, meals, router }) {
                     <li key={ing.name} className="flex items-center justify-between py-1 border-b border-cream-dark/40">
                       <span>
                         <span className="font-semibold text-forest">{ing.name}</span>
-                        {ing.note ? <span className="text-[11px] text-forest/60 ml-1.5">{ing.note}</span> : null}
+                        {ing.note ? <span className="text-[11px] text-forest/70 ml-1.5">{ing.note}</span> : null}
                       </span>
                       <span className="text-forest/70">
                         {ing.units ? `${ing.units * servings} ${ing.units * servings === 1 ? "egg" : "eggs"} (` : ""}
@@ -298,7 +298,7 @@ function RecipeView({ meal, meals, router }) {
                   ))}
                 </ul>
                 {meal.seasoning ? (
-                  <p id="seasoning-line" className="text-xs text-forest/60 pt-3">
+                  <p id="seasoning-line" className="text-xs text-forest/70 pt-3">
                     <span className="font-semibold text-forest">Seasoning</span> ({meal.pantryNote}): {meal.seasoning}
                   </p>
                 ) : null}
@@ -310,7 +310,7 @@ function RecipeView({ meal, meals, router }) {
                     {meal.steps.map((s, i) => <li key={i} className="leading-relaxed">{s}</li>)}
                   </ol>
                   {servings !== meal.servings ? (
-                    <p id="steps-servings-note" className="text-xs text-forest/60 pt-3">
+                    <p id="steps-servings-note" className="text-xs text-forest/70 pt-3">
                       Steps are written for {meal.servings} {meal.servings === 1 ? "serving" : "servings"}. The ingredient list shows the grams for {servings} {servings === 1 ? "serving" : "servings"}.
                     </p>
                   ) : null}
@@ -323,7 +323,7 @@ function RecipeView({ meal, meals, router }) {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-serif font-bold text-xl text-forest">Ingredients to Buy</h3>
-                  <p className="text-xs text-forest/60">Whole packs in typical sizes, so you see what you buy and what is left over.</p>
+                  <p className="text-xs text-forest/70">Whole packs in typical sizes, so you see what you buy and what is left over.</p>
                 </div>
                 <span className="text-xs bg-forest text-lime font-bold px-3 py-1 rounded-full">Typical packs</span>
               </div>
@@ -362,7 +362,7 @@ function RecipeView({ meal, meals, router }) {
                             <span className="inline-flex items-center justify-end gap-2">
                               <PriceInput row={r} prices={prices} onBlocked={() => showToast("Not saved: this browser blocks storage.")} />
                               {r.hasPrice && r.estimate ? (
-                                <span className="min-w-[3.25rem] text-right font-normal text-forest/60" title={estimateTitle(r.pricePeriod, r.priceRegion)}>
+                                <span className="min-w-[3.25rem] text-right font-normal text-forest/70" title={estimateTitle(r.pricePeriod, r.priceRegion)}>
                                   {money(r.price)} <span className="text-[10px]">est.</span>
                                 </span>
                               ) : r.hasPrice ? <span className="min-w-[3.25rem] text-right">{money(r.price)}</span> : null}
@@ -402,11 +402,11 @@ function RecipeView({ meal, meals, router }) {
               {/* Metrics Summary Footer */}
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-4 border-t border-cream-dark bg-cream-card/50 p-4 rounded-2xl">
                 <div>
-                  <span className="text-[11px] text-forest/60 block">Cost of what you use:</span>
+                  <span className="text-[11px] text-forest/70 block">Cost of what you use:</span>
                   <span id="summary-used-cost" className="font-bold text-sm text-forest">{noPrices ? "No prices yet" : money(t.used)}</span>
                 </div>
                 <div>
-                  <span className="text-[11px] text-forest/60 block">
+                  <span className="text-[11px] text-forest/70 block">
                     {t.unpriced && !noPrices
                       ? `Partial total (${t.unpriced} ${t.unpriced === 1 ? "item has" : "items have"} no price yet):`
                       : "Cost of purchase:"}
@@ -415,11 +415,11 @@ function RecipeView({ meal, meals, router }) {
                 </div>
                 {/* Cost of what one serving uses, so it does not change with the servings chosen */}
                 <div>
-                  <span className="text-[11px] text-forest/60 block">{t.unpriced && !noPrices ? "Cost per serving (partial):" : "Cost per serving:"}</span>
+                  <span className="text-[11px] text-forest/70 block">{t.unpriced && !noPrices ? "Cost per serving (partial):" : "Cost per serving:"}</span>
                   <span id="summary-serving-cost" className="font-bold text-sm text-forest">{noPrices ? "No prices yet" : money(t.used / servings)}</span>
                 </div>
                 <div>
-                  <span className="text-[11px] text-forest/60 block">Total waste/leftover:</span>
+                  <span className="text-[11px] text-forest/70 block">Total waste/leftover:</span>
                   <span id="summary-waste-metrics" className="font-bold text-sm text-forest">{grams(t.wasteGrams)}{noPrices ? "" : ` (${money(t.wasteCost)})`}</span>
                 </div>
               </div>
@@ -471,7 +471,7 @@ function RecipeView({ meal, meals, router }) {
                 </button>
               )}
               {meal.kind === "local" && (
-                <button onClick={deleteMeal} className={`w-full sm:flex-1 bg-transparent border-2 font-bold py-4 rounded-2xl text-sm transition-all flex items-center justify-center gap-2 ${confirmDelete ? "border-red-600 text-red-600" : "border-forest/20 text-forest/60 hover:border-red-600 hover:text-red-600"}`}>
+                <button onClick={deleteMeal} className={`w-full sm:flex-1 bg-transparent border-2 font-bold py-4 rounded-2xl text-sm transition-all flex items-center justify-center gap-2 ${confirmDelete ? "border-red-600 text-red-600" : "border-forest/20 text-forest/70 hover:border-red-600 hover:text-red-600"}`}>
                   <i className="fa-regular fa-trash-can"></i>
                   <span>{confirmDelete ? "Click again to delete for good" : "Delete meal"}</span>
                 </button>

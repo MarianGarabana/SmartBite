@@ -62,7 +62,7 @@ function Field({ field, onChange }) {
         <textarea id={`field-${field.id}`} rows={Math.min(8, Math.max(2, Math.ceil(String(field.value ?? "").length / 60)))}
           value={field.value ?? ""} onChange={(e) => onChange(e.target.value)}
           placeholder="Empty: this line is left out" className={`${textArea} [field-sizing:content] min-h-[4.5rem]`}></textarea>
-        {field.help && <span className="block text-[11px] text-forest/60 mt-1">{field.help}</span>}
+        {field.help && <span className="block text-[11px] text-forest/70 mt-1">{field.help}</span>}
       </div>
     );
   }
@@ -72,7 +72,7 @@ function Field({ field, onChange }) {
       <input id={`field-${field.id}`} type={field.type === "number" ? "number" : "text"} value={field.value ?? ""}
         onChange={(e) => onChange(field.type === "number" ? (e.target.value === "" ? null : Number(e.target.value)) : e.target.value)}
         className={input} />
-      {field.help && <span className="block text-[11px] text-forest/60 mt-1">{field.help}</span>}
+      {field.help && <span className="block text-[11px] text-forest/70 mt-1">{field.help}</span>}
     </div>
   );
 }
@@ -284,7 +284,7 @@ export default function ProfilePage({ demoMeals }) {
             </div>
             {profile.sections.map((s) => (
               <div key={s.id} className="space-y-6 pt-2 border-t border-cream-dark first:border-t-0 first:pt-0">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-forest/50">{s.label}</h3>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-forest/70">{s.label}</h3>
                 <div className={`grid grid-cols-1 gap-6${s.fields.every((f) => f.type === "number") ? " sm:grid-cols-2" : ""}`}>
                   {s.fields.map((f) => (
                     <Field key={f.id} field={f} onChange={(value) => setProfile((p) => setField(p, f.id, value))} />
@@ -313,7 +313,7 @@ export default function ProfilePage({ demoMeals }) {
                 <label htmlFor="profile-name" className={label}>Display name</label>
                 <input id="profile-name" value={name} maxLength={40} placeholder="Optional" onChange={(e) => setName(e.target.value)}
                   onBlur={saveName} onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }} className={input} />
-                <span className="block text-[11px] text-forest/60 mt-1">Shown on this page only. It stays in this browser.</span>
+                <span className="block text-[11px] text-forest/70 mt-1">Shown on this page only. It stays in this browser.</span>
               </div>
             </div>
             <div className="bg-forest text-cream rounded-3xl p-6 sm:p-8 shadow-card space-y-5">
@@ -404,7 +404,7 @@ export default function ProfilePage({ demoMeals }) {
                   {(countryList.length ? countryList : COUNTRIES.filter((c) => c.id === country)).map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
                 </select>
                 {regions.length === 0 && (
-                  <span className="block text-[11px] text-forest/60 mt-1">
+                  <span className="block text-[11px] text-forest/70 mt-1">
                     No estimated prices for {countryLabel} yet: only the prices you type count. The budget check waits for a price on every item.
                   </span>
                 )}
@@ -414,7 +414,7 @@ export default function ProfilePage({ demoMeals }) {
                 <select id="currency" value={currency} onChange={(e) => pickCurrency(e.target.value)} className={input}>
                   {(currencyList.length ? currencyList : [{ id: currency, label: currency }]).map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
                 </select>
-                <span className="block text-[11px] text-forest/60 mt-1">
+                <span className="block text-[11px] text-forest/70 mt-1">
                   Shown next to every price. Nothing is converted: type prices in this currency.
                   {regions.length > 0 && ESTIMATE_CURRENCY[country] !== currency ? ` Estimated prices for ${countryLabel} are in ${ESTIMATE_CURRENCY[country]}, so they are off while your currency is ${currency}.` : ""}
                 </span>
@@ -423,7 +423,7 @@ export default function ProfilePage({ demoMeals }) {
                 <label htmlFor="profile-budget" className={label}>Budget per meal</label>
                 <input id="profile-budget" inputMode="decimal" value={budget} onChange={(e) => setBudget(e.target.value)} onBlur={saveBudget}
                   onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }} className={input} />
-                <span className="block text-[11px] text-forest/60 mt-1">For one serving. Make Your Meal starts from this; it is not sent to the AI.</span>
+                <span className="block text-[11px] text-forest/70 mt-1">For one serving. Make Your Meal starts from this; it is not sent to the AI.</span>
               </div>
               {regions.length > 0 && ESTIMATE_CURRENCY[country] === currency && (
                 <div>
@@ -433,7 +433,7 @@ export default function ProfilePage({ demoMeals }) {
                     {regions.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
                     <option value={ESTIMATES_OFF}>Off: only my prices</option>
                   </select>
-                  <span className="block text-[11px] text-forest/60 mt-1">
+                  <span className="block text-[11px] text-forest/70 mt-1">
                     {region === ESTIMATES_OFF
                       ? "Only the prices you type count. The budget check waits for a price on every item."
                       : `Items you have not priced get the average price households paid ${regionName ? `in ${regionName} (the ${countryLabel} average where the region has too little data)` : `in ${countryLabel}`} over the latest 12 months published (MAPA household consumption panel). They show as est. on the recipe page; a price you type always wins.`}
@@ -453,7 +453,7 @@ export default function ProfilePage({ demoMeals }) {
                     onChange={(e) => setOtherName(e.target.value)} onBlur={() => otherName.trim() && saveStore(`other:${otherName}`)}
                     className={`${input} mt-2`} />
                 )}
-                <span className="block text-[11px] text-forest/60 mt-1">
+                <span className="block text-[11px] text-forest/70 mt-1">
                   Prices and products you save go to this store. Foods you have no product for at this store use the ones you saved with no store, then the typical pack. SmartBite never contacts the store.
                 </span>
               </div>
@@ -470,7 +470,7 @@ export default function ProfilePage({ demoMeals }) {
                     <input type="file" accept="application/json,.json" onChange={upload} className="sr-only" />
                   </label>
                 </div>
-                <span className="block text-[11px] text-forest/60">A file to keep your products, or move them to another browser.</span>
+                <span className="block text-[11px] text-forest/70">A file to keep your products, or move them to another browser.</span>
               </div>
             </div>
             <div id="profile-file" className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">

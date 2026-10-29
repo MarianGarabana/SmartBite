@@ -12,7 +12,7 @@ export default function Error({ error, retry }) {
         <span className="font-script text-3xl text-forest font-bold">Something burnt</span>
         <h1 className="font-serif text-3xl font-bold text-forest">This page hit an error</h1>
         <p className="text-sm text-forest/70">Your profile, cart and meals are safe in this browser. Try again, or go back home.</p>
-        {error?.digest ? <p className="text-xs text-forest/60">Error id: {error.digest}</p> : null}
+        {error?.digest ? <p className="text-xs text-forest/70">Error id: {error.digest}</p> : null}
         <div className="pt-3 flex items-center justify-center gap-3">
           <button onClick={() => retry()} className="bg-lime hover:bg-lime-hover text-forest font-bold text-sm px-6 py-3 rounded-full transition-colors">
             Try again

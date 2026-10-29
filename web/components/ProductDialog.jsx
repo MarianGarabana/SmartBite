@@ -12,7 +12,7 @@ import { NO_STORE, deleteProduct, okProduct, readProducts, readStore, regionLabe
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
 const input = "w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest";
-const small = "block text-[11px] text-forest/60 mt-1";
+const small = "block text-[11px] text-forest/70 mt-1";
 
 const NUTRITION = { label: "your label", ciqual: "Ciqual", usda: "USDA", open_food_facts: "Open Food Facts" };
 const MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -34,13 +34,13 @@ export function ProductCell({ row, onEdit }) {
   return (
     <>
       <span className="block">{row.product || "Typical pack"}</span>
-      <span className="block text-[10px] text-forest/50 mt-0.5">
+      <span className="block text-[10px] text-forest/70 mt-0.5">
         {row.userProduct ? <span className="font-bold text-lime-hover">Your product · </span> : null}
         {sourceText(row)}
       </span>
       {row.foodKey && onEdit ? (
         <button type="button" onClick={() => onEdit(row)} aria-label={`Edit product for ${row.ingredient}`}
-          className="text-[10px] font-bold text-forest/60 hover:text-lime-hover mt-0.5">
+          className="text-[10px] font-bold text-forest/70 hover:text-lime-hover mt-0.5">
           <i className="fa-solid fa-pen mr-1"></i>Edit product
         </button>
       ) : null}
@@ -226,7 +226,7 @@ export function ProductDialog({ row, onClose, showToast }) {
             <div className="grid grid-cols-3 gap-3">
               {LABEL_FIELDS.map(([k, name]) => (
                 <div key={k}>
-                  <label htmlFor={`product-${k}`} className="block text-[11px] font-bold text-forest/60 mb-1">{name}</label>
+                  <label htmlFor={`product-${k}`} className="block text-[11px] font-bold text-forest/70 mb-1">{name}</label>
                   <input id={`product-${k}`} inputMode="decimal" value={form[k]} onChange={set(k)} className={input} />
                 </div>
               ))}
@@ -246,7 +246,7 @@ export function ProductDialog({ row, onClose, showToast }) {
           <button onClick={save} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Save product</button>
           <button onClick={onClose} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2.5">Cancel</button>
           {own && (
-            <button onClick={remove} className="text-xs font-bold text-forest/50 hover:text-red-600 px-3 py-2.5 ml-auto">Remove product</button>
+            <button onClick={remove} className="text-xs font-bold text-forest/70 hover:text-red-600 px-3 py-2.5 ml-auto">Remove product</button>
           )}
         </div>
       </div>
