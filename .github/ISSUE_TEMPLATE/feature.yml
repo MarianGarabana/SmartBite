@@ -1,0 +1,21 @@
+name: Feature idea
+description: Something SmartBite could do
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What do you want to do?
+      description: The task or problem, in your own words. For example "I shop for two people and want the list split by person."
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+      description: How SmartBite could help. A sketch or screenshot is welcome.
+  - type: textarea
+    id: now
+    attributes:
+      label: What you do today
+      description: How you handle it now, without this feature.

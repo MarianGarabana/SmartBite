@@ -1,0 +1,65 @@
+name: Bug report
+description: Something in SmartBite does not work as it should
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Never paste your API key here. For a security problem, use the Security tab instead (see SECURITY.md).
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to see it again
+      placeholder: |
+        1. Open Make Your Meal
+        2. Type "something warm with chicken"
+        3. Click Show me 4 ideas
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where
+      options:
+        - The live site
+        - Running on my computer
+    validations:
+      required: true
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Model provider
+      options:
+        - No key (demo meals)
+        - Anthropic
+        - OpenAI
+        - OpenRouter
+        - Gemini
+        - Ollama or another local endpoint
+        - Another OpenAI-compatible endpoint
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model name
+      placeholder: e.g. claude-sonnet-5-5
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and device
+      placeholder: e.g. Safari on iPhone, Chrome on Windows
+    validations:
+      required: true
+  - type: input
+    id: error-id
+    attributes:
+      label: Error id
+      description: If the page showed "error id ..." or an error code, copy it here.
