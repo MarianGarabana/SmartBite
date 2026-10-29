@@ -35,11 +35,11 @@ function CartPrice({ item, prices, onBlocked, priceClass }) {
 }
 
 const CATEGORIES = [
-  { name: "Breakfast", img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=250&q=80" },
-  { name: "Lunch", img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=250&q=80" },
-  { name: "Dinner", img: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=250&q=80" },
-  { name: "Salads", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=250&q=80" },
-  { name: "Warm Meals", img: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=250&q=80" },
+  { name: "Breakfast", img: "/img/breakfast.jpg" },
+  { name: "Lunch", img: "/img/lunch.jpg" },
+  { name: "Dinner", img: "/img/dinner.jpg" },
+  { name: "Salads", img: "/img/salads.jpg" },
+  { name: "Warm Meals", img: "/img/warm-meals.jpg" },
 ];
 // Meals show their category if they have one, else their date; "~" marks totals read as "about"
 const label = (m) => m.category || m.date;
@@ -142,7 +142,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                 <div className="lg:col-span-5 flex justify-center items-center relative">
                   <div className="absolute w-[320px] h-[320px] sm:w-[380px] sm:h-[380px] bg-lime rounded-full -rotate-6 shadow-glow opacity-90"></div>
                   <div className="relative z-10 w-[300px] h-[300px] sm:w-[360px] sm:h-[360px] rounded-full overflow-hidden border-8 border-forest shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80" alt="Healthy chicken and vegetable bowl" className="w-full h-full object-cover" />
+                    <img src="/img/hero-bowl.jpg" alt="Healthy chicken and vegetable bowl" fetchPriority="high" width="800" height="800" className="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
@@ -160,7 +160,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
               {CATEGORIES.map((c) => (
                 <button key={c.name} onClick={() => openCategory(c.name)} className="group flex flex-col items-center p-6 bg-white rounded-3xl shadow-soft hover:shadow-card hover:-translate-y-1 transition-all border border-cream-dark/50">
                   <div className="w-24 h-24 rounded-full bg-cream-card group-hover:bg-lime/20 flex items-center justify-center mb-4 transition-colors overflow-hidden">
-                    <img src={c.img} alt={c.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <img src={c.img} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   </div>
                   <span className="font-serif font-bold text-lg text-forest">{c.name}</span>
                 </button>

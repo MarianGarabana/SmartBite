@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { adjustApply, adjustInfo, adjustPreview, adjustReset, cartJobs, consolidate } from "../lib/cart";
 import { mealRequest } from "../lib/cartmath";
+import { REPO_URL } from "../lib/site";
 import { cachedReply, evaluateCached, requestKey } from "../lib/engine";
 import { toMeal } from "../lib/meal";
 import { usePhoto } from "../lib/photos";
@@ -253,14 +254,16 @@ export function useToast() {
 
 // The photo the user added in this browser, else the demo photo, else a green placeholder with the meal name.
 // label: show "AI-generated photo" on a demo photo made with AI (the parent is positioned)
-export function MealImage({ meal, className, textClass = "text-sm", label = false }) {
+// lazy by default: hidden tabs hold every demo photo; eager only for a page's main photo
+export function MealImage({ meal, className, textClass = "text-sm", label = false, eager = false }) {
+  const loading = eager ? "eager" : "lazy";
   const photo = usePhoto(meal.slug);
   const src = photo || meal.images[0];
   if (src && !photo && meal.aiPhoto) {
-    const img = <img src={src} alt={`${meal.name} (AI-generated photo)`} className={className} />;
+    const img = <img src={src} alt={`${meal.name} (AI-generated photo)`} loading={loading} className={className} />;
     return label ? <>{img}<PhotoLabel /></> : img;
   }
-  if (src) return <img src={src} alt={meal.name} className={className} />;
+  if (src) return <img src={src} alt={meal.name} loading={loading} className={className} />;
   return (
     <div className={`${className} bg-forest-light flex items-center justify-center p-3 text-center`}>
       <span className={`font-serif font-bold text-lime leading-snug ${textClass}`}>{meal.name}</span>
@@ -470,8 +473,12 @@ export function Footer({ onNavigate }) {
           ))}
           <Link href="/profile" className="hover:text-lime transition-colors">Profile</Link>
           <Link href="/privacy" className="hover:text-lime transition-colors">Privacy</Link>
+          <a href={REPO_URL} target="_blank" rel="noopener noreferrer" className="hover:text-lime transition-colors">Source code</a>
         </nav>
-        <p className="text-[11px] text-cream/40">© 2026 SmartBite. Whole-pack meal planner. Open source, AGPL-3.0.</p>
+        <div className="text-[11px] text-cream/40 text-center sm:text-right space-y-1">
+          <p>© 2026 SmartBite. Whole-pack meal planner. Open source, AGPL-3.0.</p>
+          <p>Not medical advice. For a health condition, ask a doctor or dietitian.</p>
+        </div>
       </div>
     </footer>
   );

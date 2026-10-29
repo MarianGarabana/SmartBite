@@ -184,7 +184,7 @@ function RecipeView({ meal, meals, router }) {
             {/* Meal Header & Macros */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               <div className="md:col-span-5 h-64 rounded-2xl overflow-hidden relative">
-                <MealImage meal={meal} label className="w-full h-full object-cover" textClass="text-2xl" />
+                <MealImage meal={meal} label eager className="w-full h-full object-cover" textClass="text-2xl" />
                 {hasPhoto && (
                   <button onClick={() => setPhotoOpen(!photoOpen)}
                     className="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-forest text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-soft">

@@ -2,6 +2,7 @@
 // Short privacy note: no accounts, data stays in the browser.
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { REPO_URL } from "../lib/site";
 import { PageShell, useToast } from "./Chrome";
 
 const POINTS = [
@@ -20,6 +21,10 @@ const POINTS = [
     "When you press Look up in Edit product, your browser asks Open Food Facts for that one barcode. Only the barcode is sent, with your IP address and browser details like any web request. Nothing about you, your profile or your meals goes there. Open Food Facts data is under the ODbL licence."],
   ["fa-calculator", "Math in code",
     "Ideas and recipes are AI-generated. Packs, macros and leftovers are computed in code, not by the model."],
+  ["fa-server", "Hosting and logs",
+    "SmartBite is hosted on Vercel. Like any web host, Vercel keeps short-lived request logs (IP address, page, time) to run and protect the service. Images and fonts are served from the same site. When the engine fails, it logs an error id and the request's size, never what you sent."],
+  ["fa-scale-balanced", "Your rights",
+    "SmartBite keeps no data about you, so there is nothing to look up or delete on our side. To delete your own data, clear this site's storage in your browser. For Vercel's logs, see Vercel's privacy policy."],
 ];
 
 export default function PrivacyPage({ demoMeals }) {
@@ -47,6 +52,9 @@ export default function PrivacyPage({ demoMeals }) {
           ))}
           <p className="text-xs text-forest/60 text-center pt-2">
             Change your profile or remove your key in your <Link href="/profile" className="font-bold underline hover:text-lime-hover">Profile</Link>.
+          </p>
+          <p className="text-xs text-forest/60 text-center">
+            SmartBite is an open-source project by Marian Garabana. Questions go to the <a href={`${REPO_URL}/issues`} target="_blank" rel="noopener noreferrer" className="font-bold underline hover:text-lime-hover">issues page on GitHub</a>.
           </p>
         </div>
       </section>
