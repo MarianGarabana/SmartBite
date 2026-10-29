@@ -20,6 +20,7 @@ export async function resolve(specifier, context, next) {
 const { priceKey, productsFor, withPrices } = await import("../lib/cartmath.js");
 const { categoriesOf, demoIdea, demoPicks, estimateTitle, periodText, toMeal } = await import("../lib/meal.js");
 const { consolidate } = await import("../lib/cart.js");
+const { listText } = await import("../lib/packs.js");
 const { evaluateMeal } = await import("../lib/engine.js");
 const store = await import("../lib/store.js");
 
@@ -137,6 +138,30 @@ test("cart totals follow the user's prices; unpriced rows keep grams and leftove
   assert.equal(one.totals.priced, 1);
   assert.equal(one.totals.unpriced, bought.length - 1);
   for (const r of one.rows.filter((x) => !x.optional && !x.hasPrice)) assert.ok(r.bought > 0 && r.left >= 0);
+});
+
+test("the shopping list text lists what to buy, ticked optional items last, and the total", () => {
+  const meal = load(TUNA);
+  const bought = meal.lines.filter((l) => !l.optional && l.priceKey);
+  const optional = meal.lines.find((l) => l.optional && l.packSize);
+  const prices = Object.fromEntries(bought.map((l) => [l.priceKey, 1]));
+  const stored = { meals: [{ slug: TUNA }], optional: [optional.key], have: [bought[0].key], prices };
+  const cart = consolidate(stored, [meal]);
+  const text = listText(cart.rows, cart.totals, (v) => `€${v.toFixed(2)}`);
+  const lines = text.split("\n");
+  assert.equal(lines[0], "SmartBite shopping list");
+  assert.ok(!text.includes(`- ${bought[0].ingredient}:`), "already at home is not on the list");
+  const second = cart.rows.find((r) => r.key === bought[1].key);
+  assert.ok(lines.includes(`- ${second.ingredient}: ${second.packs} x ${second.product}, €${second.price.toFixed(2)}`));
+  // A product name with no pack size in it gets the grams
+  const named = listText([{ ...second, product: "Hacendado tuna" }], cart.totals, String);
+  assert.ok(named.includes(`x Hacendado tuna (${Math.round(second.packSize)}g)`));
+  const items = lines.filter((l) => l.startsWith("- "));
+  assert.ok(items.at(-1).startsWith(`- ${optional.ingredient}:`), "the ticked optional item comes last");
+  assert.equal(lines.at(-1), `Total: €${cart.totals.bought.toFixed(2)}`);
+  // No prices: no total line
+  const plain = consolidate({ ...stored, prices: {} }, [meal]);
+  assert.ok(!listText(plain.rows, plain.totals, String).includes("Total"));
 });
 
 test("a price is shared by every meal that buys the same pack", () => {

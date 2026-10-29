@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { checkForm } from "../lib/form";
 import { makeMeal, progressText } from "../lib/flow";
 import { generateIdeas, reviseIdea } from "../lib/llm";
+import { listText } from "../lib/packs";
 import { demoIdea, demoPicks, estimatePlace, estimateTitle, periodText, toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
 import { DEFAULT_BUDGET, engineEstimates, llmReady, needsSetup, readActiveProducts, readBudget, readLlm, readProfile,
@@ -64,6 +65,13 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
   // A row priced with an estimate that counts in the total, for the note under the list
   const estRow = cart.rows.find((r) => r.estimate && r.hasPrice && !r.have && (!r.optional || r.included));
   const estRegion = cart.rows.find((r) => r.estimate && r.priceRegion)?.priceRegion;
+  // Copy, Share (phones and browsers that have it) and Print for the shopping list
+  const [canShare, setCanShare] = useState(false);
+  useEffect(() => setCanShare(typeof navigator.share === "function"), []);
+  const listCopy = () => navigator.clipboard.writeText(listText(cart.rows, cart.totals, money))
+    .then(() => showToast("Shopping list copied.")).catch(() => showToast("Could not copy. Use Print instead."));
+  const listShare = () => navigator.share({ title: "Shopping list", text: listText(cart.rows, cart.totals, money) })
+    .catch(() => {}); // closed without sharing
   // "Adjust leftovers to meals": suggestions from code, previewed before anything changes
   const [adjust, setAdjust] = useState(null);
   const openAdjust = () => {
@@ -322,10 +330,22 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
 
             <div className="lg:col-span-8 space-y-6">
               <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-6">
-                <div className="flex items-center justify-between border-b border-cream-dark pb-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-cream-dark pb-4">
                   <div>
                     <h3 className="font-serif font-bold text-xl text-forest">Consolidated Shopping List</h3>
                     <p className="text-xs text-forest/60">Identical ingredients across all cart meals are automatically merged into single store packs.</p>
+                  </div>
+                  <div id="cart-list-actions" className="flex gap-2 print:hidden">
+                    {[
+                      ["Copy list", "fa-copy", listCopy],
+                      ...(canShare ? [["Share", "fa-share-nodes", listShare]] : []),
+                      ["Print", "fa-print", () => window.print()],
+                    ].map(([text, icon, onClick]) => (
+                      <button key={text} onClick={onClick} className="bg-cream-card hover:bg-lime text-forest font-bold px-3.5 py-2 rounded-xl text-xs transition-colors flex items-center gap-1.5">
+                        <i className={`fa-solid ${icon} text-[10px]`}></i>
+                        <span>{text}</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
                 {/* relative: the sr-only header label is absolute and would widen the page past this scroll box */}

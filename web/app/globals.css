@@ -36,3 +36,10 @@ body {
 .animate-skeleton {
   animation: pulseSkeleton 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+/* Print (Cart "Print"): the page without the site's header, footer and toast, and the Cart without its buttons and
+   empty price fields; colors print as on screen (the dark totals box keeps its light text) */
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  header, footer, #toast-msg, #tab-cart button, #tab-cart input[type="text"] { display: none !important; }
+}

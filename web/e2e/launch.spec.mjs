@@ -83,3 +83,26 @@ test("security headers are set, and with the CSP on no page breaks a rule", asyn
   }
   expect(violations).toEqual([]);
 });
+
+test("the Cart's shopping list copies as text and prints without the site's header and buttons", async ({ page, context }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page.goto(`/recipes/${DEMO_SLUG}`);
+  await page.getByRole("button", { name: "Add to my cart" }).click();
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("smartbite.cart") || "{}").meals?.length ?? 0)).toBe(1);
+  await page.goto("/?tab=cart");
+  const firstIngredient = page.locator("#cart-consolidated-tbody tr td").first();
+  await expect(firstIngredient).toBeVisible();
+
+  await page.getByRole("button", { name: "Copy list" }).click();
+  await expect(page.locator("#toast-text")).toHaveText("Shopping list copied.");
+  const text = await page.evaluate(() => navigator.clipboard.readText());
+  expect(text).toMatch(/^SmartBite shopping list\n\n- /);
+  expect(text).toContain(`- ${await firstIngredient.innerText()}: `);
+
+  await page.emulateMedia({ media: "print" });
+  await expect(page.locator("header")).toBeHidden();
+  await expect(page.locator("footer")).toBeHidden();
+  await expect(page.locator("#cart-list-actions")).toBeHidden();
+  await expect(page.locator("#cart-consolidated-tbody")).toBeVisible();
+  await expect(page.locator("#cart-total-bought")).toBeVisible();
+});

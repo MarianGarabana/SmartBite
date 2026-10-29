@@ -31,3 +31,20 @@ export function totals(rows) {
   }
   return t;
 }
+
+// The Cart's shopping list as plain text for Copy and Share: what to buy (not "already at home"; optional rows only
+// when ticked, after the rest), packs and product, then the total. money formats a price in the user's currency.
+export function listText(rows, t, money) {
+  const g = (v) => `${Math.round(v)}g`;
+  const buy = rows.filter((r) => !r.have && (!r.optional || r.included));
+  const lines = [...buy.filter((r) => !r.optional), ...buy.filter((r) => r.optional)].map((r) => {
+    if (!r.packSize) return `- ${r.ingredient}: ${g(r.needed)}`;
+    const price = r.hasPrice ? `, ${money(r.price)}${r.estimate ? " est." : ""}` : "";
+    // The product name says the pack ("eggs clase M 24 uds", "ground beef 400 g"); grams only when it has no number
+    const pack = !r.product ? g(r.packSize) : /\d/.test(r.product) ? r.product : `${r.product} (${g(r.packSize)})`;
+    return `- ${r.ingredient}: ${r.packs} x ${pack}${price}`;
+  });
+  const total = !t.priced ? null
+    : t.unpriced ? `Partial total (${t.unpriced} without a price): ${money(t.bought)}` : `Total: ${money(t.bought)}`;
+  return ["SmartBite shopping list", "", ...lines, ...(total ? ["", total] : [])].join("\n");
+}
