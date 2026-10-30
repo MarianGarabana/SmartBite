@@ -529,17 +529,137 @@
     "kcal": 485.5,
     "protein_g": 40.22,
     "carbs_g": 44.3,
-    "fat_g": 12.81
+    "fat_g": 12.81,
+    "fiber_g": 15.92
    },
    "total": {
     "kcal": 3883.98,
     "protein_g": 321.8,
     "carbs_g": 354.39,
-    "fat_g": 102.52
+    "fat_g": 102.52,
+    "fiber_g": 127.4
    },
    "misses": [
     "carbs 44 g over max 40 g"
    ],
+   "fiber_pct": 64,
+   "micros": {
+    "nutrients": [
+     {
+      "key": "iron_mg",
+      "label": "Iron",
+      "unit": "mg",
+      "per_serving": 7.72,
+      "nrv": 14,
+      "pct": 55,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "calcium_mg",
+      "label": "Calcium",
+      "unit": "mg",
+      "per_serving": 108.76,
+      "nrv": 800,
+      "pct": 14,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "potassium_mg",
+      "label": "Potassium",
+      "unit": "mg",
+      "per_serving": 1098.77,
+      "nrv": 2000,
+      "pct": 55,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "magnesium_mg",
+      "label": "Magnesium",
+      "unit": "mg",
+      "per_serving": 128.59,
+      "nrv": 375,
+      "pct": 34,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "zinc_mg",
+      "label": "Zinc",
+      "unit": "mg",
+      "per_serving": 7.83,
+      "nrv": 10,
+      "pct": 78,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "vitamin_a_ug",
+      "label": "Vitamin A",
+      "unit": "µg",
+      "per_serving": 111.87,
+      "nrv": 800,
+      "pct": 14,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "vitamin_c_mg",
+      "label": "Vitamin C",
+      "unit": "mg",
+      "per_serving": 22.68,
+      "nrv": 80,
+      "pct": 28,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "vitamin_d_ug",
+      "label": "Vitamin D",
+      "unit": "µg",
+      "per_serving": 0.1,
+      "nrv": 5,
+      "pct": 2,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "vitamin_b12_ug",
+      "label": "Vitamin B12",
+      "unit": "µg",
+      "per_serving": 2.21,
+      "nrv": 2.5,
+      "pct": 88,
+      "ingredients_with_data": 7,
+      "ingredients_total": 8
+     },
+     {
+      "key": "folate_ug",
+      "label": "Folate",
+      "unit": "µg",
+      "per_serving": 138.89,
+      "nrv": 200,
+      "pct": 69,
+      "ingredients_with_data": 7,
+      "ingredients_total": 8
+     }
+    ],
+    "summary": {
+     "at_least_15pct": 7,
+     "count": 10
+    },
+    "coverage": {
+     "with_data": 6,
+     "total": 8,
+     "missing": [
+      "dried lentils",
+      "soy sauce"
+     ]
+    },
+    "reference": "EU reference intakes (Regulation (EU) 1169/2011, Annex XIII)"
+   },
    "missing_nutrition": [],
    "unresolved": [],
    "lines": [
@@ -553,7 +673,8 @@
       "kcal": 1360.0,
       "protein_g": 160.0,
       "carbs_g": 0.0,
-      "fat_g": 80.0
+      "fat_g": 80.0,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -567,7 +688,8 @@
       "kcal": 560.88,
       "protein_g": 42.19,
       "carbs_g": 68.4,
-      "fat_g": 2.88
+      "fat_g": 2.88,
+      "fiber_g": 46.44
      },
      "missing": []
     },
@@ -581,7 +703,8 @@
       "kcal": 448.0,
       "protein_g": 8.99,
       "carbs_g": 91.39,
-      "fat_g": 3.58
+      "fat_g": 3.58,
+      "fiber_g": 6.4
      },
      "missing": []
     },
@@ -595,7 +718,8 @@
       "kcal": 1255.68,
       "protein_g": 96.38,
       "carbs_g": 170.88,
-      "fat_g": 6.91
+      "fat_g": 6.91,
+      "fiber_g": 62.59
      },
      "missing": []
     },
@@ -609,7 +733,8 @@
       "kcal": 71.68,
       "protein_g": 4.1,
       "carbs_g": 10.62,
-      "fat_g": 0.43
+      "fat_g": 0.43,
+      "fiber_g": 5.82
      },
      "missing": []
     },
@@ -623,7 +748,8 @@
       "kcal": 34.88,
       "protein_g": 1.7,
       "carbs_g": 5.95,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 1.86
      },
      "missing": []
     },
@@ -637,7 +763,8 @@
       "kcal": 25.54,
       "protein_g": 4.64,
       "carbs_g": 1.1,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 0.58
      },
      "missing": []
     },
@@ -651,7 +778,8 @@
       "kcal": 13.4,
       "protein_g": 0.36,
       "carbs_g": 2.33,
-      "fat_g": 0.17
+      "fat_g": 0.17,
+      "fiber_g": 0.56
      },
      "missing": []
     },
@@ -665,7 +793,8 @@
       "kcal": 96.96,
       "protein_g": 2.83,
       "carbs_g": 2.05,
-      "fat_g": 7.95
+      "fat_g": 7.95,
+      "fiber_g": 1.89
      },
      "missing": []
     },
@@ -679,7 +808,8 @@
       "kcal": 9.02,
       "protein_g": 0.29,
       "carbs_g": 0.71,
-      "fat_g": 0.42
+      "fat_g": 0.42,
+      "fiber_g": 0.65
      },
      "missing": []
     },
@@ -693,7 +823,8 @@
       "kcal": 7.94,
       "protein_g": 0.32,
       "carbs_g": 0.96,
-      "fat_g": 0.18
+      "fat_g": 0.18,
+      "fiber_g": 0.61
      },
      "missing": []
     }
@@ -708,7 +839,6 @@
    }
   ]
  },
- "mfp": "SmartBite: Korean beef bowl with peas and brown rice-lentil mix\nServings: 8\n\nground beef, 800 g (raw)\nfrozen peas, 720 g\nbrown rice, 128 g (dry)\ndried lentils, 384 g (dry)\nspring onion, 224 g (raw)\ngarlic, 32 g (raw)\nsoy sauce, 64 g\nground ginger, 4 g\nsesame seeds, 16 g\nchili flakes, 2 g\nblack pepper, 2 g (raw)",
  "slug": "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix",
  "demo": true,
  "photo": "/demo/images/korean-beef-bowl-with-peas-and-brown-rice-lentil-mix.jpg",

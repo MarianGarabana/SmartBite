@@ -108,7 +108,7 @@ def test_label_replaces_the_nutrition_table_for_that_food_only():
     plain, data = post(TUNA), post(TUNA, products=[skyr, product()])
     got = macro(data, "skyr")
     assert (got["source"], got["source_id"]) == ("label", "12345670")
-    assert got["amount"] == {"kcal": 180, "protein_g": 33, "carbs_g": 10.5, "fat_g": 0.6}  # 300 g
+    assert got["amount"] == {"kcal": 180, "protein_g": 33, "carbs_g": 10.5, "fat_g": 0.6, "fiber_g": 0}  # 300 g, no fiber on the label
     assert macro(data, "canned chickpeas") == macro(plain, "canned chickpeas")  # product with no label: table
 
 

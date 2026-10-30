@@ -3,11 +3,12 @@
 // must still work for the visit.
 import { PACK_SIZES } from "../generated/index.js";
 import { EGG_GRAMS, norm, priceKey } from "./cartmath";
-import { DEFAULT_PROFILE, mergeProfile } from "./profile";
+import { DEFAULT_PROFILE, fieldValue, mergeProfile } from "./profile";
 import { ANTHROPIC, DEFAULT_ANTHROPIC_MODEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, presetById } from "./providers";
 
 export const KEYS = {
   cart: "smartbite.cart", // { meals: [{ slug, servings, grams?, baseServings? }], optional: [key], have: [key] }
+  demoCart: "smartbite.demoCart", // the cart of /demo, same shape: playing with the demo never touches the real cart
   saved: "smartbite.saved", // slugs of local meals saved in My Recipes
   meals: "smartbite.meals", // { slug: Meal result } made in this browser
   profile: "smartbite.profile", // Kitchen Profile (lib/profile.js)
@@ -66,10 +67,13 @@ export function onStoreChange(callback) {
 
 const list = (v) => (Array.isArray(v) ? v : []);
 
+// The demo (/demo and the demo recipe pages) keeps its own cart; it is not in the profile file
+export const cartKey = (demo = false) => (demo ? KEYS.demoCart : KEYS.cart);
+
 // The cart carries the user's products for their store and their prices too (read from their own keys), so cart
 // totals follow a price typed anywhere
-export function readCart() {
-  const c = readJson(KEYS.cart, {}) || {};
+export function readCart(demo = false) {
+  const c = readJson(cartKey(demo), {}) || {};
   const products = readActiveProducts();
   return {
     meals: list(c.meals).filter((e) => e && typeof e.slug === "string"),
@@ -81,7 +85,7 @@ export function readCart() {
 }
 
 // Products and prices live under their own keys, never inside the cart
-export const writeCart = ({ prices: _prices, products: _products, ...cart }) => writeJson(KEYS.cart, cart);
+export const writeCart = ({ prices: _prices, products: _products, ...cart }, demo = false) => writeJson(cartKey(demo), cart);
 
 export const MAX_PRICE_EUR = 1000; // same limit as docs/contracts/evaluate.schema.json
 
@@ -493,6 +497,19 @@ export const hasProfile = () => readJson(KEYS.setup, null) === SETUP_DONE
   || [KEYS.profile, KEYS.name, KEYS.apiKey, KEYS.openaiKey].some(hasValue);
 export const needsSetup = () => !hasProfile() && readJson(KEYS.setup, null) !== SETUP_SKIPPED;
 export const markSetup = (state) => writeJson(KEYS.setup, state === SETUP_DONE ? SETUP_DONE : SETUP_SKIPPED);
+
+// Profile complete (decided 2026-10-30): the real Make Your Meal runs only then; before, it shows Set up profile or
+// Try the demo. The rule: the chosen provider is ready (llmReady: a saved key, or an endpoint that needs none) AND
+// either the setup was finished once (KEYS.setup "done") or a Kitchen Profile with a calories and a protein target is
+// saved. The second half is the migration: browsers that saved a key and targets before this rule (in the Profile
+// page, or before the setup existed) count as complete on load and are never sent back through the setup.
+export function profileComplete() {
+  if (!llmReady(readLlm())) return false;
+  if (readJson(KEYS.setup, null) === SETUP_DONE) return true;
+  const saved = readJson(KEYS.profile, null);
+  const target = (id) => { try { return Number(fieldValue(saved, id)) > 0; } catch { return false; } }; // odd shapes: no
+  return Boolean(saved && Array.isArray(saved.sections) && target("kcal_target") && target("protein_g_target"));
+}
 
 // What /api/evaluate takes: { country, region } with null for none (no estimates, or the national average)
 export function engineEstimates(country = readCountry(), region = readRegion(country), currency = readCurrency(country)) {

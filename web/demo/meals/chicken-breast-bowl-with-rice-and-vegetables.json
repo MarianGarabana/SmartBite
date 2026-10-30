@@ -526,15 +526,134 @@
     "kcal": 474.89,
     "protein_g": 46.52,
     "carbs_g": 32.48,
-    "fat_g": 15.13
+    "fat_g": 15.13,
+    "fiber_g": 7.58
    },
    "total": {
     "kcal": 3799.08,
     "protein_g": 372.18,
     "carbs_g": 259.82,
-    "fat_g": 121.03
+    "fat_g": 121.03,
+    "fiber_g": 60.67
    },
    "misses": [],
+   "fiber_pct": 30,
+   "micros": {
+    "nutrients": [
+     {
+      "key": "iron_mg",
+      "label": "Iron",
+      "unit": "mg",
+      "per_serving": 2.15,
+      "nrv": 14,
+      "pct": 15,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "calcium_mg",
+      "label": "Calcium",
+      "unit": "mg",
+      "per_serving": 132.88,
+      "nrv": 800,
+      "pct": 17,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "potassium_mg",
+      "label": "Potassium",
+      "unit": "mg",
+      "per_serving": 1544.38,
+      "nrv": 2000,
+      "pct": 77,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "magnesium_mg",
+      "label": "Magnesium",
+      "unit": "mg",
+      "per_serving": 106.23,
+      "nrv": 375,
+      "pct": 28,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "zinc_mg",
+      "label": "Zinc",
+      "unit": "mg",
+      "per_serving": 1.7,
+      "nrv": 10,
+      "pct": 17,
+      "ingredients_with_data": 6,
+      "ingredients_total": 7
+     },
+     {
+      "key": "vitamin_a_ug",
+      "label": "Vitamin A",
+      "unit": "µg",
+      "per_serving": 138.95,
+      "nrv": 800,
+      "pct": 17,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "vitamin_c_mg",
+      "label": "Vitamin C",
+      "unit": "mg",
+      "per_serving": 144.78,
+      "nrv": 80,
+      "pct": 181,
+      "ingredients_with_data": 6,
+      "ingredients_total": 7
+     },
+     {
+      "key": "vitamin_d_ug",
+      "label": "Vitamin D",
+      "unit": "µg",
+      "per_serving": 0.0,
+      "nrv": 5,
+      "pct": 0,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "vitamin_b12_ug",
+      "label": "Vitamin B12",
+      "unit": "µg",
+      "per_serving": 1.26,
+      "nrv": 2.5,
+      "pct": 50,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "folate_ug",
+      "label": "Folate",
+      "unit": "µg",
+      "per_serving": 176.24,
+      "nrv": 200,
+      "pct": 88,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     }
+    ],
+    "summary": {
+     "at_least_15pct": 9,
+     "count": 10
+    },
+    "coverage": {
+     "with_data": 6,
+     "total": 7,
+     "missing": [
+      "quark 0%"
+     ]
+    },
+    "reference": "EU reference intakes (Regulation (EU) 1169/2011, Annex XIII)"
+   },
    "missing_nutrition": [],
    "unresolved": [],
    "lines": [
@@ -548,7 +667,8 @@
       "kcal": 1320.0,
       "protein_g": 280.8,
       "carbs_g": 0.0,
-      "fat_g": 18.0
+      "fat_g": 18.0,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -562,7 +682,8 @@
       "kcal": 616.0,
       "protein_g": 12.36,
       "carbs_g": 136.4,
-      "fat_g": 1.39
+      "fat_g": 1.39,
+      "fiber_g": 2.69
      },
      "missing": []
     },
@@ -576,7 +697,8 @@
       "kcal": 134.4,
       "protein_g": 5.2,
       "carbs_g": 22.96,
-      "fat_g": 0.88
+      "fat_g": 0.88,
+      "fiber_g": 4.0
      },
      "missing": []
     },
@@ -590,7 +712,8 @@
       "kcal": 159.0,
       "protein_g": 6.55,
       "carbs_g": 28.1,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 6.0
      },
      "missing": []
     },
@@ -604,7 +727,8 @@
       "kcal": 268.8,
       "protein_g": 8.48,
       "carbs_g": 47.84,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 25.6
      },
      "missing": []
     },
@@ -618,7 +742,8 @@
       "kcal": 974.4,
       "protein_g": 7.49,
       "carbs_g": 0.0,
-      "fat_g": 98.88
+      "fat_g": 98.88,
+      "fiber_g": 17.28
      },
      "missing": []
     },
@@ -632,7 +757,8 @@
       "kcal": 282.5,
       "protein_g": 49.5,
       "carbs_g": 21.0,
-      "fat_g": 0.5
+      "fat_g": 0.5,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -646,7 +772,8 @@
       "kcal": 25.44,
       "protein_g": 1.13,
       "carbs_g": 1.5,
-      "fat_g": 1.03
+      "fat_g": 1.03,
+      "fiber_g": 2.79
      },
      "missing": []
     },
@@ -660,7 +787,8 @@
       "kcal": 10.6,
       "protein_g": 0.36,
       "carbs_g": 1.06,
-      "fat_g": 0.17
+      "fat_g": 0.17,
+      "fiber_g": 1.7
      },
      "missing": []
     },
@@ -674,7 +802,8 @@
       "kcal": 0.0,
       "protein_g": 0.0,
       "carbs_g": 0.0,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -688,7 +817,8 @@
       "kcal": 7.94,
       "protein_g": 0.32,
       "carbs_g": 0.96,
-      "fat_g": 0.18
+      "fat_g": 0.18,
+      "fiber_g": 0.61
      },
      "missing": []
     }
@@ -696,7 +826,6 @@
   },
   "change_requests": []
  },
- "mfp": "SmartBite: Chicken breast bowl with rice and vegetables\nServings: 8\n\nchicken breast, 1200 g (raw)\nrice, 176 g (dry)\ncucumber, 800 g (raw)\ncherry tomatoes, 500 g (raw)\nred bell pepper, 800 g (raw)\navocado, 480 g\nquark 0%, 500 g\npaprika, 8 g\noregano, 4 g\nsalt, 8 g\nblack pepper, 2 g (raw)",
  "slug": "chicken-breast-bowl-with-rice-and-vegetables",
  "demo": true,
  "photo": "/demo/images/chicken-breast-bowl-with-rice-and-vegetables.jpg",

@@ -60,7 +60,7 @@ test("a country's currency shows on prices, and Spain's estimates need euros", a
   await expect(page.locator("#price-region")).toHaveCount(0);
   await page.locator("#currency").selectOption("EUR");
   await expect(page.locator("#price-region")).toBeVisible();
-  await page.goto(`/?tab=make-meal`);
+  await page.goto(`/demo?tab=make-meal`); // the same form; the real one waits for a key
   await expect(page.getByText("Total budget (€)")).toBeVisible();
 });
 

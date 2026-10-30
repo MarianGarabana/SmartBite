@@ -50,7 +50,8 @@ def test_demo_meal_is_valid(path):
 @pytest.mark.parametrize("path", FILES, ids=lambda p: p.stem)
 def test_demo_meal_has_no_store_fields(path):
     meal = load(path)
-    keys = {k for _, k, _ in walk(meal)}
+    # micros nutrients name themselves with "label" (e.g. "Iron"): not a store label
+    keys = {k for path, k, _ in walk(meal) if not path.startswith("meal.evaluation.macros.micros.nutrients[")}
     assert not keys & STORE_KEYS
     strings = [v for _, _, v in walk(meal) if isinstance(v, str)]
     assert not [s for s in strings if "http" in s or "www." in s]
@@ -72,4 +73,4 @@ def test_demo_meal_uses_english_food_keys_and_matches_the_engine(path):
     assert meal["evaluation"]["macros"]["unresolved"] == []
     assert all(i["food"] == i["name"] for i in meal["evaluation"]["items"])
     fresh = evaluate(meal["form"], meal["picked_idea"], meal["recipe"])
-    assert fresh["evaluation"] == meal["evaluation"] and fresh["mfp"] == meal["mfp"]
+    assert fresh["evaluation"] == meal["evaluation"] and "mfp" not in fresh and "mfp" not in meal

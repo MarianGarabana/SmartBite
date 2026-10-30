@@ -34,7 +34,7 @@ def test_evaluate_returns_a_valid_meal_equal_to_the_demo_meal():
     assert r.status_code == 200
     data = r.json()
     assert validate_output(data, "evaluate.schema.json", "Output") == []
-    assert data["evaluation"] == meal["evaluation"] and data["mfp"] == meal["mfp"]
+    assert data["evaluation"] == meal["evaluation"] and "mfp" not in data
 
 
 def test_profile_is_accepted():

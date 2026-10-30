@@ -1,30 +1,49 @@
 // Create profile, the profile menu and the phone menu (decided 2026-10-22) on the running dev server (3100). No model
-// runs: without a key, Make Your Meal shows the demo ideas.
-// 1. A new visitor's first "Show me 4 ideas" opens the setup once; Skip carries on to the demo ideas.
+// runs. Since 2026-10-30 the real Make Your Meal waits for a complete profile (key + setup) and never shows demo ideas.
+// 1. Without a complete profile, Step 1 offers Set up profile or Try the demo; a key and targets saved before count.
 // 2. Create profile from the menu: shop, targets and key steps, then Make Your Meal starts from the new targets.
 // 3. Phones: no sideways scroll, the tabs sit in a menu; desktop keeps the tab bar.
 import { expect, test } from "@playwright/test";
 
-test("a new visitor's first ideas open the setup once, and Skip goes on to the demo ideas", async ({ page }) => {
+test("without a complete profile, Make Your Meal offers Set up profile or Try the demo, never demo ideas", async ({ page }) => {
   await page.goto("/?tab=make-meal");
-  await page.locator("#input-craving").fill("chicken bowl");
-  await page.getByRole("button", { name: "Show me 4 ideas" }).click();
+  const card = page.locator("#make-setup");
+  await expect(card).toContainText("Set up your profile first");
+  await expect(page.locator("#input-craving")).toBeHidden();
+  await expect(page.locator("#ideas-card-grid")).toHaveCount(0);
+  await expect(page.locator("#demo-note")).toHaveCount(0);
+
+  // Set up profile opens the setup; skipped, the card stays
+  await card.getByRole("button", { name: "Set up profile" }).click();
   const setup = page.getByRole("dialog");
   await expect(setup).toContainText("Where you shop");
   await setup.getByRole("button", { name: "Skip setup" }).click();
   await expect(setup).toHaveCount(0);
-  await expect(page.locator("#demo-note")).toBeVisible();
-  await expect(page.locator("#ideas-card-grid > div")).toHaveCount(4);
+  await expect(card).toBeVisible();
+  // Finished without a key: still not complete
+  await card.getByRole("button", { name: "Set up profile" }).click();
+  for (let i = 0; i < 3; i++) await setup.getByRole("button", { name: "Skip this step" }).click();
+  await setup.getByRole("button", { name: "Make Your Meal" }).click();
+  await expect(card).toBeVisible();
+  await expect(page.locator("#input-craving")).toBeHidden();
 
-  // Not again
+  await card.getByRole("link", { name: "Try the demo" }).click();
+  await expect(page).toHaveURL(/\/demo$/);
+  await expect(page.locator("#demo-banner")).toBeVisible();
+});
+
+test("a key and saved targets from before the setup count as a complete profile", async ({ page }) => {
+  await page.goto("/profile");
+  await page.evaluate(() => {
+    localStorage.setItem("smartbite.anthropicKey", JSON.stringify("sk-ant-old-key"));
+    localStorage.setItem("smartbite.profile", JSON.stringify({ sections: [{ id: "targets", fields: [
+      { id: "kcal_target", type: "number", value: 520 }, { id: "protein_g_target", type: "number", value: 40 }] }] }));
+  });
   await page.goto("/?tab=make-meal");
-  await page.locator("#input-craving").fill("salmon salad");
-  await page.getByRole("button", { name: "Show me 4 ideas" }).click();
-  await expect(page.locator("#demo-note")).toBeVisible();
-  await expect(page.getByRole("dialog")).toHaveCount(0);
-  // Skipped is not a profile: the menu still offers Create profile
-  await page.getByRole("button", { name: "Profile menu" }).click();
-  await expect(page.getByRole("menuitem")).toHaveText(["Create profile", "Open profile file"]);
+  await expect(page.locator("#input-craving")).toBeVisible();
+  await expect(page.locator("#input-calories")).toHaveValue("520");
+  await expect(page.locator("#make-setup")).toHaveCount(0);
+  expect(await page.evaluate(() => localStorage.getItem("smartbite.setup"))).toBeNull(); // never sent through the setup
 });
 
 test("Create profile from the menu saves shop, targets and key, then Make Your Meal starts from them", async ({ page }) => {
@@ -80,7 +99,7 @@ test("a bad number in the setup targets gets a plain message and is not saved", 
 test.describe("phone", () => {
   test.use({ viewport: { width: 390, height: 844 } });
   test("no sideways scroll, and the tabs are in a menu", async ({ page }) => {
-    for (const url of ["/", "/profile", "/recipes/korean-beef-bowl-with-peas-and-brown-rice-lentil-mix", "/privacy"]) {
+    for (const url of ["/", "/demo", "/profile", "/recipes/korean-beef-bowl-with-peas-and-brown-rice-lentil-mix", "/privacy"]) {
       await page.goto(url);
       const header = await page.locator("header").evaluate((h) => h.scrollWidth);
       expect(header, url).toBeLessThanOrEqual(390);
@@ -95,7 +114,7 @@ test.describe("phone", () => {
   test("the Cart with optional items and the footer stay inside the screen", async ({ page }) => {
     await page.goto("/recipes/classic-lentil-stew-with-chickpeas-and-chicken"); // has optional oil and spices
     await page.getByRole("button", { name: "Add to my cart" }).click();
-    await page.goto("/?tab=cart");
+    await page.goto("/demo?tab=cart"); // a demo meal: the demo cart
     await expect(page.locator("#cart-consolidated-tbody tr").first()).toBeVisible();
     const width = await page.evaluate(() => document.documentElement.scrollWidth);
     expect(width).toBeLessThanOrEqual(390);
@@ -116,7 +135,7 @@ test("the shopping tables fit their card at every width, with no sideways scroll
     await page.goto("/recipes/classic-lentil-stew-with-chickpeas-and-chicken");
     await expect(page.locator("#pack-table-body tr").first()).toBeVisible();
     expect(await fits("#pack-table-body"), `recipe at ${width}`).toBe(true);
-    await page.goto("/?tab=cart");
+    await page.goto("/demo?tab=cart");
     await expect(page.locator("#cart-consolidated-tbody tr").first()).toBeVisible();
     expect(await fits("#cart-consolidated-tbody"), `cart at ${width}`).toBe(true);
   }

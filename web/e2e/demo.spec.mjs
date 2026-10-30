@@ -1,0 +1,105 @@
+// Demo and real split (decided 2026-10-30) on the running dev server (3100) with the real engine (8100). No model runs.
+// 1. A Demo item in the top nav, one tap on phones too, opens /demo.
+// 2. /demo runs the demo flow with no key: craving, demo ideas, a demo recipe page that leads back into /demo.
+// 3. The real app shows only the user's own meals; a new visitor gets Set up profile or Try the demo.
+// 4. The demo cart is kept apart from the real cart.
+import { expect, test } from "@playwright/test";
+
+const DEMO_SLUG = "tuna-frittata-with-vegetables";
+const cartMeals = (page, key) => page.evaluate((k) => JSON.parse(localStorage.getItem(k) || "{}").meals?.length ?? 0, key);
+
+test.describe("phone", () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+  test("the Demo item shows next to the menus, one tap from any page", async ({ page }) => {
+    for (const url of ["/", "/profile", "/privacy"]) {
+      await page.goto(url);
+      await expect(page.locator("#nav-demo-phone"), url).toBeVisible();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth), url).toBeLessThanOrEqual(390);
+    }
+    await page.locator("#nav-demo-phone").click();
+    await expect(page).toHaveURL(/\/demo$/);
+    await expect(page.locator("#demo-banner")).toBeVisible();
+    await expect(page.locator("#home-kitchen-grid > div")).toHaveCount(5);
+  });
+});
+
+test("desktop: the Demo item sits after How It Works and is active in the demo", async ({ page }) => {
+  await page.goto("/");
+  const items = await page.locator("header nav").first().locator("button, a").allInnerTexts();
+  expect(items.slice(-2)).toEqual(["How It Works", "Demo"]);
+  await expect(page.locator("#nav-demo-phone")).toBeHidden();
+  await page.locator("#nav-demo").click();
+  await expect(page).toHaveURL(/\/demo$/);
+  await expect(page.locator("#nav-demo")).toHaveClass(/font-semibold/);
+});
+
+test("the demo runs with no key: craving, demo ideas, recipe page, and back into the demo", async ({ page }) => {
+  const llm = [];
+  page.on("request", (r) => { if (/anthropic|openai|openrouter|googleapis/.test(r.url())) llm.push(r.url()); });
+  await page.goto("/demo");
+  await page.locator("#nav-make-meal").click();
+  await expect(page).toHaveURL(/\/demo\?tab=make-meal$/);
+  await page.locator("#input-craving").fill("tuna frittata");
+  await page.getByRole("button", { name: "Show me 4 ideas" }).click();
+  await expect(page.getByRole("dialog")).toHaveCount(0); // no setup in the demo
+  await expect(page.locator("#demo-note")).toBeVisible();
+  const cards = page.locator("#ideas-card-grid > div");
+  await expect(cards).toHaveCount(4);
+  await expect(cards.first()).toContainText(/tuna frittata/i);
+  await cards.first().click();
+  await page.getByRole("dialog").getByRole("button", { name: "Select meal" }).click();
+  await page.waitForURL(new RegExp(`/recipes/${DEMO_SLUG}$`));
+  await expect(page.getByText("Demo Meal", { exact: true })).toBeVisible();
+  await expect(page.locator("#nav-demo")).toHaveClass(/font-semibold/);
+
+  // Header and the Back link lead back into the demo, not the real app
+  await page.locator("#nav-cart").click();
+  await expect(page).toHaveURL(/\/demo\?tab=cart$/);
+  await page.goto(`/recipes/${DEMO_SLUG}`);
+  await page.getByRole("button", { name: "Back to recipes" }).click();
+  await expect(page).toHaveURL(/\/demo\?tab=recipes$/);
+  await expect(page.locator("#recipes-grid a[href^='/recipes/']")).toHaveCount(13);
+  expect(llm).toEqual([]);
+});
+
+test("demo tabs show in the address under /demo, and Back goes to the tab before", async ({ page }) => {
+  await page.goto("/demo");
+  await page.locator("#nav-cart").click();
+  await expect(page).toHaveURL(/\/demo\?tab=cart$/);
+  await page.locator("#nav-recipes").click();
+  await expect(page).toHaveURL(/\/demo\?tab=recipes$/);
+  await page.goBack();
+  await expect(page).toHaveURL(/\/demo\?tab=cart$/);
+  await expect(page.locator("#tab-cart")).toBeVisible();
+});
+
+test("the real app shows only the user's meals; a new visitor gets Set up profile or Try the demo", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("#home-setup")).toContainText("Set up your profile first");
+  await expect(page.locator("#home-kitchen-grid")).toHaveCount(0);
+  await expect(page.locator("#demo-banner")).toHaveCount(0);
+  await page.goto("/?tab=recipes");
+  await expect(page.locator("#recipes-setup")).toBeVisible();
+  await expect(page.locator("#tab-recipes a[href^='/recipes/']")).toHaveCount(0);
+  await page.locator("#recipes-setup").getByRole("link", { name: "Try the demo" }).click();
+  await expect(page).toHaveURL(/\/demo$/);
+});
+
+test("the demo cart is kept apart from the real cart", async ({ page }) => {
+  await page.goto("/demo?tab=recipes");
+  await page.locator("#recipes-grid > div").first().getByRole("button", { name: "Add to cart" }).click();
+  await expect.poll(() => cartMeals(page, "smartbite.demoCart")).toBe(1);
+  expect(await page.evaluate(() => localStorage.getItem("smartbite.cart"))).toBeNull();
+  await expect(page.locator("#cart-badge")).toHaveText("1");
+
+  await page.goto("/?tab=cart");
+  await expect(page.locator("#cart-empty-state")).toBeVisible();
+  await expect(page.locator("#cart-badge")).toHaveText("0");
+  // A demo meal's page adds to the demo cart too
+  await page.goto(`/recipes/${DEMO_SLUG}`);
+  await page.getByRole("button", { name: "Add to my cart" }).click();
+  await expect.poll(() => cartMeals(page, "smartbite.demoCart")).toBe(2);
+  expect(await page.evaluate(() => localStorage.getItem("smartbite.cart"))).toBeNull();
+  await page.goto("/demo?tab=cart");
+  await expect(page.locator("#cart-meals-container > div")).toHaveCount(2);
+});

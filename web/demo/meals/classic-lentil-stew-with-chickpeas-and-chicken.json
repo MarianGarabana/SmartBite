@@ -574,15 +574,134 @@
     "kcal": 457.23,
     "protein_g": 49.86,
     "carbs_g": 39.64,
-    "fat_g": 6.65
+    "fat_g": 6.65,
+    "fiber_g": 17.42
    },
    "total": {
     "kcal": 3657.8,
     "protein_g": 398.87,
     "carbs_g": 317.13,
-    "fat_g": 53.18
+    "fat_g": 53.18,
+    "fiber_g": 139.38
    },
    "misses": [],
+   "fiber_pct": 70,
+   "micros": {
+    "nutrients": [
+     {
+      "key": "iron_mg",
+      "label": "Iron",
+      "unit": "mg",
+      "per_serving": 5.84,
+      "nrv": 14,
+      "pct": 42,
+      "ingredients_with_data": 10,
+      "ingredients_total": 10
+     },
+     {
+      "key": "calcium_mg",
+      "label": "Calcium",
+      "unit": "mg",
+      "per_serving": 139.16,
+      "nrv": 800,
+      "pct": 17,
+      "ingredients_with_data": 10,
+      "ingredients_total": 10
+     },
+     {
+      "key": "potassium_mg",
+      "label": "Potassium",
+      "unit": "mg",
+      "per_serving": 1725.75,
+      "nrv": 2000,
+      "pct": 86,
+      "ingredients_with_data": 10,
+      "ingredients_total": 10
+     },
+     {
+      "key": "magnesium_mg",
+      "label": "Magnesium",
+      "unit": "mg",
+      "per_serving": 158.21,
+      "nrv": 375,
+      "pct": 42,
+      "ingredients_with_data": 10,
+      "ingredients_total": 10
+     },
+     {
+      "key": "zinc_mg",
+      "label": "Zinc",
+      "unit": "mg",
+      "per_serving": 3.14,
+      "nrv": 10,
+      "pct": 31,
+      "ingredients_with_data": 10,
+      "ingredients_total": 10
+     },
+     {
+      "key": "vitamin_a_ug",
+      "label": "Vitamin A",
+      "unit": "µg",
+      "per_serving": 682.63,
+      "nrv": 800,
+      "pct": 85,
+      "ingredients_with_data": 10,
+      "ingredients_total": 10
+     },
+     {
+      "key": "vitamin_c_mg",
+      "label": "Vitamin C",
+      "unit": "mg",
+      "per_serving": 64.26,
+      "nrv": 80,
+      "pct": 80,
+      "ingredients_with_data": 10,
+      "ingredients_total": 10
+     },
+     {
+      "key": "vitamin_d_ug",
+      "label": "Vitamin D",
+      "unit": "µg",
+      "per_serving": 0.0,
+      "nrv": 5,
+      "pct": 0,
+      "ingredients_with_data": 10,
+      "ingredients_total": 10
+     },
+     {
+      "key": "vitamin_b12_ug",
+      "label": "Vitamin B12",
+      "unit": "µg",
+      "per_serving": 0.19,
+      "nrv": 2.5,
+      "pct": 7,
+      "ingredients_with_data": 9,
+      "ingredients_total": 10
+     },
+     {
+      "key": "folate_ug",
+      "label": "Folate",
+      "unit": "µg",
+      "per_serving": 199.85,
+      "nrv": 200,
+      "pct": 100,
+      "ingredients_with_data": 10,
+      "ingredients_total": 10
+     }
+    ],
+    "summary": {
+     "at_least_15pct": 8,
+     "count": 10
+    },
+    "coverage": {
+     "with_data": 9,
+     "total": 10,
+     "missing": [
+      "dried lentils"
+     ]
+    },
+    "reference": "EU reference intakes (Regulation (EU) 1169/2011, Annex XIII)"
+   },
    "missing_nutrition": [],
    "unresolved": [],
    "lines": [
@@ -596,7 +715,8 @@
       "kcal": 1046.4,
       "protein_g": 80.32,
       "carbs_g": 142.4,
-      "fat_g": 5.76
+      "fat_g": 5.76,
+      "fiber_g": 52.16
      },
      "missing": []
     },
@@ -610,7 +730,8 @@
       "kcal": 585.6,
       "protein_g": 32.35,
       "carbs_g": 72.0,
-      "fat_g": 12.86
+      "fat_g": 12.86,
+      "fiber_g": 26.16
      },
      "missing": []
     },
@@ -624,7 +745,8 @@
       "kcal": 968.0,
       "protein_g": 205.92,
       "carbs_g": 0.0,
-      "fat_g": 13.2
+      "fat_g": 13.2,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -638,7 +760,8 @@
       "kcal": 392.4,
       "protein_g": 61.75,
       "carbs_g": 19.7,
-      "fat_g": 1.46
+      "fat_g": 1.46,
+      "fiber_g": 21.0
      },
      "missing": []
     },
@@ -652,7 +775,8 @@
       "kcal": 120.8,
       "protein_g": 3.12,
       "carbs_g": 20.64,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 11.6
      },
      "missing": []
     },
@@ -666,7 +790,8 @@
       "kcal": 124.8,
       "protein_g": 3.52,
       "carbs_g": 20.0,
-      "fat_g": 1.98
+      "fat_g": 1.98,
+      "fiber_g": 5.44
      },
      "missing": []
     },
@@ -680,7 +805,8 @@
       "kcal": 107.52,
       "protein_g": 3.39,
       "carbs_g": 19.14,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 10.24
      },
      "missing": []
     },
@@ -694,7 +820,8 @@
       "kcal": 108.48,
       "protein_g": 5.76,
       "carbs_g": 17.42,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 8.64
      },
      "missing": []
     },
@@ -708,7 +835,8 @@
       "kcal": 17.44,
       "protein_g": 0.85,
       "carbs_g": 2.98,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 0.93
      },
      "missing": []
     },
@@ -722,7 +850,8 @@
       "kcal": 143.84,
       "protein_g": 0.04,
       "carbs_g": 0.0,
-      "fat_g": 15.98
+      "fat_g": 15.98,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -736,7 +865,8 @@
       "kcal": 25.44,
       "protein_g": 1.13,
       "carbs_g": 1.5,
-      "fat_g": 1.03
+      "fat_g": 1.03,
+      "fiber_g": 2.79
      },
      "missing": []
     },
@@ -750,7 +880,8 @@
       "kcal": 17.08,
       "protein_g": 0.71,
       "carbs_g": 1.35,
-      "fat_g": 0.89
+      "fat_g": 0.89,
+      "fiber_g": 0.42
      },
      "missing": []
     }
@@ -765,7 +896,6 @@
    }
   ]
  },
- "mfp": "SmartBite: Classic lentil stew with chickpeas and chicken\nServings: 8\n\ndried lentils, 320 g (dry)\ncanned chickpeas, 480 g\nchicken breast, 880 g (raw)\ntextured soy protein, 120 g\ncarrot, 400 g (raw)\nonion, 320 g (raw)\nred bell pepper, 320 g (raw)\ncrushed tomatoes, 480 g\ngarlic, 16 g (raw)\nextra virgin olive oil, 16 g\npaprika, 8 g\ncumin, 4 g",
  "slug": "classic-lentil-stew-with-chickpeas-and-chicken",
  "demo": true,
  "photo": "/demo/images/classic-lentil-stew-with-chickpeas-and-chicken.jpg",

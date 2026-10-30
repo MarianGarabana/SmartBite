@@ -3,8 +3,8 @@ import json
 import pytest
 
 from smartbite_engine.calc import Nutrition
-from smartbite_engine.nutrition import (cache_loader, ingredient_macros, load_table, meal_macros, parse_off, plain,
-                                        resolve)
+from smartbite_engine.nutrition import (MICRO_KEYS, cache_loader, ingredient_macros, load_table, meal_macros,
+                                        off_micros, parse_off, plain, resolve)
 from smartbite_engine.names import canonical
 
 
@@ -85,6 +85,35 @@ def test_parse_off_lists_missing_fields_as_zero():
     name, nutrition, missing = parse_off(text)
     assert nutrition == Nutrition(50, 0, 0, 0)
     assert missing == ("protein_g", "carbs_g", "fat_g")
+
+
+def test_parse_off_reads_fiber_and_converts_micros_from_grams():
+    text = json.dumps({"status": 1, "product": {"product_name": "x", "nutriments": {
+        "energy-kcal_100g": 50, "proteins_100g": 1, "carbohydrates_100g": 2, "fat_100g": 3, "fiber_100g": 4.5,
+        "iron_100g": 0.0021, "vitamin-d_100g": 0.0000025, "vitamin-b9_100g": 0.00012}}})
+    assert parse_off(text)[1] == Nutrition(50, 1, 2, 3, 4.5)
+    assert off_micros(text) == pytest.approx({"iron_mg": 2.1, "vitamin_d_ug": 2.5, "folate_ug": 120})
+    found = resolve("proteina", table=TABLE, barcode="1", load=lambda kind, key: text)
+    assert found.per_100g.fiber_g == 4.5 and set(found.micros) == {"iron_mg", "vitamin_d_ug", "folate_ug"}
+
+
+def test_off_product_without_fiber_counts_0_and_has_no_micros():
+    text = off_text()
+    assert parse_off(text)[1].fiber_g == 0 and parse_off(text)[2] == () and off_micros(text) == {}
+
+
+def test_table_fiber_and_micros_scale_with_grams_and_missing_keys_stay_unknown():
+    table = {"rice": {**rec(350, 7.0, 77.5, 0.8, state="dry"), "fiber_g": 1.5, "iron_mg": 0.8}}
+    line = ingredient_macros("arroz", 200, table=table)
+    assert line.amount.fiber_g == pytest.approx(3.0)
+    assert line.micros == pytest.approx({"iron_mg": 1.6})
+
+
+def test_real_table_has_fiber_and_micros_for_most_foods():
+    foods = load_table().values()
+    assert sum("fiber_g" in r for r in foods) >= 130
+    assert sum(all(k in r for k in MICRO_KEYS) for r in foods) >= 95
+    assert all(isinstance(r[k], float) and r[k] >= 0 for r in foods for k in ("fiber_g",) + MICRO_KEYS if k in r)
 
 
 def test_frozen_ingredient_uses_frozen_record():

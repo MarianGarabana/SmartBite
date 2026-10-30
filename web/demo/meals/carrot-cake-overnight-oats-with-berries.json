@@ -450,15 +450,135 @@
     "kcal": 486.04,
     "protein_g": 45.1,
     "carbs_g": 37.68,
-    "fat_g": 12.84
+    "fat_g": 12.84,
+    "fiber_g": 12.23
    },
    "total": {
     "kcal": 3888.32,
     "protein_g": 360.83,
     "carbs_g": 301.48,
-    "fat_g": 102.69
+    "fat_g": 102.69,
+    "fiber_g": 97.86
    },
    "misses": [],
+   "fiber_pct": 49,
+   "micros": {
+    "nutrients": [
+     {
+      "key": "iron_mg",
+      "label": "Iron",
+      "unit": "mg",
+      "per_serving": 3.19,
+      "nrv": 14,
+      "pct": 23,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "calcium_mg",
+      "label": "Calcium",
+      "unit": "mg",
+      "per_serving": 393.53,
+      "nrv": 800,
+      "pct": 49,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "potassium_mg",
+      "label": "Potassium",
+      "unit": "mg",
+      "per_serving": 753.02,
+      "nrv": 2000,
+      "pct": 38,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "magnesium_mg",
+      "label": "Magnesium",
+      "unit": "mg",
+      "per_serving": 180.68,
+      "nrv": 375,
+      "pct": 48,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "zinc_mg",
+      "label": "Zinc",
+      "unit": "mg",
+      "per_serving": 4.71,
+      "nrv": 10,
+      "pct": 47,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "vitamin_a_ug",
+      "label": "Vitamin A",
+      "unit": "µg",
+      "per_serving": 552.38,
+      "nrv": 800,
+      "pct": 69,
+      "ingredients_with_data": 7,
+      "ingredients_total": 8
+     },
+     {
+      "key": "vitamin_c_mg",
+      "label": "Vitamin C",
+      "unit": "mg",
+      "per_serving": 21.22,
+      "nrv": 80,
+      "pct": 27,
+      "ingredients_with_data": 7,
+      "ingredients_total": 8
+     },
+     {
+      "key": "vitamin_d_ug",
+      "label": "Vitamin D",
+      "unit": "µg",
+      "per_serving": 0.0,
+      "nrv": 5,
+      "pct": 0,
+      "ingredients_with_data": 7,
+      "ingredients_total": 8
+     },
+     {
+      "key": "vitamin_b12_ug",
+      "label": "Vitamin B12",
+      "unit": "µg",
+      "per_serving": 1.61,
+      "nrv": 2.5,
+      "pct": 64,
+      "ingredients_with_data": 8,
+      "ingredients_total": 8
+     },
+     {
+      "key": "folate_ug",
+      "label": "Folate",
+      "unit": "µg",
+      "per_serving": 75.75,
+      "nrv": 200,
+      "pct": 38,
+      "ingredients_with_data": 7,
+      "ingredients_total": 8
+     }
+    ],
+    "summary": {
+     "at_least_15pct": 9,
+     "count": 10
+    },
+    "coverage": {
+     "with_data": 6,
+     "total": 8,
+     "missing": [
+      "greek yogurt 0%",
+      "chia seeds"
+     ]
+    },
+    "reference": "EU reference intakes (Regulation (EU) 1169/2011, Annex XIII)"
+   },
    "missing_nutrition": [],
    "unresolved": [],
    "lines": [
@@ -472,7 +592,8 @@
       "kcal": 844.8,
       "protein_g": 187.51,
       "carbs_g": 7.56,
-      "fat_g": 3.74
+      "fat_g": 3.74,
+      "fiber_g": 7.44
      },
      "missing": []
     },
@@ -486,7 +607,8 @@
       "kcal": 1212.8,
       "protein_g": 42.08,
       "carbs_g": 184.32,
-      "fat_g": 20.86
+      "fat_g": 20.86,
+      "fiber_g": 32.32
      },
      "missing": []
     },
@@ -500,7 +622,8 @@
       "kcal": 610.0,
       "protein_g": 103.0,
       "carbs_g": 36.4,
-      "fat_g": 3.7
+      "fat_g": 3.7,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -514,7 +637,8 @@
       "kcal": 120.8,
       "protein_g": 3.12,
       "carbs_g": 20.64,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 11.6
      },
      "missing": []
     },
@@ -528,7 +652,8 @@
       "kcal": 290.56,
       "protein_g": 10.56,
       "carbs_g": 4.94,
-      "fat_g": 19.65
+      "fat_g": 19.65,
+      "fiber_g": 22.02
      },
      "missing": []
     },
@@ -542,7 +667,8 @@
       "kcal": 84.24,
       "protein_g": 1.51,
       "carbs_g": 14.47,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 9.12
      },
      "missing": []
     },
@@ -556,7 +682,8 @@
       "kcal": 138.48,
       "protein_g": 2.09,
       "carbs_g": 25.44,
-      "fat_g": 0.79
+      "fat_g": 0.79,
+      "fiber_g": 5.76
      },
      "missing": []
     },
@@ -570,7 +697,8 @@
       "kcal": 567.2,
       "protein_g": 10.64,
       "carbs_g": 5.5,
-      "fat_g": 53.84
+      "fat_g": 53.84,
+      "fiber_g": 5.36
      },
      "missing": []
     },
@@ -584,7 +712,8 @@
       "kcal": 19.44,
       "protein_g": 0.32,
       "carbs_g": 2.2,
-      "fat_g": 0.1
+      "fat_g": 0.1,
+      "fiber_g": 4.25
      },
      "missing": []
     }
@@ -592,7 +721,6 @@
   },
   "change_requests": []
  },
- "mfp": "SmartBite: Carrot cake overnight oats with berries\nServings: 8\n\nvanilla whey protein, 240 g\nrolled oats, 320 g (dry)\ngreek yogurt 0%, 1000 g\ncarrot, 400 g (raw)\nchia seeds, 64 g\nstrawberries, 240 g\nblueberries, 240 g\nwalnuts, 80 g\ncinnamon, 8 g",
  "slug": "carrot-cake-overnight-oats-with-berries",
  "demo": true,
  "photo": "/demo/images/carrot-cake-overnight-oats-with-berries.jpg",

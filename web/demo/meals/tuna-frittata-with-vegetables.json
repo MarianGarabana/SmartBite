@@ -411,17 +411,136 @@
     "kcal": 509.56,
     "protein_g": 49.39,
     "carbs_g": 10.9,
-    "fat_g": 28.85
+    "fat_g": 28.85,
+    "fiber_g": 4.42
    },
    "total": {
     "kcal": 2038.26,
     "protein_g": 197.55,
     "carbs_g": 43.61,
-    "fat_g": 115.39
+    "fat_g": 115.39,
+    "fiber_g": 17.67
    },
    "misses": [
     "kcal 510 vs target 450"
    ],
+   "fiber_pct": 18,
+   "micros": {
+    "nutrients": [
+     {
+      "key": "iron_mg",
+      "label": "Iron",
+      "unit": "mg",
+      "per_serving": 6.24,
+      "nrv": 14,
+      "pct": 45,
+      "ingredients_with_data": 6,
+      "ingredients_total": 6
+     },
+     {
+      "key": "calcium_mg",
+      "label": "Calcium",
+      "unit": "mg",
+      "per_serving": 248.57,
+      "nrv": 800,
+      "pct": 31,
+      "ingredients_with_data": 6,
+      "ingredients_total": 6
+     },
+     {
+      "key": "potassium_mg",
+      "label": "Potassium",
+      "unit": "mg",
+      "per_serving": 1268.97,
+      "nrv": 2000,
+      "pct": 63,
+      "ingredients_with_data": 6,
+      "ingredients_total": 6
+     },
+     {
+      "key": "magnesium_mg",
+      "label": "Magnesium",
+      "unit": "mg",
+      "per_serving": 93.58,
+      "nrv": 375,
+      "pct": 25,
+      "ingredients_with_data": 6,
+      "ingredients_total": 6
+     },
+     {
+      "key": "zinc_mg",
+      "label": "Zinc",
+      "unit": "mg",
+      "per_serving": 3.71,
+      "nrv": 10,
+      "pct": 37,
+      "ingredients_with_data": 6,
+      "ingredients_total": 6
+     },
+     {
+      "key": "vitamin_a_ug",
+      "label": "Vitamin A",
+      "unit": "µg",
+      "per_serving": 452.71,
+      "nrv": 800,
+      "pct": 57,
+      "ingredients_with_data": 5,
+      "ingredients_total": 6
+     },
+     {
+      "key": "vitamin_c_mg",
+      "label": "Vitamin C",
+      "unit": "mg",
+      "per_serving": 94.32,
+      "nrv": 80,
+      "pct": 118,
+      "ingredients_with_data": 5,
+      "ingredients_total": 6
+     },
+     {
+      "key": "vitamin_d_ug",
+      "label": "Vitamin D",
+      "unit": "µg",
+      "per_serving": 8.27,
+      "nrv": 5,
+      "pct": 165,
+      "ingredients_with_data": 6,
+      "ingredients_total": 6
+     },
+     {
+      "key": "vitamin_b12_ug",
+      "label": "Vitamin B12",
+      "unit": "µg",
+      "per_serving": 3.34,
+      "nrv": 2.5,
+      "pct": 133,
+      "ingredients_with_data": 6,
+      "ingredients_total": 6
+     },
+     {
+      "key": "folate_ug",
+      "label": "Folate",
+      "unit": "µg",
+      "per_serving": 221.56,
+      "nrv": 200,
+      "pct": 111,
+      "ingredients_with_data": 5,
+      "ingredients_total": 6
+     }
+    ],
+    "summary": {
+     "at_least_15pct": 10,
+     "count": 10
+    },
+    "coverage": {
+     "with_data": 5,
+     "total": 6,
+     "missing": [
+      "canned tuna in water"
+     ]
+    },
+    "reference": "EU reference intakes (Regulation (EU) 1169/2011, Annex XIII)"
+   },
    "missing_nutrition": [],
    "unresolved": [],
    "lines": [
@@ -435,7 +554,8 @@
       "kcal": 1428.0,
       "protein_g": 130.56,
       "carbs_g": 0.61,
-      "fat_g": 100.27
+      "fat_g": 100.27,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -449,7 +569,8 @@
       "kcal": 264.16,
       "protein_g": 51.58,
       "carbs_g": 7.63,
-      "fat_g": 3.04
+      "fat_g": 3.04,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -463,7 +584,8 @@
       "kcal": 167.0,
       "protein_g": 12.1,
       "carbs_g": 17.5,
-      "fat_g": 3.2
+      "fat_g": 3.2,
+      "fiber_g": 10.0
      },
      "missing": []
     },
@@ -477,7 +599,8 @@
       "kcal": 53.76,
       "protein_g": 1.7,
       "carbs_g": 9.57,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 5.12
      },
      "missing": []
     },
@@ -491,7 +614,8 @@
       "kcal": 46.8,
       "protein_g": 1.32,
       "carbs_g": 7.5,
-      "fat_g": 0.74
+      "fat_g": 0.74,
+      "fiber_g": 2.04
      },
      "missing": []
     },
@@ -505,7 +629,8 @@
       "kcal": 71.92,
       "protein_g": 0.02,
       "carbs_g": 0.0,
-      "fat_g": 7.99
+      "fat_g": 7.99,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -519,7 +644,8 @@
       "kcal": 0.0,
       "protein_g": 0.0,
       "carbs_g": 0.0,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -533,7 +659,8 @@
       "kcal": 6.62,
       "protein_g": 0.27,
       "carbs_g": 0.8,
-      "fat_g": 0.15
+      "fat_g": 0.15,
+      "fiber_g": 0.51
      },
      "missing": []
     }
@@ -554,7 +681,6 @@
    }
   ]
  },
- "mfp": "SmartBite: Tuna frittata with vegetables\nServings: 4\n\neggs, 1020 g\ncanned tuna in water, 208 g\nzucchini, 1000 g (raw)\nred bell pepper, 160 g (raw)\nonion, 120 g (raw)\nextra virgin olive oil, 8 g\nsalt, 4 g\nblack pepper, 2 g (raw)",
  "slug": "tuna-frittata-with-vegetables",
  "demo": true,
  "photo": "/demo/images/tuna-frittata-with-vegetables.jpg",

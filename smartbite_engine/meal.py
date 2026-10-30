@@ -15,7 +15,6 @@ pack option; its price wins over everything else and its label replaces the nutr
 """
 import math
 import re
-import unicodedata
 from dataclasses import asdict, fields
 
 from .calc import EGG_GRAMS, Nutrition, per_serving, scale, total
@@ -23,12 +22,13 @@ from .estimated_prices import for_region, load_estimates, pack_estimate, period
 from .form import MealForm
 from .generic_packs import buy_unpriced, load_packs, pack_entry, product_option
 from .names import canonical, plain
-from .nutrition import IngredientMacros, ingredient_macros, load_table
+from .nutrition import (FIBER_REFERENCE_G, FIELDS, IngredientMacros, ingredient_macros, load_table, micros_block,
+                        percent)
 from .pack import EGG_SIZE, HIGH_LEFTOVER_PCT, pack_line, pack_meal
 
 MACRO_TOLERANCE = 0.10  # kcal within 10% of target, protein at least 90% of target
 PROTEIN_MAX_OVER = 0.20  # protein more than 20% over target is a miss too
-MACRO_FIELDS = ("kcal", "protein_g", "carbs_g", "fat_g")
+MACRO_FIELDS = ("kcal", "protein_g", "carbs_g", "fat_g", "fiber_g")
 EGGS = "eggs"
 
 # Spices, salt, oil, vinegar, sauces and bottled juice: listed in the cart but out of cost, budget and leftover
@@ -37,50 +37,6 @@ OPTIONAL_FOODS = frozenset({
     "salt", "black pepper", "paprika", "smoked paprika", "cumin", "curry powder", "cinnamon", "nutmeg", "oregano",
     "thyme", "dried parsley", "garlic powder", "onion powder", "ground ginger", "chili flakes",
     "extra virgin olive oil", "vinegar", "mustard", "soy sauce", "teriyaki sauce", "lemon juice", "lime juice"})
-
-# MyFitnessPal marks, the same word lists as web/lib/mfp.js so server and browser give the same text
-DRY_WORDS = re.compile(
-    r"\b(arroz|pasta|macarr|espagu|fideo|tallar|penne|fusil|lasa|avena|lenteja|quinoa|cusc|"
-    r"rice|spaghetti|noodle|macaroni|oats|lentil|couscous)", re.I)
-RAW_WORDS = re.compile(
-    r"\b(pollo|pechuga|contramuslo|muslo|pavo|ternera|cerdo|lomo|carne|salmon|merluza|bacalao|"
-    r"gamba|sardina|caballa|atun|patata|boniato|tomate|pepino|calabacin|brocoli|espinaca|lechuga|"
-    r"cebolla|cebolleta|pimiento|zanahoria|champinon|berenjena|judia|calabaza|coliflor|ajo|rucula|"
-    r"guisante|verdura|kale|col|"
-    r"chicken|turkey|beef|pork|salmon|cod|hake|prawn|shrimp|tuna|potato|sweet potato|tomato|cucumber|"
-    r"zucchini|courgette|broccoli|spinach|lettuce|onion|pepper|carrot|mushroom|eggplant|aubergine|bean|"
-    r"pumpkin|cauliflower|garlic|rocket|arugula)", re.I)
-NOT_RAW_OR_DRY = re.compile(
-    r"\b(cocid|lata|conserva|bote|asad|frito|triturad|fiambre|caldo|polvo|microondas|"
-    r"cooked|canned|tinned|jar|roasted|fried|crushed|stock|broth|powder)", re.I)
-
-
-def _plain_accents(text):
-    text = unicodedata.normalize("NFKD", text)
-    return "".join(c for c in text if not unicodedata.combining(c)).lower().strip()
-
-
-def mfp_mark(food, dry=False):
-    name = _plain_accents(food)
-    if NOT_RAW_OR_DRY.search(name):
-        return ""
-    if dry or DRY_WORDS.search(name):
-        return " (dry)"
-    return " (raw)" if RAW_WORDS.search(name) else ""
-
-
-def mfp_grams(grams):
-    """Whole grams from 1 g up; a pinch under 1 g keeps one decimal (0.3 g, not 0 g), as web/lib/mfp.js."""
-    return round(grams) if grams >= 1 else round(grams, 1)
-
-
-def mfp_block(title, servings, items):
-    """Plain text for a food diary's recipe tool: whole-recipe grams plus the number of servings. A line that
-    rounds to 0 g is left out."""
-    lines = [f"SmartBite: {title}", f"Servings: {servings}", ""]
-    lines += [f"{i['name']}, {mfp_grams(i['total_grams'])} g{mfp_mark(i['food'] or i['name'], i['dry'])}"
-              for i in items if mfp_grams(i["total_grams"]) > 0]
-    return "\n".join(lines)
 
 
 def to_form(form):
@@ -346,7 +302,8 @@ def _unpriced_leftover_requests(lines):
 def _label_macros(food, grams, product):
     """Macros from the label on the user's saved product (source "label", or "open_food_facts" when a barcode lookup
     filled it): it wins over the nutrition table."""
-    label = Nutrition(**{f: product["per_100g"][f] for f in MACRO_FIELDS})
+    per = product["per_100g"]
+    label = Nutrition(**{f: per[f] for f in FIELDS}, fiber_g=per.get("fiber_g") or 0.0)  # labels carry no micros
     source = "open_food_facts" if product.get("label_source") == "open_food_facts" else "label"
     return IngredientMacros(food, grams, label, scale(label, grams), source, product.get("barcode"), ())
 
@@ -367,7 +324,8 @@ def _macro_lines(items, table, products=None):
             missing.append(f"{it['name']}: no nutrition record, left out of the totals")
             continue
         lines.append({"name": it["name"], "food": it["food"], "grams": it["total_grams"], "source": got.source,
-                      "source_id": got.source_id, "amount": got.amount, "missing": list(got.missing)})
+                      "source_id": got.source_id, "amount": got.amount, "missing": list(got.missing),
+                      "micros": got.micros})
         if got.missing:
             missing.append(f"{it['name']}: no {', '.join(got.missing)} value in the source, counted as 0")
     return lines, missing
@@ -425,6 +383,7 @@ def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None,
     meal_total = total(l["amount"] for l in macro_lines)
     per = per_serving(meal_total, servings)
     misses = macro_check(per, meal_form)
+    micros = micros_block(macro_lines, servings)
     unresolved = [it["name"] for it in items if it["food"] is None]
 
     requests = list(pack["change_requests"])
@@ -437,9 +396,10 @@ def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None,
         "items": items,
         "pack": pack,
         "macros": {"per_serving": _macros(per), "total": _macros(meal_total), "misses": misses,
+                   "fiber_pct": percent(per.fiber_g, FIBER_REFERENCE_G), "micros": micros,
                    "missing_nutrition": missing, "unresolved": unresolved,
-                   "lines": [{**l, "amount": _macros(l["amount"])} for l in macro_lines]},
+                   "lines": [{**{k: v for k, v in l.items() if k != "micros"}, "amount": _macros(l["amount"])}
+                             for l in macro_lines]},
         "change_requests": requests,
     }
-    return {"form": form_dict(form), "picked_idea": picked_idea, "recipe": recipe, "evaluation": evaluation,
-            "mfp": mfp_block(recipe["title"], servings, items)}
+    return {"form": form_dict(form), "picked_idea": picked_idea, "recipe": recipe, "evaluation": evaluation}

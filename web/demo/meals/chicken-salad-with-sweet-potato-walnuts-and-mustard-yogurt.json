@@ -577,15 +577,136 @@
     "kcal": 483.73,
     "protein_g": 45.48,
     "carbs_g": 29.45,
-    "fat_g": 17.92
+    "fat_g": 17.92,
+    "fiber_g": 7.11
    },
    "total": {
     "kcal": 3869.84,
     "protein_g": 363.85,
     "carbs_g": 235.63,
-    "fat_g": 143.36
+    "fat_g": 143.36,
+    "fiber_g": 56.9
    },
    "misses": [],
+   "fiber_pct": 28,
+   "micros": {
+    "nutrients": [
+     {
+      "key": "iron_mg",
+      "label": "Iron",
+      "unit": "mg",
+      "per_serving": 2.34,
+      "nrv": 14,
+      "pct": 17,
+      "ingredients_with_data": 9,
+      "ingredients_total": 9
+     },
+     {
+      "key": "calcium_mg",
+      "label": "Calcium",
+      "unit": "mg",
+      "per_serving": 193.57,
+      "nrv": 800,
+      "pct": 24,
+      "ingredients_with_data": 9,
+      "ingredients_total": 9
+     },
+     {
+      "key": "potassium_mg",
+      "label": "Potassium",
+      "unit": "mg",
+      "per_serving": 1113.69,
+      "nrv": 2000,
+      "pct": 56,
+      "ingredients_with_data": 9,
+      "ingredients_total": 9
+     },
+     {
+      "key": "magnesium_mg",
+      "label": "Magnesium",
+      "unit": "mg",
+      "per_serving": 111.18,
+      "nrv": 375,
+      "pct": 30,
+      "ingredients_with_data": 9,
+      "ingredients_total": 9
+     },
+     {
+      "key": "zinc_mg",
+      "label": "Zinc",
+      "unit": "mg",
+      "per_serving": 2.32,
+      "nrv": 10,
+      "pct": 23,
+      "ingredients_with_data": 9,
+      "ingredients_total": 9
+     },
+     {
+      "key": "vitamin_a_ug",
+      "label": "Vitamin A",
+      "unit": "µg",
+      "per_serving": 582.8,
+      "nrv": 800,
+      "pct": 73,
+      "ingredients_with_data": 7,
+      "ingredients_total": 9
+     },
+     {
+      "key": "vitamin_c_mg",
+      "label": "Vitamin C",
+      "unit": "mg",
+      "per_serving": 18.87,
+      "nrv": 80,
+      "pct": 24,
+      "ingredients_with_data": 6,
+      "ingredients_total": 9
+     },
+     {
+      "key": "vitamin_d_ug",
+      "label": "Vitamin D",
+      "unit": "µg",
+      "per_serving": 0.0,
+      "nrv": 5,
+      "pct": 0,
+      "ingredients_with_data": 9,
+      "ingredients_total": 9
+     },
+     {
+      "key": "vitamin_b12_ug",
+      "label": "Vitamin B12",
+      "unit": "µg",
+      "per_serving": 0.78,
+      "nrv": 2.5,
+      "pct": 31,
+      "ingredients_with_data": 9,
+      "ingredients_total": 9
+     },
+     {
+      "key": "folate_ug",
+      "label": "Folate",
+      "unit": "µg",
+      "per_serving": 69.51,
+      "nrv": 200,
+      "pct": 35,
+      "ingredients_with_data": 8,
+      "ingredients_total": 9
+     }
+    ],
+    "summary": {
+     "at_least_15pct": 9,
+     "count": 10
+    },
+    "coverage": {
+     "with_data": 6,
+     "total": 9,
+     "missing": [
+      "feta",
+      "greek yogurt 0%",
+      "mustard"
+     ]
+    },
+    "reference": "EU reference intakes (Regulation (EU) 1169/2011, Annex XIII)"
+   },
    "missing_nutrition": [],
    "unresolved": [],
    "lines": [
@@ -599,7 +720,8 @@
       "kcal": 1100.0,
       "protein_g": 234.0,
       "carbs_g": 0.0,
-      "fat_g": 15.0
+      "fat_g": 15.0,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -613,7 +735,8 @@
       "kcal": 487.2,
       "protein_g": 9.42,
       "carbs_g": 102.6,
-      "fat_g": 0.3
+      "fat_g": 0.3,
+      "fiber_g": 18.0
      },
      "missing": []
     },
@@ -627,7 +750,8 @@
       "kcal": 216.0,
       "protein_g": 1.0,
       "carbs_g": 46.4,
-      "fat_g": 1.0
+      "fat_g": 1.0,
+      "fiber_g": 5.6
      },
      "missing": []
     },
@@ -641,7 +765,8 @@
       "kcal": 218.12,
       "protein_g": 16.41,
       "carbs_g": 26.6,
-      "fat_g": 1.12
+      "fat_g": 1.12,
+      "fiber_g": 18.06
      },
      "missing": []
     },
@@ -655,7 +780,8 @@
       "kcal": 162.0,
       "protein_g": 2.88,
       "carbs_g": 28.6,
-      "fat_g": 2.4
+      "fat_g": 2.4,
+      "fiber_g": 4.6
      },
      "missing": []
     },
@@ -669,7 +795,8 @@
       "kcal": 680.64,
       "protein_g": 12.77,
       "carbs_g": 6.6,
-      "fat_g": 64.61
+      "fat_g": 64.61,
+      "fiber_g": 6.43
      },
      "missing": []
     },
@@ -683,7 +810,8 @@
       "kcal": 568.0,
       "protein_g": 30.2,
       "carbs_g": 0.9,
-      "fat_g": 48.6
+      "fat_g": 48.6,
+      "fiber_g": 0.4
      },
      "missing": []
     },
@@ -697,7 +825,8 @@
       "kcal": 302.56,
       "protein_g": 51.09,
       "carbs_g": 18.05,
-      "fat_g": 1.84
+      "fat_g": 1.84,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -711,7 +840,8 @@
       "kcal": 96.64,
       "protein_g": 4.43,
       "carbs_g": 2.77,
-      "fat_g": 7.17
+      "fat_g": 7.17,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -725,7 +855,8 @@
       "kcal": 0.0,
       "protein_g": 0.0,
       "carbs_g": 0.0,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -739,7 +870,8 @@
       "kcal": 13.24,
       "protein_g": 0.53,
       "carbs_g": 1.6,
-      "fat_g": 0.3
+      "fat_g": 0.3,
+      "fiber_g": 1.01
      },
      "missing": []
     },
@@ -753,7 +885,8 @@
       "kcal": 25.44,
       "protein_g": 1.13,
       "carbs_g": 1.5,
-      "fat_g": 1.03
+      "fat_g": 1.03,
+      "fiber_g": 2.79
      },
      "missing": []
     }
@@ -761,7 +894,6 @@
   },
   "change_requests": []
  },
- "mfp": "SmartBite: Chicken salad with sweet potato, walnuts and mustard yogurt\nServings: 8\n\nchicken breast, 1000 g (raw)\nsweet potato, 600 g (raw)\napple, 400 g\nfrozen peas, 280 g\npomegranate, 200 g\nwalnuts, 96 g\nfeta, 200 g\ngreek yogurt 0%, 496 g\nmustard, 64 g\nsalt, 8 g\nblack pepper, 4 g (raw)\npaprika, 8 g",
  "slug": "chicken-salad-with-sweet-potato-walnuts-and-mustard-yogurt",
  "demo": true,
  "photo": "/demo/images/chicken-salad-with-sweet-potato-walnuts-and-mustard-yogurt.jpg",

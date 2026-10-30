@@ -2,15 +2,16 @@
 // Header, footer, toast, meal image and add button from the mockup (design freeze), shared by the main page,
 // the recipe page and the profile and privacy pages. Markup and classes copied 1:1.
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { adjustApply, adjustInfo, adjustPreview, adjustReset, cartJobs, consolidate } from "../lib/cart";
 import { mealRequest } from "../lib/cartmath";
-import { REPO_URL } from "../lib/site";
+import { REPO_URL, tabUrl } from "../lib/site";
 import { cachedReply, evaluateCached, requestKey } from "../lib/engine";
-import { toMeal } from "../lib/meal";
+import { modeMeals, toMeal } from "../lib/meal";
 import { usePhoto } from "../lib/photos";
-import { DEFAULT_CURRENCY, currencySymbol, engineEstimates, exportProfile, hasProfile, onStoreChange, readActiveProducts,
-  readCart, readCurrency, readLocalMeals, readName, readPrices, readSaved, writeCart } from "../lib/store";
+import { DEFAULT_CURRENCY, currencySymbol, engineEstimates, exportProfile, hasProfile, onStoreChange, profileComplete,
+  readActiveProducts, readCart, readCurrency, readLocalMeals, readName, readPrices, readSaved, writeCart } from "../lib/store";
 import { SetupHost, openSetup } from "./SetupDialog";
 
 export const TABS = [
@@ -20,6 +21,31 @@ export const TABS = [
   { id: "cart", label: "Cart" },
   { id: "how-it-works", label: "How It Works" },
 ];
+// Demo mode (decided 2026-10-30): /demo and the demo meals' recipe pages, set by their server pages with DemoMode.
+// There the cart has its own storage key and the Demo nav item is active. page: a page outside the tabs (a demo
+// recipe page), whose header and footer lead back into the /demo tabs.
+const ModeContext = createContext({ demo: false, page: false });
+export function DemoMode({ page = false, children }) {
+  return <ModeContext.Provider value={{ demo: true, page }}>{children}</ModeContext.Provider>;
+}
+export const useDemo = () => useContext(ModeContext).demo;
+function useTabNav(onNavigate) {
+  const { demo, page } = useContext(ModeContext);
+  const router = useRouter();
+  return demo && page ? (tab) => router.push(tabUrl(tab, true)) : onNavigate;
+}
+
+// Profile complete (lib/store.js profileComplete): null until this browser's storage is read, then on every change
+export function useProfileComplete() {
+  const [complete, setComplete] = useState(null);
+  useEffect(() => {
+    const read = () => setComplete(profileComplete());
+    read();
+    return onStoreChange(read);
+  }, []);
+  return complete;
+}
+
 export const EMPTY_CART = { meals: [], rows: [], totals: { bought: 0, used: 0, wasteGrams: 0, wasteCost: 0, unpriced: 0, priced: 0, optional: 0 },
   leftovers: [], leftoverRecipes: [] };
 // Money in the user's currency (Profile): "€4.99", "£4.99", "CHF 4.99". Only the symbol changes, nothing is converted.
@@ -175,14 +201,17 @@ export function useEvaluations(jobs, products, estimates) {
 
 // evaluate: run the cart meals through the engine like the recipe page does (same servings, products, country), so
 // packs, estimates, totals and Adjust leftovers match it. Only the Cart needs it; other pages show the count.
-export function useCart(showToast, meals, { evaluate = false } = {}) {
+// In the demo the cart is the demo cart with the demo meals; elsewhere the real cart with the meals made here.
+export function useCart(showToast, allMeals, { evaluate = false } = {}) {
+  const demo = useDemo();
+  const meals = useMemo(() => modeMeals(allMeals, demo), [allMeals, demo]);
   // null until the browser storage is read (the server render shows an empty cart)
   const [stored, setStored] = useState(null);
   useEffect(() => {
-    const read = () => setStored(readCart());
+    const read = () => setStored(readCart(demo));
     read();
     return onStoreChange(read);
-  }, []);
+  }, [demo]);
   const estimates = useEstimates();
   const replies = useEvaluations(evaluate && stored ? cartJobs(stored, meals) : [], stored?.products, estimates);
   const replySig = Object.entries(replies).map(([id, r]) => `${id} ${r.docKey}`).join("\n");
@@ -195,17 +224,17 @@ export function useCart(showToast, meals, { evaluate = false } = {}) {
   const cart = useMemo(() => (stored ? consolidate(stored, meals, evaluated) : EMPTY_CART), [stored, meals, evaluated]);
   const save = (next) => {
     setStored(next);
-    if (!writeCart(next)) showToast("This browser blocks storage: the cart is kept until you reload.");
+    if (!writeCart(next, demo)) showToast("This browser blocks storage: the cart is kept until you reload.");
   };
   const add = (meal, servings) => {
-    const c = readCart();
+    const c = readCart(demo);
     save({ ...c, meals: [...c.meals, servings ? { slug: meal.slug, servings } : { slug: meal.slug }] });
     showToast(`Added "${meal.name}" to cart!`);
   };
   // The index is the row the page shows (only meals that still exist). Remove it only if that row still holds
   // the same meal; if the cart changed in another tab, show the fresh cart instead
   const remove = (index, slug) => {
-    const c = readCart();
+    const c = readCart(demo);
     const known = new Set(meals.map((m) => m.slug));
     const target = c.meals.filter((e) => known.has(e.slug))[index];
     if (!target || target.slug !== slug) {
@@ -216,26 +245,26 @@ export function useCart(showToast, meals, { evaluate = false } = {}) {
     showToast("Meal removed from cart.");
   };
   const setOptional = (key, on) => {
-    const c = readCart();
+    const c = readCart(demo);
     const keys = c.optional.filter((k) => k !== key);
     save({ ...c, optional: on ? [...keys, key] : keys });
   };
   // Already at home: out of the list and total, Restore buys it again
   const setHave = (key, on, name) => {
-    const c = readCart();
+    const c = readCart(demo);
     const keys = c.have.filter((k) => k !== key);
     save({ ...c, have: on ? [...keys, key] : keys });
     showToast(on ? `"${name}" marked as already at home.` : `"${name}" is back in the list.`);
   };
   // "Adjust leftovers to meals": suggestions from code, previewed before anything changes
-  const adjustSuggestions = () => adjustInfo(readCart(), meals, evaluated);
-  const previewAdjust = (ids) => adjustPreview(readCart(), meals, ids, evaluated);
+  const adjustSuggestions = () => adjustInfo(readCart(demo), meals, evaluated);
+  const previewAdjust = (ids) => adjustPreview(readCart(demo), meals, ids, evaluated);
   const applyAdjust = (ids) => {
-    save(adjustApply(readCart(), meals, ids, evaluated));
+    save(adjustApply(readCart(demo), meals, ids, evaluated));
     showToast("Cart adjusted.");
   };
   const resetAdjust = () => {
-    save(adjustReset(readCart(), meals, evaluated));
+    save(adjustReset(readCart(demo), meals, evaluated));
     showToast("Adjustments undone.");
   };
   return { cart, add, remove, setOptional, setHave, adjustSuggestions, previewAdjust, applyAdjust, resetAdjust };
@@ -337,6 +366,8 @@ const menuItem = "block w-full text-left px-4 py-2.5 text-sm text-forest hover:b
 // file. With one: Profile, Save profile file, Open profile file, under the display name if there is one.
 function ProfileMenu({ active, onNavigate }) {
   const [open, setOpen, ref] = useMenu();
+  const demo = useDemo();
+  const router = useRouter();
   const [me, setMe] = useState({ has: false, name: "" });
   useEffect(() => {
     const read = () => setMe({ has: hasProfile(), name: readName() });
@@ -345,7 +376,8 @@ function ProfileMenu({ active, onNavigate }) {
   }, []);
   const create = () => {
     setOpen(false);
-    openSetup((state, opts) => state === "done" && !opts?.profile && onNavigate("make-meal"));
+    // A profile made in the demo is for the real app: its Make Your Meal opens
+    openSetup((state, opts) => state === "done" && !opts?.profile && (demo ? router.push(tabUrl("make-meal")) : onNavigate("make-meal")));
   };
   const save = () => {
     setOpen(false);
@@ -399,17 +431,30 @@ function TabsMenu({ active, onNavigate }) {
   );
 }
 
-export function Header({ active, onNavigate, cartCount }) {
+// The Demo item (decided 2026-10-30): next to How It Works on desktop, and on phones outside the menu (one tap)
+function DemoLink({ id, className, demo, onNavigate }) {
+  return (
+    <Link href="/demo" id={id} onClick={demo ? (e) => { e.preventDefault(); onNavigate("home"); } : undefined}
+      className={`${className} rounded-full hover:text-forest hover:bg-forest/5 transition-all ${demo ? "font-semibold bg-forest/5 text-forest" : "text-forest/70"}`}>
+      Demo
+    </Link>
+  );
+}
+
+export function Header({ active, onNavigate: navigate, cartCount }) {
+  const onNavigate = useTabNav(navigate);
+  const demo = useDemo();
   return (
     <header className="sticky top-0 z-50 bg-cream/95 backdrop-blur-md border-b border-forest/10 transition-all">
       <SetupHost />
       <div className="max-w-[1360px] mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-3">
 
-        <a href="/" onClick={(e) => { e.preventDefault(); onNavigate("home"); }} className="flex items-center gap-2.5 group">
+        {/* Under 460 px the name hides behind the leaf (decided 2026-10-30), so the Demo item fits next to the menus */}
+        <a href="/" aria-label="SmartBite" onClick={(e) => { e.preventDefault(); onNavigate("home"); }} className="flex items-center gap-2.5 group">
           <div className="w-10 h-10 rounded-full bg-forest flex items-center justify-center text-lime group-hover:bg-lime group-hover:text-forest transition-colors shadow-sm">
             <i className="fa-solid fa-leaf text-base"></i>
           </div>
-          <span className="font-serif text-2xl font-bold tracking-tight text-forest whitespace-nowrap">
+          <span className="font-serif text-2xl font-bold tracking-tight text-forest whitespace-nowrap max-[459px]:hidden">
             Smart<span className="font-normal italic">Bite</span>{" "}
             <span className="inline-block w-2 h-2 rounded-full bg-lime ml-0.5"></span>
           </span>
@@ -439,9 +484,11 @@ export function Header({ active, onNavigate, cartCount }) {
               </button>
             );
           })}
+          <DemoLink id="nav-demo" className="nav-btn px-4 py-2" demo={demo} onNavigate={onNavigate} />
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-4">
+          <DemoLink id="nav-demo-phone" className="lg:hidden px-3 py-2 font-medium text-sm" demo={demo} onNavigate={onNavigate} />
           <TabsMenu active={active} onNavigate={onNavigate} />
           <ProfileMenu active={active} onNavigate={onNavigate} />
           <button onClick={() => onNavigate("cart")} aria-label="Cart" className="relative px-4 py-2 rounded-full bg-forest text-cream hover:bg-forest-light transition-all flex items-center gap-2.5 shadow-sm">
@@ -455,7 +502,8 @@ export function Header({ active, onNavigate, cartCount }) {
   );
 }
 
-export function Footer({ onNavigate }) {
+export function Footer({ onNavigate: navigate }) {
+  const onNavigate = useTabNav(navigate);
   return (
     <footer className="bg-forest text-cream pt-10 pb-8 px-8 border-t border-forest-light mt-12">
       <div className="max-w-[1360px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">

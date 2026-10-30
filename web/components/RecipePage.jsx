@@ -1,7 +1,7 @@
 "use client";
 // Recipe page: the "Your meal" layout from step 3 of Make Your Meal in the mockup, copied 1:1; the steps section
-// shows for meals that have steps. Servings scale the ingredients, the shopping table and the MyFitnessPal block;
-// macro tiles stay per serving. Prices the user types (EUR per pack, kept in this browser as products for their
+// shows for meals that have steps. Servings scale the ingredients and the shopping table; macro tiles, fiber and the
+// vitamins and minerals panel stay per serving. Prices the user types (EUR per pack, kept in this browser as products for their
 // store) price the shopping table at once in the browser; the meal engine then runs the meal again with the products
 // for the budget check. With a country set
 // in Settings (Spain by default), the engine fills the other lines with estimated prices, shown grey with "est.".
@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { withPrices } from "../lib/cartmath";
 import { estimateTitle, periodText, toMeal } from "../lib/meal";
-import { mfpBlock } from "../lib/mfp";
+import { tabUrl } from "../lib/site";
 import { packRow, totals } from "../lib/packs";
 import { MAX_PHOTO_BYTES, deletePhoto, putPhoto, usePhoto } from "../lib/photos";
 import { COUNTRIES, MAX_PRICE_EUR, deleteLocalMeal, setLinePrice, setSaved } from "../lib/store";
@@ -97,11 +97,10 @@ function MissingMeal({ meals, ready, router }) {
 function RecipeView({ meal, meals, router }) {
   // Opens at the servings the meal was made for: its steps, packs and budget are for those (1 to 8, the stepper's range)
   const [servings, setServings] = useState(Math.min(8, Math.max(1, meal.servings || 1)));
-  const [copied, setCopied] = useState(false);
   const [editing, setEditing] = useState(null); // shopping row whose product is being edited
   const { toast, showToast } = useToast();
   const { cart, add } = useCart(showToast, meals);
-  const go = (tab) => router.push(tab === "home" ? "/" : `/?tab=${tab}`);
+  const go = (tab) => router.push(tabUrl(tab, meal.kind === "demo")); // a demo meal leads back into /demo
 
   // Lines hold grams for the servings they were computed for; scale them to the chosen servings. The engine's last
   // reply wins over the saved meal and stays while a newer one loads (the table never falls back to the saved
@@ -111,19 +110,15 @@ function RecipeView({ meal, meals, router }) {
   const estimates = useEstimates();
   const priced = usePricedEvaluation(meal, servings, products, estimates);
   const shown = priced?.doc ? { meal: toMeal(meal.slug, priced.doc), servings: priced.servings } : { meal, servings: meal.servings };
+  // Fiber and micros are per serving; meals saved before they existed take them from the engine's reply
+  const fiber = meal.fiber ?? shown.meal.fiber;
+  const micros = meal.micros ?? shown.meal.micros;
   const rows = withPrices(shown.meal, prices).lines.map((l) => packRow(l, (l.needed * servings) / shown.servings));
   const t = totals(rows);
   // The budget check is the engine's for these exact prices and servings; the estimate note can use the last reply
   const budget = priced && !priced.pending ? priced.doc?.evaluation.pack : null;
   const lastPack = priced?.doc?.evaluation.pack;
   const optionalRows = rows.filter((r) => r.optional && r.packSize);
-  const mfp = mfpBlock(meal.name, servings, [...meal.ingredients, ...meal.mfpExtra].map((i) => ({ ...i, grams: i.grams * servings })));
-  const copyMFPText = () =>
-    navigator.clipboard.writeText(mfp).then(() => {
-      setCopied(true);
-      showToast("MyFitnessPal text copied to clipboard!");
-      setTimeout(() => setCopied(false), 2000);
-    }).catch(() => showToast("Could not copy. Select the text and copy it."));
   // Photo: made in Gemini from the prompt and dropped here; it stays in this browser
   const photo = usePhoto(meal.slug);
   const hasPhoto = Boolean(photo || meal.images.length);
@@ -216,8 +211,8 @@ function RecipeView({ meal, meals, router }) {
                   ) : null}
                 </div>
 
-                {/* 4 Macro Tiles (per serving) */}
-                <div className="grid grid-cols-4 gap-3 pt-2">
+                {/* 4 Macro Tiles (per serving), and fiber for meals that have it */}
+                <div className={`grid ${fiber ? "grid-cols-3 sm:grid-cols-5" : "grid-cols-4"} gap-3 pt-2`}>
                   <div className="bg-cream-card p-3 rounded-2xl text-center border border-cream-dark">
                     <span className="text-[10px] uppercase font-bold text-forest/70 block">Calories</span>
                     <span id="tile-kcal" className="font-bold text-base text-forest">{meal.macros.kcal}</span>{" "}
@@ -238,6 +233,14 @@ function RecipeView({ meal, meals, router }) {
                     <span id="tile-fat" className="font-bold text-base text-forest">{meal.macros.fat}</span>{" "}
                     <span className="text-[10px] text-forest/70">grams</span>
                   </div>
+                  {fiber ? (
+                    <div className="col-span-2 sm:col-span-1 bg-cream-card p-3 rounded-2xl text-center border border-cream-dark">
+                      <span className="text-[10px] uppercase font-bold text-forest/70 block">Fiber</span>
+                      <span id="tile-fiber" className="font-bold text-base text-forest">{fiber.grams}</span>{" "}
+                      <span className="text-[10px] text-forest/70">grams</span>
+                      <span id="tile-fiber-pct" className="text-[10px] text-forest/70 block">{fiber.pct}% of 25 g</span>
+                    </div>
+                  ) : null}
                 </div>
                 <p className="text-[11px] text-forest/70">AI picked the foods and grams. Macros and packs are computed in code.</p>
               </div>
@@ -443,20 +446,42 @@ function RecipeView({ meal, meals, router }) {
               </p>
             </div>
 
-            {/* MyFitnessPal Sync Box */}
-            <div className="bg-forest text-cream rounded-3xl p-6 shadow-card space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <i className="fa-solid fa-barcode text-lime text-lg"></i>
-                  <h3 className="font-serif font-bold text-lg text-white">MyFitnessPal Quick Import</h3>
+            {/* Vitamins and minerals per serving (meals made before they were counted have none) */}
+            {micros ? (
+              <div id="micros-panel" className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="font-serif font-bold text-xl text-forest">Vitamins and minerals</h3>
+                    <p id="micros-summary" className="text-xs text-forest/70">{micros.summary}</p>
+                  </div>
+                  <span className="text-xs bg-forest text-lime font-bold px-3 py-1 rounded-full whitespace-nowrap">Per serving</span>
                 </div>
-                <button onClick={copyMFPText} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
-                  <i className="fa-regular fa-copy"></i>
-                  <span id="copy-btn-text">{copied ? "Copied ✓" : "Copy to Clipboard"}</span>
-                </button>
+                <ul id="micros-list" className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
+                  {micros.rows.map((r) => (
+                    <li key={r.key} className="text-xs">
+                      <div className="flex items-baseline justify-between gap-3">
+                        <span className="font-semibold text-forest">
+                          {r.label}
+                          {r.partial ? <><span aria-hidden="true" className="text-forest/70">*</span><span className="sr-only"> (some ingredients have no data)</span></> : null}
+                        </span>
+                        <span className="text-forest/70 whitespace-nowrap">{r.amount}{" "}<span className="font-bold text-forest ml-2">{r.pct}%</span></span>
+                      </div>
+                      <div aria-hidden="true" className="h-1.5 mt-1.5 rounded-full bg-cream-dark overflow-hidden">
+                        <div className="h-full rounded-full bg-lime" style={{ width: `${r.bar}%` }}></div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <div className="pt-4 border-t border-cream-dark space-y-1 text-[11px] text-forest/70">
+                  <p>% of the daily value for an adult. One meal is about a third of your day.</p>
+                  {micros.coverage ? (
+                    <p id="micros-coverage">{micros.coverage}{micros.missing ? ` ${micros.missing}` : ""}</p>
+                  ) : null}
+                  {micros.partial ? <p>* Some ingredients have no data for this nutrient, so the real amount may be higher.</p> : null}
+                  {micros.reference ? <p>Daily values: {micros.reference}.</p> : null}
+                </div>
               </div>
-              <pre id="mfp-text-block" className="bg-forest-card p-4 rounded-2xl text-xs font-mono text-cream/90 leading-relaxed overflow-x-auto border border-cream/10">{mfp}</pre>
-            </div>
+            ) : null}
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">

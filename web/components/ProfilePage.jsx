@@ -383,7 +383,7 @@ export default function ProfilePage({ demoMeals }) {
                   </button>
                 </div>
                 <span id="api-key-status" className="block text-[11px] text-cream/60 mt-2">
-                  {savedKey ? `Saved in this browser (ends in ${savedKey.slice(-4)}).` : provider === ANTHROPIC ? "No key saved: Make Your Meal runs in demo mode." : "No key saved for this endpoint."}
+                  {savedKey ? `Saved in this browser (ends in ${savedKey.slice(-4)}).` : provider === ANTHROPIC ? "No key saved: Make Your Meal needs one. The demo works without a key." : "No key saved for this endpoint."}
                 </span>
               </div>
               <div className="flex gap-3">

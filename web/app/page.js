@@ -1,12 +1,10 @@
 import SmartBite from "../components/SmartBite";
-import { loadDemoMeals } from "../lib/demo";
-import { randomFive } from "../lib/meal";
+import { TAB_IDS } from "../lib/site";
 
-export const dynamic = "force-dynamic"; // a new random five on every visit, and ?tab= from the other pages
-const TAB_IDS = ["home", "recipes", "make-meal", "cart", "how-it-works"];
+export const dynamic = "force-dynamic"; // ?tab= from the other pages
+// The real app: only the meals made in this browser, so no demo meals here (they live at /demo)
 
 export default async function Page({ searchParams }) {
   const { tab } = await searchParams; // the recipe page links back with /?tab=<id>
-  const meals = loadDemoMeals();
-  return <SmartBite demoMeals={meals} homeMeals={randomFive(meals)} initialTab={TAB_IDS.includes(tab) ? tab : "home"} />;
+  return <SmartBite initialTab={TAB_IDS.includes(tab) ? tab : "home"} />;
 }

@@ -1,7 +1,8 @@
 import pytest
 
 from smartbite_engine.contracts import validate_output
-from smartbite_engine.meal import OPTIONAL_FOODS, evaluate, mfp_block, mfp_mark
+from smartbite_engine.meal import OPTIONAL_FOODS, evaluate
+from smartbite_engine.nutrition import percent
 
 
 def rec(kcal, protein, carbs, fat, state="raw"):
@@ -171,20 +172,71 @@ def test_no_prices_means_an_incomplete_budget_check_that_passes():
     assert pack["waste_grams"] == 100 + 840 + 840 + 204  # leftovers of every bought line with a pack size
 
 
-def test_mfp_block_marks_dry_and_raw_grams():
-    mfp = run()["mfp"].splitlines()
-    assert mfp[:2] == ["SmartBite: Chicken rice bowl", "Servings: 2"]
-    assert "arroz, 160 g (dry)" in mfp and "Chicken Breast, 300 g (raw)" in mfp and "eggs, 102 g" in mfp
-    assert mfp_mark("canned chickpeas") == "" and mfp_mark("wholemeal pasta") == " (dry)"
-    assert mfp_mark("quinoa", dry=True) == " (dry)"
+def test_meal_result_has_no_food_diary_block():
+    assert "mfp" not in run()
 
 
-def test_mfp_block_keeps_a_pinch_under_1_g_and_drops_0_g_lines():
-    items = [{"name": "chili flakes", "food": "chili flakes", "total_grams": 0.3, "dry": False},
-             {"name": "salt", "food": "salt", "total_grams": 0.02, "dry": False},
-             {"name": "black pepper", "food": "black pepper", "total_grams": 2.4, "dry": False}]
-    assert mfp_block("T", 1, items).splitlines() == ["SmartBite: T", "Servings: 1", "", "chili flakes, 0.3 g",
-                                                     "black pepper, 2 g (raw)"]
+# Fiber and micronutrients, checked by hand: chicken has all 10, rice has no vitamin D, salt only calcium
+CHICKEN_MICROS = {"iron_mg": 0.4, "calcium_mg": 5, "potassium_mg": 350, "magnesium_mg": 28, "zinc_mg": 0.7,
+                  "vitamin_a_ug": 10, "vitamin_c_mg": 0, "vitamin_d_ug": 0.2, "vitamin_b12_ug": 0.4, "folate_ug": 5}
+RICE_MICROS = {"iron_mg": 0.8, "calcium_mg": 10, "potassium_mg": 100, "magnesium_mg": 25, "zinc_mg": 1.2,
+               "vitamin_a_ug": 0, "vitamin_c_mg": 0, "vitamin_b12_ug": 0, "folate_ug": 10}
+MICRO_TABLE = {"chicken breast": {**rec(110, 23, 0, 1.5), "fiber_g": 0, **CHICKEN_MICROS},
+               "rice": {**rec(350, 7, 78, 1), "fiber_g": 1.4, **RICE_MICROS},
+               "salt": {**rec(0, 0, 0, 0), "calcium_mg": 24}}
+
+
+def micro_run(salt_grams=1):
+    recipe = {**RECIPE, "ingredients": [ing("Chicken Breast", 150, "fresh"), ing("rice", 80, dry=True),
+                                        ing("salt", salt_grams, pantry=True)]}
+    return evaluate(FORM, IDEA, recipe, table=MICRO_TABLE, packs=PACKS)
+
+
+def test_fiber_is_in_per_serving_and_total():
+    macros = micro_run()["evaluation"]["macros"]
+    # rice 80 g per serving x 1.4 g / 100 g = 1.12 g; 2 servings = 2.24 g; 1.12 / 25 g = 4.48% -> 4
+    assert macros["per_serving"]["fiber_g"] == 1.12 and macros["total"]["fiber_g"] == 2.24
+    assert macros["fiber_pct"] == 4
+
+
+def test_fiber_from_a_food_with_no_fiber_value_adds_nothing():
+    assert run()["evaluation"]["macros"]["per_serving"]["fiber_g"] == 0
+
+
+def test_micros_block_shape_and_pct_math():
+    meal = micro_run()
+    assert validate_output(meal, "meal.schema.json") == []
+    micros = meal["evaluation"]["macros"]["micros"]
+    got = {n["key"]: (n["per_serving"], n["pct"], n["ingredients_with_data"], n["ingredients_total"])
+           for n in micros["nutrients"]}
+    assert [n["key"] for n in micros["nutrients"]] == ["iron_mg", "calcium_mg", "potassium_mg", "magnesium_mg",
+                                                      "zinc_mg", "vitamin_a_ug", "vitamin_c_mg", "vitamin_d_ug",
+                                                      "vitamin_b12_ug", "folate_ug"]
+    assert [(n["label"], n["unit"], n["nrv"]) for n in micros["nutrients"][:2]] == [("Iron", "mg", 14),
+                                                                                    ("Calcium", "mg", 800)]
+    # per serving: chicken 150 g, rice 80 g, salt 1 g (salt adds its calcium: 0.24 mg)
+    assert got == {"iron_mg": (1.24, 9, 2, 2), "calcium_mg": (15.74, 2, 2, 2), "potassium_mg": (605, 30, 2, 2),
+                   "magnesium_mg": (62, 17, 2, 2), "zinc_mg": (2.01, 20, 2, 2), "vitamin_a_ug": (15, 2, 2, 2),
+                   "vitamin_c_mg": (0, 0, 2, 2), "vitamin_d_ug": (0.3, 6, 1, 2), "vitamin_b12_ug": (0.6, 24, 2, 2),
+                   "folate_ug": (15.5, 8, 2, 2)}
+    assert micros["summary"] == {"at_least_15pct": 4, "count": 10}  # potassium, magnesium, zinc, B12
+    assert micros["coverage"] == {"with_data": 1, "total": 2, "missing": ["rice"]}
+    assert micros["reference"] == "EU reference intakes (Regulation (EU) 1169/2011, Annex XIII)"
+    assert all("micros" not in l for l in meal["evaluation"]["macros"]["lines"])
+
+
+def test_lines_under_2_g_per_serving_are_left_out_of_the_coverage():
+    small = micro_run(salt_grams=1)["evaluation"]["macros"]["micros"]
+    assert small["coverage"]["total"] == 2 and "salt" not in small["coverage"]["missing"]
+    big = micro_run(salt_grams=2)["evaluation"]["macros"]["micros"]
+    assert big["coverage"] == {"with_data": 1, "total": 3, "missing": ["rice", "salt"]}
+    calcium = big["nutrients"][1]
+    # 7.5 + 8 + 2 g salt x 24 mg / 100 g = 15.98 mg
+    assert (calcium["per_serving"], calcium["ingredients_with_data"], calcium["ingredients_total"]) == (15.98, 3, 3)
+
+
+def test_percent_rounds_half_up():
+    assert percent(1, 8) == 13 and percent(0, 5) == 0 and percent(3.1, 14) == 22
 
 
 def test_form_rules_are_checked():

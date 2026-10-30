@@ -4,10 +4,10 @@ import { expect, test } from "@playwright/test";
 
 const DEMO_SLUG = "tuna-frittata-with-vegetables";
 
-test("home has link-preview tags and every image is served by the site", async ({ page }) => {
+test("home has link-preview tags and every image is served by the site", async ({ page, baseURL }) => {
   const outside = [];
   page.on("request", (r) => {
-    if (r.resourceType() === "image" && !r.url().startsWith("http://127.0.0.1:3100/")) outside.push(r.url());
+    if (r.resourceType() === "image" && !r.url().startsWith(`${baseURL}/`)) outside.push(r.url());
   });
   await page.goto("/");
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /\/opengraph-image\.png/);
@@ -23,7 +23,10 @@ test("home does not load the photos of hidden tabs", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto("/");
   await page.waitForLoadState("networkidle");
-  // The home grid shows a handful of demo meals below the fold; My Recipes (hidden) holds all 13
+  expect(photos.size).toBe(0); // the real app has no demo meals
+  await page.goto("/demo");
+  await page.waitForLoadState("networkidle");
+  // The demo home grid shows a handful of demo meals below the fold; My Recipes (hidden) holds all 13
   expect(photos.size).toBeLessThan(13);
 });
 
@@ -41,6 +44,7 @@ test("robots, sitemap and icons answer", async ({ request }) => {
   const sitemap = await request.get("/sitemap.xml");
   expect(sitemap.status()).toBe(200);
   expect(await sitemap.text()).toContain(`/recipes/${DEMO_SLUG}</loc>`);
+  expect(await sitemap.text()).toContain("/demo</loc>");
   for (const path of ["/favicon.ico", "/apple-icon.png", "/opengraph-image.png"]) {
     expect((await request.get(path)).status(), path).toBe(200);
   }
@@ -77,7 +81,8 @@ test("security headers are set, and with the CSP on no page breaks a rule", asyn
   test.skip(!csp, "dev server runs without SMARTBITE_CSP: start it with SMARTBITE_CSP=enforce to check the policy");
   expect(csp).toContain("connect-src 'self' https://api.anthropic.com");
   expect(csp).toContain("frame-ancestors 'none'");
-  for (const path of ["/?tab=recipes", "/?tab=make-meal", "/?tab=cart", "/profile", "/privacy", `/recipes/${DEMO_SLUG}`]) {
+  for (const path of ["/?tab=recipes", "/?tab=make-meal", "/?tab=cart", "/demo", "/demo?tab=make-meal", "/profile", "/privacy",
+    `/recipes/${DEMO_SLUG}`]) {
     await page.goto(path);
     await page.waitForLoadState("networkidle");
   }
@@ -88,8 +93,8 @@ test("the Cart's shopping list copies as text and prints without the site's head
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.goto(`/recipes/${DEMO_SLUG}`);
   await page.getByRole("button", { name: "Add to my cart" }).click();
-  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("smartbite.cart") || "{}").meals?.length ?? 0)).toBe(1);
-  await page.goto("/?tab=cart");
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("smartbite.demoCart") || "{}").meals?.length ?? 0)).toBe(1);
+  await page.goto("/demo?tab=cart");
   const firstIngredient = page.locator("#cart-consolidated-tbody tr td").first();
   await expect(firstIngredient).toBeVisible();
 

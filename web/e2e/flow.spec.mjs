@@ -89,7 +89,7 @@ test("demo meal page shows the photo and the AI labels", async ({ page }) => {
 });
 
 test("each recipe category lists its demo meals", async ({ page }) => {
-  await page.goto("/?tab=recipes");
+  await page.goto("/demo?tab=recipes");
   const cards = page.locator("#tab-recipes a[href^='/recipes/']:visible");
   for (const [name, min] of [["Breakfast", 1], ["Lunch", 10], ["Dinner", 10], ["Salads", 3], ["Warm Meals", 5]]) {
     await page.locator("#recipe-filter-chips").getByRole("button", { name, exact: true }).click();
@@ -98,12 +98,10 @@ test("each recipe category lists its demo meals", async ({ page }) => {
 });
 
 test("a demo idea shows its meal's own name and macros, in a preview that covers the page", async ({ page }) => {
-  await page.goto("/?tab=make-meal");
+  await page.goto("/demo?tab=make-meal");
   await page.locator("#input-craving").fill("lentils");
   await page.getByRole("button", { name: "Show me 4 ideas" }).click();
-  const skip = page.getByRole("button", { name: "Skip setup" });
-  await skip.or(page.locator("#demo-note")).first().waitFor(); // a fresh browser opens the setup first
-  if (await skip.isVisible()) await skip.click();
+  await expect(page.locator("#demo-note")).toBeVisible(); // the demo needs no profile and no setup
   await expect(page.locator("#ideas-card-grid h3").first()).toHaveText(/lentil/i); // closest to the craving first
   await page.locator("#ideas-card-grid h3", { hasText: "Classic lentil stew" }).click();
   const dialog = page.getByRole("dialog");
@@ -117,7 +115,7 @@ test("demo meals open at the servings they were made for, and none is over budge
   await page.goto("/recipes/tuna-frittata-with-vegetables");
   await expect(page.locator("#servings-count")).toHaveText("4");
   await expect(page.locator("#budget-status")).toContainText("Within budget"); // Spain estimates, the default
-  await page.goto("/?tab=recipes");
+  await page.goto("/demo?tab=recipes");
   const slugs = await page.locator("#tab-recipes a[href^='/recipes/']").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
   for (const href of slugs) {
     await page.goto(href);
@@ -143,7 +141,7 @@ test("tabs show in the address, and Back goes to the tab before", async ({ page 
 test("eggs are counted on the recipe page, and the form asks about a blender", async ({ page }) => {
   await page.goto("/recipes/tuna-frittata-with-vegetables");
   await expect(page.getByText("20 eggs (1020g)")).toBeVisible(); // 4 servings of 5 eggs, as the steps say
-  await page.goto("/?tab=make-meal");
+  await page.goto("/demo?tab=make-meal"); // the same form as the real app, with no profile needed
   await expect(page.getByLabel("Blender", { exact: true })).not.toBeChecked(); // the Kitchen Profile says no blender
 });
 
@@ -169,9 +167,12 @@ test("make a meal with a mocked model, the real engine, then cart and Adjust lef
   await page.locator("#api-key").fill(FAKE_KEY);
   await page.getByRole("button", { name: "Save provider and key" }).click();
   await expect.poll(() => page.evaluate(() => localStorage.getItem("smartbite.anthropicKey"))).toBe(JSON.stringify(FAKE_KEY));
+  // A complete profile: the key above and the setup finished once (without it, Step 1 shows Set up profile)
+  await page.evaluate(() => localStorage.setItem("smartbite.setup", JSON.stringify("done")));
 
   // Step 1 -> 4 ideas
   await page.goto("/?tab=make-meal");
+  await expect(page.locator("#make-setup")).toHaveCount(0);
   await page.locator("#input-craving").fill("chicken bowl with rice and cucumber");
   await page.getByRole("button", { name: "Show me 4 ideas" }).click();
   const cards = page.locator("#ideas-card-grid > div");

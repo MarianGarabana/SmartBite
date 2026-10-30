@@ -8,13 +8,13 @@ import { checkForm } from "../lib/form";
 import { makeMeal, progressText } from "../lib/flow";
 import { generateIdeas, reviseIdea } from "../lib/llm";
 import { listText } from "../lib/packs";
-import { demoIdea, demoPicks, estimatePlace, estimateTitle, periodText, toMeal } from "../lib/meal";
+import { demoIdea, demoPicks, estimatePlace, estimateTitle, periodText, recipeMeals, toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
-import { DEFAULT_BUDGET, engineEstimates, llmReady, needsSetup, readActiveProducts, readBudget, readLlm, readProfile,
-  saveLocalMeal } from "../lib/store";
+import { tabUrl } from "../lib/site";
+import { DEFAULT_BUDGET, engineEstimates, readActiveProducts, readBudget, readLlm, readProfile, saveLocalMeal } from "../lib/store";
 import { SETUP_DONE_EVENT, openSetup } from "./SetupDialog";
-import { AddButton, AiLabel, Footer, Header, MealImage, CART_TABLE as T, TABS, Toast, money, moneySymbol, grams, useCart, useCurrency, useMeals, usePrices, useToast }
-  from "./Chrome";
+import { AddButton, AiLabel, Footer, Header, MealImage, CART_TABLE as T, TABS, Toast, money, moneySymbol, grams, useCart, useCurrency, useDemo, useMeals, usePrices,
+  useProfileComplete, useToast } from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
 import { PriceInput } from "./RecipePage";
 
@@ -47,8 +47,34 @@ const label = (m) => m.category || m.date;
 const kcal = (m) => `${m.approx ? "~" : ""}${m.kcal} kcal`;
 const protein = (m) => `${m.approx ? "~" : ""}${m.protein}g`;
 
-export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" }) {
+// The two ways in before the real app can make meals (decided 2026-10-30): set up the profile, or try the demo.
+// On home, in an empty My Recipes and instead of the Make Your Meal form; same card as "How SmartBite Works".
+function SetupChoices({ id, onSetUp }) {
+  return (
+    <div id={id} className="bg-cream-card rounded-3xl p-8 border border-cream-dark flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="space-y-2">
+        <span className="text-xs font-bold uppercase tracking-widest text-forest/70">Get started</span>
+        <h3 className="font-serif text-2xl font-bold text-forest">Set up your profile first</h3>
+        <p className="text-xs text-forest/70 max-w-2xl">Your AI key and your preferences, saved only in this browser. No key? Try the demo with example meals.</p>
+      </div>
+      <div className="flex flex-wrap justify-center gap-3 md:shrink-0">
+        <button onClick={onSetUp} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all whitespace-nowrap">
+          Set up profile
+        </button>
+        <Link href="/demo" className="bg-forest hover:bg-forest-light text-lime font-bold text-xs px-6 py-3 rounded-full transition-all whitespace-nowrap">
+          Try the demo
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+// The same shell runs the real app (/) and the demo (/demo, inside DemoMode): the demo shows only the demo meals and
+// its own cart; the real app only the meals made in this browser, and Make Your Meal once the profile is complete.
+export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab = "home" }) {
   useCurrency();
+  const demo = useDemo();
+  const complete = useProfileComplete(); // null until read
   const [tab, setTab] = useState(initialTab);
   const [category, setCategory] = useState("All");
   const [query, setQuery] = useState("");
@@ -87,10 +113,10 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
   const pct = (from, to) => `${to > from ? "+" : ""}${Math.round(((to - from) / from) * 100)}%`;
   const bySlug = Object.fromEntries(meals.map((m) => [m.slug, m]));
 
-  // The address shows the tab (/?tab=cart, as the other pages link back), so Back and shared links work
+  // The address shows the tab (/?tab=cart or /demo?tab=cart, as the other pages link back), so Back and shared links work
   const switchTab = (id) => {
     setTab(id);
-    const url = id === "home" ? "/" : `/?tab=${id}`;
+    const url = tabUrl(id, demo);
     if (window.location.pathname + window.location.search !== url) window.history.pushState(null, "", url);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -106,12 +132,14 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
     switchTab("recipes");
     setCategory(name);
   };
+  const setUp = () => openSetup((state, opts) => state === "done" && !opts?.profile && switchTab("make-meal"));
 
-  // Demo meals are always listed; meals made in this browser show once saved ("Save in my recipes").
+  // The demo lists the demo meals; the real app the meals made in this browser once saved ("Save in my recipes").
   const q = query.toLowerCase();
-  const shown = meals.filter(
+  const own = recipeMeals(meals, false);
+  const homeList = demo ? homeMeals : own.slice(-5).reverse(); // real app: the last five saved
+  const shown = recipeMeals(meals, demo).filter(
     (m) =>
-      (m.kind === "demo" || m.saved) &&
       (category === "All" || m.categories.includes(category)) &&
       (!q || m.name.toLowerCase().includes(q) || m.ingredients.some((i) => i.name.toLowerCase().includes(q)))
   );
@@ -122,6 +150,15 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
       <Header active={tab} onNavigate={switchTab} cartCount={cart.meals.length} />
 
       <main className="flex-1 py-6">
+        {demo && (
+          <div className="max-w-[1360px] mx-auto px-8 mb-6">
+            <div id="demo-banner" className="bg-cream-card rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
+              <span className="font-bold text-forest">Demo mode.</span> Example meals made ahead, no AI key needed.{" "}
+              <Link href={tabUrl("make-meal")} className="font-bold underline hover:text-lime-hover">Make your own meals</Link>
+            </div>
+          </div>
+        )}
+
         {/* TAB 1: HOME */}
         <section id="tab-home" className={`tab-page space-y-12${tab === "home" ? "" : " hidden"}`}>
           <div className="max-w-[1360px] mx-auto px-8">
@@ -157,6 +194,13 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
             </div>
           </div>
 
+          {/* New visitor: the two choices come right under the hero, so phones see them first */}
+          {homeList.length === 0 && !demo && complete === false && (
+            <div className="max-w-[1360px] mx-auto px-8">
+              <SetupChoices id="home-setup" onSetUp={setUp} />
+            </div>
+          )}
+
           <div className="max-w-[1360px] mx-auto px-8">
             <div className="flex items-center justify-between mb-6">
               <div>
@@ -176,11 +220,12 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
             </div>
           </div>
 
+          {homeList.length > 0 ? (
           <div className="max-w-[1360px] mx-auto px-8 pt-4">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <span className="font-script text-2xl text-forest font-bold">Pre-built examples</span>
-                <h2 className="font-serif text-3xl font-bold text-forest">Demo Meals</h2>
+                <span className="font-script text-2xl text-forest font-bold">{demo ? "Pre-built examples" : "Saved in this browser"}</span>
+                <h2 className="font-serif text-3xl font-bold text-forest">{demo ? "Demo Meals" : "Your Meals"}</h2>
               </div>
               <button onClick={() => switchTab("recipes")} className="text-xs font-bold text-forest hover:text-lime-hover flex items-center gap-1.5">
                 <span>View all recipes</span>
@@ -188,7 +233,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
               </button>
             </div>
             <div id="home-kitchen-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
-              {homeMeals.map((m) => (
+              {homeList.map((m) => (
                 <div key={m.slug} className="relative bg-white rounded-3xl overflow-hidden shadow-soft border border-cream-dark/60 flex flex-col justify-between group">
                   <div className="h-40 overflow-hidden relative">
                     <MealImage meal={m} label className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -210,6 +255,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
               ))}
             </div>
           </div>
+          ) : null}
 
           <div className="max-w-[1360px] mx-auto px-8 pt-6">
             <div className="bg-cream-card rounded-3xl p-8 border border-cream-dark flex flex-col md:flex-row items-center justify-between gap-6">
@@ -217,7 +263,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
                 <span className="text-xs font-bold uppercase tracking-widest text-forest/70">How SmartBite Works</span>
                 <h3 className="font-serif text-2xl font-bold text-forest">From craving to shopping list in 5 steps</h3>
                 <p className="text-xs text-forest/70 max-w-2xl">
-                  Type a craving and your targets. AI writes the recipe; code matches each ingredient to a typical pack size, works out macros and leftovers, and gives you a MyFitnessPal list.
+                  Type a craving and your targets. AI writes the recipe; code matches each ingredient to a typical pack size and works out macros, vitamins, minerals and leftovers.
                 </p>
               </div>
               <button onClick={() => switchTab("how-it-works")} className="bg-forest hover:bg-forest-light text-lime font-bold text-xs px-6 py-3 rounded-full transition-all whitespace-nowrap">
@@ -230,7 +276,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
         {/* TAB 2: MY RECIPES */}
         <section id="tab-recipes" className={`tab-page space-y-8 max-w-[1360px] mx-auto px-8${tab === "recipes" ? "" : " hidden"}`}>
           <div>
-            <span className="font-script text-3xl text-forest font-bold">Demo and Saved Meals</span>
+            <span className="font-script text-3xl text-forest font-bold">{demo ? "Demo Meals" : "Saved Meals"}</span>
             <h1 className="font-serif text-4xl font-bold text-forest">My Recipes</h1>
           </div>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -271,11 +317,12 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
               </div>
             ))}
           </div>
+          {!demo && complete === false && own.length === 0 && <SetupChoices id="recipes-setup" onSetUp={setUp} />}
         </section>
 
         {/* TAB 3: MAKE YOUR MEAL */}
         <MakeMealStep1 hidden={tab !== "make-meal"} showToast={showToast} leftovers={cart.leftovers}
-          demoMeals={meals.filter((m) => m.kind === "demo")} />
+          demoMeals={meals.filter((m) => m.kind === "demo")} demo={demo} complete={complete} onSetUp={setUp} />
 
         {/* TAB 4: CART */}
         <section id="tab-cart" className={`tab-page space-y-8 max-w-[1360px] mx-auto px-8${tab === "cart" ? "" : " hidden"}`}>
@@ -289,7 +336,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
               <i className="fa-solid fa-basket-shopping"></i>
             </div>
             <h3 className="font-serif font-bold text-xl text-forest">Your cart is empty</h3>
-            <p className="text-xs text-forest/70">Generate your first custom meal plan or select from the demo meals to build your shopping list.</p>
+            <p className="text-xs text-forest/70">{demo ? "Add a demo meal to build your shopping list." : "Make your first meal to build your shopping list."}</p>
             <button onClick={() => switchTab("make-meal")} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all">
               Make your first meal
             </button>
@@ -557,7 +604,7 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
               ["Pick 1 of 4 ideas", "Pick one of four AI meal ideas made for your targets."],
               ["Whole packs", "Each ingredient gets a typical pack size, so you see what you buy and what is left over."],
               ["Real macros", "Calories and macros are worked out in code for what you eat, not for the leftovers."],
-              ["Cart & MyFitnessPal", "Add meals to one cart that merges the same foods, and copy the ingredients into MyFitnessPal."],
+              ["One cart", "Add meals to one cart that merges the same foods, so you buy each food once."],
             ].map(([title, text], i) => (
               <div key={title} className="bg-white rounded-3xl p-6 shadow-soft border border-cream-dark space-y-3 flex flex-col items-center text-center">
                 <div className="w-12 h-12 rounded-2xl bg-forest text-lime font-bold flex items-center justify-center text-lg">{i + 1}</div>
@@ -591,9 +638,10 @@ export default function SmartBite({ demoMeals, homeMeals, initialTab = "home" })
   );
 }
 
-// Make Your Meal. With the user's own key (Settings) the ideas and the recipe come from lib/llm.js and the engine
+// Make Your Meal. With the user's own key (Profile) the ideas and the recipe come from lib/llm.js and the engine
 // (lib/engine.js) computes packs and macros; the finished meal is kept in this browser and opens as its recipe page.
-// Without a key the flow runs in demo mode: the ideas are the demo meals and picking one opens its recipe page.
+// Until the profile is complete the real app shows Set up profile or Try the demo instead of the form. The demo
+// (/demo) never calls a model: the ideas are the demo meals and picking one opens its recipe page.
 const toList = (v) => (Array.isArray(v) ? v.map(String) : []);
 // URL slug for a meal made here: the title plus a time stamp, so two meals never share one
 const mealSlug = (title) => `${String(title || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
@@ -601,7 +649,7 @@ const mealSlug = (title) => `${String(title || "").normalize("NFKD").replace(/[\
 const hasGear = (gear, name) => gear.some((g) => g.toLowerCase().trim() === name);
 
 // Step 1 form. Defaults follow the Kitchen Profile (Settings).
-function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
+function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete, onSetUp }) {
   const [craving, setCraving] = useState("");
   // Leftovers in the cart: a click adds one to the craving, so the ideas build on it
   const addLeftover = (l) => setCraving((c) => (c.includes(`leftover ${l.ingredient} `) ? c :
@@ -671,14 +719,6 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
 
   const saveRequest = async () => {
     if (!craving.trim()) return showToast("Tell us what you are craving first.");
-    // First time, with nothing set up: Create profile opens once (decided 2026-10-22). Skip carries on with the
-    // request; after the setup the form takes the new targets and the user sends it again.
-    if (needsSetup()) {
-      return openSetup((state, opts) => {
-        if (state !== "done") return saveRequest(); // the defaults are reloaded on SETUP_DONE_EVENT
-        if (!opts?.profile) showToast("Profile saved. Check the form, then show me 4 ideas.");
-      });
-    }
     const { form, errors } = checkForm({
       craving, exclude: tags, kcal_target: kcalTarget, protein_g_target: proteinTarget,
       carbs_g_max: carbsMax, fat_g_max: fatMax, budget_total_eur: budget, servings, time_limit_min: time,
@@ -688,8 +728,8 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
       reheat_at_work: reheat, keep_leftovers_low: lowLeftovers,
     });
     if (errors.length) return showToast(`Not sent: ${errors.join(", ")}.`);
+    if (demo) return showDemo();
     const llm = readLlm();
-    if (!llmReady(llm)) return showDemo();
     setRun({ step: 2, loading: true, form });
     try {
       const out = await generateIdeas({ form, profile: readProfile(), llm });
@@ -783,7 +823,9 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
           <h2 className="font-serif text-3xl font-bold text-forest">Define Your Next Meal</h2>
         </div>
 
-        <div className="space-y-6">
+        {/* Real app: the form waits for a complete profile (hidden, not unmounted, while the profile is read) */}
+        {!demo && complete === false && <SetupChoices id="make-setup" onSetUp={onSetUp} />}
+        <div className={`space-y-6${demo || complete ? "" : " hidden"}`}>
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">What are you craving?</label>
             <textarea id="input-craving" rows={2} value={craving} onChange={(e) => setCraving(e.target.value)} placeholder="e.g. something warm with chicken, jasmine rice, and roasted vegetables" className="w-full bg-cream/50 border border-cream-dark rounded-2xl p-4 text-sm text-forest placeholder-forest/40 focus:outline-none focus:border-forest"></textarea>
@@ -1013,9 +1055,6 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
                 <i className="fa-solid fa-arrow-left text-[10px]"></i>
                 <span>Back to edit</span>
               </button>
-              {run.error && (
-                <button onClick={showDemo} className="text-xs font-bold text-forest hover:text-lime-hover">Show the demo ideas</button>
-              )}
             </div>
           </div>
         )}
@@ -1038,10 +1077,8 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals }) {
               <i className="fa-solid fa-arrow-left text-[10px]"></i>
               <span>Back to the ideas</span>
             </button>
-            {run.recipe ? (
+            {run.recipe && (
               <button onClick={retryEngine} className="text-xs font-bold text-forest hover:text-lime-hover">Try again</button>
-            ) : (
-              <button onClick={showDemo} className="text-xs font-bold text-forest hover:text-lime-hover">Show the demo ideas</button>
             )}
           </div>
         )}

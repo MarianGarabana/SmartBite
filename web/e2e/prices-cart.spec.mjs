@@ -3,7 +3,9 @@
 // 2. The Cart uses the same engine evaluation as the recipe page: same packs, same estimates, same total.
 // 3. A region picked in Settings changes the estimates; Off removes them.
 // 4. A barcode lookup (Open Food Facts mocked) fills the Edit product dialog; the pack size must be ticked.
-// 5. The steps note and the MyFitnessPal block at 1 serving of a meal written for 8.
+// 5. The steps note at 1 serving of a meal written for 8.
+// 6. A meal saved before fiber and micros existed takes them from the engine's reply.
+import fs from "node:fs";
 import { expect, test } from "@playwright/test";
 
 const KOREAN = "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix";
@@ -76,10 +78,10 @@ test("the Cart shows the recipe page's packs, estimates and total", async ({ pag
   const recipeTotal = await page.locator("#summary-bought-cost").innerText();
   expect(recipeRows.find((r) => r.food === "ground beef").pack).toBe("300g");
 
-  await page.getByRole("button", { name: "Add to my cart" }).click();
-  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("smartbite.cart") || "{}").meals?.length ?? 0)).toBe(1);
+  await page.getByRole("button", { name: "Add to my cart" }).click(); // a demo meal: the demo cart
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("smartbite.demoCart") || "{}").meals?.length ?? 0)).toBe(1);
   await page.locator("#nav-cart").click();
-  await page.waitForURL(/tab=cart/);
+  await page.waitForURL(/\/demo\?tab=cart$/);
   const cartBody = page.locator("#cart-consolidated-tbody");
   await expect(cartBody.getByText("est.").first()).toBeVisible();
   const cartRows = await read(cartBody.locator("tr"));
@@ -146,7 +148,7 @@ test("a barcode looked up on Open Food Facts fills the product; the pack size mu
   await expect(lentils.locator("td").nth(2)).toHaveText("500g");
 });
 
-test("steps say which servings they are written for, and MyFitnessPal has no 0 g lines", async ({ page }) => {
+test("steps say which servings they are written for", async ({ page }) => {
   await page.goto(`/recipes/${KOREAN}`);
   await expect(page.locator("#servings-count")).toHaveText("8"); // opens at the servings the meal was made for
   await expect(page.locator("#steps-servings-note")).toHaveCount(0);
@@ -154,8 +156,15 @@ test("steps say which servings they are written for, and MyFitnessPal has no 0 g
   await expect(page.locator("#servings-count")).toHaveText("1");
   await expect(page.locator("#steps-servings-note")).toHaveText(
     "Steps are written for 8 servings. The ingredient list shows the grams for 1 serving.");
-  const mfp = page.locator("#mfp-text-block");
-  await expect(mfp).toContainText("chili flakes, 0.3 g");
-  await expect(mfp).toContainText("black pepper, 0.3 g (raw)");
-  expect(await mfp.innerText()).not.toMatch(/, 0 g/);
+});
+
+test("a meal saved before fiber and micros shows them from the engine's reply", async ({ page }) => {
+  const doc = JSON.parse(fs.readFileSync(`demo/meals/${KOREAN}.json`, "utf8"));
+  const { fiber_g: _, ...perServing } = doc.evaluation.macros.per_serving;
+  const { fiber_pct: __, micros: ___, ...macros } = doc.evaluation.macros;
+  const old = { ...doc, slug: "old-korean", demo: undefined, evaluation: { ...doc.evaluation, macros: { ...macros, per_serving: perServing } } };
+  await page.addInitScript((m) => localStorage.setItem("smartbite.meals", JSON.stringify({ [m.slug]: m })), old);
+  await page.goto("/recipes/old-korean");
+  await expect(page.locator("#micros-panel")).toBeVisible();
+  await expect(page.locator("#tile-fiber")).toHaveText(/\d+g/);
 });

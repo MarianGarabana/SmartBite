@@ -459,18 +459,140 @@
     "kcal": 456.71,
     "protein_g": 39.13,
     "carbs_g": 34.05,
-    "fat_g": 16.02
+    "fat_g": 16.02,
+    "fiber_g": 7.27
    },
    "total": {
     "kcal": 3196.94,
     "protein_g": 273.94,
     "carbs_g": 238.32,
-    "fat_g": 112.12
+    "fat_g": 112.12,
+    "fiber_g": 50.89
    },
    "misses": [
     "protein 39 g vs target 45 g",
     "carbs 34 g over max 30 g"
    ],
+   "fiber_pct": 29,
+   "micros": {
+    "nutrients": [
+     {
+      "key": "iron_mg",
+      "label": "Iron",
+      "unit": "mg",
+      "per_serving": 5.02,
+      "nrv": 14,
+      "pct": 36,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "calcium_mg",
+      "label": "Calcium",
+      "unit": "mg",
+      "per_serving": 223.93,
+      "nrv": 800,
+      "pct": 28,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "potassium_mg",
+      "label": "Potassium",
+      "unit": "mg",
+      "per_serving": 1005.29,
+      "nrv": 2000,
+      "pct": 50,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "magnesium_mg",
+      "label": "Magnesium",
+      "unit": "mg",
+      "per_serving": 121.06,
+      "nrv": 375,
+      "pct": 32,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "zinc_mg",
+      "label": "Zinc",
+      "unit": "mg",
+      "per_serving": 2.41,
+      "nrv": 10,
+      "pct": 24,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "vitamin_a_ug",
+      "label": "Vitamin A",
+      "unit": "µg",
+      "per_serving": 318.67,
+      "nrv": 800,
+      "pct": 40,
+      "ingredients_with_data": 4,
+      "ingredients_total": 7
+     },
+     {
+      "key": "vitamin_c_mg",
+      "label": "Vitamin C",
+      "unit": "mg",
+      "per_serving": 52.41,
+      "nrv": 80,
+      "pct": 66,
+      "ingredients_with_data": 5,
+      "ingredients_total": 7
+     },
+     {
+      "key": "vitamin_d_ug",
+      "label": "Vitamin D",
+      "unit": "µg",
+      "per_serving": 5.61,
+      "nrv": 5,
+      "pct": 112,
+      "ingredients_with_data": 7,
+      "ingredients_total": 7
+     },
+     {
+      "key": "vitamin_b12_ug",
+      "label": "Vitamin B12",
+      "unit": "µg",
+      "per_serving": 2.18,
+      "nrv": 2.5,
+      "pct": 87,
+      "ingredients_with_data": 6,
+      "ingredients_total": 7
+     },
+     {
+      "key": "folate_ug",
+      "label": "Folate",
+      "unit": "µg",
+      "per_serving": 175.05,
+      "nrv": 200,
+      "pct": 88,
+      "ingredients_with_data": 6,
+      "ingredients_total": 7
+     }
+    ],
+    "summary": {
+     "at_least_15pct": 10,
+     "count": 10
+    },
+    "coverage": {
+     "with_data": 3,
+     "total": 7,
+     "missing": [
+      "canned tuna in water",
+      "artichoke hearts",
+      "wholemeal pasta",
+      "feta"
+     ]
+    },
+    "reference": "EU reference intakes (Regulation (EU) 1169/2011, Annex XIII)"
+   },
    "missing_nutrition": [],
    "unresolved": [],
    "lines": [
@@ -484,7 +606,8 @@
       "kcal": 817.88,
       "protein_g": 159.71,
       "carbs_g": 23.63,
-      "fat_g": 9.4
+      "fat_g": 9.4,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -498,7 +621,8 @@
       "kcal": 135.52,
       "protein_g": 10.08,
       "carbs_g": 12.94,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 17.92
      },
      "missing": []
     },
@@ -512,7 +636,8 @@
       "kcal": 864.85,
       "protein_g": 28.91,
       "carbs_g": 165.62,
-      "fat_g": 5.39
+      "fat_g": 5.39,
+      "fiber_g": 14.95
      },
      "missing": []
     },
@@ -526,7 +651,8 @@
       "kcal": 111.3,
       "protein_g": 4.58,
       "carbs_g": 19.67,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 4.2
      },
      "missing": []
     },
@@ -540,7 +666,8 @@
       "kcal": 97.9,
       "protein_g": 7.88,
       "carbs_g": 9.0,
-      "fat_g": 1.15
+      "fat_g": 1.15,
+      "fiber_g": 7.64
      },
      "missing": []
     },
@@ -554,7 +681,8 @@
       "kcal": 1113.28,
       "protein_g": 59.19,
       "carbs_g": 1.76,
-      "fat_g": 95.26
+      "fat_g": 95.26,
+      "fiber_g": 0.78
      },
      "missing": []
     },
@@ -568,7 +696,8 @@
       "kcal": 44.62,
       "protein_g": 3.12,
       "carbs_g": 4.3,
-      "fat_g": 0.66
+      "fat_g": 0.66,
+      "fiber_g": 4.51
      },
      "missing": []
     },
@@ -582,7 +711,8 @@
       "kcal": 0.0,
       "protein_g": 0.0,
       "carbs_g": 0.0,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -596,7 +726,8 @@
       "kcal": 11.59,
       "protein_g": 0.47,
       "carbs_g": 1.4,
-      "fat_g": 0.26
+      "fat_g": 0.26,
+      "fiber_g": 0.89
      },
      "missing": []
     }
@@ -617,7 +748,6 @@
    }
   ]
  },
- "mfp": "SmartBite: Tuna artichoke whole wheat pasta salad\nServings: 7\n\ncanned tuna in water, 644 g\nartichoke hearts, 560 g\nwholemeal pasta, 245 g (dry)\ncherry tomatoes, 350 g (raw)\nspinach, 294 g (raw)\nfeta, 392 g\nfresh parsley, 105 g\nsalt, 7 g\nblack pepper, 4 g (raw)",
  "slug": "tuna-artichoke-whole-wheat-pasta-salad",
  "demo": true,
  "photo": "/demo/images/tuna-artichoke-whole-wheat-pasta-salad.jpg",

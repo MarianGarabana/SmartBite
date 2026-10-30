@@ -1,3 +1,4 @@
+import { DemoMode } from "../../../components/Chrome";
 import RecipePage from "../../../components/RecipePage";
 import { loadDemoMeals } from "../../../lib/demo";
 
@@ -22,7 +23,10 @@ export async function generateMetadata({ params }) {
   };
 }
 
+// A demo meal's page belongs to the demo: its cart is the demo cart and its header leads back into /demo
 export default async function Page({ params }) {
   const { slug } = await params;
-  return <RecipePage slug={slug} demoMeals={loadDemoMeals()} />;
+  const demoMeals = loadDemoMeals();
+  const page = <RecipePage slug={slug} demoMeals={demoMeals} />;
+  return demoMeals.some((m) => m.slug === slug) ? <DemoMode page>{page}</DemoMode> : page;
 }

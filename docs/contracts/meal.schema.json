@@ -15,7 +15,6 @@
         "recipe": { "$ref": "recipe.schema.json#/$defs/Output" },
         "evaluation": { "$ref": "#/$defs/Evaluation" },
         "attempts": { "type": "array", "items": { "type": "object" }, "description": "One short summary per recipe attempt." },
-        "mfp": { "type": "string", "description": "Plain 'ingredient, grams' block for a food diary app." },
         "slug": { "type": "string", "description": "URL name of the meal, e.g. 'greek-chicken-bowl'." },
         "demo": { "type": "boolean", "description": "True for the pre-built demo meals shown without an API key." },
         "fixture": { "type": "boolean", "description": "True for hand-made test data, never shown as a real meal." },
@@ -101,13 +100,76 @@
         "user_product": { "type": "boolean", "description": "Only on lines from a product the user saved (request products): its pack size is the only option; price_source is 'user', 'estimate' (no price on the product, a country's estimate for its pack size) or null (unpriced)." }
       }
     },
+    "MealNutrition": {
+      "description": "Macros computed by the engine, plus fiber (a food with no fiber value adds 0). fiber_g is optional so meals saved before it existed stay valid.",
+      "type": "object",
+      "required": ["kcal", "protein_g", "carbs_g", "fat_g"],
+      "properties": {
+        "kcal": { "type": "number", "minimum": 0 },
+        "protein_g": { "type": "number", "minimum": 0 },
+        "carbs_g": { "type": "number", "minimum": 0 },
+        "fat_g": { "type": "number", "minimum": 0 },
+        "fiber_g": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "Micros": {
+      "description": "10 micronutrients per serving vs EU reference intakes (Regulation (EU) 1169/2011, Annex XIII). Every eaten line adds the nutrients it has; a nutrient the source does not give counts as unknown, not 0. Lines under 2 g per serving (spices, salt) are left out of the ingredient counts and coverage.",
+      "type": "object",
+      "required": ["nutrients", "summary", "coverage", "reference"],
+      "properties": {
+        "nutrients": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "required": ["key", "label", "unit", "per_serving", "nrv", "pct", "ingredients_with_data", "ingredients_total"],
+            "properties": {
+              "key": { "enum": ["iron_mg", "calcium_mg", "potassium_mg", "magnesium_mg", "zinc_mg", "vitamin_a_ug", "vitamin_c_mg", "vitamin_d_ug", "vitamin_b12_ug", "folate_ug"] },
+              "label": { "type": "string" },
+              "unit": { "enum": ["mg", "µg"] },
+              "per_serving": { "type": "number", "minimum": 0 },
+              "nrv": { "type": "number", "exclusiveMinimum": 0, "description": "EU nutrient reference value for adults, per day." },
+              "pct": { "type": "integer", "minimum": 0, "description": "per_serving as % of nrv, rounded half up." },
+              "ingredients_with_data": { "type": "integer", "minimum": 0 },
+              "ingredients_total": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "summary": {
+          "type": "object",
+          "required": ["at_least_15pct", "count"],
+          "properties": {
+            "at_least_15pct": { "type": "integer", "minimum": 0, "description": "Nutrients with pct of at least 15 (a significant amount in Annex XIII)." },
+            "count": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "coverage": {
+          "type": "object",
+          "required": ["with_data", "total", "missing"],
+          "properties": {
+            "with_data": { "type": "integer", "minimum": 0, "description": "Counted ingredients with a value for all 10 nutrients." },
+            "total": { "type": "integer", "minimum": 0, "description": "Eaten lines of at least 2 g per serving." },
+            "missing": { "type": "array", "items": { "type": "string" }, "description": "Names of counted ingredients missing at least one nutrient." }
+          },
+          "additionalProperties": false
+        },
+        "reference": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
     "MealMacros": {
       "type": "object",
       "required": ["per_serving", "total", "misses"],
       "properties": {
-        "per_serving": { "$ref": "common.schema.json#/$defs/Macros" },
-        "total": { "$ref": "common.schema.json#/$defs/Macros" },
+        "per_serving": { "$ref": "#/$defs/MealNutrition" },
+        "total": { "$ref": "#/$defs/MealNutrition" },
         "misses": { "type": "array", "items": { "type": "string" }, "description": "e.g. 'protein 38 g vs target 45 g'." },
+        "fiber_pct": { "type": "integer", "minimum": 0, "description": "Per-serving fiber as % of 25 g a day (EFSA adequate intake for adults), rounded half up." },
+        "micros": { "$ref": "#/$defs/Micros" },
         "missing_nutrition": { "type": "array", "items": { "type": "string" } },
         "lines": {
           "type": "array",
@@ -119,7 +181,7 @@
               "grams": { "type": "number", "minimum": 0 },
               "source": { "type": ["string", "null"], "description": "e.g. ciqual, usda, open_food_facts, or label (nutrition from the user's saved product)." },
               "source_id": { "type": ["string", "null"] },
-              "amount": { "$ref": "common.schema.json#/$defs/Macros" }
+              "amount": { "$ref": "#/$defs/MealNutrition" }
             }
           }
         }

@@ -1,6 +1,6 @@
 # Nutrition sources
 
-`per-100g.json` gives kcal, protein, carbs and fat per 100 g edible portion for each food. Every record names its source, the source id and the source food name. It is built by `data/build/build_nutrition.py` from the raw files below and the hand-picked map in `data/build/nutrition-map.json`. Matches that are judgment calls are listed in `review.md`.
+`per-100g.json` gives kcal, protein, carbs and fat per 100 g edible portion for each food, plus fiber and 10 micronutrients when the source has them (iron, calcium, potassium, magnesium, zinc, vitamins A, C, D and B12, folate). A missing fiber or micronutrient key means the source has no value: unknown, not 0. Every record names its source, the source id and the source food name. It is built by `data/build/build_nutrition.py` from the raw files below and the hand-picked map in `data/build/nutrition-map.json`. Matches that are judgment calls are listed in `review.md`.
 
 ## Ciqual 2025 (ANSES)
 
@@ -10,7 +10,8 @@
 - License: Licence Ouverte / Open Licence 2.0 (Etalab 2.0), <https://www.etalab.gouv.fr/licence-ouverte-open-licence/>. Reuse is free, including commercial reuse, with attribution.
 - Citation: Anses. 2025. Table de composition nutritionnelle des aliments Ciqual. https://doi.org/10.57745/RDMHWY
 - Fields used: energy, Regulation EU No 1169/2011 (kcal/100 g, code 328); protein, N x Jones factor (25000); carbohydrate (31000); fat (40000).
-- Values: "traces" and "< x" are read as 0. "-" (no value) is listed under `missing` and counted as 0.
+- Fiber and micronutrients: fiber (34100, g); iron (10260), calcium (10200), potassium (10190), magnesium (10120), zinc (10300), vitamin C (55100), all mg; vitamin A as retinol equivalents (51104, µg; never retinol or beta-carotene alone); vitamin D (52100, µg); vitamin B12 (56600, µg); folate as total folates (56700, µg), or as dietary folate equivalents (56702) for foods that have only that one (Ciqual gives one or the other; for foods without added folic acid they are the same).
+- Values: "traces" and "< x" are read as 0, for every field (below the detection limit, so a nutrient is never overstated). For the four macros, "-" (no value) is listed under `missing` and counted as 0. For fiber and micronutrients, "-" or no row means the key is left out (unknown).
 
 ## USDA FoodData Central
 
@@ -20,6 +21,7 @@
 - License: public domain, CC0 1.0 Universal, <https://creativecommons.org/publicdomain/zero/1.0/>. No permission needed.
 - Citation (suggested by USDA): U.S. Department of Agriculture, Agricultural Research Service. FoodData Central. 2019-2026. fdc.nal.usda.gov.
 - Fields used: Energy (nutrient 1008; if absent, Atwater Specific 2048, then Atwater General 2047); Protein (1003); Carbohydrate, by difference (1005; if absent, by summation 1050); Total lipid (1004; if absent, NLEA total fat 1085).
+- Fiber and micronutrients: fiber (1079); iron (1089), calcium (1087), potassium (1092), magnesium (1090), zinc (1095), vitamin C (1162), all mg; vitamin A as RAE (1106, µg); vitamin D, D2 + D3 (1114, µg, not the IU field); vitamin B12 (1178, µg); folate, total (1177, µg). A nutrient with no row for the food is left out (unknown).
 
 ## Differences between the two
 
@@ -28,7 +30,7 @@
 
 ## Branded products
 
-- Open Food Facts, looked up by barcode at run time (`smartbite_engine/nutrition.py`). Data is ODbL 1.0. Nothing from Open Food Facts is stored in this folder.
+- Open Food Facts, looked up by barcode at run time (`smartbite_engine/nutrition.py`). Data is ODbL 1.0. Nothing from Open Food Facts is stored in this folder. Fiber comes from `fiber_100g`; micronutrients from the `_100g` fields (Open Food Facts stores them in g per 100 g; the engine converts to mg or µg). A field the product does not have stays unknown.
 
 ## What is not used
 

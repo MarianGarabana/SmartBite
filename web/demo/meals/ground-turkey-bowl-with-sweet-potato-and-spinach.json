@@ -371,15 +371,134 @@
     "kcal": 454.2,
     "protein_g": 41.49,
     "carbs_g": 17.09,
-    "fat_g": 22.76
+    "fat_g": 22.76,
+    "fiber_g": 5.06
    },
    "total": {
     "kcal": 1362.61,
     "protein_g": 124.48,
     "carbs_g": 51.27,
-    "fat_g": 68.27
+    "fat_g": 68.27,
+    "fiber_g": 15.18
    },
    "misses": [],
+   "fiber_pct": 20,
+   "micros": {
+    "nutrients": [
+     {
+      "key": "iron_mg",
+      "label": "Iron",
+      "unit": "mg",
+      "per_serving": 5.75,
+      "nrv": 14,
+      "pct": 41,
+      "ingredients_with_data": 5,
+      "ingredients_total": 5
+     },
+     {
+      "key": "calcium_mg",
+      "label": "Calcium",
+      "unit": "mg",
+      "per_serving": 187.76,
+      "nrv": 800,
+      "pct": 23,
+      "ingredients_with_data": 5,
+      "ingredients_total": 5
+     },
+     {
+      "key": "potassium_mg",
+      "label": "Potassium",
+      "unit": "mg",
+      "per_serving": 1273.89,
+      "nrv": 2000,
+      "pct": 64,
+      "ingredients_with_data": 5,
+      "ingredients_total": 5
+     },
+     {
+      "key": "magnesium_mg",
+      "label": "Magnesium",
+      "unit": "mg",
+      "per_serving": 122.56,
+      "nrv": 375,
+      "pct": 33,
+      "ingredients_with_data": 5,
+      "ingredients_total": 5
+     },
+     {
+      "key": "zinc_mg",
+      "label": "Zinc",
+      "unit": "mg",
+      "per_serving": 6.56,
+      "nrv": 10,
+      "pct": 66,
+      "ingredients_with_data": 5,
+      "ingredients_total": 5
+     },
+     {
+      "key": "vitamin_a_ug",
+      "label": "Vitamin A",
+      "unit": "µg",
+      "per_serving": 1024.01,
+      "nrv": 800,
+      "pct": 128,
+      "ingredients_with_data": 4,
+      "ingredients_total": 5
+     },
+     {
+      "key": "vitamin_c_mg",
+      "label": "Vitamin C",
+      "unit": "mg",
+      "per_serving": 24.41,
+      "nrv": 80,
+      "pct": 31,
+      "ingredients_with_data": 4,
+      "ingredients_total": 5
+     },
+     {
+      "key": "vitamin_d_ug",
+      "label": "Vitamin D",
+      "unit": "µg",
+      "per_serving": 1.02,
+      "nrv": 5,
+      "pct": 20,
+      "ingredients_with_data": 4,
+      "ingredients_total": 5
+     },
+     {
+      "key": "vitamin_b12_ug",
+      "label": "Vitamin B12",
+      "unit": "µg",
+      "per_serving": 0.45,
+      "nrv": 2.5,
+      "pct": 18,
+      "ingredients_with_data": 4,
+      "ingredients_total": 5
+     },
+     {
+      "key": "folate_ug",
+      "label": "Folate",
+      "unit": "µg",
+      "per_serving": 189.5,
+      "nrv": 200,
+      "pct": 95,
+      "ingredients_with_data": 4,
+      "ingredients_total": 5
+     }
+    ],
+    "summary": {
+     "at_least_15pct": 10,
+     "count": 10
+    },
+    "coverage": {
+     "with_data": 4,
+     "total": 5,
+     "missing": [
+      "ground turkey"
+     ]
+    },
+    "reference": "EU reference intakes (Regulation (EU) 1169/2011, Annex XIII)"
+   },
    "missing_nutrition": [],
    "unresolved": [],
    "lines": [
@@ -393,7 +512,8 @@
       "kcal": 850.99,
       "protein_g": 93.64,
       "carbs_g": 0.0,
-      "fat_g": 51.79
+      "fat_g": 51.79,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -407,7 +527,8 @@
       "kcal": 194.88,
       "protein_g": 3.77,
       "carbs_g": 41.04,
-      "fat_g": 0.12
+      "fat_g": 0.12,
+      "fiber_g": 7.2
      },
      "missing": []
     },
@@ -421,7 +542,8 @@
       "kcal": 79.92,
       "protein_g": 6.43,
       "carbs_g": 7.34,
-      "fat_g": 0.94
+      "fat_g": 0.94,
+      "fiber_g": 6.24
      },
      "missing": []
     },
@@ -435,7 +557,8 @@
       "kcal": 214.2,
       "protein_g": 19.58,
       "carbs_g": 0.09,
-      "fat_g": 15.04
+      "fat_g": 15.04,
+      "fiber_g": 0.0
      },
      "missing": []
     },
@@ -449,7 +572,8 @@
       "kcal": 13.08,
       "protein_g": 0.64,
       "carbs_g": 2.23,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 0.7
      },
      "missing": []
     },
@@ -463,7 +587,8 @@
       "kcal": 9.54,
       "protein_g": 0.42,
       "carbs_g": 0.56,
-      "fat_g": 0.39
+      "fat_g": 0.39,
+      "fiber_g": 1.05
      },
      "missing": []
     },
@@ -477,7 +602,8 @@
       "kcal": 0.0,
       "protein_g": 0.0,
       "carbs_g": 0.0,
-      "fat_g": 0.0
+      "fat_g": 0.0,
+      "fiber_g": 0.0
      },
      "missing": []
     }
@@ -492,7 +618,6 @@
    }
   ]
  },
- "mfp": "SmartBite: Ground turkey bowl with sweet potato and spinach\nServings: 3\n\nground turkey, 540 g (raw)\nsweet potato, 240 g (raw)\nspinach, 240 g (raw)\neggs, 153 g\ngarlic, 12 g (raw)\npaprika, 3 g\nsalt, 3 g",
  "slug": "ground-turkey-bowl-with-sweet-potato-and-spinach",
  "demo": true,
  "photo": "/demo/images/ground-turkey-bowl-with-sweet-potato-and-spinach.jpg",
