@@ -11,7 +11,8 @@ import { listText } from "../lib/packs";
 import { demoIdea, demoPicks, estimatePlace, estimateTitle, periodText, recipeMeals, toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
 import { tabUrl } from "../lib/site";
-import { DEFAULT_BUDGET, engineEstimates, readActiveProducts, readBudget, readLlm, readProfile, saveLocalMeal } from "../lib/store";
+import { DEFAULT_BUDGET, engineEstimates, profileComplete, readActiveProducts, readBudget, readLlm, readProfile, saveLocalMeal }
+  from "../lib/store";
 import { SETUP_DONE_EVENT, openSetup } from "./SetupDialog";
 import { AddButton, AiLabel, Footer, Header, MealImage, CART_TABLE as T, TABS, Toast, money, moneySymbol, grams, useCart, useCurrency, useDemo, useMeals, usePrices,
   useProfileComplete, useToast } from "./Chrome";
@@ -48,7 +49,8 @@ const kcal = (m) => `${m.approx ? "~" : ""}${m.kcal} kcal`;
 const protein = (m) => `${m.approx ? "~" : ""}${m.protein}g`;
 
 // The two ways in before the real app can make meals (decided 2026-10-30): set up the profile, or try the demo.
-// On home, in an empty My Recipes and instead of the Make Your Meal form; same card as "How SmartBite Works".
+// On home and in an empty My Recipes (Make Your Meal sends people to /start instead); same card as "How SmartBite
+// Works". Button wording as on /start (decided 2026-10-31).
 function SetupChoices({ id, onSetUp }) {
   return (
     <div id={id} className="bg-cream-card rounded-3xl p-8 border border-cream-dark flex flex-col md:flex-row items-center justify-between gap-6">
@@ -59,7 +61,7 @@ function SetupChoices({ id, onSetUp }) {
       </div>
       <div className="flex flex-wrap justify-center gap-3 md:shrink-0">
         <button onClick={onSetUp} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all whitespace-nowrap">
-          Set up profile
+          Use my API key
         </button>
         <Link href="/demo" className="bg-forest hover:bg-forest-light text-lime font-bold text-xs px-6 py-3 rounded-full transition-all whitespace-nowrap">
           Try the demo
@@ -132,7 +134,12 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
     switchTab("recipes");
     setCategory(name);
   };
-  const setUp = () => openSetup((state, opts) => state === "done" && !opts?.profile && switchTab("make-meal"));
+  const setUp = () => openSetup((state, opts) => state === "done" && !opts?.profile && profileComplete() && switchTab("make-meal"));
+  // The real Make Your Meal waits for a complete profile (decided 2026-10-31): until then it sends people to /start
+  const router = useRouter();
+  useEffect(() => {
+    if (!demo && complete === false && tab === "make-meal") router.replace("/start");
+  }, [demo, complete, tab, router]);
 
   // The demo lists the demo meals; the real app the meals made in this browser once saved ("Save in my recipes").
   const q = query.toLowerCase();
@@ -154,7 +161,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
           <div className="max-w-[1360px] mx-auto px-8 mb-6">
             <div id="demo-banner" className="bg-cream-card rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
               <span className="font-bold text-forest">Demo mode.</span> Example meals made ahead, no AI key needed.{" "}
-              <Link href={tabUrl("make-meal")} className="font-bold underline hover:text-lime-hover">Make your own meals</Link>
+              <Link href="/start" className="font-bold underline hover:text-lime-hover">Make your own meals</Link>
             </div>
           </div>
         )}
@@ -322,7 +329,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
 
         {/* TAB 3: MAKE YOUR MEAL */}
         <MakeMealStep1 hidden={tab !== "make-meal"} showToast={showToast} leftovers={cart.leftovers}
-          demoMeals={meals.filter((m) => m.kind === "demo")} demo={demo} complete={complete} onSetUp={setUp} />
+          demoMeals={meals.filter((m) => m.kind === "demo")} demo={demo} complete={complete} />
 
         {/* TAB 4: CART */}
         <section id="tab-cart" className={`tab-page space-y-8 max-w-[1360px] mx-auto px-8${tab === "cart" ? "" : " hidden"}`}>
@@ -640,7 +647,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
 
 // Make Your Meal. With the user's own key (Profile) the ideas and the recipe come from lib/llm.js and the engine
 // (lib/engine.js) computes packs and macros; the finished meal is kept in this browser and opens as its recipe page.
-// Until the profile is complete the real app shows Set up profile or Try the demo instead of the form. The demo
+// Until the profile is complete the real app sends Make Your Meal to /start (Use my API key or Try the demo). The demo
 // (/demo) never calls a model: the ideas are the demo meals and picking one opens its recipe page.
 const toList = (v) => (Array.isArray(v) ? v.map(String) : []);
 // URL slug for a meal made here: the title plus a time stamp, so two meals never share one
@@ -649,7 +656,7 @@ const mealSlug = (title) => `${String(title || "").normalize("NFKD").replace(/[\
 const hasGear = (gear, name) => gear.some((g) => g.toLowerCase().trim() === name);
 
 // Step 1 form. Defaults follow the Kitchen Profile (Settings).
-function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete, onSetUp }) {
+function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete }) {
   const [craving, setCraving] = useState("");
   // Leftovers in the cart: a click adds one to the craving, so the ideas build on it
   const addLeftover = (l) => setCraving((c) => (c.includes(`leftover ${l.ingredient} `) ? c :
@@ -823,8 +830,14 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
           <h2 className="font-serif text-3xl font-bold text-forest">Define Your Next Meal</h2>
         </div>
 
-        {/* Real app: the form waits for a complete profile (hidden, not unmounted, while the profile is read) */}
-        {!demo && complete === false && <SetupChoices id="make-setup" onSetUp={onSetUp} />}
+        {/* Real app: the form waits for a complete profile (hidden, not unmounted, while the profile is read; once read
+            as not complete, the page goes to /start). The demo says what it is and leads to /start. */}
+        {demo && (
+          <div id="demo-make-bar" className="bg-cream-card rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
+            <span className="font-bold text-forest">This is the demo.</span> Ideas come from the example meals, not from your craving.{" "}
+            <Link href="/start" className="font-bold underline hover:text-lime-hover">Make a real one?</Link>
+          </div>
+        )}
         <div className={`space-y-6${demo || complete ? "" : " hidden"}`}>
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">What are you craving?</label>
@@ -956,7 +969,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
             {run.demo && (
               <div id="demo-note" className="bg-cream-card rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
                 <span className="font-bold text-forest">Demo mode.</span> These are the pre-built example meals closest to your craving, not made from it.
-                To make your own, add your API key in your <Link href="/profile" className="font-bold underline hover:text-lime-hover">Profile</Link>.
+                To make your own, <Link href="/start" className="font-bold underline hover:text-lime-hover">use your API key</Link>.
               </div>
             )}
             <div id="ideas-card-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -316,7 +316,7 @@ export default function ProfilePage({ demoMeals }) {
                 <span className="block text-[11px] text-forest/70 mt-1">Shown on this page only. It stays in this browser.</span>
               </div>
             </div>
-            <div className="bg-forest text-cream rounded-3xl p-6 sm:p-8 shadow-card space-y-5">
+            <div id="ai-provider" className="scroll-mt-24 bg-forest text-cream rounded-3xl p-6 sm:p-8 shadow-card space-y-5">
               <div className="flex items-center gap-2">
                 <i className="fa-solid fa-key text-lime text-lg"></i>
                 <h2 className="font-serif font-bold text-xl text-white">Your AI provider and key</h2>

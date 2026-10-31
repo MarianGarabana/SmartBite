@@ -5,6 +5,7 @@
 // store) price the shopping table at once in the browser; the meal engine then runs the meal again with the products
 // for the budget check. With a country set
 // in Settings (Spain by default), the engine fills the other lines with estimated prices, shown grey with "est.".
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { withPrices } from "../lib/cartmath";
@@ -502,6 +503,20 @@ function RecipeView({ meal, meals, router }) {
                 </button>
               )}
             </div>
+
+            {/* After a demo recipe, the way to a real one (decided 2026-10-31); same card as "Set up your profile first" */}
+            {meal.kind === "demo" && (
+              <div id="make-your-own" className="bg-cream-card rounded-3xl p-8 border border-cream-dark flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="space-y-2">
+                  <span className="text-xs font-bold uppercase tracking-widest text-forest/70">Like it?</span>
+                  <h3 className="font-serif text-2xl font-bold text-forest">Make your own</h3>
+                  <p className="text-xs text-forest/70 max-w-2xl">Tell SmartBite what you are craving and get your own recipe, shopping list and macros. Bring your AI key; it stays in this browser.</p>
+                </div>
+                <Link href="/start" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all whitespace-nowrap md:shrink-0">
+                  Make your own
+                </Link>
+              </div>
+            )}
           </div>
         </section>
       </main>

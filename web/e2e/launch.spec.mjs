@@ -45,6 +45,7 @@ test("robots, sitemap and icons answer", async ({ request }) => {
   expect(sitemap.status()).toBe(200);
   expect(await sitemap.text()).toContain(`/recipes/${DEMO_SLUG}</loc>`);
   expect(await sitemap.text()).toContain("/demo</loc>");
+  expect(await sitemap.text()).toContain("/start</loc>");
   for (const path of ["/favicon.ico", "/apple-icon.png", "/opengraph-image.png"]) {
     expect((await request.get(path)).status(), path).toBe(200);
   }
@@ -81,7 +82,7 @@ test("security headers are set, and with the CSP on no page breaks a rule", asyn
   test.skip(!csp, "dev server runs without SMARTBITE_CSP: start it with SMARTBITE_CSP=enforce to check the policy");
   expect(csp).toContain("connect-src 'self' https://api.anthropic.com");
   expect(csp).toContain("frame-ancestors 'none'");
-  for (const path of ["/?tab=recipes", "/?tab=make-meal", "/?tab=cart", "/demo", "/demo?tab=make-meal", "/profile", "/privacy",
+  for (const path of ["/?tab=recipes", "/?tab=make-meal", "/?tab=cart", "/start", "/demo", "/demo?tab=make-meal", "/profile", "/privacy",
     `/recipes/${DEMO_SLUG}`]) {
     await page.goto(path);
     await page.waitForLoadState("networkidle");

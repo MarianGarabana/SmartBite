@@ -1,24 +1,34 @@
 "use client";
-// Create profile (decided 2026-10-22): a short first-run setup, saved in this browser like the Profile page. Three
-// steps, each with Skip: where you shop, your targets, your AI key; then "You're set". Everything else keeps its
-// default and is edited in the Profile. Opened from the profile menu, or once on the first "Show me 4 ideas"
+// Create profile (decided 2026-10-22): a short first-run setup, saved in this browser like the Profile page. Two
+// steps (decided 2026-10-31: targets left out, they are set in the Make Your Meal form; no Skip, a key is needed to
+// finish): where you shop, your AI key; then "You're set". Close leaves without finishing. Everything else keeps its
+// default and is edited in the Profile. Opened from /start, the profile menu, or once on the first "Show me 4 ideas"
 // (openSetup). Styles from the Edit product dialog (design freeze).
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { DEFAULT_PROFILE, fieldValue, setField } from "../lib/profile";
-import { ANTHROPIC } from "../lib/providers";
+import { ANTHROPIC, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, presetById } from "../lib/providers";
 import { COUNTRIES, DEFAULT_COUNTRY, ESTIMATE_CURRENCY, NATIONAL, NO_STORE, REGIONS, SETUP_DONE, SETUP_SKIPPED, STORES,
-  currencyFor, currencySymbol, markSetup, readApiKey, readBudget, readCountry, readCurrency, readLlmSettings, readProfile,
-  readRegion, readStore, writeApiKey, writeBudget, writeCountry, writeCurrency, writeLlmSettings, writeProfile, writeRegion,
-  writeStore } from "../lib/store";
+  currencyFor, currencySymbol, markSetup, readApiKey, readCountry, readCurrency, readLlmSettings, readOpenAiKey, readRegion,
+  readStore, writeApiKey, writeCountry, writeCurrency, writeLlmSettings, writeOpenAiKey, writeRegion, writeStore } from "../lib/store";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
 const input = "w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest";
 const small = "block text-[11px] text-forest/70 mt-1";
-const STEPS = ["Where you shop", "Your targets", "Your AI key"];
+const STEPS = ["Where you shop", "Your AI key"];
 const SETUP_EVENT = "smartbite-setup";
 export const SETUP_DONE_EVENT = "smartbite-setup-done"; // after the setup is finished: forms re-read their defaults
+// The tested providers (decided 2026-10-31): Anthropic, and Gemini through its OpenAI-compatible preset. "OpenAI or
+// other" (OpenAI, OpenRouter, any OpenAI-compatible endpoint, untested) leads to the Profile, which asks for the model.
+const GEMINI = presetById("gemini");
+const OTHER = "other";
+const KEY_CHOICES = [
+  { id: ANTHROPIC, label: "Anthropic (Claude)", field: "Anthropic API key", placeholder: "sk-ant-...", host: "api.anthropic.com",
+    getKey: "https://console.anthropic.com/settings/keys", getKeyLabel: "Get a key in the Anthropic Console" },
+  { id: GEMINI.id, label: "Google Gemini", field: "Gemini API key", placeholder: "AIza...", host: new URL(GEMINI.baseUrl).host,
+    getKey: "https://aistudio.google.com/apikey", getKeyLabel: "Get a key in Google AI Studio (has a free tier)" },
+  { id: OTHER, label: "OpenAI or other" },
+];
 
 // Opens the setup on any page with a header; onClose(state, { profile }) gets "done" or "skipped" when it closes,
 // and profile true when the user left through the link to the Profile
@@ -45,34 +55,24 @@ export function SetupHost() {
   return createPortal(<SetupDialog onClose={close} />, document.body);
 }
 
-const num = (text) => {
-  const t = String(text ?? "").trim().replace(",", ".");
-  return /^\d+(\.\d*)?$/.test(t) ? Number(t) : NaN;
-};
-
 function SetupDialog({ onClose }) {
   const [step, setStep] = useState(0);
   const [country, setCountry] = useState(DEFAULT_COUNTRY);
   const [region, setRegion] = useState(NATIONAL);
   const [store, setStore] = useState(NO_STORE);
   const [countryList, setCountryList] = useState([]);
-  const [profile, setProfile] = useState(DEFAULT_PROFILE);
-  const [kcal, setKcal] = useState("");
-  const [protein, setProtein] = useState("");
-  const [budget, setBudget] = useState("");
   const [key, setKey] = useState("");
+  const [provider, setProvider] = useState(ANTHROPIC); // ANTHROPIC or "gemini"
   const [error, setError] = useState("");
   useEffect(() => {
-    const p = readProfile();
     setCountry(readCountry());
     setRegion(readRegion());
     setStore(readStore().startsWith("other:") ? NO_STORE : readStore());
     setCountryList(COUNTRIES);
-    setProfile(p);
-    setKcal(String(fieldValue(p, "kcal_target") ?? ""));
-    setProtein(String(fieldValue(p, "protein_g_target") ?? ""));
-    setBudget(readBudget().toFixed(2));
-    setKey(readApiKey());
+    const llm = readLlmSettings();
+    const gemini = llm.provider === OPENAI_COMPATIBLE && llm.openai.preset === GEMINI.id;
+    setProvider(gemini ? GEMINI.id : ANTHROPIC);
+    setKey(gemini ? readOpenAiKey() : readApiKey());
   }, []);
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose(SETUP_SKIPPED);
@@ -85,7 +85,7 @@ function SetupDialog({ onClose }) {
   const stores = STORES[country] || [];
   const next = () => { setError(""); setStep((s) => s + 1); };
 
-  // Each step saves what it shows, then moves on; Skip moves on without saving
+  // Each step saves what it shows, then moves on
   const saveShop = () => {
     writeCountry(country);
     if (currencyFor(country)) writeCurrency(currencyFor(country));
@@ -93,19 +93,23 @@ function SetupDialog({ onClose }) {
     writeStore(store);
     next();
   };
-  const saveTargets = () => {
-    const [k, p, b] = [num(kcal), num(protein), num(budget)];
-    if (!(k >= 100 && k <= 3000)) return setError("Calories per meal: a number from 100 to 3000.");
-    if (!(p >= 0 && p <= 300)) return setError("Protein per meal: a number from 0 to 300.");
-    if (!(b > 0 && b <= 1000)) return setError("Budget per meal: a number above 0.");
-    writeProfile(setField(setField(profile, "kcal_target", k), "protein_g_target", p));
-    writeBudget(b);
-    next();
+  // Switching provider shows that provider's saved key (or none)
+  const pickProvider = (id) => {
+    setProvider(id);
+    setError("");
+    setKey(id === ANTHROPIC ? readApiKey() : id === GEMINI.id ? readOpenAiKey() : "");
   };
+  const choice = KEY_CHOICES.find((c) => c.id === provider);
   const saveKey = () => {
-    if (key.trim()) {
-      writeLlmSettings({ ...readLlmSettings(), provider: ANTHROPIC });
+    if (!key.trim()) return setError("Paste your key first. No key? Close this and try the demo.");
+    const settings = readLlmSettings();
+    if (provider === ANTHROPIC) {
+      writeLlmSettings({ ...settings, provider: ANTHROPIC });
       writeApiKey(key);
+    } else {
+      writeLlmSettings({ ...settings, provider: OPENAI_COMPATIBLE,
+        openai: { preset: GEMINI.id, baseUrl: GEMINI.baseUrl, model: GEMINI.model } });
+      writeOpenAiKey(key);
     }
     next();
   };
@@ -120,7 +124,7 @@ function SetupDialog({ onClose }) {
             <h2 id="setup-title" className="font-serif text-3xl font-bold text-forest leading-snug">{step < STEPS.length ? STEPS[step] : "You're set"}</h2>
           </div>
           {step < STEPS.length && (
-            <button onClick={() => onClose(SETUP_SKIPPED)} className="text-xs font-bold text-forest/70 hover:text-forest whitespace-nowrap pt-2">Skip setup</button>
+            <button onClick={() => onClose(SETUP_SKIPPED)} className="text-xs font-bold text-forest/70 hover:text-forest whitespace-nowrap pt-2">Close</button>
           )}
         </div>
 
@@ -157,39 +161,41 @@ function SetupDialog({ onClose }) {
 
         {step === 1 && (
           <div className="space-y-4">
-            <p className="text-xs text-forest/70">These fill in the Make Your Meal form. Fridge, freezer, gear and cooking style keep their defaults; change them in your Profile.</p>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label htmlFor="setup-kcal" className={label}>Calories per meal</label>
-                <input id="setup-kcal" inputMode="numeric" value={kcal} onChange={(e) => setKcal(e.target.value)} className={input} />
+            <p className="text-xs text-forest/70">
+              SmartBite writes ideas and recipes with your own AI key. It is stored only in this browser{choice.host ? ` and sent only to ${choice.host}` : ""}. No key? You can still try the demo.
+            </p>
+            <div>
+              <span id="setup-provider-label" className={label}>AI provider</span>
+              <div role="radiogroup" aria-labelledby="setup-provider-label" className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {KEY_CHOICES.map((c) => (
+                  <button key={c.id} role="radio" aria-checked={provider === c.id} onClick={() => pickProvider(c.id)}
+                    className={`rounded-xl p-3 text-sm font-bold border transition-colors ${provider === c.id ? "bg-lime-soft border-forest text-forest" : "bg-cream/50 border-cream-dark text-forest/70 hover:border-forest"}`}>
+                    {c.label}
+                  </button>
+                ))}
               </div>
-              <div>
-                <label htmlFor="setup-protein" className={label}>Protein per meal (g)</label>
-                <input id="setup-protein" inputMode="numeric" value={protein} onChange={(e) => setProtein(e.target.value)} className={input} />
-              </div>
-              <div>
-                <label htmlFor="setup-budget" className={label}>Budget per meal ({currencySymbol(readCurrency()) || readCurrency()})</label>
-                <input id="setup-budget" inputMode="decimal" value={budget} onChange={(e) => setBudget(e.target.value)} className={input} />
-              </div>
+              {provider === GEMINI.id && <span className={small}>{EXPERIMENTAL_LABEL} Model: {GEMINI.model}.</span>}
             </div>
+            {provider === OTHER ? (
+              <p id="setup-other" className="text-xs text-forest/80 bg-cream/50 border border-cream-dark rounded-xl p-3">
+                OpenAI, OpenRouter or another OpenAI-compatible endpoint need a model name too, so they are set up in your{" "}
+                <Link href="/profile#ai-provider" onClick={() => onClose(SETUP_DONE, { profile: true })} className="font-bold underline hover:text-lime-hover">Profile</Link>.
+                What you saved in the steps before is kept. Not tested by SmartBite yet: results may vary.
+              </p>
+            ) : (
+            <div>
+              <label htmlFor="setup-key" className={label}>{choice.field}</label>
+              <input id="setup-key" type="password" autoComplete="off" value={key} onChange={(e) => setKey(e.target.value)} placeholder={choice.placeholder} className={input} />
+              <span className={small}>
+                <a href={choice.getKey} target="_blank" rel="noopener noreferrer" className="font-bold underline hover:text-lime-hover">{choice.getKeyLabel}</a>.
+              </span>
+            </div>
+            )}
             {error && <div role="status" className="bg-amber-100 text-amber-900 text-xs rounded-xl p-3">{error}</div>}
           </div>
         )}
 
         {step === 2 && (
-          <div className="space-y-4">
-            <p className="text-xs text-forest/70">
-              SmartBite writes ideas and recipes with your own Anthropic key. It is stored only in this browser and sent only to api.anthropic.com. No key? You can still try the demo ideas.
-            </p>
-            <div>
-              <label htmlFor="setup-key" className={label}>Anthropic API key</label>
-              <input id="setup-key" type="password" autoComplete="off" value={key} onChange={(e) => setKey(e.target.value)} placeholder="sk-ant-..." className={input} />
-              <span className={small}>Another provider (OpenAI-compatible, experimental)? Set it up in your Profile.</span>
-            </div>
-          </div>
-        )}
-
-        {step === 3 && (
           <p className="text-sm text-forest/80">
             Your profile is saved in this browser. Change anything later in your <Link href="/profile" onClick={() => onClose(SETUP_DONE, { profile: true })} className="font-bold underline hover:text-lime-hover">Profile</Link>,
             and save a profile file there to keep it or move it to another browser.
@@ -198,11 +204,9 @@ function SetupDialog({ onClose }) {
 
         <div className="flex flex-wrap gap-3">
           {step === 0 && <button onClick={saveShop} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Next</button>}
-          {step === 1 && <button onClick={saveTargets} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Next</button>}
-          {step === 2 && <button onClick={saveKey} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">{key.trim() ? "Save key" : "Next"}</button>}
-          {step === 3 && <button onClick={() => onClose(SETUP_DONE)} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Make Your Meal</button>}
-          {step > 0 && step < 3 && <button onClick={() => { setError(""); setStep((s) => s - 1); }} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2.5">Back</button>}
-          {step < 3 && <button onClick={next} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2.5 ml-auto">Skip this step</button>}
+          {step === 1 && provider !== OTHER && <button onClick={saveKey} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Save key</button>}
+          {step === 2 && <button onClick={() => onClose(SETUP_DONE)} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Make Your Meal</button>}
+          {step === 1 && <button onClick={() => { setError(""); setStep(0); }} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2.5">Back</button>}
         </div>
       </div>
     </div>

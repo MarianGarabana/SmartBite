@@ -167,12 +167,12 @@ test("make a meal with a mocked model, the real engine, then cart and Adjust lef
   await page.locator("#api-key").fill(FAKE_KEY);
   await page.getByRole("button", { name: "Save provider and key" }).click();
   await expect.poll(() => page.evaluate(() => localStorage.getItem("smartbite.anthropicKey"))).toBe(JSON.stringify(FAKE_KEY));
-  // A complete profile: the key above and the setup finished once (without it, Step 1 shows Set up profile)
+  // A complete profile: the key above and the setup finished once (without it, Make Your Meal goes to /start)
   await page.evaluate(() => localStorage.setItem("smartbite.setup", JSON.stringify("done")));
 
   // Step 1 -> 4 ideas
   await page.goto("/?tab=make-meal");
-  await expect(page.locator("#make-setup")).toHaveCount(0);
+  await expect(page).toHaveURL(/\?tab=make-meal$/);
   await page.locator("#input-craving").fill("chicken bowl with rice and cucumber");
   await page.getByRole("button", { name: "Show me 4 ideas" }).click();
   const cards = page.locator("#ideas-card-grid > div");
