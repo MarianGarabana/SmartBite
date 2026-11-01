@@ -13,7 +13,7 @@ import { estimateTitle, periodText, toMeal } from "../lib/meal";
 import { tabUrl } from "../lib/site";
 import { packRow, totals } from "../lib/packs";
 import { MAX_PHOTO_BYTES, deletePhoto, putPhoto, usePhoto } from "../lib/photos";
-import { COUNTRIES, MAX_PRICE_EUR, deleteLocalMeal, setLinePrice, setSaved } from "../lib/store";
+import { COUNTRIES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, setLinePrice, setSaved } from "../lib/store";
 import { AiLabel, Footer, Header, MealImage, RECIPE_TABLE as T, Toast, money, moneySymbol, grams, useCart, useCurrency, useEstimates, useEvaluations, useMeals, usePrices,
   useProducts, useToast } from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
@@ -140,8 +140,11 @@ function RecipeView({ meal, meals, router }) {
     showToast("Photo saved in this browser.");
     setPhotoOpen(false);
   };
-  const saveToRecipes = () =>
-    showToast(setSaved(meal.slug, true) ? `Saved "${meal.name}" in My Recipes!` : "Not saved: this browser blocks storage.");
+  const saveToRecipes = () => {
+    const ok = setSaved(meal.slug, true);
+    if (ok) askPersist();
+    showToast(ok ? `Saved "${meal.name}" in My Recipes, in this browser.` : "Not saved: this browser blocks storage.");
+  };
   // Delete meal (meals made in this browser only): first click asks, second click deletes for good
   const [confirmDelete, setConfirmDelete] = useState(false);
   const askedAt = useRef(0);

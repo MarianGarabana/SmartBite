@@ -285,6 +285,14 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
           <div>
             <span className="font-script text-3xl text-forest font-bold">{demo ? "Demo Meals" : "Saved Meals"}</span>
             <h1 className="font-serif text-4xl font-bold text-forest">My Recipes</h1>
+            {/* Saved meals live only in this browser (decided 2026-11-01): the profile file is the copy */}
+            {!demo && own.length > 0 && (
+              <p id="recipes-kept" className="text-xs text-forest/70 mt-2">
+                Your meals are kept in this browser only.{" "}
+                <Link href="/profile#profile-file" className="font-bold underline hover:text-lime-hover">Save a profile file</Link>{" "}
+                to keep a copy or move them to another device.
+              </p>
+            )}
           </div>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0" id="recipe-filter-chips">

@@ -81,6 +81,7 @@ test("the real app shows only the user's meals; a new visitor gets Set up profil
   await page.goto("/?tab=recipes");
   await expect(page.locator("#recipes-setup")).toBeVisible();
   await expect(page.locator("#tab-recipes a[href^='/recipes/']")).toHaveCount(0);
+  await expect(page.locator("#recipes-kept")).toHaveCount(0); // no meals of its own: no profile file note
   await page.locator("#recipes-setup").getByRole("link", { name: "Try the demo" }).click();
   await expect(page).toHaveURL(/\/demo$/);
 });

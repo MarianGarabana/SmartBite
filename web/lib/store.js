@@ -522,6 +522,18 @@ export function engineEstimates(country = readCountry(), region = readRegion(cou
 
 export const readSaved = () => list(readJson(KEYS.saved, []));
 
+// Ask the browser to keep this site's storage (decided 2026-11-01): without it, a browser may clear it when space runs
+// low, and Safari after 7 days of use without a visit. The browser decides (Firefox asks the user); no answer is an
+// error. Called when a meal is saved.
+export async function askPersist() {
+  try {
+    const s = globalThis.navigator?.storage;
+    if (s?.persist && !(await s.persisted())) await s.persist();
+  } catch {
+    // not supported, or refused: the meal is still saved
+  }
+}
+
 export function setSaved(slug, on) {
   const slugs = readSaved().filter((s) => s !== slug);
   return writeJson(KEYS.saved, on ? [...slugs, slug] : slugs);

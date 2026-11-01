@@ -182,3 +182,26 @@ test("budget per meal: a positive number, else the default", () => {
   store.writeBudget(6.5);
   assert.equal(JSON.parse(store.exportProfile()).data.budget, 6.5);
 });
+
+// Decided 2026-11-01: saving a meal asks the browser to keep the site's storage; any answer, or none, is fine
+test("askPersist asks once the storage is not kept yet, and never throws", async () => {
+  const had = Object.getOwnPropertyDescriptor(globalThis, "navigator");
+  const calls = [];
+  const fake = (persisted, persist) => Object.defineProperty(globalThis, "navigator", { configurable: true,
+    value: { storage: { persisted: async () => persisted, persist } } });
+  try {
+    fake(false, async () => { calls.push("persist"); return true; });
+    await store.askPersist();
+    assert.deepEqual(calls, ["persist"]);
+    fake(true, async () => { calls.push("again"); return true; });
+    await store.askPersist();
+    assert.deepEqual(calls, ["persist"]); // already kept: not asked again
+    fake(false, async () => { throw new Error("refused"); });
+    await store.askPersist(); // no throw
+    Object.defineProperty(globalThis, "navigator", { configurable: true, value: {} });
+    await store.askPersist(); // not supported: no throw
+  } finally {
+    if (had) Object.defineProperty(globalThis, "navigator", had);
+    else delete globalThis.navigator;
+  }
+});

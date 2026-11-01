@@ -219,6 +219,15 @@ test("make a meal with a mocked model, the real engine, then cart and Adjust lef
   expect(calls.every((c) => c.key === FAKE_KEY)).toBe(true);
 
   // Add to cart -> Cart tab
+  // Save in my recipes: the toast says where it is kept; My Recipes points to the profile file (decided 2026-11-01)
+  await page.getByRole("button", { name: "Save in my recipes" }).click();
+  await expect(page.locator("#toast-text")).toHaveText('Saved "Greek chicken bowl" in My Recipes, in this browser.');
+  const recipeUrl = page.url();
+  await page.goto("/?tab=recipes");
+  await expect(page.locator("#recipes-kept")).toContainText("Your meals are kept in this browser only.");
+  await expect(page.locator("#recipes-kept").getByRole("link", { name: "Save a profile file" })).toHaveAttribute("href", "/profile#profile-file");
+  await page.goto(recipeUrl);
+
   await page.getByRole("button", { name: "Add to my cart" }).click();
   await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("smartbite.cart") || "{}").meals?.length ?? 0)).toBe(1);
   await page.locator("#nav-cart").click();
