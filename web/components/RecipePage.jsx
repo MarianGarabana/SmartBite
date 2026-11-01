@@ -221,24 +221,20 @@ function RecipeView({ meal, meals, router }) {
                   </div>
                   <div className="bg-lime-soft p-3 rounded-2xl text-center border border-lime/30">
                     <span className="text-[10px] uppercase font-bold text-forest/70 block">Protein</span>
-                    <span id="tile-protein" className="font-bold text-base text-forest">{meal.macros.protein}</span>{" "}
-                    <span className="text-[10px] text-forest/70">grams</span>
+                    <span id="tile-protein" className="font-bold text-base text-forest">{meal.macros.protein}</span>
                   </div>
                   <div className="bg-cream-card p-3 rounded-2xl text-center border border-cream-dark">
                     <span className="text-[10px] uppercase font-bold text-forest/70 block">Carbs</span>
-                    <span id="tile-carbs" className="font-bold text-base text-forest">{meal.macros.carbs}</span>{" "}
-                    <span className="text-[10px] text-forest/70">grams</span>
+                    <span id="tile-carbs" className="font-bold text-base text-forest">{meal.macros.carbs}</span>
                   </div>
                   <div className="bg-cream-card p-3 rounded-2xl text-center border border-cream-dark">
                     <span className="text-[10px] uppercase font-bold text-forest/70 block">Fat</span>
-                    <span id="tile-fat" className="font-bold text-base text-forest">{meal.macros.fat}</span>{" "}
-                    <span className="text-[10px] text-forest/70">grams</span>
+                    <span id="tile-fat" className="font-bold text-base text-forest">{meal.macros.fat}</span>
                   </div>
                   {fiber ? (
                     <div className="col-span-2 sm:col-span-1 bg-cream-card p-3 rounded-2xl text-center border border-cream-dark">
                       <span className="text-[10px] uppercase font-bold text-forest/70 block">Fiber</span>
-                      <span id="tile-fiber" className="font-bold text-base text-forest">{fiber.grams}</span>{" "}
-                      <span className="text-[10px] text-forest/70">grams</span>
+                      <span id="tile-fiber" className="font-bold text-base text-forest">{fiber.grams}</span>
                       <span id="tile-fiber-pct" className="text-[10px] text-forest/70 block">{fiber.pct}% of 25 g</span>
                     </div>
                   ) : null}
