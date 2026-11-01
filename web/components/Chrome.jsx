@@ -2,7 +2,7 @@
 // Header, footer, toast, meal image and add button from the mockup (design freeze), shared by the main page,
 // the recipe page and the profile and privacy pages. Markup and classes copied 1:1.
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { adjustApply, adjustInfo, adjustPreview, adjustReset, cartJobs, consolidate } from "../lib/cart";
 import { mealRequest } from "../lib/cartmath";
@@ -437,6 +437,11 @@ function DemoLink({ id, className, demo, onNavigate }) {
 export function Header({ active, onNavigate: navigate, cartCount }) {
   const onNavigate = useTabNav(navigate);
   const demo = useDemo();
+  // Get started (decided 2026-11-01): a lime pill to /start until the profile is complete (key and setup), on every
+  // page but /start itself. Hidden while storage is unread (null) so it never flashes for a set-up visitor.
+  const complete = useProfileComplete();
+  const path = usePathname();
+  const showStart = complete === false && path !== "/start";
   return (
     <header className="sticky top-0 z-50 bg-cream/95 backdrop-blur-md border-b border-forest/10 transition-all">
       <SetupHost />
@@ -481,9 +486,15 @@ export function Header({ active, onNavigate: navigate, cartCount }) {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-4">
-          <DemoLink id="nav-demo-phone" className="lg:hidden px-3 py-2 font-medium text-sm" demo={demo} onNavigate={onNavigate} />
+          {/* Under 640 px the Get started pill takes the Demo item's place; /start offers the demo too */}
+          <DemoLink id="nav-demo-phone" className={`lg:hidden px-3 py-2 font-medium text-sm${showStart ? " max-sm:hidden" : ""}`} demo={demo} onNavigate={onNavigate} />
           <TabsMenu active={active} onNavigate={onNavigate} />
           <ProfileMenu active={active} />
+          {showStart && (
+            <Link id="nav-start" href="/start" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-4 py-2.5 rounded-full transition-all whitespace-nowrap shadow-sm">
+              Get started
+            </Link>
+          )}
           <button onClick={() => onNavigate("cart")} aria-label="Cart" className="relative px-4 py-2 rounded-full bg-forest text-cream hover:bg-forest-light transition-all flex items-center gap-2.5 shadow-sm">
             <i className="fa-solid fa-basket-shopping text-lime text-sm"></i>
             <span className="text-xs font-bold hidden sm:inline">Cart</span>

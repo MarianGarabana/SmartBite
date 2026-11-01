@@ -10,16 +10,30 @@ const cartMeals = (page, key) => page.evaluate((k) => JSON.parse(localStorage.ge
 
 test.describe("phone", () => {
   test.use({ viewport: { width: 390, height: 844 } });
-  test("the Demo item shows next to the menus, one tap from any page", async ({ page }) => {
-    for (const url of ["/", "/profile", "/privacy"]) {
+  // Decided 2026-11-01: until the profile is complete, Get started takes the Demo item's place under 640 px
+  test("a new visitor gets Get started next to the menus; once set up, the Demo item is back", async ({ page }) => {
+    for (const url of ["/", "/profile", "/privacy", "/demo"]) {
+      await page.goto(url);
+      await expect(page.locator("#nav-start"), url).toBeVisible();
+      await expect(page.locator("#nav-demo-phone"), url).toBeHidden();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth), url).toBeLessThanOrEqual(390);
+    }
+    await page.locator("#nav-start").click();
+    await expect(page).toHaveURL(/\/start$/);
+    await expect(page.locator("#nav-start")).toHaveCount(0); // not on /start itself
+    await page.locator("#start-demo").getByRole("link", { name: "Try the demo" }).click();
+    await expect(page.locator("#demo-banner")).toBeVisible();
+    await expect(page.locator("#home-kitchen-grid > div")).toHaveCount(5);
+
+    await page.evaluate(() => { localStorage.setItem("smartbite.anthropicKey", JSON.stringify("sk-ant-test")); localStorage.setItem("smartbite.setup", JSON.stringify("done")); });
+    for (const url of ["/", "/profile"]) {
       await page.goto(url);
       await expect(page.locator("#nav-demo-phone"), url).toBeVisible();
+      await expect(page.locator("#nav-start"), url).toHaveCount(0);
       expect(await page.evaluate(() => document.documentElement.scrollWidth), url).toBeLessThanOrEqual(390);
     }
     await page.locator("#nav-demo-phone").click();
     await expect(page).toHaveURL(/\/demo$/);
-    await expect(page.locator("#demo-banner")).toBeVisible();
-    await expect(page.locator("#home-kitchen-grid > div")).toHaveCount(5);
   });
 });
 
@@ -28,6 +42,7 @@ test("desktop: the Demo item sits after How It Works and is active in the demo",
   const items = await page.locator("header nav").first().locator("button, a").allInnerTexts();
   expect(items.slice(-2)).toEqual(["How It Works", "Demo"]);
   await expect(page.locator("#nav-demo-phone")).toBeHidden();
+  await expect(page.locator("#nav-start")).toHaveText("Get started"); // new visitor: the pill to /start
   await page.locator("#nav-demo").click();
   await expect(page).toHaveURL(/\/demo$/);
   await expect(page.locator("#nav-demo")).toHaveClass(/font-semibold/);
