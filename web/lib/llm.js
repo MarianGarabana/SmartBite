@@ -77,6 +77,10 @@ async function post(url, headers, body, llm) {
   if (!res.ok) {
     const err = Array.isArray(data) ? data[0] : data; // Gemini wraps errors in a list
     const detail = redact(err?.error?.message || err?.message || res.statusText || "", llm.apiKey);
+    // 503 (decided 2026-11-01): the provider is overloaded, often on free keys; its own text adds nothing to this
+    if (res.status === 503) {
+      throw new LlmError("The AI provider is busy right now (503). This is on their side, not yours: wait a minute and try again.");
+    }
     const lead = res.status === 401 || res.status === 403
       ? `The provider did not accept the key (${res.status}). Check it in your Profile.`
       : res.status === 429 ? "The provider says too many requests (429). Wait a moment and try again."

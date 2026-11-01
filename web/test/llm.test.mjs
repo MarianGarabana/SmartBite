@@ -144,6 +144,9 @@ test("errors never show the key; refusals and network errors are plain messages"
 
   mockFetch([{ status: 429, json: [{ error: { code: 429, message: "Quota exceeded for metric: free_tier_requests" } }] }]);
   await assert.rejects(generateIdeas({ form: FORM, profile: null, llm: OPENAI }), /\(429\).*Quota exceeded/);
+  mockFetch([{ status: 503, json: [{ error: { code: 503, message: "This model is currently experiencing high demand." } }] }]);
+  await assert.rejects(generateIdeas({ form: FORM, profile: null, llm: OPENAI }),
+    { message: "The AI provider is busy right now (503). This is on their side, not yours: wait a minute and try again." });
 
   mockFetch([anthropicReply(IDEAS, { stop_reason: "refusal" })]);
   await assert.rejects(generateIdeas({ form: FORM, profile: null, llm: ANTHROPIC }), /declined/);
