@@ -22,7 +22,7 @@ export const ANTHROPIC_MODELS = [
 ];
 export const DEFAULT_ANTHROPIC_MODEL = ANTHROPIC_MODELS[0].id;
 
-export const EXPERIMENTAL_LABEL = "Experimental: tested with two Gemini models.";
+export const EXPERIMENTAL_LABEL = "Experimental: tested with three Gemini models.";
 
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "0.0.0.0", "[::1]"]);
 export const isLocalSite = (hostname) => LOCAL_HOSTS.has(String(hostname || "").toLowerCase());
@@ -33,7 +33,9 @@ export const OPENAI_PRESETS = [
   { id: "openrouter", label: "OpenRouter", baseUrl: "https://openrouter.ai/api/v1", model: "", keyNeeded: true,
     cors: "Allows calls from the browser (checked 2026-10-19)." },
   { id: "gemini", label: "Google Gemini", baseUrl: "https://generativelanguage.googleapis.com/v1beta/openai",
-    model: "gemini-3.8-flash", keyNeeded: true,
+    // Default since 2026-11-01: gemini-3.6-flash. Live eval: ideas 5.5 s and recipe 17.7 s per call (median) against
+    // 161 s and 171 s for gemini-3.8-flash, the default before (eval/results/live-gemini-36-effort-usage.md)
+    model: "gemini-3.6-flash", keyNeeded: true,
     cors: "Allows calls from the browser (checked 2026-10-19). Uses Google's OpenAI-compatible endpoint, which is in beta." },
   { id: "ollama", label: "Ollama (on this computer)", baseUrl: "http://localhost:11434/v1", model: "", keyNeeded: false,
     localOnly: true,

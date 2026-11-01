@@ -69,7 +69,7 @@ PROVIDERS = {
                   "env_key": "ANTHROPIC_API_KEY", "url": ANTHROPIC_URL,
                   # the browser sends max_tokens 16000, so no reply is longer
                   "max_output_tokens": MAX_TOKENS},
-    "gemini": {"model": "gemini-3.8-flash", "models": ("gemini-3.8-flash", "gemini-3.5-flash-lite", "gemini-3.6-flash"),
+    "gemini": {"model": "gemini-3.6-flash", "models": ("gemini-3.8-flash", "gemini-3.5-flash-lite", "gemini-3.6-flash"),
                "env_key": "GEMINI_API_KEY", "url": f"{GEMINI_BASE_URL}/chat/completions",
                # the browser sends no max_tokens: the model's own output limit, 65,536
                # (https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash, page updated 2026-09-02, read 2026-10-19;

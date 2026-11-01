@@ -83,7 +83,7 @@ async function post(url, headers, body, llm) {
     }
     const lead = res.status === 401 || res.status === 403
       ? `The provider did not accept the key (${res.status}). Check it in your Profile.`
-      : res.status === 429 ? "The provider says too many requests (429). Wait a moment and try again."
+      : res.status === 429 ? "The provider says too many requests (429). Free keys allow only a few calls per minute and per day: wait a minute, or try again tomorrow."
         : `The provider answered with an error (${res.status}).`;
     throw new LlmError(detail ? `${lead} ${detail}` : lead);
   }

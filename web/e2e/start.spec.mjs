@@ -53,7 +53,7 @@ test("the setup takes a Gemini key too, or sends other providers to the Profile"
     key: localStorage.getItem("smartbite.openaiKey"), anthropic: localStorage.getItem("smartbite.anthropicKey") }));
   expect(saved.llm.provider).toBe("openai_compatible");
   expect(saved.llm.openai).toEqual({ preset: "gemini", baseUrl: "https://generativelanguage.googleapis.com/v1beta/openai",
-    model: "gemini-3.8-flash" });
+    model: "gemini-3.6-flash" });
   expect(saved.key).toBe('"AIza-test-key"');
   expect(saved.anthropic).toBeNull();
 

@@ -134,7 +134,7 @@ def test_gemini_request_shape(monkeypatch):
     assert set(req["body"]) == {"model", "messages", "response_format", "reasoning_effort"}
     assert req["body"]["reasoning_effort"] == "low"  # ideas
     assert "reasoning_effort" not in t.requests[1]["body"]  # the recipe keeps Gemini's default
-    assert req["body"]["model"] == "gemini-3.8-flash"
+    assert req["body"]["model"] == "gemini-3.6-flash"  # the web app's default since 2026-11-01
     assert req["body"]["response_format"] == {"type": "json_object"}
     assert [m["role"] for m in req["body"]["messages"]] == ["system", "user"]
 

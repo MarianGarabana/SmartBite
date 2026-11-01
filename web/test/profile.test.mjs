@@ -205,3 +205,21 @@ test("askPersist asks once the storage is not kept yet, and never throws", async
     else delete globalThis.navigator;
   }
 });
+
+// Decided 2026-11-01: the Gemini default moved from gemini-3.8-flash to gemini-3.6-flash
+test("settings saved with the old Gemini default move to the new one; a later pick of the old model is kept", () => {
+  const data = fakeWindow();
+  const old = { provider: "openai_compatible", openai: { preset: "gemini", baseUrl: "https://generativelanguage.googleapis.com/v1beta/openai", model: "gemini-3.8-flash" } };
+  data[store.KEYS.llm] = JSON.stringify(old);
+  assert.equal(store.readLlmSettings().openai.model, "gemini-3.6-flash");
+  assert.equal(store.readLlm().model, "gemini-3.6-flash");
+  // Saved again after the change (the Profile writes what it read, with geminiDefault): the user's own pick stays
+  const s = store.readLlmSettings();
+  store.writeLlmSettings({ ...s, openai: { ...s.openai, model: "gemini-3.8-flash" } });
+  assert.equal(store.readLlmSettings().openai.model, "gemini-3.8-flash");
+  // Other models and presets are never touched
+  data[store.KEYS.llm] = JSON.stringify({ ...old, openai: { ...old.openai, model: "gemini-3.5-flash-lite" } });
+  assert.equal(store.readLlmSettings().openai.model, "gemini-3.5-flash-lite");
+  data[store.KEYS.llm] = JSON.stringify({ ...old, openai: { preset: "custom", baseUrl: "https://x.test/v1", model: "gemini-3.8-flash" } });
+  assert.equal(store.readLlmSettings().openai.model, "gemini-3.8-flash");
+});

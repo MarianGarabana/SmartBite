@@ -27,7 +27,7 @@ const KEY_CHOICES = [
   { id: ANTHROPIC, label: "Anthropic (Claude)", field: "Anthropic API key", placeholder: "sk-ant-...", host: "api.anthropic.com",
     getKey: "https://console.anthropic.com/settings/keys", getKeyLabel: "Get a key in the Anthropic Console" },
   { id: GEMINI.id, label: "Google Gemini", field: "Gemini API key", placeholder: "AIza...", host: new URL(GEMINI.baseUrl).host,
-    getKey: "https://aistudio.google.com/apikey", getKeyLabel: "Get a key in Google AI Studio (has a free tier)" },
+    getKey: "https://aistudio.google.com/apikey", getKeyLabel: "Get a key in Google AI Studio (free tier: a limited number of calls per day)" },
   { id: OTHER, label: "OpenAI or other" },
 ];
 

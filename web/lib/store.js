@@ -579,18 +579,27 @@ export const writeOpenAiKey = (key) => writeJson(KEYS.openaiKey, key.trim());
 export const clearOpenAiKey = () => remove(KEYS.openaiKey);
 
 // Provider settings without keys: { provider, anthropicModel, openai: { preset, baseUrl, model } }
+// The Gemini default changed on 2026-11-01 (gemini-3.8-flash -> the preset's model). Settings saved with the old
+// default move to the new one until they are saved again after the change (geminiDefault records that), so a user
+// who picks the old model on purpose in the Profile keeps it.
+const OLD_GEMINI_DEFAULT = "gemini-3.8-flash";
+
 export function readLlmSettings() {
   const s = readJson(KEYS.llm, {}) || {};
   const o = s.openai || {};
   const preset = presetById(o.preset);
+  const gemini = presetById("gemini");
+  let model = typeof o.model === "string" ? o.model : preset.model;
+  if (o.preset === gemini.id && model === OLD_GEMINI_DEFAULT && s.geminiDefault !== gemini.model) model = gemini.model;
   return {
     provider: s.provider === OPENAI_COMPATIBLE ? OPENAI_COMPATIBLE : ANTHROPIC,
     anthropicModel: typeof s.anthropicModel === "string" && s.anthropicModel ? s.anthropicModel : DEFAULT_ANTHROPIC_MODEL,
     openai: {
       preset: OPENAI_PRESETS.some((p) => p.id === o.preset) ? o.preset : preset.id,
       baseUrl: typeof o.baseUrl === "string" ? o.baseUrl : preset.baseUrl,
-      model: typeof o.model === "string" ? o.model : preset.model,
+      model,
     },
+    geminiDefault: gemini.model,
   };
 }
 
