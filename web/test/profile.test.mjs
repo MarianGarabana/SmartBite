@@ -135,6 +135,21 @@ test("only SmartBite profile files of this version, with parts of the right shap
   assert.equal(globalThis.window.localStorage.getItem("smartbite.other"), null);
 });
 
+// Decided 2026-11-01: an opened file counts as a finished setup, so only a missing key stands before Make Your Meal
+test("an opened profile file counts as a finished setup; with a key the profile is complete", () => {
+  fakeWindow();
+  const file = (data) => store.readProfileFile(JSON.stringify({ app: "SmartBite", kind: "profile", version: 1, data })).data;
+  store.openProfile(file({ name: "Marta", country: "ES" }));
+  assert.equal(store.hasProfile(), true);
+  assert.equal(store.needsSetup(), false);
+  assert.equal(store.profileComplete(), false); // no key in the file
+  store.writeApiKey("sk-ant-test");
+  assert.equal(store.profileComplete(), true); // no second setup
+  fakeWindow();
+  store.openProfile(file({ apiKey: "sk-ant-in-file" }));
+  assert.equal(store.profileComplete(), true);
+});
+
 // Create profile (decided 2026-10-22): asked once, only in a browser with nothing of the user's
 test("the setup is needed only in a browser with no profile, key or name, until done or skipped", () => {
   const data = fakeWindow();

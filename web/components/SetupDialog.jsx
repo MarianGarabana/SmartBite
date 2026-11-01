@@ -3,7 +3,8 @@
 // steps (decided 2026-10-31: targets left out, they are set in the Make Your Meal form; no Skip, a key is needed to
 // finish): where you shop, your AI key; then "You're set". Close leaves without finishing. Everything else keeps its
 // default and is edited in the Profile. Opened from /start, the profile menu, or once on the first "Show me 4 ideas"
-// (openSetup). Styles from the Edit product dialog (design freeze).
+// (openSetup). Styles from the Edit product dialog (design freeze). After a profile file is opened without a key the
+// setup shows only the key step (keyOnly, decided 2026-11-01); closing it then keeps the file's finished setup.
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -31,32 +32,32 @@ const KEY_CHOICES = [
 ];
 
 // Opens the setup on any page with a header; onClose(state, { profile }) gets "done" or "skipped" when it closes,
-// and profile true when the user left through the link to the Profile
-export function openSetup(onClose) {
-  window.dispatchEvent(new CustomEvent(SETUP_EVENT, { detail: { onClose } }));
+// and profile true when the user left through the link to the Profile. { keyOnly: true } shows only the key step.
+export function openSetup(onClose, { keyOnly = false } = {}) {
+  window.dispatchEvent(new CustomEvent(SETUP_EVENT, { detail: { onClose, keyOnly } }));
 }
 
 // Mounted once in the header: listens for openSetup and shows the dialog. The dialog goes to document.body: the
 // header's backdrop blur makes it the box that fixed children are placed in, which cut the dialog to 80 px.
 export function SetupHost() {
-  const [open, setOpen] = useState(null); // { onClose } while the dialog shows
+  const [open, setOpen] = useState(null); // { onClose, keyOnly } while the dialog shows
   useEffect(() => {
-    const show = (e) => setOpen({ onClose: e.detail?.onClose });
+    const show = (e) => setOpen({ onClose: e.detail?.onClose, keyOnly: Boolean(e.detail?.keyOnly) });
     window.addEventListener(SETUP_EVENT, show);
     return () => window.removeEventListener(SETUP_EVENT, show);
   }, []);
   if (!open) return null;
   const close = (state, opts = {}) => {
-    markSetup(state);
+    if (!(open.keyOnly && state === SETUP_SKIPPED)) markSetup(state);
     setOpen(null);
     if (state === SETUP_DONE) window.dispatchEvent(new Event(SETUP_DONE_EVENT));
     open.onClose?.(state, opts);
   };
-  return createPortal(<SetupDialog onClose={close} />, document.body);
+  return createPortal(<SetupDialog onClose={close} keyOnly={open.keyOnly} />, document.body);
 }
 
-function SetupDialog({ onClose }) {
-  const [step, setStep] = useState(0);
+function SetupDialog({ onClose, keyOnly }) {
+  const [step, setStep] = useState(keyOnly ? 1 : 0);
   const [country, setCountry] = useState(DEFAULT_COUNTRY);
   const [region, setRegion] = useState(NATIONAL);
   const [store, setStore] = useState(NO_STORE);
@@ -71,7 +72,8 @@ function SetupDialog({ onClose }) {
     setCountryList(COUNTRIES);
     const llm = readLlmSettings();
     const gemini = llm.provider === OPENAI_COMPATIBLE && llm.openai.preset === GEMINI.id;
-    setProvider(gemini ? GEMINI.id : ANTHROPIC);
+    // A profile file may bring an untested provider: then the key step points to the Profile, which asks for the model
+    setProvider(gemini ? GEMINI.id : keyOnly && llm.provider === OPENAI_COMPATIBLE ? OTHER : ANTHROPIC);
     setKey(gemini ? readOpenAiKey() : readApiKey());
   }, []);
   useEffect(() => {
@@ -120,7 +122,7 @@ function SetupDialog({ onClose }) {
         className="bg-white rounded-3xl p-8 shadow-card border border-cream-dark max-w-lg w-full space-y-6 max-h-[90vh] overflow-y-auto">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <span className="font-script text-2xl text-forest font-bold">{step < STEPS.length ? `Step ${step + 1} of ${STEPS.length}` : "All done"}</span>
+            <span className="font-script text-2xl text-forest font-bold">{step >= STEPS.length ? "All done" : keyOnly ? "Profile opened" : `Step ${step + 1} of ${STEPS.length}`}</span>
             <h2 id="setup-title" className="font-serif text-3xl font-bold text-forest leading-snug">{step < STEPS.length ? STEPS[step] : "You're set"}</h2>
           </div>
           {step < STEPS.length && (
@@ -161,6 +163,7 @@ function SetupDialog({ onClose }) {
 
         {step === 1 && (
           <div className="space-y-4">
+            {keyOnly && <p id="setup-key-only" className="text-sm text-forest/80">Your profile file is open. It does not include your AI key, so add it here to start.</p>}
             <p className="text-xs text-forest/70">
               SmartBite writes ideas and recipes with your own AI key. It is stored only in this browser{choice.host ? ` and sent only to ${choice.host}` : ""}. No key? You can still try the demo.
             </p>
@@ -206,7 +209,7 @@ function SetupDialog({ onClose }) {
           {step === 0 && <button onClick={saveShop} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Next</button>}
           {step === 1 && provider !== OTHER && <button onClick={saveKey} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Save key</button>}
           {step === 2 && <button onClick={() => onClose(SETUP_DONE)} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Make Your Meal</button>}
-          {step === 1 && <button onClick={() => { setError(""); setStep(0); }} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2.5">Back</button>}
+          {step === 1 && !keyOnly && <button onClick={() => { setError(""); setStep(0); }} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2.5">Back</button>}
         </div>
       </div>
     </div>

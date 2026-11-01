@@ -2,7 +2,7 @@
 // runs. Since 2026-10-30 the real Make Your Meal waits for a complete profile (key + setup) and never shows demo ideas.
 // 1. Without a complete profile, Make Your Meal goes to /start (Use my API key or Try the demo); a key and targets
 //    saved before count.
-// 2. Create profile from the menu: shop and key steps (no targets, no Skip since 2026-10-31), then Make Your Meal.
+// 2. Get started from the menu (/start), then the setup: shop and key steps (no targets, no Skip since 2026-10-31), then Make Your Meal.
 // 3. Phones: no sideways scroll, the tabs sit in a menu; desktop keeps the tab bar.
 import { expect, test } from "@playwright/test";
 
@@ -56,10 +56,13 @@ test("a key and saved targets from before the setup count as a complete profile"
   expect(await page.evaluate(() => localStorage.getItem("smartbite.setup"))).toBeNull(); // never sent through the setup
 });
 
-test("Create profile from the menu saves shop and key, then Make Your Meal opens", async ({ page }) => {
+test("Get started from the menu leads to /start; the setup saves shop and key, then Make Your Meal opens", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Profile menu" }).click();
-  await page.getByRole("menuitem", { name: "Create profile" }).click();
+  await expect(page.getByRole("menuitem")).toHaveText(["Get started"]);
+  await page.getByRole("menuitem", { name: "Get started" }).click();
+  await expect(page).toHaveURL(/\/start$/);
+  await page.locator("#start-key").getByRole("button", { name: "Use my API key" }).click();
   const setup = page.getByRole("dialog");
   await expect(setup).toContainText("Step 1 of 2");
   await setup.locator("#setup-region").selectOption("ES-MD");
@@ -73,13 +76,13 @@ test("Create profile from the menu saves shop and key, then Make Your Meal opens
   await expect(setup).toContainText("You're set");
   await setup.getByRole("button", { name: "Make Your Meal" }).click();
 
-  await expect(page.locator("#input-craving")).toBeVisible(); // the main page switches tabs in place
+  await expect(page.locator("#input-craving")).toBeVisible();
   const saved = await page.evaluate(() => ({ region: localStorage.getItem("smartbite.region"),
     store: localStorage.getItem("smartbite.store"), key: localStorage.getItem("smartbite.anthropicKey"),
     setup: localStorage.getItem("smartbite.setup") }));
   expect(saved).toEqual({ region: '"ES-MD"', store: '"mercadona"', key: '"sk-ant-test-key"', setup: '"done"' });
   await page.getByRole("button", { name: "Profile menu" }).click();
-  await expect(page.getByRole("menuitem")).toHaveText(["Profile", "Save profile file", "Open profile file"]);
+  await expect(page.getByRole("menuitem")).toHaveText(["Profile", "Save profile file"]); // opening a file is on the Profile page
   const [file] = await Promise.all([page.waitForEvent("download"), page.getByRole("menuitem", { name: "Save profile file" }).click()]);
   expect(file.suggestedFilename()).toMatch(/^smartbite-profile-/);
 });

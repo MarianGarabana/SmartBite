@@ -12,7 +12,7 @@ import { modeMeals, toMeal } from "../lib/meal";
 import { usePhoto } from "../lib/photos";
 import { DEFAULT_CURRENCY, currencySymbol, engineEstimates, exportProfile, hasProfile, onStoreChange, profileComplete,
   readActiveProducts, readCart, readCurrency, readLocalMeals, readName, readPrices, readSaved, writeCart } from "../lib/store";
-import { SetupHost, openSetup } from "./SetupDialog";
+import { SetupHost } from "./SetupDialog";
 
 export const TABS = [
   { id: "home", label: "Home" },
@@ -362,23 +362,17 @@ function useMenu() {
 
 const menuItem = "block w-full text-left px-4 py-2.5 text-sm text-forest hover:bg-forest/5 rounded-xl transition-colors";
 
-// Profile menu (decided 2026-10-22): no accounts, so no "Log in". Without a profile: Create profile, Open profile
-// file. With one: Profile, Save profile file, Open profile file, under the display name if there is one.
-function ProfileMenu({ active, onNavigate }) {
+// Profile menu (decided 2026-10-22): no accounts, so no "Log in". Without a profile: Get started (/start: key, demo
+// or profile file). With one: Profile (where a profile file is opened) and Save profile file, under the display name
+// if there is one. "Open profile file" left the menu on 2026-11-01: it led to the same Profile page.
+function ProfileMenu({ active }) {
   const [open, setOpen, ref] = useMenu();
-  const demo = useDemo();
-  const router = useRouter();
   const [me, setMe] = useState({ has: false, name: "" });
   useEffect(() => {
     const read = () => setMe({ has: hasProfile(), name: readName() });
     read();
     return onStoreChange(read);
   }, []);
-  const create = () => {
-    setOpen(false);
-    // A profile made in the demo is for the real app: its Make Your Meal opens
-    openSetup((state, opts) => state === "done" && !opts?.profile && (demo ? router.push(tabUrl("make-meal")) : onNavigate("make-meal")));
-  };
   const save = () => {
     setOpen(false);
     downloadJson(exportProfile(), "smartbite-profile");
@@ -398,9 +392,8 @@ function ProfileMenu({ active, onNavigate }) {
               <button role="menuitem" onClick={save} className={menuItem}>Save profile file</button>
             </>
           ) : (
-            <button role="menuitem" onClick={create} className={menuItem}>Create profile</button>
+            <Link role="menuitem" href="/start" onClick={() => setOpen(false)} className={menuItem}>Get started</Link>
           )}
-          <Link role="menuitem" href="/profile#profile-file" onClick={() => setOpen(false)} className={menuItem}>Open profile file</Link>
         </div>
       )}
     </div>
@@ -490,7 +483,7 @@ export function Header({ active, onNavigate: navigate, cartCount }) {
         <div className="flex items-center gap-2 sm:gap-4">
           <DemoLink id="nav-demo-phone" className="lg:hidden px-3 py-2 font-medium text-sm" demo={demo} onNavigate={onNavigate} />
           <TabsMenu active={active} onNavigate={onNavigate} />
-          <ProfileMenu active={active} onNavigate={onNavigate} />
+          <ProfileMenu active={active} />
           <button onClick={() => onNavigate("cart")} aria-label="Cart" className="relative px-4 py-2 rounded-full bg-forest text-cream hover:bg-forest-light transition-all flex items-center gap-2.5 shadow-sm">
             <i className="fa-solid fa-basket-shopping text-lime text-sm"></i>
             <span className="text-xs font-bold hidden sm:inline">Cart</span>

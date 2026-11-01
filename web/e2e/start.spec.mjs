@@ -2,7 +2,9 @@
 // 1. /start offers Use my API key and Try the demo; with a full setup, Use my API key ends in Make Your Meal. The key
 //    step offers Anthropic, Gemini, or "OpenAI or other" (set up in the Profile).
 // 2. Inside the demo, Make Your Meal and the demo recipe pages lead to /start.
-// 3. Phones: no sideways scroll on /start.
+// 3. "I have a profile file" (decided 2026-11-01): a file with no key asks only for the key, a file with one goes
+//    straight to Make Your Meal; the file can be dropped or chosen.
+// 4. Phones: no sideways scroll on /start.
 import { expect, test } from "@playwright/test";
 
 const DEMO_SLUG = "tuna-frittata-with-vegetables";
@@ -86,11 +88,63 @@ test("the demo's Make Your Meal and demo recipe pages lead to /start", async ({ 
   await expect(page.locator("#demo-make-bar")).toHaveCount(0);
 });
 
+const profileFile = (data) => ({ name: "smartbite-profile-2026-11-01.json", mimeType: "application/json",
+  buffer: Buffer.from(JSON.stringify({ app: "SmartBite", kind: "profile", version: 1, exported: "2026-11-01", data })) });
+
+test("a profile file with no key opens on /start, asks only for the key, then Make Your Meal", async ({ page }) => {
+  await page.goto("/start");
+  await expect(page.locator("#start-file")).toContainText("I have a profile file");
+  await page.locator("#start-file-open").setInputFiles(profileFile({ name: "Marta", country: "ES", region: "ES-MD", store: "mercadona" }));
+  await expect(page.getByRole("alertdialog")).toHaveCount(0); // nothing to replace in a new browser: no confirm, no backup
+  const setup = page.getByRole("dialog");
+  await expect(setup).toContainText("Profile opened");
+  await expect(setup).toContainText("Your AI key");
+  await expect(setup).not.toContainText("Step 1 of 2");
+  await expect(setup.getByRole("button", { name: "Back" })).toHaveCount(0);
+  await setup.locator("#setup-key").fill("sk-ant-test-key");
+  await setup.getByRole("button", { name: "Save key" }).click();
+  await setup.getByRole("button", { name: "Make Your Meal" }).click();
+  await expect(page.locator("#input-craving")).toBeVisible();
+  const saved = await page.evaluate(() => ({ name: localStorage.getItem("smartbite.name"),
+    store: localStorage.getItem("smartbite.store"), setup: localStorage.getItem("smartbite.setup") }));
+  expect(saved).toEqual({ name: '"Marta"', store: '"mercadona"', setup: '"done"' });
+});
+
+test("closing the key step keeps the opened profile; it asks for the key again later", async ({ page }) => {
+  await page.goto("/start");
+  await page.locator("#start-file-open").setInputFiles(profileFile({ name: "Marta" }));
+  await page.getByRole("dialog").getByRole("button", { name: "Close" }).click();
+  expect(await page.evaluate(() => localStorage.getItem("smartbite.setup"))).toBe('"done"');
+  await page.goto("/?tab=make-meal");
+  await expect(page).toHaveURL(/\/start$/); // no key yet
+});
+
+test("a dropped profile file with a key goes straight to Make Your Meal", async ({ page }) => {
+  await page.goto("/start");
+  const text = JSON.stringify({ app: "SmartBite", kind: "profile", version: 1, data: { name: "Marta", apiKey: "sk-ant-in-file" } });
+  const dt = await page.evaluateHandle((t) => {
+    const d = new DataTransfer();
+    d.items.add(new File([t], "smartbite-profile.json", { type: "application/json" }));
+    return d;
+  }, text);
+  await page.locator("#start-file-drop").dispatchEvent("drop", { dataTransfer: dt });
+  await expect(page.locator("#input-craving")).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem("smartbite.anthropicKey"))).toBe('"sk-ant-in-file"');
+});
+
+test("a file that is not a profile shows why and changes nothing", async ({ page }) => {
+  await page.goto("/start");
+  await page.locator("#start-file-open").setInputFiles({ name: "notes.json", mimeType: "application/json", buffer: Buffer.from("{}") });
+  await expect(page.getByText("This is not a SmartBite profile file.")).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem("smartbite.setup"))).toBeNull();
+});
+
 test.describe("phone", () => {
   test.use({ viewport: { width: 390, height: 844 } });
   test("no sideways scroll on /start", async ({ page }) => {
     await page.goto("/start");
     await expect(page.locator("#start-demo")).toBeVisible();
+    await expect(page.locator("#start-file-drop")).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   });
 });

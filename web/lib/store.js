@@ -357,8 +357,9 @@ export function readProfileFile(text) {
 }
 
 // Replaces this browser's profile with a file read by readProfileFile. false when the browser refused to store it.
+// An opened file counts as a finished setup (decided 2026-11-01): only a missing key can still stand in the way.
 export function openProfile(data) {
-  let ok = true;
+  let ok = writeJson(KEYS.setup, SETUP_DONE);
   for (const part of Object.keys(PROFILE_PARTS)) {
     if (part in data) ok = writeJson(KEYS[part], data[part]) && ok;
     else remove(KEYS[part]);
