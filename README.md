@@ -174,4 +174,4 @@ Code: [AGPL-3.0](LICENSE). Data files keep their own licenses and attribution, l
 
 ## Author
 
-Built by Marian Garabana. <!-- TODO: LinkedIn URL -->
+Built by [Marian Garabana](https://www.linkedin.com/in/marian-garabana-garrido/).
