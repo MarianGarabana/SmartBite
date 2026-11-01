@@ -60,6 +60,7 @@ ANTHROPIC_URL = "https://api.anthropic.com/v1/messages"
 ANTHROPIC_VERSION = "2023-06-01"
 MAX_TOKENS = 16000
 EFFORT = {"ideas": "low", "revision": "low", "recipe": "medium"}
+GEMINI_EFFORT = {"ideas": "low", "revision": "low"}  # reasoning_effort; the recipe keeps Gemini's default
 GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai"
 COUNTRY = "ES"  # web/lib/store.js DEFAULT_COUNTRY
 
@@ -213,6 +214,8 @@ def build_request(provider, model, key, step, system, messages):
     headers = {"content-type": "application/json", "authorization": f"Bearer {key}", "user-agent": USER_AGENT}
     body = {"model": model, "messages": [{"role": "system", "content": system}, *messages],
             "response_format": {"type": "json_object"}}
+    if step in GEMINI_EFFORT:
+        body["reasoning_effort"] = GEMINI_EFFORT[step]
     return PROVIDERS[provider]["url"], headers, body
 
 

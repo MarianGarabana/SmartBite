@@ -22,6 +22,12 @@ const MAX_TOKENS = 16000; // non-streaming default from the Messages API guidanc
 // Effort per step (Anthropic output_config.effort). Ideas and revisions are short; the recipe needs more care.
 const EFFORT = { ideas: "low", revision: "low", recipe: "medium" };
 const LABEL = { ideas: "ideas", revision: "changed idea", recipe: "recipe" };
+// Gemini thinking per step (OpenAI-compatible reasoning_effort, decided 2026-11-01). Without it Gemini 3 thinks at its
+// default level: about 2,700 output tokens and a median 161 s for 4 ideas with gemini-3.8-flash (eval/results
+// live-gemini-*-usage.json, October 2026). Ideas and revisions are rough; the recipe keeps the default until measured.
+// Sent only to Gemini's endpoint: other OpenAI-compatible endpoints may reject the field.
+const GEMINI_EFFORT = { ideas: "low", revision: "low" };
+const GEMINI_HOST = "generativelanguage.googleapis.com";
 
 export class LlmError extends Error {
   constructor(message) {
@@ -103,15 +109,19 @@ async function callAnthropic(llm, step, system, messages) {
   return { text, assistant: { role: "assistant", content } };
 }
 
+const isGemini = (baseUrl) => { try { return new URL(baseUrl).host === GEMINI_HOST; } catch { return false; } };
+
 // One chat completions call with JSON output (OpenAI-compatible endpoints)
 async function callOpenAi(llm, step, system, messages) {
   const headers = { "content-type": "application/json" };
   if (llm.apiKey) headers.authorization = `Bearer ${llm.apiKey}`;
-  const data = await post(`${llm.baseUrl.replace(/\/+$/, "")}/chat/completions`, headers, {
+  const body = {
     model: llm.model,
     messages: [{ role: "system", content: system }, ...messages],
     response_format: { type: "json_object" },
-  }, llm);
+  };
+  if (GEMINI_EFFORT[step] && isGemini(llm.baseUrl)) body.reasoning_effort = GEMINI_EFFORT[step];
+  const data = await post(`${llm.baseUrl.replace(/\/+$/, "")}/chat/completions`, headers, body, llm);
   const choice = data.choices?.[0];
   if (choice?.finish_reason === "length") throw new LlmError("The reply was cut off before it ended. Try again.");
   const text = typeof choice?.message?.content === "string" ? choice.message.content : "";

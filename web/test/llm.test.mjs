@@ -96,6 +96,23 @@ test("OpenAI-compatible: chat completions with JSON output, Bearer key, retry on
   assert.match(calls[1].body.messages[3].content, /servings must be 2, got 3/);
 });
 
+// Decided 2026-11-01: Gemini thinks at "low" for ideas and changed ideas; the recipe and other endpoints get no field
+test("Gemini: reasoning_effort low for ideas and revisions only; other endpoints never get it", async () => {
+  const GEMINI = { ...OPENAI, model: "gemini-3.8-flash", baseUrl: "https://generativelanguage.googleapis.com/v1beta/openai", preset: "gemini" };
+  let calls = mockFetch([openaiReply(IDEAS)]);
+  await generateIdeas({ form: FORM, profile: null, llm: GEMINI });
+  assert.equal(calls[0].body.reasoning_effort, "low");
+  calls = mockFetch([openaiReply({ idea: idea(2) })]);
+  await reviseIdea({ idea: idea(2), changes: "no rice", form: FORM, profile: null, llm: GEMINI });
+  assert.equal(calls[0].body.reasoning_effort, "low");
+  calls = mockFetch([openaiReply(RECIPE)]);
+  await writeRecipe({ idea: idea(2), form: FORM, profile: null, llm: GEMINI });
+  assert.equal("reasoning_effort" in calls[0].body, false);
+  calls = mockFetch([openaiReply(IDEAS)]);
+  await generateIdeas({ form: FORM, profile: null, llm: OPENAI });
+  assert.equal("reasoning_effort" in calls[0].body, false);
+});
+
 test("OpenAI-compatible without a key (Ollama): no Authorization header", async () => {
   const calls = mockFetch([openaiReply(IDEAS)]);
   await generateIdeas({ form: FORM, profile: null, llm: { ...OPENAI, apiKey: "", baseUrl: "http://localhost:11434/v1" } });

@@ -85,6 +85,8 @@ def test_settings_match_the_web_app():
     assert re.search(rf"MAX_TOKENS = {live.MAX_TOKENS};", llm)
     effort = re.search(r"const EFFORT = \{(.*?)\};", llm).group(1)
     assert dict(re.findall(r'(\w+): "(\w+)"', effort)) == live.EFFORT
+    gemini_effort = re.search(r"const GEMINI_EFFORT = \{(.*?)\};", llm).group(1)
+    assert dict(re.findall(r'(\w+): "(\w+)"', gemini_effort)) == live.GEMINI_EFFORT
     assert re.search(r'ANTHROPIC_MODELS = \[\s*\{ id: "claude-sonnet-5-5"', providers)
     assert live.PROVIDERS["anthropic"]["model"] == "claude-sonnet-5-5"
     gemini = re.search(r'\{ id: "gemini".*?\}', providers, re.DOTALL).group(0)
@@ -129,7 +131,9 @@ def test_gemini_request_shape(monkeypatch):
     assert req["url"] == "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
     assert req["headers"] == {"content-type": "application/json", "authorization": f"Bearer {KEY}",
                               "user-agent": "SmartBite"}
-    assert set(req["body"]) == {"model", "messages", "response_format"}
+    assert set(req["body"]) == {"model", "messages", "response_format", "reasoning_effort"}
+    assert req["body"]["reasoning_effort"] == "low"  # ideas
+    assert "reasoning_effort" not in t.requests[1]["body"]  # the recipe keeps Gemini's default
     assert req["body"]["model"] == "gemini-3.8-flash"
     assert req["body"]["response_format"] == {"type": "json_object"}
     assert [m["role"] for m in req["body"]["messages"]] == ["system", "user"]
