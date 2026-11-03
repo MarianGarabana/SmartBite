@@ -378,13 +378,13 @@ function ProfileMenu({ active }) {
     downloadJson(exportProfile(), "smartbite-profile");
   };
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative max-sm:static">
       <button onClick={() => setOpen((o) => !o)} aria-label="Profile menu" aria-haspopup="menu" aria-expanded={open} title="Profile"
         className={`w-9 h-9 rounded-full flex items-center justify-center hover:text-forest hover:bg-forest/5 transition-all ${active === "profile" || open ? "bg-forest/5 text-forest" : "text-forest/70"}`}>
         <i className="fa-solid fa-user text-sm"></i>
       </button>
       {open && (
-        <div role="menu" className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-card border border-cream-dark p-2 z-50">
+        <div role="menu" className="absolute right-0 max-sm:right-4 mt-2 w-56 bg-white rounded-2xl shadow-card border border-cream-dark p-2 z-50">
           {me.name && <p className="px-4 pt-2 pb-1 text-xs font-bold text-forest/70 truncate">{me.name}</p>}
           {me.has ? (
             <>
@@ -401,16 +401,18 @@ function ProfileMenu({ active }) {
 }
 
 // Phone and tablet (under 1024 px, decided 2026-10-22): the tab links move into this menu; desktop is unchanged
+// Both header menus (2026-11-03): under 640 px they open 16 px from the header's right edge (the sticky header is
+// their anchor), not from their icon, which on small phones sits too far left and pushed the menu off screen
 function TabsMenu({ active, onNavigate }) {
   const [open, setOpen, ref] = useMenu();
   return (
-    <div ref={ref} className="relative lg:hidden">
+    <div ref={ref} className="relative max-sm:static lg:hidden">
       <button onClick={() => setOpen((o) => !o)} aria-label="Menu" aria-haspopup="menu" aria-expanded={open}
         className={`w-9 h-9 rounded-full flex items-center justify-center hover:text-forest hover:bg-forest/5 transition-all ${open ? "bg-forest/5 text-forest" : "text-forest/70"}`}>
         <i className={`fa-solid ${open ? "fa-xmark" : "fa-bars"} text-sm`}></i>
       </button>
       {open && (
-        <div role="menu" className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-card border border-cream-dark p-2 z-50">
+        <div role="menu" className="absolute right-0 max-sm:right-4 mt-2 w-56 bg-white rounded-2xl shadow-card border border-cream-dark p-2 z-50">
           {TABS.map((t) => (
             <button key={t.id} role="menuitem" onClick={() => { setOpen(false); onNavigate(t.id); }}
               className={`${menuItem} flex items-center gap-1.5 ${active === t.id ? "font-semibold bg-forest/5" : ""}`}>
