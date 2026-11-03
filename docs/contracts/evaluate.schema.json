@@ -20,8 +20,8 @@
           "items": { "$ref": "#/$defs/Product" }
         },
         "country": {
-          "description": "Optional country for estimated prices. \"ES\": every line without a product price gets an estimated pack price from Spain's average prices (MAPA household panel, data/open/prices/es.json); \"CA\": from Canada's average retail prices in CAD (Statistics Canada, data/open/prices/ca.json). Lines get price_source \"estimate\"; a product's price always wins. Omitted: no estimates and the reply is the same as before estimates existed.",
-          "enum": ["CA", "ES"]
+          "description": "Optional country for estimated prices. \"ES\": every line without a product price gets an estimated pack price from Spain's average prices (MAPA household panel, data/open/prices/es.json); \"CA\": from Canada's average retail prices in CAD (Statistics Canada, data/open/prices/ca.json); \"GB\": from the UK's average prices in GBP (ONS, data/open/prices/gb.json). Lines get price_source \"estimate\"; a product's price always wins. Omitted: no estimates and the reply is the same as before estimates existed.",
+          "enum": ["CA", "ES", "GB"]
         },
         "region": {
           "description": "Optional region inside the country, ISO 3166-2 (Spain: comunidad autonoma, e.g. \"ES-MD\"), only with a country (422 otherwise). Foods with a regional average price (MAPA region columns, data/open/prices/es.json regions) use it and their lines carry price_region; the other foods keep the national estimate. Omitted: national estimates only.",

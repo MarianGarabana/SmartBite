@@ -128,3 +128,56 @@ curl -A SmartBite -o data/raw/statcan/18100245-eng.zip https://www150.statcan.gc
 unzip -o data/raw/statcan/18100245-eng.zip -d data/raw/statcan
 .venv/bin/python data/build/build_prices_ca.py
 ```
+
+## United Kingdom: ONS shopping prices comparison tool (`gb.json`)
+
+Estimated prices for the United Kingdom come from the Office for National Statistics (ONS), **Shopping prices
+comparison tool**, data download, sheet "Average price".
+Source: Office for National Statistics licensed under the Open Government Licence v.3.0. Period used: October 2025 to
+September 2026.
+
+- Tool page: https://www.ons.gov.uk/economy/inflationandpriceindices/articles/shoppingpricescomparisontool/latest
+- File used: `datadownload.xlsx`, which the ONS publishes through its GitHub repository
+  (https://github.com/onsdigital/cpi-items-actions/raw/main/datadownload.xlsx), downloaded 2026-11-03 with
+  `User-Agent: SmartBite` only (4,384,322 bytes; latest month in the file: September 2026).
+- Period: October 2025 to September 2026 (12 months).
+- Method (tool page): average prices come from the price quotes of the monthly consumer prices collection and, for
+  grocery items, supermarket scanner data (checkout and online sales). The ONS calls them official statistics in
+  development.
+
+### Reuse terms
+
+The ONS terms and conditions (https://www.ons.gov.uk/help/termsandconditions) say most content is Crown copyright
+published under the Open Government Licence (OGL), which allows reuse, commercial or not, with an acknowledgement.
+SmartBite uses the statement the ONS asks for: "Source: Office for National Statistics licensed under the Open
+Government Licence v.3.0".
+
+### How the prices are made
+
+`data/build/build_prices_gb.py` reads the XLSX (standard library only) from `data/raw/ons/` (gitignored). Each food maps
+by hand to one item in `data/build/prices-map-gb.json`, with its size; the build stops if the item's WEIGHT_SIZE in the
+file differs from the map (for example a can that changes from 400 g). Sizes: "1000 g" items are prices per kg, packs
+by weight, "1136 ml" milk per litre with the density used for the pack sizes, "each" items per kg with the SmartBite
+unit weight (one SmartBite lemon costs one ONS lemon), and the 12 pack of free-range eggs per egg. The file has no
+volumes, so the price is the plain mean of the 12 monthly averages. Match quality: 29 exact and 21 close matches get
+a price (50 foods); canned lentils, green bell pepper, red bell pepper, rice are broad matches kept only to say why they have none. Houmous is left
+out (9 of the 12 months have a price).
+
+### Caveats
+
+- Averages over brands and shops for the size the ONS prices (for example canned beans in 400 g cans, eggs free-range
+  in 12 packs, basmati and jasmine rice together); a different size or brand can cost more or less per kg.
+- Peppers have no estimate: the ONS "Peppers, each" price is about GBP 1.60 every month, about twice a loose pepper,
+  so it probably mixes in multipacks.
+- No plain white rice item: plain rice has no estimate (basmati and microwave rice have one).
+- Canned food: SmartBite pack sizes are drained weight, ONS can sizes are probably net weight, so estimates for canned
+  beans, sweetcorn and tomatoes can be low.
+- National average only.
+- Rebuild every quarter or so: the ONS updates the file monthly, about two weeks after the month.
+
+Rebuild:
+
+```
+curl -L -A SmartBite -o data/raw/ons/datadownload.xlsx https://github.com/onsdigital/cpi-items-actions/raw/main/datadownload.xlsx
+.venv/bin/python data/build/build_prices_gb.py
+```

@@ -369,9 +369,10 @@ test("estimated-price countries match the price tables", async () => {
     assert.equal(store.ESTIMATE_CURRENCY[t.country], t.currency);
     assert.equal(store.hasEstimates(t.country), true);
   }
-  assert.equal(store.hasEstimates("GB"), false);
+  assert.equal(store.hasEstimates("US"), false);
   const { estimateLabel } = await import("../lib/meal.js");
   assert.equal(estimateLabel("2025-09/2026-08", null, "CA"), "Canada average price paid, Statistics Canada, Sep 2025 to Aug 2026");
+  assert.equal(estimateLabel("2025-10/2026-09", null, "GB"), "United Kingdom average price, ONS, Oct 2025 to Sep 2026");
   assert.equal(estimateLabel("2025-08/2026-07", "ES-MD", "ES"), "Comunidad de Madrid average price paid, MAPA, Aug 2025 to Jul 2026");
 });
 

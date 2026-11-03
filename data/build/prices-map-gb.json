@@ -1,0 +1,329 @@
+{
+ "note": "Each SmartBite food mapped by hand to one ID_DESC of the ONS Shopping Prices Comparison Tool data download (sheet Average price). match: exact, close (same food, mixed with its subtypes), broad (no price, kept to show why). Only exact and close get an estimated price. Size, checked against the sheet's WEIGHT_SIZE at build: per kg ('1000 g'), grams (pack weight), litres (density from packs.json), each (one piece, per kg with the SmartBite unit weight) or eggs (12 pack). Houmous is left out: 9 of the 12 months in the period. Foods not listed have no ONS item.",
+ "foods": {
+  "apple": {
+   "match": "exact",
+   "product": "Apples - not cooking",
+   "per": "kg",
+   "note": "Eating apples, per kg."
+  },
+  "avocado": {
+   "match": "exact",
+   "product": "Avocados",
+   "per": "each",
+   "note": "Price of one avocado; per kg uses the SmartBite unit."
+  },
+  "banana": {
+   "match": "exact",
+   "product": "Bananas",
+   "per": "kg",
+   "note": ""
+  },
+  "basmati rice": {
+   "match": "close",
+   "product": "Rice - basmati or jasmine",
+   "grams": 750,
+   "note": "Basmati and jasmine together."
+  },
+  "beef steak": {
+   "match": "close",
+   "product": "Beef - steak or chops",
+   "per": "kg",
+   "note": "All beef steaks."
+  },
+  "blueberries": {
+   "match": "exact",
+   "product": "Blueberries",
+   "per": "kg",
+   "note": ""
+  },
+  "broccoli": {
+   "match": "exact",
+   "product": "Broccoli",
+   "per": "kg",
+   "note": "Loose broccoli per kg."
+  },
+  "canned chickpeas": {
+   "match": "close",
+   "product": "Beans - canned or jarred (excl. baked beans)",
+   "grams": 400,
+   "note": "All canned beans, 400 g can as net weight; SmartBite packs are drained weight, so the estimate can be low."
+  },
+  "canned lentils": {
+   "match": "broad",
+   "product": "Beans - canned or jarred (excl. baked beans)",
+   "grams": 400,
+   "note": "Beans, not lentils: no price."
+  },
+  "canned red kidney beans": {
+   "match": "close",
+   "product": "Beans - canned or jarred (excl. baked beans)",
+   "grams": 400,
+   "note": "All canned beans, 400 g can as net weight; drained packs, the estimate can be low."
+  },
+  "canned sweetcorn": {
+   "match": "close",
+   "product": "Sweetcorn - canned or jarred",
+   "grams": 250,
+   "note": "250 g can or jar as the ONS prices it; SmartBite packs are drained weight, so the estimate can be low."
+  },
+  "canned tuna in oil": {
+   "match": "close",
+   "product": "Fish - canned tuna",
+   "grams": 150,
+   "note": "All canned tuna."
+  },
+  "canned tuna in water": {
+   "match": "close",
+   "product": "Fish - canned tuna",
+   "grams": 150,
+   "note": "All canned tuna."
+  },
+  "canned white beans": {
+   "match": "close",
+   "product": "Beans - canned or jarred (excl. baked beans)",
+   "grams": 400,
+   "note": "All canned beans, 400 g can as net weight; drained packs, the estimate can be low."
+  },
+  "carrot": {
+   "match": "exact",
+   "product": "Carrots",
+   "per": "kg",
+   "note": ""
+  },
+  "cauliflower": {
+   "match": "exact",
+   "product": "Cauliflower",
+   "per": "each",
+   "note": "Price of one cauliflower; per kg uses the SmartBite unit."
+  },
+  "chicken breast": {
+   "match": "close",
+   "product": "Chicken - fillet or steak",
+   "per": "kg",
+   "note": "Chicken fillets and steaks, mostly breast."
+  },
+  "couscous": {
+   "match": "exact",
+   "product": "Couscous - dry",
+   "grams": 300,
+   "note": ""
+  },
+  "crushed tomatoes": {
+   "match": "close",
+   "product": "Tomatoes - canned or jarred",
+   "grams": 400,
+   "note": "All canned and jarred tomatoes."
+  },
+  "cucumber": {
+   "match": "exact",
+   "product": "Cucumber",
+   "per": "each",
+   "note": "Price of one cucumber; per kg uses the SmartBite unit."
+  },
+  "eggs": {
+   "match": "exact",
+   "product": "Eggs - free-range",
+   "eggs": 12,
+   "note": "Free-range eggs, 12 pack; price per egg = pack / 12."
+  },
+  "extra virgin olive oil": {
+   "match": "close",
+   "product": "Oil - olive",
+   "litres": 0.75,
+   "note": "All olive oil, not only extra virgin."
+  },
+  "frozen mixed berries": {
+   "match": "close",
+   "product": "Fruit - frozen",
+   "grams": 500,
+   "note": "All frozen fruit, mostly berries."
+  },
+  "frozen peas": {
+   "match": "exact",
+   "product": "Peas - frozen",
+   "grams": 900,
+   "note": ""
+  },
+  "frozen shrimp": {
+   "match": "exact",
+   "product": "Seafood - frozen prawns and shrimps",
+   "per": "kg",
+   "note": ""
+  },
+  "frozen stir-fry vegetables": {
+   "match": "close",
+   "product": "Mixed vegetables - frozen",
+   "grams": 750,
+   "note": "Frozen mixed vegetables."
+  },
+  "grana padano": {
+   "match": "close",
+   "product": "Cheese - parmesan and similar products",
+   "per": "kg",
+   "note": "Parmesan and similar hard cheeses."
+  },
+  "green beans": {
+   "match": "close",
+   "product": "Beans - fresh (excl. soya or edamame)",
+   "per": "kg",
+   "note": "All fresh beans."
+  },
+  "green bell pepper": {
+   "match": "broad",
+   "product": "Peppers",
+   "per": "each",
+   "note": "ONS 'Peppers, each' averages about GBP 1.60 every month, about twice a loose pepper: probably mixed multipacks too. No price."
+  },
+  "ground beef": {
+   "match": "close",
+   "product": "Beef - minced or diced",
+   "per": "kg",
+   "note": "Minced and diced beef together."
+  },
+  "kiwi": {
+   "match": "exact",
+   "product": "Kiwis",
+   "per": "each",
+   "note": "Price of one kiwi; per kg uses the SmartBite unit."
+  },
+  "lemon": {
+   "match": "exact",
+   "product": "Lemons",
+   "per": "each",
+   "note": "Price of one lemon; per kg uses the SmartBite unit."
+  },
+  "lettuce": {
+   "match": "close",
+   "product": "Lettuce",
+   "per": "each",
+   "note": "One head, any type; per kg uses the SmartBite unit."
+  },
+  "macaroni": {
+   "match": "close",
+   "product": "Pasta - dry",
+   "grams": 500,
+   "note": "All dry pasta."
+  },
+  "microwave rice": {
+   "match": "exact",
+   "product": "Rice - microwave",
+   "grams": 250,
+   "note": ""
+  },
+  "mushrooms": {
+   "match": "exact",
+   "product": "Mushrooms",
+   "per": "kg",
+   "note": ""
+  },
+  "onion": {
+   "match": "exact",
+   "product": "Onions",
+   "per": "kg",
+   "note": ""
+  },
+  "orange": {
+   "match": "exact",
+   "product": "Oranges",
+   "per": "each",
+   "note": "Price of one orange; per kg uses the SmartBite unit."
+  },
+  "peanut butter": {
+   "match": "exact",
+   "product": "Peanut butter",
+   "grams": 300,
+   "note": ""
+  },
+  "pork loin": {
+   "match": "close",
+   "product": "Pork - steak or chops",
+   "per": "kg",
+   "note": "Pork steaks and chops."
+  },
+  "potato": {
+   "match": "exact",
+   "product": "Potatoes - white",
+   "per": "kg",
+   "note": ""
+  },
+  "raspberries": {
+   "match": "exact",
+   "product": "Raspberries",
+   "per": "kg",
+   "note": ""
+  },
+  "red bell pepper": {
+   "match": "broad",
+   "product": "Peppers",
+   "per": "each",
+   "note": "ONS 'Peppers, each' averages about GBP 1.60 every month, about twice a loose pepper: probably mixed multipacks too. No price."
+  },
+  "rice": {
+   "match": "broad",
+   "product": "Rice - basmati or jasmine",
+   "grams": 750,
+   "note": "Basmati and jasmine only: no price for plain white rice."
+  },
+  "rolled oats": {
+   "match": "close",
+   "product": "Oats or porridge",
+   "grams": 750,
+   "note": "Oats and porridge oats."
+  },
+  "salmon": {
+   "match": "exact",
+   "product": "Fish - fresh salmon",
+   "per": "kg",
+   "note": ""
+  },
+  "semi-skimmed milk": {
+   "match": "exact",
+   "product": "Milk - cow's (semi-skimmed, fresh)",
+   "litres": 1.136,
+   "note": "2 pints (1136 ml)."
+  },
+  "strawberries": {
+   "match": "exact",
+   "product": "Strawberries",
+   "per": "kg",
+   "note": ""
+  },
+  "sugar": {
+   "match": "exact",
+   "product": "Sugar - white",
+   "grams": 1000,
+   "note": ""
+  },
+  "sweet potato": {
+   "match": "exact",
+   "product": "Potatoes - sweet",
+   "per": "kg",
+   "note": ""
+  },
+  "tomato": {
+   "match": "exact",
+   "product": "Tomatoes",
+   "per": "kg",
+   "note": ""
+  },
+  "wheat tortillas": {
+   "match": "exact",
+   "product": "Wraps and tortillas (without filling)",
+   "grams": 360,
+   "note": ""
+  },
+  "wholemeal sandwich bread": {
+   "match": "close",
+   "product": "Bread - sliced wholemeal or brown",
+   "grams": 800,
+   "note": "Wholemeal and brown sliced bread."
+  },
+  "zucchini": {
+   "match": "exact",
+   "product": "Courgette",
+   "per": "kg",
+   "note": ""
+  }
+ }
+}

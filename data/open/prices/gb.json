@@ -1,0 +1,384 @@
+{
+ "country": "GB",
+ "currency": "GBP",
+ "source": "ONS, Shopping prices comparison tool (average prices)",
+ "source_url": "https://www.ons.gov.uk/economy/inflationandpriceindices/articles/shoppingpricescomparisontool/latest",
+ "files": [
+  "datadownload.xlsx"
+ ],
+ "period_from": "2025-10",
+ "period_to": "2026-09",
+ "months": 12,
+ "built": "2026-11-03",
+ "note": "Average price in the United Kingdom (ONS: consumer prices collection quotes and, for groceries, supermarket scanner data; official statistics in development), the mean of the monthly averages over the period. Averages over brands and shops for the size ONS prices; not a shop's price. Per kg from that size: liquids per litre with the density used for the pack sizes, loose pieces with the SmartBite unit weight. Prices are in GBP (fields named _eur hold the table's currency).",
+ "foods": {
+  "apple": {
+   "match": "exact",
+   "ons_item": "Apples - not cooking",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 2.248
+  },
+  "avocado": {
+   "match": "exact",
+   "ons_item": "Avocados",
+   "ons_size": "each",
+   "months": 12,
+   "price_per_kg_eur": 7.672,
+   "price_each": 1.043,
+   "unit_grams": 136
+  },
+  "banana": {
+   "match": "exact",
+   "ons_item": "Bananas",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 1.129
+  },
+  "basmati rice": {
+   "match": "close",
+   "ons_item": "Rice - basmati or jasmine",
+   "ons_size": "750 g",
+   "months": 12,
+   "price_per_kg_eur": 2.499
+  },
+  "beef steak": {
+   "match": "close",
+   "ons_item": "Beef - steak or chops",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 23.397
+  },
+  "blueberries": {
+   "match": "exact",
+   "ons_item": "Blueberries",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 11.228
+  },
+  "broccoli": {
+   "match": "exact",
+   "ons_item": "Broccoli",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 2.688
+  },
+  "canned chickpeas": {
+   "match": "close",
+   "ons_item": "Beans - canned or jarred (excl. baked beans)",
+   "ons_size": "400 g",
+   "months": 12,
+   "price_per_kg_eur": 1.713
+  },
+  "canned red kidney beans": {
+   "match": "close",
+   "ons_item": "Beans - canned or jarred (excl. baked beans)",
+   "ons_size": "400 g",
+   "months": 12,
+   "price_per_kg_eur": 1.713
+  },
+  "canned sweetcorn": {
+   "match": "close",
+   "ons_item": "Sweetcorn - canned or jarred",
+   "ons_size": "250 g",
+   "months": 12,
+   "price_per_kg_eur": 3.81
+  },
+  "canned tuna in oil": {
+   "match": "close",
+   "ons_item": "Fish - canned tuna",
+   "ons_size": "150 g",
+   "months": 12,
+   "price_per_kg_eur": 7.1
+  },
+  "canned tuna in water": {
+   "match": "close",
+   "ons_item": "Fish - canned tuna",
+   "ons_size": "150 g",
+   "months": 12,
+   "price_per_kg_eur": 7.1
+  },
+  "canned white beans": {
+   "match": "close",
+   "ons_item": "Beans - canned or jarred (excl. baked beans)",
+   "ons_size": "400 g",
+   "months": 12,
+   "price_per_kg_eur": 1.713
+  },
+  "carrot": {
+   "match": "exact",
+   "ons_item": "Carrots",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 0.933
+  },
+  "cauliflower": {
+   "match": "exact",
+   "ons_item": "Cauliflower",
+   "ons_size": "each",
+   "months": 12,
+   "price_per_kg_eur": 2.329,
+   "price_each": 1.369,
+   "unit_grams": 588
+  },
+  "chicken breast": {
+   "match": "close",
+   "ons_item": "Chicken - fillet or steak",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 9.072
+  },
+  "couscous": {
+   "match": "exact",
+   "ons_item": "Couscous - dry",
+   "ons_size": "300 g",
+   "months": 12,
+   "price_per_kg_eur": 4.411
+  },
+  "crushed tomatoes": {
+   "match": "close",
+   "ons_item": "Tomatoes - canned or jarred",
+   "ons_size": "400 g",
+   "months": 12,
+   "price_per_kg_eur": 1.66
+  },
+  "cucumber": {
+   "match": "exact",
+   "ons_item": "Cucumber",
+   "ons_size": "each",
+   "months": 12,
+   "price_per_kg_eur": 3.372,
+   "price_each": 1.015,
+   "unit_grams": 301
+  },
+  "eggs": {
+   "match": "exact",
+   "ons_item": "Eggs - free-range",
+   "ons_size": "12 pack",
+   "months": 12,
+   "price_per_unit_eur": 0.3281
+  },
+  "extra virgin olive oil": {
+   "match": "close",
+   "ons_item": "Oil - olive",
+   "ons_size": "750 ml",
+   "months": 12,
+   "price_per_kg_eur": 9.61,
+   "price_per_litre_eur": 8.841,
+   "grams_per_ml": 0.92
+  },
+  "frozen mixed berries": {
+   "match": "close",
+   "ons_item": "Fruit - frozen",
+   "ons_size": "500 g",
+   "months": 12,
+   "price_per_kg_eur": 6.248
+  },
+  "frozen peas": {
+   "match": "exact",
+   "ons_item": "Peas - frozen",
+   "ons_size": "900 g",
+   "months": 12,
+   "price_per_kg_eur": 2.28
+  },
+  "frozen shrimp": {
+   "match": "exact",
+   "ons_item": "Seafood - frozen prawns and shrimps",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 19.482
+  },
+  "frozen stir-fry vegetables": {
+   "match": "close",
+   "ons_item": "Mixed vegetables - frozen",
+   "ons_size": "750 g",
+   "months": 12,
+   "price_per_kg_eur": 2.212
+  },
+  "grana padano": {
+   "match": "close",
+   "ons_item": "Cheese - parmesan and similar products",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 23.647
+  },
+  "green beans": {
+   "match": "close",
+   "ons_item": "Beans - fresh (excl. soya or edamame)",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 5.206
+  },
+  "ground beef": {
+   "match": "close",
+   "ons_item": "Beef - minced or diced",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 11.033
+  },
+  "kiwi": {
+   "match": "exact",
+   "ons_item": "Kiwis",
+   "ons_size": "each",
+   "months": 12,
+   "price_per_kg_eur": 7.355,
+   "price_each": 0.507,
+   "unit_grams": 69
+  },
+  "lemon": {
+   "match": "exact",
+   "ons_item": "Lemons",
+   "ons_size": "each",
+   "months": 12,
+   "price_per_kg_eur": 6.422,
+   "price_each": 0.372,
+   "unit_grams": 58
+  },
+  "lettuce": {
+   "match": "close",
+   "ons_item": "Lettuce",
+   "ons_size": "each",
+   "months": 12,
+   "price_per_kg_eur": 2.838,
+   "price_each": 0.993,
+   "unit_grams": 350
+  },
+  "macaroni": {
+   "match": "close",
+   "ons_item": "Pasta - dry",
+   "ons_size": "500 g",
+   "months": 12,
+   "price_per_kg_eur": 1.967
+  },
+  "microwave rice": {
+   "match": "exact",
+   "ons_item": "Rice - microwave",
+   "ons_size": "250 g",
+   "months": 12,
+   "price_per_kg_eur": 3.747
+  },
+  "mushrooms": {
+   "match": "exact",
+   "ons_item": "Mushrooms",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 3.922
+  },
+  "onion": {
+   "match": "exact",
+   "ons_item": "Onions",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 1.16
+  },
+  "orange": {
+   "match": "exact",
+   "ons_item": "Oranges",
+   "ons_size": "each",
+   "months": 12,
+   "price_per_kg_eur": 3.836,
+   "price_each": 0.503,
+   "unit_grams": 131
+  },
+  "peanut butter": {
+   "match": "exact",
+   "ons_item": "Peanut butter",
+   "ons_size": "300 g",
+   "months": 12,
+   "price_per_kg_eur": 6.881
+  },
+  "pork loin": {
+   "match": "close",
+   "ons_item": "Pork - steak or chops",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 9.359
+  },
+  "potato": {
+   "match": "exact",
+   "ons_item": "Potatoes - white",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 0.987
+  },
+  "raspberries": {
+   "match": "exact",
+   "ons_item": "Raspberries",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 13.7
+  },
+  "rolled oats": {
+   "match": "close",
+   "ons_item": "Oats or porridge",
+   "ons_size": "750 g",
+   "months": 12,
+   "price_per_kg_eur": 3.112
+  },
+  "salmon": {
+   "match": "exact",
+   "ons_item": "Fish - fresh salmon",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 21.579
+  },
+  "semi-skimmed milk": {
+   "match": "exact",
+   "ons_item": "Milk - cow's (semi-skimmed, fresh)",
+   "ons_size": "1136 ml",
+   "months": 12,
+   "price_per_kg_eur": 0.979,
+   "price_per_litre_eur": 1.009,
+   "grams_per_ml": 1.03
+  },
+  "strawberries": {
+   "match": "exact",
+   "ons_item": "Strawberries",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 9.695
+  },
+  "sugar": {
+   "match": "exact",
+   "ons_item": "Sugar - white",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 1.152
+  },
+  "sweet potato": {
+   "match": "exact",
+   "ons_item": "Potatoes - sweet",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 1.528
+  },
+  "tomato": {
+   "match": "exact",
+   "ons_item": "Tomatoes",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 3.812
+  },
+  "wheat tortillas": {
+   "match": "exact",
+   "ons_item": "Wraps and tortillas (without filling)",
+   "ons_size": "360 g",
+   "months": 12,
+   "price_per_kg_eur": 4.139
+  },
+  "wholemeal sandwich bread": {
+   "match": "close",
+   "ons_item": "Bread - sliced wholemeal or brown",
+   "ons_size": "800 g",
+   "months": 12,
+   "price_per_kg_eur": 1.615
+  },
+  "zucchini": {
+   "match": "exact",
+   "ons_item": "Courgette",
+   "ons_size": "1000 g",
+   "months": 12,
+   "price_per_kg_eur": 3.092
+  }
+ }
+}
