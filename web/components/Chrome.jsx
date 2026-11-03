@@ -436,13 +436,13 @@ export function Header({ active, onNavigate: navigate, cartCount }) {
       <SetupHost />
       <div className="max-w-[1360px] mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-3">
 
-        {/* The name hides under 460 px while the Get started pill shows (also while storage is unread), and under 382 px always,
+        {/* The name hides under 489 px while the Get started pill shows (also while storage is unread), and under 382 px always,
             so the header keeps its 16 px gutters (2026-11-03; was under 460 px always) */}
         <a href="/" aria-label="SmartBite" onClick={(e) => { e.preventDefault(); onNavigate("home"); }} className="flex items-center gap-2.5 group">
           <div className="w-10 h-10 rounded-full bg-forest flex items-center justify-center text-lime group-hover:bg-lime group-hover:text-forest transition-colors shadow-sm">
             <i className="fa-solid fa-leaf text-base"></i>
           </div>
-          <span className={`font-serif text-2xl font-bold tracking-tight text-forest whitespace-nowrap max-[381px]:hidden${complete === true ? "" : " max-[459px]:hidden"}`}>
+          <span className={`font-serif text-2xl font-bold tracking-tight text-forest whitespace-nowrap max-[381px]:hidden${complete === true ? "" : " max-[488px]:hidden"}`}>
             Smart<span className="font-normal italic">Bite</span>{" "}
             <span className="inline-block w-2 h-2 rounded-full bg-lime ml-0.5"></span>
           </span>
@@ -478,7 +478,10 @@ export function Header({ active, onNavigate: navigate, cartCount }) {
           {/* No Demo item since 2026-11-03: the demo is on /start (where "/" sends new visitors), the Home box and
               the footer */}
           <TabsMenu active={active} onNavigate={onNavigate} />
-          <ProfileMenu active={active} />
+          {/* Under 360 px the profile icon makes room for Get started (2026-11-03); /start and the footer lead to the profile */}
+          <div className={showStart ? "max-[359px]:hidden" : undefined}>
+            <ProfileMenu active={active} />
+          </div>
           {showStart && (
             <Link id="nav-start" href="/start" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-4 py-2.5 rounded-full transition-all whitespace-nowrap shadow-sm">
               Get started
