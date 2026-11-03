@@ -1,0 +1,131 @@
+{
+ "country": "FR",
+ "currency": "EUR",
+ "source": "INSEE, IPC-PM-2015, Prix moyens de vente de détail",
+ "source_url": "https://www.insee.fr/fr/statistiques/series/103157792",
+ "files": [
+  "IPC-PM-2015.xml"
+ ],
+ "insee_updated": "2026-10-15",
+ "period_from": "2025-10",
+ "period_to": "2026-09",
+ "months": 12,
+ "built": "2026-11-03",
+ "note": "Average retail price in metropolitan France (INSEE, from the consumer price index collection), the mean of the monthly averages over the period. Averages over shops for the unit in the series title (1 kg or one piece); not a shop's price. A piece is priced per kg with the SmartBite unit weight. Fresh foods only.",
+ "foods": {
+  "apple": {
+   "match": "exact",
+   "insee_idbank": "000641367",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Pommes (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 3.008
+  },
+  "avocado": {
+   "match": "exact",
+   "insee_idbank": "001791255",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Avocat (pièce)",
+   "months": 12,
+   "price_per_kg_eur": 11.042,
+   "price_each": 1.502,
+   "unit_grams": 136
+  },
+  "banana": {
+   "match": "exact",
+   "insee_idbank": "000641432",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Bananes (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 2.083
+  },
+  "beef steak": {
+   "match": "close",
+   "insee_idbank": "000442433",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Boeuf : faux filet (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 31.202
+  },
+  "carrot": {
+   "match": "exact",
+   "insee_idbank": "000641422",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Carottes (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 2.059
+  },
+  "green beans": {
+   "match": "exact",
+   "insee_idbank": "000641359",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Haricots verts (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 7.343
+  },
+  "green bell pepper": {
+   "match": "close",
+   "insee_idbank": "010596274",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Poivrons (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 4.766
+  },
+  "lemon": {
+   "match": "exact",
+   "insee_idbank": "000641434",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Citrons (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 3.991
+  },
+  "mushrooms": {
+   "match": "exact",
+   "insee_idbank": "000641423",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Champignons de Paris (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 6.406
+  },
+  "onion": {
+   "match": "exact",
+   "insee_idbank": "000641427",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Oignons (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 2.822
+  },
+  "orange": {
+   "match": "exact",
+   "insee_idbank": "000641365",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Oranges (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 2.695
+  },
+  "pork loin": {
+   "match": "exact",
+   "insee_idbank": "000442448",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Porc : rôti dans le filet (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 13.878
+  },
+  "potato": {
+   "match": "exact",
+   "insee_idbank": "000641360",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Pommes de terre de conservation (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 1.775
+  },
+  "red bell pepper": {
+   "match": "close",
+   "insee_idbank": "010596274",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Poivrons (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 4.766
+  },
+  "tomato": {
+   "match": "exact",
+   "insee_idbank": "000641429",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Tomates (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 4.057
+  },
+  "zucchini": {
+   "match": "exact",
+   "insee_idbank": "000641425",
+   "insee_series": "Prix moyens mensuels de vente au détail en métropole - Courgettes (1 kg)",
+   "months": 12,
+   "price_per_kg_eur": 3.092
+  }
+ }
+}

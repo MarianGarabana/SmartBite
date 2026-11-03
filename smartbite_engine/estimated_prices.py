@@ -10,6 +10,8 @@ mean of 12 months, in GBP, national only.
 United States (US): average price, BLS Average Price Data (U.S. city average), mean of the months with data in the
 latest 12 (October 2025 has none), in USD.
 Ireland (IE): national average price, CSO table CPM12, mean of 12 months, in EUR.
+France (FR): average retail price in metropolitan France, INSEE IPC-PM-2015, mean of 12 months, in EUR, fresh
+foods only.
 A pack's estimate is price per kg x pack weight (eggs: price per egg x eggs), rounded to 0.05 in the table's currency;
 a price the user types always wins.
 """
@@ -18,7 +20,7 @@ from functools import lru_cache
 from pathlib import Path
 
 PRICES_DIR = Path(__file__).resolve().parents[1] / "data" / "open" / "prices"
-COUNTRIES = ("CA", "ES", "GB", "IE", "US")
+COUNTRIES = ("CA", "ES", "FR", "GB", "IE", "US")
 STEP_EUR = 0.05
 
 

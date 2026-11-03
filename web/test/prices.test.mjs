@@ -210,9 +210,9 @@ test("country is Spain by default, the list is the supported countries plus Othe
   const data = fakeWindow();
   assert.equal(store.readCountry(), "ES");
   assert.deepEqual(store.engineEstimates(), { country: "ES", region: null });
-  assert.equal(store.writeCountry("FR"), true);
-  assert.equal(store.readCountry(), "FR");
-  assert.deepEqual(store.engineEstimates(), { country: null, region: null }); // no estimates for France yet
+  assert.equal(store.writeCountry("AU"), true);
+  assert.equal(store.readCountry(), "AU");
+  assert.deepEqual(store.engineEstimates(), { country: null, region: null }); // no estimated prices for Australia
   data[store.KEYS.country] = JSON.stringify("XX");
   assert.equal(store.readCountry(), "ES");
   store.writeCountry("XX");
@@ -375,6 +375,7 @@ test("estimated-price countries match the price tables", async () => {
   assert.equal(estimateLabel("2025-10/2026-09", null, "GB"), "United Kingdom average price, ONS, Oct 2025 to Sep 2026");
   assert.equal(estimateLabel("2025-10/2026-09", null, "US"), "United States average price, BLS, Oct 2025 to Sep 2026");
   assert.equal(estimateLabel("2025-10/2026-09", null, "IE"), "Ireland average price, CSO, Oct 2025 to Sep 2026");
+  assert.equal(estimateLabel("2025-10/2026-09", null, "FR"), "France average price, INSEE, Oct 2025 to Sep 2026");
   assert.equal(estimateLabel("2025-08/2026-07", "ES-MD", "ES"), "Comunidad de Madrid average price paid, MAPA, Aug 2025 to Jul 2026");
 });
 

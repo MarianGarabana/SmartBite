@@ -1,0 +1,201 @@
+{
+ "note": "Each SmartBite food mapped by hand to one monthly series of INSEE IPC-PM-2015 (Prix moyens de vente de détail, metropolitan France), by IDBANK, fetched as SDMX from the BDM web service. product is the series title (TITLE_FR); its unit, '(1 kg)' or '(pièce)', must match per. match: exact, close (same food, mixed with its subtypes or a stand-in cut), broad (no price, kept to show why). Only exact and close get an estimated price. Fresh foods only: INSEE has no dairy, eggs, grains, legumes or canned food, and a fresh price never stands for a frozen food.",
+ "foods": {
+  "apple": {
+   "match": "exact",
+   "idbank": "000641367",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Pommes (1 kg)",
+   "per": "kg",
+   "note": ""
+  },
+  "artichoke hearts": {
+   "match": "broad",
+   "idbank": "001791256",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Artichauts (pièce)",
+   "per": "each",
+   "note": "Whole fresh artichokes, not jarred hearts; also only 9 of the 12 months. No price."
+  },
+  "avocado": {
+   "match": "exact",
+   "idbank": "001791255",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Avocat (pièce)",
+   "per": "each",
+   "note": "Price of one avocado; per kg uses the SmartBite unit."
+  },
+  "banana": {
+   "match": "exact",
+   "idbank": "000641432",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Bananes (1 kg)",
+   "per": "kg",
+   "note": ""
+  },
+  "beef steak": {
+   "match": "close",
+   "idbank": "000442433",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Boeuf : faux filet (1 kg)",
+   "per": "kg",
+   "note": "Faux filet (sirloin), the everyday steak cut; rumsteck, bavette and entrecôte average EUR 30.52 to 31.94 per kg, filet EUR 49.76."
+  },
+  "canned sliced mushrooms": {
+   "match": "broad",
+   "idbank": "000641423",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Champignons de Paris (1 kg)",
+   "per": "kg",
+   "note": "Fresh mushrooms: no price for canned."
+  },
+  "carrot": {
+   "match": "exact",
+   "idbank": "000641422",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Carottes (1 kg)",
+   "per": "kg",
+   "note": ""
+  },
+  "cauliflower": {
+   "match": "broad",
+   "idbank": "001791254",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Chou-fleur (pièce)",
+   "per": "each",
+   "note": "INSEE 'Chou-fleur (pièce)' averages EUR 3.43 a head (EUR 2.10 to 4.58 by month), weight not stated: EUR 5.83 per kg of SmartBite's 588 g head, about 3 times Spain's price per kg (MAPA, es.json). No price."
+  },
+  "frozen cauliflower": {
+   "match": "broad",
+   "idbank": "001791254",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Chou-fleur (pièce)",
+   "per": "each",
+   "note": "Fresh cauliflower: no price for frozen."
+  },
+  "frozen green beans": {
+   "match": "broad",
+   "idbank": "000641359",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Haricots verts (1 kg)",
+   "per": "kg",
+   "note": "Fresh green beans: no price for frozen."
+  },
+  "frozen hake": {
+   "match": "broad",
+   "idbank": "000641408",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Filet de merlan (1 kg)",
+   "per": "kg",
+   "note": "No hake series; fresh whiting fillet is another fish and not frozen. No price."
+  },
+  "frozen shrimp": {
+   "match": "broad",
+   "idbank": "000641354",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Crevettes roses tropicales (1 kg)",
+   "per": "kg",
+   "note": "Prawns from the fish counter: no price for a frozen pack."
+  },
+  "green beans": {
+   "match": "exact",
+   "idbank": "000641359",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Haricots verts (1 kg)",
+   "per": "kg",
+   "note": ""
+  },
+  "green bell pepper": {
+   "match": "close",
+   "idbank": "010596274",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Poivrons (1 kg)",
+   "per": "kg",
+   "note": "All sweet peppers; green ones usually cost less."
+  },
+  "ground beef": {
+   "match": "broad",
+   "idbank": "000442433",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Boeuf : faux filet (1 kg)",
+   "per": "kg",
+   "note": "Steak cuts only: no price for minced beef."
+  },
+  "kiwi": {
+   "match": "broad",
+   "idbank": "001791257",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Kiwi (pièce)",
+   "per": "each",
+   "note": "INSEE 'Kiwi (pièce)' averages EUR 0.90 a kiwi: EUR 13.04 per kg of SmartBite's 69 g kiwi, about 2.9 times Spain's price per kg (MAPA, es.json); probably large or gold kiwis. No price."
+  },
+  "lemon": {
+   "match": "exact",
+   "idbank": "000641434",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Citrons (1 kg)",
+   "per": "kg",
+   "note": ""
+  },
+  "lemon juice": {
+   "match": "broad",
+   "idbank": "000641434",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Citrons (1 kg)",
+   "per": "kg",
+   "note": "Fresh lemons: no price for bottled juice."
+  },
+  "mushrooms": {
+   "match": "exact",
+   "idbank": "000641423",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Champignons de Paris (1 kg)",
+   "per": "kg",
+   "note": "Button mushrooms (champignons de Paris)."
+  },
+  "onion": {
+   "match": "exact",
+   "idbank": "000641427",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Oignons (1 kg)",
+   "per": "kg",
+   "note": ""
+  },
+  "orange": {
+   "match": "exact",
+   "idbank": "000641365",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Oranges (1 kg)",
+   "per": "kg",
+   "note": ""
+  },
+  "pork loin": {
+   "match": "exact",
+   "idbank": "000442448",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Porc : rôti dans le filet (1 kg)",
+   "per": "kg",
+   "note": "Loin roast (rôti dans le filet), the same cut as a joint."
+  },
+  "potato": {
+   "match": "exact",
+   "idbank": "000641360",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Pommes de terre de conservation (1 kg)",
+   "per": "kg",
+   "note": "Storage (main crop) potatoes; new potatoes are a separate series."
+  },
+  "red bell pepper": {
+   "match": "close",
+   "idbank": "010596274",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Poivrons (1 kg)",
+   "per": "kg",
+   "note": "All sweet peppers."
+  },
+  "sliced turkey breast": {
+   "match": "broad",
+   "idbank": "000849397",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Jambon supérieur (1 kg)",
+   "per": "kg",
+   "note": "Cooked pork ham, not turkey. No price."
+  },
+  "tomato": {
+   "match": "exact",
+   "idbank": "000641429",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Tomates (1 kg)",
+   "per": "kg",
+   "note": ""
+  },
+  "wholemeal sandwich bread": {
+   "match": "broad",
+   "idbank": "000442423",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Pain baguette (1 kg)",
+   "per": "kg",
+   "note": "White baguette, not sliced wholemeal bread. No price."
+  },
+  "zucchini": {
+   "match": "exact",
+   "idbank": "000641425",
+   "product": "Prix moyens mensuels de vente au détail en métropole - Courgettes (1 kg)",
+   "per": "kg",
+   "note": ""
+  }
+ }
+}

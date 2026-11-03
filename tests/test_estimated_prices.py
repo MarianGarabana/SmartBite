@@ -216,7 +216,7 @@ def test_pack_estimate_per_kg_and_per_egg():
 
 def test_unknown_country_is_refused():
     with pytest.raises(ValueError, match="no estimated prices"):
-        load_estimates("FR")
+        load_estimates("DE")
 
 
 def test_estimates_price_the_packs_the_meal_buys_without_changing_them():
@@ -375,7 +375,7 @@ def test_api_rejects_a_region_without_country_or_unknown(extra):
     assert r.status_code == 422
 
 
-@pytest.mark.parametrize("country", ["FR", "es", "", None, 1])
+@pytest.mark.parametrize("country", ["DE", "es", "", None, 1])
 def test_api_rejects_other_countries(country):
     body, _ = demo(TUNA)
     r = client.post("/api/evaluate", json={**body, "country": country})

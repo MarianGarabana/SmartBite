@@ -274,3 +274,67 @@ Rebuild:
 .venv/bin/python data/build/build_prices_ie.py --download
 .venv/bin/python data/build/build_prices_ie.py
 ```
+
+## France: INSEE average retail prices (`fr.json`)
+
+Estimated prices for France come from INSEE (Institut national de la statistique et des études économiques), **series
+IPC-PM-2015, Prix moyens de vente de détail** (average retail prices in metropolitan France, from the consumer price
+index collection). Source: Insee, IPC-PM-2015, data last updated 2026-10-15, Licence Ouverte / Open Licence 2.0.
+Period used: October 2025 to September 2026.
+
+- Series page: https://www.insee.fr/fr/statistiques/series/103157792
+- Data: the INSEE BDM web service as SDMX 2.1 (https://bdm.insee.fr/series/sdmx/data/IPC-PM-2015?startPeriod=2025-01),
+  downloaded 2026-11-03 with `User-Agent: SmartBite` only (258,363 bytes; 307 series, 62 of them monthly with data
+  up to 2026-09; the series used were last updated 2026-10-15), saved as `data/raw/insee/IPC-PM-2015.xml`.
+- Period: October 2025 to September 2026 (12 months; every food used has all 12).
+
+### Reuse terms
+
+The INSEE legal notice ("Mentions légales et crédits", https://www.insee.fr/fr/information/2008466) says public
+information on insee.fr, data included, is available under the Licence Ouverte / Open Licence version 2.0 (Etalab),
+which allows free reuse, commercial reuse included, "sous réserve de mentionner la source sous la forme « Source :
+Insee », de mentionner la date de dernière mise à jour des données lorsque celle-ci est connue et de ne pas altérer le
+sens des informations ou induire en erreur quant à leur interprétation". SmartBite credits "Source : Insee" here and
+next to every estimate, gives the update date (2026-10-15, also `insee_updated` in `fr.json`), and changes the data
+(12-month means, per kg prices).
+
+### How the prices are made
+
+`data/build/build_prices_fr.py --download` saves the SDMX file; the build reads it (standard library only). Each food
+maps by hand to one monthly series by IDBANK in `data/build/prices-map-fr.json`; the build checks that the series
+title matches the map, that the series is monthly and not stopped, and that the unit at the end of the title fits the
+map size: "(1 kg)" for per kg, "(pièce)" for one piece. The price is the plain mean of the 12 monthly averages (at
+least 10 needed; months marked NaN count as missing), per kg; a piece (avocado) is priced per kg with the SmartBite
+unit weight (136 g), so one avocado costs the INSEE piece price. Match quality: 13 exact and 3 close matches get a price
+(16 foods). The close ones: beef steak (faux filet, the sirloin), and red and green bell pepper (all sweet peppers).
+Broad matches, kept to say why they have none:
+
+- kiwi: "Kiwi (pièce)" averages EUR 0.90 a kiwi, EUR 13.04 per kg of the 69 g SmartBite kiwi, about 2.9 times Spain's
+  price per kg.
+- cauliflower: "Chou-fleur (pièce)" averages EUR 3.43 a head (EUR 2.10 to 4.58 by month) with no weight stated,
+  EUR 5.83 per kg of the 588 g SmartBite head, about 3.2 times Spain's price per kg.
+- artichoke hearts: whole fresh artichokes, not jarred hearts (and only 9 of the 12 months).
+- frozen cauliflower, frozen green beans, frozen shrimp, frozen hake: fresh prices only (no hake at all).
+- canned sliced mushrooms and lemon juice: fresh mushrooms and fresh lemons only.
+- ground beef: steak cuts only. Sliced turkey breast: only cooked pork ham. Wholemeal sandwich bread: only the white
+  baguette.
+
+### Caveats
+
+- Fresh foods only. INSEE publishes average prices for a short list of items: fruit, vegetables, meat cuts, a few
+  fish and the baguette. There is no dairy, eggs, rice, pasta, legumes or canned food, so most lines show "add your
+  price".
+- Close matches stand in for similar foods: faux filet for any beef steak (rumsteck, bavette and entrecôte average
+  EUR 30.52 to 31.94 per kg, faux filet EUR 31.20), all sweet peppers for red or green ones (green ones usually cost
+  less).
+- Metropolitan France only (no overseas departments), national average only.
+- Fresh produce prices move with the season (tomatoes EUR 3.18 to 5.23 per kg by month); the 12-month mean smooths
+  that out.
+- Rebuild every quarter or so: INSEE updates the series monthly.
+
+Rebuild:
+
+```
+.venv/bin/python data/build/build_prices_fr.py --download
+.venv/bin/python data/build/build_prices_fr.py
+```

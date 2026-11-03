@@ -3,7 +3,7 @@
 // 2. A country with another currency changes the price symbol everywhere and turns Spain's estimates off.
 // 3. The country list is the 8 countries with supermarket data plus Other country; each lists its own supermarkets.
 // 4. Canada: estimated prices in CAD from Statistics Canada on the recipe page; off when turned off. The UK: GBP, ONS.
-//    The US: USD, BLS. Ireland: EUR, CSO.
+//    The US: USD, BLS. Ireland: EUR, CSO. France: EUR, INSEE (fresh foods only).
 import { expect, test } from "@playwright/test";
 
 const KOREAN = "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix";
@@ -196,4 +196,18 @@ test("Ireland gets estimated prices in EUR from the CSO", async ({ page }) => {
   const onion = page.locator("#pack-table-body tr").filter({ hasText: "onion" }).first();
   await expect(onion.getByText("est.")).toBeVisible();
   await expect(onion).toContainText("€");
+});
+
+test("France gets estimated prices in EUR from INSEE, fresh foods only", async ({ page }) => {
+  await page.goto("/profile");
+  await page.locator("#price-country").selectOption("FR");
+  await expect(page.locator("#currency")).toHaveValue("EUR");
+  await expect(page.getByText("the average price in France")).toContainText("INSEE average retail prices, fresh foods only; 16 foods have one");
+  await page.goto("/recipes/oven-baked-chicken-with-zucchini-and-orange"); // zucchini, orange, potato and onion have an INSEE price
+  await toOneServing(page);
+  await page.waitForLoadState("networkidle");
+  await expect(page.getByText("Prices marked est. are estimates (France average price, INSEE, Oct 2025 to Sep 2026)")).toBeVisible();
+  const zucchini = page.locator("#pack-table-body tr").filter({ hasText: "zucchini" }).first();
+  await expect(zucchini.getByText("est.")).toBeVisible();
+  await expect(zucchini).toContainText("€");
 });
