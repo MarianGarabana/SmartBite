@@ -1,0 +1,119 @@
+{
+ "note": "Each SmartBite food mapped by hand to one item of CSO table CPM12 (National Average Price), fetched as JSON-stat from the CSO PxStat API. The item label states its size. match: exact, close (same food, mixed with its subtypes), broad (no price, kept to show why). Only exact and close get an estimated price. Size: per kg, grams (pack weight), litres (density from packs.json) or eggs (half dozen). Foods not listed have no CSO item (no rice, legumes, canned fish, yogurt or most fruit).",
+ "foods": {
+  "banana": {
+   "match": "exact",
+   "product": "Bananas per kg",
+   "per": "kg",
+   "note": ""
+  },
+  "beef steak": {
+   "match": "close",
+   "product": "Sirloin steak per kg",
+   "per": "kg",
+   "note": "Sirloin, the everyday steak cut; striploin costs more."
+  },
+  "broccoli": {
+   "match": "exact",
+   "product": "Broccoli per kg",
+   "per": "kg",
+   "note": ""
+  },
+  "carrot": {
+   "match": "exact",
+   "product": "Carrots per kg",
+   "per": "kg",
+   "note": ""
+  },
+  "chicken breast": {
+   "match": "broad",
+   "product": "Uncooked chicken medium size 1.6kg",
+   "grams": 1600,
+   "note": "Whole chicken only: no price for breast."
+  },
+  "crushed tomatoes": {
+   "match": "close",
+   "product": "Tomatoes tinned per 400g",
+   "grams": 400,
+   "note": "All tinned tomatoes, 400 g can."
+  },
+  "eggs": {
+   "match": "exact",
+   "product": "Medium eggs per half dozen",
+   "eggs": 6,
+   "note": "Medium eggs (SmartBite counts size M); price per egg = half dozen / 6."
+  },
+  "frozen hake": {
+   "match": "broad",
+   "product": "Fresh hake per kg",
+   "per": "kg",
+   "note": "Fresh hake: no price for frozen."
+  },
+  "grated cheese": {
+   "match": "close",
+   "product": "Irish cheddar per kg",
+   "per": "kg",
+   "note": "Cheddar, the usual grated cheese."
+  },
+  "macaroni": {
+   "match": "close",
+   "product": "Spaghetti per 500g",
+   "grams": 500,
+   "note": "Spaghetti stands for dry pasta."
+  },
+  "mushrooms": {
+   "match": "exact",
+   "product": "Mushrooms per kg",
+   "per": "kg",
+   "note": ""
+  },
+  "onion": {
+   "match": "exact",
+   "product": "Onions per kg",
+   "per": "kg",
+   "note": ""
+  },
+  "pork loin": {
+   "match": "close",
+   "product": "Pork loin chops per kg",
+   "per": "kg",
+   "note": "Loin chops."
+  },
+  "potato": {
+   "match": "exact",
+   "product": "Potatoes 2.5 kg",
+   "grams": 2500,
+   "note": "2.5 kg bag."
+  },
+  "salmon": {
+   "match": "exact",
+   "product": "Fresh salmon per kg",
+   "per": "kg",
+   "note": ""
+  },
+  "semi-skimmed milk": {
+   "match": "close",
+   "product": "Low fat milk per 1 litre",
+   "litres": 1,
+   "note": "Low fat milk."
+  },
+  "sugar": {
+   "match": "exact",
+   "product": "White granulated sugar per 1 kg",
+   "grams": 1000,
+   "note": ""
+  },
+  "tomato": {
+   "match": "exact",
+   "product": "Tomatoes per kg",
+   "per": "kg",
+   "note": ""
+  },
+  "wholemeal sandwich bread": {
+   "match": "close",
+   "product": "Bread, brown sliced pan, large (800g)",
+   "grams": 800,
+   "note": "Brown sliced pan."
+  }
+ }
+}

@@ -3,7 +3,7 @@
 // 2. A country with another currency changes the price symbol everywhere and turns Spain's estimates off.
 // 3. The country list is the 8 countries with supermarket data plus Other country; each lists its own supermarkets.
 // 4. Canada: estimated prices in CAD from Statistics Canada on the recipe page; off when turned off. The UK: GBP, ONS.
-//    The US: USD, BLS.
+//    The US: USD, BLS. Ireland: EUR, CSO.
 import { expect, test } from "@playwright/test";
 
 const KOREAN = "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix";
@@ -182,4 +182,18 @@ test("the United States gets estimated prices in USD from the BLS", async ({ pag
   const beef = page.locator("#pack-table-body tr").filter({ hasText: "ground beef" });
   await expect(beef.getByText("est.")).toBeVisible();
   await expect(beef).toContainText("$");
+});
+
+test("Ireland gets estimated prices in EUR from the CSO", async ({ page }) => {
+  await page.goto("/profile");
+  await page.locator("#price-country").selectOption("IE");
+  await expect(page.locator("#currency")).toHaveValue("EUR");
+  await expect(page.getByText("the national average price in Ireland")).toContainText("CSO national average prices; 17 foods have one");
+  await page.goto("/recipes/classic-lentil-stew-with-chickpeas-and-chicken"); // carrot, onion and tinned tomatoes have a CSO price
+  await toOneServing(page);
+  await page.waitForLoadState("networkidle");
+  await expect(page.getByText("Prices marked est. are estimates (Ireland average price, CSO, Oct 2025 to Sep 2026)")).toBeVisible();
+  const onion = page.locator("#pack-table-body tr").filter({ hasText: "onion" }).first();
+  await expect(onion.getByText("est.")).toBeVisible();
+  await expect(onion).toContainText("€");
 });

@@ -231,3 +231,46 @@ Rebuild:
 .venv/bin/python data/build/build_prices_us.py --download
 .venv/bin/python data/build/build_prices_us.py
 ```
+
+## Ireland: CSO National Average Price (`ie.json`)
+
+Estimated prices for Ireland come from the Central Statistics Office (CSO), Ireland, **table CPM12, National Average
+Price**. Source: Central Statistics Office, Ireland, licensed under CC BY 4.0. Period used: October 2025 to September
+2026.
+
+- Table: https://data.cso.ie/table/CPM12
+- Data: the CSO PxStat API as JSON-stat
+  (https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/CPM12/JSON-stat/2.0/en), downloaded
+  2026-11-03 with `User-Agent: SmartBite` only (93,083 bytes; table updated 2026-10-08), saved as
+  `data/raw/cso/CPM12.json`.
+- Period: October 2025 to September 2026 (12 months; every food used has all 12).
+
+### Reuse terms
+
+The CSO copyright policy (https://www.cso.ie/en/aboutus/whoweare/copyrightpolicy/) says statistical information on
+its website is licensed under Creative Commons Attribution (CC BY 4.0). SmartBite credits the CSO here and next to every
+estimate, and changes the data (per kg prices, 12-month means).
+
+### How the prices are made
+
+`data/build/build_prices_ie.py --download` saves the table; the build reads it (standard library only). Each food maps
+by hand to one item in `data/build/prices-map-ie.json`; the item label states the size ("per kg", "per 500g", "per
+half dozen", "Potatoes 2.5 kg"). The price is the plain mean of the 12 monthly averages, per kg (milk per litre with the
+density used for the pack sizes, eggs per egg from the half dozen of medium eggs). Match quality: 10 exact and 7
+close matches get a price (17 foods); chicken breast (only whole chicken) and frozen hake (only fresh hake) are
+broad matches kept to say why they have none.
+
+### Caveats
+
+- The CSO prices few foods: no rice, legumes, canned fish, yogurt or most fruit, so many lines show "add your price".
+- Close matches stand in for similar foods: spaghetti for macaroni, brown sliced pan for wholemeal bread, cheddar for
+  grated cheese, loin chops for pork loin.
+- National average only.
+- Rebuild every quarter or so: the CSO updates the table monthly.
+
+Rebuild:
+
+```
+.venv/bin/python data/build/build_prices_ie.py --download
+.venv/bin/python data/build/build_prices_ie.py
+```

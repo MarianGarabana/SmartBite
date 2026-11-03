@@ -1,0 +1,121 @@
+{
+ "country": "IE",
+ "currency": "EUR",
+ "source": "CSO, table CPM12, National Average Price",
+ "source_url": "https://data.cso.ie/table/CPM12",
+ "files": [
+  "CPM12.json"
+ ],
+ "cso_updated": "2026-10-08T11:00:00.000Z",
+ "period_from": "2025-10",
+ "period_to": "2026-09",
+ "months": 12,
+ "built": "2026-11-03",
+ "note": "National average price in Ireland (CSO, from the Consumer Price Index collection), the mean of the monthly averages over the period. Averages over brands and shops for the size in the item's label; not a shop's price. Per kg from that size; milk per litre with the density used for the pack sizes.",
+ "foods": {
+  "banana": {
+   "match": "exact",
+   "cso_item": "Bananas per kg",
+   "months": 12,
+   "price_per_kg_eur": 1.961
+  },
+  "beef steak": {
+   "match": "close",
+   "cso_item": "Sirloin steak per kg",
+   "months": 12,
+   "price_per_kg_eur": 21.965
+  },
+  "broccoli": {
+   "match": "exact",
+   "cso_item": "Broccoli per kg",
+   "months": 12,
+   "price_per_kg_eur": 3.495
+  },
+  "carrot": {
+   "match": "exact",
+   "cso_item": "Carrots per kg",
+   "months": 12,
+   "price_per_kg_eur": 1.402
+  },
+  "crushed tomatoes": {
+   "match": "close",
+   "cso_item": "Tomatoes tinned per 400g",
+   "months": 12,
+   "price_per_kg_eur": 2.906
+  },
+  "eggs": {
+   "match": "exact",
+   "cso_item": "Medium eggs per half dozen",
+   "months": 12,
+   "price_per_unit_eur": 0.3228
+  },
+  "grated cheese": {
+   "match": "close",
+   "cso_item": "Irish cheddar per kg",
+   "months": 12,
+   "price_per_kg_eur": 11.178
+  },
+  "macaroni": {
+   "match": "close",
+   "cso_item": "Spaghetti per 500g",
+   "months": 12,
+   "price_per_kg_eur": 2.935
+  },
+  "mushrooms": {
+   "match": "exact",
+   "cso_item": "Mushrooms per kg",
+   "months": 12,
+   "price_per_kg_eur": 4.364
+  },
+  "onion": {
+   "match": "exact",
+   "cso_item": "Onions per kg",
+   "months": 12,
+   "price_per_kg_eur": 1.68
+  },
+  "pork loin": {
+   "match": "close",
+   "cso_item": "Pork loin chops per kg",
+   "months": 12,
+   "price_per_kg_eur": 10.064
+  },
+  "potato": {
+   "match": "exact",
+   "cso_item": "Potatoes 2.5 kg",
+   "months": 12,
+   "price_per_kg_eur": 1.461
+  },
+  "salmon": {
+   "match": "exact",
+   "cso_item": "Fresh salmon per kg",
+   "months": 12,
+   "price_per_kg_eur": 23.947
+  },
+  "semi-skimmed milk": {
+   "match": "close",
+   "cso_item": "Low fat milk per 1 litre",
+   "months": 12,
+   "price_per_kg_eur": 1.332,
+   "price_per_litre_eur": 1.372,
+   "grams_per_ml": 1.03
+  },
+  "sugar": {
+   "match": "exact",
+   "cso_item": "White granulated sugar per 1 kg",
+   "months": 12,
+   "price_per_kg_eur": 1.832
+  },
+  "tomato": {
+   "match": "exact",
+   "cso_item": "Tomatoes per kg",
+   "months": 12,
+   "price_per_kg_eur": 3.693
+  },
+  "wholemeal sandwich bread": {
+   "match": "close",
+   "cso_item": "Bread, brown sliced pan, large (800g)",
+   "months": 12,
+   "price_per_kg_eur": 2.317
+  }
+ }
+}
