@@ -26,6 +26,9 @@ export const KEYS = {
   name: "smartbite.name", // display name on the Profile page and in the profile menu, optional
   budget: "smartbite.budget", // budget per meal (one serving) in the user's currency: the Make Your Meal starting value
   setup: "smartbite.setup", // "done" or "skipped": the Create profile setup was finished or skipped once
+  // true once /start was shown (decided 2026-11-03). Any "smartbite." key tells app/layout.js FRONT_DOOR that this
+  // browser was here before, so "/" opens Home instead of sending it to /start.
+  startSeen: "smartbite.startSeen",
 };
 const CHANGED = "smartbite-storage";
 

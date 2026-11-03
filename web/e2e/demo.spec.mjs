@@ -1,5 +1,5 @@
 // Demo and real split (decided 2026-10-30) on the running dev server (3100) with the real engine (8100). No model runs.
-// 1. A Demo item in the top nav, one tap on phones too, opens /demo.
+// 1. /demo opens from /start, the Home box and the footer (the header Demo item left on 2026-11-03).
 // 2. /demo runs the demo flow with no key: craving, demo ideas, a demo recipe page that leads back into /demo.
 // 3. The real app shows only the user's own meals; a new visitor gets Set up profile or Try the demo.
 // 4. The demo cart is kept apart from the real cart.
@@ -10,12 +10,12 @@ const cartMeals = (page, key) => page.evaluate((k) => JSON.parse(localStorage.ge
 
 test.describe("phone", () => {
   test.use({ viewport: { width: 390, height: 844 } });
-  // Decided 2026-11-01: until the profile is complete, Get started takes the Demo item's place under 640 px
-  test("a new visitor gets Get started next to the menus; once set up, the Demo item is back", async ({ page }) => {
+  // Decided 2026-11-03: no Demo item in the header; until the profile is complete, Get started leads to /start
+  test("a new visitor gets Get started next to the menus; once set up, no pill and no Demo item", async ({ page }) => {
     for (const url of ["/", "/profile", "/privacy", "/demo"]) {
       await page.goto(url);
       await expect(page.locator("#nav-start"), url).toBeVisible();
-      await expect(page.locator("#nav-demo-phone"), url).toBeHidden();
+      await expect(page.locator("header").getByRole("link", { name: "Demo", exact: true }), url).toHaveCount(0);
       expect(await page.evaluate(() => document.documentElement.scrollWidth), url).toBeLessThanOrEqual(390);
     }
     await page.locator("#nav-start").click();
@@ -28,24 +28,23 @@ test.describe("phone", () => {
     await page.evaluate(() => { localStorage.setItem("smartbite.anthropicKey", JSON.stringify("sk-ant-test")); localStorage.setItem("smartbite.setup", JSON.stringify("done")); });
     for (const url of ["/", "/profile"]) {
       await page.goto(url);
-      await expect(page.locator("#nav-demo-phone"), url).toBeVisible();
       await expect(page.locator("#nav-start"), url).toHaveCount(0);
       expect(await page.evaluate(() => document.documentElement.scrollWidth), url).toBeLessThanOrEqual(390);
     }
-    await page.locator("#nav-demo-phone").click();
+    await page.locator("#footer-demo").click();
     await expect(page).toHaveURL(/\/demo$/);
   });
 });
 
-test("desktop: the Demo item sits after How It Works and is active in the demo", async ({ page }) => {
+test("desktop: the header ends at How It Works; the demo is in the footer", async ({ page }) => {
   await page.goto("/");
   const items = await page.locator("header nav").first().locator("button, a").allInnerTexts();
-  expect(items.slice(-2)).toEqual(["How It Works", "Demo"]);
-  await expect(page.locator("#nav-demo-phone")).toBeHidden();
+  expect(items.at(-1)).toBe("How It Works");
+  await expect(page.locator("header").getByRole("link", { name: "Demo", exact: true })).toHaveCount(0);
   await expect(page.locator("#nav-start")).toHaveText("Get started"); // new visitor: the pill to /start
-  await page.locator("#nav-demo").click();
+  await page.locator("#footer-demo").click();
   await expect(page).toHaveURL(/\/demo$/);
-  await expect(page.locator("#nav-demo")).toHaveClass(/font-semibold/);
+  await expect(page.locator("#demo-banner")).toBeVisible();
 });
 
 test("the demo runs with no key: craving, demo ideas, recipe page, and back into the demo", async ({ page }) => {
@@ -65,7 +64,6 @@ test("the demo runs with no key: craving, demo ideas, recipe page, and back into
   await page.getByRole("dialog").getByRole("button", { name: "Select meal" }).click();
   await page.waitForURL(new RegExp(`/recipes/${DEMO_SLUG}$`));
   await expect(page.getByText("Demo Meal", { exact: true })).toBeVisible();
-  await expect(page.locator("#nav-demo")).toHaveClass(/font-semibold/);
 
   // Header and the Back link lead back into the demo, not the real app
   await page.locator("#nav-cart").click();

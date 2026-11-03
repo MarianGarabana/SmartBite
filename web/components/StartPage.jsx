@@ -5,7 +5,8 @@
 // Cards and buttons reuse the Make Your Meal and setup card styles (design freeze).
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { profileComplete } from "../lib/store";
+import { useEffect } from "react";
+import { KEYS, profileComplete, writeJson } from "../lib/store";
 import { PageShell, useProfileComplete, useToast } from "./Chrome";
 import ProfileFileOpen from "./ProfileFileOpen";
 import { openSetup } from "./SetupDialog";
@@ -17,6 +18,7 @@ export default function StartPage({ demoMeals }) {
   const router = useRouter();
   const toastState = useToast();
   const complete = useProfileComplete();
+  useEffect(() => { writeJson(KEYS.startSeen, true); }, []); // "/" stops sending this browser here (app/layout.js)
   const afterSetup = (state, opts) => {
     if (state !== "done" || opts?.profile) return;
     if (profileComplete()) router.push("/?tab=make-meal");

@@ -17,6 +17,10 @@ export default defineConfig({
   reporter: "list",
   use: {
     baseURL: "http://127.0.0.1:3100",
+    // Every test browser has seen /start once, so "/" opens Home (app/layout.js FRONT_DOOR); the front door tests in
+    // e2e/start.spec.mjs start from empty storage
+    storageState: { cookies: [], origins: [{ origin: "http://127.0.0.1:3100",
+      localStorage: [{ name: "smartbite.startSeen", value: "true" }] }] },
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },

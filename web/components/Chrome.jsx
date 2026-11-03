@@ -22,7 +22,7 @@ export const TABS = [
   { id: "how-it-works", label: "How It Works" },
 ];
 // Demo mode (decided 2026-10-30): /demo and the demo meals' recipe pages, set by their server pages with DemoMode.
-// There the cart has its own storage key and the Demo nav item is active. page: a page outside the tabs (a demo
+// There the cart has its own storage key and a banner says it is the demo. page: a page outside the tabs (a demo
 // recipe page), whose header and footer lead back into the /demo tabs.
 const ModeContext = createContext({ demo: false, page: false });
 export function DemoMode({ page = false, children }) {
@@ -424,19 +424,8 @@ function TabsMenu({ active, onNavigate }) {
   );
 }
 
-// The Demo item (decided 2026-10-30): next to How It Works on desktop, and on phones outside the menu (one tap)
-function DemoLink({ id, className, demo, onNavigate }) {
-  return (
-    <Link href="/demo" id={id} onClick={demo ? (e) => { e.preventDefault(); onNavigate("home"); } : undefined}
-      className={`${className} rounded-full hover:text-forest hover:bg-forest/5 transition-all ${demo ? "font-semibold bg-forest/5 text-forest" : "text-forest/70"}`}>
-      Demo
-    </Link>
-  );
-}
-
 export function Header({ active, onNavigate: navigate, cartCount }) {
   const onNavigate = useTabNav(navigate);
-  const demo = useDemo();
   // Get started (decided 2026-11-01): a lime pill to /start until the profile is complete (key and setup), on every
   // page but /start itself. Hidden while storage is unread (null) so it never flashes for a set-up visitor.
   const complete = useProfileComplete();
@@ -447,7 +436,7 @@ export function Header({ active, onNavigate: navigate, cartCount }) {
       <SetupHost />
       <div className="max-w-[1360px] mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-3">
 
-        {/* Under 460 px the name hides behind the leaf (decided 2026-10-30), so the Demo item fits next to the menus */}
+        {/* Under 460 px the name hides behind the leaf (decided 2026-10-30), so the Get started pill fits next to the menus */}
         <a href="/" aria-label="SmartBite" onClick={(e) => { e.preventDefault(); onNavigate("home"); }} className="flex items-center gap-2.5 group">
           <div className="w-10 h-10 rounded-full bg-forest flex items-center justify-center text-lime group-hover:bg-lime group-hover:text-forest transition-colors shadow-sm">
             <i className="fa-solid fa-leaf text-base"></i>
@@ -482,12 +471,11 @@ export function Header({ active, onNavigate: navigate, cartCount }) {
               </button>
             );
           })}
-          <DemoLink id="nav-demo" className="nav-btn px-4 py-2" demo={demo} onNavigate={onNavigate} />
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-4">
-          {/* Under 640 px the Get started pill takes the Demo item's place; /start offers the demo too */}
-          <DemoLink id="nav-demo-phone" className={`lg:hidden px-3 py-2 font-medium text-sm${showStart ? " max-sm:hidden" : ""}`} demo={demo} onNavigate={onNavigate} />
+          {/* No Demo item since 2026-11-03: the demo is on /start (where "/" sends new visitors), the Home box and
+              the footer */}
           <TabsMenu active={active} onNavigate={onNavigate} />
           <ProfileMenu active={active} />
           {showStart && (
@@ -523,6 +511,7 @@ export function Footer({ onNavigate: navigate }) {
           {TABS.map((t) => (
             <button key={t.id} onClick={() => onNavigate(t.id)} className="hover:text-lime transition-colors">{t.label}</button>
           ))}
+          <Link href="/demo" id="footer-demo" className="hover:text-lime transition-colors">Demo</Link>
           <Link href="/profile" className="hover:text-lime transition-colors">Profile</Link>
           <Link href="/privacy" className="hover:text-lime transition-colors">Privacy</Link>
           <a href={REPO_URL} target="_blank" rel="noopener noreferrer" className="hover:text-lime transition-colors">Source code</a>

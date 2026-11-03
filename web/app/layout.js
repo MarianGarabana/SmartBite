@@ -22,9 +22,20 @@ export const metadata = {
   twitter: { card: "summary_large_image", title, description },
 };
 
+// Front door (decided 2026-11-03): a browser with no SmartBite storage at all (no "smartbite." key in localStorage)
+// that opens "/" with no ?tab= goes to /start first, to pick API key, demo or profile file. /start sets
+// smartbite.startSeen, so it happens once. It runs in <head> before the page paints and hides it while the browser
+// moves on, so Home never flashes. Blocked storage: no redirect. Client-side moves to "/" never run it.
+const FRONT_DOOR = `(function(){try{if(location.pathname!=="/"||/[?&]tab=/.test(location.search))return;var s=window.localStorage;
+for(var i=0;i<s.length;i++){if((s.key(i)||"").indexOf("smartbite.")===0)return}
+document.documentElement.style.visibility="hidden";location.replace("/start")}catch(e){}})()`;
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${caveat.variable} ${playfair.variable} ${jakarta.variable}`}>
+      <head>
+        <script id="front-door" dangerouslySetInnerHTML={{ __html: FRONT_DOOR }} />
+      </head>
       <body className="bg-cream text-forest selection:bg-lime selection:text-forest">
         {children}
         {/* Only on Vercel: a copy run elsewhere has no analytics endpoint */}
