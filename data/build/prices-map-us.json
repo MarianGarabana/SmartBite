@@ -1,0 +1,152 @@
+{
+ "note": "Each SmartBite food mapped by hand to one BLS Average Price Data series (area 0000, U.S. city average), fetched from the BLS public API v1. match: exact, close (same food, mixed with its subtypes), broad (no price, kept to show why). Only exact and close get an estimated price. Size: grams (453.6 per lb, or the stated ounces), litres (3.785 per gallon, density from packs.json) or eggs (per dozen). Series with no 2025 or 2026 data in the API (peanut butter, apples, canned tuna, broccoli, peppers, onions, carrots, cucumbers) are not listed.",
+ "foods": {
+  "banana": {
+   "match": "exact",
+   "series": "APU0000711211",
+   "product": "Bananas, per lb.",
+   "grams": 453.6,
+   "note": ""
+  },
+  "beef steak": {
+   "match": "close",
+   "series": "APU0000703613",
+   "product": "Steak, sirloin, USDA Choice, boneless, per lb.",
+   "grams": 453.6,
+   "note": "Sirloin, the everyday steak cut."
+  },
+  "canned sweetcorn": {
+   "match": "close",
+   "series": "APU0000714221",
+   "product": "Corn, canned, any style, all sizes, per lb.",
+   "grams": 453.6,
+   "note": "Any canned corn, per lb of net weight; SmartBite packs are drained weight, so the estimate can be low."
+  },
+  "chicken breast": {
+   "match": "exact",
+   "series": "APU0000FF1101",
+   "product": "Chicken breast, boneless, per lb.",
+   "grams": 453.6,
+   "note": ""
+  },
+  "dried chickpeas": {
+   "match": "close",
+   "series": "APU0000714233",
+   "product": "Beans, dried, any type, all sizes, per lb.",
+   "grams": 453.6,
+   "note": "All dried beans."
+  },
+  "dried lentils": {
+   "match": "broad",
+   "series": "APU0000714233",
+   "product": "Beans, dried, any type, all sizes, per lb.",
+   "grams": 453.6,
+   "note": "Beans, not lentils: no price."
+  },
+  "eggs": {
+   "match": "exact",
+   "series": "APU0000708111",
+   "product": "Eggs, grade A, large, per doz.",
+   "eggs": 12,
+   "note": "Price per egg = price of a dozen / 12."
+  },
+  "grated cheese": {
+   "match": "close",
+   "series": "APU0000710212",
+   "product": "Cheddar cheese, natural, per lb.",
+   "grams": 453.6,
+   "note": "Cheddar, the usual shredded cheese."
+  },
+  "ground beef": {
+   "match": "exact",
+   "series": "APU0000703112",
+   "product": "Ground beef, 100% beef, per lb.",
+   "grams": 453.6,
+   "note": ""
+  },
+  "lemon": {
+   "match": "exact",
+   "series": "APU0000711412",
+   "product": "Lemons, per lb.",
+   "grams": 453.6,
+   "note": ""
+  },
+  "lettuce": {
+   "match": "close",
+   "series": "APU0000FL2101",
+   "product": "Lettuce, romaine, per lb.",
+   "grams": 453.6,
+   "note": "Romaine; iceberg has only 9 of the 12 months."
+  },
+  "macaroni": {
+   "match": "close",
+   "series": "APU0000701322",
+   "product": "Spaghetti and macaroni, per lb.",
+   "grams": 453.6,
+   "note": "Spaghetti and macaroni together."
+  },
+  "orange": {
+   "match": "broad",
+   "series": "APU0000711311",
+   "product": "Oranges, Navel, per lb.",
+   "grams": 453.6,
+   "note": "Only 9 of the 12 months in the period: no price."
+  },
+  "plain yogurt 0%": {
+   "match": "close",
+   "series": "APU0000FJ4101",
+   "product": "Yogurt, per 8 oz.",
+   "grams": 226.8,
+   "note": "All yogurt, any fat or flavour, per 8 oz (226.8 g)."
+  },
+  "pork loin": {
+   "match": "close",
+   "series": "APU0000704212",
+   "product": "Chops, boneless, per lb.",
+   "grams": 453.6,
+   "note": "Boneless pork chops (loin)."
+  },
+  "potato": {
+   "match": "exact",
+   "series": "APU0000712112",
+   "product": "Potatoes, white, per lb.",
+   "grams": 453.6,
+   "note": ""
+  },
+  "rice": {
+   "match": "exact",
+   "series": "APU0000701312",
+   "product": "Rice, white, long grain, uncooked, per lb.",
+   "grams": 453.6,
+   "note": ""
+  },
+  "semi-skimmed milk": {
+   "match": "close",
+   "series": "APU0000FJ1101",
+   "product": "Milk, fresh, low-fat, reduced fat, skim, per gal.",
+   "litres": 3.785,
+   "note": "Low-fat, reduced fat and skim together, per gallon (3.785 l)."
+  },
+  "strawberries": {
+   "match": "exact",
+   "series": "APU0000711415",
+   "product": "Strawberries, dry pint, per 12 oz.",
+   "grams": 340.2,
+   "note": "12 oz (340.2 g)."
+  },
+  "tomato": {
+   "match": "exact",
+   "series": "APU0000712311",
+   "product": "Tomatoes, field grown, per lb.",
+   "grams": 453.6,
+   "note": ""
+  },
+  "wholemeal sandwich bread": {
+   "match": "broad",
+   "series": "APU0000702212",
+   "product": "Bread, whole wheat, pan, per lb.",
+   "grams": 453.6,
+   "note": "Only 7 of the 12 months in the period: no price."
+  }
+ }
+}

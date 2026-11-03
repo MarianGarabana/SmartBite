@@ -1,0 +1,145 @@
+{
+ "country": "US",
+ "currency": "USD",
+ "source": "U.S. Bureau of Labor Statistics, Average Price Data (U.S. city average)",
+ "source_url": "https://www.bls.gov/cpi/factsheets/average-prices.htm",
+ "files": [
+  "ap.json"
+ ],
+ "fetched": "2026-11-03",
+ "period_from": "2025-10",
+ "period_to": "2026-09",
+ "months": 12,
+ "built": "2026-11-03",
+ "note": "Average price in U.S. cities (BLS, prices collected for the Consumer Price Index), the mean of the monthly averages in the period; October 2025 has no data (2025 lapse in appropriations). Averages over brands and stores; not a store's price. Per kg from per lb (453.6 g) or the stated ounces; milk per gallon (3.785 l) with the density used for the pack sizes. Prices are in USD (fields named _eur hold the table's currency).",
+ "foods": {
+  "banana": {
+   "match": "exact",
+   "bls_series": "APU0000711211",
+   "bls_item": "Bananas, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 1.44
+  },
+  "beef steak": {
+   "match": "close",
+   "bls_series": "APU0000703613",
+   "bls_item": "Steak, sirloin, USDA Choice, boneless, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 31.271
+  },
+  "canned sweetcorn": {
+   "match": "close",
+   "bls_series": "APU0000714221",
+   "bls_item": "Corn, canned, any style, all sizes, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 2.812
+  },
+  "chicken breast": {
+   "match": "exact",
+   "bls_series": "APU0000FF1101",
+   "bls_item": "Chicken breast, boneless, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 9.185
+  },
+  "dried chickpeas": {
+   "match": "close",
+   "bls_series": "APU0000714233",
+   "bls_item": "Beans, dried, any type, all sizes, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 3.701
+  },
+  "eggs": {
+   "match": "exact",
+   "bls_series": "APU0000708111",
+   "bls_item": "Eggs, grade A, large, per doz.",
+   "months": 11,
+   "price_per_unit_eur": 0.1993
+  },
+  "grated cheese": {
+   "match": "close",
+   "bls_series": "APU0000710212",
+   "bls_item": "Cheddar cheese, natural, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 13.006
+  },
+  "ground beef": {
+   "match": "exact",
+   "bls_series": "APU0000703112",
+   "bls_item": "Ground beef, 100% beef, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 14.929
+  },
+  "lemon": {
+   "match": "exact",
+   "bls_series": "APU0000711412",
+   "bls_item": "Lemons, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 4.515
+  },
+  "lettuce": {
+   "match": "close",
+   "bls_series": "APU0000FL2101",
+   "bls_item": "Lettuce, romaine, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 7.68
+  },
+  "macaroni": {
+   "match": "close",
+   "bls_series": "APU0000701322",
+   "bls_item": "Spaghetti and macaroni, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 2.962
+  },
+  "plain yogurt 0%": {
+   "match": "close",
+   "bls_series": "APU0000FJ4101",
+   "bls_item": "Yogurt, per 8 oz.",
+   "months": 11,
+   "price_per_kg_eur": 6.832
+  },
+  "pork loin": {
+   "match": "close",
+   "bls_series": "APU0000704212",
+   "bls_item": "Chops, boneless, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 10.021
+  },
+  "potato": {
+   "match": "exact",
+   "bls_series": "APU0000712112",
+   "bls_item": "Potatoes, white, per lb.",
+   "months": 10,
+   "price_per_kg_eur": 1.987
+  },
+  "rice": {
+   "match": "exact",
+   "bls_series": "APU0000701312",
+   "bls_item": "Rice, white, long grain, uncooked, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 2.385
+  },
+  "semi-skimmed milk": {
+   "match": "close",
+   "bls_series": "APU0000FJ1101",
+   "bls_item": "Milk, fresh, low-fat, reduced fat, skim, per gal.",
+   "months": 11,
+   "price_per_kg_eur": 0.91,
+   "price_per_litre_eur": 0.937,
+   "grams_per_ml": 1.03
+  },
+  "strawberries": {
+   "match": "exact",
+   "bls_series": "APU0000711415",
+   "bls_item": "Strawberries, dry pint, per 12 oz.",
+   "months": 10,
+   "price_per_kg_eur": 8.117
+  },
+  "tomato": {
+   "match": "exact",
+   "bls_series": "APU0000712311",
+   "bls_item": "Tomatoes, field grown, per lb.",
+   "months": 11,
+   "price_per_kg_eur": 4.594
+  }
+ }
+}

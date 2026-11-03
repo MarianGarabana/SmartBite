@@ -7,6 +7,8 @@ Canada (CA): average price paid (grocery transaction data), Statistics Canada ta
 hold the table's currency), national only.
 United Kingdom (GB): average price, ONS Shopping prices comparison tool (price quotes and supermarket scanner data),
 mean of 12 months, in GBP, national only.
+United States (US): average price, BLS Average Price Data (U.S. city average), mean of the months with data in the
+latest 12 (October 2025 has none), in USD.
 A pack's estimate is price per kg x pack weight (eggs: price per egg x eggs), rounded to 0.05 in the table's currency;
 a price the user types always wins.
 """
@@ -15,7 +17,7 @@ from functools import lru_cache
 from pathlib import Path
 
 PRICES_DIR = Path(__file__).resolve().parents[1] / "data" / "open" / "prices"
-COUNTRIES = ("CA", "ES", "GB")
+COUNTRIES = ("CA", "ES", "GB", "US")
 STEP_EUR = 0.05
 
 
@@ -42,7 +44,7 @@ def for_region(table, region):
 
 
 def round_price(eur):
-    """Rounded to 0.05 (EUR, CAD, GBP), never below 0.05."""
+    """Rounded to 0.05 (EUR, CAD, GBP, USD), never below 0.05."""
     return max(STEP_EUR, round(round(eur / STEP_EUR) * STEP_EUR, 2))
 
 

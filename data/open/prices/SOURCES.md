@@ -181,3 +181,53 @@ Rebuild:
 curl -L -A SmartBite -o data/raw/ons/datadownload.xlsx https://github.com/onsdigital/cpi-items-actions/raw/main/datadownload.xlsx
 .venv/bin/python data/build/build_prices_gb.py
 ```
+
+## United States: BLS Average Price Data (`us.json`)
+
+Estimated prices for the United States come from the U.S. Bureau of Labor Statistics (BLS), **Average Price Data**,
+U.S. city average (series APU0000...). Cite as: "U.S. Bureau of Labor Statistics, Average Price Data, U.S. city
+average, October 2025 to September 2026."
+
+- Fact sheet: https://www.bls.gov/cpi/factsheets/average-prices.htm
+- Data: the BLS public API v1 (https://api.bls.gov/publicAPI/v1/timeseries/data/, no key), fetched 2026-11-03 with
+  `User-Agent: SmartBite` only, saved as `data/raw/bls/ap.json`. The bulk files on download.bls.gov and the www.bls.gov
+  pages answered 403 to that header, so the API is the only route used.
+- Period: October 2025 to September 2026. October 2025 has no data; the API marks it "Data unavailable due to the
+  2025 lapse in appropriations". Most foods average the other 11 months; strawberries and potatoes 10.
+- Method: average prices of the items the BLS prices for the Consumer Price Index, per stated unit (per lb, per dozen
+  eggs, per gallon of milk, per 8 or 12 oz).
+
+### Reuse terms
+
+Works of the U.S. federal government are not subject to copyright in the United States (17 U.S.C. 105), so BLS data
+are in the public domain; the BLS asks for a citation, given above. (The BLS copyright page could not be read from the
+build machine: www.bls.gov answered 403.)
+
+### How the prices are made
+
+`data/build/build_prices_us.py --download` fetches the mapped series from the API (one request per 25 series) and
+saves the reply; the build then reads the saved file. Each food maps by hand to one series in
+`data/build/prices-map-us.json`, with its unit: per lb as 453.6 g, ounces as stated, milk per gallon (3.785 l, per kg
+with the density used for the pack sizes) and eggs per dozen (per egg). The price is the plain mean of the monthly
+averages with data in the latest 12 calendar months; a food needs at least 10. Match quality: 9 exact and 9
+close matches get a price (18 foods); dried lentils (dried beans only), oranges (9 of 12 months) and wholemeal
+bread (7 of 12) are broad matches kept to say why they have none. The BLS API returned no 2025 or 2026 data for the
+apple, broccoli, pepper, onion, carrot, cucumber, canned tuna and peanut butter series: those foods have no estimate.
+
+### Caveats
+
+- Fewer foods than the other countries: the BLS prices about 60 food items, and many fresh items are no longer
+  published.
+- Per-lb prices of loose fruit are for the whole fruit; SmartBite weighs the part you eat (a lemon is 58 g), so the
+  estimate for one lemon or banana is on the low side.
+- Close matches mix subtypes (low-fat, reduced fat and skim milk together; any yogurt for 0% plain; all dried beans
+  for chickpeas; cheddar for grated cheese).
+- U.S. city average only; the BLS also publishes four regions, not used yet.
+- Rebuild every quarter or so: the BLS publishes monthly with the CPI.
+
+Rebuild:
+
+```
+.venv/bin/python data/build/build_prices_us.py --download
+.venv/bin/python data/build/build_prices_us.py
+```

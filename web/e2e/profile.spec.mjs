@@ -3,6 +3,7 @@
 // 2. A country with another currency changes the price symbol everywhere and turns Spain's estimates off.
 // 3. The country list is the 8 countries with supermarket data plus Other country; each lists its own supermarkets.
 // 4. Canada: estimated prices in CAD from Statistics Canada on the recipe page; off when turned off. The UK: GBP, ONS.
+//    The US: USD, BLS.
 import { expect, test } from "@playwright/test";
 
 const KOREAN = "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix";
@@ -41,18 +42,18 @@ test("a country's currency shows on prices, and Spain's estimates need euros", a
   await expect(page.locator("#summary-bought-cost")).toContainText("€");
 
   await page.goto("/profile");
-  await page.locator("#price-country").selectOption("US"); // no estimated prices for the US yet
-  await expect(page.locator("#currency")).toHaveValue("USD");
+  await page.locator("#price-country").selectOption("AU"); // no estimated prices for Australia
+  await expect(page.locator("#currency")).toHaveValue("AUD");
   await page.goto(`/recipes/${KOREAN}`);
   await toOneServing(page);
   await page.waitForLoadState("networkidle");
   await expect(page.locator("#pack-table-body").getByText("est.")).toHaveCount(0);
   await expect(page.locator("#summary-bought-cost")).toHaveText("No prices yet");
   const beef = page.locator("#pack-table-body tr").filter({ hasText: "ground beef" });
-  await expect(beef.locator("input")).toHaveAttribute("placeholder", "$ / pack");
+  await expect(beef.locator("input")).toHaveAttribute("placeholder", "A$ / pack");
   await beef.locator("input").fill("4.99");
-  await expect(beef).toContainText("$4.99");
-  await expect(page.locator("#summary-bought-cost")).toContainText("$4.99");
+  await expect(beef).toContainText("A$ 4.99"); // symbols longer than one character get a space, as for CA$
+  await expect(page.locator("#summary-bought-cost")).toContainText(/A\$ ?4\.99/);
 
   // Back to Spain but paying in pounds: estimates stay off; then euros brings them back
   await page.goto("/profile");
@@ -167,4 +168,18 @@ test("the United Kingdom gets estimated prices in GBP from the ONS", async ({ pa
   const beef = page.locator("#pack-table-body tr").filter({ hasText: "ground beef" });
   await expect(beef.getByText("est.")).toBeVisible();
   await expect(beef).toContainText("£");
+});
+
+test("the United States gets estimated prices in USD from the BLS", async ({ page }) => {
+  await page.goto("/profile");
+  await page.locator("#price-country").selectOption("US");
+  await expect(page.locator("#currency")).toHaveValue("USD");
+  await expect(page.getByText("the average price in the United States")).toContainText("U.S. Bureau of Labor Statistics average prices; 18 foods have one");
+  await page.goto(`/recipes/${KOREAN}`);
+  await toOneServing(page);
+  await page.waitForLoadState("networkidle");
+  await expect(page.getByText("Prices marked est. are estimates (United States average price, BLS, Oct 2025 to Sep 2026)")).toBeVisible();
+  const beef = page.locator("#pack-table-body tr").filter({ hasText: "ground beef" });
+  await expect(beef.getByText("est.")).toBeVisible();
+  await expect(beef).toContainText("$");
 });

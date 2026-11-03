@@ -388,7 +388,8 @@ export function openProfile(data) {
 
 // Country: picks the supermarket list and, where SmartBite has them, estimated prices (engine,
 // docs/contracts/evaluate.schema.json "country"): average prices fill the lines the user did not price (ESTIMATES:
-// Spain from MAPA, nationally or per comunidad autonoma; Canada from Statistics Canada; the UK from the ONS). Labels come from the browser (Intl), in English.
+// Spain from MAPA, nationally or per comunidad autonoma; Canada from Statistics Canada; the UK from the ONS; the US
+// from the BLS). Labels come from the browser (Intl), in English.
 // The list holds the countries with supermarket data (decided 2026-11-03) and "Other country" (generic packs, no
 // stores, no estimates). A saved code from the full ISO list that is not supported reads as "Other country" but stays
 // in storage, so its currency still follows it.
@@ -429,8 +430,8 @@ export const REGIONS = {
 export const NATIONAL = "national"; // the country's average
 export const ESTIMATES_OFF = "off"; // only the prices the user types
 // Countries with estimated prices (data/open/prices/<country>.json; the engine's country enum): currency, source and
-// how many foods have one (a test checks foods against the data). Spain since 2026-10-19, Canada and the UK since
-// 2026-11-03.
+// how many foods have one (a test checks foods against the data). Spain since 2026-10-19, Canada, the UK and the US
+// since 2026-11-03.
 export const ESTIMATES = {
   ES: { currency: "EUR", source: "MAPA", sourceLong: "MAPA household consumption panel", kind: "average price paid",
     phrase: "the average price households paid", foods: 76 },
@@ -438,6 +439,8 @@ export const ESTIMATES = {
     kind: "average price paid", phrase: "the average price shoppers paid", foods: 53 },
   GB: { currency: "GBP", source: "ONS", sourceLong: "ONS shopping prices comparison tool", kind: "average price",
     phrase: "the average price", foods: 50 },
+  US: { currency: "USD", source: "BLS", sourceLong: "U.S. Bureau of Labor Statistics average prices", kind: "average price",
+    phrase: "the average price", foods: 18 },
 };
 export const hasEstimates = (country) => !!ESTIMATES[country];
 export const regionLabel = (id) => Object.values(REGIONS).flat().find((r) => r.id === id)?.label || null;

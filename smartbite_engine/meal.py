@@ -7,7 +7,7 @@ pack_meal for the whole cart. Macros are for what is eaten (pantry items include
 Names that are not a known food are listed in `unresolved`, never guessed: they get no nutrition (left out of the
 totals and listed in missing_nutrition) and no pack size.
 
-With a country ("ES", "CA" or "GB"), lines the user did not price get an estimated price from that country's
+With a country ("ES", "CA", "GB" or "US"), lines the user did not price get an estimated price from that country's
 average prices (estimated_prices.py), for the same pack size the line buys without a price. The user's price wins.
 
 A product the user saved for a food (request products, picked by the browser for their store) is that food's only
@@ -339,7 +339,7 @@ def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None,
     prices: optional user prices, {food key: price of the default pack}, {food key: {price_eur, other_prices,
     price_date}}, or the API's list form [{food, pack_grams, price_eur}] (docs/contracts/evaluate.schema.json).
     With no prices the budget check is marked incomplete and every line uses typical pack sizes.
-    country: optional, "ES", "CA" or "GB": lines without a user price get an estimated price (price_source "estimate"); the pack
+    country: optional, "ES", "CA", "GB" or "US": lines without a user price get an estimated price (price_source "estimate"); the pack
     then says whether the budget counts estimates (prices_estimated) and where they come from (estimate_source).
     Without a country the reply is the same as before estimates existed.
     region: optional, with a country only, e.g. "ES-MD": foods with a regional average use it (line price_region)
