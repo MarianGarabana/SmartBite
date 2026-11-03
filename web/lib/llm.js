@@ -28,6 +28,12 @@ const LABEL = { ideas: "ideas", revision: "changed idea", recipe: "recipe" };
 // Sent only to Gemini's endpoint: other OpenAI-compatible endpoints may reject the field.
 const GEMINI_EFFORT = { ideas: "low", revision: "low" };
 const GEMINI_HOST = "generativelanguage.googleapis.com";
+// Time limit per model call (decided 2026-11-03), so a stuck call ends with a message instead of spinning forever.
+// Live eval, successful calls: gemini-3.6-flash max 22 s, gemini-3.5-flash-lite max 3 s, gemini-3.8-flash max 575 s
+// (8 of 36 calls over 5 min). Counts from the request until the whole reply is read.
+export const CALL_TIMEOUT_MS = 5 * 60 * 1000;
+export const TIMEOUT_MESSAGE = "The AI provider did not answer within 5 minutes, so SmartBite stopped waiting. " +
+  "Try again, or pick a faster model in your Profile (for Gemini: gemini-3.6-flash).";
 
 export class LlmError extends Error {
   constructor(message) {
@@ -61,10 +67,24 @@ const hostOf = (url) => {
 };
 
 async function post(url, headers, body, llm) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), CALL_TIMEOUT_MS);
+  try {
+    return await send(url, headers, body, llm, controller.signal);
+  } catch (e) {
+    if (controller.signal.aborted) throw new LlmError(TIMEOUT_MESSAGE);
+    throw e;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function send(url, headers, body, llm, signal) {
   let res;
   try {
-    res = await fetch(url, { method: "POST", headers, body: JSON.stringify(body) });
-  } catch {
+    res = await fetch(url, { method: "POST", headers, body: JSON.stringify(body), signal });
+  } catch (e) {
+    if (signal.aborted) throw e;
     const where = hostOf(url);
     throw new LlmError(llm.provider === ANTHROPIC
       ? `Could not reach ${where}. Check your connection and try again.`
@@ -73,7 +93,9 @@ async function post(url, headers, body, llm) {
   let data = null;
   try {
     data = await res.json();
-  } catch {}
+  } catch (e) {
+    if (signal.aborted) throw e;
+  }
   if (!res.ok) {
     const err = Array.isArray(data) ? data[0] : data; // Gemini wraps errors in a list
     const detail = redact(err?.error?.message || err?.message || res.statusText || "", llm.apiKey);

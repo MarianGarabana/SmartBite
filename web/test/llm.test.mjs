@@ -1,14 +1,14 @@
 // lib/llm.js and lib/engine.js with fetch mocked: request shapes for Anthropic and OpenAI-compatible endpoints,
 // one retry with the error list, and the key kept out of everything but the provider's header. No real API calls.
 import assert from "node:assert/strict";
-import test from "node:test";
+import test, { mock } from "node:test";
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { missingMainFoods } from "../lib/contracts.js";
 import { evaluateMeal } from "../lib/engine.js";
-import { ANTHROPIC_URL, generateIdeas, redact, reviseIdea, writeRecipe } from "../lib/llm.js";
+import { ANTHROPIC_URL, CALL_TIMEOUT_MS, TIMEOUT_MESSAGE, generateIdeas, redact, reviseIdea, writeRecipe } from "../lib/llm.js";
 
 const KEY = "sk-ant-api03-SECRET-test-key-1234";
 const OPENAI_KEY = "sk-proj-SECRET-openai-5678";
@@ -157,6 +157,36 @@ test("errors never show the key; refusals and network errors are plain messages"
   const calls = mockFetch([anthropicReply(IDEAS)]);
   await assert.rejects(generateIdeas({ form: FORM, profile: null, llm: { ...ANTHROPIC, apiKey: "" } }), /Add your Anthropic API key/);
   assert.equal(calls.length, 0, "no request without a key");
+});
+
+// A provider that never answers: fetch (or the reply body) waits until the request is aborted
+const hang = (signal) => new Promise((_, reject) => signal.addEventListener("abort", () => {
+  const e = new Error("This operation was aborted");
+  e.name = "AbortError";
+  reject(e);
+}));
+
+test("a call with no answer stops after the time limit with a clear message", async (t) => {
+  t.after(() => mock.timers.reset());
+  mock.timers.enable({ apis: ["setTimeout"] });
+  for (const [llm, slowPart] of [[OPENAI, "fetch"], [ANTHROPIC, "fetch"], [OPENAI, "body"]]) {
+    let signal = null;
+    globalThis.fetch = async (url, init) => {
+      signal = init.signal;
+      if (slowPart === "fetch") return hang(init.signal);
+      return { ok: true, status: 200, statusText: "", json: () => hang(init.signal) };
+    };
+    const pending = generateIdeas({ form: FORM, profile: null, llm }).catch((e) => e);
+    await new Promise((r) => setImmediate(r));
+    assert.ok(signal, "fetch gets an abort signal");
+    mock.timers.tick(CALL_TIMEOUT_MS - 1);
+    assert.equal(signal.aborted, false, "still waiting just before the limit");
+    mock.timers.tick(1);
+    const err = await pending;
+    assert.equal(err.name, "LlmError");
+    assert.equal(err.message, TIMEOUT_MESSAGE, `${llm.provider} ${slowPart}`);
+  }
+  assert.equal(CALL_TIMEOUT_MS, 300000);
 });
 
 test("engine: POSTs {form, profile, picked_idea, recipe} to /api/evaluate, never the key", async () => {
