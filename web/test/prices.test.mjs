@@ -355,3 +355,35 @@ test("demo mode picks the demo meals closest to the craving, without foods the u
   // No word matches: the list order, as before
   assert.deepEqual(names("salmon sushi"), meals.slice(0, 4).map((m) => m.name));
 });
+
+// ESTIMATES (decided 2026-11-03, Canada added): one entry per data/open/prices/<country>.json, same currency and food
+// count, and the estimate wording follows the country
+test("estimated-price countries match the price tables", async () => {
+  const dir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "data", "open", "prices");
+  const tables = fs.readdirSync(dir).filter((f) => /^[a-z]{2}\.json$/.test(f))
+    .map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")));
+  assert.deepEqual(Object.keys(store.ESTIMATES).sort(), tables.map((t) => t.country).sort());
+  for (const t of tables) {
+    assert.equal(store.ESTIMATES[t.country].currency, t.currency, t.country);
+    assert.equal(store.ESTIMATES[t.country].foods, Object.keys(t.foods).length, t.country);
+    assert.equal(store.ESTIMATE_CURRENCY[t.country], t.currency);
+    assert.equal(store.hasEstimates(t.country), true);
+  }
+  assert.equal(store.hasEstimates("GB"), false);
+  const { estimateLabel } = await import("../lib/meal.js");
+  assert.equal(estimateLabel("2025-09/2026-08", null, "CA"), "Canada average price paid, Statistics Canada, Sep 2025 to Aug 2026");
+  assert.equal(estimateLabel("2025-08/2026-07", "ES-MD", "ES"), "Comunidad de Madrid average price paid, MAPA, Aug 2025 to Jul 2026");
+});
+
+test("Canada gets estimates in CAD, and they are off in another currency", () => {
+  const data = fakeWindow();
+  store.writeCountry("CA");
+  assert.equal(store.readCurrency(), "CAD");
+  assert.deepEqual(store.engineEstimates(), { country: "CA", region: null });
+  store.writeRegion("off");
+  assert.deepEqual(store.engineEstimates(), { country: null, region: null });
+  store.writeRegion("national");
+  store.writeCurrency("USD");
+  assert.deepEqual(store.engineEstimates(), { country: null, region: null });
+  assert.equal(JSON.parse(data[store.KEYS.country]), "CA");
+});

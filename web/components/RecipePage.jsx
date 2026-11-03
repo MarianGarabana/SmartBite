@@ -13,7 +13,7 @@ import { estimateTitle, periodText, toMeal } from "../lib/meal";
 import { tabUrl } from "../lib/site";
 import { packRow, totals } from "../lib/packs";
 import { MAX_PHOTO_BYTES, deletePhoto, putPhoto, usePhoto } from "../lib/photos";
-import { COUNTRIES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, setLinePrice, setSaved } from "../lib/store";
+import { COUNTRIES, ESTIMATES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, setLinePrice, setSaved } from "../lib/store";
 import { AiLabel, Footer, Header, MealImage, RECIPE_TABLE as T, Toast, money, moneySymbol, grams, useCart, useCurrency, useEstimates, useEvaluations, useMeals, usePrices,
   useProducts, useToast } from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
@@ -162,9 +162,10 @@ function RecipeView({ meal, meals, router }) {
   const noPrices = t.priced === 0;
   // Estimates in the budget: where they come from, for the note under the table
   const est = lastPack?.prices_estimated ? lastPack.estimate_source : null;
-  const estPlace = est?.region_name ? `${est.region_name} average price paid (${COUNTRIES.find((c) => c.id === est.country)?.label || est.country}'s where the region has none)`
-    : est ? `${COUNTRIES.find((c) => c.id === est.country)?.label || est.country} average price paid` : null;
-  const estLabel = est ? `${estPlace}, MAPA, ${periodText(est.period_from, est.period_to)}` : null;
+  const estInfo = est ? ESTIMATES[est.country] || ESTIMATES.ES : null;
+  const estPlace = est?.region_name ? `${est.region_name} ${estInfo.kind} (${COUNTRIES.find((c) => c.id === est.country)?.label || est.country}'s where the region has none)`
+    : est ? `${COUNTRIES.find((c) => c.id === est.country)?.label || est.country} ${estInfo.kind}` : null;
+  const estLabel = est ? `${estPlace}, ${estInfo.source}, ${periodText(est.period_from, est.period_to)}` : null;
 
   return (
     <div className="desktop-frame flex flex-col justify-between">

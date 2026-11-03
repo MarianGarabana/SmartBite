@@ -387,8 +387,8 @@ export function openProfile(data) {
 }
 
 // Country: picks the supermarket list and, where SmartBite has them, estimated prices (engine,
-// docs/contracts/evaluate.schema.json "country"): average prices paid fill the lines the user did not price. Only
-// Spain has them (MAPA), nationally or per comunidad autonoma. Labels come from the browser (Intl), in English.
+// docs/contracts/evaluate.schema.json "country"): average prices fill the lines the user did not price (ESTIMATES:
+// Spain from MAPA, nationally or per comunidad autonoma; Canada from Statistics Canada). Labels come from the browser (Intl), in English.
 // The list holds the countries with supermarket data (decided 2026-11-03) and "Other country" (generic packs, no
 // stores, no estimates). A saved code from the full ISO list that is not supported reads as "Other country" but stays
 // in storage, so its currency still follows it.
@@ -428,7 +428,15 @@ export const REGIONS = {
 };
 export const NATIONAL = "national"; // the country's average
 export const ESTIMATES_OFF = "off"; // only the prices the user types
-export const hasEstimates = (country) => !!REGIONS[country];
+// Countries with estimated prices (data/open/prices/<country>.json; the engine's country enum): currency, source and
+// how many foods have one (a test checks foods against the data). Spain since 2026-10-19, Canada since 2026-11-03.
+export const ESTIMATES = {
+  ES: { currency: "EUR", source: "MAPA", sourceLong: "MAPA household consumption panel", kind: "average price paid",
+    phrase: "the average price households paid", foods: 76 },
+  CA: { currency: "CAD", source: "Statistics Canada", sourceLong: "Statistics Canada monthly average retail prices",
+    kind: "average price paid", phrase: "the average price shoppers paid", foods: 53 },
+};
+export const hasEstimates = (country) => !!ESTIMATES[country];
 export const regionLabel = (id) => Object.values(REGIONS).flat().find((r) => r.id === id)?.label || null;
 
 const okCountry = (id) => COUNTRIES.some((x) => x.id === id);
@@ -462,7 +470,7 @@ const COUNTRY_CURRENCY = { ...Object.fromEntries(EURO.map((c) => [c, "EUR"])), G
   CA: "CAD", MX: "MXN", BR: "BRL", AR: "ARS", CL: "CLP", CO: "COP", PE: "PEN", UY: "UYU", EC: "USD", PA: "USD", SV: "USD",
   AU: "AUD", NZ: "NZD", JP: "JPY", CN: "CNY", HK: "HKD", TW: "TWD", KR: "KRW", SG: "SGD", IN: "INR", IL: "ILS", AE: "AED",
   SA: "SAR", ZA: "ZAR", MA: "MAD", EG: "EGP", NG: "NGN", KE: "KES", TH: "THB", MY: "MYR", ID: "IDR", PH: "PHP", VN: "VND" };
-export const ESTIMATE_CURRENCY = { ES: "EUR" }; // data/open/prices/<country>.json "currency"
+export const ESTIMATE_CURRENCY = Object.fromEntries(Object.entries(ESTIMATES).map(([c, e]) => [c, e.currency]));
 export const DEFAULT_CURRENCY = "EUR";
 export const currencyFor = (country) => COUNTRY_CURRENCY[country] || null;
 const okCurrency = (c) => typeof c === "string" && /^[A-Z]{3}$/.test(c) && currencySymbol(c) !== null;

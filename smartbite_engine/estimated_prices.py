@@ -2,15 +2,18 @@
 
 Spain (ES): average price paid by households, MAPA Panel de consumo alimentario en hogares, volume-weighted over
 12 months (data/open/prices/SOURCES.md). Only foods with an exact or close panel row have one. With a region
-(comunidad autonoma, e.g. "ES-MD"), foods with a regional price use it and the rest the national one. A pack's estimate is
-price per kg x pack weight (eggs: price per egg x eggs), rounded to 0.05 EUR; a price the user types always wins.
+(comunidad autonoma, e.g. "ES-MD"), foods with a regional price use it and the rest the national one.
+Canada (CA): average price paid (grocery transaction data), Statistics Canada table 18-10-0245-01, mean of 12 months, in CAD (the _eur fields
+hold the table's currency), national only.
+A pack's estimate is price per kg x pack weight (eggs: price per egg x eggs), rounded to 0.05 in the table's currency;
+a price the user types always wins.
 """
 import json
 from functools import lru_cache
 from pathlib import Path
 
 PRICES_DIR = Path(__file__).resolve().parents[1] / "data" / "open" / "prices"
-COUNTRIES = ("ES",)
+COUNTRIES = ("CA", "ES")
 STEP_EUR = 0.05
 
 
@@ -37,7 +40,7 @@ def for_region(table, region):
 
 
 def round_price(eur):
-    """Rounded to 0.05 EUR, never below 0.05."""
+    """Rounded to 0.05 (EUR, CAD), never below 0.05."""
     return max(STEP_EUR, round(round(eur / STEP_EUR) * STEP_EUR, 2))
 
 

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { DEFAULT_PROFILE, setField } from "../lib/profile";
 import { ANTHROPIC, ANTHROPIC_MODELS, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, endpointAllowed, presetAvailable, presetById }
   from "../lib/providers";
-import { COUNTRIES, DEFAULT_COUNTRY, OTHER_COUNTRY, DEFAULT_CURRENCY, ESTIMATE_CURRENCY, ESTIMATES_OFF, NATIONAL, NO_STORE, REGIONS, STORES, clearApiKey, currencies, currencyFor, clearOpenAiKey, exportProducts, exportProfile, importProducts, okStore,
+import { COUNTRIES, DEFAULT_COUNTRY, OTHER_COUNTRY, DEFAULT_CURRENCY, ESTIMATES, ESTIMATE_CURRENCY, hasEstimates, ESTIMATES_OFF, NATIONAL, NO_STORE, REGIONS, STORES, clearApiKey, currencies, currencyFor, clearOpenAiKey, exportProducts, exportProfile, importProducts, okStore,
   onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readBudget, readCurrency, readName, readProfile, readRegion, readStore, resetProfile,
   storeLabel, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeBudget, writeCurrency, writeName, writeProfile, writeRegion, writeStore } from "../lib/store";
 import { PageShell, downloadJson, useToast } from "./Chrome";
@@ -155,6 +155,7 @@ export default function ProfilePage({ demoMeals }) {
   };
   const regions = REGIONS[country] || [];
   const countryLabel = COUNTRIES.find((c) => c.id === country)?.label || country;
+  const theCountry = `${["GB", "US"].includes(country) ? "the " : ""}${countryLabel}`;
   const regionName = regions.find((r) => r.id === region)?.label;
 
   // Supermarket: saved as soon as it changes ("Other" waits for a name). Products: counted on every storage change.
@@ -391,9 +392,9 @@ export default function ProfilePage({ demoMeals }) {
                 <select id="price-country" value={country} onChange={(e) => pickCountry(e.target.value)} className={input}>
                   {(countryList.length ? countryList : COUNTRIES.filter((c) => c.id === country)).map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
                 </select>
-                {regions.length === 0 && (
+                {!hasEstimates(country) && (
                   <span className="block text-[11px] text-forest/70 mt-1">
-                    {country === OTHER_COUNTRY ? "No estimated prices or supermarket list outside the listed countries" : `No estimated prices for ${["GB", "US"].includes(country) ? "the " : ""}${countryLabel} yet`}: only the prices you type count. The budget check waits for a price on every item.
+                    {country === OTHER_COUNTRY ? "No estimated prices or supermarket list outside the listed countries" : `No estimated prices for ${theCountry} yet`}: only the prices you type count. The budget check waits for a price on every item.
                   </span>
                 )}
               </div>
@@ -404,7 +405,7 @@ export default function ProfilePage({ demoMeals }) {
                 </select>
                 <span className="block text-[11px] text-forest/70 mt-1">
                   Shown next to every price. Nothing is converted: type prices in this currency.
-                  {regions.length > 0 && ESTIMATE_CURRENCY[country] !== currency ? ` Estimated prices for ${countryLabel} are in ${ESTIMATE_CURRENCY[country]}, so they are off while your currency is ${currency}.` : ""}
+                  {hasEstimates(country) && ESTIMATE_CURRENCY[country] !== currency ? ` Estimated prices for ${countryLabel} are in ${ESTIMATE_CURRENCY[country]}, so they are off while your currency is ${currency}.` : ""}
                 </span>
               </div>
               <div>
@@ -413,7 +414,7 @@ export default function ProfilePage({ demoMeals }) {
                   onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }} className={input} />
                 <span className="block text-[11px] text-forest/70 mt-1">For one serving. Make Your Meal starts from this; it is not sent to the AI.</span>
               </div>
-              {regions.length > 0 && ESTIMATE_CURRENCY[country] === currency && (
+              {hasEstimates(country) && ESTIMATE_CURRENCY[country] === currency && (
                 <div>
                   <label htmlFor="price-region" className={label}>Estimated prices</label>
                   <select id="price-region" value={region} onChange={(e) => pickRegion(e.target.value)} className={input}>
@@ -424,7 +425,7 @@ export default function ProfilePage({ demoMeals }) {
                   <span className="block text-[11px] text-forest/70 mt-1">
                     {region === ESTIMATES_OFF
                       ? "Only the prices you type count. The budget check waits for a price on every item."
-                      : `Items you have not priced get the average price households paid ${regionName ? `in ${regionName} (the ${countryLabel} average where the region has too little data)` : `in ${countryLabel}`} over the latest 12 months published (MAPA household consumption panel). They show as est. on the recipe page; a price you type always wins.`}
+                      : `Items you have not priced get ${ESTIMATES[country].phrase} ${regionName ? `in ${regionName} (the ${countryLabel} average where the region has too little data)` : `in ${theCountry}`} over the latest 12 months published (${ESTIMATES[country].sourceLong}; ${ESTIMATES[country].foods} foods have one). They show as est. on the recipe page; a price you type always wins.`}
                   </span>
                 </div>
               )}

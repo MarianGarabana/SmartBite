@@ -8,7 +8,7 @@ import { useState } from "react";
 import { EGG_GRAMS } from "../lib/cartmath";
 import { LookupError, lookupBarcode } from "../lib/off";
 import { moneySymbol } from "./Chrome";
-import { NO_STORE, deleteProduct, okProduct, readProducts, readStore, regionLabel, saveProduct, storeLabel } from "../lib/store";
+import { ESTIMATES, NO_STORE, deleteProduct, okProduct, readCountry, readProducts, readStore, regionLabel, saveProduct, storeLabel } from "../lib/store";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
 const input = "w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest";
@@ -21,11 +21,11 @@ const dayText = (d) => {
   return y && m >= 1 && m <= 12 && day ? `${day} ${MONTH[m - 1]} ${y}` : null;
 };
 
-// "Macros: Ciqual · Price: estimate (MAPA)": where a row's numbers come from
+// "Macros: Ciqual · Price: estimate (MAPA)": where a row's numbers come from (the source of the user's country)
 export function sourceText(row) {
   const macros = NUTRITION[row.nutritionSource] || null;
   const date = dayText(row.priceDate);
-  const price = row.estimate ? `estimate (MAPA${row.priceRegion ? `, ${regionLabel(row.priceRegion)}` : ""})` : row.hasPrice ? `yours${date ? `, ${date}` : ""}` : "none yet";
+  const price = row.estimate ? `estimate (${(ESTIMATES[readCountry()] || ESTIMATES.ES).source}${row.priceRegion ? `, ${regionLabel(row.priceRegion)}` : ""})` : row.hasPrice ? `yours${date ? `, ${date}` : ""}` : "none yet";
   return [macros && `Macros: ${macros}`, `Price: ${price}`].filter(Boolean).join(" · ");
 }
 

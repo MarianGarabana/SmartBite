@@ -1,0 +1,403 @@
+{
+ "country": "CA",
+ "currency": "CAD",
+ "source": "Statistics Canada, Table 18-10-0245-01, Monthly average retail prices for selected products",
+ "source_url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810024501",
+ "files": [
+  "18100245.csv"
+ ],
+ "period_from": "2025-09",
+ "period_to": "2026-08",
+ "months": 12,
+ "built": "2026-11-03",
+ "note": "Average price paid in Canada (Statistics Canada, from grocery retailers' transaction data), the mean of the monthly averages over the period. Averages over brands and stores for the size Statistics Canada prices; not a shop's price. Per kg from that size: canned food in ml read as grams, liquids per litre with the density used for the pack sizes, loose pieces with the SmartBite unit weight. Prices are in CAD (fields named _eur hold the table's currency, as for every country).",
+ "foods": {
+  "apple": {
+   "match": "exact",
+   "statcan_product": "Apples, per kilogram",
+   "statcan_vector": "v1353834291",
+   "months": 12,
+   "price_per_kg_eur": 5.603
+  },
+  "avocado": {
+   "match": "exact",
+   "statcan_product": "Avocado, unit",
+   "statcan_vector": "v1353834299",
+   "months": 12,
+   "price_per_kg_eur": 14.436,
+   "price_each": 1.963,
+   "unit_grams": 136
+  },
+  "banana": {
+   "match": "exact",
+   "statcan_product": "Bananas, per kilogram",
+   "statcan_vector": "v1353834294",
+   "months": 12,
+   "price_per_kg_eur": 1.788
+  },
+  "beef steak": {
+   "match": "close",
+   "statcan_product": "Beef top sirloin cuts, per kilogram",
+   "statcan_vector": "v1353834273",
+   "months": 12,
+   "price_per_kg_eur": 27.983
+  },
+  "brown rice": {
+   "match": "exact",
+   "statcan_product": "Brown rice, 900 grams",
+   "statcan_vector": "v1458869906",
+   "months": 12,
+   "price_per_kg_eur": 6.426
+  },
+  "canned chickpeas": {
+   "match": "close",
+   "statcan_product": "Canned beans and lentils, 540 millilitres",
+   "statcan_vector": "v1353834343",
+   "months": 12,
+   "price_per_kg_eur": 3.14
+  },
+  "canned lentils": {
+   "match": "close",
+   "statcan_product": "Canned beans and lentils, 540 millilitres",
+   "statcan_vector": "v1353834343",
+   "months": 12,
+   "price_per_kg_eur": 3.14
+  },
+  "canned red kidney beans": {
+   "match": "close",
+   "statcan_product": "Canned beans and lentils, 540 millilitres",
+   "statcan_vector": "v1353834343",
+   "months": 12,
+   "price_per_kg_eur": 3.14
+  },
+  "canned sweetcorn": {
+   "match": "close",
+   "statcan_product": "Canned corn, 341 millilitres",
+   "statcan_vector": "v1458869907",
+   "months": 12,
+   "price_per_kg_eur": 4.743
+  },
+  "canned tuna in oil": {
+   "match": "close",
+   "statcan_product": "Canned tuna, 170 grams",
+   "statcan_vector": "v1353834282",
+   "months": 12,
+   "price_per_kg_eur": 9.77
+  },
+  "canned tuna in water": {
+   "match": "close",
+   "statcan_product": "Canned tuna, 170 grams",
+   "statcan_vector": "v1353834282",
+   "months": 12,
+   "price_per_kg_eur": 9.77
+  },
+  "canned white beans": {
+   "match": "close",
+   "statcan_product": "Canned beans and lentils, 540 millilitres",
+   "statcan_vector": "v1353834343",
+   "months": 12,
+   "price_per_kg_eur": 3.14
+  },
+  "carrot": {
+   "match": "exact",
+   "statcan_product": "Carrots, 1.36 kilograms",
+   "statcan_vector": "v1353834303",
+   "months": 12,
+   "price_per_kg_eur": 2.83
+  },
+  "chicken breast": {
+   "match": "exact",
+   "statcan_product": "Chicken breasts, per kilogram",
+   "statcan_vector": "v1353834278",
+   "months": 12,
+   "price_per_kg_eur": 14.598
+  },
+  "chicken thigh": {
+   "match": "exact",
+   "statcan_product": "Chicken thigh, per kilogram",
+   "statcan_vector": "v1353834279",
+   "months": 12,
+   "price_per_kg_eur": 12.819
+  },
+  "crushed tomatoes": {
+   "match": "close",
+   "statcan_product": "Canned tomatoes, 796 millilitres",
+   "statcan_vector": "v1353834341",
+   "months": 12,
+   "price_per_kg_eur": 2.753
+  },
+  "cucumber": {
+   "match": "exact",
+   "statcan_product": "Cucumber, unit",
+   "statcan_vector": "v1353834307",
+   "months": 12,
+   "price_per_kg_eur": 5.443,
+   "price_each": 1.638,
+   "unit_grams": 301
+  },
+  "dried chickpeas": {
+   "match": "close",
+   "statcan_product": "Dry beans and legumes, 900 grams",
+   "statcan_vector": "v1458869913",
+   "months": 12,
+   "price_per_kg_eur": 3.901
+  },
+  "dried lentils": {
+   "match": "exact",
+   "statcan_product": "Dried lentils, 900 grams",
+   "statcan_vector": "v1353834344",
+   "months": 12,
+   "price_per_kg_eur": 3.974
+  },
+  "eggs": {
+   "match": "exact",
+   "statcan_product": "Eggs, 1 dozen",
+   "statcan_vector": "v1353834290",
+   "months": 12,
+   "price_per_unit_eur": 0.4008
+  },
+  "extra virgin olive oil": {
+   "match": "close",
+   "statcan_product": "Olive oil, 1 litre",
+   "statcan_vector": "v1458869924",
+   "months": 12,
+   "price_per_kg_eur": 12.572,
+   "price_per_litre_eur": 11.566,
+   "grams_per_ml": 0.92
+  },
+  "firm tofu": {
+   "match": "close",
+   "statcan_product": "Tofu, 350 grams",
+   "statcan_vector": "v1458869936",
+   "months": 12,
+   "price_per_kg_eur": 8.245
+  },
+  "frozen broccoli": {
+   "match": "exact",
+   "statcan_product": "Frozen broccoli, 500 grams",
+   "statcan_vector": "v1353834322",
+   "months": 12,
+   "price_per_kg_eur": 7.745
+  },
+  "frozen green beans": {
+   "match": "exact",
+   "statcan_product": "Frozen green beans, 750 grams",
+   "statcan_vector": "v1353834321",
+   "months": 12,
+   "price_per_kg_eur": 5.941
+  },
+  "frozen peas": {
+   "match": "exact",
+   "statcan_product": "Frozen peas, 750 grams",
+   "statcan_vector": "v1353834325",
+   "months": 12,
+   "price_per_kg_eur": 4.897
+  },
+  "frozen shrimp": {
+   "match": "close",
+   "statcan_product": "Shrimp, 300 grams",
+   "statcan_vector": "v1458869931",
+   "months": 12,
+   "price_per_kg_eur": 25.031
+  },
+  "frozen spinach": {
+   "match": "exact",
+   "statcan_product": "Frozen spinach, 300 grams",
+   "statcan_vector": "v1458869916",
+   "months": 12,
+   "price_per_kg_eur": 6.883
+  },
+  "frozen stir-fry vegetables": {
+   "match": "close",
+   "statcan_product": "Frozen mixed vegetables, 750 grams",
+   "statcan_vector": "v1353834324",
+   "months": 12,
+   "price_per_kg_eur": 5.498
+  },
+  "green bell pepper": {
+   "match": "close",
+   "statcan_product": "Peppers, per kilogram",
+   "statcan_vector": "v1353834310",
+   "months": 12,
+   "price_per_kg_eur": 8.021
+  },
+  "ground beef": {
+   "match": "exact",
+   "statcan_product": "Ground beef, per kilogram",
+   "statcan_vector": "v1353834274",
+   "months": 12,
+   "price_per_kg_eur": 15.909
+  },
+  "hummus": {
+   "match": "exact",
+   "statcan_product": "Hummus, 227 grams",
+   "statcan_vector": "v1458869918",
+   "months": 12,
+   "price_per_kg_eur": 16.773
+  },
+  "lemon": {
+   "match": "exact",
+   "statcan_product": "Lemons, unit",
+   "statcan_vector": "v1353834296",
+   "months": 12,
+   "price_per_kg_eur": 18.29,
+   "price_each": 1.061,
+   "unit_grams": 58
+  },
+  "lettuce": {
+   "match": "close",
+   "statcan_product": "Romaine lettuce, unit",
+   "statcan_vector": "v1353834319",
+   "months": 12,
+   "price_per_kg_eur": 11.188,
+   "price_each": 3.916,
+   "unit_grams": 350
+  },
+  "lime": {
+   "match": "exact",
+   "statcan_product": "Limes, unit",
+   "statcan_vector": "v1353834315",
+   "months": 12,
+   "price_per_kg_eur": 12.338,
+   "price_each": 0.827,
+   "unit_grams": 67
+  },
+  "macaroni": {
+   "match": "close",
+   "statcan_product": "Dry or fresh pasta, 500 grams",
+   "statcan_vector": "v1353834327",
+   "months": 12,
+   "price_per_kg_eur": 6.705
+  },
+  "mushrooms": {
+   "match": "exact",
+   "statcan_product": "Mushrooms, 227 grams",
+   "statcan_vector": "v1353834308",
+   "months": 12,
+   "price_per_kg_eur": 10.345
+  },
+  "onion": {
+   "match": "close",
+   "statcan_product": "Onions, 1.36 kilograms",
+   "statcan_vector": "v1353834305",
+   "months": 12,
+   "price_per_kg_eur": 3.258
+  },
+  "orange": {
+   "match": "exact",
+   "statcan_product": "Oranges, per kilogram",
+   "statcan_vector": "v1353834292",
+   "months": 12,
+   "price_per_kg_eur": 4.27
+  },
+  "peanut butter": {
+   "match": "exact",
+   "statcan_product": "Peanut butter, 1 kilogram",
+   "statcan_vector": "v1353834338",
+   "months": 12,
+   "price_per_kg_eur": 5.938
+  },
+  "pita bread": {
+   "match": "close",
+   "statcan_product": "Flatbread and pita, 500 grams",
+   "statcan_vector": "v1458869914",
+   "months": 12,
+   "price_per_kg_eur": 6.967
+  },
+  "plain yogurt 0%": {
+   "match": "close",
+   "statcan_product": "Yogurt, 500 grams",
+   "statcan_vector": "v1353834289",
+   "months": 12,
+   "price_per_kg_eur": 7.61
+  },
+  "pork loin": {
+   "match": "exact",
+   "statcan_product": "Pork loin cuts, per kilogram",
+   "statcan_vector": "v1353834275",
+   "months": 12,
+   "price_per_kg_eur": 9.231
+  },
+  "potato": {
+   "match": "close",
+   "statcan_product": "Potatoes, 4.54 kilograms",
+   "statcan_vector": "v1353834300",
+   "months": 12,
+   "price_per_kg_eur": 1.042
+  },
+  "pumpkin": {
+   "match": "close",
+   "statcan_product": "Squash, per kilogram",
+   "statcan_vector": "v1458869933",
+   "months": 12,
+   "price_per_kg_eur": 4.249
+  },
+  "red bell pepper": {
+   "match": "close",
+   "statcan_product": "Peppers, per kilogram",
+   "statcan_vector": "v1353834310",
+   "months": 12,
+   "price_per_kg_eur": 8.021
+  },
+  "rice": {
+   "match": "exact",
+   "statcan_product": "White rice, 2 kilograms",
+   "statcan_vector": "v1458869937",
+   "months": 12,
+   "price_per_kg_eur": 4.777
+  },
+  "salmon": {
+   "match": "exact",
+   "statcan_product": "Salmon, per kilogram",
+   "statcan_vector": "v1458869929",
+   "months": 12,
+   "price_per_kg_eur": 27.101
+  },
+  "semi-skimmed milk": {
+   "match": "close",
+   "statcan_product": "Milk, 1 litre",
+   "statcan_vector": "v1353834283",
+   "months": 12,
+   "price_per_kg_eur": 3.065,
+   "price_per_litre_eur": 3.157,
+   "grams_per_ml": 1.03
+  },
+  "soy milk": {
+   "match": "exact",
+   "statcan_product": "Soy milk, 1.89 litres",
+   "statcan_vector": "v1458869932",
+   "months": 12,
+   "price_per_kg_eur": 2.31,
+   "price_per_litre_eur": 2.31,
+   "grams_per_ml": 1.0
+  },
+  "strawberries": {
+   "match": "exact",
+   "statcan_product": "Strawberries, 454 grams",
+   "statcan_vector": "v1458869934",
+   "months": 12,
+   "price_per_kg_eur": 9.578
+  },
+  "sugar": {
+   "match": "exact",
+   "statcan_product": "White sugar, 2 kilograms",
+   "statcan_vector": "v1353834330",
+   "months": 12,
+   "price_per_kg_eur": 1.442
+  },
+  "sweet potato": {
+   "match": "exact",
+   "statcan_product": "Sweet potatoes, per kilogram",
+   "statcan_vector": "v1353834317",
+   "months": 12,
+   "price_per_kg_eur": 4.325
+  },
+  "tomato": {
+   "match": "exact",
+   "statcan_product": "Tomatoes, per kilogram",
+   "statcan_vector": "v1353834301",
+   "months": 12,
+   "price_per_kg_eur": 5.505
+  }
+ }
+}

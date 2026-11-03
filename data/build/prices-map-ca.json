@@ -1,0 +1,341 @@
+{
+ "note": "Each SmartBite food mapped by hand to one product of Statistics Canada table 18-10-0245-01 (Monthly average retail prices for selected products, GEO Canada). match: exact (same food), close (same food, mixed with its subtypes or sizes), broad (no price, kept to show why). Only exact and close get an estimated price. Size: per kg (price per kilogram), grams (pack weight; ml of canned food read as grams), litres (density from packs.json), each (one piece, per kg with the SmartBite unit weight of that food, so one SmartBite unit costs one StatCan unit) or eggs (per dozen). Foods not listed have no StatCan product.",
+ "foods": {
+  "apple": {
+   "match": "exact",
+   "product": "Apples, per kilogram",
+   "per": "kg",
+   "note": "All apple varieties, loose."
+  },
+  "avocado": {
+   "match": "exact",
+   "product": "Avocado, unit",
+   "per": "each",
+   "note": "Price of one avocado; per kg uses the SmartBite unit (one avocado)."
+  },
+  "banana": {
+   "match": "exact",
+   "product": "Bananas, per kilogram",
+   "per": "kg",
+   "note": "Loose bananas."
+  },
+  "beef steak": {
+   "match": "close",
+   "product": "Beef top sirloin cuts, per kilogram",
+   "per": "kg",
+   "note": "Top sirloin, the everyday steak cut; striploin costs more."
+  },
+  "broccoli": {
+   "match": "broad",
+   "product": "Broccoli, unit",
+   "per": "each",
+   "note": "One head or bunch, weight not stated: no price."
+  },
+  "brown rice": {
+   "match": "exact",
+   "product": "Brown rice, 900 grams ",
+   "grams": 900,
+   "note": ""
+  },
+  "canned chickpeas": {
+   "match": "close",
+   "product": "Canned beans and lentils, 540 millilitres",
+   "grams": 540,
+   "note": "All canned beans and lentils, 540 ml can as net weight; SmartBite packs are drained weight, so the estimate can be low."
+  },
+  "canned lentils": {
+   "match": "close",
+   "product": "Canned beans and lentils, 540 millilitres",
+   "grams": 540,
+   "note": "All canned beans and lentils, 540 ml can as net weight; drained packs, the estimate can be low."
+  },
+  "canned red kidney beans": {
+   "match": "close",
+   "product": "Canned beans and lentils, 540 millilitres",
+   "grams": 540,
+   "note": "All canned beans and lentils, 540 ml can as net weight; drained packs, the estimate can be low."
+  },
+  "canned sweetcorn": {
+   "match": "close",
+   "product": "Canned corn, 341 millilitres",
+   "grams": 341,
+   "note": "341 ml can as net weight; drained packs, the estimate can be low."
+  },
+  "canned tuna in oil": {
+   "match": "close",
+   "product": "Canned tuna, 170 grams",
+   "grams": 170,
+   "note": "All canned tuna, 170 g can."
+  },
+  "canned tuna in water": {
+   "match": "close",
+   "product": "Canned tuna, 170 grams",
+   "grams": 170,
+   "note": "All canned tuna, 170 g can."
+  },
+  "canned white beans": {
+   "match": "close",
+   "product": "Canned beans and lentils, 540 millilitres",
+   "grams": 540,
+   "note": "All canned beans and lentils, 540 ml can as net weight; drained packs, the estimate can be low."
+  },
+  "carrot": {
+   "match": "exact",
+   "product": "Carrots, 1.36 kilograms",
+   "grams": 1360,
+   "note": "3 lb bag."
+  },
+  "chicken breast": {
+   "match": "exact",
+   "product": "Chicken breasts, per kilogram",
+   "per": "kg",
+   "note": ""
+  },
+  "chicken thigh": {
+   "match": "exact",
+   "product": "Chicken thigh, per kilogram",
+   "per": "kg",
+   "note": ""
+  },
+  "crushed tomatoes": {
+   "match": "close",
+   "product": "Canned tomatoes, 796 millilitres",
+   "grams": 796,
+   "note": "All canned tomatoes, 796 ml can as net weight."
+  },
+  "cucumber": {
+   "match": "exact",
+   "product": "Cucumber, unit",
+   "per": "each",
+   "note": "Price of one cucumber; per kg uses the SmartBite unit."
+  },
+  "dried chickpeas": {
+   "match": "close",
+   "product": "Dry beans and legumes, 900 grams ",
+   "grams": 900,
+   "note": "All dry beans and legumes."
+  },
+  "dried lentils": {
+   "match": "exact",
+   "product": "Dried lentils, 900 grams",
+   "grams": 900,
+   "note": ""
+  },
+  "eggs": {
+   "match": "exact",
+   "product": "Eggs, 1 dozen",
+   "eggs": 12,
+   "note": "Price per egg = price of a dozen / 12."
+  },
+  "extra virgin olive oil": {
+   "match": "close",
+   "product": "Olive oil, 1 litre",
+   "litres": 1,
+   "note": "All olive oil, not only extra virgin."
+  },
+  "firm tofu": {
+   "match": "close",
+   "product": "Tofu, 350 grams ",
+   "grams": 350,
+   "note": "All tofu."
+  },
+  "frozen broccoli": {
+   "match": "exact",
+   "product": "Frozen broccoli, 500 grams",
+   "grams": 500,
+   "note": ""
+  },
+  "frozen green beans": {
+   "match": "exact",
+   "product": "Frozen green beans, 750 grams",
+   "grams": 750,
+   "note": ""
+  },
+  "frozen mixed berries": {
+   "match": "broad",
+   "product": "Frozen strawberries, 600 grams",
+   "grams": 600,
+   "note": "Strawberries only: no price."
+  },
+  "frozen peas": {
+   "match": "exact",
+   "product": "Frozen peas, 750 grams",
+   "grams": 750,
+   "note": ""
+  },
+  "frozen salmon": {
+   "match": "broad",
+   "product": "Salmon, per kilogram",
+   "per": "kg",
+   "note": "Fresh salmon: no price for frozen."
+  },
+  "frozen shrimp": {
+   "match": "close",
+   "product": "Shrimp, 300 grams",
+   "grams": 300,
+   "note": "Shrimp packs, mostly frozen."
+  },
+  "frozen spinach": {
+   "match": "exact",
+   "product": "Frozen spinach, 300 grams",
+   "grams": 300,
+   "note": ""
+  },
+  "frozen stir-fry vegetables": {
+   "match": "close",
+   "product": "Frozen mixed vegetables, 750 grams ",
+   "grams": 750,
+   "note": "Frozen mixed vegetables."
+  },
+  "green bell pepper": {
+   "match": "close",
+   "product": "Peppers, per kilogram",
+   "per": "kg",
+   "note": "All sweet peppers; green ones usually cost less."
+  },
+  "ground beef": {
+   "match": "exact",
+   "product": "Ground beef, per kilogram",
+   "per": "kg",
+   "note": ""
+  },
+  "hummus": {
+   "match": "exact",
+   "product": "Hummus, 227 grams",
+   "grams": 227,
+   "note": ""
+  },
+  "lemon": {
+   "match": "exact",
+   "product": "Lemons, unit",
+   "per": "each",
+   "note": "Price of one lemon; per kg uses the SmartBite unit."
+  },
+  "lettuce": {
+   "match": "close",
+   "product": "Romaine lettuce, unit",
+   "per": "each",
+   "note": "One head of romaine; per kg uses the SmartBite unit."
+  },
+  "lime": {
+   "match": "exact",
+   "product": "Limes, unit",
+   "per": "each",
+   "note": "Price of one lime; per kg uses the SmartBite unit."
+  },
+  "macaroni": {
+   "match": "close",
+   "product": "Dry or fresh pasta, 500 grams",
+   "grams": 500,
+   "note": "All pasta."
+  },
+  "mushrooms": {
+   "match": "exact",
+   "product": "Mushrooms, 227 grams",
+   "grams": 227,
+   "note": ""
+  },
+  "onion": {
+   "match": "close",
+   "product": "Onions, 1.36 kilograms",
+   "grams": 1360,
+   "note": "3 lb bag, the usual way to buy; loose onions cost more per kg (CA$5.44 vs CA$3.26, Sep 2025 to Aug 2026)."
+  },
+  "orange": {
+   "match": "exact",
+   "product": "Oranges, per kilogram",
+   "per": "kg",
+   "note": "Loose oranges."
+  },
+  "peanut butter": {
+   "match": "exact",
+   "product": "Peanut butter, 1 kilogram",
+   "grams": 1000,
+   "note": ""
+  },
+  "pita bread": {
+   "match": "close",
+   "product": "Flatbread and pita, 500 grams ",
+   "grams": 500,
+   "note": "All flatbread and pita."
+  },
+  "plain yogurt 0%": {
+   "match": "close",
+   "product": "Yogurt, 500 grams",
+   "grams": 500,
+   "note": "All yogurt, any fat."
+  },
+  "pork loin": {
+   "match": "exact",
+   "product": "Pork loin cuts, per kilogram",
+   "per": "kg",
+   "note": ""
+  },
+  "potato": {
+   "match": "close",
+   "product": "Potatoes, 4.54 kilograms",
+   "grams": 4540,
+   "note": "10 lb bag, the usual way to buy; loose potatoes cost about 5 times more per kg (CA$5.08 vs CA$1.04, Sep 2025 to Aug 2026)."
+  },
+  "pumpkin": {
+   "match": "close",
+   "product": "Squash, per kilogram",
+   "per": "kg",
+   "note": "All squash."
+  },
+  "red bell pepper": {
+   "match": "close",
+   "product": "Peppers, per kilogram",
+   "per": "kg",
+   "note": "All sweet peppers."
+  },
+  "rice": {
+   "match": "exact",
+   "product": "White rice, 2 kilograms",
+   "grams": 2000,
+   "note": ""
+  },
+  "salmon": {
+   "match": "exact",
+   "product": "Salmon, per kilogram",
+   "per": "kg",
+   "note": "Fresh salmon."
+  },
+  "semi-skimmed milk": {
+   "match": "close",
+   "product": "Milk, 1 litre",
+   "litres": 1,
+   "note": "Milk, fat not stated."
+  },
+  "soy milk": {
+   "match": "exact",
+   "product": "Soy milk, 1.89 litres",
+   "litres": 1.89,
+   "note": ""
+  },
+  "strawberries": {
+   "match": "exact",
+   "product": "Strawberries, 454 grams",
+   "grams": 454,
+   "note": ""
+  },
+  "sugar": {
+   "match": "exact",
+   "product": "White sugar, 2 kilograms",
+   "grams": 2000,
+   "note": ""
+  },
+  "sweet potato": {
+   "match": "exact",
+   "product": "Sweet potatoes, per kilogram",
+   "per": "kg",
+   "note": ""
+  },
+  "tomato": {
+   "match": "exact",
+   "product": "Tomatoes, per kilogram",
+   "per": "kg",
+   "note": ""
+  }
+ }
+}

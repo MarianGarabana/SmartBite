@@ -1,7 +1,7 @@
 // A Meal result ({form, picked_idea, recipe, evaluation: {pack, macros}}, docs/contracts/meal.schema.json) as the
 // shape the pages use. Pure: runs on the server for demo meals and in the browser for meals made there.
 import { norm, priceKey } from "./cartmath";
-import { regionLabel } from "./store";
+import { COUNTRIES, ESTIMATES, readCountry, regionLabel } from "./store";
 
 export const SLUG = /^[a-z0-9-]+$/;
 
@@ -21,12 +21,18 @@ export function periodText(from, to) {
   return x && y ? `${x} to ${y}` : null;
 }
 
-// Where an estimated price comes from: the region's name (line price_region) or "Spain"
-export const estimatePlace = (region) => regionLabel(region) || "Spain";
+// Where an estimated price comes from: the region's name (line price_region) or the country's
+export const estimatePlace = (region, country = readCountry()) =>
+  regionLabel(region) || COUNTRIES.find((c) => c.id === country)?.label || country;
+
+// "Canada average price paid, Statistics Canada, Sep 2025 to Aug 2026": an estimated price's source
+export const estimateLabel = (period, region, country = readCountry()) => {
+  const e = ESTIMATES[country] || ESTIMATES.ES;
+  return `${estimatePlace(region, country)} ${e.kind}, ${e.source}, ${periodText(period) || "latest 12 months"}`;
+};
 
 // Tooltip of an estimated price
-export const estimateTitle = (period, region) =>
-  `Estimated: ${estimatePlace(region)} average price paid, MAPA, ${periodText(period) || "latest 12 months"}`;
+export const estimateTitle = (period, region, country) => `Estimated: ${estimateLabel(period, region, country)}`;
 
 // Recipe categories come from the title, in code (no AI): breakfast foods make a Breakfast; any other meal is a
 // Lunch and a Dinner, and a Salad or a Warm Meal. The first one is the label on the meal's card.

@@ -2,6 +2,7 @@
 // 1. The old /settings link opens the Profile; a display name shows in the heading.
 // 2. A country with another currency changes the price symbol everywhere and turns Spain's estimates off.
 // 3. The country list is the 8 countries with supermarket data plus Other country; each lists its own supermarkets.
+// 4. Canada: estimated prices in CAD from Statistics Canada on the recipe page; off when turned off.
 import { expect, test } from "@playwright/test";
 
 const KOREAN = "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix";
@@ -128,4 +129,27 @@ test("the country list is the supported countries plus Other, each with its supe
   await page.reload();
   await expect(country).toHaveValue("other");
   await expect(page.locator("#currency")).toHaveValue("SEK");
+});
+
+test("Canada gets estimated prices in CAD from Statistics Canada", async ({ page }) => {
+  await page.goto("/profile");
+  await page.locator("#price-country").selectOption("CA");
+  await expect(page.locator("#currency")).toHaveValue("CAD");
+  await expect(page.locator("#price-region option")).toHaveText(["Canada average", "Off: only my prices"]);
+  await expect(page.getByText("the average price shoppers paid in Canada")).toContainText("Statistics Canada monthly average retail prices; 53 foods have one");
+  await page.goto(`/recipes/${KOREAN}`);
+  await toOneServing(page);
+  await page.waitForLoadState("networkidle");
+  await expect(page.getByText("Prices marked est. are estimates (Canada average price paid, Statistics Canada, Sep 2025 to Aug 2026)")).toBeVisible();
+  const beef = page.locator("#pack-table-body tr").filter({ hasText: "ground beef" });
+  await expect(beef.getByText("est.")).toBeVisible();
+  await expect(beef).toContainText("CA$");
+  await expect(page.locator("#summary-bought-cost")).toContainText("CA$");
+
+  await page.goto("/profile");
+  await page.locator("#price-region").selectOption("off");
+  await page.goto(`/recipes/${KOREAN}`);
+  await toOneServing(page);
+  await page.waitForLoadState("networkidle");
+  await expect(page.locator("#pack-table-body").getByText("est.")).toHaveCount(0);
 });

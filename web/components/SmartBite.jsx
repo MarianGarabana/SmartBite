@@ -8,7 +8,7 @@ import { checkForm } from "../lib/form";
 import { makeMeal, progressText } from "../lib/flow";
 import { generateIdeas, reviseIdea } from "../lib/llm";
 import { listText } from "../lib/packs";
-import { demoIdea, demoPicks, estimatePlace, estimateTitle, periodText, recipeMeals, toMeal } from "../lib/meal";
+import { demoIdea, demoPicks, estimateLabel, estimateTitle, recipeMeals, toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
 import { tabUrl } from "../lib/site";
 import { DEFAULT_BUDGET, engineEstimates, profileComplete, readActiveProducts, readBudget, readLlm, readProfile, saveLocalMeal }
@@ -467,7 +467,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                 {/* Estimated prices count in the total, as on the recipe page */}
                 {estRow && (
                   <p id="cart-estimates" className="text-xs text-forest/70">
-                    Prices marked est. are estimates ({estimatePlace(estRegion)} average price paid, MAPA, {periodText(estRow.pricePeriod) || "latest 12 months"}). Type your store&apos;s price to replace one.
+                    Prices marked est. are estimates ({estimateLabel(estRow.pricePeriod, estRegion)}). Type your store&apos;s price to replace one.
                   </p>
                 )}
                 {/* Already at home: out of the total and leftovers; Restore buys it again */}
