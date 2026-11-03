@@ -104,14 +104,27 @@ function readOldPrices() {
   return Object.fromEntries(Object.entries(p).filter(([k, v]) => k.includes("|") && okPrice(v)));
 }
 
-// Supermarkets per country (decided 2026-10-21). The store only labels the user's own products: no store site is
-// ever contacted. "Other" keeps a name the user types, as "other:<name>".
+// Supermarkets per country (decided 2026-10-21; 7 more countries 2026-11-03, the largest chains by market share). The
+// store only labels the user's own products: no store site is ever contacted. "Other" keeps a name the user types, as
+// "other:<name>". Spain's ids have no suffix (saved products use them); the others end in the country, so Lidl in the UK
+// and Lidl in Spain keep separate products.
+const chains = (cc, names) => names.map((label) => ({
+  id: `${label.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}-${cc}`,
+  label,
+}));
 export const STORES = {
   ES: [
     { id: "mercadona", label: "Mercadona" }, { id: "carrefour", label: "Carrefour" }, { id: "lidl", label: "Lidl" },
     { id: "dia", label: "Dia" }, { id: "alcampo", label: "Alcampo" }, { id: "eroski", label: "Eroski" },
     { id: "aldi", label: "Aldi" }, { id: "consum", label: "Consum" },
   ],
+  CA: chains("ca", ["Loblaws", "Sobeys", "Metro", "Costco", "Walmart"]),
+  GB: chains("gb", ["Tesco", "Sainsbury's", "Asda", "Aldi", "Lidl", "Morrisons"]),
+  US: chains("us", ["Walmart", "Costco", "Kroger", "Albertsons / Safeway", "Publix", "Aldi", "Trader Joe's", "Whole Foods"]),
+  MX: chains("mx", ["Walmart", "Bodega Aurrerá", "Soriana", "Chedraui", "La Comer", "Sam's Club"]),
+  FR: chains("fr", ["E.Leclerc", "Carrefour", "Intermarché", "Super U", "Auchan", "Lidl", "Aldi"]),
+  IE: chains("ie", ["Tesco", "Dunnes Stores", "SuperValu", "Lidl", "Aldi"]),
+  AU: chains("au", ["Woolworths", "Coles", "Aldi", "IGA", "Costco"]),
 };
 export const NO_STORE = "none";
 const MAX_STORE_NAME = 40;
@@ -373,9 +386,12 @@ export function openProfile(data) {
   return ok;
 }
 
-// Country (any): picks the supermarket list and, where SmartBite has them, estimated prices (engine,
+// Country: picks the supermarket list and, where SmartBite has them, estimated prices (engine,
 // docs/contracts/evaluate.schema.json "country"): average prices paid fill the lines the user did not price. Only
 // Spain has them (MAPA), nationally or per comunidad autonoma. Labels come from the browser (Intl), in English.
+// The list holds the countries with supermarket data (decided 2026-11-03) and "Other country" (generic packs, no
+// stores, no estimates). A saved code from the full ISO list that is not supported reads as "Other country" but stays
+// in storage, so its currency still follows it.
 const ISO_COUNTRIES = ("AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR " +
   "BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET " +
   "FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ " +
@@ -390,8 +406,13 @@ const countryName = (code) => {
     return code;
   }
 };
-export const COUNTRIES = ISO_COUNTRIES.map((id) => ({ id, label: countryName(id), ...(id === "ES" ? { source: "MAPA" } : {}) }))
-  .sort((a, b) => a.label.localeCompare(b.label, "en"));
+export const SUPPORTED_COUNTRIES = ["AU", "CA", "FR", "IE", "MX", "ES", "GB", "US"];
+export const OTHER_COUNTRY = "other";
+export const COUNTRIES = [
+  ...SUPPORTED_COUNTRIES.map((id) => ({ id, label: countryName(id), ...(id === "ES" ? { source: "MAPA" } : {}) }))
+    .sort((a, b) => a.label.localeCompare(b.label, "en")),
+  { id: OTHER_COUNTRY, label: "Other country" },
+];
 export const DEFAULT_COUNTRY = "ES";
 
 // Regions with their own estimated prices (data/open/prices/es.json "regions", ISO 3166-2; the engine's region enum)
@@ -411,14 +432,16 @@ export const hasEstimates = (country) => !!REGIONS[country];
 export const regionLabel = (id) => Object.values(REGIONS).flat().find((r) => r.id === id)?.label || null;
 
 const okCountry = (id) => COUNTRIES.some((x) => x.id === id);
+const isoCountry = (id) => ISO_COUNTRIES.includes(id);
 
-// A country code; anything else in storage gives the default. Before 2026-10-22 "none" meant Spain with no estimates.
+// A listed country; another ISO code reads as "Other country"; anything else gives the default. Before 2026-10-22
+// "none" meant Spain with no estimates.
 export function readCountry() {
   const c = readJson(KEYS.country, DEFAULT_COUNTRY);
-  return okCountry(c) ? c : DEFAULT_COUNTRY;
+  return okCountry(c) ? c : isoCountry(c) ? OTHER_COUNTRY : DEFAULT_COUNTRY;
 }
 
-export const writeCountry = (id) => writeJson(KEYS.country, okCountry(id) ? id : DEFAULT_COUNTRY);
+export const writeCountry = (id) => writeJson(KEYS.country, okCountry(id) || isoCountry(id) ? id : DEFAULT_COUNTRY);
 
 // "national", "off" or one of the country's regions; the old country "none" reads as "off"
 export function readRegion(country = readCountry()) {
@@ -467,10 +490,12 @@ export function currencies() {
     .sort((a, b) => a.label.localeCompare(b.label, "en"));
 }
 
-// The saved currency, else the country's, else EUR
+// The saved currency, else the country's (for "Other country", the ISO code still in storage), else EUR
 export function readCurrency(country = readCountry()) {
   const c = readJson(KEYS.currency, null);
-  return okCurrency(c) ? c : currencyFor(country) || DEFAULT_CURRENCY;
+  if (okCurrency(c)) return c;
+  const own = country === OTHER_COUNTRY ? readJson(KEYS.country, null) : country;
+  return currencyFor(own) || DEFAULT_CURRENCY;
 }
 
 export const writeCurrency = (code) => writeJson(KEYS.currency, okCurrency(code) ? code : DEFAULT_CURRENCY);

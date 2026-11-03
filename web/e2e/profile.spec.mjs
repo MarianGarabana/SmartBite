@@ -1,6 +1,7 @@
 // Profile (was Settings, decided 2026-10-22) on the running dev server (3100) with the real engine (8100). No model runs.
 // 1. The old /settings link opens the Profile; a display name shows in the heading.
 // 2. A country with another currency changes the price symbol everywhere and turns Spain's estimates off.
+// 3. The country list is the 8 countries with supermarket data plus Other country; each lists its own supermarkets.
 import { expect, test } from "@playwright/test";
 
 const KOREAN = "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix";
@@ -106,4 +107,25 @@ test("a profile file saved in one browser opens in another, after a confirm and 
   await toOneServing(b);
   await expect(b.locator("#pack-table-body tr").filter({ hasText: "ground beef" })).toContainText("€4.99");
   await context.close();
+});
+
+test("the country list is the supported countries plus Other, each with its supermarkets", async ({ page }) => {
+  await page.goto("/profile");
+  const country = page.locator("#price-country");
+  await expect(country.locator("option")).toHaveText(["Australia", "Canada", "France", "Ireland", "Mexico", "Spain",
+    "United Kingdom", "United States", "Other country"]);
+  await country.selectOption("US");
+  await expect(page.locator("#store option")).toHaveText(["No store", "Walmart", "Costco", "Kroger", "Albertsons / Safeway",
+    "Publix", "Aldi", "Trader Joe's", "Whole Foods", "Other"]);
+  await page.locator("#store").selectOption({ label: "Trader Joe's" });
+  await page.reload();
+  await expect(page.locator("#store")).toHaveValue("trader-joe-s-us");
+  await country.selectOption("other");
+  await expect(page.getByText("No estimated prices or supermarket list outside the listed countries")).toBeVisible();
+  await expect(page.locator("#store option")).toHaveText(["No store", "Trader Joe's", "Other"]); // the saved store stays listed
+  // A country saved before the list was limited reads as Other country and keeps its currency
+  await page.evaluate(() => { localStorage.setItem("smartbite.country", JSON.stringify("SE")); localStorage.removeItem("smartbite.currency"); });
+  await page.reload();
+  await expect(country).toHaveValue("other");
+  await expect(page.locator("#currency")).toHaveValue("SEK");
 });

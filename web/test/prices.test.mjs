@@ -206,21 +206,54 @@ const estimatedDoc = (doc) => ({ ...doc, evaluation: { ...doc.evaluation, pack: 
     ? { ...l, has_price: true, cost_bought_eur: 2.5, cost_used_eur: 0.5, price_source: "estimate", price_date: "2026-07",
       price_period: "2025-08/2026-07" } : l)) } } });
 
-test("country is Spain by default, any country can be picked, and bad values fall back", () => {
+test("country is Spain by default, the list is the supported countries plus Other, and bad values fall back", () => {
   const data = fakeWindow();
   assert.equal(store.readCountry(), "ES");
   assert.deepEqual(store.engineEstimates(), { country: "ES", region: null });
   assert.equal(store.writeCountry("FR"), true);
   assert.equal(store.readCountry(), "FR");
-  assert.deepEqual(store.engineEstimates(), { country: null, region: null }); // no estimates for France
+  assert.deepEqual(store.engineEstimates(), { country: null, region: null }); // no estimates for France yet
   data[store.KEYS.country] = JSON.stringify("XX");
   assert.equal(store.readCountry(), "ES");
   store.writeCountry("XX");
   assert.equal(JSON.parse(data[store.KEYS.country]), "ES");
-  assert.equal(store.COUNTRIES.length, 249);
+  // Decided 2026-11-03: 8 countries with supermarket data, sorted by name, then Other country
+  assert.deepEqual(store.COUNTRIES.map((c) => c.id), ["AU", "CA", "FR", "IE", "MX", "ES", "GB", "US", "other"]);
   assert.equal(store.COUNTRIES.find((c) => c.id === "ES").label, "Spain");
+  assert.equal(store.COUNTRIES.at(-1).label, "Other country");
+  assert.equal(store.writeCountry("other"), true);
+  assert.equal(store.readCountry(), "other");
+  assert.deepEqual(store.engineEstimates(), { country: null, region: null });
   delete globalThis.window;
   assert.equal(store.readCountry(), "ES");
+});
+
+test("a saved country that is not listed reads as Other country and keeps its currency", () => {
+  const data = fakeWindow();
+  data[store.KEYS.country] = JSON.stringify("DE");
+  assert.equal(store.readCountry(), "other");
+  assert.equal(JSON.parse(data[store.KEYS.country]), "DE"); // storage is not rewritten
+  assert.equal(store.readCurrency(), "EUR");
+  data[store.KEYS.country] = JSON.stringify("SE");
+  assert.equal(store.readCountry(), "other");
+  assert.equal(store.readCurrency(), "SEK");
+  assert.deepEqual(store.engineEstimates(), { country: null, region: null });
+  store.writeCountry("other");
+  assert.equal(store.readCurrency(), "EUR"); // picked from the list: no country currency to follow
+});
+
+test("every listed country but Other has supermarkets, with ids that never repeat", () => {
+  for (const c of store.COUNTRIES) {
+    if (c.id === "other") assert.equal(store.STORES.other, undefined);
+    else assert.ok(store.STORES[c.id]?.length >= 5, c.id);
+  }
+  const ids = Object.values(store.STORES).flat().map((s) => s.id);
+  assert.equal(new Set(ids).size, ids.length);
+  assert.ok(ids.includes("mercadona") && ids.includes("lidl")); // Spain keeps the ids saved products use
+  assert.equal(store.STORES.GB.find((s) => s.label === "Sainsbury's").id, "sainsbury-s-gb");
+  assert.equal(store.STORES.MX.find((s) => s.label === "Bodega Aurrerá").id, "bodega-aurrera-mx");
+  assert.equal(store.okStore("tesco-ie"), "tesco-ie");
+  assert.equal(store.storeLabel("e-leclerc-fr"), "E.Leclerc");
 });
 
 test("region: national by default, a Spanish region or off; the old country none reads as off", () => {

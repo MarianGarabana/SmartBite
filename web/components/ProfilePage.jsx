@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { DEFAULT_PROFILE, setField } from "../lib/profile";
 import { ANTHROPIC, ANTHROPIC_MODELS, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, endpointAllowed, presetAvailable, presetById }
   from "../lib/providers";
-import { COUNTRIES, DEFAULT_COUNTRY, DEFAULT_CURRENCY, ESTIMATE_CURRENCY, ESTIMATES_OFF, NATIONAL, NO_STORE, REGIONS, STORES, clearApiKey, currencies, currencyFor, clearOpenAiKey, exportProducts, exportProfile, importProducts, okStore,
+import { COUNTRIES, DEFAULT_COUNTRY, OTHER_COUNTRY, DEFAULT_CURRENCY, ESTIMATE_CURRENCY, ESTIMATES_OFF, NATIONAL, NO_STORE, REGIONS, STORES, clearApiKey, currencies, currencyFor, clearOpenAiKey, exportProducts, exportProfile, importProducts, okStore,
   onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readBudget, readCurrency, readName, readProfile, readRegion, readStore, resetProfile,
   storeLabel, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeBudget, writeCurrency, writeName, writeProfile, writeRegion, writeStore } from "../lib/store";
 import { PageShell, downloadJson, useToast } from "./Chrome";
@@ -393,7 +393,7 @@ export default function ProfilePage({ demoMeals }) {
                 </select>
                 {regions.length === 0 && (
                   <span className="block text-[11px] text-forest/70 mt-1">
-                    No estimated prices for {countryLabel} yet: only the prices you type count. The budget check waits for a price on every item.
+                    {country === OTHER_COUNTRY ? "No estimated prices or supermarket list outside the listed countries" : `No estimated prices for ${["GB", "US"].includes(country) ? "the " : ""}${countryLabel} yet`}: only the prices you type count. The budget check waits for a price on every item.
                   </span>
                 )}
               </div>

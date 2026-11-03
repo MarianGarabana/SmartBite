@@ -32,6 +32,28 @@ Added 2026-10-19 (P25-P27): demo meals are Marian's 13 saved meals (store data r
 
 v1 stays general: open nutrition tables and typical packs. The author's personal app is the specific version (her store catalog, her labels, her profile) and stays private. More depth comes when a user sets a region and a supermarket, from open sources or the user only: (1) the user's own labels and prices, entered once and used for that food from then on; (2) Open Food Facts products filtered by country and store tag, or found by barcode, for real pack sizes and nutrition per 100 g; (3) Open Food Facts Open Prices by location for reported prices. No store scraping.
 
+### More countries (decided 2026-11-03)
+
+The country list holds the countries with supermarket data, then "Other country" (generic packs, no stores, the user's own
+prices). Each country gets the largest supermarket chains as labels, typical pack sizes from Open Food Facts for that
+country (its own sizes where a food has at least 5 products, else the generic ones) and estimated prices from official
+statistics: the average of the latest 12 months, national only, per kg in the country's currency. Foods with no official
+price show "add your price". No store site is contacted. Recipes, prompts and the food list do not change.
+
+| Step | Country | Price source |
+|---|---|---|
+| 1 | List of 8 countries and their chains | none (labels) |
+| 2 | Canada | Statistics Canada, table 18-10-0245-01 |
+| 3 | United Kingdom | ONS shopping prices comparison |
+| 4 | United States | BLS Average Price Data (header `User-Agent: SmartBite` only; else one manual download) |
+| 5 | Ireland | CSO, National Average Price (CPM12) |
+| 6 | France | INSEE, prix moyens de vente de detail (fresh foods only) |
+| 7 | Mexico | PROFECO, Quien es quien en los precios (national median of store prices) |
+| 8 | Australia | none found: pack sizes and chains only |
+
+Spain keeps MAPA, national and per comunidad autonoma. Germany, Italy, Portugal and the Netherlands have no current
+official average prices and stay under "Other country".
+
 ## Open questions (decide in the phase named)
 
 - Phase 4: leftovers adjust stays client side in JS for v1 (it already works in the browser); port to Python only if the API needs it.
