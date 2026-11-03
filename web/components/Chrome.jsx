@@ -436,12 +436,13 @@ export function Header({ active, onNavigate: navigate, cartCount }) {
       <SetupHost />
       <div className="max-w-[1360px] mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-3">
 
-        {/* Under 460 px the name hides behind the leaf (decided 2026-10-30), so the Get started pill fits next to the menus */}
+        {/* The name hides under 460 px while the Get started pill shows (also while storage is unread), and under 382 px always,
+            so the header keeps its 16 px gutters (2026-11-03; was under 460 px always) */}
         <a href="/" aria-label="SmartBite" onClick={(e) => { e.preventDefault(); onNavigate("home"); }} className="flex items-center gap-2.5 group">
           <div className="w-10 h-10 rounded-full bg-forest flex items-center justify-center text-lime group-hover:bg-lime group-hover:text-forest transition-colors shadow-sm">
             <i className="fa-solid fa-leaf text-base"></i>
           </div>
-          <span className="font-serif text-2xl font-bold tracking-tight text-forest whitespace-nowrap max-[459px]:hidden">
+          <span className={`font-serif text-2xl font-bold tracking-tight text-forest whitespace-nowrap max-[381px]:hidden${complete === true ? "" : " max-[459px]:hidden"}`}>
             Smart<span className="font-normal italic">Bite</span>{" "}
             <span className="inline-block w-2 h-2 rounded-full bg-lime ml-0.5"></span>
           </span>
