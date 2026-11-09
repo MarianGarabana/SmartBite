@@ -12,7 +12,7 @@ import { withPrices } from "../lib/cartmath";
 import { estimateTitle, periodText, toMeal } from "../lib/meal";
 import { tabUrl } from "../lib/site";
 import { packRow, totals } from "../lib/packs";
-import { GEMINI_IMAGE_MODEL, usesGemini } from "../lib/llm";
+import { PHOTO_MAKERS, photoMaker } from "../lib/llm";
 import { MAX_PHOTO_BYTES, deletePhoto, makePhoto, putPhoto, usePhoto, usePhotoJob } from "../lib/photos";
 import { COUNTRIES, ESTIMATES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, readLlm, setLinePrice, setSaved } from "../lib/store";
 import { AiLabel, Footer, Header, MealImage, RECIPE_TABLE as T, Toast, money, moneySymbol, grams, useCart, useCurrency, useEstimates, useEvaluations, useMeals, usePrices,
@@ -127,17 +127,35 @@ function RecipeView({ meal, meals, router }) {
   const [photoOpen, setPhotoOpen] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [uploading, setUploading] = useState(false);
-  // Gemini key (read after mount: settings live in this browser): SmartBite makes the photo; other keys get the prompt
-  const [gemini, setGemini] = useState(null);
+  // A key that can make images (read after mount: settings live in this browser): SmartBite makes the photo with it;
+  // other keys get the prompt for Gemini
+  const [imageKey, setImageKey] = useState(null); // { llm, maker } or null
   useEffect(() => {
     const llm = readLlm();
-    setGemini(usesGemini(llm) ? llm : null);
+    const id = photoMaker(llm);
+    setImageKey(id ? { llm, maker: PHOTO_MAKERS[id] } : null);
   }, []);
   const photoJob = usePhotoJob(meal.slug);
   const photoMaking = photoJob?.status === "making";
-  const autoPhoto = Boolean(gemini && meal.photoPrompt && photoJob?.status !== "failed");
-  const startPhoto = () => { setPhotoOpen(false); makePhoto(meal.slug, meal.photoPrompt, gemini); };
+  const autoPhoto = Boolean(imageKey && meal.photoPrompt && photoJob?.status !== "failed");
+  const startPhoto = () => { setPhotoOpen(false); makePhoto(meal.slug, meal.photoPrompt, imageKey.llm); };
+  // Phones get a camera button: a photo of the cooked plate is the quickest real photo (decided 2026-11-09)
+  const [touch, setTouch] = useState(false);
+  useEffect(() => { setTouch(window.matchMedia?.("(pointer: coarse)").matches || false); }, []);
   const showPhotoCard = !hasPhoto || photoOpen || photoMaking || photoJob?.status === "failed";
+  // Paste an image (Cmd/Ctrl+V) while the photo card is open, e.g. one copied from the Gemini app or website
+  useEffect(() => {
+    if (!showPhotoCard || photoMaking) return;
+    const onPaste = (e) => {
+      if (e.target.closest?.("input, textarea, [contenteditable]")) return;
+      const file = [...(e.clipboardData?.files || [])].find((f) => f.type.startsWith("image/"));
+      if (!file) return;
+      e.preventDefault();
+      uploadPhoto(file);
+    };
+    window.addEventListener("paste", onPaste);
+    return () => window.removeEventListener("paste", onPaste);
+  });
   const copyPrompt = () => navigator.clipboard.writeText(meal.photoPrompt).then(() => showToast("Prompt copied. Paste it in Gemini."))
     .catch(() => showToast("Could not copy. Select the prompt and copy it."));
   const uploadPhoto = async (file) => {
@@ -265,13 +283,13 @@ function RecipeView({ meal, meals, router }) {
                 <div>
                   <span className="font-script text-2xl text-forest font-bold">Your photo</span>
                   <h3 className="font-serif text-2xl font-bold text-forest">
-                    {photoMaking ? "Making your photo" : autoPhoto ? "Make the photo with Gemini" : "Make the photo in Gemini"}
+                    {photoMaking ? "Making your photo" : autoPhoto ? `Make the photo with ${imageKey.maker.label}` : "Make the photo in Gemini"}
                   </h3>
                 </div>
                 {photoMaking ? (
                   <div className="flex items-center gap-3 bg-cream-card rounded-2xl p-4 border border-cream-dark" role="status">
                     <i className="fa-solid fa-circle-notch fa-spin text-forest/60"></i>
-                    <p className="text-xs text-forest">Gemini is making the photo from your recipe with your key. It usually takes under a minute.</p>
+                    <p className="text-xs text-forest">{imageKey?.maker.label || "Your AI provider"} is making the photo from your recipe with your key. It usually takes under a minute.</p>
                   </div>
                 ) : autoPhoto ? (
                   <div className="space-y-3">
@@ -280,9 +298,15 @@ function RecipeView({ meal, meals, router }) {
                     </button>
                   </div>
                 ) : null}
-                {gemini && (
+                {touch && !photoMaking && (
+                  <label className="inline-flex bg-forest hover:bg-forest-light text-cream font-bold text-xs px-4 py-2.5 rounded-xl transition-colors items-center gap-2 cursor-pointer">
+                    <i className="fa-solid fa-camera"></i><span>Take a photo of your plate</span>
+                    <input type="file" accept="image/*" capture="environment" className="hidden" onChange={(e) => uploadPhoto(e.target.files[0])} />
+                  </label>
+                )}
+                {imageKey && (
                   <p className="text-[11px] text-forest/70">
-                    Made with your Gemini key ({GEMINI_IMAGE_MODEL}). Google charges about $0.03 per photo on paid keys; free keys cannot make images.
+                    Made with your {imageKey.maker.label} key ({imageKey.maker.model}). {imageKey.maker.cost}
                   </p>
                 )}
                 {photoJob?.status === "failed" && (
@@ -312,7 +336,7 @@ function RecipeView({ meal, meals, router }) {
                 {!photoMaking && (
                   <>
                     <p className="text-xs text-forest/70">
-                      {autoPhoto ? "Or drop your own image here, or click to choose it." : `${meal.photoPrompt ? "2. " : ""}Drop the image here, or click to choose it.`} It stays in this browser.
+                      {autoPhoto ? "Or drop your own image here, paste it, or click to choose it." : `${meal.photoPrompt ? "2. " : ""}Drop the image here, paste it, or click to choose it.`} It stays in this browser.
                     </p>
                     <label
                       onDragOver={(e) => { e.preventDefault(); setDragging(true); }}

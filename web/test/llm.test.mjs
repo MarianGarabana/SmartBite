@@ -8,7 +8,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { missingMainFoods } from "../lib/contracts.js";
 import { evaluateMeal } from "../lib/engine.js";
-import { ANTHROPIC_URL, CALL_TIMEOUT_MS, FREE_KEY_PHOTO, GEMINI_IMAGE_MODEL, TIMEOUT_MESSAGE, generateIdeas, generatePhoto, redact, reviseIdea, usesGemini, writeRecipe } from "../lib/llm.js";
+import { ANTHROPIC_URL, CALL_TIMEOUT_MS, FREE_KEY_PHOTO, GEMINI_IMAGE_MODEL, PHOTO_MAKERS, TIMEOUT_MESSAGE, generateIdeas, generatePhoto, photoMaker, redact, reviseIdea, usesGemini, writeRecipe } from "../lib/llm.js";
 
 const KEY = "sk-ant-api03-SECRET-test-key-1234";
 const OPENAI_KEY = "sk-proj-SECRET-openai-5678";
@@ -315,6 +315,48 @@ test("generatePhoto: no image, an error reply or a non-Gemini key give plain err
     "generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-flash-lite-image" } }] }]);
   await assert.rejects(generatePhoto({ prompt: "x", llm: GEMINI }), (e) => e.message === FREE_KEY_PHOTO);
   const calls = mockFetch([]);
-  await assert.rejects(generatePhoto({ prompt: "x", llm: OPENAI }), /only with a Gemini key/);
+  await assert.rejects(generatePhoto({ prompt: "x", llm: OPENAI }), /only with a Gemini, OpenAI or OpenRouter key/);
   assert.equal(calls.length, 0);
+});
+
+const OPENAI_REAL = { provider: "openai_compatible", model: "gpt-5.5-mini", baseUrl: "https://api.openai.com/v1", apiKey: OPENAI_KEY, preset: "openai" };
+const OPENROUTER = { provider: "openai_compatible", model: "some/model", baseUrl: "https://openrouter.ai/api/v1/", apiKey: "sk-or-v1-SECRET-4321",
+  preset: "openrouter" };
+
+test("photoMaker: Gemini, OpenAI and OpenRouter keys make photos; Anthropic, other endpoints and no key do not", () => {
+  assert.equal(photoMaker(GEMINI), "gemini");
+  assert.equal(photoMaker(OPENAI_REAL), "openai");
+  assert.equal(photoMaker(OPENROUTER), "openrouter");
+  assert.equal(photoMaker(OPENAI), null);
+  assert.equal(photoMaker(ANTHROPIC), null);
+  assert.equal(photoMaker({ ...OPENROUTER, apiKey: "" }), null);
+});
+
+test("generatePhoto: OpenAI images API, low quality jpeg, b64_json becomes a Blob", async () => {
+  const jpg = Buffer.from("fake-jpeg");
+  const calls = mockFetch([{ json: { data: [{ b64_json: jpg.toString("base64") }] } }]);
+  const blob = await generatePhoto({ prompt: "a bowl", llm: OPENAI_REAL });
+  assert.equal(calls[0].url, "https://api.openai.com/v1/images/generations");
+  assert.equal(calls[0].init.headers.authorization, `Bearer ${OPENAI_KEY}`);
+  assert.deepEqual(calls[0].body, { model: PHOTO_MAKERS.openai.model, prompt: "a bowl", size: "1536x1024", quality: "low", output_format: "jpeg" });
+  assert.equal(blob.type, "image/jpeg");
+  assert.deepEqual(Buffer.from(await blob.arrayBuffer()), jpg);
+});
+
+test("generatePhoto: OpenRouter images API; a data URL reply works too", async () => {
+  const png = Buffer.from("fake-png");
+  const calls = mockFetch([{ json: { data: [{ url: `data:image/png;base64,${png.toString("base64")}` }] } }]);
+  const blob = await generatePhoto({ prompt: "a bowl", llm: OPENROUTER });
+  assert.equal(calls[0].url, "https://openrouter.ai/api/v1/images");
+  assert.equal(calls[0].body.model, "openai/gpt-image-1-mini");
+  assert.equal(calls[0].body.quality, "low");
+  assert.equal(blob.type, "image/png");
+  assert.deepEqual(Buffer.from(await blob.arrayBuffer()), png);
+});
+
+test("generatePhoto: OpenAI repeats a wrong key in its error; the message never shows it", async () => {
+  mockFetch([{ status: 401, json: { error: { message: `Incorrect API key provided: ${OPENAI_KEY}. You can find your API key at https://platform.openai.com/account/api-keys.` } } }]);
+  await assert.rejects(generatePhoto({ prompt: "x", llm: OPENAI_REAL }), (e) => /401/.test(e.message) && !e.message.includes(OPENAI_KEY));
+  mockFetch([{ json: { data: [] } }]);
+  await assert.rejects(generatePhoto({ prompt: "x", llm: OPENROUTER }), /OpenRouter sent no image/);
 });

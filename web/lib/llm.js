@@ -137,42 +137,74 @@ async function callAnthropic(llm, step, system, messages) {
 
 const isGemini = (baseUrl) => { try { return new URL(baseUrl).host === GEMINI_HOST; } catch { return false; } };
 
-// Photos (decided 2026-11-09): a Gemini key makes the recipe photo itself with Google's native image endpoint (same
-// host as the chat endpoint, so the hosted site's CSP already allows it; CORS checked 2026-11-09 with a fake key:
-// preflight 200 and the 400 reply both echo the origin). Model: Nano Banana 2 Lite, Google's cheapest image model
-// ($0.0336 per 1K image on paid keys per ai.google.dev/gemini-api/docs/pricing; not on the free tier).
+// Photos (decided 2026-11-09): keys that can make images make the recipe photo themselves, straight from the browser
+// (each endpoint below is on the provider's own host, so the hosted site's CSP already allows it). CORS checked
+// 2026-11-09 with a fake key: Gemini preflight 200 echoing the origin; OpenAI /images/generations and OpenRouter
+// /images preflight 200/204 with "*". Prices per photo from the providers' pricing pages on 2026-11-09:
+// - Gemini: Nano Banana 2 Lite, $0.0336 per 1K image; no image model is on the free tier.
+// - OpenAI: gpt-image-1-mini at low quality, $0.005 to $0.006 per photo; OpenAI may ask for organization verification.
+// - OpenRouter: the same OpenAI model at $8 per 1M image tokens, from the user's OpenRouter credit.
 export const GEMINI_IMAGE_MODEL = "gemini-3.1-flash-lite-image";
-
+const OPENAI_HOST = "api.openai.com";
+const OPENROUTER_HOST = "openrouter.ai";
+export const PHOTO_MAKERS = {
+  gemini: { label: "Gemini", model: GEMINI_IMAGE_MODEL,
+    cost: "Google charges about $0.03 per photo on paid keys; free keys cannot make images." },
+  openai: { label: "OpenAI", model: "gpt-image-1-mini",
+    cost: "OpenAI charges about $0.005 per photo (low quality). OpenAI may ask you to verify your organization first." },
+  openrouter: { label: "OpenRouter", model: "openai/gpt-image-1-mini",
+    cost: "Paid from your OpenRouter credit, under $0.01 per photo (low quality)." },
+};
 export const FREE_KEY_PHOTO = "Your Gemini key is on the free tier, and Google does not allow image models on free keys. " +
   "Turn on billing for the key in Google AI Studio, or make the photo by hand below.";
 
-// True when the user's model key is a Gemini key, so SmartBite can make the photo for them
-export const usesGemini = (llm) => Boolean(llm?.provider === OPENAI_COMPATIBLE && llm.apiKey && isGemini(llm.baseUrl));
+// Which provider can make the photo for this key: "gemini", "openai", "openrouter", or null (the manual card)
+export function photoMaker(llm) {
+  if (llm?.provider !== OPENAI_COMPATIBLE || !llm.apiKey) return null;
+  const host = hostOf(llm.baseUrl);
+  return host === GEMINI_HOST ? "gemini" : host === OPENAI_HOST ? "openai" : host === OPENROUTER_HOST ? "openrouter" : null;
+}
+export const usesGemini = (llm) => photoMaker(llm) === "gemini";
+
+const toBlob = (b64, type) => new Blob([Uint8Array.from(atob(b64), (c) => c.charCodeAt(0))], { type });
+const noImage = (who, why) => new LlmError(`${who} sent no image${why ? ` (${why})` : ""}. Try again, or make the photo by hand.`);
 
 // One image call; returns the photo as a Blob. Errors are LlmError with the provider's reason (key never shown).
 export async function generatePhoto({ prompt, llm }) {
-  if (!usesGemini(llm)) throw new LlmError("Photos are made only with a Gemini key.");
+  const maker = photoMaker(llm);
+  if (!maker) throw new LlmError("Photos are made only with a Gemini, OpenAI or OpenRouter key.");
   if (!prompt) throw new LlmError("This meal has no photo prompt.");
-  const url = `${new URL(llm.baseUrl).origin}/v1beta/models/${GEMINI_IMAGE_MODEL}:generateContent`;
-  let data;
-  try {
-    data = await post(url, { "content-type": "application/json", "x-goog-api-key": llm.apiKey }, {
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { responseModalities: ["IMAGE"], imageConfig: { aspectRatio: "4:3" } },
-    }, llm);
-  } catch (e) {
-    // Free keys get 429 with "free_tier ... limit: 0" (seen 2026-11-09): waiting never helps, so say what does
-    if (/free_tier/.test(e.message) && /limit: 0\b/.test(e.message)) throw new LlmError(FREE_KEY_PHOTO);
-    throw e;
+  const origin = new URL(llm.baseUrl).origin;
+  if (maker === "gemini") {
+    let data;
+    try {
+      data = await post(`${origin}/v1beta/models/${GEMINI_IMAGE_MODEL}:generateContent`,
+        { "content-type": "application/json", "x-goog-api-key": llm.apiKey }, {
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { responseModalities: ["IMAGE"], imageConfig: { aspectRatio: "4:3" } },
+        }, llm);
+    } catch (e) {
+      // Free keys get 429 with "free_tier ... limit: 0" (seen 2026-11-09): waiting never helps, so say what does
+      if (/free_tier/.test(e.message) && /limit: 0\b/.test(e.message)) throw new LlmError(FREE_KEY_PHOTO);
+      throw e;
+    }
+    const parts = data?.candidates?.[0]?.content?.parts || [];
+    const image = parts.map((p) => p.inlineData || p.inline_data).find((d) => d?.data);
+    if (!image) throw noImage("Gemini", data?.promptFeedback?.blockReason || data?.candidates?.[0]?.finishReason);
+    return toBlob(image.data, image.mimeType || image.mime_type || "image/png");
   }
-  const parts = data?.candidates?.[0]?.content?.parts || [];
-  const image = parts.map((p) => p.inlineData || p.inline_data).find((d) => d?.data);
-  if (!image) {
-    const why = data?.promptFeedback?.blockReason || data?.candidates?.[0]?.finishReason;
-    throw new LlmError(`Gemini sent no image${why ? ` (${why})` : ""}. Try again, or make the photo by hand.`);
-  }
-  const bytes = Uint8Array.from(atob(image.data), (c) => c.charCodeAt(0));
-  return new Blob([bytes], { type: image.mimeType || image.mime_type || "image/png" });
+  const headers = { "content-type": "application/json", authorization: `Bearer ${llm.apiKey}` };
+  const data = maker === "openai"
+    ? await post(`${llm.baseUrl.replace(/\/+$/, "")}/images/generations`, headers,
+      { model: PHOTO_MAKERS.openai.model, prompt, size: "1536x1024", quality: "low", output_format: "jpeg" }, llm)
+    : await post(`${llm.baseUrl.replace(/\/+$/, "")}/images`, headers,
+      { model: PHOTO_MAKERS.openrouter.model, prompt, aspect_ratio: "3:2", quality: "low", output_format: "jpeg" }, llm);
+  const item = (data?.data || []).find((d) => d?.b64_json || /^data:image\//.test(d?.url || ""));
+  if (!item) throw noImage(PHOTO_MAKERS[maker].label);
+  if (item.b64_json) return toBlob(item.b64_json, "image/jpeg");
+  const [, type, b64] = item.url.match(/^data:([^;]+);base64,(.*)$/) || [];
+  if (!b64) throw noImage(PHOTO_MAKERS[maker].label);
+  return toBlob(b64, type);
 }
 
 // One chat completions call with JSON output (OpenAI-compatible endpoints)

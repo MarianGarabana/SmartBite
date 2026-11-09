@@ -282,6 +282,97 @@ export function useToast() {
 }
 
 // The photo the user added in this browser, else the demo photo, else a green placeholder with the meal name.
+// Cover drawn in code (decided 2026-11-09): a plate seen from above with the recipe's own foods, so a meal without a
+// photo still looks like food and can never show a food it does not have. No key, no network. Colors by food word;
+// an unknown food gets a stable color from its name.
+const FOOD_COLORS = [
+  [/salmon/, "#ee8a5f"], [/tuna/, "#cfae92"], [/chicken|turkey|pollo|pavo/, "#e6c49b"], [/beef|steak|pork|lamb|ternera/, "#7d4b36"],
+  [/egg|huevo/, "#f6d56b"], [/tofu|soy|tempeh/, "#e9dcc0"], [/lentil|lenteja/, "#8c5b3c"], [/chickpea|garbanzo|bean|alubia|hummus/, "#cfa767"],
+  [/brown rice|wholemeal|whole wheat|integral/, "#d8c39f"], [/rice|arroz|couscous|quinoa/, "#f4efe3"], [/pasta|noodle/, "#e9c986"],
+  [/oat|avena|granola/, "#d9c49c"], [/sweet potato|boniato|carrot|zanahoria|pumpkin|calabaza/, "#e8853a"], [/potato|patata/, "#e8c98c"],
+  [/tomato|tomate|red bell|red pepper|pimiento rojo|roasted red|pomegranate|granada|strawberr|fresa/, "#d8453b"],
+  [/spinach|espinaca|kale|broccoli|brócoli|green bean|judía/, "#43803d"], [/pea|guisante|edamame|parsley|perejil|spring onion|cebolleta|herb/, "#7cba4c"],
+  [/cucumber|pepino|zucchini|calabac|lettuce|lechuga|arugula|rúcula|celery/, "#a3cf72"], [/avocado|aguacate/, "#93b552"],
+  [/feta|cheese|queso|yogurt|yogur|skyr|quark|cottage|requesón|ricotta|mozzarella/, "#f7f4ec"], [/blueberr|arándano|grape/, "#4f5fae"],
+  [/orange|naranja|mango|peach/, "#f2a23b"], [/lemon|limón|corn|maíz|banana/, "#f3d95b"], [/apple|manzana|pear/, "#cbd76c"],
+  [/walnut|nuez|nueces|almond|almendra|peanut|chia|seed|semilla/, "#a6784b"], [/mushroom|champi/, "#a88d70"],
+  [/onion|cebolla|garlic|ajo|cauliflower|coliflor/, "#efe5d3"], [/olive|aceituna/, "#5b5a2e"],
+];
+const PROTEIN = /salmon|tuna|chicken|turkey|pollo|pavo|beef|steak|pork|lamb|ternera|egg|huevo|tofu|soy|tempeh/;
+const hashOf = (text) => [...String(text)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+const FALLBACK_COLORS = ["#d9a066", "#9cc46b", "#e07a5f", "#f2cc8f", "#81b29a", "#c99c7a"];
+const foodColor = (name) => {
+  const n = String(name).toLowerCase();
+  return (FOOD_COLORS.find(([re]) => re.test(n)) || [null, FALLBACK_COLORS[hashOf(n) % FALLBACK_COLORS.length]])[1];
+};
+// mix a hex color with white (t > 0) or black (t < 0)
+const shade = (hex, t) => {
+  const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).map((v) => Math.round(t > 0 ? v + (255 - v) * t : v * (1 + t)));
+  return `#${c.map((v) => v.toString(16).padStart(2, "0")).join("")}`;
+};
+const polar = (r, a) => [200 + r * Math.cos(a), 150 + r * Math.sin(a)];
+function wedge(r0, r1, a0, a1) {
+  const big = a1 - a0 > Math.PI ? 1 : 0;
+  const [x0, y0] = polar(r1, a0), [x1, y1] = polar(r1, a1), [x2, y2] = polar(r0, a1), [x3, y3] = polar(r0, a0);
+  return r0 > 0 ? `M${x0} ${y0}A${r1} ${r1} 0 ${big} 1 ${x1} ${y1}L${x2} ${y2}A${r0} ${r0} 0 ${big} 0 ${x3} ${y3}Z`
+    : `M200 150L${x0} ${y0}A${r1} ${r1} 0 ${big} 1 ${x1} ${y1}Z`;
+}
+
+// Up to 6 foods by weight; the main protein sits in the middle, the rest in sections around it
+export function plateParts(ingredients) {
+  const foods = [...(ingredients || [])].filter((it) => it.grams > 0 || it.units > 0)
+    .map((it) => ({ name: it.name, grams: it.grams || it.units * 50 }))
+    .sort((a, b) => b.grams - a.grams).slice(0, 6);
+  const center = foods.find((f) => PROTEIN.test(f.name.toLowerCase())) || null;
+  const ring = foods.filter((f) => f !== center);
+  const total = ring.reduce((t, f) => t + Math.max(f.grams, 15), 0);
+  let a = -Math.PI / 2;
+  return {
+    center: center && { ...center, color: foodColor(center.name) },
+    ring: ring.map((f) => {
+      const span = (2 * Math.PI * Math.max(f.grams, 15)) / total;
+      const part = { ...f, color: foodColor(f.name), a0: a, a1: a + span };
+      a += span;
+      return part;
+    }),
+  };
+}
+
+function PlateCover({ meal, className }) {
+  const { center, ring } = plateParts(meal.ingredients);
+  const r0 = center ? 46 : 0;
+  let seed = hashOf(meal.slug);
+  const rand = () => ((seed = (seed * 1103515245 + 12345) >>> 0) / 4294967296);
+  const dots = (r1, r2, a0, a1, color, n) => Array.from({ length: n }, (_, i) => {
+    const [x, y] = polar(r1 + rand() * (r2 - r1), a0 + rand() * (a1 - a0));
+    return <circle key={i} cx={x} cy={y} r={1.5 + rand() * 3} fill={shade(color, i % 2 ? -0.18 : 0.25)} opacity="0.75" />;
+  });
+  const names = [center, ...ring].filter(Boolean).map((f) => f.name).join(", ");
+  return (
+    <svg viewBox="52 12 296 282" preserveAspectRatio="xMidYMid meet" role="img" aria-label={`${meal.name}: drawing of ${names}`} className={`${className} bg-forest-light`}>
+      <defs>
+        <radialGradient id={`bg-${meal.slug}`} cx="50%" cy="45%" r="75%"><stop offset="0" stopColor="#21574a" /><stop offset="1" stopColor="#184236" /></radialGradient>
+      </defs>
+      <rect width="400" height="300" fill={`url(#bg-${meal.slug})`} />
+      <circle cx="204" cy="158" r="124" fill="#0a1f19" opacity="0.45" />
+      <circle cx="200" cy="150" r="124" fill="#f2f0e6" />
+      <circle cx="200" cy="150" r="108" fill="#e6e2d3" />
+      {ring.map((f) => (
+        <g key={f.name}>
+          <path d={wedge(r0 + 4, 104, f.a0 + 0.03, f.a1 - 0.03)} fill={f.color} />
+          {dots(r0 + 10, 98, f.a0 + 0.08, f.a1 - 0.08, f.color, Math.round(6 + (f.a1 - f.a0) * 6))}
+        </g>
+      ))}
+      {center && (
+        <g>
+          <circle cx="200" cy="150" r={ring.length ? 44 : 100} fill={center.color} />
+          {dots(4, ring.length ? 40 : 94, 0, 2 * Math.PI, center.color, ring.length ? 10 : 28)}
+        </g>
+      )}
+    </svg>
+  );
+}
+
 // label: show "AI-generated photo" on a demo photo made with AI (the parent is positioned)
 // lazy by default: hidden tabs hold every demo photo; eager only for a page's main photo
 export function MealImage({ meal, className, textClass = "text-sm", label = false, eager = false }) {
@@ -293,6 +384,7 @@ export function MealImage({ meal, className, textClass = "text-sm", label = fals
     return label ? <>{img}<PhotoLabel /></> : img;
   }
   if (src) return <img src={src} alt={meal.name} loading={loading} className={className} />;
+  if (meal.ingredients?.length) return <PlateCover meal={meal} className={className} />;
   return (
     <div className={`${className} bg-forest-light flex items-center justify-center p-3 text-center`}>
       <span className={`font-serif font-bold text-lime leading-snug ${textClass}`}>{meal.name}</span>

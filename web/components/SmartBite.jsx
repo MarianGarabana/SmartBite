@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { checkForm } from "../lib/form";
 import { makeMeal, progressText } from "../lib/flow";
-import { generateIdeas, reviseIdea, usesGemini } from "../lib/llm";
+import { generateIdeas, photoMaker, reviseIdea } from "../lib/llm";
 import { makePhoto } from "../lib/photos";
 import { listText } from "../lib/packs";
 import { demoIdea, demoPicks, estimateLabel, estimateTitle, recipeMeals, toMeal } from "../lib/meal";
@@ -778,9 +778,10 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
       if (!saveLocalMeal(slug, doc)) {
         return setRun({ ...base, step: 3, loading: false, idea, recipe, error: "Not saved: this browser blocks storage." });
       }
-      // Gemini key: the photo is made right away (decided 2026-11-09); other keys keep the manual photo card
+      // A key that can make images (Gemini, OpenAI, OpenRouter) makes the photo right away (decided 2026-11-09);
+      // other keys keep the manual photo card
       const llm = readLlm();
-      if (usesGemini(llm) && shown.photoPrompt) makePhoto(slug, shown.photoPrompt, llm);
+      if (photoMaker(llm) && shown.photoPrompt) makePhoto(slug, shown.photoPrompt, llm);
       router.push(`/recipes/${slug}`);
     } catch (e) {
       setRun({ ...base, step: 3, loading: false, idea, recipe, error: notReady(recipe, e.message) });
