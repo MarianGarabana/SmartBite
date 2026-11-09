@@ -566,6 +566,15 @@ function RecipeView({ meal, meals, router }) {
                   <span>Save in my recipes</span>
                 </button>
               )}
+              {/* Demo (decided 2026-11-09): the save button shows, greyed, and says how to save a meal of your own */}
+              {meal.kind === "demo" && (
+                <button id="demo-save" aria-disabled="true"
+                  onClick={() => showToast("Example meals are already in My Recipes. Make your own meal to save it.")}
+                  className="w-full sm:flex-1 bg-transparent border-2 border-forest/20 text-forest/70 font-bold py-4 rounded-2xl text-sm flex items-center justify-center gap-2 cursor-not-allowed">
+                  <i className="fa-regular fa-bookmark"></i>
+                  <span>Save in my recipes</span>
+                </button>
+              )}
               {meal.kind === "local" && (
                 <button onClick={deleteMeal} className={`w-full sm:flex-1 bg-transparent border-2 font-bold py-4 rounded-2xl text-sm transition-all flex items-center justify-center gap-2 ${confirmDelete ? "border-red-600 text-red-600" : "border-forest/20 text-forest/70 hover:border-red-600 hover:text-red-600"}`}>
                   <i className="fa-regular fa-trash-can"></i>

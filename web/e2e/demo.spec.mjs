@@ -130,3 +130,11 @@ test("the demo cart is kept apart from the real cart", async ({ page }) => {
   await page.goto("/demo?tab=cart");
   await expect(page.locator("#cart-meals-container > div")).toHaveCount(2);
 });
+
+test("a demo recipe shows a greyed save button that explains how to save a meal", async ({ page }) => {
+  await page.goto("/recipes/tuna-frittata-with-vegetables");
+  const save = page.locator("#demo-save");
+  await expect(save).toHaveAttribute("aria-disabled", "true");
+  await save.click({ force: true }); // Playwright skips aria-disabled elements; browsers still deliver the click
+  await expect(page.getByText("Example meals are already in My Recipes. Make your own meal to save it.")).toBeVisible();
+});
