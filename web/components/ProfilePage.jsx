@@ -1,7 +1,7 @@
 "use client";
 // Profile (was Settings until 2026-10-22): display name, every Kitchen Profile field
 // (prompts/kitchen-profile.default.json), the AI provider with the user's own key, and where they shop (country,
-// currency, region, supermarket, products). All of it stays in this browser (lib/store.js). Same cards, inputs and buttons as the Make Your
+// currency, region, products). All of it stays in this browser (lib/store.js). Same cards, inputs and buttons as the Make Your
 // Meal form.
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -9,9 +9,9 @@ import { useEffect, useState } from "react";
 import { DEFAULT_PROFILE, setField } from "../lib/profile";
 import { ANTHROPIC, ANTHROPIC_MODELS, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, endpointAllowed, presetAvailable, presetById }
   from "../lib/providers";
-import { COUNTRIES, DEFAULT_COUNTRY, OTHER_COUNTRY, DEFAULT_CURRENCY, ESTIMATES, ESTIMATE_CURRENCY, hasEstimates, ESTIMATES_OFF, NATIONAL, NO_STORE, REGIONS, STORES, clearApiKey, currencies, currencyFor, clearOpenAiKey, exportProducts, exportProfile, importProducts, okStore,
-  onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readBudget, readCurrency, readName, readProfile, readRegion, readStore, resetProfile,
-  storeLabel, writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeBudget, writeCurrency, writeName, writeProfile, writeRegion, writeStore } from "../lib/store";
+import { COUNTRIES, DEFAULT_COUNTRY, OTHER_COUNTRY, DEFAULT_CURRENCY, ESTIMATES, ESTIMATE_CURRENCY, hasEstimates, ESTIMATES_OFF, NATIONAL, REGIONS, clearApiKey, currencies, currencyFor, clearOpenAiKey, exportProducts, exportProfile, importProducts,
+  onStoreChange, readApiKey, readCountry, readLlmSettings, readOpenAiKey, readProducts, readBudget, readCurrency, readName, readProfile, readRegion, resetProfile,
+  writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeBudget, writeCurrency, writeName, writeProfile, writeRegion } from "../lib/store";
 import { PageShell, downloadJson, useToast } from "./Chrome";
 import ProfileFileOpen from "./ProfileFileOpen";
 
@@ -89,7 +89,7 @@ export default function ProfilePage({ demoMeals }) {
   const [savedKeys, setSavedKeys] = useState({ [ANTHROPIC]: "", [OPENAI_COMPATIBLE]: "" });
   const [showKey, setShowKey] = useState(false);
   const [hostname, setHostname] = useState("");
-  // Country (supermarket list, estimated prices) and region for estimated prices: saved as soon as they change
+  // Country (estimated prices, pack sizes) and region for estimated prices: saved as soon as they change
   const [country, setCountry] = useState(DEFAULT_COUNTRY);
   const [region, setRegion] = useState(NATIONAL);
   const [currency, setCurrency] = useState(DEFAULT_CURRENCY);
@@ -158,31 +158,13 @@ export default function ProfilePage({ demoMeals }) {
   const theCountry = `${["GB", "US"].includes(country) ? "the " : ""}${countryLabel}`;
   const regionName = regions.find((r) => r.id === region)?.label;
 
-  // Supermarket: saved as soon as it changes ("Other" waits for a name). Products: counted on every storage change.
-  const [store, setStore] = useState(NO_STORE);
-  const [otherName, setOtherName] = useState("");
+  // Products: counted on every storage change
   const [products, setProducts] = useState({});
   useEffect(() => {
-    const s = readStore();
-    setStore(s.startsWith("other:") ? "other" : s);
-    setOtherName(s.startsWith("other:") ? s.slice(6) : "");
     const read = () => setProducts(readProducts());
     read();
     return onStoreChange(read);
   }, []);
-  const saveStore = (id) => showToast(writeStore(id)
-    ? (id === NO_STORE ? "No store: your products for any store are used." : `Shopping at ${storeLabel(okStore(id))}.`)
-    : "Not saved: this browser blocks storage.");
-  const pickStore = (id) => {
-    setStore(id);
-    if (id !== "other") saveStore(id);
-    else if (otherName.trim()) saveStore(`other:${otherName}`);
-  };
-  const storeId = store === "other" ? okStore(`other:${otherName}`) : store;
-  const counts = Object.keys(products).reduce((c, k) => {
-    const s = k.slice(0, k.lastIndexOf("|"));
-    return { ...c, [s]: (c[s] || 0) + 1 };
-  }, {});
   const total = Object.keys(products).length;
   const saveFile = downloadJson;
   const download = () => saveFile(exportProducts(), "smartbite-products");
@@ -385,7 +367,7 @@ export default function ProfilePage({ demoMeals }) {
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
               <div>
                 <span className="font-script text-2xl text-forest font-bold">Where you shop</span>
-                <h2 className="font-serif font-bold text-xl text-forest">Region and supermarket</h2>
+                <h2 className="font-serif font-bold text-xl text-forest">Country and prices</h2>
               </div>
               <div>
                 <label htmlFor="price-country" className={label}>Country</label>
@@ -394,7 +376,7 @@ export default function ProfilePage({ demoMeals }) {
                 </select>
                 {!hasEstimates(country) && (
                   <span className="block text-[11px] text-forest/70 mt-1">
-                    {country === OTHER_COUNTRY ? "No estimated prices or supermarket list outside the listed countries" : `No estimated prices for ${theCountry} yet`}: only the prices you type count. The budget check waits for a price on every item.
+                    {country === OTHER_COUNTRY ? "No estimated prices outside the listed countries" : `No estimated prices for ${theCountry} yet`}: only the prices you type count. The budget check waits for a price on every item.
                   </span>
                 )}
               </div>
@@ -429,28 +411,11 @@ export default function ProfilePage({ demoMeals }) {
                   </span>
                 </div>
               )}
-              <div>
-                <label htmlFor="store" className={label}>Supermarket</label>
-                <select id="store" value={store} onChange={(e) => pickStore(e.target.value)} className={input}>
-                  <option value={NO_STORE}>No store</option>
-                  {[...(STORES[country] || []), ...Object.values(STORES).flat().filter((s) => s.id === store && !(STORES[country] || []).includes(s))]
-                    .map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
-                  <option value="other">Other</option>
-                </select>
-                {store === "other" && (
-                  <input aria-label="Supermarket name" value={otherName} maxLength={40} placeholder="Supermarket name"
-                    onChange={(e) => setOtherName(e.target.value)} onBlur={() => otherName.trim() && saveStore(`other:${otherName}`)}
-                    className={`${input} mt-2`} />
-                )}
-                <span className="block text-[11px] text-forest/70 mt-1">
-                  Prices and products you save go to this store. Foods you have no product for at this store use the ones you saved with no store, then the typical pack. SmartBite never contacts the store.
-                </span>
-              </div>
               <div className="space-y-2">
                 <span className={label}>Your products</span>
                 <p className="text-xs text-forest/80">
                   {total === 0 ? "None yet. Use Edit product on a shopping line, or type a price there."
-                    : `${total} saved in this browser${counts[storeId] ? `, ${counts[storeId]} for ${storeLabel(storeId)}` : ""}.`}
+                    : `${total} saved in this browser. They count wherever you shop.`}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <button onClick={download} disabled={!total} className="bg-forest text-cream hover:bg-forest/90 disabled:opacity-40 font-bold text-xs px-4 py-2 rounded-xl transition-colors">Export products</button>

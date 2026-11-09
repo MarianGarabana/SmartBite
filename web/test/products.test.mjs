@@ -1,6 +1,6 @@
-// User products per store (region and supermarket, decided 2026-10-21): one product per store and food in
-// localStorage, the user's store first, then their no-store product; other stores never count. Old typed prices
-// become no-store products without being deleted. Export and import keep products across browsers.
+// User products (decided 2026-10-21; no supermarkets since 2026-11-09): one product per food in localStorage, used
+// wherever the user shops. Products saved per store before then read as one per food, the newest price first. Old
+// typed prices become no-store products without being deleted. Export and import keep products across browsers.
 // localStorage is mocked; no server is called.
 import assert from "node:assert/strict";
 import { register } from "node:module";
@@ -55,43 +55,48 @@ test("old typed prices show as no-store products and stay in their own key", () 
   assert.deepEqual(JSON.parse(data[store.KEYS.prices]), old);
 });
 
-test("the user's store wins, then the no-store product; other stores never count", () => {
-  fakeWindow();
-  store.saveProduct("none", chickpeas({ price_eur: 1.2 }));
-  store.saveProduct("mercadona", chickpeas({ pack_grams: 400, price_eur: 0.9 }));
-  store.saveProduct("lidl", { food: "lemon", name: "Limon", sold_by: "per_kg", pack_grams: 1000, price_eur: 2 });
+test("products saved per supermarket before 2026-11-09 read as one per food, the newest price first", () => {
+  const data = fakeWindow();
+  data[store.KEYS.store] = JSON.stringify("lidl");
+  data[store.KEYS.products] = JSON.stringify({
+    "none|canned chickpeas": chickpeas({ price_eur: 1.2, price_date: "2026-10-01" }),
+    "mercadona|canned chickpeas": chickpeas({ pack_grams: 400, price_eur: 0.9, price_date: "2026-10-20" }),
+    "lidl|lemon": { food: "lemon", name: "Limon", sold_by: "per_kg", pack_grams: 1000, price_eur: 2, price_date: "2026-10-05" },
+    "carrefour|lemon": { food: "lemon", name: "Limon", sold_by: "per_kg", pack_grams: 1000, price_eur: 2.4, price_date: "2026-10-05" },
+    "walmart|feta": chickpeas({ food: "feta" }), // unknown store: dropped
+  });
   const products = store.readProducts();
-  assert.equal(store.activeProducts(products, "mercadona")["canned chickpeas"].pack_grams, 400);
-  assert.equal(store.activeProducts(products, "carrefour")["canned chickpeas"].pack_grams, 570);
-  assert.equal(store.activeProducts(products, "none")["canned chickpeas"].pack_grams, 570);
-  assert.equal(store.activeProducts(products, "mercadona").lemon, undefined);
-  assert.equal(store.activeProducts(products, "lidl").lemon.price_eur, 2);
-  store.writeStore("mercadona");
-  assert.deepEqual(store.readPrices(), { "canned chickpeas|400": 0.9 });
-  assert.deepEqual(store.readCart().products, { "canned chickpeas": products["mercadona|canned chickpeas"] });
+  assert.deepEqual(Object.keys(products).sort(), ["none|canned chickpeas", "none|lemon"]);
+  assert.equal(products["none|canned chickpeas"].pack_grams, 400); // newest date wins
+  assert.equal(products["none|lemon"].price_eur, 2); // same date: the store that was picked wins
+  assert.equal(store.readStore(), "none"); // the old choice no longer applies
+  assert.deepEqual(store.readPrices(), { "canned chickpeas|400": 0.9, "lemon|1000": 2 });
+  assert.deepEqual(store.readCart().products, { "canned chickpeas": products["none|canned chickpeas"], lemon: products["none|lemon"] });
+  // The first save writes the merged products back
+  store.saveProduct(store.readStore(), { food: "feta", name: "Feta 200 g", sold_by: "pack", pack_grams: 200 });
+  assert.deepEqual(Object.keys(JSON.parse(data[store.KEYS.products])).sort(), ["none|canned chickpeas", "none|feta", "none|lemon"]);
 });
 
-test("a price typed while shopping at a store goes to that store; clearing keeps a label", () => {
+test("a price typed on a shopping line goes to the user's product; clearing keeps a label", () => {
   fakeWindow();
   store.saveProduct("none", chickpeas({ per_100g: LABEL, barcode: "12345670" }));
   const line = { foodKey: "canned chickpeas", product: "canned chickpeas 400 g", soldBy: "pack", packSize: 400 };
-  assert.equal(store.setLinePrice(line, 0.95, "mercadona"), true);
-  const own = store.readProducts()["mercadona|canned chickpeas"];
-  // A copy of the no-store product (its pack, name and label), with the price
+  assert.equal(store.setLinePrice(line, 0.95), true);
+  const own = store.readProducts()["none|canned chickpeas"];
+  // The same product (its pack, name and label), with the price
   assert.equal(own.pack_grams, 570);
   assert.deepEqual(own.per_100g, LABEL);
   assert.equal(own.price_eur, 0.95);
   assert.match(own.price_date, /^\d{4}-\d{2}-\d{2}$/);
-  assert.equal(store.readProducts()["none|canned chickpeas"].price_eur, undefined);
   // Clearing the price keeps the product, since it has a label
-  store.setLinePrice(line, null, "mercadona");
-  const kept = store.readProducts()["mercadona|canned chickpeas"];
+  store.setLinePrice(line, null);
+  const kept = store.readProducts()["none|canned chickpeas"];
   assert.equal(kept.price_eur, undefined);
   assert.equal(kept.price_date, undefined);
   assert.deepEqual(kept.per_100g, LABEL);
   // Nothing to clear: fine
-  assert.equal(store.setLinePrice({ ...line, foodKey: "feta" }, null, "mercadona"), true);
-  assert.equal(store.setLinePrice({ ...line, foodKey: null }, 1, "mercadona"), false);
+  assert.equal(store.setLinePrice({ ...line, foodKey: "feta" }, null), true);
+  assert.equal(store.setLinePrice({ ...line, foodKey: null }, 1), false);
 });
 
 test("product rules: the pack field matches sold_by, labels and barcodes are checked, extra fields dropped", () => {
@@ -114,41 +119,24 @@ test("product rules: the pack field matches sold_by, labels and barcodes are che
   assert.equal(store.saveProduct("none", chickpeas({ pack_grams: -1 })), false);
 });
 
-test("store ids: known stores, a typed name as other, anything else is no store", () => {
-  const data = fakeWindow();
-  assert.equal(store.readStore(), "none");
-  assert.equal(store.writeStore("mercadona"), true);
-  assert.equal(store.readStore(), "mercadona");
-  assert.equal(store.storeLabel("mercadona"), "Mercadona");
-  store.writeStore("other:  Mi tienda del barrio ");
-  assert.equal(store.readStore(), "other:Mi tienda del barrio");
-  assert.equal(store.storeLabel(store.readStore()), "Mi tienda del barrio");
-  assert.equal(store.okStore("other:   "), "none");
-  assert.equal(store.okStore(`other:${"x".repeat(60)}`).length, "other:".length + 40);
-  data[store.KEYS.store] = JSON.stringify("walmart");
-  assert.equal(store.readStore(), "none");
-  assert.equal(store.storeLabel("none"), "No store");
-  // A product kept under an unknown store is dropped on read
-  data[store.KEYS.products] = JSON.stringify({ "walmart|canned chickpeas": chickpeas(), "none|feta": chickpeas() });
-  assert.deepEqual(store.readProducts(), {});
-});
-
 test("export and import: a round trip keeps every product; bad files and bad entries are reported", () => {
   fakeWindow();
   store.saveProduct("none", chickpeas({ per_100g: LABEL }));
-  store.saveProduct("mercadona", chickpeas({ price_eur: 0.9 }));
+  store.saveProduct("none", { food: "feta", name: "Feta 200 g", sold_by: "pack", pack_grams: 200, price_eur: 2 });
   const file = store.exportProducts();
   const parsed = JSON.parse(file);
   assert.equal(parsed.app, "SmartBite");
   assert.equal(parsed.kind, "products");
 
   fakeWindow();
-  store.saveProduct("lidl", { food: "lemon", name: "Limon", sold_by: "per_kg", pack_grams: 1000 });
-  const bad = { ...parsed, products: { ...parsed.products, "none|feta": { food: "feta" }, "walmart|lemon": chickpeas() } };
+  store.saveProduct("none", { food: "lemon", name: "Limon", sold_by: "per_kg", pack_grams: 1000 });
+  // A file from before 2026-11-09 can carry store keys: they become one product per food, the newest price first
+  const bad = { ...parsed, products: { ...parsed.products, "mercadona|canned chickpeas": chickpeas({ price_eur: 0.9, price_date: "2026-10-20" }),
+    "none|eggs": { food: "eggs" }, "walmart|lemon": chickpeas() } };
   const out = store.importProducts(JSON.stringify(bad));
   assert.deepEqual(out, { ok: true, added: 2, skipped: 2 });
-  assert.deepEqual(Object.keys(store.readProducts()).sort(),
-    ["lidl|lemon", "mercadona|canned chickpeas", "none|canned chickpeas"]);
+  assert.deepEqual(Object.keys(store.readProducts()).sort(), ["none|canned chickpeas", "none|feta", "none|lemon"]);
+  assert.equal(store.readProducts()["none|canned chickpeas"].price_eur, 0.9);
   assert.match(store.importProducts("{broken").error, /not JSON/);
   assert.match(store.importProducts(JSON.stringify({ app: "Other", products: {} })).error, /not a SmartBite products/);
 

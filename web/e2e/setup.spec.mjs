@@ -82,7 +82,7 @@ test("Get started from the menu leads to /start; the setup saves shop and key, t
   const setup = page.getByRole("dialog");
   await expect(setup).toContainText("Step 1 of 2");
   await setup.locator("#setup-region").selectOption("ES-MD");
-  await setup.locator("#setup-store").selectOption("mercadona");
+  await expect(setup.locator("#setup-store")).toHaveCount(0); // no supermarket choice since 2026-11-09
   await setup.getByRole("button", { name: "Next" }).click();
 
   // No targets step (decided 2026-10-31): targets are set in the Make Your Meal form
@@ -96,7 +96,7 @@ test("Get started from the menu leads to /start; the setup saves shop and key, t
   const saved = await page.evaluate(() => ({ region: localStorage.getItem("smartbite.region"),
     store: localStorage.getItem("smartbite.store"), key: localStorage.getItem("smartbite.anthropicKey"),
     setup: localStorage.getItem("smartbite.setup") }));
-  expect(saved).toEqual({ region: '"ES-MD"', store: '"mercadona"', key: '"sk-ant-test-key"', setup: '"done"' });
+  expect(saved).toEqual({ region: '"ES-MD"', store: null, key: '"sk-ant-test-key"', setup: '"done"' });
   await page.getByRole("button", { name: "Profile menu" }).click();
   await expect(page.getByRole("menuitem")).toHaveText(["Profile", "Save profile file"]); // opening a file is on the Profile page
   const [file] = await Promise.all([page.waitForEvent("download"), page.getByRole("menuitem", { name: "Save profile file" }).click()]);

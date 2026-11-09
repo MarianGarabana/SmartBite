@@ -9,9 +9,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { ANTHROPIC, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, presetById } from "../lib/providers";
-import { COUNTRIES, DEFAULT_COUNTRY, ESTIMATE_CURRENCY, NATIONAL, NO_STORE, REGIONS, SETUP_DONE, SETUP_SKIPPED, STORES,
+import { COUNTRIES, DEFAULT_COUNTRY, ESTIMATE_CURRENCY, NATIONAL, REGIONS, SETUP_DONE, SETUP_SKIPPED,
   currencyFor, currencySymbol, markSetup, readApiKey, readCountry, readCurrency, readLlmSettings, readOpenAiKey, readRegion,
-  readStore, writeApiKey, writeCountry, writeCurrency, writeLlmSettings, writeOpenAiKey, writeRegion, writeStore } from "../lib/store";
+  writeApiKey, writeCountry, writeCurrency, writeLlmSettings, writeOpenAiKey, writeRegion } from "../lib/store";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
 const input = "w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest";
@@ -60,7 +60,6 @@ function SetupDialog({ onClose, keyOnly }) {
   const [step, setStep] = useState(keyOnly ? 1 : 0);
   const [country, setCountry] = useState(DEFAULT_COUNTRY);
   const [region, setRegion] = useState(NATIONAL);
-  const [store, setStore] = useState(NO_STORE);
   const [countryList, setCountryList] = useState([]);
   const [key, setKey] = useState("");
   const [provider, setProvider] = useState(ANTHROPIC); // ANTHROPIC or "gemini"
@@ -68,7 +67,6 @@ function SetupDialog({ onClose, keyOnly }) {
   useEffect(() => {
     setCountry(readCountry());
     setRegion(readRegion());
-    setStore(readStore().startsWith("other:") ? NO_STORE : readStore());
     setCountryList(COUNTRIES);
     const llm = readLlmSettings();
     const gemini = llm.provider === OPENAI_COMPATIBLE && llm.openai.preset === GEMINI.id;
@@ -84,7 +82,6 @@ function SetupDialog({ onClose, keyOnly }) {
 
   const regions = REGIONS[country] || [];
   const currency = currencyFor(country) || readCurrency(country);
-  const stores = STORES[country] || [];
   const next = () => { setError(""); setStep((s) => s + 1); };
 
   // Each step saves what it shows, then moves on
@@ -92,7 +89,6 @@ function SetupDialog({ onClose, keyOnly }) {
     writeCountry(country);
     if (currencyFor(country)) writeCurrency(currencyFor(country));
     if (regions.length) writeRegion(region);
-    writeStore(store);
     next();
   };
   // Switching provider shows that provider's saved key (or none)
@@ -135,7 +131,7 @@ function SetupDialog({ onClose, keyOnly }) {
             <p className="text-xs text-forest/70">Saved in this browser. No account, nothing sent anywhere.</p>
             <div>
               <label htmlFor="setup-country" className={label}>Country</label>
-              <select id="setup-country" value={country} onChange={(e) => { setCountry(e.target.value); setStore(NO_STORE); }} className={input}>
+              <select id="setup-country" value={country} onChange={(e) => setCountry(e.target.value)} className={input}>
                 {(countryList.length ? countryList : COUNTRIES.filter((c) => c.id === country)).map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
               </select>
               <span className={small}>Prices show in {currency} ({currencySymbol(currency) || currency}). You can change the currency in your Profile.</span>
@@ -150,14 +146,6 @@ function SetupDialog({ onClose, keyOnly }) {
                 <span className={small}>For estimated prices on items you have not priced.</span>
               </div>
             )}
-            <div>
-              <label htmlFor="setup-store" className={label}>Supermarket</label>
-              <select id="setup-store" value={store} onChange={(e) => setStore(e.target.value)} className={input}>
-                <option value={NO_STORE}>No store</option>
-                {stores.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
-              </select>
-              <span className={small}>Your products and prices are kept per store. SmartBite never contacts the store.</span>
-            </div>
           </div>
         )}
 

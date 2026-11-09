@@ -8,7 +8,7 @@ import { useState } from "react";
 import { EGG_GRAMS } from "../lib/cartmath";
 import { LookupError, lookupBarcode } from "../lib/off";
 import { moneySymbol } from "./Chrome";
-import { ESTIMATES, NO_STORE, deleteProduct, okProduct, readCountry, readProducts, readStore, regionLabel, saveProduct, storeLabel } from "../lib/store";
+import { ESTIMATES, NO_STORE, deleteProduct, okProduct, readCountry, readProducts, readStore, regionLabel, saveProduct } from "../lib/store";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
 const input = "w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest";
@@ -147,7 +147,7 @@ export function ProductDialog({ row, onClose, showToast }) {
       ...(per100 && fromOff ? { label_source: "open_food_facts" } : {}) };
     if (!okProduct(product)) return showToast("Some numbers are out of range. Check the pack size, price and label.");
     if (!saveProduct(store, product)) return showToast("Not saved: this browser blocks storage.");
-    showToast(`Product saved for ${store === NO_STORE ? "every store" : storeLabel(store)}.`);
+    showToast("Product saved.");
     onClose();
   };
   const remove = () => {
@@ -161,7 +161,7 @@ export function ProductDialog({ row, onClose, showToast }) {
       <div role="dialog" aria-modal="true" aria-labelledby="product-dialog-title" onClick={(e) => e.stopPropagation()}
         className="bg-white rounded-3xl p-8 shadow-card border border-cream-dark max-w-lg w-full space-y-6 max-h-[90vh] overflow-y-auto">
         <div>
-          <span className="font-script text-2xl text-forest font-bold">{store === NO_STORE ? "Any store" : storeLabel(store)}</span>
+          <span className="font-script text-2xl text-forest font-bold">Your product</span>
           <h2 id="product-dialog-title" className="font-serif text-3xl font-bold text-forest leading-snug">Your product for {row.ingredient}</h2>
           <p className="text-xs text-forest/70 mt-1">Saved in this browser. It replaces the typical pack{hasLabel ? " and the nutrition table" : ""} for this food in every meal.</p>
         </div>

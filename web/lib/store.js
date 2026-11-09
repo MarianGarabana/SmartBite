@@ -19,7 +19,7 @@ export const KEYS = {
   // (migratePrices), then left as it is, as a backup
   prices: "smartbite.prices",
   products: "smartbite.products", // { "<store id>|<food key>": product (docs/contracts/evaluate.schema.json Product) }
-  store: "smartbite.store", // supermarket id (STORES), "other:<name>", or "none"
+  store: "smartbite.store", // old supermarket choice (before 2026-11-09): read only to merge old products
   country: "smartbite.country", // ISO country code ("none" before 2026-10-22: Spain, estimates off)
   region: "smartbite.region", // estimated prices: "national", "off" or a region code such as "ES-MD"
   currency: "smartbite.currency", // ISO 4217 code shown with prices (symbol only, no conversion); unset: the country's
@@ -104,8 +104,9 @@ function readOldPrices() {
   return Object.fromEntries(Object.entries(p).filter(([k, v]) => k.includes("|") && okPrice(v)));
 }
 
-// Supermarkets per country (decided 2026-10-21; 7 more countries 2026-11-03, the largest chains by market share). The
-// store only labels the user's own products: no store site is ever contacted. "Other" keeps a name the user types, as
+// Supermarkets per country (decided 2026-10-21, choice removed 2026-11-09): kept only so products saved per store
+// before then still read. The
+// store only labelled the user's own products: no store site is ever contacted. "Other" keeps a name the user types, as
 // "other:<name>". Spain's ids have no suffix (saved products use them); the others end in the country, so Lidl in the UK
 // and Lidl in Spain keep separate products.
 const chains = (cc, names) => names.map((label) => ({
@@ -143,7 +144,10 @@ export function okStore(id) {
 export const storeLabel = (id) => (id === NO_STORE ? "No store"
   : id.startsWith("other:") ? id.slice(6) : Object.values(STORES).flat().find((s) => s.id === id)?.label || id);
 
-export const readStore = () => okStore(readJson(KEYS.store, NO_STORE));
+// No supermarket choice since 2026-11-09 (Marian): prices are per country (and Spanish region), and the user's own
+// products count for every store. The old saved choice only breaks ties when old products are merged (readProducts).
+export const readStore = () => NO_STORE;
+const oldStore = () => okStore(readJson(KEYS.store, NO_STORE));
 export const writeStore = (id) => writeJson(KEYS.store, okStore(id));
 
 // One product as kept and sent to the engine (docs/contracts/evaluate.schema.json Product), or null when it breaks
@@ -220,16 +224,24 @@ export function migratePrices(prices, packs = PACK_SIZES) {
   return Object.fromEntries(Object.entries(best).map(([food, b]) => [`${NO_STORE}|${food}`, b.product]));
 }
 
-// { "<store id>|<food key>": product }; bad entries dropped. Before the first product is saved, the old typed prices
-// show as no-store products (nothing written here: reading never writes)
+// { "none|<food key>": product }; bad entries dropped. Before the first product is saved, the old typed prices show
+// as no-store products (nothing written here: reading never writes). Products saved per supermarket before
+// 2026-11-09 read as no-store ones: one per food, the newest price date first, then the store that was picked.
 export function readProducts() {
   const raw = readJson(KEYS.products, null);
   if (!isObject(raw)) return migratePrices(readOldPrices());
+  const picked = oldStore();
   const out = {};
+  const from = {};
   for (const [key, value] of Object.entries(raw)) {
     const product = okProduct(value);
     const store = key.slice(0, key.lastIndexOf("|"));
-    if (product && okStore(store) === store && key === `${store}|${product.food}`) out[key] = product;
+    if (!product || okStore(store) !== store || key !== `${store}|${product.food}`) continue;
+    const id = `${NO_STORE}|${product.food}`;
+    const have = out[id];
+    const newer = !have || (product.price_date || "") > (have.price_date || "")
+      || ((product.price_date || "") === (have.price_date || "") && store === picked && from[id] !== picked);
+    if (newer) { out[id] = product; from[id] = store; }
   }
   return out;
 }
@@ -297,7 +309,7 @@ export function setLinePrice(line, price, store = readStore()) {
 export const MAX_PRODUCTS = 1000;
 
 // Products as a file to keep (Settings "Export products") and back: { app, kind, version, exported, products }.
-// Import adds to the products kept here; the same store and food is replaced by the file's.
+// Import adds to the products kept here; the same food is replaced by the file's.
 export function exportProducts() {
   return JSON.stringify({ app: "SmartBite", kind: "products", version: 1, exported: today(), products: readProducts() },
     null, 1);
@@ -319,8 +331,10 @@ export function importProducts(text) {
   for (const [key, value] of Object.entries(data.products)) {
     const p = okProduct(value);
     const store = key.slice(0, key.lastIndexOf("|"));
-    if (p && okStore(store) === store) add[`${store}|${p.food}`] = p;
-    else skipped += 1;
+    if (!p || okStore(store) !== store) { skipped += 1; continue; }
+    // No stores since 2026-11-09: a file from before keeps one product per food, the newest price date
+    const id = `${NO_STORE}|${p.food}`;
+    if (!add[id] || (p.price_date || "") > (add[id].price_date || "")) add[id] = p;
   }
   const merged = { ...readProducts(), ...add };
   if (Object.keys(merged).length > MAX_PRODUCTS) {
@@ -386,11 +400,11 @@ export function openProfile(data) {
   return ok;
 }
 
-// Country: picks the supermarket list and, where SmartBite has them, estimated prices (engine,
+// Country: picks pack sizes and, where SmartBite has them, estimated prices (engine,
 // docs/contracts/evaluate.schema.json "country"): average prices fill the lines the user did not price (ESTIMATES:
 // Spain from MAPA, nationally or per comunidad autonoma; Canada from Statistics Canada; the UK from the ONS; the US
 // from the BLS; Ireland from the CSO; France from INSEE, fresh foods only). Labels come from the browser (Intl), in English.
-// The list holds the countries with supermarket data (decided 2026-11-03) and "Other country" (generic packs, no
+// The list holds the countries with price data (decided 2026-11-03) and "Other country" (generic packs, no
 // stores, no estimates). A saved code from the full ISO list that is not supported reads as "Other country" but stays
 // in storage, so its currency still follows it.
 const ISO_COUNTRIES = ("AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR " +
