@@ -6,6 +6,20 @@
 // 3. Phones: no sideways scroll, the tabs sit in a menu; desktop keeps the tab bar.
 import { expect, test } from "@playwright/test";
 
+// Make Your Meal is a quiz (2026-11-09): type the craving, click Continue through the questions, then ask for ideas
+async function askForIdeas(page, craving) {
+  await page.locator("#input-craving").fill(craving);
+  const show = page.getByRole("button", { name: "Show me 4 ideas" });
+  for (let i = 0; i < 10 && !(await show.isVisible()); i++) await page.getByRole("button", { name: /^(Continue|Back to summary)/ }).click();
+  await show.click();
+}
+// Click Continue until the question with this title shows
+async function goToQuestion(page, title) {
+  const heading = page.locator("#make-step-1 h2", { hasText: title });
+  for (let i = 0; i < 10 && !(await heading.isVisible()); i++) await page.getByRole("button", { name: /^Continue/ }).click();
+  await expect(heading).toBeVisible();
+}
+
 test("without a complete profile, Make Your Meal goes to /start, never to demo ideas", async ({ page }) => {
   await page.goto("/?tab=make-meal");
   await expect(page).toHaveURL(/\/start$/);
@@ -51,6 +65,8 @@ test("a key and saved targets from before the setup count as a complete profile"
   });
   await page.goto("/?tab=make-meal");
   await expect(page.locator("#input-craving")).toBeVisible();
+  await page.locator("#input-craving").fill("chicken");
+  await goToQuestion(page, "How big should it be?");
   await expect(page.locator("#input-calories")).toHaveValue("520");
   await expect(page.locator("#make-setup")).toHaveCount(0);
   expect(await page.evaluate(() => localStorage.getItem("smartbite.setup"))).toBeNull(); // never sent through the setup

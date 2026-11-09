@@ -63,8 +63,12 @@ test("a country's currency shows on prices, and Spain's estimates need euros", a
   await expect(page.locator("#price-region")).toHaveCount(0);
   await page.locator("#currency").selectOption("EUR");
   await expect(page.locator("#price-region")).toBeVisible();
-  await page.goto(`/demo?tab=make-meal`); // the same form; the real one waits for a key
-  await expect(page.getByText("Total budget (€)")).toBeVisible();
+  await page.goto(`/demo?tab=make-meal`); // the same quiz; the real one waits for a key
+  await page.locator("#input-craving").fill("chicken");
+  const budgetStep = page.locator("#make-step-1 h2", { hasText: "How many servings, and what budget?" });
+  for (let i = 0; i < 10 && !(await budgetStep.isVisible()); i++) await page.getByRole("button", { name: /^Continue/ }).click();
+  await expect(page.getByText("Total budget", { exact: true })).toBeVisible();
+  await expect(page.locator("#input-budget + span")).toHaveText("€");
 });
 
 test("a profile file saved in one browser opens in another, after a confirm and a backup download", async ({ browser }, testInfo) => {

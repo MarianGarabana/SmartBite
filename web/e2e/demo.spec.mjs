@@ -5,6 +5,20 @@
 // 4. The demo cart is kept apart from the real cart.
 import { expect, test } from "@playwright/test";
 
+// Make Your Meal is a quiz (2026-11-09): type the craving, click Continue through the questions, then ask for ideas
+async function askForIdeas(page, craving) {
+  await page.locator("#input-craving").fill(craving);
+  const show = page.getByRole("button", { name: "Show me 4 ideas" });
+  for (let i = 0; i < 10 && !(await show.isVisible()); i++) await page.getByRole("button", { name: /^(Continue|Back to summary)/ }).click();
+  await show.click();
+}
+// Click Continue until the question with this title shows
+async function goToQuestion(page, title) {
+  const heading = page.locator("#make-step-1 h2", { hasText: title });
+  for (let i = 0; i < 10 && !(await heading.isVisible()); i++) await page.getByRole("button", { name: /^Continue/ }).click();
+  await expect(heading).toBeVisible();
+}
+
 const DEMO_SLUG = "tuna-frittata-with-vegetables";
 const cartMeals = (page, key) => page.evaluate((k) => JSON.parse(localStorage.getItem(k) || "{}").meals?.length ?? 0, key);
 
@@ -53,8 +67,7 @@ test("the demo runs with no key: craving, demo ideas, recipe page, and back into
   await page.goto("/demo");
   await page.locator("#nav-make-meal").click();
   await expect(page).toHaveURL(/\/demo\?tab=make-meal$/);
-  await page.locator("#input-craving").fill("tuna frittata");
-  await page.getByRole("button", { name: "Show me 4 ideas" }).click();
+  await askForIdeas(page, "tuna frittata");
   await expect(page.getByRole("dialog")).toHaveCount(0); // no setup in the demo
   await expect(page.locator("#demo-note")).toBeVisible();
   const cards = page.locator("#ideas-card-grid > div");

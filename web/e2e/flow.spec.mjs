@@ -2,6 +2,20 @@
 // The Anthropic API is mocked with route interception: the fake key never leaves the browser and no model runs.
 import { expect, test } from "@playwright/test";
 
+// Make Your Meal is a quiz (2026-11-09): type the craving, click Continue through the questions, then ask for ideas
+async function askForIdeas(page, craving) {
+  await page.locator("#input-craving").fill(craving);
+  const show = page.getByRole("button", { name: "Show me 4 ideas" });
+  for (let i = 0; i < 10 && !(await show.isVisible()); i++) await page.getByRole("button", { name: /^(Continue|Back to summary)/ }).click();
+  await show.click();
+}
+// Click Continue until the question with this title shows
+async function goToQuestion(page, title) {
+  const heading = page.locator("#make-step-1 h2", { hasText: title });
+  for (let i = 0; i < 10 && !(await heading.isVisible()); i++) await page.getByRole("button", { name: /^Continue/ }).click();
+  await expect(heading).toBeVisible();
+}
+
 const FAKE_KEY = "sk-ant-e2e-fake-key-0000";
 const DEMO_SLUG = "tuna-frittata-with-vegetables";
 const ANTHROPIC = "https://api.anthropic.com/v1/messages";
@@ -99,8 +113,7 @@ test("each recipe category lists its demo meals", async ({ page }) => {
 
 test("a demo idea shows its meal's own name and macros, in a preview that covers the page", async ({ page }) => {
   await page.goto("/demo?tab=make-meal");
-  await page.locator("#input-craving").fill("lentils");
-  await page.getByRole("button", { name: "Show me 4 ideas" }).click();
+  await askForIdeas(page, "lentils");
   await expect(page.locator("#demo-note")).toBeVisible(); // the demo needs no profile and no setup
   await expect(page.locator("#ideas-card-grid h3").first()).toHaveText(/lentil/i); // closest to the craving first
   await page.locator("#ideas-card-grid h3", { hasText: "Classic lentil stew" }).click();
@@ -141,7 +154,9 @@ test("tabs show in the address, and Back goes to the tab before", async ({ page 
 test("eggs are counted on the recipe page, and the form asks about a blender", async ({ page }) => {
   await page.goto("/recipes/tuna-frittata-with-vegetables");
   await expect(page.getByText("20 eggs (1020g)")).toBeVisible(); // 4 servings of 5 eggs, as the steps say
-  await page.goto("/demo?tab=make-meal"); // the same form as the real app, with no profile needed
+  await page.goto("/demo?tab=make-meal"); // the same quiz as the real app, with no profile needed
+  await page.locator("#input-craving").fill("eggs");
+  await goToQuestion(page, "What can you cook with?");
   await expect(page.getByLabel("Blender", { exact: true })).not.toBeChecked(); // the Kitchen Profile says no blender
 });
 
@@ -173,8 +188,7 @@ test("make a meal with a mocked model, the real engine, then cart and Adjust lef
   // Step 1 -> 4 ideas
   await page.goto("/?tab=make-meal");
   await expect(page).toHaveURL(/\?tab=make-meal$/);
-  await page.locator("#input-craving").fill("chicken bowl with rice and cucumber");
-  await page.getByRole("button", { name: "Show me 4 ideas" }).click();
+  await askForIdeas(page, "chicken bowl with rice and cucumber");
   const cards = page.locator("#ideas-card-grid > div");
   await expect(cards).toHaveCount(4);
   await expect(cards.first()).toContainText("Greek chicken bowl");

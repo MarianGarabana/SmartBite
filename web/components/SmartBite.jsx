@@ -3,7 +3,7 @@
 // meals plus what this browser keeps (cart, saved meals) in localStorage.
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { checkForm } from "../lib/form";
 import { makeMeal, progressText } from "../lib/flow";
 import { generateIdeas, photoMaker, reviseIdea } from "../lib/llm";
@@ -664,16 +664,126 @@ const mealSlug = (title) => `${String(title || "").normalize("NFKD").replace(/[\
   .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "meal"}-${Date.now().toString(36)}`;
 const hasGear = (gear, name) => gear.some((g) => g.toLowerCase().trim() === name);
 
-// Step 1 form. Defaults follow the Kitchen Profile (Settings).
+// Step 1 quiz options (decided 2026-11-09, ported from the personal app): [value sent, label, Font Awesome icon, small
+// line]. Craving values are the words the craving sentence uses; avoid values are plain English food names, matched
+// against dishes by lib/inspiration.js (every word of the item in one food name).
+const QUIZ = {
+  protein: [["chicken", "Chicken", "fa-drumstick-bite"], ["turkey", "Turkey", "fa-feather"], ["beef", "Beef", "fa-cow"],
+    ["salmon or white fish", "Fish", "fa-fish"], ["canned tuna", "Canned tuna", "fa-fish-fins"], ["eggs", "Eggs", "fa-egg"],
+    ["chickpeas or lentils", "Legumes", "fa-jar"], ["tofu", "Tofu", "fa-cubes"]],
+  style: [["bowl", "Bowl", "fa-bowl-rice"], ["salad", "Salad", "fa-leaf"], ["stew or soup", "Stew or soup", "fa-mug-hot"],
+    ["stir-fry", "Stir-fry", "fa-fire-burner"], ["baked in the oven", "Oven bake", "fa-temperature-high"],
+    ["frittata", "Frittata", "fa-cubes-stacked"], ["pasta", "Pasta", "fa-bowl-food"], ["overnight oats", "Overnight oats", "fa-jar-wheat"]],
+  cuisine: [["Spanish", "Spanish", "fa-sun"], ["Mediterranean", "Mediterranean", "fa-umbrella-beach"],
+    ["Italian", "Italian", "fa-pizza-slice"], ["Greek", "Greek", "fa-landmark"], ["Mexican", "Mexican", "fa-pepper-hot"],
+    ["Asian (Chinese, Japanese, Korean or Thai)", "Asian", "fa-torii-gate"], ["Indian", "Indian", "fa-gopuram"],
+    ["Middle Eastern", "Middle Eastern", "fa-mosque"]],
+  avoid: [["onion", "Onion"], ["garlic", "Garlic"], ["bell pepper", "Bell pepper"], ["tomato", "Tomato"], ["mushrooms", "Mushrooms"],
+    ["avocado", "Avocado"], ["cilantro", "Cilantro"], ["spicy food", "Spicy food"], ["pork", "Pork"], ["fish", "Fish"],
+    ["eggs", "Eggs"], ["dairy", "Dairy"]],
+  time: [["15", "Under 15 min", "fa-bolt", "Quick, few steps"], ["30", "Under 30 min", "fa-clock", "Normal weeknight"],
+    ["45", "Under 45 min", "fa-hourglass-half", "Time for the oven"]],
+  gear: [["microwave", "Microwave", "fa-tv"], ["stove", "Stove", "fa-fire-burner"], ["oven", "Oven", "fa-temperature-high"],
+    ["blender", "Blender", "fa-blender"]],
+};
+const quizLabel = (list, v) => (list.find((o) => o[0] === v) || [v, v])[1];
+const flip = (list, v) => (list.includes(v) ? list.filter((x) => x !== v) : [...list, v]);
+
+// Option card on a native checkbox or radio (selected state shown by fill and tick, not by colour alone)
+function Choice({ type = "checkbox", name, checked, onChange, icon, label, sub, tall, tile }) {
+  const box = tile ? "justify-center p-0 min-h-[48px]" : tall ? "flex-col items-start p-4 min-h-[118px]" : "items-center p-3 min-h-[52px]";
+  return (
+    <label className={`quiz-opt relative flex ${box} gap-2.5 border-[1.5px] border-cream-dark rounded-2xl bg-cream/50 cursor-pointer select-none text-forest hover:border-forest-light transition-colors active:scale-[.98]`}>
+      <input type={type} name={name} checked={checked} onChange={onChange} className="sr-only" />
+      {icon && (
+        <span className={`quiz-ico ${tall ? "w-11 h-11 text-lg" : "w-9 h-9 text-sm"} rounded-xl bg-white flex items-center justify-center shrink-0`}>
+          <i className={`fa-solid ${icon}`}></i>
+        </span>
+      )}
+      <span className="min-w-0 grid gap-0.5">
+        <span className={`font-bold ${tile ? "text-base font-extrabold" : tall ? "text-[15px]" : "text-[13px]"}`}>{label}</span>
+        {sub && <span className="quiz-sub text-[11.5px] text-forest/70 font-medium">{sub}</span>}
+      </span>
+      {!tile && (
+        <span className={`quiz-tick ${tall ? "absolute top-3.5 right-3.5" : "ml-auto"} w-5 h-5 rounded-full border-[1.5px] border-cream-dark bg-white flex items-center justify-center shrink-0`}>
+          <i className="fa-solid fa-check text-[10px]"></i>
+        </span>
+      )}
+    </label>
+  );
+}
+
+const Chip = ({ on, onClick, children }) => (
+  <button type="button" aria-pressed={on} onClick={onClick}
+    className={`text-xs font-bold px-3.5 py-1.5 rounded-full border-[1.5px] transition-colors ${on ? "bg-forest border-forest text-cream" : "bg-white border-cream-dark text-forest hover:border-forest-light"}`}>
+    {children}
+  </button>
+);
+
+// Slider with the number beside it: drag, tap a preset, or type (sliders need a typed fallback)
+function Dial({ id, label, icon, unit, min, max, step, value, onChange, presets = [], note, money: isMoney, children }) {
+  const [draft, setDraft] = useState(null);
+  const show = (v) => (isMoney ? v.toFixed(2) : String(v));
+  const clamp = (v) => Math.min(max, Math.max(min, isMoney ? Math.round(v * 2) / 2 : Math.round(v)));
+  const typed = (raw) => {
+    setDraft(raw);
+    const v = parseFloat(raw.replace(",", "."));
+    if (v >= min && v <= max) onChange(clamp(v));
+  };
+  const done = () => {
+    const v = parseFloat((draft ?? "").replace(",", "."));
+    if (!Number.isNaN(v)) onChange(clamp(v));
+    setDraft(null);
+  };
+  return (
+    <div className="bg-cream/50 border-[1.5px] border-cream-dark rounded-2xl p-5 space-y-3">
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <label htmlFor={id} className="flex items-center gap-2.5 text-sm font-bold text-forest">
+          <span className="w-9 h-9 rounded-xl bg-white flex items-center justify-center"><i className={`fa-solid ${icon}`}></i></span>
+          {label}
+        </label>
+        {value !== null && (
+          <span className="flex items-baseline gap-1">
+            <input id={id} inputMode="decimal" value={draft ?? show(value)} onChange={(e) => typed(e.target.value)} onBlur={done}
+              className="w-[4.5ch] bg-transparent border-b-2 border-dashed border-cream-dark focus:border-lime-hover focus:outline-none text-right font-serif text-3xl font-extrabold text-forest tabular-nums" />
+            <span className="text-sm font-bold text-forest/70">{unit}</span>
+          </span>
+        )}
+      </div>
+      {children}
+      {value !== null && (
+        <>
+          <input type="range" id={`${id}-range`} min={min} max={max} step={step} value={Math.min(max, Math.max(min, value))}
+            onChange={(e) => onChange(Number(e.target.value))} aria-label={label} aria-valuetext={`${show(value)} ${unit}`} className="quiz-range"
+            style={{ "--p": `${((Math.min(max, Math.max(min, value)) - min) / (max - min)) * 100}%` }} />
+          <div className="flex justify-between text-[11px] font-semibold text-forest/70 -mt-1 tabular-nums">
+            <span>{show(min)} {unit}</span><span>{show(max)} {unit}</span>
+          </div>
+          {presets.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {presets.map((p) => <Chip key={p} on={value === p} onClick={() => onChange(p)}>{show(p)} {unit}</Chip>)}
+            </div>
+          )}
+        </>
+      )}
+      {note && <p className="text-xs text-forest/70">{note}</p>}
+    </div>
+  );
+}
+
+// Step 1: one question per screen, then a check-your-answers summary (decided 2026-11-09). Each visit starts from the
+// user's profile (targets, gear, foods to avoid, budget); answers are not remembered between visits.
 function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete }) {
-  const [craving, setCraving] = useState("");
-  // Leftovers in the cart: a click adds one to the craving, so the ideas build on it
-  const addLeftover = (l) => setCraving((c) => (c.includes(`leftover ${l.ingredient} `) ? c :
-    `${c.trim() ? `${c.trim()}, ` : ""}use my leftover ${l.ingredient} (${grams(l.left)})`));
-  const [kcalTarget, setKcalTarget] = useState("450");
-  const [proteinTarget, setProteinTarget] = useState("45");
-  const [carbsMax, setCarbsMax] = useState("");
-  const [fatMax, setFatMax] = useState("");
+  const [crave, setCrave] = useState({ protein: [], style: [], cuisine: [] });
+  const [craveText, setCraveText] = useState("");
+  // Leftovers in the cart: a tap adds one to the craving, so the ideas build on it
+  const [useLeftovers, setUseLeftovers] = useState([]);
+  const [avoid, setAvoid] = useState([]);
+  const [kcalTarget, setKcalTarget] = useState(450);
+  const [proteinTarget, setProteinTarget] = useState(45);
+  const [profileTargets, setProfileTargets] = useState({ kcal: null, protein: null });
+  const [carbsMax, setCarbsMax] = useState(null); // null = no limit
+  const [fatMax, setFatMax] = useState(null);
   const [time, setTime] = useState("30");
   const [gear, setGear] = useState({ microwave: true, stove: true, oven: true, noBlender: true });
   const [reheat, setReheat] = useState(true);
@@ -681,20 +791,25 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
   const [servings, setServings] = useState(1);
-  const [budget, setBudget] = useState("5.50");
+  const [budget, setBudget] = useState(5.5);
   // The profile lives in this browser, so it is read after the first render (and again after Create profile)
   const loadDefaults = () => {
     const profile = readProfile();
-    const kcal = fieldValue(profile, "kcal_target");
-    const protein = fieldValue(profile, "protein_g_target");
-    if (kcal) setKcalTarget(String(kcal));
-    if (protein) setProteinTarget(String(protein));
+    const kcal = Number(fieldValue(profile, "kcal_target")) || null;
+    const protein = Number(fieldValue(profile, "protein_g_target")) || null;
+    if (kcal) setKcalTarget(Math.round(kcal));
+    if (protein) setProteinTarget(Math.round(protein));
+    setProfileTargets({ kcal, protein });
     const g = toList(fieldValue(profile, "gear", []));
     if (g.length) setGear({ microwave: hasGear(g, "microwave"), stove: hasGear(g, "stove"), oven: hasGear(g, "oven"),
       noBlender: hasGear(g, "no blender") });
-    setTags(toList(fieldValue(profile, "exclude", [])));
+    // Profile foods to avoid: the ones that are cards start ticked, the rest are typed items
+    const excluded = toList(fieldValue(profile, "exclude", []));
+    const cards = QUIZ.avoid.map(([v]) => v);
+    setAvoid(excluded.map((x) => x.toLowerCase().trim()).filter((x) => cards.includes(x)));
+    setTags(excluded.filter((x) => !cards.includes(x.toLowerCase().trim())));
     const b = readBudget();
-    if (b !== DEFAULT_BUDGET) setBudget((b * servings).toFixed(2));
+    if (b !== DEFAULT_BUDGET) setBudget(Math.round(b * servings * 2) / 2);
   };
   useEffect(() => {
     loadDefaults();
@@ -710,7 +825,17 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
     setTags([...tags, val]);
     setTagInput("");
   };
-  const perServing = (parseFloat(budget) || 0) / servings;
+  const perServing = budget / servings;
+  const exclude = [...avoid, ...tags];
+  const craving = [...crave.protein, ...crave.style, ...crave.cuisine, craveText.trim(),
+    ...leftovers.filter((l) => useLeftovers.includes(l.key)).map((l) => `use my leftover ${l.ingredient} (${grams(l.left)})`)]
+    .filter(Boolean).join(", ");
+  const [q, setQ] = useState(0);
+  const [toSummary, setToSummary] = useState(false);
+  const [quizError, setQuizError] = useState("");
+  const quizTop = useRef(null);
+  const quizTitle = useRef(null);
+  const moved = useRef(false);
   const router = useRouter();
   // { step: 1 } | { step: 2, loading } | { step: 2, ideas, demo } | { step: 2 or 3, error } | { step: 3, loading }
   // Step 3 also keeps { idea, recipe } once the recipe is written, so "Try again" re-runs only the engine
@@ -724,7 +849,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
     return () => window.removeEventListener("keydown", onKey);
   }, [preview]);
   const step = run.step;
-  const demoIdeas = () => demoPicks(demoMeals.filter((m) => m.idea), craving, tags)
+  const demoIdeas = () => demoPicks(demoMeals.filter((m) => m.idea), craving, exclude)
     .map((m, i) => ({ ...m.idea, ...demoIdea(m), idea_id: String(i + 1), slug: m.slug }));
   const showDemo = () => { setPreview(null); setRun({ step: 2, demo: true, ideas: demoIdeas() }); };
   const startOver = () => { setPreview(null); setRun({ step: 1 }); };
@@ -732,12 +857,185 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
     ? ["flex items-center gap-2 font-bold text-xs text-forest", "w-7 h-7 rounded-full bg-lime text-forest flex items-center justify-center font-extrabold text-xs"]
     : ["flex items-center gap-2 font-semibold text-xs text-forest/70", "w-7 h-7 rounded-full bg-cream-dark text-forest/70 flex items-center justify-center text-xs"]);
   const toggleGear = (key) => setGear({ ...gear, [key]: !gear[key] });
+  const hasGearOn = (k) => (k === "blender" ? !gear.noBlender : gear[k]);
+  const toggleGearCard = (k) => toggleGear(k === "blender" ? "noBlender" : k);
+
+  const plural = (n, word) => `${n} ${word}${n > 1 ? "s" : ""}`;
+  const QUESTIONS = [
+    { title: "What are you craving?", icon: "fa-utensils",
+      hint: "Tap anything that sounds good. Mix as many as you like, or add your own words.",
+      summary: craving || "Not chosen yet",
+      check: () => (craving ? "" : "Tap at least one thing, or type a few words."),
+      body: (
+        <>
+          {[["protein", "Protein"], ["style", "Kind of meal"], ["cuisine", "Flavour"]].map(([key, legend]) => (
+            <fieldset key={key} className="space-y-2.5">
+              <legend className="text-xs font-bold uppercase tracking-wider text-forest/70 mb-2.5">{legend}</legend>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+                {QUIZ[key].map(([v, label, icon]) => (
+                  <Choice key={v} checked={crave[key].includes(v)} onChange={() => setCrave({ ...crave, [key]: flip(crave[key], v) })} icon={icon} label={label} />
+                ))}
+              </div>
+            </fieldset>
+          ))}
+          {leftovers.length > 0 && (
+            <div id="craving-leftovers" className="bg-cream/50 border border-cream-dark rounded-2xl p-3 space-y-2">
+              <p className="text-xs text-forest/70"><span className="font-bold">Leftovers in your cart.</span> Tap one to cook with it.</p>
+              <div className="flex flex-wrap gap-2">
+                {leftovers.map((l) => (
+                  <Chip key={l.key} on={useLeftovers.includes(l.key)} onClick={() => setUseLeftovers(flip(useLeftovers, l.key))}>
+                    <i className="fa-solid fa-plus text-[10px] mr-1"></i>{l.ingredient} {grams(l.left)}
+                  </Chip>
+                ))}
+              </div>
+            </div>
+          )}
+          <div>
+            <label htmlFor="input-craving" className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Your own words (optional)</label>
+            <input type="text" id="input-craving" value={craveText} onChange={(e) => setCraveText(e.target.value)} placeholder="e.g. something with a crunchy topping" className="w-full bg-cream/50 border border-cream-dark rounded-2xl px-4 py-3 text-sm text-forest placeholder-forest/40 focus:outline-none focus:border-forest" />
+          </div>
+          <div className="bg-lime-soft rounded-2xl px-4 py-3 text-sm text-forest flex gap-2.5 items-start">
+            <i className="fa-solid fa-comment mt-0.5"></i>
+            <span>{craving ? <>We will ask for: <span className="font-bold">{craving}</span></> : "Your craving shows here as you tap."}</span>
+          </div>
+        </>
+      ) },
+    { title: "Anything you do NOT want?", icon: "fa-ban",
+      hint: "Tap the foods to leave out. Skip this if nothing bothers you.",
+      summary: [...avoid.map((v) => quizLabel(QUIZ.avoid, v)), ...tags].join(", ") || "Nothing",
+      body: (
+        <>
+          <fieldset>
+            <legend className="sr-only">Foods to leave out</legend>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+              {QUIZ.avoid.map(([v, label]) => <Choice key={v} checked={avoid.includes(v)} onChange={() => setAvoid(flip(avoid, v))} label={label} />)}
+            </div>
+          </fieldset>
+          <div>
+            <label htmlFor="unwanted-input" className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Something else</label>
+            <div className="flex items-center gap-2 mb-3">
+              <input type="text" id="unwanted-input" value={tagInput} onChange={(e) => setTagInput(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); e.stopPropagation(); addTag(); } }}
+                placeholder="Type a food and press Add (e.g. olive oil)" className="flex-1 min-w-0 bg-cream/50 border border-cream-dark rounded-xl px-4 py-2.5 text-xs text-forest focus:outline-none focus:border-forest" />
+              <button type="button" onClick={addTag} className="bg-forest text-cream font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-forest-light">Add</button>
+            </div>
+            <div id="unwanted-tags-container" className="flex flex-wrap gap-2">
+              {tags.map((t, i) => (
+                <span key={`${t}-${i}`} className="tag-item inline-flex items-center gap-1.5 bg-cream-dark text-forest text-xs px-3 py-1 rounded-full font-medium">
+                  {t}
+                  <button type="button" onClick={() => setTags(tags.filter((_, j) => j !== i))} aria-label={`Remove ${t}`} className="hover:text-red-600"><i className="fa-solid fa-xmark text-[10px]"></i></button>
+                </span>
+              ))}
+            </div>
+          </div>
+        </>
+      ) },
+    { title: "How big should it be?", icon: "fa-dumbbell",
+      hint: "Per serving. Drag the bar, tap a preset, or type the exact number.",
+      summary: `${kcalTarget} kcal, ${proteinTarget} g protein`,
+      check: () => (proteinTarget * 4 > kcalTarget ? "Protein alone is more calories than the target. Lower protein or raise calories." : ""),
+      body: (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Dial id="input-calories" label="Calories" icon="fa-fire" unit="kcal" min={200} max={1200} step={10} value={kcalTarget} onChange={setKcalTarget}
+            presets={[350, 450, 550, 650]} note={profileTargets.kcal ? `Your profile target: ${profileTargets.kcal} kcal.` : null} />
+          <Dial id="input-protein" label="Protein" icon="fa-dumbbell" unit="g" min={10} max={120} step={1} value={proteinTarget} onChange={setProteinTarget}
+            presets={[30, 40, 45, 55]} note={`About ${Math.round((proteinTarget * 4 * 100) / kcalTarget)}% of the calories come from protein.`} />
+        </div>
+      ) },
+    { title: "Any limits on carbs or fat?", icon: "fa-sliders",
+      hint: "Optional. Most meals need no limit here.",
+      summary: `${carbsMax === null ? "carbs no limit" : `carbs max ${carbsMax} g`}, ${fatMax === null ? "fat no limit" : `fat max ${fatMax} g`}`,
+      body: (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[["input-carbs", "Max carbs", "fa-wheat-awn", carbsMax, setCarbsMax, 10, 150, 5, 50, [30, 50, 70]],
+            ["input-fat", "Max fat", "fa-droplet", fatMax, setFatMax, 5, 60, 1, 20, [15, 20, 25]]].map(([id, label, icon, value, set, min, max, step, start, presets]) => (
+            <Dial key={id} id={id} label={label} icon={icon} unit="g" min={min} max={max} step={step} value={value} onChange={set} presets={presets}
+              note={value === null ? "No limit." : null}>
+              <div className="flex gap-1.5">
+                <Chip on={value === null} onClick={() => set(null)}>No limit</Chip>
+                <Chip on={value !== null} onClick={() => value === null && set(start)}>Set a max</Chip>
+              </div>
+            </Dial>
+          ))}
+        </div>
+      ) },
+    { title: "How many servings, and what budget?", icon: "fa-cart-shopping",
+      hint: "Servings for the batch you cook at once.",
+      summary: `${plural(servings, "serving")}, ${money(budget)} total`,
+      body: (
+        <>
+          <fieldset>
+            <legend className="text-xs font-bold uppercase tracking-wider text-forest/70 mb-2.5">Servings</legend>
+            <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                <Choice key={n} type="radio" name="servings" checked={servings === n} onChange={() => setServings(n)} label={n} tile />
+              ))}
+            </div>
+          </fieldset>
+          <Dial id="input-budget" label="Total budget" icon="fa-wallet" unit={moneySymbol()} min={2} max={60} step={0.5} value={budget} onChange={setBudget} money
+            presets={[4, 5.5, 8, 12]} note={<span id="budget-per-serving"><span className="font-bold">{money(perServing)}</span> per serving for {plural(servings, "serving")}.</span>} />
+        </>
+      ) },
+    { title: "How much time to cook?", icon: "fa-clock",
+      hint: "Hands-on time for one batch.",
+      summary: quizLabel(QUIZ.time, time),
+      body: (
+        <fieldset>
+          <legend className="sr-only">Time limit</legend>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {QUIZ.time.map(([v, label, icon, sub]) => <Choice key={v} type="radio" name="time" checked={time === v} onChange={() => setTime(v)} icon={icon} label={label} sub={sub} tall />)}
+          </div>
+        </fieldset>
+      ) },
+    { title: "What can you cook with?", icon: "fa-kitchen-set",
+      hint: "Untick anything you do not have this week.",
+      summary: QUIZ.gear.filter(([k]) => hasGearOn(k)).map(([, label]) => label).join(", ") || "Nothing ticked",
+      body: (
+        <fieldset>
+          <legend className="sr-only">Kitchen gear</legend>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {QUIZ.gear.map(([k, label, icon]) => <Choice key={k} checked={hasGearOn(k)} onChange={() => toggleGearCard(k)} icon={icon} label={label} tall />)}
+          </div>
+        </fieldset>
+      ) },
+    { title: "Two last things", icon: "fa-list-check",
+      hint: "Both are on by default.",
+      summary: [reheat && "I can reheat at work", lowLeftovers && "Keep leftovers low"].filter(Boolean).join(", ") || "Neither",
+      body: (
+        <fieldset>
+          <legend className="sr-only">Extras</legend>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Choice checked={reheat} onChange={() => setReheat(!reheat)} icon="fa-briefcase" label="I can reheat at work" sub="Meals that keep and reheat in a microwave" tall />
+            <Choice checked={lowLeftovers} onChange={() => setLowLeftovers(!lowLeftovers)} icon="fa-recycle" label="Keep leftovers low" sub="Stores sell fixed pack sizes, so we try to buy only what you will use" tall />
+          </div>
+        </fieldset>
+      ) },
+  ];
+  const review = q === QUESTIONS.length;
+  const goTo = (n, fromSummary = false) => { moved.current = true; setQuizError(""); setToSummary(fromSummary); setQ(n); };
+  // after a move: focus the new question title and bring the card's top into view
+  useEffect(() => {
+    if (!moved.current) return;
+    quizTitle.current?.focus({ preventScroll: true });
+    if (quizTop.current && quizTop.current.getBoundingClientRect().top < 0) quizTop.current.scrollIntoView({ block: "start" });
+  }, [q]);
+  const next = () => {
+    if (review) return saveRequest();
+    const problem = QUESTIONS[q].check?.();
+    if (problem) return setQuizError(problem);
+    goTo(toSummary ? QUESTIONS.length : q + 1);
+  };
+  const onQuizKey = (e) => {
+    if (e.key !== "Enter" || e.target.closest("button")) return;
+    e.preventDefault();
+    next();
+  };
 
   const saveRequest = async () => {
     if (!craving.trim()) return showToast("Tell us what you are craving first.");
     const { form, errors } = checkForm({
-      craving, exclude: tags, kcal_target: kcalTarget, protein_g_target: proteinTarget,
-      carbs_g_max: carbsMax, fat_g_max: fatMax, budget_total_eur: budget, servings, time_limit_min: time,
+      craving, exclude, kcal_target: kcalTarget, protein_g_target: proteinTarget,
+      carbs_g_max: carbsMax ?? "", fat_g_max: fatMax ?? "", budget_total_eur: budget, servings, time_limit_min: time,
       // form gear: oven, no_blender, and microwave_only when the microwave is the only heat source
       gear: [gear.oven && "oven", gear.noBlender && "no_blender",
              gear.microwave && !gear.stove && !gear.oven && "microwave_only"].filter(Boolean),
@@ -837,13 +1135,8 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
         </div>
       </div>
 
-      <div id="make-step-1" className={`bg-white rounded-3xl p-8 sm:p-10 shadow-soft border border-cream-dark max-w-4xl mx-auto space-y-8${step !== 1 ? " hidden" : ""}`}>
-        <div>
-          <span className="font-script text-2xl text-forest font-bold">Step 1 of 3</span>
-          <h2 className="font-serif text-3xl font-bold text-forest">Define Your Next Meal</h2>
-        </div>
-
-        {/* Real app: the form waits for a complete profile (hidden, not unmounted, while the profile is read; once read
+      <div id="make-step-1" ref={quizTop} onKeyDown={onQuizKey} className={`bg-white rounded-3xl p-6 sm:p-10 shadow-soft border border-cream-dark max-w-4xl mx-auto space-y-6 scroll-mt-6${step !== 1 ? " hidden" : ""}`}>
+        {/* Real app: the quiz waits for a complete profile (hidden, not unmounted, while the profile is read; once read
             as not complete, the page goes to /start). The demo says what it is and leads to /start. */}
         {demo && (
           <div id="demo-make-bar" className="bg-cream-card rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
@@ -852,118 +1145,51 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
           </div>
         )}
         <div className={`space-y-6${demo || complete ? "" : " hidden"}`}>
-          <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">What are you craving?</label>
-            <textarea id="input-craving" rows={2} value={craving} onChange={(e) => setCraving(e.target.value)} placeholder="e.g. something warm with chicken, jasmine rice, and roasted vegetables" className="w-full bg-cream/50 border border-cream-dark rounded-2xl p-4 text-sm text-forest placeholder-forest/40 focus:outline-none focus:border-forest"></textarea>
-            {leftovers.length > 0 && (
-              <div id="craving-leftovers" className="mt-3 bg-cream/50 border border-cream-dark rounded-2xl p-3 space-y-2">
-                <p className="text-xs text-forest/70"><span className="font-bold">Leftovers in your cart.</span> Click one to add it to your craving.</p>
-                <div className="flex flex-wrap gap-2">
-                  {leftovers.map((l) => (
-                    <button key={l.key} onClick={() => addLeftover(l)} className="inline-flex items-center gap-1.5 bg-cream-dark hover:bg-forest hover:text-cream text-forest text-xs px-3 py-1 rounded-full font-medium transition-colors">
-                      <i className="fa-solid fa-plus text-[10px]"></i>{l.ingredient} {grams(l.left)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Foods I do NOT want</label>
-            <div className="flex items-center gap-2 mb-3">
-              <input type="text" id="unwanted-input" value={tagInput} onChange={(e) => setTagInput(e.target.value)} placeholder="Type ingredient & press Add (e.g. cilantro, olive oil)" className="flex-1 bg-cream/50 border border-cream-dark rounded-xl px-4 py-2.5 text-xs text-forest focus:outline-none focus:border-forest" />
-              <button onClick={addTag} className="bg-forest text-cream font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-forest-light">Add</button>
-            </div>
-            <div id="unwanted-tags-container" className="flex flex-wrap gap-2">
-              {tags.map((t, i) => (
-                <span key={`${t}-${i}`} className="tag-item inline-flex items-center gap-1.5 bg-cream-dark text-forest text-xs px-3 py-1 rounded-full font-medium">
-                  {t}
-                  <button onClick={() => setTags(tags.filter((_, j) => j !== i))} className="hover:text-red-600"><i className="fa-solid fa-xmark text-[10px]"></i></button>
-                </span>
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <span className="font-script text-2xl text-forest font-bold">{review ? "Last step" : `Question ${q + 1} of ${QUESTIONS.length}`}</span>
+            <div className="flex gap-1 flex-1 max-w-xs" aria-hidden="true">
+              {[...QUESTIONS, null].map((_, k) => (
+                <span key={k} className={`h-1.5 flex-1 rounded-full transition-colors ${k < q ? "bg-lime" : k === q ? "bg-forest" : "bg-cream-dark"}`}></span>
               ))}
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div key={q} className="quiz-enter space-y-6">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Calories target (kcal)</label>
-              <input type="number" id="input-calories" value={kcalTarget} onChange={(e) => setKcalTarget(e.target.value)} className="w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest" />
+              <h2 ref={quizTitle} tabIndex={-1} className="font-serif text-3xl font-bold text-forest focus:outline-none text-balance">
+                {review ? "Check your answers" : QUESTIONS[q].title}
+              </h2>
+              <p className="text-sm text-forest/70 mt-1.5">{review ? "Change anything, then get your ideas." : QUESTIONS[q].hint}</p>
             </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Protein target (g)</label>
-              <input type="number" id="input-protein" value={proteinTarget} onChange={(e) => setProteinTarget(e.target.value)} className="w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest" />
-            </div>
+            {review ? (
+              <dl className="border border-cream-dark rounded-2xl overflow-hidden">
+                {QUESTIONS.map((item, k) => (
+                  <div key={item.title} className={`grid grid-cols-[1fr_auto] sm:grid-cols-[minmax(150px,30%)_1fr_auto] gap-x-4 gap-y-1 px-4 py-3.5 items-start${k ? " border-t border-cream-dark" : ""}`}>
+                    <dt className="text-xs font-bold text-forest/70 flex items-center gap-2"><i className={`fa-solid ${item.icon} w-4 text-center`}></i>{item.title.replace(/\?$/, "")}</dt>
+                    <dd className="text-sm font-semibold text-forest min-w-0 break-words col-span-2 row-start-2 sm:col-span-1 sm:row-start-auto">{item.summary}</dd>
+                    <button type="button" onClick={() => goTo(k, true)} className="col-start-2 row-start-1 sm:col-start-auto sm:row-start-auto text-xs font-extrabold text-forest underline decoration-lime decoration-2 underline-offset-4 hover:text-lime-hover">
+                      Change<span className="sr-only"> {item.title}</span>
+                    </button>
+                  </div>
+                ))}
+              </dl>
+            ) : QUESTIONS[q].body}
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-1.5">Max Carbs (g)</label>
-              <input type="number" id="input-carbs" value={carbsMax} onChange={(e) => setCarbsMax(e.target.value)} placeholder="Optional" className="w-full bg-cream/50 border border-cream-dark rounded-xl p-2.5 text-xs text-forest" />
-            </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-1.5">Max Fat (g)</label>
-              <input type="number" id="input-fat" value={fatMax} onChange={(e) => setFatMax(e.target.value)} placeholder="Optional" className="w-full bg-cream/50 border border-cream-dark rounded-xl p-2.5 text-xs text-forest" />
-            </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-1.5">Total budget ({moneySymbol()})</label>
-              <input type="number" step="0.5" id="input-budget" value={budget} onChange={(e) => setBudget(e.target.value)} className="w-full bg-cream/50 border border-cream-dark rounded-xl p-2.5 text-xs text-forest font-bold" />
-              <span id="budget-per-serving" className="block text-[11px] text-forest/70 mt-1">{money(perServing)} per serving</span>
-            </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-1.5">Servings</label>
-              <div className="flex items-center border border-cream-dark rounded-xl overflow-hidden bg-cream/50">
-                <button onClick={() => setServings(Math.max(1, servings - 1))} className="w-8 h-9 text-forest font-bold hover:bg-cream-dark">-</button>
-                <span id="servings-count" className="flex-1 text-center text-xs font-bold">{servings}</span>
-                <button onClick={() => setServings(Math.min(8, servings + 1))} className="w-8 h-9 text-forest font-bold hover:bg-cream-dark">+</button>
-              </div>
-            </div>
-          </div>
+          {quizError && <p role="alert" className="text-xs font-bold text-red-700">{quizError}</p>}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Preparation Time Limit</label>
-              <select id="input-time" value={time} onChange={(e) => setTime(e.target.value)} className="w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-xs text-forest font-semibold">
-                <option value="15">&lt; 15 mins</option>
-                <option value="30">&lt; 30 mins</option>
-                <option value="45">&lt; 45 mins</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Kitchen Gear Available</label>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <label className="flex items-center gap-2"><input type="checkbox" checked={gear.microwave} onChange={() => toggleGear("microwave")} className="accent-forest" /> Microwave</label>
-                <label className="flex items-center gap-2"><input type="checkbox" checked={gear.stove} onChange={() => toggleGear("stove")} className="accent-forest" /> Stove</label>
-                <label className="flex items-center gap-2"><input type="checkbox" checked={gear.oven} onChange={() => toggleGear("oven")} className="accent-forest" /> Oven</label>
-                <label className="flex items-center gap-2"><input type="checkbox" checked={!gear.noBlender} onChange={() => toggleGear("noBlender")} className="accent-forest" /> Blender</label>
-              </div>
-            </div>
+          <div className="flex items-center justify-between gap-3 pt-5 border-t border-cream-dark">
+            <button type="button" onClick={() => goTo(q - 1)} className={`flex items-center gap-2 text-sm font-bold text-forest px-2 py-3 hover:text-lime-hover${q === 0 ? " invisible" : ""}`}>
+              <i className="fa-solid fa-arrow-left text-xs"></i> Back
+            </button>
+            <span className="hidden sm:inline text-[11px] text-forest/70">Press <kbd className="font-sans font-bold bg-cream-card border border-cream-dark rounded-md px-1.5 py-px">Enter</kbd> to continue</span>
+            <button type="button" onClick={next} className="flex-1 sm:flex-none bg-lime hover:bg-lime-hover text-forest font-bold py-3.5 px-7 rounded-2xl text-base transition-all shadow-glow flex items-center justify-center gap-2">
+              <span>{review ? "Show me 4 ideas" : toSummary ? "Back to summary" : "Continue"}</span>
+              <i className="fa-solid fa-arrow-right text-sm"></i>
+            </button>
           </div>
-
-          <div className="space-y-3 pt-2 border-t border-cream-dark">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-xs font-bold text-forest block">I can reheat at work</span>
-                <span className="text-[11px] text-forest/70">Optimizes for microwave batch meals</span>
-              </div>
-              <input type="checkbox" id="toggle-reheat" checked={reheat} onChange={() => setReheat(!reheat)} className="accent-lime w-4 h-4 cursor-pointer" />
-            </div>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-xs font-bold text-forest block">Keep leftovers low</span>
-                <span className="text-[11px] text-forest/70">Stores sell fixed pack sizes, so we try to buy only what you will use.</span>
-              </div>
-              <input type="checkbox" id="toggle-leftovers" checked={lowLeftovers} onChange={() => setLowLeftovers(!lowLeftovers)} className="accent-lime w-4 h-4 cursor-pointer" />
-            </div>
-          </div>
-
-          <button onClick={saveRequest} className="w-full bg-lime hover:bg-lime-hover text-forest font-bold py-4 rounded-2xl text-base transition-all shadow-glow flex items-center justify-center gap-2">
-            <span>Show me 4 ideas</span>
-            <i className="fa-solid fa-arrow-right text-sm"></i>
-          </button>
         </div>
       </div>
-
 
       {/* STEP 2: PICK AN IDEA (mockup markup; idea cards without a photo) */}
       <div id="make-step-2" className={`space-y-6 max-w-5xl mx-auto${step !== 2 ? " hidden" : ""}`}>
