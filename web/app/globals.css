@@ -43,12 +43,6 @@ body {
   body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   header, footer, #toast-msg, #tab-cart button, #tab-cart input[type="text"] { display: none !important; }
 }
-
-/* Menu card cover (decided 2026-11-09): smaller spaces drop the frame, meta line, foods and category */
-.menu-cover { container-type: size; }
-@container (max-height: 200px) { .menu-cover .mc-meta, .menu-cover .mc-cat { display: none; } .menu-cover .mc-name { margin-top: 0.9rem; } } /* cards: the kcal badge sits top left */
-@container (max-width: 160px) { .menu-cover .mc-frame, .menu-cover .mc-foods, .menu-cover .mc-cat { display: none; } }
-@container (max-height: 120px) { .menu-cover .mc-foods { display: none; } }
 /* Make Your Meal quiz (decided 2026-11-09, Marian). Selected cards: forest fill plus a lime tick, never color alone. */
 .quiz-tick i { opacity: 0; }
 .quiz-opt:has(input:checked) { background: #0f2d24; border-color: #0f2d24; color: #f9f8f3; }

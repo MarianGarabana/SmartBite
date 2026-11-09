@@ -282,41 +282,15 @@ export function useToast() {
 }
 
 // The photo the user added in this browser, else the demo photo, else a green placeholder with the meal name.
-// Menu card cover (decided 2026-11-09, replaces a colour-wedge plate Marian did not like): a meal without a photo shows
-// a card like a restaurant menu with its own main foods, so it never shows a food the meal does not have. Small
-// spaces drop parts of it (container queries in globals.css).
-const FOOD_ICONS = [
-  [/chicken|turkey|pollo|pavo/, "fa-drumstick-bite"], [/ground beef|burger|mince/, "fa-burger"], [/beef|steak|pork|lamb|ternera/, "fa-cow"],
-  [/tuna|salmon|fish|cod|hake|shrimp|prawn/, "fa-fish"], [/egg|huevo/, "fa-egg"], [/rice|quinoa|couscous|arroz/, "fa-bowl-rice"],
-  [/pasta|noodle|spaghetti/, "fa-bowl-food"], [/oat|granola|muesli|avena/, "fa-jar-wheat"], [/bread|wrap|tortilla|toast/, "fa-bread-slice"],
-  [/lentil|chickpea|bean|pea\b|peas|edamame|hummus|soy/, "fa-jar"], [/carrot|sweet potato|pumpkin|potato/, "fa-carrot"],
-  [/pepper|chili|chile/, "fa-pepper-hot"], [/lemon|lime|orange/, "fa-lemon"], [/apple|berr|pomegranate|banana|mango|fruit/, "fa-apple-whole"],
-  [/cheese|feta|mozzarella|parmesan|grana/, "fa-cheese"], [/yogurt|yoghurt|skyr|quark|cottage|ricotta|requesón/, "fa-spoon"],
-  [/walnut|almond|nut|seed|chia/, "fa-seedling"],
-];
-const foodIcon = (name) => (FOOD_ICONS.find(([re]) => re.test(String(name).toLowerCase())) || [null, "fa-leaf"])[1];
-
-// Up to 4 main foods by weight, as written in the recipe
-export const coverFoods = (ingredients) => [...(ingredients || [])].filter((it) => it.grams > 0 || it.units > 0)
-  .sort((a, b) => (b.grams || b.units * 50) - (a.grams || a.units * 50)).slice(0, 4)
-  .map((it) => ({ name: String(it.name).toLowerCase(), icon: foodIcon(it.name) }));
-
-function MenuCover({ meal, className, textClass }) {
-  const foods = coverFoods(meal.ingredients);
+// A meal's photo in its frame, or nothing (decided 2026-11-09: a meal with no photo shows no image at all, only its
+// name). children sit on the photo (the kcal badge); fallback shows instead when there is no photo.
+export function MealPhoto({ meal, frameClass, imgClass, label = false, eager = false, children = null, fallback = null }) {
+  const photo = usePhoto(meal.slug);
+  if (!photo && !meal.images[0]) return fallback;
   return (
-    <div className={`${className} menu-cover relative overflow-hidden bg-forest flex flex-col items-center justify-center text-center gap-2 px-6 py-5`}
-      role="img" aria-label={`${meal.name}: ${foods.map((f) => f.name).join(", ")}`}>
-      <span className="mc-frame absolute inset-2.5 border border-lime/30 rounded-xl pointer-events-none" aria-hidden="true"></span>
-      {meal.category && <span className="mc-cat font-script text-lime text-lg leading-none">~ {meal.category} ~</span>}
-      <span className={`mc-name font-serif font-bold text-cream leading-snug text-balance ${textClass === "text-sm" ? "text-lg" : textClass}`}>{meal.name}</span>
-      {foods.length > 0 && (
-        <ul className="mc-foods flex flex-wrap justify-center gap-x-3 gap-y-1 text-[11px] text-cream/80 max-w-[90%]">
-          {foods.map((f) => (
-            <li key={f.name} className="flex items-center gap-1.5"><i className={`fa-solid ${f.icon} text-lime text-[10px]`}></i>{f.name}</li>
-          ))}
-        </ul>
-      )}
-      {meal.kcal ? <span className="mc-meta text-[11px] text-cream/60">{meal.kcal} kcal · {meal.protein} g protein</span> : null}
+    <div className={frameClass}>
+      <MealImage meal={meal} label={label} eager={eager} className={imgClass} />
+      {children}
     </div>
   );
 }
@@ -332,7 +306,6 @@ export function MealImage({ meal, className, textClass = "text-sm", label = fals
     return label ? <>{img}<PhotoLabel /></> : img;
   }
   if (src) return <img src={src} alt={meal.name} loading={loading} className={className} />;
-  if (meal.ingredients?.length) return <MenuCover meal={meal} className={className} textClass={textClass} />;
   return (
     <div className={`${className} bg-forest-light flex items-center justify-center p-3 text-center`}>
       <span className={`font-serif font-bold text-lime leading-snug ${textClass}`}>{meal.name}</span>

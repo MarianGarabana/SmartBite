@@ -7,15 +7,15 @@ import { useEffect, useRef, useState } from "react";
 import { checkForm } from "../lib/form";
 import { makeMeal, progressText } from "../lib/flow";
 import { generateIdeas, photoMaker, reviseIdea } from "../lib/llm";
-import { makePhoto } from "../lib/photos";
+import { deletePhoto, makePhoto } from "../lib/photos";
 import { listText } from "../lib/packs";
 import { demoIdea, demoPicks, estimateLabel, estimateTitle, recipeMeals, toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
 import { tabUrl } from "../lib/site";
-import { DEFAULT_BUDGET, engineEstimates, profileComplete, readActiveProducts, readBudget, readLlm, readProfile, saveLocalMeal }
+import { DEFAULT_BUDGET, deleteLocalMeal, engineEstimates, profileComplete, readActiveProducts, readBudget, readLlm, readProfile, saveLocalMeal }
   from "../lib/store";
 import { SETUP_DONE_EVENT, openSetup } from "./SetupDialog";
-import { AddButton, AiLabel, Footer, Header, MealImage, CART_TABLE as T, TABS, Toast, money, moneySymbol, grams, useCart, useCurrency, useDemo, useMeals, usePrices,
+import { AddButton, AiLabel, Footer, Header, MealPhoto, CART_TABLE as T, TABS, Toast, money, moneySymbol, grams, useCart, useCurrency, useDemo, useMeals, usePrices,
   useProfileComplete, useToast } from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
 import { PriceInput } from "./RecipePage";
@@ -243,10 +243,10 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
             <div id="home-kitchen-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
               {homeList.map((m) => (
                 <div key={m.slug} className="relative bg-white rounded-3xl overflow-hidden shadow-soft border border-cream-dark/60 flex flex-col justify-between group">
-                  <div className="h-40 overflow-hidden relative">
-                    <MealImage meal={m} label className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <MealPhoto meal={m} label frameClass="h-40 overflow-hidden relative" imgClass="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fallback={<div className="px-4 pt-4"><span className="inline-block bg-forest text-lime font-bold text-[10px] px-2.5 py-0.5 rounded-full">{kcal(m)}</span></div>}>
                     <span className="absolute top-2.5 left-2.5 bg-forest/90 text-lime font-bold text-[10px] px-2.5 py-0.5 rounded-full">{kcal(m)}</span>
-                  </div>
+                  </MealPhoto>
                   <div className="p-4 flex-1 flex flex-col justify-between">
                     <div>
                       <span className="text-[10px] font-bold uppercase text-forest/70 block">{label(m)}</span>
@@ -313,10 +313,11 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
           <div id="recipes-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {shown.map((m) => (
               <div key={m.slug} className="relative bg-white rounded-3xl overflow-hidden shadow-soft border border-cream-dark/60 flex flex-col justify-between group">
-                <div className="h-44 overflow-hidden relative">
-                  <MealImage meal={m} label className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                {m.kind === "local" && <CardMenu meal={m} showToast={showToast} />}
+                <MealPhoto meal={m} label frameClass="h-44 overflow-hidden relative" imgClass="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  fallback={<div className="px-5 pt-5"><span className="inline-block bg-forest text-lime font-bold text-xs px-3 py-1 rounded-full">{kcal(m)}</span></div>}>
                   <span className="absolute top-3 left-3 bg-forest/90 text-lime font-bold text-xs px-3 py-1 rounded-full">{kcal(m)}</span>
-                </div>
+                </MealPhoto>
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
                     <span className="text-[11px] font-bold uppercase tracking-wider text-forest/70">{label(m)}</span>
@@ -373,7 +374,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                   const entry = cart.meals[idx];
                   return (
                     <div key={`${slug}-${idx}`} className="bg-white rounded-2xl p-4 shadow-soft border border-cream-dark flex items-center justify-between gap-4">
-                      <MealImage meal={meal} className="w-16 h-16 rounded-xl object-cover" textClass="text-[8px]" />
+                      <MealPhoto meal={meal} frameClass="w-16 h-16 rounded-xl overflow-hidden shrink-0" imgClass="w-full h-full object-cover" />
                       <div className="flex-1">
                         <h4 className="font-serif font-bold text-sm text-forest">{meal.name}</h4>
                         <span className="text-xs text-forest/70">
@@ -650,6 +651,49 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
 
       {/* Toast Feedback Overlay */}
       <Toast toast={toast} />
+    </div>
+  );
+}
+
+// "..." menu on a My Recipes card for a meal made in this browser (decided 2026-11-09): Edit opens the recipe page with
+// the editor; Delete asks once more, then removes the meal, its photo and its cart entries for good.
+function CardMenu({ meal, showToast }) {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const box = useRef(null);
+  useEffect(() => {
+    if (!open) return;
+    const away = (e) => { if (!box.current?.contains(e.target)) { setOpen(false); setConfirm(false); } };
+    const onKey = (e) => { if (e.key === "Escape") { setOpen(false); setConfirm(false); } };
+    document.addEventListener("pointerdown", away);
+    window.addEventListener("keydown", onKey);
+    return () => { document.removeEventListener("pointerdown", away); window.removeEventListener("keydown", onKey); };
+  }, [open]);
+  const remove = async () => {
+    if (!confirm) return setConfirm(true);
+    if (!deleteLocalMeal(meal.slug)) return showToast("Not deleted. Try again.");
+    await deletePhoto(meal.slug);
+    setOpen(false);
+    showToast(`Deleted "${meal.name}".`);
+  };
+  const item = "w-full text-left px-4 py-2.5 text-xs font-bold flex items-center gap-2.5 hover:bg-cream-card";
+  return (
+    <div ref={box} className="absolute top-3 right-3 z-20">
+      <button type="button" aria-label={`Options for ${meal.name}`} aria-haspopup="menu" aria-expanded={open} onClick={() => { setOpen(!open); setConfirm(false); }}
+        className="w-8 h-8 rounded-full bg-white/90 hover:bg-white shadow-soft text-forest flex items-center justify-center">
+        <i className="fa-solid fa-ellipsis"></i>
+      </button>
+      {open && (
+        <div role="menu" className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-card border border-cream-dark overflow-hidden">
+          <button role="menuitem" onClick={() => router.push(`/recipes/${meal.slug}?edit=1`)} className={`${item} text-forest`}>
+            <i className="fa-regular fa-pen-to-square w-4"></i>Edit meal
+          </button>
+          <button role="menuitem" onClick={remove} className={`${item} text-red-700`}>
+            <i className="fa-regular fa-trash-can w-4"></i>{confirm ? "Tap again to delete" : "Delete meal"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

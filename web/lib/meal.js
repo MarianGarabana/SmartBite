@@ -217,3 +217,45 @@ export function randomFive(meals) {
   }
   return copy.slice(0, 5);
 }
+
+// Editing a meal by hand (decided 2026-11-09, components/MealEditor.jsx)
+const EDIT_EGG_GRAMS = 51;
+// Storage and dry weight of a food added by hand, from its name (the AI sets these for the foods it picks)
+export function newIngredient(name, grams) {
+  const n = String(name).toLowerCase();
+  const eggs = /\begg/.test(n) && !/eggplant|white/.test(n);
+  return {
+    name: String(name).trim(),
+    grams_per_serving: eggs ? Math.max(1, Math.round(grams / EDIT_EGG_GRAMS)) * EDIT_EGG_GRAMS : grams,
+    units_per_serving: eggs ? Math.max(1, Math.round(grams / EDIT_EGG_GRAMS)) : 0,
+    storage: /frozen/.test(n) ? "frozen" : /canned|dried|\bdry\b|rice|pasta|quinoa|couscous|oat|lentil|flour|nut|seed|oil|vinegar|sauce|spice|honey|jar/.test(n) ? "keeps" : "fresh",
+    pantry: false,
+    dry: /rice|pasta|quinoa|couscous/.test(n),
+  };
+}
+
+// The recipe as edited: name, steps (one per line) and foods; grams per serving, eggs in units
+export function editedRecipe(recipe, { title, stepsText, rows }) {
+  return {
+    ...recipe,
+    title: title.trim(),
+    steps: stepsText.split("\n").map((s) => s.trim()).filter(Boolean),
+    ingredients: rows.map((r) => {
+      if (r.isNew) return newIngredient(r.name, Number(r.amount));
+      const units = r.units_per_serving ? Math.max(1, Math.round(Number(r.amount))) : 0;
+      return { ...r.base, name: r.name.trim(), units_per_serving: units,
+        grams_per_serving: units ? units * EDIT_EGG_GRAMS : Number(r.amount) };
+    }),
+  };
+}
+
+export function editProblem({ title, stepsText, rows }) {
+  if (!title.trim()) return "Give the meal a name.";
+  if (title.trim().length > 100) return "The name is too long (100 characters at most).";
+  if (!stepsText.trim()) return "Add at least one step.";
+  if (!rows.length) return "Keep at least one food.";
+  if (rows.some((r) => !r.name.trim())) return "Every food needs a name.";
+  if (rows.some((r) => !(Number(r.amount) > 0))) return "Every food needs grams above 0 (eggs: at least 1).";
+  return "";
+}
+

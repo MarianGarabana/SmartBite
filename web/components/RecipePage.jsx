@@ -18,6 +18,7 @@ import { COUNTRIES, ESTIMATES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, readL
 import { AiLabel, Footer, Header, MealImage, RECIPE_TABLE as T, Toast, money, moneySymbol, grams, useCart, useCurrency, useEstimates, useEvaluations, useMeals, usePrices,
   useProducts, useToast } from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
+import { MealEditor } from "./MealEditor";
 
 // Demo meals come from the server; meals made in this browser are looked up in its storage
 export default function RecipePage({ slug, demoMeals }) {
@@ -174,6 +175,15 @@ function RecipeView({ meal, meals, router }) {
     if (ok) askPersist();
     showToast(ok ? `Saved "${meal.name}" in My Recipes, in this browser.` : "Not saved: this browser blocks storage.");
   };
+  // Edit meal (meals made in this browser only, decided 2026-11-09); "?edit=1" from a My Recipes card opens it
+  const [editingMeal, setEditingMeal] = useState(false);
+  useEffect(() => {
+    if (meal.kind === "local" && new URLSearchParams(window.location.search).get("edit") === "1") setEditingMeal(true);
+  }, [meal.kind]);
+  const closeEditor = () => {
+    setEditingMeal(false);
+    if (window.location.search) router.replace(`/recipes/${meal.slug}`, { scroll: false });
+  };
   // Delete meal (meals made in this browser only): first click asks, second click deletes for good
   const [confirmDelete, setConfirmDelete] = useState(false);
   const askedAt = useRef(0);
@@ -212,16 +222,17 @@ function RecipeView({ meal, meals, router }) {
 
             {/* Meal Header & Macros */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-              <div className="md:col-span-5 h-64 rounded-2xl overflow-hidden relative">
-                <MealImage meal={meal} label eager className="w-full h-full object-cover" textClass="text-2xl" />
-                {hasPhoto && (
+              {/* No photo: no image box, the title and macros take the full width (decided 2026-11-09) */}
+              {hasPhoto && (
+                <div className="md:col-span-5 h-64 rounded-2xl overflow-hidden relative">
+                  <MealImage meal={meal} label eager className="w-full h-full object-cover" textClass="text-2xl" />
                   <button onClick={() => setPhotoOpen(!photoOpen)}
                     className="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-forest text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-soft">
                     <i className="fa-solid fa-camera mr-1.5"></i>{photoOpen ? "Close" : "Replace photo"}
                   </button>
-                )}
-              </div>
-              <div className="md:col-span-7 space-y-4">
+                </div>
+              )}
+              <div className={`${hasPhoto ? "md:col-span-7" : "md:col-span-12"} space-y-4`}>
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="text-xs font-bold uppercase tracking-widest text-forest bg-lime-soft px-3 py-1 rounded-full">{meal.kind === "demo" ? "Demo Meal" : "Chosen Custom Recipe"}</span>
                   <AiLabel />
@@ -576,6 +587,12 @@ function RecipeView({ meal, meals, router }) {
                 </button>
               )}
               {meal.kind === "local" && (
+                <button id="edit-meal" onClick={() => setEditingMeal(true)} className="w-full sm:flex-1 bg-transparent border-2 border-forest hover:bg-forest hover:text-cream text-forest font-bold py-4 rounded-2xl text-sm transition-all flex items-center justify-center gap-2">
+                  <i className="fa-regular fa-pen-to-square"></i>
+                  <span>Edit meal</span>
+                </button>
+              )}
+              {meal.kind === "local" && (
                 <button onClick={deleteMeal} className={`w-full sm:flex-1 bg-transparent border-2 font-bold py-4 rounded-2xl text-sm transition-all flex items-center justify-center gap-2 ${confirmDelete ? "border-red-600 text-red-600" : "border-forest/20 text-forest/70 hover:border-red-600 hover:text-red-600"}`}>
                   <i className="fa-regular fa-trash-can"></i>
                   <span>{confirmDelete ? "Click again to delete for good" : "Delete meal"}</span>
@@ -601,6 +618,7 @@ function RecipeView({ meal, meals, router }) {
       </main>
 
       <Footer onNavigate={go} />
+      {editingMeal && <MealEditor slug={meal.slug} onClose={closeEditor} showToast={showToast} />}
       {editing && <ProductDialog row={editing} onClose={() => setEditing(null)} showToast={showToast} />}
       <Toast toast={toast} />
     </div>

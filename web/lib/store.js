@@ -606,6 +606,14 @@ export function readLocalMeals() {
 
 export const saveLocalMeal = (slug, doc) => writeJson(KEYS.meals, { ...readLocalMeals(), [slug]: doc });
 
+// An edited meal (decided 2026-11-09) keeps its address: the new meal replaces the old one, and its cart entries lose
+// the "Adjust leftovers" grams and servings, which were computed for the old recipe
+export function replaceLocalMeal(slug, doc) {
+  const cart = readCart();
+  const meals = cart.meals.map((e) => (e.slug === slug ? { slug: e.slug, servings: e.servings } : e));
+  return saveLocalMeal(slug, doc) && writeCart({ ...cart, meals });
+}
+
 // Delete a meal made in this browser: it leaves My Recipes and the cart too
 export function deleteLocalMeal(slug) {
   const { [slug]: _gone, ...rest } = readLocalMeals();
