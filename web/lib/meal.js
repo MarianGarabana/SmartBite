@@ -140,6 +140,7 @@ export function toMeal(slug, doc, { kind = "demo", saved = false } = {}) {
     kind, // "demo": ships with the site; "local": made in this browser
     saved, // local meals show in My Recipes only after "Save in my recipes"
     fixture: !!doc.fixture, // hand-made test data, labelled on the page
+    shared: !!doc.shared, // opened from a shared link (lib/share.js), labelled "Shared recipe"
     name: doc.recipe.title,
     categories: categoriesOf(doc.recipe.title),
     category: categoriesOf(doc.recipe.title)[0],

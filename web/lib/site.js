@@ -11,6 +11,7 @@ export const tabUrl = (tab, demo = false) => `${demo ? "/demo" : "/"}${tab && ta
 // Analytics: a meal made in a browser has its name in its address, so it is reported as /recipes/[own-meal]
 export function hidePrivatePath(url, demoSlugs) {
   const u = new URL(url);
+  u.hash = ""; // a shared recipe link (/r#...) carries the recipe after "#"; it is never counted
   const m = u.pathname.match(/^\/recipes\/([^/]+)\/?$/);
   if (m && !demoSlugs.includes(decodeURIComponent(m[1]))) u.pathname = "/recipes/[own-meal]";
   return u.toString();

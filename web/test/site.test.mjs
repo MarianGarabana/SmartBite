@@ -9,4 +9,5 @@ test("analytics paths: own meals are hidden, demo recipes and other pages are ke
   assert.equal(hidePrivatePath(`${site}/recipes/tuna-frittata-with-vegetables`, demo), `${site}/recipes/tuna-frittata-with-vegetables`);
   assert.equal(hidePrivatePath(`${site}/?tab=cart`, demo), `${site}/?tab=cart`);
   assert.equal(hidePrivatePath(`${site}/privacy`, demo), `${site}/privacy`);
+  assert.equal(hidePrivatePath(`${site}/r#H4sIAAAAsecretrecipe`, demo), `${site}/r`);
 });

@@ -14,7 +14,8 @@ import { tabUrl } from "../lib/site";
 import { packRow, totals } from "../lib/packs";
 import { PHOTO_MAKERS, photoMaker } from "../lib/llm";
 import { MAX_PHOTO_BYTES, deletePhoto, makePhoto, putPhoto, usePhoto, usePhotoJob } from "../lib/photos";
-import { COUNTRIES, ESTIMATES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, readLlm, setLinePrice, setSaved } from "../lib/store";
+import { COUNTRIES, ESTIMATES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, profileComplete, readLlm, setLinePrice, setSaved } from "../lib/store";
+import { encodeShare, sharePayload, shareUrl } from "../lib/share";
 import { AiLabel, Footer, Header, MealImage, RECIPE_TABLE as T, Toast, money, moneySymbol, grams, useCart, useCurrency, useEstimates, useEvaluations, useMeals, usePrices,
   useProducts, useToast } from "./Chrome";
 import { ProductCell, ProductDialog } from "./ProductDialog";
@@ -170,6 +171,28 @@ function RecipeView({ meal, meals, router }) {
     showToast("Photo saved in this browser.");
     setPhotoOpen(false);
   };
+  // Share recipe (decided 2026-11-09): a link with the recipe only (lib/share.js); phones get their share menu, other
+  // screens copy the link
+  const shareRecipe = async () => {
+    let url;
+    try {
+      url = shareUrl(window.location.origin, await encodeShare(sharePayload(meal)));
+    } catch {
+      return showToast("Could not make the link for this recipe.");
+    }
+    if (touch && typeof navigator.share === "function") {
+      try {
+        return await navigator.share({ title: meal.name, url });
+      } catch (e) {
+        if (e?.name === "AbortError") return; // closed the share menu
+      }
+    }
+    navigator.clipboard.writeText(url).then(() => showToast("Link copied. It holds the recipe only, nothing about you."))
+      .catch(() => showToast("Could not copy the link."));
+  };
+  // A shared recipe opened by someone with no setup gets the "Make your own" card, like the demo (read after mount)
+  const [setUp, setSetUp] = useState(true);
+  useEffect(() => { setSetUp(profileComplete()); }, []);
   const saveToRecipes = () => {
     const ok = setSaved(meal.slug, true);
     if (ok) askPersist();
@@ -218,6 +241,9 @@ function RecipeView({ meal, meals, router }) {
                 <i className="fa-solid fa-arrow-left text-[10px]"></i>
                 <span>Back to recipes</span>
               </button>
+              <button id="share-recipe" onClick={shareRecipe} className="bg-white hover:bg-cream-dark text-forest font-bold text-xs px-4 py-2 rounded-xl transition-colors border border-cream-dark flex items-center gap-2">
+                <i className="fa-solid fa-share-nodes"></i><span>Share recipe</span>
+              </button>
             </div>
 
             {/* Meal Header & Macros */}
@@ -234,7 +260,7 @@ function RecipeView({ meal, meals, router }) {
               )}
               <div className={`${hasPhoto ? "md:col-span-7" : "md:col-span-12"} space-y-4`}>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-bold uppercase tracking-widest text-forest bg-lime-soft px-3 py-1 rounded-full">{meal.kind === "demo" ? "Demo Meal" : "Chosen Custom Recipe"}</span>
+                  <span className="text-xs font-bold uppercase tracking-widest text-forest bg-lime-soft px-3 py-1 rounded-full">{meal.kind === "demo" ? "Demo Meal" : meal.shared ? "Shared recipe" : "Chosen Custom Recipe"}</span>
                   <AiLabel />
                   {meal.fixture && (
                     <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full">Test fixture</span>
@@ -601,7 +627,7 @@ function RecipeView({ meal, meals, router }) {
             </div>
 
             {/* After a demo recipe, the way to a real one (decided 2026-10-31); same card as "Set up your profile first" */}
-            {meal.kind === "demo" && (
+            {(meal.kind === "demo" || (meal.shared && !setUp)) && (
               <div id="make-your-own" className="bg-cream-card rounded-3xl p-8 border border-cream-dark flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="space-y-2">
                   <span className="text-xs font-bold uppercase tracking-widest text-forest/70">Like it?</span>

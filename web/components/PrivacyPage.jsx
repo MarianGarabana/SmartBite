@@ -17,6 +17,8 @@ const POINTS = [
     "When you make a meal, your craving, form and Kitchen Profile are sent from your browser to the provider you chose (Anthropic by default) to write the ideas and the recipe. That provider's own terms apply to that request."],
   ["fa-gears", "What goes to the SmartBite engine",
     "The form, your Kitchen Profile, the picked idea and the recipe go to the SmartBite engine to compute packs, macros and leftovers. It sends the result back and keeps nothing. Your key is never sent there."],
+  ["fa-share-nodes", "Shared recipe links",
+    "Share recipe makes a link that holds the recipe only: its name, foods, grams, steps, photo prompt and kcal and protein targets. Nothing about you goes in: no country, prices, products, profile or photo. The recipe sits after the # in the link, which browsers never send to a server. When someone opens it, the recipe goes to the SmartBite engine like any meal, and they get macros and prices for their own country and products."],
   ["fa-barcode", "Barcode lookups",
     "When you press Look up in Edit product, your browser asks Open Food Facts for that one barcode. Only the barcode is sent, with your IP address and browser details like any web request. Nothing about you, your profile or your meals goes there. Open Food Facts data is under the ODbL licence."],
   ["fa-calculator", "Math in code",
