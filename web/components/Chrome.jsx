@@ -286,9 +286,9 @@ export function useToast() {
 // lazy by default: hidden tabs hold every demo photo; eager only for a page's main photo
 export function MealImage({ meal, className, textClass = "text-sm", label = false, eager = false }) {
   const loading = eager ? "eager" : "lazy";
-  const photo = usePhoto(meal.slug);
+  const { url: photo, ai } = usePhoto(meal.slug, true);
   const src = photo || meal.images[0];
-  if (src && !photo && meal.aiPhoto) {
+  if (src && (photo ? ai : meal.aiPhoto)) {
     const img = <img src={src} alt={`${meal.name} (AI-generated photo)`} loading={loading} className={className} />;
     return label ? <>{img}<PhotoLabel /></> : img;
   }

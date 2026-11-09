@@ -8,7 +8,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { missingMainFoods } from "../lib/contracts.js";
 import { evaluateMeal } from "../lib/engine.js";
-import { ANTHROPIC_URL, CALL_TIMEOUT_MS, TIMEOUT_MESSAGE, generateIdeas, redact, reviseIdea, writeRecipe } from "../lib/llm.js";
+import { ANTHROPIC_URL, CALL_TIMEOUT_MS, FREE_KEY_PHOTO, GEMINI_IMAGE_MODEL, TIMEOUT_MESSAGE, generateIdeas, generatePhoto, redact, reviseIdea, usesGemini, writeRecipe } from "../lib/llm.js";
 
 const KEY = "sk-ant-api03-SECRET-test-key-1234";
 const OPENAI_KEY = "sk-proj-SECRET-openai-5678";
@@ -276,4 +276,45 @@ test("missingMainFoods matches missing_main_foods in eval/checks.py", { skip: !f
   assert.deepEqual(js, py);
   assert.ok(py.some((m) => m.length) && py.some((m) => !m.length), "the cases cover both kept and dropped foods");
   assert.deepEqual(js.slice(-2), [[], ["basmati rice"]]);
+});
+
+// Auto photo with a Gemini key (decided 2026-11-09)
+const GEMINI_KEY = "AIzaSy-SECRET-gemini-9999";
+const GEMINI = { provider: "openai_compatible", model: "gemini-3.6-flash", baseUrl: "https://generativelanguage.googleapis.com/v1beta/openai",
+  apiKey: GEMINI_KEY, preset: "gemini" };
+
+test("usesGemini: only an OpenAI-compatible Gemini base URL with a key", () => {
+  assert.equal(usesGemini(GEMINI), true);
+  assert.equal(usesGemini({ ...GEMINI, apiKey: "" }), false);
+  assert.equal(usesGemini(OPENAI), false);
+  assert.equal(usesGemini(ANTHROPIC), false);
+  assert.equal(usesGemini(null), false);
+});
+
+test("generatePhoto: native image endpoint, key in x-goog-api-key, image part becomes a Blob", async () => {
+  const png = Buffer.from("fake-png-bytes");
+  const calls = mockFetch([{ json: { candidates: [{ content: { parts: [{ text: "here" }, { inlineData: { mimeType: "image/png", data: png.toString("base64") } }] } }] } }]);
+  const blob = await generatePhoto({ prompt: "Overhead photo of a chicken rice bowl", llm: GEMINI });
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url, `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_IMAGE_MODEL}:generateContent`);
+  assert.equal(calls[0].init.headers["x-goog-api-key"], GEMINI_KEY);
+  assert.equal(calls[0].init.headers.authorization, undefined);
+  assert.deepEqual(calls[0].body.contents, [{ parts: [{ text: "Overhead photo of a chicken rice bowl" }] }]);
+  assert.deepEqual(calls[0].body.generationConfig.responseModalities, ["IMAGE"]);
+  assert.equal(blob.type, "image/png");
+  assert.deepEqual(Buffer.from(await blob.arrayBuffer()), png);
+});
+
+test("generatePhoto: no image, an error reply or a non-Gemini key give plain errors without the key", async () => {
+  mockFetch([{ json: { candidates: [{ content: { parts: [] }, finishReason: "IMAGE_SAFETY" }] } }]);
+  await assert.rejects(generatePhoto({ prompt: "x", llm: GEMINI }), /Gemini sent no image \(IMAGE_SAFETY\)/);
+  mockFetch([{ status: 429, json: [{ error: { message: `Quota exceeded for ${GEMINI_KEY}, limit: 0` } }] }]);
+  await assert.rejects(generatePhoto({ prompt: "x", llm: GEMINI }), (e) => /429/.test(e.message) && !e.message.includes(GEMINI_KEY));
+  // the real free-key reply (2026-11-09): limit 0 on the free tier, so the message says what helps instead of "wait"
+  mockFetch([{ status: 429, json: [{ error: { message: "You exceeded your current quota. * Quota exceeded for metric: " +
+    "generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-flash-lite-image" } }] }]);
+  await assert.rejects(generatePhoto({ prompt: "x", llm: GEMINI }), (e) => e.message === FREE_KEY_PHOTO);
+  const calls = mockFetch([]);
+  await assert.rejects(generatePhoto({ prompt: "x", llm: OPENAI }), /only with a Gemini key/);
+  assert.equal(calls.length, 0);
 });
