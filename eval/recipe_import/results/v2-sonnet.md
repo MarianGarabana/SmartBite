@@ -1,6 +1,6 @@
 # Recipe import eval: v2-sonnet
 
-Model claude-sonnet-5-5, temperature: provider default, prompt prompts/import.md (sha256 6cc993358e6e), scored 2026-11-10T09:57:34+00:00.
+Model claude-sonnet-5-5, temperature: provider default, prompt prompts/import.md (sha256 6cc993358e6e), scored 2026-11-10T10:21:30+00:00.
 
 **6 of 10 cases pass** (bar: 9 of 10). 10 calls, 30585 input and 11241 output tokens ($0.1736 at paid prices).
 

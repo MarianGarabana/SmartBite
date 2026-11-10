@@ -4,11 +4,11 @@
         [--min-gap 6] [--dry-run] [--resume]
     .venv/bin/python -m eval.recipe_import.run score <name>
 
-live: one call per case with prompts/import.md (the browser's prompt, same known food list); a reply that fails the
+live: one call per case with prompts/import.md (the prompt the browser will send; the web app copies it at build), same known food list; a reply that fails the
 contract gets its errors back once, as askJson in web/lib/llm.js does. --provider gemini (default) or anthropic, with
 the recipe call's settings (Gemini: default reasoning; Anthropic: effort medium), through eval.live's Runner: key from
 .env only (never printed or written), spend guard per call
-(worst case added to money spent; stop past --max-usd), `User-Agent: SmartBite`, at most 2 calls per case.
+(worst case added to money spent; stop past --max-usd), `User-Agent: SmartBite`, at most 2 calls per case per try (each --resume try adds its calls to the case's log).
 Writes eval/recipe_import/replies/<run>/<case>.json and then scores the run. --resume runs again only the cases of
 that run whose call failed on the provider side (HTTP 5xx, e.g. 503 "high demand"); model replies are never re-rolled.
 
@@ -88,6 +88,11 @@ def run_live(run, cases, max_usd, key, model, min_gap_s, *, transport=live.urlli
     if resume:
         if not folder.is_dir():
             raise live.LiveError(f"nothing to resume: no replies at {folder}")
+        now = _sha(PROMPT_FILE)
+        stored = {json.loads(f.read_text(encoding="utf-8")).get("prompt_sha") for f in folder.glob("*.json")}
+        if stored - {now}:
+            raise live.LiveError(f"refusing to resume {run}: its replies were made with another prompt "
+                                 f"({', '.join(sorted(x or 'not recorded' for x in stored))}, now {now}); start a new run")
         cases = [c for c in cases if provider_failed(folder / f"{c['id']}.json")]
         log(f"resume: {len(cases)} cases had a provider error: {', '.join(c['id'] for c in cases) or 'none'}")
     elif folder.exists() and any(folder.iterdir()):
@@ -110,7 +115,8 @@ def run_live(run, cases, max_usd, key, model, min_gap_s, *, transport=live.urlli
         if resume and path.exists():  # keep the provider errors of earlier tries in the call log
             calls = json.loads(path.read_text(encoding="utf-8")).get("calls", []) + calls
         path.write_text(json.dumps(
-            {"case": case["id"], "model": runner.model, "reply": data, "text": text, "error": error, "calls": calls},
+            {"case": case["id"], "model": runner.model, "prompt_sha": _sha(PROMPT_FILE), "reply": data, "text": text,
+             "error": error, "calls": calls},
             ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
         if stopped:
             log(f"STOP: {stopped}")
@@ -124,13 +130,14 @@ def score(run, *, replies=REPLIES, results=RESULTS, cases=None):
     if not folder.is_dir():
         raise live.LiveError(f"no replies at {folder}")
     known = set(foods())
-    graded, calls, model = [], [], None
+    graded, calls, model, shas = [], [], None, set()
     for case in cases:
         path = folder / f"{case['id']}.json"
         if not path.exists():
             continue
         stored = json.loads(path.read_text(encoding="utf-8"))
         model = stored.get("model") or model
+        shas.add(stored.get("prompt_sha") or "not recorded")
         calls += stored.get("calls", [])
         g = grade_case(case, stored.get("reply"), known)
         if stored.get("error") and stored.get("reply") is None:
@@ -138,7 +145,7 @@ def score(run, *, replies=REPLIES, results=RESULTS, cases=None):
         graded.append(g)
     passed = sum(g["passed"] for g in graded)
     summary = {"run": run, "model": model, "prompt": str(PROMPT_FILE.relative_to(live.ROOT)),
-               "prompt_sha": _sha(PROMPT_FILE), "scored_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+               "prompt_sha": ", ".join(sorted(shas)), "scored_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                "cases": len(graded), "passed": passed, "bar": PASS_BAR, "meets_bar": passed >= PASS_BAR,
                "calls": len(calls), "input_tokens": sum(c["input_tokens"] for c in calls),
                "output_tokens": sum(c["output_tokens"] for c in calls),
@@ -172,6 +179,8 @@ def report(s):
             ok = "yes" if r["ok"] else ("no" if r["level"] == "fail" else "note")
             got = ", ".join(r["got"]) or "-"
             amount = "" if r["grams"] is None else r["grams"]
+            if r.get("pieces"):
+                amount = f"{amount} ({', '.join(f'{p['count']:g} {p['size']}' for p in r['pieces'])}, table)"
             out.append(f"| {r['line']} | {' or '.join(r['accept'])} | {got} | {amount} | {r['window'] or ''} | "
                        f"{ok}{': ' + r['problem'] if r.get('problem') else ''} |")
         if g["notes"]:

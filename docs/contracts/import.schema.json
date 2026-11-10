@@ -39,7 +39,16 @@
         "storage": { "enum": ["fresh", "keeps", "frozen"] },
         "pantry": { "type": "boolean" },
         "dry": { "type": "boolean", "description": "True for rice, pasta, quinoa and couscous, whose grams are dry (uncooked) weight." },
-        "note": { "type": "string", "maxLength": 80 }
+        "note": { "type": "string", "maxLength": 80 },
+        "pieces": {
+          "type": "object", "required": ["count", "size"],
+          "description": "Optional. Whole pieces the line counts (4 large potatoes, 3 cloves garlic). Code weighs foods in data/open/piece-weights.json and replaces grams_total.",
+          "properties": {
+            "count": { "type": "number", "exclusiveMinimum": 0 },
+            "size": { "enum": ["small", "medium", "large"] }
+          },
+          "additionalProperties": false
+        }
       },
       "additionalProperties": false
     }

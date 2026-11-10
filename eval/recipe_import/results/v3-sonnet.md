@@ -1,0 +1,158 @@
+# Recipe import eval: v3-sonnet
+
+Model claude-sonnet-5-5, temperature: provider default, prompt prompts/import.md (sha256 199a5ee87333), scored 2026-11-10T10:21:30+00:00.
+
+**9 of 10 cases pass** (bar: 9 of 10). 10 calls, 32665 input and 11515 output tokens ($0.1805 at paid prices).
+
+| Case | Result | Servings | Why it failed |
+|---|---|---|---|
+| en-shakshouka | pass | None |  |
+| en-lentil-soup | pass | None |  |
+| en-chicken-fajitas | pass | None |  |
+| en-beef-stew | pass | None |  |
+| en-frittata | pass | None |  |
+| en-tuna-salad | pass | None |  |
+| en-chicken-curry | pass | None |  |
+| es-filete-pollo | FAIL | 4 | 1 tallo de porro: amount 150 outside 66.8 to 111.2 |
+| es-huevos-flamenca | pass | 4 |  |
+| es-ensalada-murciana | pass | 4 |  |
+
+## en-shakshouka
+
+| Line | Want | Got | Amount | Window | OK |
+|---|---|---|---|---|---|
+| 6 tbsp olive oil | extra virgin olive oil | extra virgin olive oil | 82 | 60.8 to 101.2 | yes |
+| 1 tbsp sweet paprika | paprika | paprika | 7 | 5.1 to 8.5 | yes |
+| 6 cloves garlic, minced | garlic | garlic | 18.0 (6 medium, table) | 13.5 to 22.5 | yes |
+| 1 large sweet red pepper, diced | red bell pepper | red bell pepper | 164.0 (1 large, table) | 123 to 205 | yes |
+| 1 chile pepper (red or green), chopped | UNKNOWN | chile pepper | 45.0 (1 medium, table) | 33.8 to 56.2 | yes |
+| 6 ripe tomatoes diced | tomato | tomato | 738.0 (6 medium, table) | 553.5 to 922.5 | yes |
+| Ground black pepper | black pepper | black pepper | 2 |  | yes |
+| Salt to taste | salt | salt | 5 |  | yes |
+| 6 eggs | eggs | eggs | 6 eggs | 6 eggs | yes |
+
+## en-lentil-soup
+
+| Line | Want | Got | Amount | Window | OK |
+|---|---|---|---|---|---|
+| 1-2 tablespoons olive oil | extra virgin olive oil | extra virgin olive oil | 20 | 12.2 to 29.7 | yes |
+| 1 onion, diced | onion | onion | 110.0 (1 medium, table) | 82.5 to 137.5 | yes |
+| 2 carrots, diced | carrot | carrot | 122.0 (2 medium, table) | 91.5 to 152.5 | yes |
+| 2 cloves garlic, minced | garlic | garlic | 6.0 (2 medium, table) | 4.5 to 7.5 | yes |
+| 1/2 lb dry red lentils | dried lentils | dried lentils | 227 | 204.1 to 249.5 | yes |
+| 6 cups water or stock | chicken broth | chicken broth | 1440 |  | yes |
+| 1 bay leaf | UNKNOWN | bay leaf | 1 |  | yes |
+
+## en-chicken-fajitas
+
+| Line | Want | Got | Amount | Window | OK |
+|---|---|---|---|---|---|
+| 1 Tbsp olive oil | extra virgin olive oil | extra virgin olive oil | 14 | 10.1 to 16.9 | yes |
+| 1-2 lb skinless, boneless chicken breast | chicken breast | chicken breast | 680 | 408.2 to 997.9 | yes |
+| 1 red bell pepper | red bell pepper | red bell pepper | 119.0 (1 medium, table) | 89.2 to 148.8 | yes |
+| 1 green bell pepper | green bell pepper | green bell pepper | 119.0 (1 medium, table) | 89.2 to 148.8 | yes |
+| 1/2 yellow onion | onion | onion | 55.0 (0.5 medium, table) | 41.2 to 68.8 | yes |
+| 1 tsp ground cumin | cumin | cumin | 2 |  | yes |
+| 1 Tbsp crushed red pepper | chili flakes | chili flakes | 6 |  | yes |
+| (steps) turmeric, salt and black pepper | UNKNOWN or salt or black pepper | turmeric, salt, black pepper | 11 |  | yes |
+
+## en-beef-stew
+
+| Line | Want | Got | Amount | Window | OK |
+|---|---|---|---|---|---|
+| 2 lb (900 g) beef | beef steak | beef steak | 900 | 810 to 990 | yes |
+| 1/2 cup flour | UNKNOWN | flour | 60 | 46.9 to 78.1 | yes |
+| 1/4 cup oil | extra virgin olive oil | extra virgin olive oil | 55 | 40.5 to 67.5 | yes |
+| 1 bay leaf | UNKNOWN | bay leaf | 1 |  | yes |
+| 1 tsp marjoram | UNKNOWN or oregano | marjoram | 1 |  | yes |
+| 1 tsp oregano | oregano | oregano | 2 |  | yes |
+| 46 fl oz tomato juice | UNKNOWN or crushed tomatoes | tomato juice | 1400 | 1048.8 to 1748 | yes |
+| 10 1/2 oz (298 g) double-strength beef broth | UNKNOWN or chicken broth | beef broth | 298 | 268.2 to 327.8 | yes |
+| 2-4 russet potatoes | potato | potato | 1107.0 (3 large, table) | 664.2 to 1623.6 | yes |
+| 4 large carrots | carrot | carrot | 288.0 (4 large, table) | 216 to 360 | yes |
+| 4 stalks of celery | UNKNOWN | celery | 160.0 (4 medium, table) | 120 to 200 | yes |
+
+## en-frittata
+
+| Line | Want | Got | Amount | Window | OK |
+|---|---|---|---|---|---|
+| 1 tablespoon olive oil | extra virgin olive oil | extra virgin olive oil | 14 | 10.1 to 16.9 | yes |
+| 2 garlic cloves, minced | garlic | garlic | 6.0 (2 medium, table) | 4.5 to 7.5 | yes |
+| 1 bunch of fresh asparagus | UNKNOWN | asparagus | 300 |  | yes |
+| 8 large eggs | eggs | eggs | 8 eggs | 8 eggs | yes |
+| 3 teaspoons milk | semi-skimmed milk | semi-skimmed milk | 15 | 11.2 to 18.8 | yes |
+| 2 teaspoons fresh basil or 1 teaspoon dried | UNKNOWN | basil | 3 |  | yes |
+| 1 pinch of salt | salt | salt | 0.4 |  | yes |
+| 1 pinch of ground black pepper | black pepper | black pepper | 0.2 |  | yes |
+| 3 tablespoons grated Parmesan cheese | grana padano or grated cheese or UNKNOWN | grana padano | 18 | 11.2 to 18.8 | yes |
+
+## en-tuna-salad
+
+| Line | Want | Got | Amount | Window | OK |
+|---|---|---|---|---|---|
+| 1 large can (12 oz) tuna | canned tuna in water or canned tuna in oil | canned tuna in water | 340 | 272.2 to 374.2 | yes |
+| 1 can water chestnuts, drained and chopped | UNKNOWN | water chestnuts | 140 |  | yes |
+| 1/2 small onion, chopped | onion | onion | 35.0 (0.5 small, table) | 26.2 to 43.8 | yes |
+| 1-2 stalks celery, chopped | UNKNOWN | celery | 60.0 (1.5 medium, table) | 36 to 88 | yes |
+| 1/2 cup carrot, shredded | carrot | carrot | 55 | 41.2 to 68.8 | yes |
+| 1/2 cup mayonnaise | UNKNOWN | mayonnaise | 110 | 82.5 to 137.5 | yes |
+| 1 tablespoon Dijon mustard | mustard | mustard | 15 | 11.2 to 18.8 | yes |
+| 1 teaspoon soy sauce | soy sauce | soy sauce | 5 | 4.5 to 7.5 | yes |
+| Salt to taste | salt | salt | 2 |  | yes |
+| Pepper to taste | black pepper | black pepper | 1 |  | yes |
+
+## en-chicken-curry
+
+| Line | Want | Got | Amount | Window | OK |
+|---|---|---|---|---|---|
+| 4 lb chicken | chicken breast or chicken thigh | chicken breast | 1814 | 1632.9 to 1995.8 | yes |
+| 100 ml + 150 ml coconut yogurt (two lines) | UNKNOWN | coconut yogurt, coconut yogurt | 250 | 225 to 275 | yes |
+| Juice of 1/2 lemon | lemon juice or lemon | lemon juice | 23 | 18 to 30 | yes |
+| 1 tablespoon coconut oil | UNKNOWN | coconut oil | 14 | 10.2 to 17 | yes |
+| 500 g tomatoes, diced | tomato | tomato | 500 | 450 to 550 | yes |
+| 200 g potatoes | potato | potato | 200 | 180 to 220 | yes |
+| 1 medium onion | onion | onion | 110.0 (1 medium, table) | 82.5 to 137.5 | yes |
+| garlic paste (1/2 tsp twice) | garlic or UNKNOWN | garlic, garlic | 5.0 |  | yes |
+| ginger paste (1 1/2 tsp + 1 tsp) | ground ginger or UNKNOWN | ginger paste, ginger paste | 13 |  | yes |
+| salt, chile powder, turmeric, coriander, garam masala, paprika, cumin, cinnamon, fenugreek, curry powder, mint, mustard/cumin/fennel seeds | ANY | salt, chili flakes, turmeric, ground coriander, chili flakes, garam masala, paprika, cumin, cinnamon, fenugreek leaves, curry powder, mint, curry powder, mustard seeds, cumin, fennel seeds, curry powder, fresh coriander | 54.6 |  | yes |
+
+## es-filete-pollo
+
+| Line | Want | Got | Amount | Window | OK |
+|---|---|---|---|---|---|
+| 4 filetes de pechuga de pollo | chicken breast | chicken breast | 600 | 406.8 to 1196.8 | yes |
+| 1 zapallo italiano mediano | zucchini | zucchini | 196.0 (1 medium, table) | 147 to 245 | yes |
+| 2 zanahorias medianas | carrot | carrot | 122.0 (2 medium, table) | 91.5 to 152.5 | yes |
+| 1 tallo de porro | UNKNOWN | leek | 150 | 66.8 to 111.2 | no: amount 150 outside 66.8 to 111.2 |
+| 1 morron | red bell pepper or green bell pepper | red bell pepper | 119.0 (1 medium, table) | 89.2 to 148.8 | yes |
+| 2 tazas de champinones picados | mushrooms | mushrooms | 140 | 105 to 175 | yes |
+| 1 pizca de sal | salt | salt | 1 |  | yes |
+| 1 pizca de pimienta | black pepper | black pepper | 0.5 |  | yes |
+| (steps) un chorrito de aceite | extra virgin olive oil | extra virgin olive oil | 9 |  | yes |
+
+## es-huevos-flamenca
+
+| Line | Want | Got | Amount | Window | OK |
+|---|---|---|---|---|---|
+| 4 huevos grandes (L o XL) | eggs | eggs | 4 eggs | 4 eggs | yes |
+| 4 patatas grandes | potato | potato | 1476.0 (4 large, table) | 1107 to 1845 | yes |
+| 400 g de tomate frito | tomato sauce | tomato sauce | 400 | 360 to 440 | yes |
+| 125 g de jamon york | UNKNOWN | ham | 125 | 112.5 to 137.5 | yes |
+| 125 g de chorizo | UNKNOWN | chorizo | 125 | 112.5 to 137.5 | yes |
+| 100 g de guisantes | frozen peas | frozen peas | 100 | 90 to 110 | yes |
+| 1 cebolla grande | onion | onion | 150.0 (1 large, table) | 112.5 to 187.5 | yes |
+| 1/8 litro vino blanco | UNKNOWN | white wine | 125 | 112.5 to 137.5 | yes |
+| Aceite de oliva | extra virgin olive oil | extra virgin olive oil | 60 |  | yes |
+| Sal al gusto | salt | salt | 3 |  | yes |
+
+## es-ensalada-murciana
+
+| Line | Want | Got | Amount | Window | OK |
+|---|---|---|---|---|---|
+| 1 bote de tomate pelado en conserva | crushed tomatoes or tomato | crushed tomatoes | 400 |  | yes |
+| 1 cebolla tierna | spring onion or onion | spring onion | 60 |  | yes |
+| 3 huevos duros | eggs | eggs | 3 eggs | 3 eggs | yes |
+| Aceitunas negras de Cuquillo | kalamata olives or UNKNOWN | kalamata olives | 40 |  | yes |
+| 2 latas pequenas de atun | canned tuna in oil or canned tuna in water | canned tuna in oil | 100 |  | yes |
+| Sal al gusto | salt | salt | 3 |  | yes |
+| aceite moderadamente | extra virgin olive oil | extra virgin olive oil | 30 |  | yes |

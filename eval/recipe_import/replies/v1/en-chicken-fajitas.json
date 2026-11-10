@@ -1,6 +1,7 @@
 {
  "case": "en-chicken-fajitas",
  "model": "gemini-3.6-flash",
+ "prompt_sha": "70900dd8b303",
  "reply": {
   "title": "Chicken Fajitas",
   "servings": null,

@@ -1,6 +1,7 @@
 {
  "case": "en-beef-stew",
  "model": "gemini-3.6-flash",
+ "prompt_sha": "70900dd8b303",
  "reply": {
   "title": "Beef Stew",
   "servings": null,

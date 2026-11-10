@@ -13,6 +13,7 @@
      "accept": [
       "extra virgin olive oil"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": true,
      "optional": false,
@@ -28,6 +29,7 @@
      "accept": [
       "paprika"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -43,6 +45,7 @@
      "accept": [
       "garlic"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -58,6 +61,7 @@
      "accept": [
       "red bell pepper"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -72,6 +76,12 @@
      "line": "1 chile pepper (red or green), chopped",
      "accept": [
       "UNKNOWN"
+     ],
+     "unknown_names": [
+      "chili",
+      "chile",
+      "chilli",
+      "hot pepper"
      ],
      "pantry": false,
      "required": true,
@@ -88,6 +98,7 @@
      "accept": [
       "tomato"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -103,6 +114,7 @@
      "accept": [
       "black pepper"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -113,6 +125,7 @@
      "accept": [
       "salt"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -123,6 +136,7 @@
      "accept": [
       "eggs"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -148,6 +162,7 @@
      "accept": [
       "extra virgin olive oil"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": true,
      "optional": false,
@@ -163,6 +178,7 @@
      "accept": [
       "onion"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -178,6 +194,7 @@
      "accept": [
       "carrot"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -193,6 +210,7 @@
      "accept": [
       "garlic"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -208,6 +226,7 @@
      "accept": [
       "dried lentils"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -223,6 +242,7 @@
      "accept": [
       "chicken broth"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": false,
      "optional": true,
@@ -232,6 +252,10 @@
      "line": "1 bay leaf",
      "accept": [
       "UNKNOWN"
+     ],
+     "unknown_names": [
+      "bay leaf",
+      "bay leaves"
      ],
      "pantry": true,
      "required": false,
@@ -255,6 +279,7 @@
      "accept": [
       "extra virgin olive oil"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": true,
      "optional": false,
@@ -270,6 +295,7 @@
      "accept": [
       "chicken breast"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -285,6 +311,7 @@
      "accept": [
       "red bell pepper"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -300,6 +327,7 @@
      "accept": [
       "green bell pepper"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -315,6 +343,7 @@
      "accept": [
       "onion"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -330,6 +359,7 @@
      "accept": [
       "cumin"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -340,6 +370,7 @@
      "accept": [
       "chili flakes"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -351,6 +382,9 @@
       "UNKNOWN",
       "salt",
       "black pepper"
+     ],
+     "unknown_names": [
+      "turmeric"
      ],
      "pantry": true,
      "required": false,
@@ -378,6 +412,7 @@
      "accept": [
       "beef steak"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -392,6 +427,9 @@
      "line": "1/2 cup flour",
      "accept": [
       "UNKNOWN"
+     ],
+     "unknown_names": [
+      "flour"
      ],
      "pantry": false,
      "required": true,
@@ -408,6 +446,7 @@
      "accept": [
       "extra virgin olive oil"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": true,
      "optional": false,
@@ -423,6 +462,10 @@
      "accept": [
       "UNKNOWN"
      ],
+     "unknown_names": [
+      "bay leaf",
+      "bay leaves"
+     ],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -434,6 +477,9 @@
       "UNKNOWN",
       "oregano"
      ],
+     "unknown_names": [
+      "marjoram"
+     ],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -444,6 +490,7 @@
      "accept": [
       "oregano"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -454,6 +501,9 @@
      "accept": [
       "UNKNOWN",
       "crushed tomatoes"
+     ],
+     "unknown_names": [
+      "tomato juice"
      ],
      "pantry": false,
      "required": true,
@@ -471,6 +521,12 @@
       "UNKNOWN",
       "chicken broth"
      ],
+     "unknown_names": [
+      "beef broth",
+      "beef stock",
+      "beef bouillon",
+      "beef consomme"
+     ],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -486,6 +542,7 @@
      "accept": [
       "potato"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -501,6 +558,7 @@
      "accept": [
       "carrot"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -515,6 +573,9 @@
      "line": "4 stalks of celery",
      "accept": [
       "UNKNOWN"
+     ],
+     "unknown_names": [
+      "celery"
      ],
      "pantry": false,
      "required": true,
@@ -541,6 +602,7 @@
      "accept": [
       "extra virgin olive oil"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": true,
      "optional": false,
@@ -556,6 +618,7 @@
      "accept": [
       "garlic"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -571,6 +634,9 @@
      "accept": [
       "UNKNOWN"
      ],
+     "unknown_names": [
+      "asparagus"
+     ],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -581,6 +647,7 @@
      "accept": [
       "eggs"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -596,6 +663,7 @@
      "accept": [
       "semi-skimmed milk"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -611,6 +679,9 @@
      "accept": [
       "UNKNOWN"
      ],
+     "unknown_names": [
+      "basil"
+     ],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -621,6 +692,7 @@
      "accept": [
       "salt"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -631,6 +703,7 @@
      "accept": [
       "black pepper"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -642,6 +715,10 @@
       "grana padano",
       "grated cheese",
       "UNKNOWN"
+     ],
+     "unknown_names": [
+      "parmesan",
+      "parmigiano"
      ],
      "pantry": false,
      "required": true,
@@ -669,6 +746,7 @@
       "canned tuna in water",
       "canned tuna in oil"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -684,6 +762,9 @@
      "accept": [
       "UNKNOWN"
      ],
+     "unknown_names": [
+      "water chestnut"
+     ],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -694,6 +775,7 @@
      "accept": [
       "onion"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -708,6 +790,9 @@
      "line": "1-2 stalks celery, chopped",
      "accept": [
       "UNKNOWN"
+     ],
+     "unknown_names": [
+      "celery"
      ],
      "pantry": false,
      "required": true,
@@ -724,6 +809,7 @@
      "accept": [
       "carrot"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -738,6 +824,10 @@
      "line": "1/2 cup mayonnaise",
      "accept": [
       "UNKNOWN"
+     ],
+     "unknown_names": [
+      "mayonnaise",
+      "mayo"
      ],
      "pantry": false,
      "required": true,
@@ -754,6 +844,7 @@
      "accept": [
       "mustard"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -769,6 +860,7 @@
      "accept": [
       "soy sauce"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -784,6 +876,7 @@
      "accept": [
       "salt"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -794,6 +887,7 @@
      "accept": [
       "black pepper"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -817,6 +911,7 @@
       "chicken breast",
       "chicken thigh"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -831,6 +926,10 @@
      "line": "100 ml + 150 ml coconut yogurt (two lines)",
      "accept": [
       "UNKNOWN"
+     ],
+     "unknown_names": [
+      "coconut yogurt",
+      "coconut yoghurt"
      ],
      "pantry": false,
      "required": true,
@@ -848,6 +947,7 @@
       "lemon juice",
       "lemon"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -862,6 +962,9 @@
      "line": "1 tablespoon coconut oil",
      "accept": [
       "UNKNOWN"
+     ],
+     "unknown_names": [
+      "coconut oil"
      ],
      "pantry": true,
      "required": true,
@@ -878,6 +981,7 @@
      "accept": [
       "tomato"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -893,6 +997,7 @@
      "accept": [
       "potato"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -908,6 +1013,7 @@
      "accept": [
       "onion"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -924,6 +1030,9 @@
       "garlic",
       "UNKNOWN"
      ],
+     "unknown_names": [
+      "garlic"
+     ],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -935,6 +1044,9 @@
       "ground ginger",
       "UNKNOWN"
      ],
+     "unknown_names": [
+      "ginger"
+     ],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -945,6 +1057,7 @@
      "accept": [
       "ANY"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -968,6 +1081,7 @@
      "accept": [
       "chicken breast"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -983,6 +1097,7 @@
      "accept": [
       "zucchini"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -998,6 +1113,7 @@
      "accept": [
       "carrot"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1012,6 +1128,9 @@
      "line": "1 tallo de porro",
      "accept": [
       "UNKNOWN"
+     ],
+     "unknown_names": [
+      "leek"
      ],
      "pantry": false,
      "required": true,
@@ -1029,6 +1148,7 @@
       "red bell pepper",
       "green bell pepper"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1044,6 +1164,7 @@
      "accept": [
       "mushrooms"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1059,6 +1180,7 @@
      "accept": [
       "salt"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -1069,6 +1191,7 @@
      "accept": [
       "black pepper"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -1079,6 +1202,7 @@
      "accept": [
       "extra virgin olive oil"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": true,
@@ -1101,6 +1225,7 @@
      "accept": [
       "eggs"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1116,6 +1241,7 @@
      "accept": [
       "potato"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1131,6 +1257,7 @@
      "accept": [
       "tomato sauce"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1145,6 +1272,9 @@
      "line": "125 g de jamon york",
      "accept": [
       "UNKNOWN"
+     ],
+     "unknown_names": [
+      "ham"
      ],
      "pantry": false,
      "required": true,
@@ -1161,6 +1291,9 @@
      "accept": [
       "UNKNOWN"
      ],
+     "unknown_names": [
+      "chorizo"
+     ],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1176,6 +1309,7 @@
      "accept": [
       "frozen peas"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1191,6 +1325,7 @@
      "accept": [
       "onion"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1205,6 +1340,9 @@
      "line": "1/8 litro vino blanco",
      "accept": [
       "UNKNOWN"
+     ],
+     "unknown_names": [
+      "white wine"
      ],
      "pantry": false,
      "required": true,
@@ -1221,6 +1359,7 @@
      "accept": [
       "extra virgin olive oil"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": true,
      "optional": false,
@@ -1231,6 +1370,7 @@
      "accept": [
       "salt"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -1255,6 +1395,7 @@
       "crushed tomatoes",
       "tomato"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1266,6 +1407,7 @@
       "spring onion",
       "onion"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1276,6 +1418,7 @@
      "accept": [
       "eggs"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1292,6 +1435,9 @@
       "kalamata olives",
       "UNKNOWN"
      ],
+     "unknown_names": [
+      "olive"
+     ],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1303,6 +1449,7 @@
       "canned tuna in oil",
       "canned tuna in water"
      ],
+     "unknown_names": [],
      "pantry": false,
      "required": true,
      "optional": false,
@@ -1313,6 +1460,7 @@
      "accept": [
       "salt"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": false,
      "optional": false,
@@ -1323,6 +1471,7 @@
      "accept": [
       "extra virgin olive oil"
      ],
+     "unknown_names": [],
      "pantry": true,
      "required": true,
      "optional": false,

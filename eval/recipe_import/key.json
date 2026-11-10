@@ -1,5 +1,5 @@
 {
-  "note": "Hand-written answer key for the paste-a-recipe import (decided 2026-11-09, Q15). One entry per ingredient line a reader sees. accept: the app food names (data/open/aliases.json foods) that count as a right match; \"UNKNOWN\" means the food is not in the app's list and must be kept as its own name, flagged unknown. amount: how the expected grams for the WHOLE recipe are worked out (build_key.py, weights from portions.json). required: false for salt, spices and dried herbs (no effect on macros worth scoring); they are reported, not needed to pass. must_not_include: foods that appear only as serving ideas or water. Draft for Marian's review.",
+  "note": "Hand-written answer key for the paste-a-recipe import (decided 2026-11-09, Q15). One entry per ingredient line a reader sees. accept: the app food names (data/open/aliases.json foods) that count as a right match; \"UNKNOWN\" means the food is not in the app's list and must be kept as its own name, flagged unknown; unknown_names lists the words one of which that name must contain (added 2026-11-10). amount: how the expected grams for the WHOLE recipe are worked out (build_key.py, weights from portions.json). required: false for salt, spices and dried herbs (no effect on macros worth scoring); they are reported, not needed to pass. must_not_include: foods that appear only as serving ideas or water. Draft for Marian's review.",
   "tolerances": {
     "weight": 0.1,
     "household": 0.25,
@@ -67,7 +67,13 @@
           "amount": {
             "household": "chili_pepper",
             "count": 1
-          }
+          },
+          "unknown_names": [
+            "chili",
+            "chile",
+            "chilli",
+            "hot pepper"
+          ]
         },
         {
           "line": "6 ripe tomatoes diced",
@@ -198,7 +204,11 @@
           ],
           "pantry": true,
           "required": false,
-          "amount": null
+          "amount": null,
+          "unknown_names": [
+            "bay leaf",
+            "bay leaves"
+          ]
         }
       ],
       "must_not_include": [
@@ -305,7 +315,10 @@
           "pantry": true,
           "required": false,
           "optional": true,
-          "amount": null
+          "amount": null,
+          "unknown_names": [
+            "turmeric"
+          ]
         }
       ],
       "must_not_include": [
@@ -343,7 +356,10 @@
           "amount": {
             "household": "flour_cup",
             "count": 0.5
-          }
+          },
+          "unknown_names": [
+            "flour"
+          ]
         },
         {
           "line": "1/4 cup oil",
@@ -364,7 +380,11 @@
           ],
           "pantry": true,
           "required": false,
-          "amount": null
+          "amount": null,
+          "unknown_names": [
+            "bay leaf",
+            "bay leaves"
+          ]
         },
         {
           "line": "1 tsp marjoram",
@@ -374,7 +394,10 @@
           ],
           "pantry": true,
           "required": false,
-          "amount": null
+          "amount": null,
+          "unknown_names": [
+            "marjoram"
+          ]
         },
         {
           "line": "1 tsp oregano",
@@ -395,7 +418,10 @@
           "amount": {
             "household": "tomato_juice_fl_oz",
             "count": 46
-          }
+          },
+          "unknown_names": [
+            "tomato juice"
+          ]
         },
         {
           "line": "10 1/2 oz (298 g) double-strength beef broth",
@@ -408,7 +434,13 @@
             "weight": {
               "g": 298
             }
-          }
+          },
+          "unknown_names": [
+            "beef broth",
+            "beef stock",
+            "beef bouillon",
+            "beef consomme"
+          ]
         },
         {
           "line": "2-4 russet potatoes",
@@ -449,7 +481,10 @@
           "amount": {
             "household": "celery_stalk_medium",
             "count": 4
-          }
+          },
+          "unknown_names": [
+            "celery"
+          ]
         }
       ],
       "must_not_include": []
@@ -489,7 +524,10 @@
             "UNKNOWN"
           ],
           "required": true,
-          "amount": null
+          "amount": null,
+          "unknown_names": [
+            "asparagus"
+          ]
         },
         {
           "line": "8 large eggs",
@@ -519,7 +557,10 @@
           ],
           "pantry": true,
           "required": false,
-          "amount": null
+          "amount": null,
+          "unknown_names": [
+            "basil"
+          ]
         },
         {
           "line": "1 pinch of salt",
@@ -550,7 +591,11 @@
           "amount": {
             "household": "parmesan_tbsp",
             "count": 3
-          }
+          },
+          "unknown_names": [
+            "parmesan",
+            "parmigiano"
+          ]
         }
       ],
       "must_not_include": []
@@ -588,7 +633,10 @@
             "UNKNOWN"
           ],
           "required": true,
-          "amount": null
+          "amount": null,
+          "unknown_names": [
+            "water chestnut"
+          ]
         },
         {
           "line": "1/2 small onion, chopped",
@@ -618,7 +666,10 @@
                 "count": 2
               }
             ]
-          }
+          },
+          "unknown_names": [
+            "celery"
+          ]
         },
         {
           "line": "1/2 cup carrot, shredded",
@@ -640,7 +691,11 @@
           "amount": {
             "household": "mayonnaise_cup",
             "count": 0.5
-          }
+          },
+          "unknown_names": [
+            "mayonnaise",
+            "mayo"
+          ]
         },
         {
           "line": "1 tablespoon Dijon mustard",
@@ -718,7 +773,11 @@
             "volume": {
               "ml": 250
             }
-          }
+          },
+          "unknown_names": [
+            "coconut yogurt",
+            "coconut yoghurt"
+          ]
         },
         {
           "line": "Juice of 1/2 lemon",
@@ -742,7 +801,10 @@
           "amount": {
             "household": "coconut_oil_tbsp",
             "count": 1
-          }
+          },
+          "unknown_names": [
+            "coconut oil"
+          ]
         },
         {
           "line": "500 g tomatoes, diced",
@@ -787,7 +849,10 @@
           ],
           "pantry": true,
           "required": false,
-          "amount": null
+          "amount": null,
+          "unknown_names": [
+            "garlic"
+          ]
         },
         {
           "line": "ginger paste (1 1/2 tsp + 1 tsp)",
@@ -797,7 +862,10 @@
           ],
           "pantry": true,
           "required": false,
-          "amount": null
+          "amount": null,
+          "unknown_names": [
+            "ginger"
+          ]
         },
         {
           "line": "salt, chile powder, turmeric, coriander, garam masala, paprika, cumin, cinnamon, fenugreek, curry powder, mint, mustard/cumin/fennel seeds",
@@ -870,7 +938,10 @@
           "amount": {
             "household": "leek",
             "count": 1
-          }
+          },
+          "unknown_names": [
+            "leek"
+          ]
         },
         {
           "line": "1 morron",
@@ -977,7 +1048,10 @@
             "weight": {
               "g": 125
             }
-          }
+          },
+          "unknown_names": [
+            "ham"
+          ]
         },
         {
           "line": "125 g de chorizo",
@@ -989,7 +1063,10 @@
             "weight": {
               "g": 125
             }
-          }
+          },
+          "unknown_names": [
+            "chorizo"
+          ]
         },
         {
           "line": "100 g de guisantes",
@@ -1024,7 +1101,10 @@
             "volume": {
               "ml": 125
             }
-          }
+          },
+          "unknown_names": [
+            "white wine"
+          ]
         },
         {
           "line": "Aceite de oliva",
@@ -1091,7 +1171,10 @@
             "UNKNOWN"
           ],
           "required": true,
-          "amount": null
+          "amount": null,
+          "unknown_names": [
+            "olive"
+          ]
         },
         {
           "line": "2 latas pequenas de atun",

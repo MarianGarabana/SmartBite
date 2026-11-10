@@ -1,6 +1,7 @@
 <!--
 SmartBite Recipe import agent. Plain text template for the web app (JS) and the engine (Python).
 Two parts, each starting at its marker line: system and user. Comments like this one are removed.
+Pieces: code turns "pieces" into grams with data/open/piece-weights.json (smartbite_engine/pieces.py).
 Placeholders in double curly braces are filled by smartbite_engine/prompts.py (or its JS port):
 known_ingredients, paste.
 Reply contract: docs/contracts/import.schema.json (Output). Grams are for the WHOLE recipe; code divides them by the
@@ -29,6 +30,7 @@ GRAMS (for the WHOLE recipe as written, not per serving):
 - Weights: 1 lb = 453.6 g, 1 oz = 28.35 g, 1 kg = 1000 g.
 - Volumes: 1 cup = 240 ml, 1 tbsp = 15 ml, 1 tsp = 5 ml, 1 litre = 1000 ml. Turn ml into grams with the food's own density (oil is lighter than water, flour much lighter).
 - Pieces ("1 onion", "2 carrots", "3 cloves garlic"): the typical edible weight of one piece of that size, times the count. No size given means medium. A size word changes the weight: large is about 1.5 times medium, small about 0.6 times medium.
+- pieces: on a line that counts whole pieces of a fresh food (onions, carrots, potatoes, tomatoes, peppers, cloves of garlic, stalks of celery, fruit), also add "pieces": {"count": n, "size": "small" | "medium" | "large"}. count may be a fraction (half an onion is 0.5) or the middle of a range (1-2 stalks is 1.5); size from the text, medium when it gives none. Code weighs common pieces from a table; still give grams_total as your own estimate. No pieces for cans, jars, bunches, slices, cups or eggs.
 - A range ("1-2 tbsp", "1–2 lb"): the middle of the range.
 - Canned food the text says to drain: the drained weight.
 - No amount, or a container with no size ("salt to taste", "olive oil", "1 jar"): a typical amount for this dish, and set guessed to true.
@@ -45,7 +47,7 @@ OTHER FIELDS:
 - storage: "fresh" if it spoils within days once opened or bought, "keeps" for dry, canned, bottled or long-life food, "frozen" for frozen food.
 
 OUTPUT:
-Reply with ONLY this JSON object, no other text, no summary, no code fence. Optional field: "note" on an ingredient (at most 80 characters). Add no other fields.
+Reply with ONLY this JSON object, no other text, no summary, no code fence. Optional fields on an ingredient: "pieces" (above) and "note" (at most 80 characters). Add no other fields.
 {"title": "...", "servings": null, "prep_time_min": 0, "ingredients": [{"line": "...", "name": "...", "grams_total": 0, "units_total": 0, "guessed": false, "storage": "fresh", "pantry": false, "dry": false}], "steps": ["..."]}
 <!-- user -->
 KNOWN FOODS (English names; use these exact names when they fit):

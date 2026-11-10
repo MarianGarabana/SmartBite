@@ -22,8 +22,10 @@ def perfect(case):
         if food["optional"]:
             continue
         name = food["accept"][0]
-        if name in ("UNKNOWN", "ANY"):
-            name = f"unlisted food {n}"
+        if name == "UNKNOWN":
+            name = food["unknown_names"][0]
+        elif name == "ANY":
+            name = f"unlisted spice {n}"
         check = food["check"] or {}
         eggs = check.get("kind") == "eggs"
         units = check["expected"] if eggs else 0
@@ -216,3 +218,37 @@ def test_a_step_naming_two_foods_files_each_under_its_own_line():
     reply = perfect(case)
     next(i for i in reply["ingredients"] if i["line"] == "4 lb chicken")["name"] = "chicken"
     assert any("name chicken" in f for f in grade_case(case, reply, KNOWN)["fails"])
+
+
+def test_piece_lines_are_graded_on_the_table_grams():
+    case = by_id("es-huevos-flamenca")
+    reply = perfect(case)
+    potato = next(i for i in reply["ingredients"] if i["line"] == "4 patatas grandes")
+    potato.update(grams_total=800, pieces={"count": 4, "size": "large"})  # model guess 800 g, table 4 x 369 g
+    g = grade_case(case, reply, KNOWN)
+    assert g["passed"], g["fails"]
+    row = next(r for r in g["rows"] if r["line"] == "4 patatas grandes")
+    assert row["grams"] == 1476.0 and row["pieces"] == [{"count": 4, "size": "large"}]
+    potato["pieces"] = {"count": 4, "size": "medium"}  # wrong size word: 852 g, outside the window
+    assert not grade_case(case, reply, KNOWN)["passed"]
+
+
+def test_resume_refuses_after_the_prompt_changed(tmp_path, monkeypatch):
+    case = by_id("en-frittata")
+    imp.run_live("p1", [case], 1.0, "k", "gemini-3.6-flash", 0, transport=lambda *a: (503, b"{}"), replies=tmp_path,
+                 log=lambda *_: None)
+    assert json.loads((tmp_path / "p1" / "en-frittata.json").read_text())["prompt_sha"]
+    monkeypatch.setattr(imp, "_sha", lambda path: "another")
+    with pytest.raises(live.LiveError, match="another prompt"):
+        imp.run_live("p1", [case], 1.0, "k", "gemini-3.6-flash", 0, transport=lambda *a: (503, b"{}"),
+                     replies=tmp_path, log=lambda *_: None, resume=True)
+
+
+def test_an_unknown_food_must_be_the_right_food():
+    case = by_id("es-filete-pollo")
+    reply = perfect(case)
+    leek = next(i for i in reply["ingredients"] if i["line"] == "1 tallo de porro")
+    leek["name"] = "leeks, raw"
+    assert grade_case(case, reply, KNOWN)["passed"]
+    leek["name"] = "banana bread"  # not on the app's list, but not a leek either
+    assert any("name banana bread" in f for f in grade_case(case, reply, KNOWN)["fails"])

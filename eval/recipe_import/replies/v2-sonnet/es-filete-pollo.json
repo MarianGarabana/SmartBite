@@ -1,6 +1,7 @@
 {
  "case": "es-filete-pollo",
  "model": "claude-sonnet-5-5",
+ "prompt_sha": "6cc993358e6e",
  "reply": {
   "title": "Filete de pollo a la sartén con verduras",
   "servings": 4,

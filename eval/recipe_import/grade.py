@@ -2,7 +2,8 @@
 checked in code against cases.json (built from key.json by build_key.py).
 
 A case passes when all of these hold:
-- the reply is a valid import Output (docs/contracts/import.schema.json),
+- the reply is a valid import Output (docs/contracts/import.schema.json); grams are checked after code weighs the
+  piece lines (smartbite_engine/pieces.py; the web app needs its JS port before it shows the same grams),
 - servings equal the key's (null when the text states none),
 - every required food is there under an accepted name, with grams (eggs: units) inside its window,
 - no food from must_not_include, and no food that matches no line of the paste.
@@ -19,6 +20,7 @@ import unicodedata
 
 from smartbite_engine.contracts import validate_output
 from smartbite_engine.names import foods
+from smartbite_engine.pieces import apply_pieces
 
 CONTRACT = "import.schema.json"
 MIN_SCORE = 0.5  # below this an ingredient matches no line of the paste
@@ -46,18 +48,26 @@ def line_score(key_line, reply_line):
     return max(both / len(k), both / len(r))
 
 
-def accepted(name, accept, known):
+def unknown_ok(name, food):
+    """An unlisted name passes an UNKNOWN line only when it contains one of the key's words for it ("leek")."""
+    plain = unicodedata.normalize("NFKD", name or "").encode("ascii", "ignore").decode().lower()
+    return any(w in plain for w in food.get("unknown_names", []))
+
+
+def accepted(name, accept, known, food):
     if "ANY" in accept:
         return True
     plain = (name or "").strip().lower()
-    return plain in accept or ("UNKNOWN" in accept and plain not in known)
+    if plain in accept:
+        return True
+    return "UNKNOWN" in accept and plain not in known and unknown_ok(name, food)
 
 
-def name_bonus(name, accept, known):
+def name_bonus(name, accept, known, food):
     plain = (name or "").strip().lower()
     if plain in accept:
         return 1.0
-    if "ANY" in accept or ("UNKNOWN" in accept and plain not in known):
+    if "ANY" in accept or ("UNKNOWN" in accept and plain not in known and unknown_ok(name, food)):
         return 0.3
     return 0.0
 
@@ -72,13 +82,13 @@ def assign(case, ingredients, known):
         best, best_i = 0.0, None
         for i, food in enumerate(case["foods"]):
             words_s = line_score(food["line"], ing.get("line", ""))
-            if words_s >= MIN_SHARED and accepted(ing.get("name"), food["accept"], known):
-                s = words_s + name_bonus(ing.get("name"), food["accept"], known)
+            if words_s >= MIN_SHARED and accepted(ing.get("name"), food["accept"], known, food):
+                s = words_s + name_bonus(ing.get("name"), food["accept"], known, food)
                 if s > best:
                     best, best_i = s, i
         if best_i is None:
             for i, food in enumerate(case["foods"]):
-                s = line_score(food["line"], ing.get("line", "")) + name_bonus(ing.get("name"), food["accept"], known)
+                s = line_score(food["line"], ing.get("line", "")) + name_bonus(ing.get("name"), food["accept"], known, food)
                 if s > best:
                     best, best_i = s, i
         if best_i is None or best < MIN_SCORE:
@@ -103,9 +113,10 @@ def grade_case(case, reply, known=None):
     if errors:
         result["fails"].append("reply breaks the contract: " + "; ".join(errors[:5]))
         return result
+    reply = apply_pieces(reply)  # piece lines weighed by code (Python now; the web app's JS port is still to come)
     ings = reply["ingredients"]
     result["servings"] = reply["servings"]
-    if reply["servings"] != case["servings"]:
+    if reply["servings"] != case["servings"] and reply["servings"] not in case.get("servings_also_ok", []):
         want = "none (the app asks)" if case["servings"] is None else case["servings"]
         result["fails"].append(f"servings {reply['servings']!r}, want {want}")
 
@@ -114,13 +125,14 @@ def grade_case(case, reply, known=None):
         got = [ings[j] for j in matched.get(i, [])]
         level = "fail" if food["required"] and not food["optional"] else "note"
         row = {"line": food["line"], "accept": food["accept"], "got": [g["name"] for g in got], "grams": None,
-               "window": None, "ok": True, "level": level}
+               "window": None, "ok": True, "level": level,
+               "pieces": [g["pieces"] for g in got if g.get("grams_from") == "pieces"]}
         problems = []
         if not got:
             if not food["optional"]:
                 problems.append("missing")
         else:
-            wrong = [g["name"] for g in got if not accepted(g["name"], food["accept"], known)]
+            wrong = [g["name"] for g in got if not accepted(g["name"], food["accept"], known, food)]
             if wrong:
                 problems.append(f"name {', '.join(wrong)} (want {' or '.join(food['accept'])})")
             check = food["check"]

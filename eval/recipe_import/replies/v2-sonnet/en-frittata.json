@@ -1,6 +1,7 @@
 {
  "case": "en-frittata",
  "model": "claude-sonnet-5-5",
+ "prompt_sha": "6cc993358e6e",
  "reply": {
   "title": "Frittata",
   "servings": null,

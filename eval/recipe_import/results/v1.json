@@ -2,8 +2,8 @@
  "run": "v1",
  "model": "gemini-3.6-flash",
  "prompt": "prompts/import.md",
- "prompt_sha": "6cc993358e6e",
- "scored_at": "2026-11-10T09:57:33+00:00",
+ "prompt_sha": "70900dd8b303",
+ "scored_at": "2026-11-10T10:21:29+00:00",
  "cases": 10,
  "passed": 5,
  "bar": 9,
@@ -32,7 +32,8 @@
      "grams": 82,
      "window": "60.8 to 101.2",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 tbsp sweet paprika",
@@ -45,7 +46,8 @@
      "grams": 7,
      "window": "5.1 to 8.5",
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "6 cloves garlic, minced",
@@ -58,7 +60,8 @@
      "grams": 18,
      "window": "13.5 to 22.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 large sweet red pepper, diced",
@@ -71,7 +74,8 @@
      "grams": 200,
      "window": "123 to 205",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 chile pepper (red or green), chopped",
@@ -85,6 +89,7 @@
      "window": "33.8 to 56.2",
      "ok": false,
      "level": "fail",
+     "pieces": [],
      "problem": "amount 15 outside 33.8 to 56.2"
     },
     {
@@ -98,7 +103,8 @@
      "grams": 738,
      "window": "553.5 to 922.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "Ground black pepper",
@@ -111,7 +117,8 @@
      "grams": 1,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "Salt to taste",
@@ -124,7 +131,8 @@
      "grams": 2,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "6 eggs",
@@ -137,7 +145,8 @@
      "grams": "6 eggs",
      "window": "6 eggs",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     }
    ],
    "servings": null
@@ -159,7 +168,8 @@
      "grams": 21,
      "window": "12.2 to 29.7",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 onion, diced",
@@ -172,7 +182,8 @@
      "grams": 110,
      "window": "82.5 to 137.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "2 carrots, diced",
@@ -185,7 +196,8 @@
      "grams": 122,
      "window": "91.5 to 152.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "2 cloves garlic, minced",
@@ -198,7 +210,8 @@
      "grams": 6,
      "window": "4.5 to 7.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1/2 lb dry red lentils",
@@ -211,7 +224,8 @@
      "grams": 227,
      "window": "204.1 to 249.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "6 cups water or stock",
@@ -224,7 +238,8 @@
      "grams": 1440,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "1 bay leaf",
@@ -237,7 +252,8 @@
      "grams": 0.5,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     }
    ],
    "servings": null
@@ -259,7 +275,8 @@
      "grams": 14,
      "window": "10.1 to 16.9",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1-2 lb skinless, boneless chicken breast",
@@ -272,7 +289,8 @@
      "grams": 680,
      "window": "408.2 to 997.9",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 red bell pepper",
@@ -285,7 +303,8 @@
      "grams": 120,
      "window": "89.2 to 148.8",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 green bell pepper",
@@ -298,7 +317,8 @@
      "grams": 120,
      "window": "89.2 to 148.8",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1/2 yellow onion",
@@ -311,7 +331,8 @@
      "grams": 55,
      "window": "41.2 to 68.8",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 tsp ground cumin",
@@ -324,7 +345,8 @@
      "grams": 3,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "1 Tbsp crushed red pepper",
@@ -337,7 +359,8 @@
      "grams": 6,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "(steps) turmeric, salt and black pepper",
@@ -354,7 +377,8 @@
      "grams": 7,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     }
    ],
    "servings": null
@@ -378,7 +402,8 @@
      "grams": 900,
      "window": "810 to 990",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1/2 cup flour",
@@ -391,7 +416,8 @@
      "grams": 60,
      "window": "46.9 to 78.1",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1/4 cup oil",
@@ -404,7 +430,8 @@
      "grams": 55,
      "window": "40.5 to 67.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 bay leaf",
@@ -417,7 +444,8 @@
      "grams": 0.5,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "1 tsp marjoram",
@@ -431,7 +459,8 @@
      "grams": 1,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "1 tsp oregano",
@@ -444,7 +473,8 @@
      "grams": 1,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "46 fl oz tomato juice",
@@ -458,7 +488,8 @@
      "grams": 1360,
      "window": "1048.8 to 1748",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "10 1/2 oz (298 g) double-strength beef broth",
@@ -472,7 +503,8 @@
      "grams": 298,
      "window": "268.2 to 327.8",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "2-4 russet potatoes",
@@ -485,7 +517,8 @@
      "grams": 750,
      "window": "664.2 to 1623.6",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "4 large carrots",
@@ -499,6 +532,7 @@
      "window": "216 to 360",
      "ok": false,
      "level": "fail",
+     "pieces": [],
      "problem": "amount 400 outside 216 to 360"
     },
     {
@@ -512,7 +546,8 @@
      "grams": 160,
      "window": "120 to 200",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     }
    ],
    "servings": null
@@ -534,7 +569,8 @@
      "grams": 14,
      "window": "10.1 to 16.9",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "2 garlic cloves, minced",
@@ -547,7 +583,8 @@
      "grams": 6,
      "window": "4.5 to 7.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 bunch of fresh asparagus",
@@ -560,7 +597,8 @@
      "grams": 250,
      "window": null,
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "8 large eggs",
@@ -573,7 +611,8 @@
      "grams": "8 eggs",
      "window": "8 eggs",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "3 teaspoons milk",
@@ -586,7 +625,8 @@
      "grams": 15,
      "window": "11.2 to 18.8",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "2 teaspoons fresh basil or 1 teaspoon dried",
@@ -599,7 +639,8 @@
      "grams": 2,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "1 pinch of salt",
@@ -612,7 +653,8 @@
      "grams": 0.5,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "1 pinch of ground black pepper",
@@ -625,7 +667,8 @@
      "grams": 0.5,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "3 tablespoons grated Parmesan cheese",
@@ -640,7 +683,8 @@
      "grams": 18,
      "window": "11.2 to 18.8",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     }
    ],
    "servings": null
@@ -663,7 +707,8 @@
      "grams": 340.2,
      "window": "272.2 to 374.2",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 can water chestnuts, drained and chopped",
@@ -676,7 +721,8 @@
      "grams": 140,
      "window": null,
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1/2 small onion, chopped",
@@ -689,7 +735,8 @@
      "grams": 35,
      "window": "26.2 to 43.8",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1-2 stalks celery, chopped",
@@ -702,7 +749,8 @@
      "grams": 60,
      "window": "36 to 88",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1/2 cup carrot, shredded",
@@ -715,7 +763,8 @@
      "grams": 55,
      "window": "41.2 to 68.8",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1/2 cup mayonnaise",
@@ -728,7 +777,8 @@
      "grams": 110,
      "window": "82.5 to 137.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 tablespoon Dijon mustard",
@@ -741,7 +791,8 @@
      "grams": 15,
      "window": "11.2 to 18.8",
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "1 teaspoon soy sauce",
@@ -754,7 +805,8 @@
      "grams": 6,
      "window": "4.5 to 7.5",
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "Salt to taste",
@@ -767,7 +819,8 @@
      "grams": 1,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "Pepper to taste",
@@ -780,7 +833,8 @@
      "grams": 0.5,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     }
    ],
    "servings": null
@@ -806,6 +860,7 @@
      "window": null,
      "ok": false,
      "level": "fail",
+     "pieces": [],
      "problem": "name chicken (want chicken breast or chicken thigh)"
     },
     {
@@ -820,7 +875,8 @@
      "grams": 250,
      "window": "225 to 275",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "Juice of 1/2 lemon",
@@ -835,7 +891,8 @@
      "grams": 25,
      "window": "18 to 30",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 tablespoon coconut oil",
@@ -848,7 +905,8 @@
      "grams": 14,
      "window": "10.2 to 17",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "500 g tomatoes, diced",
@@ -861,7 +919,8 @@
      "grams": 500,
      "window": "450 to 550",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "200 g potatoes",
@@ -874,7 +933,8 @@
      "grams": 200,
      "window": "180 to 220",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 medium onion",
@@ -887,7 +947,8 @@
      "grams": 110,
      "window": "82.5 to 137.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "garlic paste (1/2 tsp twice)",
@@ -902,7 +963,8 @@
      "grams": 5.0,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "ginger paste (1 1/2 tsp + 1 tsp)",
@@ -917,7 +979,8 @@
      "grams": 12.5,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "salt, chile powder, turmeric, coriander, garam masala, paprika, cumin, cinnamon, fenugreek, curry powder, mint, mustard/cumin/fennel seeds",
@@ -947,7 +1010,8 @@
      "grams": 54.0,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     }
    ],
    "servings": null
@@ -982,7 +1046,8 @@
      "grams": "4 eggs",
      "window": "4 eggs",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "4 patatas grandes",
@@ -996,6 +1061,7 @@
      "window": "1107 to 1845",
      "ok": false,
      "level": "fail",
+     "pieces": [],
      "problem": "amount 800 outside 1107 to 1845"
     },
     {
@@ -1009,7 +1075,8 @@
      "grams": 400,
      "window": "360 to 440",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "125 g de jamon york",
@@ -1022,7 +1089,8 @@
      "grams": 125,
      "window": "112.5 to 137.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "125 g de chorizo",
@@ -1035,7 +1103,8 @@
      "grams": 125,
      "window": "112.5 to 137.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "100 g de guisantes",
@@ -1048,7 +1117,8 @@
      "grams": 100,
      "window": "90 to 110",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 cebolla grande",
@@ -1061,7 +1131,8 @@
      "grams": 180,
      "window": "112.5 to 187.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1/8 litro vino blanco",
@@ -1074,7 +1145,8 @@
      "grams": 125,
      "window": "112.5 to 137.5",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "Aceite de oliva",
@@ -1087,7 +1159,8 @@
      "grams": 30,
      "window": null,
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "Sal al gusto",
@@ -1100,7 +1173,8 @@
      "grams": 4,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     }
    ],
    "servings": 4
@@ -1123,7 +1197,8 @@
      "grams": 800,
      "window": null,
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "1 cebolla tierna",
@@ -1137,7 +1212,8 @@
      "grams": 100,
      "window": null,
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "3 huevos duros",
@@ -1150,7 +1226,8 @@
      "grams": "3 eggs",
      "window": "3 eggs",
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "Aceitunas negras de Cuquillo",
@@ -1164,7 +1241,8 @@
      "grams": 50,
      "window": null,
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "2 latas pequenas de atun",
@@ -1178,7 +1256,8 @@
      "grams": 104,
      "window": null,
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     },
     {
      "line": "Sal al gusto",
@@ -1191,7 +1270,8 @@
      "grams": 5,
      "window": null,
      "ok": true,
-     "level": "note"
+     "level": "note",
+     "pieces": []
     },
     {
      "line": "aceite moderadamente",
@@ -1204,7 +1284,8 @@
      "grams": 30,
      "window": null,
      "ok": true,
-     "level": "fail"
+     "level": "fail",
+     "pieces": []
     }
    ],
    "servings": 4

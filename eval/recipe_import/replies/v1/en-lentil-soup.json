@@ -1,6 +1,7 @@
 {
  "case": "en-lentil-soup",
  "model": "gemini-3.6-flash",
+ "prompt_sha": "70900dd8b303",
  "reply": {
   "title": "Lentil Soup",
   "servings": null,

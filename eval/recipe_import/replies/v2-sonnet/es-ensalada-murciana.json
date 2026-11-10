@@ -1,6 +1,7 @@
 {
  "case": "es-ensalada-murciana",
  "model": "claude-sonnet-5-5",
+ "prompt_sha": "6cc993358e6e",
  "reply": {
   "title": "Ensalada murciana",
   "servings": 4,

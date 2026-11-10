@@ -1,6 +1,7 @@
 {
  "case": "en-chicken-curry",
  "model": "gemini-3.6-flash",
+ "prompt_sha": "70900dd8b303",
  "reply": {
   "title": "Chicken Curry",
   "servings": null,

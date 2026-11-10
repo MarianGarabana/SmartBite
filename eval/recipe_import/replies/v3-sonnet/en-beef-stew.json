@@ -1,0 +1,165 @@
+{
+ "case": "en-beef-stew",
+ "model": "claude-sonnet-5-5",
+ "prompt_sha": "199a5ee87333",
+ "reply": {
+  "title": "Beef Stew",
+  "servings": null,
+  "prep_time_min": 120,
+  "ingredients": [
+   {
+    "line": "2 lb (900 g) beef",
+    "name": "beef steak",
+    "grams_total": 900,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "½ cup flour",
+    "name": "flour",
+    "grams_total": 60,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "¼ cup oil",
+    "name": "extra virgin olive oil",
+    "grams_total": 55,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "1 bay leaf",
+    "name": "bay leaf",
+    "grams_total": 1,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "1 tsp (5 ml) marjoram",
+    "name": "marjoram",
+    "grams_total": 1,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "1 tsp (5 ml) oregano",
+    "name": "oregano",
+    "grams_total": 2,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "46 fl oz (5 ¾ cup, 1.36 L, or 1 large can) tomato juice",
+    "name": "tomato juice",
+    "grams_total": 1400,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "10 ½ oz (298 g, about 1 ¼ cup, or 300 mL) double-strength beef broth",
+    "name": "beef broth",
+    "grams_total": 298,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "2–4 russet potatoes, or other large non-sweet white baking potatoes",
+    "name": "potato",
+    "grams_total": 900,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "pieces": {
+     "count": 3,
+     "size": "large"
+    }
+   },
+   {
+    "line": "4 large carrots",
+    "name": "carrot",
+    "grams_total": 360,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "pieces": {
+     "count": 4,
+     "size": "large"
+    }
+   },
+   {
+    "line": "4 stalks of celery",
+    "name": "celery",
+    "grams_total": 160,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false,
+    "pieces": {
+     "count": 4,
+     "size": "medium"
+    }
+   }
+  ],
+  "steps": [
+   "Cut the beef into chunks about 1 inch (2.5 cm) across.",
+   "Put the beef and flour in a container, such as a plastic bag, and shake or squish until the beef is well-coated. Use more flour for a thicker stew, or less for a thinner stew.",
+   "Put oil into a wide pot and heat it.",
+   "In several batches, brown the beef in the pot with the oil.",
+   "Return the browned beef to the pot, along with all the spices, tomato juice, and the double-strength beef broth.",
+   "Cover the pot, then simmer for at least an hour to soften the beef. Stir the stew every few minutes to prevent the beef from burning on the bottom of the pot.",
+   "Peel the carrots, and cut them into pieces about the same size as the beef. Add them to the stew, and simmer a bit more, stirring every few minutes.",
+   "Cut the other vegetables likewise, add to stew, and simmer a bit more, stirring.",
+   "When all the vegetables are soft but not yet falling apart, remove the bay leaf and serve the stew."
+  ]
+ },
+ "text": "{\"title\":\"Beef Stew\",\"servings\":null,\"prep_time_min\":120,\"ingredients\":[{\"line\":\"2 lb (900 g) beef\",\"name\":\"beef steak\",\"grams_total\":900,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"½ cup flour\",\"name\":\"flour\",\"grams_total\":60,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":false,\"dry\":false},{\"line\":\"¼ cup oil\",\"name\":\"extra virgin olive oil\",\"grams_total\":55,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"1 bay leaf\",\"name\":\"bay leaf\",\"grams_total\":1,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"1 tsp (5 ml) marjoram\",\"name\":\"marjoram\",\"grams_total\":1,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"1 tsp (5 ml) oregano\",\"name\":\"oregano\",\"grams_total\":2,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"46 fl oz (5 ¾ cup, 1.36 L, or 1 large can) tomato juice\",\"name\":\"tomato juice\",\"grams_total\":1400,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":false,\"dry\":false},{\"line\":\"10 ½ oz (298 g, about 1 ¼ cup, or 300 mL) double-strength beef broth\",\"name\":\"beef broth\",\"grams_total\":298,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":false,\"dry\":false},{\"line\":\"2–4 russet potatoes, or other large non-sweet white baking potatoes\",\"name\":\"potato\",\"grams_total\":900,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false,\"pieces\":{\"count\":3,\"size\":\"large\"}},{\"line\":\"4 large carrots\",\"name\":\"carrot\",\"grams_total\":360,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false,\"pieces\":{\"count\":4,\"size\":\"large\"}},{\"line\":\"4 stalks of celery\",\"name\":\"celery\",\"grams_total\":160,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false,\"pieces\":{\"count\":4,\"size\":\"medium\"}}],\"steps\":[\"Cut the beef into chunks about 1 inch (2.5 cm) across.\",\"Put the beef and flour in a container, such as a plastic bag, and shake or squish until the beef is well-coated. Use more flour for a thicker stew, or less for a thinner stew.\",\"Put oil into a wide pot and heat it.\",\"In several batches, brown the beef in the pot with the oil.\",\"Return the browned beef to the pot, along with all the spices, tomato juice, and the double-strength beef broth.\",\"Cover the pot, then simmer for at least an hour to soften the beef. Stir the stew every few minutes to prevent the beef from burning on the bottom of the pot.\",\"Peel the carrots, and cut them into pieces about the same size as the beef. Add them to the stew, and simmer a bit more, stirring every few minutes.\",\"Cut the other vegetables likewise, add to stew, and simmer a bit more, stirring.\",\"When all the vegetables are soft but not yet falling apart, remove the bay leaf and serve the stew.\"]}",
+ "error": null,
+ "calls": [
+  {
+   "case": "en-beef-stew",
+   "stage": "import",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-sonnet-5-5",
+   "status": 200,
+   "input_tokens": 3357,
+   "output_tokens": 1226,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 5.957,
+   "cost_usd": 0.018974,
+   "error": null
+  }
+ ]
+}
