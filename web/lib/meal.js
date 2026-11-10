@@ -141,6 +141,7 @@ export function toMeal(slug, doc, { kind = "demo", saved = false } = {}) {
     saved, // local meals show in My Recipes only after "Save in my recipes"
     fixture: !!doc.fixture, // hand-made test data, labelled on the page
     shared: !!doc.shared, // opened from a shared link (lib/share.js), labelled "Shared recipe"
+    imported: !!doc.imported, // read from a pasted recipe (lib/importer.js), labelled "Imported recipe"
     name: doc.recipe.title,
     categories: categoriesOf(doc.recipe.title),
     category: categoriesOf(doc.recipe.title)[0],

@@ -13,7 +13,8 @@
 import { missingMainFoods, parseReply, validateOutput } from "./contracts.js";
 import { pickDishes } from "./inspiration.js";
 import { foods } from "./names.js";
-import { ideaPrompt, recipePrompt, revisionPrompt, typicalPackHints } from "./prompts.js";
+import { MAX_PASTE } from "./importer.js";
+import { ideaPrompt, importPrompt, recipePrompt, revisionPrompt, typicalPackHints } from "./prompts.js";
 import { ANTHROPIC, DEFAULT_ANTHROPIC_MODEL, OPENAI_COMPATIBLE } from "./providers.js";
 
 export const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
@@ -302,4 +303,17 @@ export async function writeRecipe({ idea, form, profile, llm, knownIngredients, 
     }
     return errors;
   });
+}
+
+// A pasted recipe read into foods and whole-recipe grams (import.schema.json Output), with the recipe call's model
+// settings (the eval ran it that way, eval/recipe_import). Code then weighs pieces and divides by servings
+// (lib/importer.js).
+export async function importRecipe({ paste, llm, knownIngredients }) {
+  const text = String(paste ?? "").trim();
+  if (!text) throw new LlmError("Paste a recipe first.");
+  if (text.length > MAX_PASTE) {
+    throw new LlmError(`That is ${text.length.toLocaleString("en")} characters. Paste only the recipe (up to ${MAX_PASTE.toLocaleString("en")}): the ingredients and the steps.`);
+  }
+  const prompt = importPrompt(text, { knownIngredients: knownIngredients ?? foods() });
+  return askJson(llm, "recipe", prompt, (d) => validateOutput(d, "import.schema.json"));
 }

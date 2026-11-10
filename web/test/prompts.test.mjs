@@ -7,7 +7,7 @@ import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { generateIdeas, reviseIdea, writeRecipe } from "../lib/llm.js";
-import { defaultProfile, fill, formText, gramLimits, ideaPrompt, loadTemplate, pyDumps, pyFixed, pyG, recipePrompt,
+import { defaultProfile, fill, formText, gramLimits, ideaPrompt, importPrompt, loadTemplate, pyDumps, pyFixed, pyG, recipePrompt,
   renderProfile, rerunInfo, revisionPrompt, targetRanges, typicalPackHints } from "../lib/prompts.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -326,4 +326,16 @@ test("typicalPackHints lists only the foods asked for, once, by English key", ()
 
 test("air fryer gear reaches the prompt in plain words", () => {
   assert.match(formText({ ...FORM, gear: ["oven", "air_fryer"] }), /Cooking gear: oven, air fryer/);
+});
+
+test("import prompt: same text as smartbite_engine/prompts.py import_prompt", { skip: !hasPython && "no .venv/bin/python" }, () => {
+  const paste = "  Huevos a la flamenca\n\nComensales: 4\n\n* 4 huevos grandes (tamaño L ó XL)\n* 1/8 litro vino blanco\n  ";
+  const known = ["eggs", "potato", "tomato sauce", "Pechuga de pollo"];
+  const js = importPrompt(paste, { knownIngredients: known });
+  const py = spawnSync(PYTHON, ["-c", "import json,sys\nfrom smartbite_engine.prompts import import_prompt\nd=json.load(sys.stdin)\n" +
+    "print(json.dumps(import_prompt(d['paste'], known_ingredients=d['known'])))"],
+    { cwd: ROOT, input: JSON.stringify({ paste, known }), encoding: "utf8" });
+  if (py.status !== 0) throw new Error(py.stderr);
+  assert.deepEqual(js, JSON.parse(py.stdout));
+  assert.ok(js.user.includes("* 1/8 litro vino blanco") && js.system.includes("WHOLE recipe"));
 });

@@ -287,3 +287,8 @@ export function recipePrompt(form, idea, { profile = null, knownIngredients = []
     known_ingredients: knownText(knownIngredients), pack_hints: packHintsText(packHints),
     retry: retryText(rerun, form), servings: get(form, "servings") });
 }
+
+// Recipe import: the pasted recipe text as given (only trimmed), the known food names (import.schema.json Output)
+export function importPrompt(paste, { knownIngredients = [] } = {}) {
+  return render("import", { known_ingredients: knownText(knownIngredients), paste: String(paste).trim() });
+}

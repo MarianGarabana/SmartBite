@@ -72,3 +72,14 @@ test("parseReply: fence ok, text after the JSON and broken JSON fail", () => {
   assert.match(e2[0], /not valid JSON/);
   assert.deepEqual(parseReply('  {"a": "} ] {"}  '), [{ a: "} ] {" }, []]);
 });
+
+test("import: whole-recipe grams, servings null or a number, pieces optional", () => {
+  const ing = { line: "4 patatas grandes", name: "potato", grams_total: 800, units_total: 0, guessed: false, storage: "keeps",
+    pantry: false, dry: false, pieces: { count: 4, size: "large" } };
+  const reply = { title: "Huevos a la flamenca", servings: null, prep_time_min: 20, ingredients: [ing], steps: [] };
+  assert.deepEqual(validateOutput(reply, "import.schema.json"), []);
+  assert.deepEqual(validateOutput({ ...reply, servings: 4 }, "import.schema.json"), []);
+  assert.ok(validateOutput({ ...reply, servings: "4" }, "import.schema.json").some((e) => e.includes("must be integer or null")));
+  const bad = { ...ing, pieces: { count: 4, size: "huge" } };
+  assert.ok(validateOutput({ ...reply, ingredients: [bad] }, "import.schema.json").some((e) => e.includes("pieces.size")));
+});

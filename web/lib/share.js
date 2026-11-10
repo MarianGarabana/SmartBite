@@ -187,7 +187,7 @@ export async function decodeShare(code) {
 const DEFAULT_KCAL = 450;
 const DEFAULT_PROTEIN = 45;
 
-export function sharedRequest(payload, { budgetPerServing }) {
+export function sharedRequest(payload, { budgetPerServing, ideaId = "shared" }) {
   const { recipe, idea, targets } = payload;
   const servings = recipe.servings;
   // The idea's main foods must be at least 2 (idea contract); a recipe shared without them uses its first foods
@@ -210,14 +210,14 @@ export function sharedRequest(payload, { budgetPerServing }) {
       keep_leftovers_low: true,
     },
     picked_idea: {
-      idea_id: "shared",
+      idea_id: ideaId,
       name: recipe.title.slice(0, 60),
       one_line: idea.one_line || recipe.title.slice(0, 140),
       main_ingredients: mainFoods,
       rough_macros: idea.rough_macros,
       image_prompt: idea.image_prompt,
     },
-    recipe: { ...recipe, idea_id: "shared" },
+    recipe: { ...recipe, idea_id: ideaId },
   };
 }
 

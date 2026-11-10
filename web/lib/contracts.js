@@ -90,6 +90,44 @@ export const SCHEMAS = {
       Ingredient: INGREDIENT,
     },
   },
+  // Recipe import (prompts/import.md): whole-recipe grams, servings only when the text states them
+  "import.schema.json": {
+    $defs: {
+      Output: {
+        type: "object",
+        required: ["title", "servings", "prep_time_min", "ingredients", "steps"],
+        properties: {
+          title: { type: "string", maxLength: 100 },
+          servings: { type: ["integer", "null"], minimum: 1, maximum: 50 },
+          prep_time_min: { type: "integer", minimum: 0 },
+          ingredients: { type: "array", minItems: 1, items: { $ref: "#/$defs/Ingredient" } },
+          steps: { type: "array", items: { type: "string" } },
+        },
+        additionalProperties: false,
+      },
+      Ingredient: {
+        type: "object",
+        required: ["line", "name", "grams_total", "units_total", "guessed", "storage", "pantry", "dry"],
+        properties: {
+          line: { type: "string", maxLength: 400 },
+          name: { type: "string", maxLength: 60 },
+          grams_total: { type: "number", exclusiveMinimum: 0 },
+          units_total: { type: "number", minimum: 0 },
+          guessed: { type: "boolean" },
+          storage: { enum: ["fresh", "keeps", "frozen"] },
+          pantry: { type: "boolean" },
+          dry: { type: "boolean" },
+          note: { type: "string", maxLength: 80 },
+          pieces: {
+            type: "object", required: ["count", "size"],
+            properties: { count: { type: "number", exclusiveMinimum: 0 }, size: { enum: ["small", "medium", "large"] } },
+            additionalProperties: false,
+          },
+        },
+        additionalProperties: false,
+      },
+    },
+  },
 };
 
 // The reply must be one JSON object, optionally in a single ```json fence, with nothing else around it.

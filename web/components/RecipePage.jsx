@@ -260,8 +260,8 @@ function RecipeView({ meal, meals, router }) {
               )}
               <div className={`${hasPhoto ? "md:col-span-7" : "md:col-span-12"} space-y-4`}>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-bold uppercase tracking-widest text-forest bg-lime-soft px-3 py-1 rounded-full">{meal.kind === "demo" ? "Demo Meal" : meal.shared ? "Shared recipe" : "Chosen Custom Recipe"}</span>
-                  <AiLabel />
+                  <span className="text-xs font-bold uppercase tracking-widest text-forest bg-lime-soft px-3 py-1 rounded-full">{meal.kind === "demo" ? "Demo Meal" : meal.shared ? "Shared recipe" : meal.imported ? "Imported recipe" : "Chosen Custom Recipe"}</span>
+                  <AiLabel text={meal.imported ? "Read by AI" : "AI-generated"} />
                   {meal.fixture && (
                     <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full">Test fixture</span>
                   )}
@@ -309,7 +309,7 @@ function RecipeView({ meal, meals, router }) {
                     </div>
                   ) : null}
                 </div>
-                <p className="text-[11px] text-forest/70">AI picked the foods and grams. Macros and packs are computed in code.</p>
+                <p className="text-[11px] text-forest/70">{meal.imported ? "AI read the foods and grams from the pasted recipe." : "AI picked the foods and grams."} Macros and packs are computed in code.</p>
               </div>
             </div>
 

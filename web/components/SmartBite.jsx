@@ -17,6 +17,7 @@ import { DEFAULT_BUDGET, deleteLocalMeal, engineEstimates, profileComplete, read
 import { SETUP_DONE_EVENT, openSetup } from "./SetupDialog";
 import { AddButton, AiLabel, Footer, Header, MealPhoto, CART_TABLE as T, TABS, Toast, money, moneySymbol, grams, useCart, useCurrency, useDemo, useMeals, usePrices,
   useProfileComplete, useToast } from "./Chrome";
+import { PasteRecipe } from "./PasteRecipe";
 import { ProductCell, ProductDialog } from "./ProductDialog";
 import { PriceInput } from "./RecipePage";
 
@@ -81,6 +82,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
   const [tab, setTab] = useState(initialTab);
   const [category, setCategory] = useState("All");
   const [query, setQuery] = useState("");
+  const [pasting, setPasting] = useState(false); // the Paste a recipe box on My Recipes
   const { toast, showToast } = useToast();
   const { meals } = useMeals(demoMeals);
   const { cart, add: addToCart, remove: removeFromCart, setOptional, setHave, adjustSuggestions, previewAdjust,
@@ -305,11 +307,22 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                 )
               )}
             </div>
-            <div className="relative w-full md:w-72">
-              <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-forest/40"></i>
-              <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search recipes or ingredients..." className="w-full bg-white border border-cream-dark rounded-full pl-9 pr-4 py-2 text-xs text-forest placeholder-forest/40 focus:outline-none focus:border-forest" />
+            <div className="flex items-center gap-2 w-full md:w-auto">
+              <div className="relative flex-1 md:w-72 md:flex-none">
+                <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-forest/40"></i>
+                <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search recipes or ingredients..." className="w-full bg-white border border-cream-dark rounded-full pl-9 pr-4 py-2 text-xs text-forest placeholder-forest/40 focus:outline-none focus:border-forest" />
+              </div>
+              {/* Paste a recipe (decided 2026-11-09, Q14): the real app only, not the demo */}
+              {!demo && (
+                <button id="paste-recipe" onClick={() => setPasting(true)}
+                  className="shrink-0 bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-4 py-2 rounded-full transition-all flex items-center gap-1.5">
+                  <i className="fa-solid fa-paste text-[11px]"></i>
+                  <span>Paste a recipe</span>
+                </button>
+              )}
             </div>
           </div>
+          {pasting && <PasteRecipe onClose={() => setPasting(false)} />}
           <div id="recipes-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {shown.map((m) => (
               <div key={m.slug} className="relative bg-white rounded-3xl overflow-hidden shadow-soft border border-cream-dark/60 flex flex-col justify-between group">

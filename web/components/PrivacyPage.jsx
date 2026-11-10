@@ -14,7 +14,7 @@ const POINTS = [
   ["fa-key", "Your API key",
     "Your API key is stored only in this browser. It never leaves the browser except to the provider you chose in your Profile (api.anthropic.com for Anthropic), when you make a meal."],
   ["fa-wand-magic-sparkles", "What goes to the AI provider",
-    "When you make a meal, your craving, form and Kitchen Profile are sent from your browser to the provider you chose (Anthropic by default) to write the ideas and the recipe. That provider's own terms apply to that request."],
+    "When you make a meal, your craving, form and Kitchen Profile are sent from your browser to the provider you chose (Anthropic by default) to write the ideas and the recipe. When you paste a recipe, only the pasted text goes there, to read its foods and amounts. That provider's own terms apply to those requests."],
   ["fa-gears", "What goes to the SmartBite engine",
     "The form, your Kitchen Profile, the picked idea and the recipe go to the SmartBite engine to compute packs, macros and leftovers. It sends the result back and keeps nothing. Your key is never sent there."],
   ["fa-share-nodes", "Shared recipe links",

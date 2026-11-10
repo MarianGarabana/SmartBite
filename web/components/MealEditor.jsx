@@ -35,8 +35,11 @@ export function MealEditor({ slug, onClose, showToast }) {
 
   const setRow = (key, patch) => setRows(rows.map((r) => (r.key === key ? { ...r, ...patch } : r)));
   const addRow = () => setRows([...rows, { key: Date.now(), isNew: true, name: "", units_per_serving: 0, amount: "100" }]);
+  // What a meal keeps through an edit: its date and where it came from (shared link, pasted recipe). The list of
+  // foods to check after an import is dropped once the user saves: they have checked them.
+  const kept = { ...(doc?.date ? { date: doc.date } : {}), ...(doc?.shared ? { shared: true } : {}), ...(doc?.imported ? { imported: true } : {}) };
   const done = (newDoc, message) => {
-    if (!replaceLocalMeal(slug, newDoc)) return setError("Not saved: this browser blocks storage.");
+    if (!replaceLocalMeal(slug, { ...newDoc, ...kept })) return setError("Not saved: this browser blocks storage.");
     showToast(message);
     onClose(true);
   };
@@ -47,12 +50,15 @@ export function MealEditor({ slug, onClose, showToast }) {
     setError("");
     const recipe = editedRecipe(doc.recipe, { title, stepsText, rows });
     const foodsChanged = JSON.stringify(recipe.ingredients) !== JSON.stringify(doc.recipe.ingredients);
-    if (!foodsChanged) return done({ ...doc, recipe }, "Meal saved.");
+    if (!foodsChanged) {
+      const { import_check: _checked, ...rest } = doc;
+      return done({ ...rest, recipe }, "Meal saved.");
+    }
     setBusy("save");
     try {
       const out = await evaluateMeal({ form: doc.form, profile: readProfile(), picked_idea: doc.picked_idea, recipe,
         products: productsFor(recipe, readActiveProducts()), ...engineEstimates() });
-      done({ ...out, ...(doc.date ? { date: doc.date } : {}) }, "Meal saved. Macros, packs and cost are updated.");
+      done(out, "Meal saved. Macros, packs and cost are updated.");
     } catch (e) {
       setError(`Not saved: ${e.message}`);
     } finally {
@@ -72,7 +78,7 @@ export function MealEditor({ slug, onClose, showToast }) {
     try {
       const out = await makeMeal({ idea, form: doc.form, profile: readProfile(), llm, products: readActiveProducts(),
         ...engineEstimates(), onProgress: setProgress });
-      done({ ...out.meal, ...(doc.date ? { date: doc.date } : {}) }, "Meal changed. Macros, packs and cost are updated.");
+      done(out.meal, "Meal changed. Macros, packs and cost are updated.");
     } catch (e) {
       setError(`Not changed: ${e.message}`);
     } finally {
@@ -90,6 +96,19 @@ export function MealEditor({ slug, onClose, showToast }) {
           <h2 id="meal-editor-title" className="font-serif text-3xl font-bold text-forest leading-snug">{doc.recipe.title}</h2>
           <p className="text-xs text-forest/70 mt-1">Saved in this browser. Changing a food or its grams recomputes macros, packs and cost.</p>
         </div>
+        {doc.imported && doc.import_check && (
+          <div id="import-check" className="bg-lime-soft rounded-2xl p-4 space-y-1.5 text-xs text-forest">
+            <p className="font-bold">Read from your pasted recipe. Check the foods and grams per serving, then save.</p>
+            {doc.import_check.filter((c) => c.why === "unknown").length > 0 && (
+              <p>Not in SmartBite&apos;s food list, so left out of macros and cart: <span className="font-bold">
+                {doc.import_check.filter((c) => c.why === "unknown").map((c) => c.name).join(", ")}</span>. Swap one for a listed food if you can.</p>
+            )}
+            {doc.import_check.filter((c) => c.why === "guessed").length > 0 && (
+              <p>No amount in the recipe, so the grams are a guess: <span className="font-bold">
+                {doc.import_check.filter((c) => c.why === "guessed").map((c) => c.name).join(", ")}</span>.</p>
+            )}
+          </div>
+        )}
 
         <div className="space-y-4">
           <div>

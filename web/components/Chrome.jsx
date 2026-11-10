@@ -314,10 +314,10 @@ export function MealImage({ meal, className, textClass = "text-sm", label = fals
 }
 
 // Ideas and recipes come from a language model: always labelled
-export function AiLabel({ className = "" }) {
+export function AiLabel({ className = "", text = "AI-generated" }) {
   return (
     <span className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-forest/70 bg-cream-card border border-cream-dark px-2 py-0.5 rounded-full ${className}`}>
-      <i className="fa-solid fa-wand-magic-sparkles text-[9px]"></i>AI-generated
+      <i className="fa-solid fa-wand-magic-sparkles text-[9px]"></i>{text}
     </span>
   );
 }
