@@ -1,5 +1,10 @@
-// Records docs/images/demo.gif: Home -> My Recipes -> Korean beef bowl (packs, a typed price) -> Cart -> Adjust
-// leftovers. Demo data only, no model call, no key. Rerun it whenever the demo numbers change.
+// Records docs/images/demo.gif (story updated 2026-11-10):
+//   1. The demo, as a new visitor sees it: /start -> Try the demo -> the Make Your Meal quiz -> 4 ideas -> a recipe
+//      with its packs and estimated prices. The demo never calls a model.
+//   2. Paste a recipe: needs a key, so the recording sets a fake one in the browser and answers the AI call with the
+//      reply a real model (claude-sonnet-5-5) gave for the same text in the import eval
+//      (eval/recipe_import/replies/v3-sonnet/en-lentil-soup.json). The engine, the piece weights and the editor are real.
+// No real key is used and no model runs. Rerun it when the app's look or the demo meals change.
 //
 //   node scripts/record-demo.mjs [base URL] [output gif]
 //
@@ -13,7 +18,10 @@ import { chromium } from "@playwright/test";
 const BASE = (process.argv[2] || "https://smartbite-steel.vercel.app").replace(/\/$/, "");
 const OUT = path.resolve(process.argv[3] || path.join(import.meta.dirname, "..", "..", "docs", "images", "demo.gif"));
 const SIZE = { width: 960, height: 600 };
-const KOREAN = "Korean beef bowl with peas and brown rice-lentil mix";
+const ROOT = path.join(import.meta.dirname, "..", "..");
+const PASTE = fs.readFileSync(path.join(ROOT, "eval", "recipe_import", "pastes", "en-lentil-soup.txt"), "utf8");
+const REPLY = JSON.parse(fs.readFileSync(path.join(ROOT, "eval", "recipe_import", "replies", "v3-sonnet", "en-lentil-soup.json"), "utf8")).reply;
+const CORS = { "access-control-allow-origin": "*", "access-control-allow-headers": "*", "access-control-allow-methods": "POST, OPTIONS" };
 
 // Video has no mouse pointer, so the page draws one that follows the mouse
 const CURSOR = `
@@ -53,42 +61,78 @@ const context = await browser.newContext({ viewport: SIZE, recordVideo: { dir: v
 await context.addInitScript(CURSOR);
 const page = await context.newPage();
 
+// The AI call of part 2 gets the eval's real reply after a short wait; nothing leaves the browser for a model
+await page.route("https://api.anthropic.com/v1/messages", async (route) => {
+  if (route.request().method() === "OPTIONS") return route.fulfill({ status: 204, headers: CORS });
+  await new Promise((r) => setTimeout(r, 1500));
+  return route.fulfill({ status: 200, headers: { ...CORS, "content-type": "application/json" }, body: JSON.stringify({
+    type: "message", role: "assistant", content: [{ type: "text", text: JSON.stringify(REPLY) }], stop_reason: "end_turn", usage: {} }) });
+});
+
+// 1. The demo
 await page.goto(BASE);
+await page.locator("#start-demo").waitFor();
 await page.mouse.move(480, 300);
 await pause(page, 2500);
-
-await clickOn(page, page.locator("#nav-recipes"));
+await clickOn(page, page.locator("#start-demo").getByRole("link", { name: "Try the demo" }));
+await page.locator("#demo-banner").waitFor();
 await pause(page, 1500);
-await clickOn(page, page.getByRole("link", { name: KOREAN }).first());
+await page.goto(`${BASE}/demo?tab=make-meal`); // at 960 px the menu folds into the phone menu
+const quiz = page.locator("#make-step-1");
+await quiz.getByText("Chicken", { exact: true }).waitFor();
+await pause(page, 1200);
+await clickOn(page, quiz.getByText("Chicken", { exact: true }));
+await pause(page, 500);
+await clickOn(page, quiz.getByText("Bowl", { exact: true }));
+await pause(page, 1200);
+const show = page.getByRole("button", { name: "Show me 4 ideas" });
+for (let i = 0; i < 10 && !(await show.isVisible()); i++) {
+  await clickOn(page, page.getByRole("button", { name: /^(Continue|Back to summary)/ }));
+  await pause(page, 600);
+}
+await pause(page, 1000);
+await clickOn(page, show);
+const cards = page.locator("#ideas-card-grid > div");
+await cards.first().waitFor();
+await pause(page, 2500);
+await clickOn(page, cards.first());
+await pause(page, 1500);
+await clickOn(page, page.getByRole("dialog").getByRole("button", { name: "Select meal" }));
+await page.waitForURL(/\/recipes\//);
 const table = page.locator("#pack-table-body");
-await table.getByText("est.").first().waitFor();
+await table.locator("tr").first().waitFor();
 await page.mouse.move(480, 300, { steps: 10 });
-await pause(page, 3000);
-
+await pause(page, 2500);
 await scrollBy(page, 700);
 await moveTo(page, table);
-await pause(page, 1500);
-const beefPrice = table.locator("tr").filter({ hasText: "ground beef" }).locator("input");
-await clickOn(page, beefPrice);
-await beefPrice.pressSequentially("4.99", { delay: 200 });
-await pause(page, 2500);
+await pause(page, 3000);
 
-await clickOn(page, page.getByRole("button", { name: "Add to my cart" }));
+// 2. Paste a recipe (a fake key in this browser only; the AI reply is the eval's)
+await page.evaluate(() => {
+  localStorage.setItem("smartbite.anthropicKey", JSON.stringify("sk-ant-demo-recording"));
+  localStorage.setItem("smartbite.setup", JSON.stringify("done"));
+});
+await page.goto(`${BASE}/?tab=recipes`);
+await page.locator("#paste-recipe").waitFor();
 await pause(page, 1200);
-await clickOn(page, page.locator("#nav-cart"));
-const cart = page.locator("#tab-cart");
-await cart.getByRole("heading", { name: "Consolidated Shopping List" }).waitFor();
-await pause(page, 2500);
-
-await moveTo(page, cart.getByRole("heading", { name: "Your Leftovers" }));
+await clickOn(page, page.locator("#paste-recipe"));
+await page.locator("#paste-text").waitFor();
+await pause(page, 800);
+await page.locator("#paste-text").fill(PASTE);
+await pause(page, 2000);
+await clickOn(page, page.getByRole("button", { name: "Read recipe" }));
+await page.locator("#paste-servings").waitFor();
 await pause(page, 1500);
-await clickOn(page, cart.getByRole("button", { name: "Adjust leftovers to meals" }));
-await pause(page, 2500);
-const apply = cart.getByRole("button", { name: "Apply" });
-if (await apply.count()) {
-  await clickOn(page, apply.first());
-  await pause(page, 2500);
-}
+await page.locator("#paste-servings").fill("3");
+await pause(page, 800);
+await clickOn(page, page.getByRole("button", { name: "Continue" }));
+await page.locator("#import-check").waitFor();
+await page.mouse.move(480, 300, { steps: 10 });
+await pause(page, 3500);
+await clickOn(page, page.getByRole("button", { name: "Save changes" }));
+await page.getByText("Imported recipe", { exact: true }).waitFor();
+await page.mouse.move(480, 300, { steps: 10 });
+await pause(page, 3000);
 
 const video = page.video();
 await context.close();
@@ -97,7 +141,7 @@ const webm = await video.path();
 
 // Two passes: a palette from the video, then the gif with it (sharper than one pass)
 const palette = path.join(videoDir, "palette.png");
-const filters = "fps=10,scale=960:-1:flags=lanczos";
+const filters = "fps=8,scale=860:-1:flags=lanczos"; // 8 fps and 860 px keep the gif well under 10 MB for GitHub
 execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", webm, "-vf", `${filters},palettegen=stats_mode=diff`, palette]);
 execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", webm, "-i", palette,
   "-lavfi", `${filters}[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=5`, OUT]);

@@ -1,0 +1,612 @@
+{
+ "run": "live-gemini-36-effort-c",
+ "provider": "gemini",
+ "model": "gemini-3.6-flash",
+ "max_usd": 2.0,
+ "finished": "2026-11-03T10:07:08+00:00",
+ "stopped": null,
+ "prices": {
+  "gemini-3.6-flash": {
+   "input": 0.75,
+   "output": 3.75,
+   "cache_write": null,
+   "cache_read": 0.075,
+   "source": "https://ai.google.dev/gemini-api/docs/pricing (updated 2026-10-27), read 2026-10-27",
+   "valid_until": "2026-12-31"
+  }
+ },
+ "calls": 24,
+ "failed_calls": 9,
+ "contract_retries": 0,
+ "input_tokens": 34046,
+ "output_tokens": 26911,
+ "cache_write_tokens": 0,
+ "cache_read_tokens": 0,
+ "total_cost_usd": 0.126449,
+ "meals": 6,
+ "cost_per_meal_mean_usd": 0.019803,
+ "cost_per_meal_max_usd": 0.028745,
+ "latency_mean_s": 9.662,
+ "reruns": 5,
+ "cases_with_reruns": 5,
+ "kept_not_last": [
+  "c04-ternera-coreana",
+  "c05-vegetarian-lentils",
+  "c09-garbanzos-6",
+  "c11-pollo-curry-sin-garbanzos"
+ ],
+ "cases": [
+  {
+   "case": "c01-greek-chicken",
+   "status": "error",
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c03-tuna-no-cook",
+   "status": "error",
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 2,
+   "cost_usd": 0.003798,
+   "has_recipe": false
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 1,
+     "misses": [
+      "protein 40 g vs target 45 g"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": null,
+     "misses": [],
+     "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 3,
+   "cost_usd": 0.018315,
+   "has_recipe": true
+  },
+  {
+   "case": "c05-vegetarian-lentils",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 2,
+     "misses": [
+      "kcal 502 vs target 450"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": null,
+     "misses": [],
+     "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 3,
+   "cost_usd": 0.020602,
+   "has_recipe": true
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 1,
+     "misses": [
+      "kcal 598 vs target 450"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": null,
+     "misses": [],
+     "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 3,
+   "cost_usd": 0.015345,
+   "has_recipe": true
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 2,
+   "cost_usd": 0.016033,
+   "has_recipe": true
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 2,
+     "misses": [
+      "kcal 502 vs target 450"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": null,
+     "misses": [],
+     "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 3,
+   "cost_usd": 0.019776,
+   "has_recipe": true
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "status": "error",
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 2,
+   "cost_usd": 0.003835,
+   "has_recipe": false
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 2,
+     "misses": [
+      "kcal 549 vs target 450",
+      "protein 48 g is more than 20% over target 40 g: cut the protein ingredient"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 2,
+   "calls": 3,
+   "cost_usd": 0.028745,
+   "has_recipe": true
+  },
+  {
+   "case": "c14-merluza-patatas",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  },
+  {
+   "case": "c15-bolognese-high-protein",
+   "status": "error",
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g",
+   "attempts": [],
+   "kept_attempt": null,
+   "calls": 1,
+   "cost_usd": 0.0,
+   "has_recipe": false
+  }
+ ],
+ "call_log": [
+  {
+   "case": "c01-greek-chicken",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 4.124,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c03-tuna-no-cook",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2039,
+   "output_tokens": 605,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 6.678,
+   "cost_usd": 0.003798,
+   "error": null
+  },
+  {
+   "case": "c03-tuna-no-cook",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.698,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2056,
+   "output_tokens": 625,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 5.991,
+   "cost_usd": 0.003886,
+   "error": null
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2328,
+   "output_tokens": 3382,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 15.072,
+   "cost_usd": 0.014429,
+   "error": null
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 5.324,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c05-vegetarian-lentils",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2049,
+   "output_tokens": 1483,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.076,
+   "cost_usd": 0.007098,
+   "error": null
+  },
+  {
+   "case": "c05-vegetarian-lentils",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2341,
+   "output_tokens": 3133,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 15.264,
+   "cost_usd": 0.013504,
+   "error": null
+  },
+  {
+   "case": "c05-vegetarian-lentils",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 9.192,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2079,
+   "output_tokens": 643,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 4.174,
+   "cost_usd": 0.003971,
+   "error": null
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2335,
+   "output_tokens": 2566,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 14.553,
+   "cost_usd": 0.011374,
+   "error": null
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 6.13,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2077,
+   "output_tokens": 626,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 4.469,
+   "cost_usd": 0.003905,
+   "error": null
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2331,
+   "output_tokens": 2768,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 14.003,
+   "cost_usd": 0.012128,
+   "error": null
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2088,
+   "output_tokens": 1442,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.129,
+   "cost_usd": 0.006973,
+   "error": null
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2346,
+   "output_tokens": 2945,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 14.51,
+   "cost_usd": 0.012803,
+   "error": null
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.128,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2074,
+   "output_tokens": 608,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 4.021,
+   "cost_usd": 0.003835,
+   "error": null
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 3.442,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2080,
+   "output_tokens": 1323,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 6.719,
+   "cost_usd": 0.006521,
+   "error": null
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 2344,
+   "output_tokens": 3214,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 15.549,
+   "cost_usd": 0.01381,
+   "error": null
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 3479,
+   "output_tokens": 1548,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 7.723,
+   "cost_usd": 0.008414,
+   "error": null
+  },
+  {
+   "case": "c14-merluza-patatas",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.23,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  },
+  {
+   "case": "c15-bolognese-high-protein",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 429,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 0.352,
+   "cost_usd": 0.0,
+   "error": "HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.g"
+  }
+ ]
+}

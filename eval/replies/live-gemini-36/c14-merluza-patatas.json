@@ -1,0 +1,21 @@
+{
+ "ideas": "{\"ideas\": [{\"idea_id\": \"1\", \"name\": \"Merluza al horno con patatas panaderas y cebolla\", \"one_line\": \"Lomos de merluza horneados sobre una cama de patatas panaderas y cebolla, aliñados con limón y ajo.\", \"main_ingredients\": [\"frozen hake\", \"potato\", \"onion\", \"lemon juice\", \"garlic\"], \"rough_macros\": {\"kcal\": 440, \"protein_g\": 42, \"carbs_g\": 48, \"fat_g\": 8}, \"image_prompt\": \"A baked hake fillet served over thin sliced roasted potatoes and onions, garnished with lemon juice and fresh garlic, presented on a ceramic plate.\"}, {\"idea_id\": \"2\", \"name\": \"Pollo al horno con patatas y aceitunas\", \"one_line\": \"Pechuga de pollo jugosa asada en bandeja con patatas, aceitunas kalamata y un toque de limón.\", \"main_ingredients\": [\"chicken breast\", \"potato\", \"kalamata olives\", \"lemon juice\", \"garlic\"], \"rough_macros\": {\"kcal\": 450, \"protein_g\": 45, \"carbs_g\": 40, \"fat_g\": 11}, \"image_prompt\": \"Roasted chicken breast slices with crisp baked potato wedges, kalamata olives, and garlic cloves on a sheet tray.\"}, {\"idea_id\": \"3\", \"name\": \"Solomillo de cerdo al horno con patatas y zanahoria\", \"one_line\": \"Lomo de cerdo magro horneado junto con patatas y zanahorias en rodajas crujientes.\", \"main_ingredients\": [\"pork loin\", \"potato\", \"carrot\", \"onion\", \"garlic\"], \"rough_macros\": {\"kcal\": 460, \"protein_g\": 43, \"carbs_g\": 44, \"fat_g\": 12}, \"image_prompt\": \"Sliced baked pork loin served with roasted potato rounds and roasted carrots on a white dish.\"}, {\"idea_id\": \"4\", \"name\": \"Huevos a la flamenca al horno con patatas\", \"one_line\": \"Base de patatas, guisantes y pimiento rojo en salsa de tomate horneada con huevos por encima.\", \"main_ingredients\": [\"eggs\", \"egg whites\", \"potato\", \"crushed tomatoes\", \"frozen peas\", \"red bell pepper\"], \"rough_macros\": {\"kcal\": 440, \"protein_g\": 40, \"carbs_g\": 46, \"fat_g\": 10}, \"image_prompt\": \"Spanish baked eggs served in a individual casserole over rich tomato sauce, diced potatoes, peas, and red bell peppers.\"}]}",
+ "picked_idea_id": "1",
+ "recipe": "{\"idea_id\": \"1\", \"title\": \"Merluza al horno con patatas panaderas y cebolla\", \"servings\": 2, \"prep_time_min\": 40, \"ingredients\": [{\"name\": \"frozen hake\", \"grams_per_serving\": 200, \"units_per_serving\": 0, \"storage\": \"frozen\", \"pantry\": false, \"dry\": false}, {\"name\": \"potato\", \"grams_per_serving\": 213, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"onion\", \"grams_per_serving\": 55, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"extra virgin olive oil\", \"grams_per_serving\": 10, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}, {\"name\": \"garlic\", \"grams_per_serving\": 5, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": false}, {\"name\": \"lemon juice\", \"grams_per_serving\": 15, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": false, \"dry\": false}, {\"name\": \"salt\", \"grams_per_serving\": 2, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}, {\"name\": \"black pepper\", \"grams_per_serving\": 1, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}], \"steps\": [\"Precalentar el horno a 200 °C.\", \"Pelar y cortar las patatas en rodajas finas panaderas y la cebolla en tiras.\", \"Colocar las patatas y la cebolla en una bandeja de horno, añadir el aceite de oliva, sal y pimienta, y hornear durante 20 minutos.\", \"Picar el ajo. Sacar la bandeja del horno, colocar los lomos de merluza sobre las patatas y repartir el ajo picado y el zumo de limón por encima.\", \"Hornear 12-15 minutos más hasta que la merluza esté bien cocinada y servir dividido en 2 raciones.\"]}",
+ "kept_attempt": 1,
+ "attempts": [
+  {
+   "attempt": 1,
+   "problems": 1,
+   "misses": [
+    "protein 36 g vs target 40 g"
+   ]
+  },
+  {
+   "attempt": 2,
+   "problems": null,
+   "misses": [],
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  }
+ ]
+}

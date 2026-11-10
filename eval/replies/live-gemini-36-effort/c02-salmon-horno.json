@@ -1,0 +1,19 @@
+{
+ "ideas": "{\"ideas\": [{\"idea_id\": \"1\", \"name\": \"Salmón al horno con patatas panaderas y verduras\", \"one_line\": \"Lomos de salmón asados al horno sobre una cama de patata, cebolla y pimiento verde.\", \"main_ingredients\": [\"salmon\", \"potato\", \"onion\", \"green bell pepper\"], \"rough_macros\": {\"kcal\": 510, \"protein_g\": 41, \"carbs_g\": 38, \"fat_g\": 21}, \"image_prompt\": \"Baked salmon fillet placed on top of sliced roasted potatoes, onions, and green peppers on a white plate.\"}, {\"idea_id\": \"2\", \"name\": \"Salmón al horno con brócoli y boniato\", \"one_line\": \"Boniato crujiente y brócoli asados en bandeja de horno junto a lomos de salmón.\", \"main_ingredients\": [\"salmon\", \"sweet potato\", \"broccoli\"], \"rough_macros\": {\"kcal\": 490, \"protein_g\": 40, \"carbs_g\": 35, \"fat_g\": 20}, \"image_prompt\": \"Sheet pan meal with baked salmon fillet, roasted broccoli florets, and cubed roasted sweet potatoes.\"}, {\"idea_id\": \"3\", \"name\": \"Salmón al horno con judías verdes y limón\", \"one_line\": \"Salmón al horno al aroma de limón acompañado de judías verdes y patatas baby.\", \"main_ingredients\": [\"salmon\", \"green beans\", \"potato\", \"lemon juice\"], \"rough_macros\": {\"kcal\": 480, \"protein_g\": 42, \"carbs_g\": 32, \"fat_g\": 19}, \"image_prompt\": \"Lemon baked salmon with tender green beans and small roasted potatoes on a serving plate.\"}, {\"idea_id\": \"4\", \"name\": \"Salmón asado al horno con calabacín y tomates cherry\", \"one_line\": \"Salmón jugoso al horno con rodajas de calabacín y tomates cherry asados, servido con arroz.\", \"main_ingredients\": [\"salmon\", \"zucchini\", \"cherry tomatoes\", \"rice\"], \"rough_macros\": {\"kcal\": 520, \"protein_g\": 41, \"carbs_g\": 42, \"fat_g\": 20}, \"image_prompt\": \"Oven-roasted salmon fillet served over white rice with roasted sliced zucchini and burst cherry tomatoes.\"}]}",
+ "picked_idea_id": "1",
+ "recipe": "{\"idea_id\": \"1\", \"title\": \"Salmón al horno con patatas panaderas y verduras\", \"servings\": 2, \"prep_time_min\": 35, \"ingredients\": [{\"name\": \"salmon\", \"grams_per_serving\": 200, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"potato\", \"grams_per_serving\": 106, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"onion\", \"grams_per_serving\": 55, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"green bell pepper\", \"grams_per_serving\": 60, \"units_per_serving\": 0, \"storage\": \"fresh\", \"pantry\": false, \"dry\": false}, {\"name\": \"extra virgin olive oil\", \"grams_per_serving\": 3, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}, {\"name\": \"salt\", \"grams_per_serving\": 1, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}, {\"name\": \"black pepper\", \"grams_per_serving\": 1, \"units_per_serving\": 0, \"storage\": \"keeps\", \"pantry\": true, \"dry\": false}], \"steps\": [\"Precalienta el horno a 200 °C.\", \"Pela las patatas y córtalas en rodajas finas panaderas. Corta la cebolla en juliana y el pimiento verde en tiras.\", \"En una bandeja de horno, mezcla las patatas, la cebolla y el pimiento con el aceite de oliva, sal y pimienta. Hornea durante 20-25 minutos hasta que estén tiernas.\", \"Sazona el salmón con sal y pimienta, colócalo sobre las verduras y hornea durante 10-12 minutos más.\", \"Divide en 2 raciones y sirve caliente o guarda en recipientes para la semana.\"]}",
+ "kept_attempt": 1,
+ "attempts": [
+  {
+   "attempt": 1,
+   "problems": 1,
+   "misses": []
+  },
+  {
+   "attempt": 2,
+   "problems": null,
+   "misses": [],
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  }
+ ]
+}

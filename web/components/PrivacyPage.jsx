@@ -18,7 +18,7 @@ const POINTS = [
   ["fa-gears", "What goes to the SmartBite engine",
     "The form, your Kitchen Profile, the picked idea and the recipe go to the SmartBite engine to compute packs, macros and leftovers. It sends the result back and keeps nothing. Your key is never sent there."],
   ["fa-share-nodes", "Shared recipe links",
-    "Share recipe makes a link that holds the recipe only: its name, foods, grams, steps, photo prompt and kcal and protein targets. Nothing about you goes in: no country, prices, products, profile or photo. The recipe sits after the # in the link, which browsers never send to a server. When someone opens it, the recipe goes to the SmartBite engine like any meal, and they get macros and prices for their own country and products."],
+    "Share recipe makes a link that holds the recipe and the targets it was made for: its name, servings, prep time, foods, grams, steps and notes, the photo prompt, its rough macros and the kcal, protein, carbs and fat targets. Nothing else about you goes in: no country, prices, products, profile or photo. The recipe sits after the # in the link, which browsers never send to a server. When someone opens it, the recipe goes to the SmartBite engine like any meal, and they get macros and prices for the country and products set in their own browser."],
   ["fa-barcode", "Barcode lookups",
     "When you press Look up in Edit product, your browser asks Open Food Facts for that one barcode. Only the barcode is sent, with your IP address and browser details like any web request. Nothing about you, your profile or your meals goes there. Open Food Facts data is under the ODbL licence."],
   ["fa-calculator", "Math in code",
