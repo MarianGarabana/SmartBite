@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { productsFor } from "../lib/cartmath";
 import { evaluateMeal } from "../lib/engine";
-import { MAX_PASTE, MAX_SERVINGS, importSlug, importedRequest, needsServings } from "../lib/importer";
+import { LINK_MESSAGE, MAX_PASTE, MAX_SERVINGS, importSlug, importedRequest, needsServings } from "../lib/importer";
 import { importRecipe } from "../lib/llm";
 import { toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
@@ -65,7 +65,7 @@ export function PasteRecipe({ onClose }) {
       }
       await open(data, data.servings);
     } catch (e) {
-      setError(`Not read: ${e.message}`);
+      setError(e.message === LINK_MESSAGE ? e.message : `Not read: ${e.message}`);
       setBusy(null);
     }
   };
@@ -93,6 +93,7 @@ export function PasteRecipe({ onClose }) {
             <textarea id="paste-text" rows={10} value={text} onChange={(e) => setText(e.target.value)} maxLength={MAX_PASTE} disabled={Boolean(busy)}
               placeholder={"Paste the title, the ingredients and the steps.\n\ne.g.\nLentil soup\n1 onion, diced\n2 carrots\n1/2 lb red lentils\n..."}
               className={`w-full ${field} leading-relaxed`} />
+            <span className="block text-[11px] text-forest/70 -mt-1">Paste the text, not the link.</span>
             <button onClick={read} disabled={Boolean(busy)}
               className="w-full bg-lime hover:bg-lime-hover disabled:opacity-60 text-forest font-bold py-3.5 rounded-2xl text-sm transition-all shadow-glow flex items-center justify-center gap-2">
               <i className={`fa-solid ${busy ? "fa-circle-notch fa-spin" : "fa-wand-magic-sparkles"}`}></i>

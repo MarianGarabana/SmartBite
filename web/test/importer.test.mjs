@@ -93,3 +93,19 @@ test("importRecipe: empty or very long pastes are refused before any call", asyn
   await assert.rejects(importRecipe({ paste: "x".repeat(MAX_PASTE + 1), llm: ANTHROPIC }), /Paste only the recipe/);
   assert.equal(calls.length, 0);
 });
+
+test("a pasted link is caught before any call; a recipe with its source link is not", async () => {
+  const { LINK_MESSAGE, looksLikeLink } = await import("../lib/importer.js");
+  for (const link of ["https://www.bbcgoodfood.com/recipes/lentil-soup", "  www.example.com/receta-lentejas \n",
+    "Lentil soup\nhttps://example.com/lentil-soup", "https://example.com/a https://example.com/b"]) {
+    assert.equal(looksLikeLink(link), true, link);
+    assert.equal(looksLikeLink(link), true, `${link} (asked twice)`);
+  }
+  const recipe = fs.readFileSync(path.join(ROOT, "eval", "recipe_import", "pastes", "en-lentil-soup.txt"), "utf8");
+  assert.equal(looksLikeLink(recipe), false);
+  assert.equal(looksLikeLink(`${recipe}\nSource: https://en.wikibooks.org/wiki/Cookbook:Red_Lentil_Soup`), false);
+  assert.equal(looksLikeLink("Lentil soup with 2 carrots and 1 onion"), false);
+  const calls = mockFetch([]);
+  await assert.rejects(importRecipe({ paste: "https://example.com/lentil-soup", llm: ANTHROPIC }), (e) => e.message === LINK_MESSAGE);
+  assert.equal(calls.length, 0);
+});

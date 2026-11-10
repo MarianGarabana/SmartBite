@@ -13,7 +13,7 @@
 import { missingMainFoods, parseReply, validateOutput } from "./contracts.js";
 import { pickDishes } from "./inspiration.js";
 import { foods } from "./names.js";
-import { MAX_PASTE } from "./importer.js";
+import { LINK_MESSAGE, MAX_PASTE, looksLikeLink } from "./importer.js";
 import { ideaPrompt, importPrompt, recipePrompt, revisionPrompt, typicalPackHints } from "./prompts.js";
 import { ANTHROPIC, DEFAULT_ANTHROPIC_MODEL, OPENAI_COMPATIBLE } from "./providers.js";
 
@@ -311,6 +311,7 @@ export async function writeRecipe({ idea, form, profile, llm, knownIngredients, 
 export async function importRecipe({ paste, llm, knownIngredients }) {
   const text = String(paste ?? "").trim();
   if (!text) throw new LlmError("Paste a recipe first.");
+  if (looksLikeLink(text)) throw new LlmError(LINK_MESSAGE);
   if (text.length > MAX_PASTE) {
     throw new LlmError(`That is ${text.length.toLocaleString("en")} characters. Paste only the recipe (up to ${MAX_PASTE.toLocaleString("en")}): the ingredients and the steps.`);
   }

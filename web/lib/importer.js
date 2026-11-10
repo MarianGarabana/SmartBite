@@ -11,6 +11,19 @@ export const MAX_SERVINGS = 8; // the engine plans 1 to 8 servings (recipe.schem
 const EGG_GRAMS = 51; // size M, as everywhere in SmartBite
 const NO_STEPS = "No steps were pasted. Cook it as in the original recipe.";
 
+// A pasted link instead of a recipe (decided 2026-11-10): SmartBite never opens websites (Q6), and a model given only
+// an address could invent a recipe from its words. True when the text has a web address and, without it, almost
+// nothing else: fewer than 3 lines and fewer than 60 characters. A recipe with its source link at the end passes.
+export const LINK_MESSAGE = "That looks like a link. SmartBite does not open websites: open the page, select the ingredients " +
+  "and the steps, copy them, and paste the text here.";
+const URL_PATTERN = String.raw`\b(?:https?:\/\/|www\.)\S+`;
+export function looksLikeLink(text) {
+  const s = String(text ?? "");
+  if (!new RegExp(URL_PATTERN, "i").test(s)) return false; // no "g" flag here: a global regex keeps its place between calls
+  const rest = s.replace(new RegExp(URL_PATTERN, "gi"), " ").split("\n").map((l) => l.trim()).filter(Boolean);
+  return rest.length < 3 && rest.join(" ").length < 60;
+}
+
 // True when the user has to say how many servings to cook: the text states none, or more than SmartBite plans
 export const needsServings = (reply) => reply.servings == null || reply.servings > MAX_SERVINGS;
 

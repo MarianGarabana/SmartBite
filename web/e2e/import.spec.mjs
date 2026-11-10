@@ -96,6 +96,19 @@ test("paste a recipe with no AI key says to add one, and sends nothing", async (
   expect(calls).toHaveLength(0);
 });
 
+test("a pasted link is caught with a hint, and nothing goes to the AI", async ({ page }) => {
+  const calls = [];
+  await withKey(page);
+  await mockModel(page, calls);
+  await page.goto("/?tab=recipes");
+  await page.locator("#paste-recipe").click();
+  await expect(page.getByText("Paste the text, not the link.", { exact: true })).toBeVisible();
+  await page.locator("#paste-text").fill("https://www.bbcgoodfood.com/recipes/lentil-soup");
+  await page.getByRole("button", { name: "Read recipe" }).click();
+  await expect(page.locator("[role=dialog] [role=alert]")).toHaveText(/^That looks like a link\. SmartBite does not open websites/);
+  expect(calls).toHaveLength(0);
+});
+
 test("the demo has no Paste a recipe button", async ({ page }) => {
   await page.goto("/demo?tab=recipes");
   await expect(page.locator("#recipes-grid > div").first()).toBeVisible();
