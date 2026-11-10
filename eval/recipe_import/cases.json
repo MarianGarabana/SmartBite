@@ -1,0 +1,1335 @@
+{
+ "note": "Built by build_key.py; do not edit by hand.",
+ "cases": [
+  {
+   "id": "en-shakshouka",
+   "lang": "en",
+   "paste": "Shakshouka\n\nIngredients\n6 tbsp olive oil\n1 tbsp sweet paprika\n6 cloves garlic, minced\n1 large sweet red pepper, diced\n1 chile pepper (red or green), chopped\n6 ripe tomatoes diced\nGround black pepper\nSalt to taste\n6 eggs\n\nProcedure\n1. On a high heat, heat the oil for about ½ minute. Add the paprika and blend well.\n2. Add the garlic and peppers, and turn to low flame. Cook for about 10 minutes, until the peppers have slightly softened.\n3. Add the tomatoes and bring to a boil, then season to taste with salt and pepper.\n4. Make 6 dents in the mixture. Into each dent, put an egg yolk, and spread the egg whites around.\n5. Continue to cook on low until the egg whites have coagulated.\n",
+   "servings": null,
+   "servings_also_ok": [],
+   "foods": [
+    {
+     "line": "6 tbsp olive oil",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "pantry": true,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 81.0,
+      "low": 60.8,
+      "high": 101.2
+     }
+    },
+    {
+     "line": "1 tbsp sweet paprika",
+     "accept": [
+      "paprika"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 6.8,
+      "low": 5.1,
+      "high": 8.5
+     }
+    },
+    {
+     "line": "6 cloves garlic, minced",
+     "accept": [
+      "garlic"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 18,
+      "low": 13.5,
+      "high": 22.5
+     }
+    },
+    {
+     "line": "1 large sweet red pepper, diced",
+     "accept": [
+      "red bell pepper"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 164,
+      "low": 123.0,
+      "high": 205.0
+     }
+    },
+    {
+     "line": "1 chile pepper (red or green), chopped",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 45,
+      "low": 33.8,
+      "high": 56.2
+     }
+    },
+    {
+     "line": "6 ripe tomatoes diced",
+     "accept": [
+      "tomato"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 738,
+      "low": 553.5,
+      "high": 922.5
+     }
+    },
+    {
+     "line": "Ground black pepper",
+     "accept": [
+      "black pepper"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "Salt to taste",
+     "accept": [
+      "salt"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "6 eggs",
+     "accept": [
+      "eggs"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "eggs",
+      "expected": 6,
+      "low": 6,
+      "high": 6
+     }
+    }
+   ],
+   "must_not_include": []
+  },
+  {
+   "id": "en-lentil-soup",
+   "lang": "en",
+   "paste": "Lentil Soup\n\nIngredients\n1–2 tablespoons olive oil\n1 onion, diced\n2 carrots, diced\n2 cloves garlic, minced\n½ lb dry red lentils\n6 cups water or stock\n1 bay leaf\n\nProcedure\n1. Pick over the lentils to remove any debris if needed. Rinse well.\n2. Heat the olive oil in a large pan over medium heat. Once oil is hot, add the onion and carrots. Sauté for a few minutes, until the vegetables have started to soften, then add the garlic.\n3. Add the lentils, bay leaf, and water to the pot. Simmer over low-medium heat for 20–30 minutes until lentils are softened.\n4. Serve hot.\n",
+   "servings": null,
+   "servings_also_ok": [],
+   "foods": [
+    {
+     "line": "1-2 tablespoons olive oil",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "pantry": true,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "range",
+      "expected": 20.2,
+      "low": 12.2,
+      "high": 29.7
+     }
+    },
+    {
+     "line": "1 onion, diced",
+     "accept": [
+      "onion"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 110,
+      "low": 82.5,
+      "high": 137.5
+     }
+    },
+    {
+     "line": "2 carrots, diced",
+     "accept": [
+      "carrot"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 122,
+      "low": 91.5,
+      "high": 152.5
+     }
+    },
+    {
+     "line": "2 cloves garlic, minced",
+     "accept": [
+      "garlic"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 6,
+      "low": 4.5,
+      "high": 7.5
+     }
+    },
+    {
+     "line": "1/2 lb dry red lentils",
+     "accept": [
+      "dried lentils"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "weight",
+      "expected": 226.8,
+      "low": 204.1,
+      "high": 249.5
+     }
+    },
+    {
+     "line": "6 cups water or stock",
+     "accept": [
+      "chicken broth"
+     ],
+     "pantry": false,
+     "required": false,
+     "optional": true,
+     "check": null
+    },
+    {
+     "line": "1 bay leaf",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    }
+   ],
+   "must_not_include": [
+    "water"
+   ]
+  },
+  {
+   "id": "en-chicken-fajitas",
+   "lang": "en",
+   "paste": "Chicken Fajitas\n\nIngredients\n1 Tbsp olive oil\n1–2 lb (½–1 kg) skinless, boneless chicken breast\n1 red bell pepper\n1 green bell pepper\n½ yellow onion\n1 tsp ground cumin (or to taste)\n1 Tbsp crushed red pepper (or to taste)\n\nProcedure\n1. Cut chicken into roughly 1x1-inch (2.5 x 2.5 cm) pieces.\n2. Marinate the chicken with a spoonful of turmeric, salt and black pepper.\n3. Cook chicken in olive oil, cumin and red pepper over high heat in a large skillet or wok.\n4. While meat is cooking, chop/julienne vegetables peppers and onion).\n5. When meat is completely cooked, add vegetables, stirring frequently so that all are evenly cooked.\n6. Remove from heat when vegetables are soft.\n7. Serve with tortilla shells and toppings such as cheese, sour cream, lettuce, tomato, onions, and/or guacamole.\n",
+   "servings": null,
+   "servings_also_ok": [],
+   "foods": [
+    {
+     "line": "1 Tbsp olive oil",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "pantry": true,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 13.5,
+      "low": 10.1,
+      "high": 16.9
+     }
+    },
+    {
+     "line": "1-2 lb skinless, boneless chicken breast",
+     "accept": [
+      "chicken breast"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "range",
+      "expected": 680.4,
+      "low": 408.2,
+      "high": 997.9
+     }
+    },
+    {
+     "line": "1 red bell pepper",
+     "accept": [
+      "red bell pepper"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 119,
+      "low": 89.2,
+      "high": 148.8
+     }
+    },
+    {
+     "line": "1 green bell pepper",
+     "accept": [
+      "green bell pepper"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 119,
+      "low": 89.2,
+      "high": 148.8
+     }
+    },
+    {
+     "line": "1/2 yellow onion",
+     "accept": [
+      "onion"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 55.0,
+      "low": 41.2,
+      "high": 68.8
+     }
+    },
+    {
+     "line": "1 tsp ground cumin",
+     "accept": [
+      "cumin"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "1 Tbsp crushed red pepper",
+     "accept": [
+      "chili flakes"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "(steps) turmeric, salt and black pepper",
+     "accept": [
+      "UNKNOWN",
+      "salt",
+      "black pepper"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": true,
+     "check": null
+    }
+   ],
+   "must_not_include": [
+    "wheat tortillas",
+    "grated cheese",
+    "lettuce",
+    "tomato",
+    "avocado"
+   ]
+  },
+  {
+   "id": "en-beef-stew",
+   "lang": "en",
+   "paste": "Beef Stew\n\nBeef stew has chunks of softened beef and vegetables in a thick sauce. It is often served with cornbread or biscuits.\n\nIngredients\n2 lb (900 g) beef\n½ cup flour\n¼ cup oil\n1 bay leaf\n1 tsp (5 ml) marjoram\n1 tsp (5 ml) oregano\n46 fl oz (5 ¾ cup, 1.36 L, or 1 large can) tomato juice\n10 ½ oz (298 g, about 1 ¼ cup, or 300 mL) double-strength beef broth\n2–4 russet potatoes, or other large non-sweet white baking potatoes\n4 large carrots\n4 stalks of celery\n\nProcedure\n1. Cut the beef into chunks about 1 inch (2.5 cm) across.\n2. Put the beef and flour in a container, such as a plastic bag, and shake or squish until the beef is well-coated. Use more flour for a thicker stew, or less for a thinner stew.\n3. Put oil into a wide pot and heat it.\n4. In several batches, brown the beef in the pot with the oil.\n5. Return the browned beef to the pot, along with all the spices, tomato juice, and the double-strength beef broth.\n6. Cover the pot, then simmer for at least an hour to soften the beef. Stir the stew every few minutes to prevent the beef from burning on the bottom of the pot.\n7. Peel the carrots, and cut them into pieces about the same size as the beef. Add them to the stew, and simmer a bit more, stirring every few minutes.\n8. Cut the other vegetables likewise, add to stew, and simmer a bit more, stirring.\n9. When all the vegetables are soft but not yet falling apart, remove the bay leaf and serve the stew.\n",
+   "servings": null,
+   "servings_also_ok": [],
+   "foods": [
+    {
+     "line": "2 lb (900 g) beef",
+     "accept": [
+      "beef steak"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "weight",
+      "expected": 900.0,
+      "low": 810.0,
+      "high": 990.0
+     }
+    },
+    {
+     "line": "1/2 cup flour",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 62.5,
+      "low": 46.9,
+      "high": 78.1
+     }
+    },
+    {
+     "line": "1/4 cup oil",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "pantry": true,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 54.0,
+      "low": 40.5,
+      "high": 67.5
+     }
+    },
+    {
+     "line": "1 bay leaf",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "1 tsp marjoram",
+     "accept": [
+      "UNKNOWN",
+      "oregano"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "1 tsp oregano",
+     "accept": [
+      "oregano"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "46 fl oz tomato juice",
+     "accept": [
+      "UNKNOWN",
+      "crushed tomatoes"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 1398.4,
+      "low": 1048.8,
+      "high": 1748.0
+     }
+    },
+    {
+     "line": "10 1/2 oz (298 g) double-strength beef broth",
+     "accept": [
+      "UNKNOWN",
+      "chicken broth"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "weight",
+      "expected": 298.0,
+      "low": 268.2,
+      "high": 327.8
+     }
+    },
+    {
+     "line": "2-4 russet potatoes",
+     "accept": [
+      "potato"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "range",
+      "expected": 1107.0,
+      "low": 664.2,
+      "high": 1623.6
+     }
+    },
+    {
+     "line": "4 large carrots",
+     "accept": [
+      "carrot"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 288,
+      "low": 216.0,
+      "high": 360.0
+     }
+    },
+    {
+     "line": "4 stalks of celery",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 160,
+      "low": 120.0,
+      "high": 200.0
+     }
+    }
+   ],
+   "must_not_include": []
+  },
+  {
+   "id": "en-frittata",
+   "lang": "en",
+   "paste": "Frittata\n\nLike the traditional Spanish omelet, frittata is a thick, hearty omelet filled with vegetables. A frittata may be filled with any variety of vegetables, cheeses, pastas, or meats. This recipe is for a simple vegetarian one.\n\nIngredients\n1 tablespoon olive oil\n2 garlic cloves, minced\n1 bunch of fresh asparagus, trimmed and chopped\n8 large eggs\n3 teaspoons milk (whole fat milk is best, but part skim would be fine)\n2 teaspoons chopped fresh basil or 1 teaspoon dried basil\n1 pinch of salt\n1 pinch of ground black pepper\n3 tablespoons grated Parmesan cheese\n\nProcedure\n1. In a bowl, beat together the eggs, milk, basil, salt and pepper. Set aside.\n2. Preheat broiler/oven to 350°F (175°C). Heat the olive oil in the heat-safe skillet over medium heat.\n3. When the oil is hot, add the garlic and sauté until fragrant, about a minute.\n4. Add the chopped asparagus and sauté for about 5 minutes until it begins to become tender.\n5. Pour the egg mixture into the skillet and cook about 4 minutes or until bubbles begin to form in the center of the eggs.\n6. Sprinkle the Parmesan cheese on top of the eggs, and immediately transfer the pan to the oven.\n7. Cook under the broiler until the top puffs and browns, about 3 minutes.\n8. Remove the pan from the oven (careful, it will be hot) and cut the frittata into wedges.\n9. Serve immediately with crusty bread and fresh fruit for a light spring dinner.\n",
+   "servings": null,
+   "servings_also_ok": [],
+   "foods": [
+    {
+     "line": "1 tablespoon olive oil",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "pantry": true,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 13.5,
+      "low": 10.1,
+      "high": 16.9
+     }
+    },
+    {
+     "line": "2 garlic cloves, minced",
+     "accept": [
+      "garlic"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 6,
+      "low": 4.5,
+      "high": 7.5
+     }
+    },
+    {
+     "line": "1 bunch of fresh asparagus",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "8 large eggs",
+     "accept": [
+      "eggs"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "eggs",
+      "expected": 8,
+      "low": 8,
+      "high": 8
+     }
+    },
+    {
+     "line": "3 teaspoons milk",
+     "accept": [
+      "semi-skimmed milk"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 15,
+      "low": 11.2,
+      "high": 18.8
+     }
+    },
+    {
+     "line": "2 teaspoons fresh basil or 1 teaspoon dried",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "1 pinch of salt",
+     "accept": [
+      "salt"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "1 pinch of ground black pepper",
+     "accept": [
+      "black pepper"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "3 tablespoons grated Parmesan cheese",
+     "accept": [
+      "grana padano",
+      "grated cheese",
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 15,
+      "low": 11.2,
+      "high": 18.8
+     }
+    }
+   ],
+   "must_not_include": []
+  },
+  {
+   "id": "en-tuna-salad",
+   "lang": "en",
+   "paste": "Tuna Salad\n\nIngredients\nVariation I\n1 large can (12 oz) tuna\n1 can water chestnuts, drained and chopped\n½ small onion, chopped\n1–2 stalks celery, chopped\n½ cup carrot, shredded\n½ cup mayonnaise\n1 tablespoon Dijon mustard\n1 teaspoon soy sauce\nSalt to taste\nPepper to taste\n\nProcedure\n1. Mix all ingredients in a bowl.\n2. Chill before serving.\n3. Serve on toast.\n",
+   "servings": null,
+   "servings_also_ok": [],
+   "foods": [
+    {
+     "line": "1 large can (12 oz) tuna",
+     "accept": [
+      "canned tuna in water",
+      "canned tuna in oil"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "range",
+      "expected": 321.3,
+      "low": 272.2,
+      "high": 374.2
+     }
+    },
+    {
+     "line": "1 can water chestnuts, drained and chopped",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "1/2 small onion, chopped",
+     "accept": [
+      "onion"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 35.0,
+      "low": 26.2,
+      "high": 43.8
+     }
+    },
+    {
+     "line": "1-2 stalks celery, chopped",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "range",
+      "expected": 60.0,
+      "low": 36.0,
+      "high": 88.0
+     }
+    },
+    {
+     "line": "1/2 cup carrot, shredded",
+     "accept": [
+      "carrot"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 55.0,
+      "low": 41.2,
+      "high": 68.8
+     }
+    },
+    {
+     "line": "1/2 cup mayonnaise",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 110.0,
+      "low": 82.5,
+      "high": 137.5
+     }
+    },
+    {
+     "line": "1 tablespoon Dijon mustard",
+     "accept": [
+      "mustard"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 15,
+      "low": 11.2,
+      "high": 18.8
+     }
+    },
+    {
+     "line": "1 teaspoon soy sauce",
+     "accept": [
+      "soy sauce"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 6,
+      "low": 4.5,
+      "high": 7.5
+     }
+    },
+    {
+     "line": "Salt to taste",
+     "accept": [
+      "salt"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "Pepper to taste",
+     "accept": [
+      "black pepper"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    }
+   ],
+   "must_not_include": [
+    "wholemeal sandwich bread"
+   ]
+  },
+  {
+   "id": "en-chicken-curry",
+   "lang": "en",
+   "paste": "Chicken Curry\n\nIngredients\nMarinade ingredients\n4 lb chicken\n1½ teaspoon salt\n½ teaspoon red chile powder\n1 pinch of turmeric\n100 ml coconut yogurt\n1½ teaspoon ground coriander\n½ teaspoon garlic paste\n1½ teaspoon ginger paste\n1 teaspoon chile powder\n1 teaspoon garam masala\n1 teaspoon paprika\n1 teaspoon cumin\n1 teaspoon cinnamon\n1 teaspoon fenugreek leaves\n1 teaspoon curry powder\nJuice of ½ lemon\n½ teaspoon mint\nCurry ingredients\n1 tablespoon coconut oil\n500 g tomatoes, diced\n150 ml coconut yogurt\n200 g potatoes\n2 teaspoons curry powder\n1 medium onion\n1 teaspoon ginger paste\n½ teaspoon garlic paste\n1 teaspoon mustard seeds\n1 teaspoon cumin seeds\n1 teaspoon fennel seeds\n2 teaspoons curry powder\n\nProcedure\n1. Clean the chicken and cut into small pieces. Combine with all the marinade ingredients and mix well. Set aside for 30 minutes to let flavors seep in.\n2. Fry cumin, fennel, and mustard seeds on a medium heat in a large pan.\n3. Add garlic and ginger paste and fry.\n4. Chop the onions into small pieces and fry in the pan.\n5. Add the potatoes and fry.\n6. In a separate pan, sear the chicken in batches and add it to bowl separately.\n7. After the onions turn golden brown add the marinated chicken.\n8. Add curry powder, coconut yogurt and turn to a low heat. Leave to cook for 35–40 minutes.\n9. Finely chop fresh coriander and a dash of lemon juice to the curry.\n10. Serve with rice or naan bread\n",
+   "servings": null,
+   "servings_also_ok": [],
+   "foods": [
+    {
+     "line": "4 lb chicken",
+     "accept": [
+      "chicken breast",
+      "chicken thigh"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "weight",
+      "expected": 1814.4,
+      "low": 1632.9,
+      "high": 1995.8
+     }
+    },
+    {
+     "line": "100 ml + 150 ml coconut yogurt (two lines)",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "weight",
+      "expected": 250.0,
+      "low": 225.0,
+      "high": 275.0
+     }
+    },
+    {
+     "line": "Juice of 1/2 lemon",
+     "accept": [
+      "lemon juice",
+      "lemon"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 24.0,
+      "low": 18.0,
+      "high": 30.0
+     }
+    },
+    {
+     "line": "1 tablespoon coconut oil",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": true,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 13.6,
+      "low": 10.2,
+      "high": 17.0
+     }
+    },
+    {
+     "line": "500 g tomatoes, diced",
+     "accept": [
+      "tomato"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "weight",
+      "expected": 500.0,
+      "low": 450.0,
+      "high": 550.0
+     }
+    },
+    {
+     "line": "200 g potatoes",
+     "accept": [
+      "potato"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "weight",
+      "expected": 200.0,
+      "low": 180.0,
+      "high": 220.0
+     }
+    },
+    {
+     "line": "1 medium onion",
+     "accept": [
+      "onion"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 110,
+      "low": 82.5,
+      "high": 137.5
+     }
+    },
+    {
+     "line": "garlic paste (1/2 tsp twice)",
+     "accept": [
+      "garlic",
+      "UNKNOWN"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "ginger paste (1 1/2 tsp + 1 tsp)",
+     "accept": [
+      "ground ginger",
+      "UNKNOWN"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "salt, chile powder, turmeric, coriander, garam masala, paprika, cumin, cinnamon, fenugreek, curry powder, mint, mustard/cumin/fennel seeds",
+     "accept": [
+      "ANY"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    }
+   ],
+   "must_not_include": [
+    "rice",
+    "basmati rice"
+   ]
+  },
+  {
+   "id": "es-filete-pollo",
+   "lang": "es",
+   "paste": "Filete de pollo a la sartén con verduras\n\nComensales: 4\nTiempo: 45 minutos aprox.\n\nIngredientes\n* 4 filetes de pechuga de pollo\n* 1 zapallo italiano mediano\n* 2 zanahorias medianas\n* 1 tallo de porro\n* 1 morrón\n* 2 tazas de Champiñónes picados\n* 1 pizca de sal\n* 1 pizca de pimienta\n\nPreparación\n1. Se lavan los filetes de pollo y se secan con un mantel. Se sellan en una sartén con un chorrito de aceite. Se le agrega la pizca de sal. Se desea puede agregar un chorrito de agua hervida o de vino blanco.\n2. Se cortan el zapallo italiano, las zanahorias, el porro y el morron el tiritas finas y se le agrega al pollo. Se revuelve y se tapa la sartén, todo esto a fuego lento. Luego de 15 min. agregue las dos tazas de champiñones. Condimentar con pimienta o a gusto.\n3. Luego de 20 min. cerciórese de que estén cocidos en pollo y las verduras. Sirva caliente acompañado de arroz graneado, pure, o simplemente solo.\n",
+   "servings": 4,
+   "servings_also_ok": [],
+   "foods": [
+    {
+     "line": "4 filetes de pechuga de pollo",
+     "accept": [
+      "chicken breast"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "range",
+      "expected": 770.0,
+      "low": 406.8,
+      "high": 1196.8
+     }
+    },
+    {
+     "line": "1 zapallo italiano mediano",
+     "accept": [
+      "zucchini"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 196,
+      "low": 147.0,
+      "high": 245.0
+     }
+    },
+    {
+     "line": "2 zanahorias medianas",
+     "accept": [
+      "carrot"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 122,
+      "low": 91.5,
+      "high": 152.5
+     }
+    },
+    {
+     "line": "1 tallo de porro",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 89,
+      "low": 66.8,
+      "high": 111.2
+     }
+    },
+    {
+     "line": "1 morron",
+     "accept": [
+      "red bell pepper",
+      "green bell pepper"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 119,
+      "low": 89.2,
+      "high": 148.8
+     }
+    },
+    {
+     "line": "2 tazas de champinones picados",
+     "accept": [
+      "mushrooms"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 140,
+      "low": 105.0,
+      "high": 175.0
+     }
+    },
+    {
+     "line": "1 pizca de sal",
+     "accept": [
+      "salt"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "1 pizca de pimienta",
+     "accept": [
+      "black pepper"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "(steps) un chorrito de aceite",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": true,
+     "check": null
+    }
+   ],
+   "must_not_include": [
+    "rice"
+   ]
+  },
+  {
+   "id": "es-huevos-flamenca",
+   "lang": "es",
+   "paste": "Huevos a la flamenca\n\nComensales: 4\nTiempo: 20\n\nIngredientes\n* 4 huevos grandes (tamaño L ó XL)\n* 4 patatas grandes\n* 400 g de tomate frito\n* 125 g de jamón york\n* 125 g de chorizo\n* 100 g de guisantes\n* 1 cebolla grande\n* 1/8 litro vino blanco (1/2 vaso)\n* Aceite de oliva\n* Sal al gusto\n\nPreparación\n1. Tomamos una sartén grande, vertemos sobre ella 1/2 litro de aceite de oliva y la ponemos a calentar a fuego intenso.\n2. Pelamos, lavamos y cortamos las patatas en tiras, al gusto.\n3. Volvemos a lavar las patatas, ahora con un escurridor bajo el grifo, y sazonamos al gusto con sal.\n4. Una vez esté caliente el aceite de la sartén, las echamos para freír.\n5. Debemos estar pendientes de las patatas porque no deben comenzar a dorarse (luego queremos que se cuezan con el tomate y tomen su sabor).\n6. Cuando estén en su punto, las retiramos de la sartén y las dejamos escurrir sobre un plato con un par de servilletas de papel para que absorba el aceite sobrante.\n7. Tomamos una cazuela grande, vertemos 2 cucharadas de aceite de oliva y ponemos fuego medio (5-6 en vitrocerámica escala 1-9, llama pequeña en fuego horneado).\n8. Lavamos, pelamos y cortamos la cebolla en pequeños cuadraditos, del tamaño de una uña.\n9. Una vez caliente el aceite, lo vertemos sobre la cazuela.\n10. Mientras el sofrito se va preparando, tomamos una tabla de madera y cortamos el chorizo y el jamón york en cuadraditos pequeños (también del tamaño de una uña).\n11. Una vez comprobemos que el cuerpo de la cebolla se está tornando transparente, vertemos 1/2 vaso de vino blanco sobre la cazuela y mezclamos con el jamón york, el chorizo y los guisantes. Avivamos el fuego para reducir el vino.\n12. Cuando comprobemos que el vino ha reducido, vertemos el tomate sobre la cazuela y removemos un poco.\n13. A continuación, vertemos las patatas fritas sobre la cazuela y volvemos a remover. Bajamos el fuego a bajo (2-3 en vitrocerámica escala 1-9, llama mínima en fuego horneado).\n14. Cascamos los 4 huevos y los colocamos uno en cada lateral de la cazuela (señales horarias 12, 3, 6, 9).\n15. Tapamos la cazuela dejando un poco de ventilación hacia el interior y esperamos hasta que se cuajen los huevos (10-15 minutos).\nFinalmente, la receta está lista para emplatar.\n=== VARIANTES ===\nUn poco de mozarella sobre el emplatado final le da un toque y sabor especial a esta receta tradicional.\n",
+   "servings": 4,
+   "servings_also_ok": [],
+   "foods": [
+    {
+     "line": "4 huevos grandes (L o XL)",
+     "accept": [
+      "eggs"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "eggs",
+      "expected": 4,
+      "low": 4,
+      "high": 4
+     }
+    },
+    {
+     "line": "4 patatas grandes",
+     "accept": [
+      "potato"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 1476,
+      "low": 1107.0,
+      "high": 1845.0
+     }
+    },
+    {
+     "line": "400 g de tomate frito",
+     "accept": [
+      "tomato sauce"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "weight",
+      "expected": 400.0,
+      "low": 360.0,
+      "high": 440.0
+     }
+    },
+    {
+     "line": "125 g de jamon york",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "weight",
+      "expected": 125.0,
+      "low": 112.5,
+      "high": 137.5
+     }
+    },
+    {
+     "line": "125 g de chorizo",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "weight",
+      "expected": 125.0,
+      "low": 112.5,
+      "high": 137.5
+     }
+    },
+    {
+     "line": "100 g de guisantes",
+     "accept": [
+      "frozen peas"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "weight",
+      "expected": 100.0,
+      "low": 90.0,
+      "high": 110.0
+     }
+    },
+    {
+     "line": "1 cebolla grande",
+     "accept": [
+      "onion"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "household",
+      "expected": 150,
+      "low": 112.5,
+      "high": 187.5
+     }
+    },
+    {
+     "line": "1/8 litro vino blanco",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "weight",
+      "expected": 125.0,
+      "low": 112.5,
+      "high": 137.5
+     }
+    },
+    {
+     "line": "Aceite de oliva",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "pantry": true,
+     "required": true,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "Sal al gusto",
+     "accept": [
+      "salt"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    }
+   ],
+   "must_not_include": [
+    "mozzarella",
+    "light mozzarella"
+   ]
+  },
+  {
+   "id": "es-ensalada-murciana",
+   "lang": "es",
+   "paste": "Ensalada murciana\n\nEste plato es típico de la zona de la Región de Murcia. Cuando son las fiestas , tanto las de primavera como las de la feria de Septiembre es habitual que los bares introduzcan en sus menús este plato típico.\n\nComensales: 4\nTiempo: 5\n\nIngredientes\n* 1 bote de tomate pelado en conserva\n* 1 cebolla tierna\n* 3 huevos duros\n* Aceitunas negras de Cuquillo\n* 2 latas pequeñas de atún\n* Sal al gusto\n* aceite moderadamente.\n\nPreparación\nEn esta receta predomina el tomate y la cebolla. Al trocear los ingredientes no deben ser muy pequeños, pues recordemos que es una ensalada. Esta ensalada es bastante común en verano, se suele servir como primer plato.\n1. Preparamos una ensaladera en la que vamos echando: Primero el tomate troceado. El tomate en c dista mucho en sabor del tomate natural, ya que pierde su acidez y para quien no lo ha probado le resulta un sabor diferente.\n2. La cebolla se ha de cortar muy fina, de forma que cuando todo se mezcle queden finos trozos de aros.\n3. Se trocean los huevos duros y se añaden las aceitunas negras de Cuquillo (unas aceitunas bastante pequeñas, muy poco amargas), y el atún.\n4. Se añade el suficiente aceite y sal al gusto. Se mezcla todo y a servir.\nEn la huerta de Murcia siempre han sido común las industrias conserveras. De ahí viene la conserva del tomate, prácticamente sin ningún añadido. La ventaja de la conserva es en primer lugar su disponibilidad durante todo el año, y en segundo lugar el sabor tan distinto que tiene el tomate.\n",
+   "servings": 4,
+   "servings_also_ok": [],
+   "foods": [
+    {
+     "line": "1 bote de tomate pelado en conserva",
+     "accept": [
+      "crushed tomatoes",
+      "tomato"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "1 cebolla tierna",
+     "accept": [
+      "spring onion",
+      "onion"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "3 huevos duros",
+     "accept": [
+      "eggs"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": {
+      "kind": "eggs",
+      "expected": 3,
+      "low": 3,
+      "high": 3
+     }
+    },
+    {
+     "line": "Aceitunas negras de Cuquillo",
+     "accept": [
+      "kalamata olives",
+      "UNKNOWN"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "2 latas pequenas de atun",
+     "accept": [
+      "canned tuna in oil",
+      "canned tuna in water"
+     ],
+     "pantry": false,
+     "required": true,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "Sal al gusto",
+     "accept": [
+      "salt"
+     ],
+     "pantry": true,
+     "required": false,
+     "optional": false,
+     "check": null
+    },
+    {
+     "line": "aceite moderadamente",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "pantry": true,
+     "required": true,
+     "optional": false,
+     "check": null
+    }
+   ],
+   "must_not_include": []
+  }
+ ]
+}

@@ -1,0 +1,132 @@
+{
+ "case": "en-frittata",
+ "model": "claude-sonnet-5-5",
+ "reply": {
+  "title": "Frittata",
+  "servings": null,
+  "prep_time_min": 30,
+  "ingredients": [
+   {
+    "line": "1 tablespoon olive oil",
+    "name": "extra virgin olive oil",
+    "grams_total": 14,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "2 garlic cloves, minced",
+    "name": "garlic",
+    "grams_total": 6,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "1 bunch of fresh asparagus, trimmed and chopped",
+    "name": "asparagus",
+    "grams_total": 300,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "8 large eggs",
+    "name": "eggs",
+    "grams_total": 408,
+    "units_total": 8,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "3 teaspoons milk (whole fat milk is best, but part skim would be fine)",
+    "name": "semi-skimmed milk",
+    "grams_total": 15,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "2 teaspoons chopped fresh basil or 1 teaspoon dried basil",
+    "name": "basil",
+    "grams_total": 4,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "1 pinch of salt",
+    "name": "salt",
+    "grams_total": 0.4,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "1 pinch of ground black pepper",
+    "name": "black pepper",
+    "grams_total": 0.3,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "3 tablespoons grated Parmesan cheese",
+    "name": "grana padano",
+    "grams_total": 18,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "In a bowl, beat together the eggs, milk, basil, salt and pepper. Set aside.",
+   "Preheat broiler/oven to 350°F (175°C). Heat the olive oil in the heat-safe skillet over medium heat.",
+   "When the oil is hot, add the garlic and sauté until fragrant, about a minute.",
+   "Add the chopped asparagus and sauté for about 5 minutes until it begins to become tender.",
+   "Pour the egg mixture into the skillet and cook about 4 minutes or until bubbles begin to form in the center of the eggs.",
+   "Sprinkle the Parmesan cheese on top of the eggs, and immediately transfer the pan to the oven.",
+   "Cook under the broiler until the top puffs and browns, about 3 minutes.",
+   "Remove the pan from the oven (careful, it will be hot) and cut the frittata into wedges.",
+   "Serve immediately with crusty bread and fresh fruit for a light spring dinner."
+  ]
+ },
+ "text": "{\"title\":\"Frittata\",\"servings\":null,\"prep_time_min\":30,\"ingredients\":[{\"line\":\"1 tablespoon olive oil\",\"name\":\"extra virgin olive oil\",\"grams_total\":14,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"2 garlic cloves, minced\",\"name\":\"garlic\",\"grams_total\":6,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"1 bunch of fresh asparagus, trimmed and chopped\",\"name\":\"asparagus\",\"grams_total\":300,\"units_total\":0,\"guessed\":true,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"8 large eggs\",\"name\":\"eggs\",\"grams_total\":408,\"units_total\":8,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"3 teaspoons milk (whole fat milk is best, but part skim would be fine)\",\"name\":\"semi-skimmed milk\",\"grams_total\":15,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"2 teaspoons chopped fresh basil or 1 teaspoon dried basil\",\"name\":\"basil\",\"grams_total\":4,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"1 pinch of salt\",\"name\":\"salt\",\"grams_total\":0.4,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"1 pinch of ground black pepper\",\"name\":\"black pepper\",\"grams_total\":0.3,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"3 tablespoons grated Parmesan cheese\",\"name\":\"grana padano\",\"grams_total\":18,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false}],\"steps\":[\"In a bowl, beat together the eggs, milk, basil, salt and pepper. Set aside.\",\"Preheat broiler/oven to 350°F (175°C). Heat the olive oil in the heat-safe skillet over medium heat.\",\"When the oil is hot, add the garlic and sauté until fragrant, about a minute.\",\"Add the chopped asparagus and sauté for about 5 minutes until it begins to become tender.\",\"Pour the egg mixture into the skillet and cook about 4 minutes or until bubbles begin to form in the center of the eggs.\",\"Sprinkle the Parmesan cheese on top of the eggs, and immediately transfer the pan to the oven.\",\"Cook under the broiler until the top puffs and browns, about 3 minutes.\",\"Remove the pan from the oven (careful, it will be hot) and cut the frittata into wedges.\",\"Serve immediately with crusty bread and fresh fruit for a light spring dinner.\"]}",
+ "error": null,
+ "calls": [
+  {
+   "case": "en-frittata",
+   "stage": "import",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-sonnet-5-5",
+   "status": 200,
+   "input_tokens": 3131,
+   "output_tokens": 1007,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 5.155,
+   "cost_usd": 0.016332,
+   "error": null
+  }
+ ]
+}

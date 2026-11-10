@@ -271,3 +271,8 @@ def recipe_prompt(form, idea, *, profile=None, known_ingredients=(), pack_hints=
                              "known_ingredients": known_text(known_ingredients),
                              "pack_hints": pack_hints_text(pack_hints),
                              "retry": retry_text(rerun, form), "servings": _get(form, "servings")})
+
+
+def import_prompt(paste, *, known_ingredients=()):
+    """Recipe import: the pasted recipe text as given (only trimmed), the known food names."""
+    return render("import", {"known_ingredients": known_text(known_ingredients), "paste": paste.strip()})

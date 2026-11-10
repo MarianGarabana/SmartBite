@@ -1,0 +1,140 @@
+{
+ "case": "en-chicken-fajitas",
+ "model": "claude-sonnet-5-5",
+ "reply": {
+  "title": "Chicken Fajitas",
+  "servings": null,
+  "prep_time_min": 30,
+  "ingredients": [
+   {
+    "line": "1 Tbsp olive oil",
+    "name": "extra virgin olive oil",
+    "grams_total": 14,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "1–2 lb (½–1 kg) skinless, boneless chicken breast",
+    "name": "chicken breast",
+    "grams_total": 680,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "1 red bell pepper",
+    "name": "red bell pepper",
+    "grams_total": 150,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "1 green bell pepper",
+    "name": "green bell pepper",
+    "grams_total": 150,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "½ yellow onion",
+    "name": "onion",
+    "grams_total": 55,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "1 tsp ground cumin (or to taste)",
+    "name": "cumin",
+    "grams_total": 2,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "1 Tbsp crushed red pepper (or to taste)",
+    "name": "chili flakes",
+    "grams_total": 6,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "Marinate the chicken with a spoonful of turmeric, salt and black pepper.",
+    "name": "turmeric",
+    "grams_total": 9,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "Marinate the chicken with a spoonful of turmeric, salt and black pepper.",
+    "name": "salt",
+    "grams_total": 3,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "Marinate the chicken with a spoonful of turmeric, salt and black pepper.",
+    "name": "black pepper",
+    "grams_total": 1,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Cut chicken into roughly 1x1-inch (2.5 x 2.5 cm) pieces.",
+   "Marinate the chicken with a spoonful of turmeric, salt and black pepper.",
+   "Cook chicken in olive oil, cumin and red pepper over high heat in a large skillet or wok.",
+   "While meat is cooking, chop/julienne vegetables (peppers and onion).",
+   "When meat is completely cooked, add vegetables, stirring frequently so that all are evenly cooked.",
+   "Remove from heat when vegetables are soft.",
+   "Serve with tortilla shells and toppings such as cheese, sour cream, lettuce, tomato, onions, and/or guacamole."
+  ]
+ },
+ "text": "{\"title\":\"Chicken Fajitas\",\"servings\":null,\"prep_time_min\":30,\"ingredients\":[{\"line\":\"1 Tbsp olive oil\",\"name\":\"extra virgin olive oil\",\"grams_total\":14,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"1–2 lb (½–1 kg) skinless, boneless chicken breast\",\"name\":\"chicken breast\",\"grams_total\":680,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"1 red bell pepper\",\"name\":\"red bell pepper\",\"grams_total\":150,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"1 green bell pepper\",\"name\":\"green bell pepper\",\"grams_total\":150,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"½ yellow onion\",\"name\":\"onion\",\"grams_total\":55,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"1 tsp ground cumin (or to taste)\",\"name\":\"cumin\",\"grams_total\":2,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"1 Tbsp crushed red pepper (or to taste)\",\"name\":\"chili flakes\",\"grams_total\":6,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"Marinate the chicken with a spoonful of turmeric, salt and black pepper.\",\"name\":\"turmeric\",\"grams_total\":9,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"Marinate the chicken with a spoonful of turmeric, salt and black pepper.\",\"name\":\"salt\",\"grams_total\":3,\"units_total\":0,\"guessed\":true,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"Marinate the chicken with a spoonful of turmeric, salt and black pepper.\",\"name\":\"black pepper\",\"grams_total\":1,\"units_total\":0,\"guessed\":true,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false}],\"steps\":[\"Cut chicken into roughly 1x1-inch (2.5 x 2.5 cm) pieces.\",\"Marinate the chicken with a spoonful of turmeric, salt and black pepper.\",\"Cook chicken in olive oil, cumin and red pepper over high heat in a large skillet or wok.\",\"While meat is cooking, chop/julienne vegetables (peppers and onion).\",\"When meat is completely cooked, add vegetables, stirring frequently so that all are evenly cooked.\",\"Remove from heat when vegetables are soft.\",\"Serve with tortilla shells and toppings such as cheese, sour cream, lettuce, tomato, onions, and/or guacamole.\"]}",
+ "error": null,
+ "calls": [
+  {
+   "case": "en-chicken-fajitas",
+   "stage": "import",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-sonnet-5-5",
+   "status": 200,
+   "input_tokens": 2910,
+   "output_tokens": 1015,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 5.294,
+   "cost_usd": 0.01597,
+   "error": null
+  }
+ ]
+}

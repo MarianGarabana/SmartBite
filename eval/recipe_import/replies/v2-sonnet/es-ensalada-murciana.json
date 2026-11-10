@@ -1,0 +1,109 @@
+{
+ "case": "es-ensalada-murciana",
+ "model": "claude-sonnet-5-5",
+ "reply": {
+  "title": "Ensalada murciana",
+  "servings": 4,
+  "prep_time_min": 5,
+  "ingredients": [
+   {
+    "line": "1 bote de tomate pelado en conserva",
+    "name": "crushed tomatoes",
+    "grams_total": 240,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "note": "Jar of peeled tomatoes, drained weight estimated"
+   },
+   {
+    "line": "1 cebolla tierna",
+    "name": "spring onion",
+    "grams_total": 60,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "3 huevos duros",
+    "name": "eggs",
+    "grams_total": 153,
+    "units_total": 3,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "Aceitunas negras de Cuquillo",
+    "name": "kalamata olives",
+    "grams_total": 40,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "2 latas pequeñas de atún",
+    "name": "canned tuna in oil",
+    "grams_total": 104,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false,
+    "note": "2 small cans at about 52 g drained each"
+   },
+   {
+    "line": "Sal al gusto",
+    "name": "salt",
+    "grams_total": 3,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "aceite moderadamente.",
+    "name": "extra virgin olive oil",
+    "grams_total": 30,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Preparamos una ensaladera en la que vamos echando: Primero el tomate troceado. El tomate en conserva dista mucho en sabor del tomate natural, ya que pierde su acidez y para quien no lo ha probado le resulta un sabor diferente.",
+   "La cebolla se ha de cortar muy fina, de forma que cuando todo se mezcle queden finos trozos de aros.",
+   "Se trocean los huevos duros y se añaden las aceitunas negras de Cuquillo (unas aceitunas bastante pequeñas, muy poco amargas), y el atún.",
+   "Se añade el suficiente aceite y sal al gusto. Se mezcla todo y a servir."
+  ]
+ },
+ "text": "{\"title\":\"Ensalada murciana\",\"servings\":4,\"prep_time_min\":5,\"ingredients\":[{\"line\":\"1 bote de tomate pelado en conserva\",\"name\":\"crushed tomatoes\",\"grams_total\":240,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":false,\"dry\":false,\"note\":\"Jar of peeled tomatoes, drained weight estimated\"},{\"line\":\"1 cebolla tierna\",\"name\":\"spring onion\",\"grams_total\":60,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"3 huevos duros\",\"name\":\"eggs\",\"grams_total\":153,\"units_total\":3,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"Aceitunas negras de Cuquillo\",\"name\":\"kalamata olives\",\"grams_total\":40,\"units_total\":0,\"guessed\":true,\"storage\":\"keeps\",\"pantry\":false,\"dry\":false},{\"line\":\"2 latas pequeñas de atún\",\"name\":\"canned tuna in oil\",\"grams_total\":104,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":false,\"dry\":false,\"note\":\"2 small cans at about 52 g drained each\"},{\"line\":\"Sal al gusto\",\"name\":\"salt\",\"grams_total\":3,\"units_total\":0,\"guessed\":true,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"aceite moderadamente.\",\"name\":\"extra virgin olive oil\",\"grams_total\":30,\"units_total\":0,\"guessed\":true,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false}],\"steps\":[\"Preparamos una ensaladera en la que vamos echando: Primero el tomate troceado. El tomate en conserva dista mucho en sabor del tomate natural, ya que pierde su acidez y para quien no lo ha probado le resulta un sabor diferente.\",\"La cebolla se ha de cortar muy fina, de forma que cuando todo se mezcle queden finos trozos de aros.\",\"Se trocean los huevos duros y se añaden las aceitunas negras de Cuquillo (unas aceitunas bastante pequeñas, muy poco amargas), y el atún.\",\"Se añade el suficiente aceite y sal al gusto. Se mezcla todo y a servir.\"]}",
+ "error": null,
+ "calls": [
+  {
+   "case": "es-ensalada-murciana",
+   "stage": "import",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-sonnet-5-5",
+   "status": 200,
+   "input_tokens": 3188,
+   "output_tokens": 797,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 4.889,
+   "cost_usd": 0.014346,
+   "error": null
+  }
+ ]
+}

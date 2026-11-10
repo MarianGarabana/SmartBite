@@ -1,0 +1,123 @@
+{
+ "case": "es-ensalada-murciana",
+ "model": "gemini-3.6-flash",
+ "reply": {
+  "title": "Ensalada murciana",
+  "servings": 4,
+  "prep_time_min": 5,
+  "ingredients": [
+   {
+    "line": "1 bote de tomate pelado en conserva",
+    "name": "crushed tomatoes",
+    "grams_total": 800,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "1 cebolla tierna",
+    "name": "spring onion",
+    "grams_total": 100,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "3 huevos duros",
+    "name": "eggs",
+    "grams_total": 153,
+    "units_total": 3,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "Aceitunas negras de Cuquillo",
+    "name": "kalamata olives",
+    "grams_total": 50,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "2 latas pequeñas de atún",
+    "name": "canned tuna in oil",
+    "grams_total": 104,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "Sal al gusto",
+    "name": "salt",
+    "grams_total": 5,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "aceite moderadamente.",
+    "name": "extra virgin olive oil",
+    "grams_total": 30,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Preparamos una ensaladera en la que vamos echando: Primero el tomate troceado. El tomate en c dista mucho en sabor del tomate natural, ya que pierde su acidez y para quien no lo ha probado le resulta un sabor diferente.",
+   "La cebolla se ha de cortar muy fina, de forma que cuando todo se mezcle queden finos trozos de aros.",
+   "Se trocean los huevos duros y se añaden las aceitunas negras de Cuquillo (unas aceitunas bastante pequeñas, muy poco amargas), y el atún.",
+   "Se añade el suficiente aceite y sal al gusto. Se mezcla todo y a servir."
+  ]
+ },
+ "text": "{\n  \"title\": \"Ensalada murciana\",\n  \"servings\": 4,\n  \"prep_time_min\": 5,\n  \"ingredients\": [\n    {\n      \"line\": \"1 bote de tomate pelado en conserva\",\n      \"name\": \"crushed tomatoes\",\n      \"grams_total\": 800,\n      \"units_total\": 0,\n      \"guessed\": true,\n      \"storage\": \"keeps\",\n      \"pantry\": false,\n      \"dry\": false\n    },\n    {\n      \"line\": \"1 cebolla tierna\",\n      \"name\": \"spring onion\",\n      \"grams_total\": 100,\n      \"units_total\": 0,\n      \"guessed\": false,\n      \"storage\": \"fresh\",\n      \"pantry\": false,\n      \"dry\": false\n    },\n    {\n      \"line\": \"3 huevos duros\",\n      \"name\": \"eggs\",\n      \"grams_total\": 153,\n      \"units_total\": 3,\n      \"guessed\": false,\n      \"storage\": \"fresh\",\n      \"pantry\": false,\n      \"dry\": false\n    },\n    {\n      \"line\": \"Aceitunas negras de Cuquillo\",\n      \"name\": \"kalamata olives\",\n      \"grams_total\": 50,\n      \"units_total\": 0,\n      \"guessed\": true,\n      \"storage\": \"keeps\",\n      \"pantry\": false,\n      \"dry\": false\n    },\n    {\n      \"line\": \"2 latas pequeñas de atún\",\n      \"name\": \"canned tuna in oil\",\n      \"grams_total\": 104,\n      \"units_total\": 0,\n      \"guessed\": false,\n      \"storage\": \"keeps\",\n      \"pantry\": false,\n      \"dry\": false\n    },\n    {\n      \"line\": \"Sal al gusto\",\n      \"name\": \"salt\",\n      \"grams_total\": 5,\n      \"units_total\": 0,\n      \"guessed\": true,\n      \"storage\": \"keeps\",\n      \"pantry\": true,\n      \"dry\": false\n    },\n    {\n      \"line\": \"aceite moderadamente.\",\n      \"name\": \"extra virgin olive oil\",\n      \"grams_total\": 30,\n      \"units_total\": 0,\n      \"guessed\": true,\n      \"storage\": \"keeps\",\n      \"pantry\": true,\n      \"dry\": false\n    }\n  ],\n  \"steps\": [\n    \"Preparamos una ensaladera en la que vamos echando: Primero el tomate troceado. El tomate en c dista mucho en sabor del tomate natural, ya que pierde su acidez y para quien no lo ha probado le resulta un sabor diferente.\",\n    \"La cebolla se ha de cortar muy fina, de forma que cuando todo se mezcle queden finos trozos de aros.\",\n    \"Se trocean los huevos duros y se añaden las aceitunas negras de Cuquillo (unas aceitunas bastante pequeñas, muy poco amargas), y el atún.\",\n    \"Se añade el suficiente aceite y sal al gusto. Se mezcla todo y a servir.\"\n  ]\n}",
+ "error": null,
+ "calls": [
+  {
+   "case": "es-ensalada-murciana",
+   "stage": "import",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 503,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.316,
+   "cost_usd": 0.0,
+   "error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  },
+  {
+   "case": "es-ensalada-murciana",
+   "stage": "import",
+   "attempt": 1,
+   "try": 1,
+   "model": "gemini-3.6-flash",
+   "status": 200,
+   "input_tokens": 1959,
+   "output_tokens": 2903,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 19.258,
+   "cost_usd": 0.012356,
+   "error": null
+  }
+ ]
+}

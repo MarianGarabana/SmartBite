@@ -1,0 +1,1127 @@
+{
+  "note": "Hand-written answer key for the paste-a-recipe import (decided 2026-11-09, Q15). One entry per ingredient line a reader sees. accept: the app food names (data/open/aliases.json foods) that count as a right match; \"UNKNOWN\" means the food is not in the app's list and must be kept as its own name, flagged unknown. amount: how the expected grams for the WHOLE recipe are worked out (build_key.py, weights from portions.json). required: false for salt, spices and dried herbs (no effect on macros worth scoring); they are reported, not needed to pass. must_not_include: foods that appear only as serving ideas or water. Draft for Marian's review.",
+  "tolerances": {
+    "weight": 0.1,
+    "household": 0.25,
+    "range_margin": 0.1
+  },
+  "cases": [
+    {
+      "id": "en-shakshouka",
+      "lang": "en",
+      "servings": null,
+      "why": "tbsp and cloves, a 'large' pepper, no servings anywhere, salt and pepper with no amount",
+      "foods": [
+        {
+          "line": "6 tbsp olive oil",
+          "accept": [
+            "extra virgin olive oil"
+          ],
+          "pantry": true,
+          "required": true,
+          "amount": {
+            "household": "olive_oil_tbsp",
+            "count": 6
+          }
+        },
+        {
+          "line": "1 tbsp sweet paprika",
+          "accept": [
+            "paprika"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": {
+            "household": "paprika_tbsp",
+            "count": 1
+          }
+        },
+        {
+          "line": "6 cloves garlic, minced",
+          "accept": [
+            "garlic"
+          ],
+          "required": true,
+          "amount": {
+            "household": "garlic_clove",
+            "count": 6
+          }
+        },
+        {
+          "line": "1 large sweet red pepper, diced",
+          "accept": [
+            "red bell pepper"
+          ],
+          "required": true,
+          "amount": {
+            "household": "red_pepper_large",
+            "count": 1
+          }
+        },
+        {
+          "line": "1 chile pepper (red or green), chopped",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": {
+            "household": "chili_pepper",
+            "count": 1
+          }
+        },
+        {
+          "line": "6 ripe tomatoes diced",
+          "accept": [
+            "tomato"
+          ],
+          "required": true,
+          "amount": {
+            "household": "tomato_medium",
+            "count": 6
+          }
+        },
+        {
+          "line": "Ground black pepper",
+          "accept": [
+            "black pepper"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "Salt to taste",
+          "accept": [
+            "salt"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "6 eggs",
+          "accept": [
+            "eggs"
+          ],
+          "required": true,
+          "amount": {
+            "eggs": 6
+          }
+        }
+      ],
+      "must_not_include": []
+    },
+    {
+      "id": "en-lentil-soup",
+      "lang": "en",
+      "servings": null,
+      "why": "an oil range (1-2 tbsp), plain '1 onion', pounds, water that is not a food, a bay leaf the app does not know, no servings in the text",
+      "foods": [
+        {
+          "line": "1-2 tablespoons olive oil",
+          "accept": [
+            "extra virgin olive oil"
+          ],
+          "pantry": true,
+          "required": true,
+          "amount": {
+            "range": [
+              {
+                "household": "olive_oil_tbsp",
+                "count": 1
+              },
+              {
+                "household": "olive_oil_tbsp",
+                "count": 2
+              }
+            ]
+          }
+        },
+        {
+          "line": "1 onion, diced",
+          "accept": [
+            "onion"
+          ],
+          "required": true,
+          "amount": {
+            "household": "onion_medium",
+            "count": 1
+          }
+        },
+        {
+          "line": "2 carrots, diced",
+          "accept": [
+            "carrot"
+          ],
+          "required": true,
+          "amount": {
+            "household": "carrot_medium",
+            "count": 2
+          }
+        },
+        {
+          "line": "2 cloves garlic, minced",
+          "accept": [
+            "garlic"
+          ],
+          "required": true,
+          "amount": {
+            "household": "garlic_clove",
+            "count": 2
+          }
+        },
+        {
+          "line": "1/2 lb dry red lentils",
+          "accept": [
+            "dried lentils"
+          ],
+          "required": true,
+          "amount": {
+            "weight": {
+              "lb": 0.5
+            }
+          }
+        },
+        {
+          "line": "6 cups water or stock",
+          "accept": [
+            "chicken broth"
+          ],
+          "required": false,
+          "optional": true,
+          "amount": null
+        },
+        {
+          "line": "1 bay leaf",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        }
+      ],
+      "must_not_include": [
+        "water"
+      ]
+    },
+    {
+      "id": "en-chicken-fajitas",
+      "lang": "en",
+      "servings": null,
+      "why": "a 1-2 lb range, no servings, half an onion, turmeric only in the steps, toppings that must not be added",
+      "foods": [
+        {
+          "line": "1 Tbsp olive oil",
+          "accept": [
+            "extra virgin olive oil"
+          ],
+          "pantry": true,
+          "required": true,
+          "amount": {
+            "household": "olive_oil_tbsp",
+            "count": 1
+          }
+        },
+        {
+          "line": "1-2 lb skinless, boneless chicken breast",
+          "accept": [
+            "chicken breast"
+          ],
+          "required": true,
+          "amount": {
+            "range": [
+              {
+                "weight": {
+                  "lb": 1
+                }
+              },
+              {
+                "weight": {
+                  "lb": 2
+                }
+              }
+            ]
+          }
+        },
+        {
+          "line": "1 red bell pepper",
+          "accept": [
+            "red bell pepper"
+          ],
+          "required": true,
+          "amount": {
+            "household": "red_pepper_medium",
+            "count": 1
+          }
+        },
+        {
+          "line": "1 green bell pepper",
+          "accept": [
+            "green bell pepper"
+          ],
+          "required": true,
+          "amount": {
+            "household": "green_pepper_medium",
+            "count": 1
+          }
+        },
+        {
+          "line": "1/2 yellow onion",
+          "accept": [
+            "onion"
+          ],
+          "required": true,
+          "amount": {
+            "household": "onion_medium",
+            "count": 0.5
+          }
+        },
+        {
+          "line": "1 tsp ground cumin",
+          "accept": [
+            "cumin"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "1 Tbsp crushed red pepper",
+          "accept": [
+            "chili flakes"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "(steps) turmeric, salt and black pepper",
+          "accept": [
+            "UNKNOWN",
+            "salt",
+            "black pepper"
+          ],
+          "pantry": true,
+          "required": false,
+          "optional": true,
+          "amount": null
+        }
+      ],
+      "must_not_include": [
+        "wheat tortillas",
+        "grated cheese",
+        "lettuce",
+        "tomato",
+        "avocado"
+      ]
+    },
+    {
+      "id": "en-beef-stew",
+      "lang": "en",
+      "servings": null,
+      "why": "two units on one line ('2 lb (900 g)'), fluid ounces, a 2-4 range, six foods the app does not know",
+      "foods": [
+        {
+          "line": "2 lb (900 g) beef",
+          "accept": [
+            "beef steak"
+          ],
+          "required": true,
+          "amount": {
+            "weight": {
+              "g": 900
+            }
+          }
+        },
+        {
+          "line": "1/2 cup flour",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": {
+            "household": "flour_cup",
+            "count": 0.5
+          }
+        },
+        {
+          "line": "1/4 cup oil",
+          "accept": [
+            "extra virgin olive oil"
+          ],
+          "pantry": true,
+          "required": true,
+          "amount": {
+            "household": "olive_oil_cup",
+            "count": 0.25
+          }
+        },
+        {
+          "line": "1 bay leaf",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "1 tsp marjoram",
+          "accept": [
+            "UNKNOWN",
+            "oregano"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "1 tsp oregano",
+          "accept": [
+            "oregano"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "46 fl oz tomato juice",
+          "accept": [
+            "UNKNOWN",
+            "crushed tomatoes"
+          ],
+          "required": true,
+          "amount": {
+            "household": "tomato_juice_fl_oz",
+            "count": 46
+          }
+        },
+        {
+          "line": "10 1/2 oz (298 g) double-strength beef broth",
+          "accept": [
+            "UNKNOWN",
+            "chicken broth"
+          ],
+          "required": true,
+          "amount": {
+            "weight": {
+              "g": 298
+            }
+          }
+        },
+        {
+          "line": "2-4 russet potatoes",
+          "accept": [
+            "potato"
+          ],
+          "required": true,
+          "amount": {
+            "range": [
+              {
+                "household": "potato_large",
+                "count": 2
+              },
+              {
+                "household": "potato_large",
+                "count": 4
+              }
+            ]
+          }
+        },
+        {
+          "line": "4 large carrots",
+          "accept": [
+            "carrot"
+          ],
+          "required": true,
+          "amount": {
+            "household": "carrot_large",
+            "count": 4
+          }
+        },
+        {
+          "line": "4 stalks of celery",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": {
+            "household": "celery_stalk_medium",
+            "count": 4
+          }
+        }
+      ],
+      "must_not_include": []
+    },
+    {
+      "id": "en-frittata",
+      "lang": "en",
+      "servings": null,
+      "why": "teaspoons of milk, 'a bunch' with no weight, '2 tsp fresh or 1 tsp dried' basil, parmesan the app knows only as a close cousin, no servings in the text",
+      "foods": [
+        {
+          "line": "1 tablespoon olive oil",
+          "accept": [
+            "extra virgin olive oil"
+          ],
+          "pantry": true,
+          "required": true,
+          "amount": {
+            "household": "olive_oil_tbsp",
+            "count": 1
+          }
+        },
+        {
+          "line": "2 garlic cloves, minced",
+          "accept": [
+            "garlic"
+          ],
+          "required": true,
+          "amount": {
+            "household": "garlic_clove",
+            "count": 2
+          }
+        },
+        {
+          "line": "1 bunch of fresh asparagus",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": null
+        },
+        {
+          "line": "8 large eggs",
+          "accept": [
+            "eggs"
+          ],
+          "required": true,
+          "amount": {
+            "eggs": 8
+          }
+        },
+        {
+          "line": "3 teaspoons milk",
+          "accept": [
+            "semi-skimmed milk"
+          ],
+          "required": true,
+          "amount": {
+            "household": "milk_tbsp",
+            "count": 1
+          }
+        },
+        {
+          "line": "2 teaspoons fresh basil or 1 teaspoon dried",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "1 pinch of salt",
+          "accept": [
+            "salt"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "1 pinch of ground black pepper",
+          "accept": [
+            "black pepper"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "3 tablespoons grated Parmesan cheese",
+          "accept": [
+            "grana padano",
+            "grated cheese",
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": {
+            "household": "parmesan_tbsp",
+            "count": 3
+          }
+        }
+      ],
+      "must_not_include": []
+    },
+    {
+      "id": "en-tuna-salad",
+      "lang": "en",
+      "servings": null,
+      "why": "a can in ounces (with or without the liquid), 'a can' with no size, '1-2 stalks', mayonnaise the app does not know, no servings in the text",
+      "foods": [
+        {
+          "line": "1 large can (12 oz) tuna",
+          "accept": [
+            "canned tuna in water",
+            "canned tuna in oil"
+          ],
+          "required": true,
+          "amount": {
+            "range": [
+              {
+                "household": "tuna_water_can_12_5oz_drained",
+                "count": 0.96
+              },
+              {
+                "weight": {
+                  "oz": 12
+                }
+              }
+            ]
+          }
+        },
+        {
+          "line": "1 can water chestnuts, drained and chopped",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": null
+        },
+        {
+          "line": "1/2 small onion, chopped",
+          "accept": [
+            "onion"
+          ],
+          "required": true,
+          "amount": {
+            "household": "onion_small",
+            "count": 0.5
+          }
+        },
+        {
+          "line": "1-2 stalks celery, chopped",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": {
+            "range": [
+              {
+                "household": "celery_stalk_medium",
+                "count": 1
+              },
+              {
+                "household": "celery_stalk_medium",
+                "count": 2
+              }
+            ]
+          }
+        },
+        {
+          "line": "1/2 cup carrot, shredded",
+          "accept": [
+            "carrot"
+          ],
+          "required": true,
+          "amount": {
+            "household": "carrot_grated_cup",
+            "count": 0.5
+          }
+        },
+        {
+          "line": "1/2 cup mayonnaise",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": {
+            "household": "mayonnaise_cup",
+            "count": 0.5
+          }
+        },
+        {
+          "line": "1 tablespoon Dijon mustard",
+          "accept": [
+            "mustard"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": {
+            "household": "mustard_tsp",
+            "count": 3
+          }
+        },
+        {
+          "line": "1 teaspoon soy sauce",
+          "accept": [
+            "soy sauce"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": {
+            "household": "soy_sauce_tsp",
+            "count": 1
+          }
+        },
+        {
+          "line": "Salt to taste",
+          "accept": [
+            "salt"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "Pepper to taste",
+          "accept": [
+            "black pepper"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        }
+      ],
+      "must_not_include": [
+        "wholemeal sandwich bread"
+      ]
+    },
+    {
+      "id": "en-chicken-curry",
+      "lang": "en",
+      "servings": null,
+      "why": "29 ingredient lines in two groups, the same foods on more than one line (coconut yogurt, garlic and ginger paste twice, curry powder three times), ml and g, many spices, 'juice of 1/2 lemon', no servings",
+      "foods": [
+        {
+          "line": "4 lb chicken",
+          "accept": [
+            "chicken breast",
+            "chicken thigh"
+          ],
+          "required": true,
+          "amount": {
+            "weight": {
+              "lb": 4
+            }
+          }
+        },
+        {
+          "line": "100 ml + 150 ml coconut yogurt (two lines)",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": {
+            "volume": {
+              "ml": 250
+            }
+          }
+        },
+        {
+          "line": "Juice of 1/2 lemon",
+          "accept": [
+            "lemon juice",
+            "lemon"
+          ],
+          "required": true,
+          "amount": {
+            "household": "lemon_juice_per_lemon",
+            "count": 0.5
+          }
+        },
+        {
+          "line": "1 tablespoon coconut oil",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "pantry": true,
+          "required": true,
+          "amount": {
+            "household": "coconut_oil_tbsp",
+            "count": 1
+          }
+        },
+        {
+          "line": "500 g tomatoes, diced",
+          "accept": [
+            "tomato"
+          ],
+          "required": true,
+          "amount": {
+            "weight": {
+              "g": 500
+            }
+          }
+        },
+        {
+          "line": "200 g potatoes",
+          "accept": [
+            "potato"
+          ],
+          "required": true,
+          "amount": {
+            "weight": {
+              "g": 200
+            }
+          }
+        },
+        {
+          "line": "1 medium onion",
+          "accept": [
+            "onion"
+          ],
+          "required": true,
+          "amount": {
+            "household": "onion_medium",
+            "count": 1
+          }
+        },
+        {
+          "line": "garlic paste (1/2 tsp twice)",
+          "accept": [
+            "garlic",
+            "UNKNOWN"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "ginger paste (1 1/2 tsp + 1 tsp)",
+          "accept": [
+            "ground ginger",
+            "UNKNOWN"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "salt, chile powder, turmeric, coriander, garam masala, paprika, cumin, cinnamon, fenugreek, curry powder, mint, mustard/cumin/fennel seeds",
+          "accept": [
+            "ANY"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        }
+      ],
+      "must_not_include": [
+        "rice",
+        "basmati rice"
+      ]
+    },
+    {
+      "id": "es-filete-pollo",
+      "lang": "es",
+      "servings": 4,
+      "why": "Latin American words (zapallo italiano = zucchini, porro = leek, morron = bell pepper), cups ('tazas'), fillets with no weight, 4 diners stated in the text",
+      "foods": [
+        {
+          "line": "4 filetes de pechuga de pollo",
+          "accept": [
+            "chicken breast"
+          ],
+          "required": true,
+          "amount": {
+            "range": [
+              {
+                "household": "chicken_breast_4oz",
+                "count": 4
+              },
+              {
+                "household": "chicken_breast_piece",
+                "count": 4
+              }
+            ]
+          }
+        },
+        {
+          "line": "1 zapallo italiano mediano",
+          "accept": [
+            "zucchini"
+          ],
+          "required": true,
+          "amount": {
+            "household": "zucchini_medium",
+            "count": 1
+          }
+        },
+        {
+          "line": "2 zanahorias medianas",
+          "accept": [
+            "carrot"
+          ],
+          "required": true,
+          "amount": {
+            "household": "carrot_medium",
+            "count": 2
+          }
+        },
+        {
+          "line": "1 tallo de porro",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": {
+            "household": "leek",
+            "count": 1
+          }
+        },
+        {
+          "line": "1 morron",
+          "accept": [
+            "red bell pepper",
+            "green bell pepper"
+          ],
+          "required": true,
+          "amount": {
+            "household": "red_pepper_medium",
+            "count": 1
+          }
+        },
+        {
+          "line": "2 tazas de champinones picados",
+          "accept": [
+            "mushrooms"
+          ],
+          "required": true,
+          "amount": {
+            "household": "mushrooms_chopped_cup",
+            "count": 2
+          }
+        },
+        {
+          "line": "1 pizca de sal",
+          "accept": [
+            "salt"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "1 pizca de pimienta",
+          "accept": [
+            "black pepper"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "(steps) un chorrito de aceite",
+          "accept": [
+            "extra virgin olive oil"
+          ],
+          "pantry": true,
+          "required": false,
+          "optional": true,
+          "amount": null
+        }
+      ],
+      "must_not_include": [
+        "rice"
+      ]
+    },
+    {
+      "id": "es-huevos-flamenca",
+      "lang": "es",
+      "servings": 4,
+      "why": "grams for four foods, pieces for eggs, potatoes and onion, 'tomate frito' (an app alias), ham and chorizo the app does not know, wine in litres, oil for deep frying with no absorbed amount",
+      "foods": [
+        {
+          "line": "4 huevos grandes (L o XL)",
+          "accept": [
+            "eggs"
+          ],
+          "required": true,
+          "amount": {
+            "eggs": 4
+          }
+        },
+        {
+          "line": "4 patatas grandes",
+          "accept": [
+            "potato"
+          ],
+          "required": true,
+          "amount": {
+            "household": "potato_large",
+            "count": 4
+          }
+        },
+        {
+          "line": "400 g de tomate frito",
+          "accept": [
+            "tomato sauce"
+          ],
+          "required": true,
+          "amount": {
+            "weight": {
+              "g": 400
+            }
+          }
+        },
+        {
+          "line": "125 g de jamon york",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": {
+            "weight": {
+              "g": 125
+            }
+          }
+        },
+        {
+          "line": "125 g de chorizo",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": {
+            "weight": {
+              "g": 125
+            }
+          }
+        },
+        {
+          "line": "100 g de guisantes",
+          "accept": [
+            "frozen peas"
+          ],
+          "required": true,
+          "amount": {
+            "weight": {
+              "g": 100
+            }
+          }
+        },
+        {
+          "line": "1 cebolla grande",
+          "accept": [
+            "onion"
+          ],
+          "required": true,
+          "amount": {
+            "household": "onion_large",
+            "count": 1
+          }
+        },
+        {
+          "line": "1/8 litro vino blanco",
+          "accept": [
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": {
+            "volume": {
+              "ml": 125
+            }
+          }
+        },
+        {
+          "line": "Aceite de oliva",
+          "accept": [
+            "extra virgin olive oil"
+          ],
+          "pantry": true,
+          "required": true,
+          "amount": null
+        },
+        {
+          "line": "Sal al gusto",
+          "accept": [
+            "salt"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        }
+      ],
+      "must_not_include": [
+        "mozzarella",
+        "light mozzarella"
+      ]
+    },
+    {
+      "id": "es-ensalada-murciana",
+      "lang": "es",
+      "servings": 4,
+      "why": "almost nothing has a weight: '1 bote', 'latas pequenas', olives with no amount, 'aceite moderadamente'",
+      "foods": [
+        {
+          "line": "1 bote de tomate pelado en conserva",
+          "accept": [
+            "crushed tomatoes",
+            "tomato"
+          ],
+          "required": true,
+          "amount": null
+        },
+        {
+          "line": "1 cebolla tierna",
+          "accept": [
+            "spring onion",
+            "onion"
+          ],
+          "required": true,
+          "amount": null
+        },
+        {
+          "line": "3 huevos duros",
+          "accept": [
+            "eggs"
+          ],
+          "required": true,
+          "amount": {
+            "eggs": 3
+          }
+        },
+        {
+          "line": "Aceitunas negras de Cuquillo",
+          "accept": [
+            "kalamata olives",
+            "UNKNOWN"
+          ],
+          "required": true,
+          "amount": null
+        },
+        {
+          "line": "2 latas pequenas de atun",
+          "accept": [
+            "canned tuna in oil",
+            "canned tuna in water"
+          ],
+          "required": true,
+          "amount": null
+        },
+        {
+          "line": "Sal al gusto",
+          "accept": [
+            "salt"
+          ],
+          "pantry": true,
+          "required": false,
+          "amount": null
+        },
+        {
+          "line": "aceite moderadamente",
+          "accept": [
+            "extra virgin olive oil"
+          ],
+          "pantry": true,
+          "required": true,
+          "amount": null
+        }
+      ],
+      "must_not_include": []
+    }
+  ]
+}

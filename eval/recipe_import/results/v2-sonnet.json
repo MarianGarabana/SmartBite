@@ -1,0 +1,1331 @@
+{
+ "run": "v2-sonnet",
+ "model": "claude-sonnet-5-5",
+ "prompt": "prompts/import.md",
+ "prompt_sha": "6cc993358e6e",
+ "scored_at": "2026-11-10T09:57:34+00:00",
+ "cases": 10,
+ "passed": 6,
+ "bar": 9,
+ "meets_bar": false,
+ "calls": 10,
+ "input_tokens": 30585,
+ "output_tokens": 11241,
+ "cost_usd_if_paid": 0.1736,
+ "results": [
+  {
+   "id": "en-shakshouka",
+   "passed": false,
+   "fails": [
+    "1 chile pepper (red or green), chopped: amount 15 outside 33.8 to 56.2"
+   ],
+   "notes": [],
+   "rows": [
+    {
+     "line": "6 tbsp olive oil",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "got": [
+      "extra virgin olive oil"
+     ],
+     "grams": 82,
+     "window": "60.8 to 101.2",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 tbsp sweet paprika",
+     "accept": [
+      "paprika"
+     ],
+     "got": [
+      "paprika"
+     ],
+     "grams": 7,
+     "window": "5.1 to 8.5",
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "6 cloves garlic, minced",
+     "accept": [
+      "garlic"
+     ],
+     "got": [
+      "garlic"
+     ],
+     "grams": 18,
+     "window": "13.5 to 22.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 large sweet red pepper, diced",
+     "accept": [
+      "red bell pepper"
+     ],
+     "got": [
+      "red bell pepper"
+     ],
+     "grams": 180,
+     "window": "123 to 205",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 chile pepper (red or green), chopped",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "chile pepper"
+     ],
+     "grams": 15,
+     "window": "33.8 to 56.2",
+     "ok": false,
+     "level": "fail",
+     "problem": "amount 15 outside 33.8 to 56.2"
+    },
+    {
+     "line": "6 ripe tomatoes diced",
+     "accept": [
+      "tomato"
+     ],
+     "got": [
+      "tomato"
+     ],
+     "grams": 740,
+     "window": "553.5 to 922.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "Ground black pepper",
+     "accept": [
+      "black pepper"
+     ],
+     "got": [
+      "black pepper"
+     ],
+     "grams": 1,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "Salt to taste",
+     "accept": [
+      "salt"
+     ],
+     "got": [
+      "salt"
+     ],
+     "grams": 3,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "6 eggs",
+     "accept": [
+      "eggs"
+     ],
+     "got": [
+      "eggs"
+     ],
+     "grams": "6 eggs",
+     "window": "6 eggs",
+     "ok": true,
+     "level": "fail"
+    }
+   ],
+   "servings": null
+  },
+  {
+   "id": "en-lentil-soup",
+   "passed": true,
+   "fails": [],
+   "notes": [],
+   "rows": [
+    {
+     "line": "1-2 tablespoons olive oil",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "got": [
+      "extra virgin olive oil"
+     ],
+     "grams": 20,
+     "window": "12.2 to 29.7",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 onion, diced",
+     "accept": [
+      "onion"
+     ],
+     "got": [
+      "onion"
+     ],
+     "grams": 110,
+     "window": "82.5 to 137.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "2 carrots, diced",
+     "accept": [
+      "carrot"
+     ],
+     "got": [
+      "carrot"
+     ],
+     "grams": 120,
+     "window": "91.5 to 152.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "2 cloves garlic, minced",
+     "accept": [
+      "garlic"
+     ],
+     "got": [
+      "garlic"
+     ],
+     "grams": 6,
+     "window": "4.5 to 7.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1/2 lb dry red lentils",
+     "accept": [
+      "dried lentils"
+     ],
+     "got": [
+      "dried lentils"
+     ],
+     "grams": 227,
+     "window": "204.1 to 249.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "6 cups water or stock",
+     "accept": [
+      "chicken broth"
+     ],
+     "got": [
+      "chicken broth"
+     ],
+     "grams": 1440,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "1 bay leaf",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "bay leaf"
+     ],
+     "grams": 1,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    }
+   ],
+   "servings": null
+  },
+  {
+   "id": "en-chicken-fajitas",
+   "passed": false,
+   "fails": [
+    "1 red bell pepper: amount 150 outside 89.2 to 148.8",
+    "1 green bell pepper: amount 150 outside 89.2 to 148.8"
+   ],
+   "notes": [],
+   "rows": [
+    {
+     "line": "1 Tbsp olive oil",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "got": [
+      "extra virgin olive oil"
+     ],
+     "grams": 14,
+     "window": "10.1 to 16.9",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1-2 lb skinless, boneless chicken breast",
+     "accept": [
+      "chicken breast"
+     ],
+     "got": [
+      "chicken breast"
+     ],
+     "grams": 680,
+     "window": "408.2 to 997.9",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 red bell pepper",
+     "accept": [
+      "red bell pepper"
+     ],
+     "got": [
+      "red bell pepper"
+     ],
+     "grams": 150,
+     "window": "89.2 to 148.8",
+     "ok": false,
+     "level": "fail",
+     "problem": "amount 150 outside 89.2 to 148.8"
+    },
+    {
+     "line": "1 green bell pepper",
+     "accept": [
+      "green bell pepper"
+     ],
+     "got": [
+      "green bell pepper"
+     ],
+     "grams": 150,
+     "window": "89.2 to 148.8",
+     "ok": false,
+     "level": "fail",
+     "problem": "amount 150 outside 89.2 to 148.8"
+    },
+    {
+     "line": "1/2 yellow onion",
+     "accept": [
+      "onion"
+     ],
+     "got": [
+      "onion"
+     ],
+     "grams": 55,
+     "window": "41.2 to 68.8",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 tsp ground cumin",
+     "accept": [
+      "cumin"
+     ],
+     "got": [
+      "cumin"
+     ],
+     "grams": 2,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "1 Tbsp crushed red pepper",
+     "accept": [
+      "chili flakes"
+     ],
+     "got": [
+      "chili flakes"
+     ],
+     "grams": 6,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "(steps) turmeric, salt and black pepper",
+     "accept": [
+      "UNKNOWN",
+      "salt",
+      "black pepper"
+     ],
+     "got": [
+      "turmeric",
+      "salt",
+      "black pepper"
+     ],
+     "grams": 13,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    }
+   ],
+   "servings": null
+  },
+  {
+   "id": "en-beef-stew",
+   "passed": true,
+   "fails": [],
+   "notes": [],
+   "rows": [
+    {
+     "line": "2 lb (900 g) beef",
+     "accept": [
+      "beef steak"
+     ],
+     "got": [
+      "beef steak"
+     ],
+     "grams": 900,
+     "window": "810 to 990",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1/2 cup flour",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "flour"
+     ],
+     "grams": 60,
+     "window": "46.9 to 78.1",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1/4 cup oil",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "got": [
+      "extra virgin olive oil"
+     ],
+     "grams": 55,
+     "window": "40.5 to 67.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 bay leaf",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "bay leaf"
+     ],
+     "grams": 1,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "1 tsp marjoram",
+     "accept": [
+      "UNKNOWN",
+      "oregano"
+     ],
+     "got": [
+      "marjoram"
+     ],
+     "grams": 1,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "1 tsp oregano",
+     "accept": [
+      "oregano"
+     ],
+     "got": [
+      "oregano"
+     ],
+     "grams": 1.5,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "46 fl oz tomato juice",
+     "accept": [
+      "UNKNOWN",
+      "crushed tomatoes"
+     ],
+     "got": [
+      "tomato juice"
+     ],
+     "grams": 1400,
+     "window": "1048.8 to 1748",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "10 1/2 oz (298 g) double-strength beef broth",
+     "accept": [
+      "UNKNOWN",
+      "chicken broth"
+     ],
+     "got": [
+      "beef broth"
+     ],
+     "grams": 298,
+     "window": "268.2 to 327.8",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "2-4 russet potatoes",
+     "accept": [
+      "potato"
+     ],
+     "got": [
+      "potato"
+     ],
+     "grams": 900,
+     "window": "664.2 to 1623.6",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "4 large carrots",
+     "accept": [
+      "carrot"
+     ],
+     "got": [
+      "carrot"
+     ],
+     "grams": 360,
+     "window": "216 to 360",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "4 stalks of celery",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "celery"
+     ],
+     "grams": 160,
+     "window": "120 to 200",
+     "ok": true,
+     "level": "fail"
+    }
+   ],
+   "servings": null
+  },
+  {
+   "id": "en-frittata",
+   "passed": true,
+   "fails": [],
+   "notes": [],
+   "rows": [
+    {
+     "line": "1 tablespoon olive oil",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "got": [
+      "extra virgin olive oil"
+     ],
+     "grams": 14,
+     "window": "10.1 to 16.9",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "2 garlic cloves, minced",
+     "accept": [
+      "garlic"
+     ],
+     "got": [
+      "garlic"
+     ],
+     "grams": 6,
+     "window": "4.5 to 7.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 bunch of fresh asparagus",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "asparagus"
+     ],
+     "grams": 300,
+     "window": null,
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "8 large eggs",
+     "accept": [
+      "eggs"
+     ],
+     "got": [
+      "eggs"
+     ],
+     "grams": "8 eggs",
+     "window": "8 eggs",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "3 teaspoons milk",
+     "accept": [
+      "semi-skimmed milk"
+     ],
+     "got": [
+      "semi-skimmed milk"
+     ],
+     "grams": 15,
+     "window": "11.2 to 18.8",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "2 teaspoons fresh basil or 1 teaspoon dried",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "basil"
+     ],
+     "grams": 4,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "1 pinch of salt",
+     "accept": [
+      "salt"
+     ],
+     "got": [
+      "salt"
+     ],
+     "grams": 0.4,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "1 pinch of ground black pepper",
+     "accept": [
+      "black pepper"
+     ],
+     "got": [
+      "black pepper"
+     ],
+     "grams": 0.3,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "3 tablespoons grated Parmesan cheese",
+     "accept": [
+      "grana padano",
+      "grated cheese",
+      "UNKNOWN"
+     ],
+     "got": [
+      "grana padano"
+     ],
+     "grams": 18,
+     "window": "11.2 to 18.8",
+     "ok": true,
+     "level": "fail"
+    }
+   ],
+   "servings": null
+  },
+  {
+   "id": "en-tuna-salad",
+   "passed": true,
+   "fails": [],
+   "notes": [],
+   "rows": [
+    {
+     "line": "1 large can (12 oz) tuna",
+     "accept": [
+      "canned tuna in water",
+      "canned tuna in oil"
+     ],
+     "got": [
+      "canned tuna in water"
+     ],
+     "grams": 340,
+     "window": "272.2 to 374.2",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 can water chestnuts, drained and chopped",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "water chestnuts"
+     ],
+     "grams": 140,
+     "window": null,
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1/2 small onion, chopped",
+     "accept": [
+      "onion"
+     ],
+     "got": [
+      "onion"
+     ],
+     "grams": 33,
+     "window": "26.2 to 43.8",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1-2 stalks celery, chopped",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "celery"
+     ],
+     "grams": 60,
+     "window": "36 to 88",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1/2 cup carrot, shredded",
+     "accept": [
+      "carrot"
+     ],
+     "got": [
+      "carrot"
+     ],
+     "grams": 55,
+     "window": "41.2 to 68.8",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1/2 cup mayonnaise",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "mayonnaise"
+     ],
+     "grams": 110,
+     "window": "82.5 to 137.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 tablespoon Dijon mustard",
+     "accept": [
+      "mustard"
+     ],
+     "got": [
+      "mustard"
+     ],
+     "grams": 15,
+     "window": "11.2 to 18.8",
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "1 teaspoon soy sauce",
+     "accept": [
+      "soy sauce"
+     ],
+     "got": [
+      "soy sauce"
+     ],
+     "grams": 5,
+     "window": "4.5 to 7.5",
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "Salt to taste",
+     "accept": [
+      "salt"
+     ],
+     "got": [
+      "salt"
+     ],
+     "grams": 2,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "Pepper to taste",
+     "accept": [
+      "black pepper"
+     ],
+     "got": [
+      "black pepper"
+     ],
+     "grams": 1,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    }
+   ],
+   "servings": null
+  },
+  {
+   "id": "en-chicken-curry",
+   "passed": true,
+   "fails": [],
+   "notes": [],
+   "rows": [
+    {
+     "line": "4 lb chicken",
+     "accept": [
+      "chicken breast",
+      "chicken thigh"
+     ],
+     "got": [
+      "chicken thigh"
+     ],
+     "grams": 1814,
+     "window": "1632.9 to 1995.8",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "100 ml + 150 ml coconut yogurt (two lines)",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "coconut yogurt",
+      "coconut yogurt"
+     ],
+     "grams": 250,
+     "window": "225 to 275",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "Juice of 1/2 lemon",
+     "accept": [
+      "lemon juice",
+      "lemon"
+     ],
+     "got": [
+      "lemon juice",
+      "lemon juice"
+     ],
+     "grams": 30,
+     "window": "18 to 30",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 tablespoon coconut oil",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "coconut oil"
+     ],
+     "grams": 14,
+     "window": "10.2 to 17",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "500 g tomatoes, diced",
+     "accept": [
+      "tomato"
+     ],
+     "got": [
+      "tomato"
+     ],
+     "grams": 500,
+     "window": "450 to 550",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "200 g potatoes",
+     "accept": [
+      "potato"
+     ],
+     "got": [
+      "potato"
+     ],
+     "grams": 200,
+     "window": "180 to 220",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 medium onion",
+     "accept": [
+      "onion"
+     ],
+     "got": [
+      "onion"
+     ],
+     "grams": 110,
+     "window": "82.5 to 137.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "garlic paste (1/2 tsp twice)",
+     "accept": [
+      "garlic",
+      "UNKNOWN"
+     ],
+     "got": [
+      "garlic",
+      "garlic"
+     ],
+     "grams": 5.0,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "ginger paste (1 1/2 tsp + 1 tsp)",
+     "accept": [
+      "ground ginger",
+      "UNKNOWN"
+     ],
+     "got": [
+      "ginger paste",
+      "ginger paste"
+     ],
+     "grams": 13,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "salt, chile powder, turmeric, coriander, garam masala, paprika, cumin, cinnamon, fenugreek, curry powder, mint, mustard/cumin/fennel seeds",
+     "accept": [
+      "ANY"
+     ],
+     "got": [
+      "salt",
+      "chili flakes",
+      "turmeric",
+      "ground coriander",
+      "chili flakes",
+      "garam masala",
+      "paprika",
+      "cumin",
+      "cinnamon",
+      "fenugreek leaves",
+      "curry powder",
+      "mint",
+      "curry powder",
+      "mustard seeds",
+      "cumin",
+      "fennel seeds",
+      "curry powder",
+      "fresh coriander"
+     ],
+     "grams": 58.9,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    }
+   ],
+   "servings": null
+  },
+  {
+   "id": "es-filete-pollo",
+   "passed": false,
+   "fails": [
+    "1 morron: amount 150 outside 89.2 to 148.8"
+   ],
+   "notes": [],
+   "rows": [
+    {
+     "line": "4 filetes de pechuga de pollo",
+     "accept": [
+      "chicken breast"
+     ],
+     "got": [
+      "chicken breast"
+     ],
+     "grams": 600,
+     "window": "406.8 to 1196.8",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 zapallo italiano mediano",
+     "accept": [
+      "zucchini"
+     ],
+     "got": [
+      "zucchini"
+     ],
+     "grams": 200,
+     "window": "147 to 245",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "2 zanahorias medianas",
+     "accept": [
+      "carrot"
+     ],
+     "got": [
+      "carrot"
+     ],
+     "grams": 120,
+     "window": "91.5 to 152.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 tallo de porro",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "leek"
+     ],
+     "grams": 90,
+     "window": "66.8 to 111.2",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 morron",
+     "accept": [
+      "red bell pepper",
+      "green bell pepper"
+     ],
+     "got": [
+      "red bell pepper"
+     ],
+     "grams": 150,
+     "window": "89.2 to 148.8",
+     "ok": false,
+     "level": "fail",
+     "problem": "amount 150 outside 89.2 to 148.8"
+    },
+    {
+     "line": "2 tazas de champinones picados",
+     "accept": [
+      "mushrooms"
+     ],
+     "got": [
+      "mushrooms"
+     ],
+     "grams": 140,
+     "window": "105 to 175",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 pizca de sal",
+     "accept": [
+      "salt"
+     ],
+     "got": [
+      "salt"
+     ],
+     "grams": 1,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "1 pizca de pimienta",
+     "accept": [
+      "black pepper"
+     ],
+     "got": [
+      "black pepper"
+     ],
+     "grams": 0.5,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "(steps) un chorrito de aceite",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "got": [
+      "extra virgin olive oil"
+     ],
+     "grams": 10,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    }
+   ],
+   "servings": 4
+  },
+  {
+   "id": "es-huevos-flamenca",
+   "passed": false,
+   "fails": [
+    "4 patatas grandes: amount 900 outside 1107 to 1845"
+   ],
+   "notes": [],
+   "rows": [
+    {
+     "line": "4 huevos grandes (L o XL)",
+     "accept": [
+      "eggs"
+     ],
+     "got": [
+      "eggs"
+     ],
+     "grams": "4 eggs",
+     "window": "4 eggs",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "4 patatas grandes",
+     "accept": [
+      "potato"
+     ],
+     "got": [
+      "potato"
+     ],
+     "grams": 900,
+     "window": "1107 to 1845",
+     "ok": false,
+     "level": "fail",
+     "problem": "amount 900 outside 1107 to 1845"
+    },
+    {
+     "line": "400 g de tomate frito",
+     "accept": [
+      "tomato sauce"
+     ],
+     "got": [
+      "tomato sauce"
+     ],
+     "grams": 400,
+     "window": "360 to 440",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "125 g de jamon york",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "ham"
+     ],
+     "grams": 125,
+     "window": "112.5 to 137.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "125 g de chorizo",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "chorizo"
+     ],
+     "grams": 125,
+     "window": "112.5 to 137.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "100 g de guisantes",
+     "accept": [
+      "frozen peas"
+     ],
+     "got": [
+      "frozen peas"
+     ],
+     "grams": 100,
+     "window": "90 to 110",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 cebolla grande",
+     "accept": [
+      "onion"
+     ],
+     "got": [
+      "onion"
+     ],
+     "grams": 165,
+     "window": "112.5 to 187.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1/8 litro vino blanco",
+     "accept": [
+      "UNKNOWN"
+     ],
+     "got": [
+      "white wine"
+     ],
+     "grams": 124,
+     "window": "112.5 to 137.5",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "Aceite de oliva",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "got": [
+      "extra virgin olive oil"
+     ],
+     "grams": 60,
+     "window": null,
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "Sal al gusto",
+     "accept": [
+      "salt"
+     ],
+     "got": [
+      "salt"
+     ],
+     "grams": 3,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    }
+   ],
+   "servings": 4
+  },
+  {
+   "id": "es-ensalada-murciana",
+   "passed": true,
+   "fails": [],
+   "notes": [],
+   "rows": [
+    {
+     "line": "1 bote de tomate pelado en conserva",
+     "accept": [
+      "crushed tomatoes",
+      "tomato"
+     ],
+     "got": [
+      "crushed tomatoes"
+     ],
+     "grams": 240,
+     "window": null,
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "1 cebolla tierna",
+     "accept": [
+      "spring onion",
+      "onion"
+     ],
+     "got": [
+      "spring onion"
+     ],
+     "grams": 60,
+     "window": null,
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "3 huevos duros",
+     "accept": [
+      "eggs"
+     ],
+     "got": [
+      "eggs"
+     ],
+     "grams": "3 eggs",
+     "window": "3 eggs",
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "Aceitunas negras de Cuquillo",
+     "accept": [
+      "kalamata olives",
+      "UNKNOWN"
+     ],
+     "got": [
+      "kalamata olives"
+     ],
+     "grams": 40,
+     "window": null,
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "2 latas pequenas de atun",
+     "accept": [
+      "canned tuna in oil",
+      "canned tuna in water"
+     ],
+     "got": [
+      "canned tuna in oil"
+     ],
+     "grams": 104,
+     "window": null,
+     "ok": true,
+     "level": "fail"
+    },
+    {
+     "line": "Sal al gusto",
+     "accept": [
+      "salt"
+     ],
+     "got": [
+      "salt"
+     ],
+     "grams": 3,
+     "window": null,
+     "ok": true,
+     "level": "note"
+    },
+    {
+     "line": "aceite moderadamente",
+     "accept": [
+      "extra virgin olive oil"
+     ],
+     "got": [
+      "extra virgin olive oil"
+     ],
+     "grams": 30,
+     "window": null,
+     "ok": true,
+     "level": "fail"
+    }
+   ],
+   "servings": 4
+  }
+ ]
+}

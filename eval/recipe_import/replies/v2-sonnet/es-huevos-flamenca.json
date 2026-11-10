@@ -1,0 +1,150 @@
+{
+ "case": "es-huevos-flamenca",
+ "model": "claude-sonnet-5-5",
+ "reply": {
+  "title": "Huevos a la flamenca",
+  "servings": 4,
+  "prep_time_min": 20,
+  "ingredients": [
+   {
+    "line": "4 huevos grandes (tamaño L ó XL)",
+    "name": "eggs",
+    "grams_total": 204,
+    "units_total": 4,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "4 patatas grandes",
+    "name": "potato",
+    "grams_total": 900,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "400 g de tomate frito",
+    "name": "tomato sauce",
+    "grams_total": 400,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "125 g de jamón york",
+    "name": "ham",
+    "grams_total": 125,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "125 g de chorizo",
+    "name": "chorizo",
+    "grams_total": 125,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "100 g de guisantes",
+    "name": "frozen peas",
+    "grams_total": 100,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "frozen",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "1 cebolla grande",
+    "name": "onion",
+    "grams_total": 165,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "1/8 litro vino blanco (1/2 vaso)",
+    "name": "white wine",
+    "grams_total": 124,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "Aceite de oliva",
+    "name": "extra virgin olive oil",
+    "grams_total": 60,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false,
+    "note": "Frying oil mostly drained; 2 tbsp plus some absorbed by potatoes"
+   },
+   {
+    "line": "Sal al gusto",
+    "name": "salt",
+    "grams_total": 3,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "Tomamos una sartén grande, vertemos sobre ella 1/2 litro de aceite de oliva y la ponemos a calentar a fuego intenso.",
+   "Pelamos, lavamos y cortamos las patatas en tiras, al gusto.",
+   "Volvemos a lavar las patatas, ahora con un escurridor bajo el grifo, y sazonamos al gusto con sal.",
+   "Una vez esté caliente el aceite de la sartén, las echamos para freír.",
+   "Debemos estar pendientes de las patatas porque no deben comenzar a dorarse (luego queremos que se cuezan con el tomate y tomen su sabor).",
+   "Cuando estén en su punto, las retiramos de la sartén y las dejamos escurrir sobre un plato con un par de servilletas de papel para que absorba el aceite sobrante.",
+   "Tomamos una cazuela grande, vertemos 2 cucharadas de aceite de oliva y ponemos fuego medio (5-6 en vitrocerámica escala 1-9, llama pequeña en fuego horneado).",
+   "Lavamos, pelamos y cortamos la cebolla en pequeños cuadraditos, del tamaño de una uña.",
+   "Una vez caliente el aceite, lo vertemos sobre la cazuela.",
+   "Mientras el sofrito se va preparando, tomamos una tabla de madera y cortamos el chorizo y el jamón york en cuadraditos pequeños (también del tamaño de una uña).",
+   "Una vez comprobemos que el cuerpo de la cebolla se está tornando transparente, vertemos 1/2 vaso de vino blanco sobre la cazuela y mezclamos con el jamón york, el chorizo y los guisantes. Avivamos el fuego para reducir el vino.",
+   "Cuando comprobemos que el vino ha reducido, vertemos el tomate sobre la cazuela y removemos un poco.",
+   "A continuación, vertemos las patatas fritas sobre la cazuela y volvemos a remover. Bajamos el fuego a bajo (2-3 en vitrocerámica escala 1-9, llama mínima en fuego horneado).",
+   "Cascamos los 4 huevos y los colocamos uno en cada lateral de la cazuela (señales horarias 12, 3, 6, 9).",
+   "Tapamos la cazuela dejando un poco de ventilación hacia el interior y esperamos hasta que se cuajen los huevos (10-15 minutos).",
+   "Finalmente, la receta está lista para emplatar."
+  ]
+ },
+ "text": "{\"title\":\"Huevos a la flamenca\",\"servings\":4,\"prep_time_min\":20,\"ingredients\":[{\"line\":\"4 huevos grandes (tamaño L ó XL)\",\"name\":\"eggs\",\"grams_total\":204,\"units_total\":4,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"4 patatas grandes\",\"name\":\"potato\",\"grams_total\":900,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":false,\"dry\":false},{\"line\":\"400 g de tomate frito\",\"name\":\"tomato sauce\",\"grams_total\":400,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":false,\"dry\":false},{\"line\":\"125 g de jamón york\",\"name\":\"ham\",\"grams_total\":125,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"125 g de chorizo\",\"name\":\"chorizo\",\"grams_total\":125,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"100 g de guisantes\",\"name\":\"frozen peas\",\"grams_total\":100,\"units_total\":0,\"guessed\":false,\"storage\":\"frozen\",\"pantry\":false,\"dry\":false},{\"line\":\"1 cebolla grande\",\"name\":\"onion\",\"grams_total\":165,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":false,\"dry\":false},{\"line\":\"1/8 litro vino blanco (1/2 vaso)\",\"name\":\"white wine\",\"grams_total\":124,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":false,\"dry\":false},{\"line\":\"Aceite de oliva\",\"name\":\"extra virgin olive oil\",\"grams_total\":60,\"units_total\":0,\"guessed\":true,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false,\"note\":\"Frying oil mostly drained; 2 tbsp plus some absorbed by potatoes\"},{\"line\":\"Sal al gusto\",\"name\":\"salt\",\"grams_total\":3,\"units_total\":0,\"guessed\":true,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false}],\"steps\":[\"Tomamos una sartén grande, vertemos sobre ella 1/2 litro de aceite de oliva y la ponemos a calentar a fuego intenso.\",\"Pelamos, lavamos y cortamos las patatas en tiras, al gusto.\",\"Volvemos a lavar las patatas, ahora con un escurridor bajo el grifo, y sazonamos al gusto con sal.\",\"Una vez esté caliente el aceite de la sartén, las echamos para freír.\",\"Debemos estar pendientes de las patatas porque no deben comenzar a dorarse (luego queremos que se cuezan con el tomate y tomen su sabor).\",\"Cuando estén en su punto, las retiramos de la sartén y las dejamos escurrir sobre un plato con un par de servilletas de papel para que absorba el aceite sobrante.\",\"Tomamos una cazuela grande, vertemos 2 cucharadas de aceite de oliva y ponemos fuego medio (5-6 en vitrocerámica escala 1-9, llama pequeña en fuego horneado).\",\"Lavamos, pelamos y cortamos la cebolla en pequeños cuadraditos, del tamaño de una uña.\",\"Una vez caliente el aceite, lo vertemos sobre la cazuela.\",\"Mientras el sofrito se va preparando, tomamos una tabla de madera y cortamos el chorizo y el jamón york en cuadraditos pequeños (también del tamaño de una uña).\",\"Una vez comprobemos que el cuerpo de la cebolla se está tornando transparente, vertemos 1/2 vaso de vino blanco sobre la cazuela y mezclamos con el jamón york, el chorizo y los guisantes. Avivamos el fuego para reducir el vino.\",\"Cuando comprobemos que el vino ha reducido, vertemos el tomate sobre la cazuela y removemos un poco.\",\"A continuación, vertemos las patatas fritas sobre la cazuela y volvemos a remover. Bajamos el fuego a bajo (2-3 en vitrocerámica escala 1-9, llama mínima en fuego horneado).\",\"Cascamos los 4 huevos y los colocamos uno en cada lateral de la cazuela (señales horarias 12, 3, 6, 9).\",\"Tapamos la cazuela dejando un poco de ventilación hacia el interior y esperamos hasta que se cuajen los huevos (10-15 minutos).\",\"Finalmente, la receta está lista para emplatar.\"]}",
+ "error": null,
+ "calls": [
+  {
+   "case": "es-huevos-flamenca",
+   "stage": "import",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-sonnet-5-5",
+   "status": 200,
+   "input_tokens": 3644,
+   "output_tokens": 1586,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 7.874,
+   "cost_usd": 0.023148,
+   "error": null
+  }
+ ]
+}

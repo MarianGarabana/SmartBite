@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "smartbite/import.schema.json",
+  "title": "Recipe import agent (no tools)",
+  "description": "Foods, grams, servings and steps read from a recipe the user pasted. Prompt: prompts/import.md. Grams are for the whole recipe; code divides them by the servings (from the text, else the user is asked). The model picks foods and grams only; packs, macros and cost are code.",
+  "$defs": {
+    "Input": {
+      "type": "object",
+      "required": ["paste"],
+      "properties": {
+        "paste": { "type": "string", "description": "The pasted recipe text, as the user pasted it." },
+        "known_ingredients": { "type": "array", "items": { "type": "string" }, "description": "English food keys (data/open/aliases.json)." }
+      }
+    },
+    "Output": {
+      "type": "object",
+      "required": ["title", "servings", "prep_time_min", "ingredients", "steps"],
+      "properties": {
+        "title": { "type": "string", "maxLength": 100 },
+        "servings": { "type": ["integer", "null"], "minimum": 1, "maximum": 50, "description": "Only when the text states it; null otherwise." },
+        "prep_time_min": { "type": "integer", "minimum": 0 },
+        "ingredients": {
+          "type": "array", "minItems": 1,
+          "items": { "$ref": "#/$defs/Ingredient" }
+        },
+        "steps": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "Ingredient": {
+      "type": "object",
+      "required": ["line", "name", "grams_total", "units_total", "guessed", "storage", "pantry", "dry"],
+      "properties": {
+        "line": { "type": "string", "maxLength": 400, "description": "The ingredient line as written in the paste, or the step words that name the food." },
+        "name": { "type": "string", "maxLength": 60, "description": "The exact known_ingredients name when the food fits one, else a plain English food name." },
+        "grams_total": { "type": "number", "exclusiveMinimum": 0, "description": "Grams for the whole recipe as written." },
+        "units_total": { "type": "number", "minimum": 0, "description": "Eggs only (size M, 51 g each); 0 for everything else." },
+        "guessed": { "type": "boolean", "description": "True when the text gives no amount or size and the grams are the model's estimate." },
+        "storage": { "enum": ["fresh", "keeps", "frozen"] },
+        "pantry": { "type": "boolean" },
+        "dry": { "type": "boolean", "description": "True for rice, pasta, quinoa and couscous, whose grams are dry (uncooked) weight." },
+        "note": { "type": "string", "maxLength": 80 }
+      },
+      "additionalProperties": false
+    }
+  }
+}

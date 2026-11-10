@@ -1,0 +1,128 @@
+{
+ "case": "en-shakshouka",
+ "model": "claude-sonnet-5-5",
+ "reply": {
+  "title": "Shakshouka",
+  "servings": null,
+  "prep_time_min": 30,
+  "ingredients": [
+   {
+    "line": "6 tbsp olive oil",
+    "name": "extra virgin olive oil",
+    "grams_total": 82,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "1 tbsp sweet paprika",
+    "name": "paprika",
+    "grams_total": 7,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "6 cloves garlic, minced",
+    "name": "garlic",
+    "grams_total": 18,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "1 large sweet red pepper, diced",
+    "name": "red bell pepper",
+    "grams_total": 180,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "1 chile pepper (red or green), chopped",
+    "name": "chile pepper",
+    "grams_total": 15,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "6 ripe tomatoes diced",
+    "name": "tomato",
+    "grams_total": 740,
+    "units_total": 0,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   },
+   {
+    "line": "Ground black pepper",
+    "name": "black pepper",
+    "grams_total": 1,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "Salt to taste",
+    "name": "salt",
+    "grams_total": 3,
+    "units_total": 0,
+    "guessed": true,
+    "storage": "keeps",
+    "pantry": true,
+    "dry": false
+   },
+   {
+    "line": "6 eggs",
+    "name": "eggs",
+    "grams_total": 306,
+    "units_total": 6,
+    "guessed": false,
+    "storage": "fresh",
+    "pantry": false,
+    "dry": false
+   }
+  ],
+  "steps": [
+   "On a high heat, heat the oil for about ½ minute. Add the paprika and blend well.",
+   "Add the garlic and peppers, and turn to low flame. Cook for about 10 minutes, until the peppers have slightly softened.",
+   "Add the tomatoes and bring to a boil, then season to taste with salt and pepper.",
+   "Make 6 dents in the mixture. Into each dent, put an egg yolk, and spread the egg whites around.",
+   "Continue to cook on low until the egg whites have coagulated."
+  ]
+ },
+ "text": "{\"title\":\"Shakshouka\",\"servings\":null,\"prep_time_min\":30,\"ingredients\":[{\"line\":\"6 tbsp olive oil\",\"name\":\"extra virgin olive oil\",\"grams_total\":82,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"1 tbsp sweet paprika\",\"name\":\"paprika\",\"grams_total\":7,\"units_total\":0,\"guessed\":false,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"6 cloves garlic, minced\",\"name\":\"garlic\",\"grams_total\":18,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"1 large sweet red pepper, diced\",\"name\":\"red bell pepper\",\"grams_total\":180,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"1 chile pepper (red or green), chopped\",\"name\":\"chile pepper\",\"grams_total\":15,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"6 ripe tomatoes diced\",\"name\":\"tomato\",\"grams_total\":740,\"units_total\":0,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false},{\"line\":\"Ground black pepper\",\"name\":\"black pepper\",\"grams_total\":1,\"units_total\":0,\"guessed\":true,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"Salt to taste\",\"name\":\"salt\",\"grams_total\":3,\"units_total\":0,\"guessed\":true,\"storage\":\"keeps\",\"pantry\":true,\"dry\":false},{\"line\":\"6 eggs\",\"name\":\"eggs\",\"grams_total\":306,\"units_total\":6,\"guessed\":false,\"storage\":\"fresh\",\"pantry\":false,\"dry\":false}],\"steps\":[\"On a high heat, heat the oil for about ½ minute. Add the paprika and blend well.\",\"Add the garlic and peppers, and turn to low flame. Cook for about 10 minutes, until the peppers have slightly softened.\",\"Add the tomatoes and bring to a boil, then season to taste with salt and pepper.\",\"Make 6 dents in the mixture. Into each dent, put an egg yolk, and spread the egg whites around.\",\"Continue to cook on low until the egg whites have coagulated.\"]}",
+ "error": null,
+ "calls": [
+  {
+   "case": "en-shakshouka",
+   "stage": "import",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-sonnet-5-5",
+   "status": 200,
+   "input_tokens": 2842,
+   "output_tokens": 804,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 4.313,
+   "cost_usd": 0.013724,
+   "error": null
+  }
+ ]
+}

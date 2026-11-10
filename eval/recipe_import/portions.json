@@ -1,0 +1,170 @@
+{
+  "note": "Household portion weights used to turn the answer key's amounts into grams. Every value is copied from USDA FoodData Central SR Legacy (April 2018 release, data/raw/usda/FoodData_Central_sr_legacy_food_csv_2018-04.zip, food_portion.csv) for the fdc_id shown. Weight units (lb, oz, g, kg) and volume units (ml, l, fl oz) are converted in build_key.py, not here.",
+  "portions": {
+    "olive_oil_tbsp": {
+      "grams": 13.5,
+      "fdc_id": 171413,
+      "usda": "Oil, olive, salad or cooking: 1 tablespoon"
+    },
+    "olive_oil_cup": {
+      "grams": 216,
+      "fdc_id": 171413,
+      "usda": "Oil, olive, salad or cooking: 1 cup"
+    },
+    "paprika_tbsp": {
+      "grams": 6.8,
+      "fdc_id": 171329,
+      "usda": "Spices, paprika: 1 tbsp"
+    },
+    "garlic_clove": {
+      "grams": 3,
+      "fdc_id": 169230,
+      "usda": "Garlic, raw: 1 clove"
+    },
+    "red_pepper_large": {
+      "grams": 164,
+      "fdc_id": 170108,
+      "usda": "Peppers, sweet, red, raw: 1 large"
+    },
+    "red_pepper_medium": {
+      "grams": 119,
+      "fdc_id": 170108,
+      "usda": "Peppers, sweet, red, raw: 1 medium"
+    },
+    "green_pepper_medium": {
+      "grams": 119,
+      "fdc_id": 170427,
+      "usda": "Peppers, sweet, green, raw: 1 medium"
+    },
+    "chili_pepper": {
+      "grams": 45,
+      "fdc_id": 170497,
+      "usda": "Peppers, hot chili, green, raw: 1 pepper"
+    },
+    "tomato_medium": {
+      "grams": 123,
+      "fdc_id": 170457,
+      "usda": "Tomatoes, red, ripe, raw, year round average: 1 medium whole"
+    },
+    "onion_small": {
+      "grams": 70,
+      "fdc_id": 170000,
+      "usda": "Onions, raw: 1 small"
+    },
+    "onion_medium": {
+      "grams": 110,
+      "fdc_id": 170000,
+      "usda": "Onions, raw: 1 medium"
+    },
+    "onion_large": {
+      "grams": 150,
+      "fdc_id": 170000,
+      "usda": "Onions, raw: 1 large"
+    },
+    "carrot_medium": {
+      "grams": 61,
+      "fdc_id": 170393,
+      "usda": "Carrots, raw: 1 medium"
+    },
+    "carrot_large": {
+      "grams": 72,
+      "fdc_id": 170393,
+      "usda": "Carrots, raw: 1 large"
+    },
+    "carrot_grated_cup": {
+      "grams": 110,
+      "fdc_id": 170393,
+      "usda": "Carrots, raw: 1 cup grated"
+    },
+    "flour_cup": {
+      "grams": 125,
+      "fdc_id": 168894,
+      "usda": "Wheat flour, white, all-purpose, enriched, bleached: 1 cup"
+    },
+    "tomato_juice_fl_oz": {
+      "grams": 30.4,
+      "fdc_id": 170545,
+      "usda": "Tomato juice, canned, without salt added: 1 fl oz"
+    },
+    "potato_medium": {
+      "grams": 213,
+      "fdc_id": 170026,
+      "usda": "Potatoes, flesh and skin, raw: 1 medium"
+    },
+    "potato_large": {
+      "grams": 369,
+      "fdc_id": 170026,
+      "usda": "Potatoes, flesh and skin, raw: 1 large"
+    },
+    "celery_stalk_medium": {
+      "grams": 40,
+      "fdc_id": 169988,
+      "usda": "Celery, raw: 1 stalk, medium"
+    },
+    "milk_tbsp": {
+      "grams": 15,
+      "fdc_id": 171265,
+      "usda": "Milk, whole, 3.25% milkfat: 1 tbsp (3 tsp)"
+    },
+    "parmesan_tbsp": {
+      "grams": 5,
+      "fdc_id": 171247,
+      "usda": "Cheese, parmesan, grated: 1 tbsp"
+    },
+    "mayonnaise_cup": {
+      "grams": 220,
+      "fdc_id": 171009,
+      "usda": "Salad dressing, mayonnaise, regular: 1 cup"
+    },
+    "mustard_tsp": {
+      "grams": 5,
+      "fdc_id": 172234,
+      "usda": "Mustard, prepared, yellow: 1 tsp"
+    },
+    "soy_sauce_tsp": {
+      "grams": 6,
+      "fdc_id": 174278,
+      "usda": "Soy sauce made from soy (tamari): 1 tsp"
+    },
+    "lemon_juice_per_lemon": {
+      "grams": 48,
+      "fdc_id": 167747,
+      "usda": "Lemon juice, raw: 1 lemon yields"
+    },
+    "coconut_oil_tbsp": {
+      "grams": 13.6,
+      "fdc_id": 171412,
+      "usda": "Oil, coconut: 1 tbsp"
+    },
+    "chicken_breast_4oz": {
+      "grams": 113,
+      "fdc_id": 171077,
+      "usda": "Chicken breast, skinless, boneless, meat only, raw: 4 oz"
+    },
+    "chicken_breast_piece": {
+      "grams": 272,
+      "fdc_id": 171077,
+      "usda": "Chicken breast, skinless, boneless, meat only, raw: 1 piece"
+    },
+    "zucchini_medium": {
+      "grams": 196,
+      "fdc_id": 169291,
+      "usda": "Squash, summer, zucchini, includes skin, raw: 1 medium"
+    },
+    "leek": {
+      "grams": 89,
+      "fdc_id": 169246,
+      "usda": "Leeks, (bulb and lower leaf-portion), raw: 1 leek"
+    },
+    "mushrooms_chopped_cup": {
+      "grams": 70,
+      "fdc_id": 169251,
+      "usda": "Mushrooms, white, raw: 1 cup, pieces or slices"
+    },
+    "tuna_water_can_12_5oz_drained": {
+      "grams": 315,
+      "fdc_id": 173709,
+      "usda": "Fish, tuna, light, canned in water, drained solids (Includes foods for USDA's Food Distribution Program): 1 can (12.5 oz), drained"
+    }
+  }
+}
