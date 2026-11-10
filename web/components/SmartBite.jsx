@@ -187,11 +187,18 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                   <p className="text-cream/80 text-base sm:text-lg max-w-xl font-light leading-relaxed">
                     Tell SmartBite what you feel like eating. It writes a recipe in grams and a shopping list in whole packs, with the macros worked out in code.
                   </p>
-                  <div className="pt-2 flex items-center gap-4">
+                  <div className="pt-2 flex flex-wrap items-center gap-4">
                     <button onClick={() => switchTab("make-meal")} className="bg-lime hover:bg-lime-hover text-forest font-bold text-base px-8 py-4 rounded-full transition-all duration-300 shadow-glow flex items-center gap-3">
                       <span>Make your meal</span>
                       <i className="fa-solid fa-arrow-right text-sm"></i>
                     </button>
+                    {/* Demo button on home (Marian, 2026-11-10): the real app only; the demo is already the demo */}
+                    {!demo && (
+                      <Link id="hero-demo" href="/demo" className="border-2 border-lime/60 hover:border-lime hover:bg-forest-light text-lime font-bold text-base px-8 py-[14px] rounded-full transition-all duration-300 flex items-center gap-3">
+                        <i className="fa-solid fa-play text-sm"></i>
+                        <span>Try the demo</span>
+                      </Link>
+                    )}
                   </div>
                 </div>
                 <div className="lg:col-span-5 flex justify-center items-center relative">

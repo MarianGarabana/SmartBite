@@ -112,6 +112,14 @@ test("the real app shows only the user's meals; a new visitor gets Set up profil
   await expect(page).toHaveURL(/\/demo$/);
 });
 
+test("home has a Try the demo button in the hero; the demo itself does not", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#hero-demo").click();
+  await expect(page).toHaveURL(/\/demo$/);
+  await expect(page.locator("#demo-banner")).toBeVisible();
+  await expect(page.locator("#hero-demo")).toHaveCount(0);
+});
+
 test("the demo cart is kept apart from the real cart", async ({ page }) => {
   await page.goto("/demo?tab=recipes");
   await page.locator("#recipes-grid > div").first().getByRole("button", { name: "Add to cart" }).click();
