@@ -1,7 +1,7 @@
 """Make Your Meal form."""
 from dataclasses import dataclass, field
 
-GEAR = {"microwave_only", "oven", "no_blender"}
+GEAR = {"microwave_only", "oven", "air_fryer", "no_blender"}
 
 
 @dataclass(frozen=True)

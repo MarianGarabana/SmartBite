@@ -1,5 +1,5 @@
 // Make Your Meal form check, same rules as smartbite_engine/form.py (MealForm). Pure.
-const GEAR = new Set(["microwave_only", "oven", "no_blender"]);
+const GEAR = new Set(["microwave_only", "oven", "air_fryer", "no_blender"]);
 const num = (v) => (v === null || v === "" || v === undefined ? null : Number(v));
 
 export function checkForm(f) {

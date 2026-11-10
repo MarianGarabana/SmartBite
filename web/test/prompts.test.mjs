@@ -323,3 +323,7 @@ test("typicalPackHints lists only the foods asked for, once, by English key", ()
     ["chicken breast", "rice"]);
   assert.deepEqual(typicalPackHints([]), []);
 });
+
+test("air fryer gear reaches the prompt in plain words", () => {
+  assert.match(formText({ ...FORM, gear: ["oven", "air_fryer"] }), /Cooking gear: oven, air fryer/);
+});

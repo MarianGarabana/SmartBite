@@ -8,7 +8,7 @@ import { canonical, english } from "./names.js";
 const MARKER = /^<!-- (system|user) -->[ \t]*$/m;
 const COMMENT = /<!--[\s\S]*?-->/g;
 const PLACEHOLDER = /\{\{(\w+)\}\}/g;
-const GEAR_WORDS = { microwave_only: "microwave only", oven: "oven", no_blender: "no blender" };
+const GEAR_WORDS = { microwave_only: "microwave only", oven: "oven", air_fryer: "air fryer", no_blender: "no blender" };
 const NO_KNOWN = "(none listed: use plain English food names)";
 export const MAX_ATTEMPTS = 3; // the first recipe plus up to 2 reruns
 const INCREASE_CAP = 0.15; // on a rerun a bought ingredient grows at most 15% over the first recipe

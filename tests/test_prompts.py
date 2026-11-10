@@ -243,3 +243,8 @@ def test_prompts_ask_for_english_food_names_and_text_in_the_craving_language(nam
     system = load_template(name)["system"]
     assert "in English, whatever the language of the craving" in system
     assert "in the language of the craving" in system.replace("in English, whatever the language of the craving", "")
+
+
+def test_air_fryer_gear_is_a_form_value_and_reaches_the_prompt():
+    form = MealForm(craving="chicken", servings=2, budget_total_eur=10, gear=("oven", "air_fryer"))
+    assert "Cooking gear: oven, air fryer" in form_text(form)

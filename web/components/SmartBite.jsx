@@ -709,16 +709,17 @@ const mealSlug = (title) => `${String(title || "").normalize("NFKD").replace(/[\
 const hasGear = (gear, name) => gear.some((g) => g.toLowerCase().trim() === name);
 
 // Step 1 quiz options (decided 2026-11-09, ported from the personal app): [value sent, label, Font Awesome icon, small
-// line]. Craving values are the words the craving sentence uses; avoid values are plain English food names, matched
+// line]. Labels carry soft hyphens (\u00ad) and a zero-width space (\u200b) where a long word may break on a narrow
+// phone; both stay invisible when the word fits. Craving values are the words the craving sentence uses; avoid values are plain English food names, matched
 // against dishes by lib/inspiration.js (every word of the item in one food name).
 const QUIZ = {
   protein: [["chicken", "Chicken", "fa-drumstick-bite"], ["turkey", "Turkey", "fa-feather"], ["beef", "Beef", "fa-cow"],
     ["salmon or white fish", "Fish", "fa-fish"], ["canned tuna", "Canned tuna", "fa-fish-fins"], ["eggs", "Eggs", "fa-egg"],
-    ["chickpeas or lentils", "Legumes", "fa-jar"], ["tofu", "Tofu", "fa-cubes"]],
+    ["chickpeas or lentils", "Leg\u00adumes", "fa-jar"], ["tofu", "Tofu", "fa-cubes"]],
   style: [["bowl", "Bowl", "fa-bowl-rice"], ["salad", "Salad", "fa-leaf"], ["stew or soup", "Stew or soup", "fa-mug-hot"],
     ["stir-fry", "Stir-fry", "fa-fire-burner"], ["baked in the oven", "Oven bake", "fa-temperature-high"],
-    ["frittata", "Frittata", "fa-cubes-stacked"], ["pasta", "Pasta", "fa-bowl-food"], ["overnight oats", "Overnight oats", "fa-jar-wheat"]],
-  cuisine: [["Spanish", "Spanish", "fa-sun"], ["Mediterranean", "Mediterranean", "fa-umbrella-beach"],
+    ["air fried", "Air fried", "fa-wind"], ["lunch or dinner", "Lunch/\u200bDinner", "fa-utensils"], ["breakfast", "Break\u00adfast", "fa-bread-slice"]],
+  cuisine: [["Spanish", "Spanish", "fa-sun"], ["Mediterranean", "Medi\u00adter\u00adranean", "fa-umbrella-beach"],
     ["Italian", "Italian", "fa-pizza-slice"], ["Greek", "Greek", "fa-landmark"], ["Mexican", "Mexican", "fa-pepper-hot"],
     ["Asian (Chinese, Japanese, Korean or Thai)", "Asian", "fa-torii-gate"], ["Indian", "Indian", "fa-gopuram"],
     ["Middle Eastern", "Middle Eastern", "fa-mosque"]],
@@ -728,7 +729,7 @@ const QUIZ = {
   time: [["15", "Under 15 min", "fa-bolt", "Quick, few steps"], ["30", "Under 30 min", "fa-clock", "Normal weeknight"],
     ["45", "Under 45 min", "fa-hourglass-half", "Time for the oven"]],
   gear: [["microwave", "Microwave", "fa-tv"], ["stove", "Stove", "fa-fire-burner"], ["oven", "Oven", "fa-temperature-high"],
-    ["blender", "Blender", "fa-blender"]],
+    ["airFryer", "Air fryer", "fa-wind"], ["blender", "Blender", "fa-blender"]],
 };
 const quizLabel = (list, v) => (list.find((o) => o[0] === v) || [v, v])[1];
 const flip = (list, v) => (list.includes(v) ? list.filter((x) => x !== v) : [...list, v]);
@@ -749,7 +750,7 @@ function Choice({ type = "checkbox", name, checked, onChange, icon, label, sub, 
         {sub && <span className="quiz-sub text-[11.5px] text-forest/70 font-medium">{sub}</span>}
       </span>
       {!tile && (
-        <span className={`quiz-tick ${tall ? "absolute top-3.5 right-3.5" : "ml-auto"} w-5 h-5 rounded-full border-[1.5px] border-cream-dark bg-white flex items-center justify-center shrink-0`}>
+        <span className={`quiz-tick ${tall ? "absolute top-3.5 right-3.5 flex" : "ml-auto hidden sm:flex"} w-5 h-5 rounded-full border-[1.5px] border-cream-dark bg-white items-center justify-center shrink-0`}>
           <i className="fa-solid fa-check text-[10px]"></i>
         </span>
       )}
@@ -829,7 +830,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
   const [carbsMax, setCarbsMax] = useState(null); // null = no limit
   const [fatMax, setFatMax] = useState(null);
   const [time, setTime] = useState("30");
-  const [gear, setGear] = useState({ microwave: true, stove: true, oven: true, noBlender: true });
+  const [gear, setGear] = useState({ microwave: true, stove: true, oven: true, airFryer: false, noBlender: true });
   const [reheat, setReheat] = useState(true);
   const [lowLeftovers, setLowLeftovers] = useState(true);
   const [tags, setTags] = useState([]);
@@ -846,7 +847,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
     setProfileTargets({ kcal, protein });
     const g = toList(fieldValue(profile, "gear", []));
     if (g.length) setGear({ microwave: hasGear(g, "microwave"), stove: hasGear(g, "stove"), oven: hasGear(g, "oven"),
-      noBlender: hasGear(g, "no blender") });
+      airFryer: hasGear(g, "air fryer"), noBlender: hasGear(g, "no blender") });
     // Profile foods to avoid: the ones that are cards start ticked, the rest are typed items
     const excluded = toList(fieldValue(profile, "exclude", []));
     const cards = QUIZ.avoid.map(([v]) => v);
@@ -1037,7 +1038,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
       body: (
         <fieldset>
           <legend className="sr-only">Kitchen gear</legend>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {QUIZ.gear.map(([k, label, icon]) => <Choice key={k} checked={hasGearOn(k)} onChange={() => toggleGearCard(k)} icon={icon} label={label} tall />)}
           </div>
         </fieldset>
@@ -1080,9 +1081,9 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
     const { form, errors } = checkForm({
       craving, exclude, kcal_target: kcalTarget, protein_g_target: proteinTarget,
       carbs_g_max: carbsMax ?? "", fat_g_max: fatMax ?? "", budget_total_eur: budget, servings, time_limit_min: time,
-      // form gear: oven, no_blender, and microwave_only when the microwave is the only heat source
-      gear: [gear.oven && "oven", gear.noBlender && "no_blender",
-             gear.microwave && !gear.stove && !gear.oven && "microwave_only"].filter(Boolean),
+      // form gear: oven, air_fryer, no_blender, and microwave_only when the microwave is the only heat source
+      gear: [gear.oven && "oven", gear.airFryer && "air_fryer", gear.noBlender && "no_blender",
+             gear.microwave && !gear.stove && !gear.oven && !gear.airFryer && "microwave_only"].filter(Boolean),
       reheat_at_work: reheat, keep_leftovers_low: lowLeftovers,
     });
     if (errors.length) return showToast(`Not sent: ${errors.join(", ")}.`);
