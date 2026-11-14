@@ -18,7 +18,7 @@ import { COUNTRIES, ESTIMATES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, profi
 import { encodeShare, sharePayload, shareUrl } from "../lib/share";
 import { AiLabel, Footer, Header, MealImage, RECIPE_TABLE as T, Toast, money, moneySymbol, grams, useCart, useCurrency, useEstimates, useEvaluations, useMeals, usePrices,
   useProducts, useToast } from "./Chrome";
-import { ProductCell, ProductDialog } from "./ProductDialog";
+import { EditProductButton, ProductCell, ProductDialog } from "./ProductDialog";
 import { MealEditor } from "./MealEditor";
 
 // Demo meals come from the server; meals made in this browser are looked up in its storage
@@ -483,7 +483,7 @@ function RecipeView({ meal, meals, router }) {
                       ) : (
                         <tr key={r.key} className={T.row}>
                           <td className={T.ingredient}>{r.ingredient}</td>
-                          <td className={T.product}>no pack size yet</td>
+                          <td className={T.product}><span className="block">no pack size yet</span><EditProductButton row={r} onEdit={setEditing} /></td>
                           <td data-label="Pack" className={`${T.num} text-forest/70`}></td>
                           <td data-label="Packs" className={`${T.num} font-bold text-forest`}></td>
                           <td data-label="Needed" className={`${T.num} text-forest/70`}>{grams(r.needed)}</td>

@@ -29,6 +29,23 @@ export const needsServings = (reply) => reply.servings == null || reply.servings
 
 const round1 = (x) => Math.round(x * 10) / 10;
 
+// The photo prompt of an imported recipe (decided 2026-11-14): the title alone made photos with foods the recipe does
+// not have, so the prompt lists one serving's foods and amounts (eggs counted), then the seasoning, and asks for no
+// other foods. lib/meal.js builds it from the saved recipe, so it follows Edit meal and fixes meals imported before.
+export function photoPromptFor(recipe) {
+  const title = String(recipe?.title || "the dish").trim();
+  const all = recipe?.ingredients || [];
+  const amount = (it) => (it.units_per_serving > 0
+    ? `${round1(it.units_per_serving)} ${it.units_per_serving === 1 ? it.name.replace(/s$/, "") : it.name}`
+    : `${Math.round(it.grams_per_serving)} g ${it.name}`);
+  const foodsText = all.filter((it) => !it.pantry).map(amount).join(", ");
+  const seasoning = all.filter((it) => it.pantry).map((it) => it.name).join(", ");
+  if (!foodsText) return `Overhead photo of ${title}, plated as in the recipe, natural light, no text`;
+  return `Overhead photo of ${title}, one serving on a dark plate: ${foodsText}.` +
+    (seasoning ? ` Seasoned with ${seasoning}.` : "") +
+    " Only these foods, cooked and plated as in the recipe, no other foods or garnish. Natural light, no text.";
+}
+
 // The engine request for an imported recipe, and the lines the user should check in the editor.
 // servings: what the user cooks (1-8); the grams per serving come from the servings the text states, else from it.
 export function importedRequest(reply, { servings, targets = {}, budgetPerServing }) {
@@ -50,7 +67,7 @@ export function importedRequest(reply, { servings, targets = {}, budgetPerServin
   const recipe = { title, servings: cooked, prep_time_min: reply.prep_time_min, ingredients,
     steps: reply.steps.filter((s) => s.trim()).length ? reply.steps.filter((s) => s.trim()) : [NO_STEPS] };
   const idea = { one_line: title.slice(0, 140), main_ingredients: [],
-    image_prompt: `Overhead photo of ${title}, plated as in the recipe, natural light, no text`,
+    image_prompt: photoPromptFor(recipe),
     rough_macros: { kcal: 0, protein_g: 0, carbs_g: 0, fat_g: 0 } }; // unknown before the engine; never shown
   const request = sharedRequest({ recipe, idea, targets }, { budgetPerServing, ideaId: "imported" });
   return { request, check, textServings: reply.servings };

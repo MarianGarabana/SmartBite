@@ -19,7 +19,7 @@ import { AddButton, AiLabel, Footer, Header, MealPhoto, CART_TABLE as T, TABS, T
   useProfileComplete, useToast } from "./Chrome";
 import { PasteRecipe } from "./PasteRecipe";
 import MyDay from "./MyDay";
-import { ProductCell, ProductDialog } from "./ProductDialog";
+import { EditProductButton, ProductCell, ProductDialog } from "./ProductDialog";
 import { PriceInput } from "./RecipePage";
 
 // Price cell of a Cart row: a typed price as text; no price or an estimate (grey, "est.", as on the recipe page) as
@@ -565,7 +565,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                         ) : (
                           <tr key={item.key} className={T.row}>
                             <td className={T.ingredient}>{item.ingredient}</td>
-                            <td className={T.product}>no pack size yet</td>
+                            <td className={T.product}><span className="block">no pack size yet</span><EditProductButton row={item} onEdit={setEditing} /></td>
                             <td data-label="Pack" className={`${T.num} text-forest/70`}></td>
                             <td data-label="Packs" className={`${T.num} font-bold text-forest`}></td>
                             <td data-label="Used" className={`${T.num} text-forest/70`}>{grams(item.needed)}</td>

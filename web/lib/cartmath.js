@@ -21,9 +21,11 @@ export function withPrices(meal, prices) {
 
 // The products the engine needs for one recipe (evaluate.schema.json "products"): the user's product for each food
 // the recipe uses (its English key, as the engine names it), from products = { food key: product } for their store
-// (lib/store.js activeProducts). lines: the meal's shopping lines, whose food keys count too.
+// (lib/store.js activeProducts). lines: the meal's shopping lines, whose food keys count too. A food the engine does
+// not know is keyed by its plain name, as the engine keys it (decided 2026-11-14), so its product goes too.
 export function productsFor(recipe, products, lines = []) {
-  const foods = new Set([...(recipe?.ingredients || []).map((i) => canonical(i.name)),
+  const plainName = (name) => norm(name).split(/\s+/).join(" ");
+  const foods = new Set([...(recipe?.ingredients || []).map((i) => canonical(i.name) || plainName(i.name)),
     ...lines.map((l) => l.foodKey)].filter(Boolean).map(norm));
   return Object.values(products || {}).filter((p) => foods.has(p.food)).sort((a, b) => a.food.localeCompare(b.food));
 }

@@ -71,6 +71,9 @@ test("productsFor sends the user's product of each food the recipe uses and noth
   assert.deepEqual(productsFor(meal.source.recipe, {}), []);
   // Food keys of the shopping lines count too, for names the browser does not know
   assert.deepEqual(productsFor({ ingredients: [] }, { feta }, [{ foodKey: "feta" }]), [feta]);
+  // A food the engine does not know goes by its plain name, as the engine keys it
+  const pepperoni = { food: "pepperoni", name: "TELLO Pepperoni 75 g", sold_by: "pack", pack_grams: 75 };
+  assert.deepEqual(productsFor({ ingredients: [{ name: " Pepperoni " }] }, { pepperoni }), [pepperoni]);
 });
 
 test("a price typed on a line saves a product for that pack, and the cart never stores products", () => {

@@ -6,7 +6,7 @@ import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { validateOutput } from "../lib/contracts.js";
-import { MAX_PASTE, importSlug, importedRequest, needsServings } from "../lib/importer.js";
+import { MAX_PASTE, importSlug, importedRequest, needsServings, photoPromptFor } from "../lib/importer.js";
 import { importRecipe } from "../lib/llm.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -108,4 +108,19 @@ test("a pasted link is caught before any call; a recipe with its source link is 
   const calls = mockFetch([]);
   await assert.rejects(importRecipe({ paste: "https://example.com/lentil-soup", llm: ANTHROPIC }), (e) => e.message === LINK_MESSAGE);
   assert.equal(calls.length, 0);
+});
+
+test("import: the photo prompt lists one serving's foods and amounts, eggs counted, seasoning apart", () => {
+  const recipe = { title: "Avo Toast and Eggs", ingredients: [
+    { name: "eggs", grams_per_serving: 102, units_per_serving: 2, pantry: false },
+    { name: "avocado", grams_per_serving: 50, units_per_serving: 0, pantry: false },
+    { name: "salt", grams_per_serving: 1, units_per_serving: 0, pantry: true }] };
+  const prompt = photoPromptFor(recipe);
+  assert.match(prompt, /^Overhead photo of Avo Toast and Eggs, one serving on a dark plate: 2 eggs, 50 g avocado\./);
+  assert.match(prompt, /Seasoned with salt\./);
+  assert.match(prompt, /Only these foods/);
+  assert.match(photoPromptFor({ ...recipe, ingredients: [{ ...recipe.ingredients[0], units_per_serving: 1 }] }), /: 1 egg\./);
+  const { request } = importedRequest(stored("en-tuna-salad"), { servings: 2, targets: {}, budgetPerServing: 3 });
+  assert.equal(request.picked_idea.image_prompt, photoPromptFor(request.recipe));
+  for (const it of request.recipe.ingredients.filter((i) => !i.pantry)) assert.ok(request.picked_idea.image_prompt.includes(it.name), it.name);
 });

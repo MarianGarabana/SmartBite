@@ -38,14 +38,20 @@ export function ProductCell({ row, onEdit }) {
         {row.userProduct ? <span className="font-bold text-lime-hover">Your product · </span> : null}
         {sourceText(row)}
       </span>
-      {row.foodKey && onEdit ? (
-        <button type="button" onClick={() => onEdit(row)} aria-label={`Edit product for ${row.ingredient}`}
-          className="text-[10px] font-bold text-forest/70 hover:text-lime-hover mt-0.5">
-          <i className="fa-solid fa-pen mr-1"></i>Edit product
-        </button>
-      ) : null}
+      <EditProductButton row={row} onEdit={onEdit} />
     </>
   );
+}
+
+// "Edit product" under a row's product; also on rows with no pack size yet (a food the app does not know), where a
+// product with a label makes it count (decided 2026-11-14)
+export function EditProductButton({ row, onEdit }) {
+  return row.foodKey && onEdit ? (
+    <button type="button" onClick={() => onEdit(row)} aria-label={`Edit product for ${row.ingredient}`}
+      className="text-[10px] font-bold text-forest/70 hover:text-lime-hover mt-0.5">
+      <i className="fa-solid fa-pen mr-1"></i>Edit product
+    </button>
+  ) : null;
 }
 
 // "2,5" and "2.5" are 2.5; "" is null; anything else NaN

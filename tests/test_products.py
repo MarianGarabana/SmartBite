@@ -149,3 +149,43 @@ def test_products_for_other_foods_change_nothing():
 def test_food_key_is_matched_without_case_or_spaces():
     got = line(post(TUNA, products=[product(food=" Canned Chickpeas ", price_eur=1.1)]), "canned chickpeas")
     assert got["user_product"] is True
+
+
+def with_pepperoni(slug):
+    """The demo meal with one food the engine does not know (decided 2026-11-14: unknown foods can get a product)."""
+    meal = demo(slug)
+    ing = {"name": "Pepperoni", "grams_per_serving": 12, "units_per_serving": 0, "storage": "keeps",
+           "pantry": False, "dry": False}
+    meal["recipe"] = {**meal["recipe"], "ingredients": [*meal["recipe"]["ingredients"], ing]}
+    return meal
+
+
+def test_unknown_food_line_carries_its_plain_name_as_food_key():
+    r = client.post("/api/evaluate", json=with_pepperoni(TUNA))
+    data = r.json()
+    got = line(data, "pepperoni")
+    assert got["has_price"] is False and "grams_bought" not in got
+    assert data["evaluation"]["macros"]["unresolved"] == ["Pepperoni"]
+
+
+def test_product_with_label_makes_an_unknown_food_count():
+    label = {"kcal": 444, "protein_g": 20, "carbs_g": 1, "fat_g": 40}
+    pepperoni = {"food": "pepperoni", "name": "TELLO Pepperoni 75 g", "sold_by": "pack", "pack_grams": 75,
+                 "price_eur": 1.55, "per_100g": label}
+    before = client.post("/api/evaluate", json=with_pepperoni(TUNA)).json()
+    data = client.post("/api/evaluate", json={**with_pepperoni(TUNA), "products": [pepperoni]}).json()
+    got = macro(data, "pepperoni")
+    assert got["source"] == "label"
+    assert got["amount"]["kcal"] == pytest.approx(444 * 24 / 100)  # 2 servings x 12 g
+    macros = data["evaluation"]["macros"]
+    assert macros["unresolved"] == [] and not any("Pepperoni" in m for m in macros["missing_nutrition"])
+    assert macros["total"]["kcal"] == pytest.approx(before["evaluation"]["macros"]["total"]["kcal"] + 444 * 24 / 100)
+    bought = line(data, "pepperoni")
+    assert bought["user_product"] is True and bought["packs_to_buy"] == 1 and bought["cost_bought_eur"] == pytest.approx(1.55)
+
+
+def test_product_without_label_for_an_unknown_food_gives_the_pack_but_no_macros():
+    pepperoni = {"food": "pepperoni", "name": "TELLO Pepperoni 75 g", "sold_by": "pack", "pack_grams": 75}
+    data = client.post("/api/evaluate", json={**with_pepperoni(TUNA), "products": [pepperoni]}).json()
+    assert line(data, "pepperoni")["grams_bought"] == 75
+    assert data["evaluation"]["macros"]["unresolved"] == ["Pepperoni"]

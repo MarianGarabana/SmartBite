@@ -50,16 +50,17 @@ export function MealEditor({ slug, onClose, showToast }) {
     setError("");
     const recipe = editedRecipe(doc.recipe, { title, stepsText, rows });
     const foodsChanged = JSON.stringify(recipe.ingredients) !== JSON.stringify(doc.recipe.ingredients);
-    if (!foodsChanged) {
-      const { import_check: _checked, ...rest } = doc;
-      return done({ ...rest, recipe }, "Meal saved.");
-    }
+    const { import_check: _checked, ...rest } = doc;
     setBusy("save");
     try {
       const out = await evaluateMeal({ form: doc.form, profile: readProfile(), picked_idea: doc.picked_idea, recipe,
         products: productsFor(recipe, readActiveProducts()), ...engineEstimates() });
-      done(out, "Meal saved. Macros, packs and cost are updated.");
+      // Same foods: the meal keeps everything else (photo too) and takes the new numbers, so a product saved since
+      // (pack, price, label) counts after Save (decided 2026-11-14)
+      if (foodsChanged) done(out, "Meal saved. Macros, packs and cost are updated.");
+      else done({ ...rest, recipe, evaluation: out.evaluation }, "Meal saved.");
     } catch (e) {
+      if (!foodsChanged) return done({ ...rest, recipe }, "Meal saved."); // engine unreachable: name and steps still save
       setError(`Not saved: ${e.message}`);
     } finally {
       setBusy(null);

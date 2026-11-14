@@ -255,13 +255,13 @@ def _pack_line(item, packs, keep_leftovers_low, prices, estimates=None, products
     found = pack_entry(item["food"], packs) if item["food"] else None
     common = dict(units_needed=item["units_total"], storage=item["storage"], leftover_plan=item["leftover_plan"],
                   optional=item["optional"])
-    key = found[0] if found else item["food"]
+    key = found[0] if found else _food_key(item)
     if key and key in (products or {}):
         return _product_line(item, key, products[key], keep_leftovers_low, estimates, common)
     if found is None and item["pantry"]:
         return None
-    if found is None:  # unknown food: listed, no pack size, no price
-        return {**pack_line(item["name"], item["total_grams"], None, **common), "food": item["food"]}
+    if found is None:  # unknown food: listed, no pack size, no price; its name key lets the user save a product
+        return {**pack_line(item["name"], item["total_grams"], None, **common), "food": key}
     key, entry = found
     price = _price(prices, item, key)
     if "pack_prices" in price:
@@ -308,22 +308,34 @@ def _label_macros(food, grams, product):
     return IngredientMacros(food, grams, label, scale(label, grams), source, product.get("barcode"), ())
 
 
+def _food_key(item):
+    """The food key of an item: its English key, or for an unknown food its plain name (decided 2026-11-14), so a
+    product the user saves for it (pack, price, label) attaches to it like to a known food."""
+    return item["food"] or plain(item["name"])
+
+
+def _labelled(item, products):
+    """The user's product with a label for this item, or None."""
+    product = (products or {}).get(_food_key(item))
+    return product if product and product.get("per_100g") else None
+
+
 def _macro_lines(items, table, products=None):
     lines, missing = [], []
     for it in items:
-        if it["food"] is None:
+        key, product = _food_key(it), _labelled(it, products)
+        if it["food"] is None and product is None:
             missing.append(f"{it['name']}: unknown food, left out of the totals")
             continue
-        product = (products or {}).get(it["food"])
         try:
-            if product and product.get("per_100g"):
-                got = _label_macros(it["food"], it["total_grams"], product)
+            if product:
+                got = _label_macros(key, it["total_grams"], product)
             else:
                 got = ingredient_macros(it["food"], it["total_grams"], table=table)
         except LookupError:
             missing.append(f"{it['name']}: no nutrition record, left out of the totals")
             continue
-        lines.append({"name": it["name"], "food": it["food"], "grams": it["total_grams"], "source": got.source,
+        lines.append({"name": it["name"], "food": key, "grams": it["total_grams"], "source": got.source,
                       "source_id": got.source_id, "amount": got.amount, "missing": list(got.missing),
                       "micros": got.micros})
         if got.missing:
@@ -384,7 +396,7 @@ def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None,
     per = per_serving(meal_total, servings)
     misses = macro_check(per, meal_form)
     micros = micros_block(macro_lines, servings)
-    unresolved = [it["name"] for it in items if it["food"] is None]
+    unresolved = [it["name"] for it in items if it["food"] is None and _labelled(it, products) is None]
 
     requests = list(pack["change_requests"])
     if misses:

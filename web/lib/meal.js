@@ -2,6 +2,7 @@
 // shape the pages use. Pure: runs on the server for demo meals and in the browser for meals made there.
 import { norm, priceKey } from "./cartmath";
 import { COUNTRIES, ESTIMATES, readCountry, regionLabel } from "./store";
+import { photoPromptFor } from "./importer";
 
 export const SLUG = /^[a-z0-9-]+$/;
 
@@ -172,7 +173,8 @@ export function toMeal(slug, doc, { kind = "demo", saved = false } = {}) {
     // stay in the browser (lib/photos.js) and win over it
     images: sitePhoto(doc.photo) ? [doc.photo] : [],
     aiPhoto: sitePhoto(doc.photo) && doc.photo_ai_generated === true, // labelled "AI-generated photo"
-    photoPrompt: doc.picked_idea?.image_prompt || null, // copied into Gemini on the recipe page
+    // copied into Gemini on the recipe page; an imported recipe's is built from its foods (lib/importer.js)
+    photoPrompt: doc.imported ? photoPromptFor(doc.recipe) : doc.picked_idea?.image_prompt || null,
     ingredients: all.filter((it) => !it.pantry).map(item),
     seasoning: pantry.length ? pantry.map((it) => it.name).join(", ") : null,
     pantryNote: "counted in the macros",
