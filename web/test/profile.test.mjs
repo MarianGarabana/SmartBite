@@ -135,6 +135,34 @@ test("only SmartBite profile files of this version, with parts of the right shap
   assert.equal(globalThis.window.localStorage.getItem("smartbite.other"), null);
 });
 
+// My Day (decided 2026-11-14): kept until Clear day, read back as a clean day, and carried in the profile file
+test("My Day is stored, read back clean, cleared, and travels in the profile file", () => {
+  const data = fakeWindow();
+  assert.deepEqual(store.readDay().slots.lunch, []); // nothing stored: an empty day, and nothing written
+  assert.equal(store.KEYS.day in data, false);
+  assert.equal("day" in JSON.parse(store.exportProfile()).data, false);
+  const day = { version: 1, next: 3, slots: { breakfast: [{ id: "i1", kind: "recipe", slug: "my-oats", servings: 1.5 }],
+    snack: [{ id: "i2", kind: "extra", name: "Banana", kcal: 105, protein_g: 1.3, carbs_g: 27, fat_g: 0.4 }] } };
+  assert.equal(store.writeDay(day), true);
+  assert.deepEqual(store.readDay().slots.breakfast, day.slots.breakfast);
+  const text = store.exportProfile();
+  assert.deepEqual(JSON.parse(text).data.day.slots.snack, day.slots.snack);
+  store.clearDay();
+  assert.equal(store.KEYS.day in data, false);
+  const read = store.readProfileFile(text);
+  assert.equal(read.ok, true);
+  store.openProfile(read.data);
+  assert.deepEqual(store.readDay().slots.snack, day.slots.snack);
+  // A file without a day clears this browser's day; a damaged one does not open
+  store.openProfile(store.readProfileFile(JSON.stringify({ app: "SmartBite", kind: "profile", version: 1, data: { name: "M" } })).data);
+  assert.equal(store.KEYS.day in data, false);
+  assert.match(store.readProfileFile(JSON.stringify({ app: "SmartBite", kind: "profile", version: 1, data: { day: [] } })).error,
+    /damaged \(day\)/);
+  // Junk in storage reads as an empty day
+  data[store.KEYS.day] = "{oops";
+  assert.equal(store.readDay().next, 1);
+});
+
 // Decided 2026-11-01: an opened file counts as a finished setup, so only a missing key stands before Make Your Meal
 test("an opened profile file counts as a finished setup; with a key the profile is complete", () => {
   fakeWindow();

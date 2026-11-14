@@ -100,5 +100,9 @@ test("a meal saved before fiber and micros has neither; one with them gets both"
     fiber_pct: 25, micros: MICROS };
   const meal = toMeal("tuna-salad", { ...OLD, evaluation: { ...OLD.evaluation, macros } });
   assert.deepEqual(meal.fiber, { grams: "6g", pct: 25 });
+  // Raw grams for My Day, outside perServing (the cart and shared links read perServing)
+  assert.equal(meal.fiberG, 6.2);
+  assert.equal(old.fiberG, null);
+  assert.equal("fiber_g" in meal.perServing, false);
   assert.equal(meal.micros.rows.length, 4);
 });

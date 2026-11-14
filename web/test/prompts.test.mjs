@@ -244,6 +244,23 @@ test("profile edits change the prompt; empty lines and sections are left out", (
   assert.ok(!renderProfile(null).includes("Proteins I like"));
 });
 
+// My Day's daily targets are profile fields with "prompt": false: null by default and never in the prompt
+test("daily targets never reach the prompt, even when set", () => {
+  const profile = defaultProfile();
+  const fields = Object.fromEntries(profile.sections.flatMap((s) => s.fields.map((f) => [f.id, f])));
+  const daily = ["daily_kcal_target", "daily_protein_g_target", "daily_carbs_g_max", "daily_fat_g_max"];
+  for (const id of daily) assert.deepEqual([fields[id].value, fields[id].prompt, fields[id].type], [null, false, "number"], id);
+  const before = renderProfile(profile);
+  fields.daily_kcal_target.value = 1800;
+  fields.daily_protein_g_target.value = 135;
+  fields.daily_carbs_g_max.value = 220;
+  fields.daily_fat_g_max.value = 65;
+  const text = renderProfile(profile);
+  assert.equal(text, before);
+  assert.ok(!text.includes("1800") && !text.includes("My Day"));
+  assert.ok(!ideaPrompt(FORM, { profile }).system.includes("1800"));
+});
+
 test("numbers are formatted like Python", () => {
   assert.equal(pyFixed(5.125, 2), "5.12"); // exact tie: round half to even
   assert.equal(pyFixed(450.5, 0), "450");

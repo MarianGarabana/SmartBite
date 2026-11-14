@@ -251,7 +251,7 @@ export default function ProfilePage({ demoMeals }) {
             <div>
               <span className="font-script text-2xl text-forest font-bold">How you cook</span>
               <h2 className="font-serif text-3xl font-bold text-forest">Kitchen Profile</h2>
-              <p className="text-xs text-forest/70 mt-2">Every line here goes into the prompt for your ideas and recipes; the targets also fill in the Make Your Meal form. Empty a line to leave it out.</p>
+              <p className="text-xs text-forest/70 mt-2">Every line here goes into the prompt for your ideas and recipes; the targets also fill in the Make Your Meal form. Empty a line to leave it out. The daily targets are for My Day only and are not sent to the AI.</p>
             </div>
             {profile.sections.map((s) => (
               <div key={s.id} className="space-y-6 pt-2 border-t border-cream-dark first:border-t-0 first:pt-0">
@@ -433,7 +433,7 @@ export default function ProfilePage({ demoMeals }) {
                 <h2 className="font-serif font-bold text-xl text-forest">Profile file</h2>
               </div>
               <p className="text-xs text-forest/80 leading-relaxed">
-                One file with your Kitchen Profile, where you shop, your products, saved meals and cart. Open it in another browser to pick up where you left off. Photos are not included.
+                One file with your Kitchen Profile, where you shop, your products, saved meals, cart and My Day. Open it in another browser to pick up where you left off. Photos are not included.
               </p>
               <label className="flex items-start gap-2 text-xs font-bold text-forest">
                 <input id="profile-file-key" type="checkbox" checked={withKey} onChange={(e) => setWithKey(e.target.checked)} className="accent-lime w-4 h-4 mt-0.5" />

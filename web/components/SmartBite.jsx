@@ -18,6 +18,7 @@ import { SETUP_DONE_EVENT, openSetup } from "./SetupDialog";
 import { AddButton, AiLabel, Footer, Header, MealPhoto, CART_TABLE as T, TABS, Toast, money, moneySymbol, grams, useCart, useCurrency, useDemo, useMeals, usePrices,
   useProfileComplete, useToast } from "./Chrome";
 import { PasteRecipe } from "./PasteRecipe";
+import MyDay from "./MyDay";
 import { ProductCell, ProductDialog } from "./ProductDialog";
 import { PriceInput } from "./RecipePage";
 
@@ -125,7 +126,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
   const [query, setQuery] = useState("");
   const [pasting, setPasting] = useState(false); // the Paste a recipe box on My Recipes
   const { toast, showToast } = useToast();
-  const { meals } = useMeals(demoMeals);
+  const { meals, ready: mealsReady } = useMeals(demoMeals);
   const { cart, add: addToCart, remove: removeFromCart, setOptional, setHave, adjustSuggestions, previewAdjust,
     applyAdjust, resetAdjust } = useCart(showToast, meals, { evaluate: true });
   const optionalRows = cart.rows.filter((r) => r.optional && r.packSize && !r.have);
@@ -179,6 +180,13 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
     if (!demo && own.length === 0) return router.push(`${tabUrl("recipes", true)}&category=${encodeURIComponent(name)}`);
     switchTab("recipes");
     setCategory(name);
+  };
+  // My Day "Make a meal for what's left": the quiz starts from the day's remaining kcal and protein (n: a new start
+  // each click, so the same numbers apply again)
+  const [mealStart, setMealStart] = useState(null);
+  const makeMealFor = (t) => {
+    setMealStart({ ...t, n: Date.now() });
+    switchTab("make-meal");
   };
   const setUp = () => openSetup((state, opts) => state === "done" && !opts?.profile && profileComplete() && switchTab("make-meal"));
   // The real Make Your Meal waits for a complete profile (decided 2026-10-31): until then it sends people to /start
@@ -439,9 +447,12 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
           {!demo && complete === false && own.length === 0 && <SetupChoices id="recipes-setup" onSetUp={setUp} />}
         </section>
 
+        {/* TAB: MY DAY (2026-11-14): one day of meals against daily targets */}
+        <MyDay hidden={tab !== "my-day"} meals={meals} mealsReady={mealsReady} demo={demo} onMakeMeal={makeMealFor} showToast={showToast} />
+
         {/* TAB 3: MAKE YOUR MEAL */}
         <MakeMealStep1 hidden={tab !== "make-meal"} showToast={showToast} leftovers={cart.leftovers}
-          demoMeals={meals.filter((m) => m.kind === "demo")} demo={demo} complete={complete} />
+          demoMeals={meals.filter((m) => m.kind === "demo")} demo={demo} complete={complete} start={mealStart} />
 
         {/* TAB 4: CART */}
         <section id="tab-cart" className={`tab-page space-y-8 max-w-[1360px] mx-auto px-8${tab === "cart" ? "" : " hidden"}`}>
@@ -920,7 +931,7 @@ function Dial({ id, label, icon, unit, min, max, step, value, onChange, presets 
 
 // Step 1: one question per screen, then a check-your-answers summary (decided 2026-11-09). Each visit starts from the
 // user's profile (targets, gear, foods to avoid, budget); answers are not remembered between visits.
-function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete }) {
+function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete, start }) {
   const [crave, setCrave] = useState({ protein: [], style: [], cuisine: [] });
   const [craveText, setCraveText] = useState("");
   // Leftovers in the cart: a tap adds one to the craving, so the ideas build on it
@@ -947,6 +958,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
     if (kcal) setKcalTarget(Math.round(kcal));
     if (protein) setProteinTarget(Math.round(protein));
     setProfileTargets({ kcal, protein });
+    setFromDay(false);
     const g = toList(fieldValue(profile, "gear", []));
     if (g.length) setGear({ microwave: hasGear(g, "microwave"), stove: hasGear(g, "stove"), oven: hasGear(g, "oven"),
       airFryer: hasGear(g, "air fryer"), noBlender: hasGear(g, "no blender") });
@@ -966,6 +978,17 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
     // loadDefaults reads only storage and the servings at the time
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // From My Day: what is left of the day as the starting targets (already in the dial ranges, lib/day.js)
+  // A quiz that already shows ideas or a recipe starts over, so the new targets are what the next ideas use.
+  const [fromDay, setFromDay] = useState(false);
+  useEffect(() => {
+    if (!start) return;
+    setKcalTarget(start.kcal_target);
+    setProteinTarget(start.protein_g_target);
+    setFromDay(true);
+    setPreview(null);
+    setRun({ step: 1 });
+  }, [start]);
   const addTag = () => {
     const val = tagInput.trim();
     if (!val) return;
@@ -1084,7 +1107,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
       body: (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Dial id="input-calories" label="Calories" icon="fa-fire" unit="kcal" min={200} max={1200} step={10} value={kcalTarget} onChange={setKcalTarget}
-            presets={[350, 450, 550, 650]} note={profileTargets.kcal ? `Your profile target: ${profileTargets.kcal} kcal.` : null} />
+            presets={[350, 450, 550, 650]} note={fromDay ? "From what is left in My Day." : profileTargets.kcal ? `Your profile target: ${profileTargets.kcal} kcal.` : null} />
           <Dial id="input-protein" label="Protein" icon="fa-dumbbell" unit="g" min={10} max={120} step={1} value={proteinTarget} onChange={setProteinTarget}
             presets={[30, 40, 45, 55]} note={`About ${Math.round((proteinTarget * 4 * 100) / kcalTarget)}% of the calories come from protein.`} />
         </div>

@@ -3,6 +3,7 @@
 // must still work for the visit.
 import { PACK_SIZES } from "../generated/index.js";
 import { EGG_GRAMS, norm, priceKey } from "./cartmath";
+import { normalizeDay } from "./day";
 import { DEFAULT_PROFILE, fieldValue, mergeProfile } from "./profile";
 import { ANTHROPIC, DEFAULT_ANTHROPIC_MODEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, presetById } from "./providers";
 
@@ -29,6 +30,7 @@ export const KEYS = {
   // true once /start was shown (decided 2026-11-03). Any "smartbite." key tells app/layout.js FRONT_DOOR that this
   // browser was here before, so "/" opens Home instead of sending it to /start.
   startSeen: "smartbite.startSeen",
+  day: "smartbite.day", // My Day (lib/day.js): { version, next, slots: { breakfast: [item], ... } }, until "Clear day"
 };
 const CHANGED = "smartbite-storage";
 
@@ -41,16 +43,17 @@ export function readJson(key, fallback) {
   }
 }
 
-// false when the browser refused to store it (the change still lives in the page until reload)
+// false when the browser refused to store it (the change still lives in the page until reload). Only a write that
+// worked sends the change event: storage did not change otherwise, and a listener that reads it back (My Day) would
+// undo the change on the page.
 export function writeJson(key, value) {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
-    return true;
   } catch {
     return false;
-  } finally {
-    try { window.dispatchEvent(new Event(CHANGED)); } catch {}
   }
+  try { window.dispatchEvent(new Event(CHANGED)); } catch {}
+  return true;
 }
 
 function remove(key) {
@@ -89,6 +92,13 @@ export function readCart(demo = false) {
 
 // Products and prices live under their own keys, never inside the cart
 export const writeCart = ({ prices: _prices, products: _products, ...cart }, demo = false) => writeJson(cartKey(demo), cart);
+
+// My Day (decided 2026-11-14): one day, kept until "Clear day" and carried in the profile file. Only the real app
+// stores it; the /demo day lives in the page. Recipes stay in it by slug even when deleted (the page skips them), so
+// it is never pruned here.
+export const readDay = () => normalizeDay(readJson(KEYS.day, null));
+export const writeDay = (day) => writeJson(KEYS.day, normalizeDay(day));
+export const clearDay = () => remove(KEYS.day);
 
 export const MAX_PRICE_EUR = 1000; // same limit as docs/contracts/evaluate.schema.json
 
@@ -351,7 +361,7 @@ export function importProducts(text) {
 const PROFILE_PARTS = { profile: isObject, llm: isObject, country: (v) => typeof v === "string",
   region: (v) => typeof v === "string", currency: (v) => typeof v === "string", store: (v) => typeof v === "string",
   name: (v) => typeof v === "string", budget: (v) => typeof v === "number", products: isObject, meals: isObject,
-  saved: Array.isArray, cart: isObject };
+  saved: Array.isArray, cart: isObject, day: isObject };
 const KEY_PARTS = { apiKey: (v) => typeof v === "string", openaiKey: (v) => typeof v === "string" };
 export const MAX_PROFILE_FILE = 4_000_000; // bytes; localStorage holds about 5 MB per site
 

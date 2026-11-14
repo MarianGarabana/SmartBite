@@ -111,8 +111,10 @@ export const defaultProfile = () => JSON.parse(JSON.stringify(DEFAULT_PROFILE));
 // ---- Kitchen Profile ----------------------------------------------------------------------------------------
 const number = (v) => (typeof v === "number" && !Number.isInteger(v) ? pyG(v) : String(v));
 
-// One profile field as prompt text, or null when the user left it empty
+// One profile field as prompt text, or null when the user left it empty or it is not for the prompt ("prompt": false,
+// the My Day daily targets)
 export function fieldLine(field) {
+  if (field.prompt === false) return null;
   const value = field.value;
   if (value === null || value === undefined || value === "" || (Array.isArray(value) && value.length === 0)) return null;
   if (field.type === "text") return String(value).trim() || null;

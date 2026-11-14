@@ -78,6 +78,22 @@ def test_section_with_only_empty_fields_is_skipped():
     assert "Budget:" not in render_profile(profile)
 
 
+def test_daily_targets_never_reach_the_prompt():
+    """My Day's daily targets: prompt false, null by default, left out of the prompt even when set."""
+    profile = copy.deepcopy(default_profile())
+    fields = {f["id"]: f for s in profile["sections"] for f in s["fields"]}
+    daily = ("daily_kcal_target", "daily_protein_g_target", "daily_carbs_g_max", "daily_fat_g_max")
+    for field_id in daily:
+        assert (fields[field_id]["value"], fields[field_id]["prompt"], fields[field_id]["type"]) == (None, False, "number")
+    before = render_profile(profile)
+    for field_id, value in zip(daily, (1800, 135, 220, 65)):
+        fields[field_id]["value"] = value
+    text = render_profile(profile)
+    assert text == before
+    assert "1800" not in text and "My Day" not in text
+    assert "1800" not in idea_prompt(FORM, profile=profile)["system"]
+
+
 def test_default_profile_has_no_city_store_or_person():
     text = (PROMPTS / "kitchen-profile.default.json").read_text(encoding="utf-8").lower()
     for word in ("mercadona", "carrefour", "lidl", " she ", " her "):

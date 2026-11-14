@@ -164,6 +164,9 @@ export function toMeal(slug, doc, { kind = "demo", saved = false } = {}) {
       carbs: `${Math.round(per.carbs_g)}g`, fat: `${Math.round(per.fat_g)}g` },
     // Per serving; null for meals made before fiber and vitamins were counted (the page hides them)
     fiber: fiberOf(ev.macros),
+    // Raw fiber grams per serving for My Day (lib/day.js microsToday); not in perServing, which the cart and shared
+    // links read
+    fiberG: Number.isFinite(per.fiber_g) ? per.fiber_g : null,
     micros: microsOf(ev.macros),
     // Demo photo shipped with the site (a path under public/, e.g. /demo/images/<slug>.jpg); photos the user adds
     // stay in the browser (lib/photos.js) and win over it

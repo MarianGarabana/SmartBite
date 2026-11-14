@@ -37,7 +37,8 @@
         "value": { "type": ["string", "number", "array", "null"], "description": "text: the whole line. number: the number. list: the items. Empty or null leaves the line out." },
         "unit": { "type": "string" },
         "line": { "type": "string", "description": "number and list fields: the prompt line, with {value} where the value goes." },
-        "help": { "type": "string" }
+        "help": { "type": "string" },
+        "prompt": { "type": "boolean", "description": "false: the field is never put in the prompt (the My Day daily targets). Omitted: it is." }
       },
       "additionalProperties": false
     }

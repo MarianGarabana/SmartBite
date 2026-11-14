@@ -57,7 +57,10 @@ def _number(value):
 
 
 def field_line(field):
-    """One profile field as prompt text, or None when the user left it empty."""
+    """One profile field as prompt text, or None when the user left it empty or it is not for the prompt
+    ("prompt": false, the My Day daily targets)."""
+    if field.get("prompt") is False:
+        return None
     value = field.get("value")
     if value is None or value == "" or value == []:
         return None

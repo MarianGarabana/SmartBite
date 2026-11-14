@@ -2,7 +2,7 @@
   "id": "default",
   "version": 1,
   "name": "Default kitchen",
-  "note": "Default Kitchen Profile. Every field is one editable line in the profile editor; smartbite_engine.prompts.render_profile turns it into prompt text. An empty value leaves the line out. Schema: docs/contracts/kitchen-profile.schema.json.",
+  "note": "Default Kitchen Profile. Every field is one editable line in the profile editor; smartbite_engine.prompts.render_profile turns it into prompt text. An empty value leaves the line out, and a field with prompt false (the My Day daily targets) never goes into the prompt. Schema: docs/contracts/kitchen-profile.schema.json.",
   "sections": [
     {
       "id": "about",
@@ -21,6 +21,20 @@
          "line": "About {value} kcal per meal unless the form says otherwise."},
         {"id": "protein_g_target", "label": "Protein per meal", "type": "number", "unit": "g", "value": 45,
          "line": "About {value} g protein per meal unless the form says otherwise."}
+      ]
+    },
+    {
+      "id": "day",
+      "label": "My Day",
+      "fields": [
+        {"id": "daily_kcal_target", "label": "Calories per day", "type": "number", "unit": "kcal", "value": null,
+         "prompt": false, "help": "For My Day only; not sent to the AI."},
+        {"id": "daily_protein_g_target", "label": "Protein per day", "type": "number", "unit": "g", "value": null,
+         "prompt": false, "help": "For My Day only; not sent to the AI."},
+        {"id": "daily_carbs_g_max", "label": "Carbs per day, at most", "type": "number", "unit": "g", "value": null,
+         "prompt": false, "help": "For My Day only; not sent to the AI."},
+        {"id": "daily_fat_g_max", "label": "Fat per day, at most", "type": "number", "unit": "g", "value": null,
+         "prompt": false, "help": "For My Day only; not sent to the AI."}
       ]
     },
     {

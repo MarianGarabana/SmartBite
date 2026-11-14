@@ -54,6 +54,7 @@ test("desktop: the header ends at How It Works; the demo is in the footer", asyn
   await page.goto("/");
   const items = await page.locator("header nav").first().locator("button, a").allInnerTexts();
   expect(items.at(-1)).toBe("How It Works");
+  expect(items.slice(0, 3)).toEqual(["Home", "My Recipes", "My Day"]); // My Day right after My Recipes (2026-11-14)
   await expect(page.locator("header").getByRole("link", { name: "Demo", exact: true })).toHaveCount(0);
   await expect(page.locator("#nav-start")).toHaveText("Get started"); // new visitor: the pill to /start
   await page.locator("#footer-demo").click();

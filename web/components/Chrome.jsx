@@ -17,6 +17,7 @@ import { SetupHost } from "./SetupDialog";
 export const TABS = [
   { id: "home", label: "Home" },
   { id: "recipes", label: "My Recipes" },
+  { id: "my-day", label: "My Day" },
   { id: "make-meal", label: "Make Your Meal" },
   { id: "cart", label: "Cart" },
   { id: "how-it-works", label: "How It Works" },
