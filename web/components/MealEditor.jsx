@@ -7,7 +7,8 @@ import { useEffect, useMemo, useState } from "react";
 import { productsFor } from "../lib/cartmath";
 import { evaluateMeal } from "../lib/engine";
 import { makeMeal, progressText } from "../lib/flow";
-import { editProblem, editedRecipe } from "../lib/meal";
+import { editProblem, editedRecipe, tagsOf, withTags } from "../lib/meal";
+import { TagPicker } from "./MealTags";
 import { foods } from "../lib/names";
 import { engineEstimates, llmReady, readActiveProducts, readLlm, readLocalMeals, readProfile, replaceLocalMeal } from "../lib/store";
 
@@ -21,6 +22,7 @@ export function MealEditor({ slug, onClose, showToast }) {
   const [stepsText, setStepsText] = useState((doc?.recipe.steps || []).join("\n"));
   const [rows, setRows] = useState(() => (doc?.recipe.ingredients || []).map((it, i) => ({ key: i, base: it, name: it.name,
     units_per_serving: it.units_per_serving || 0, amount: String(it.units_per_serving || it.grams_per_serving), pantry: it.pantry })));
+  const [tags, setTags] = useState(() => tagsOf(doc?.recipe));
   const [ask, setAsk] = useState("");
   const [busy, setBusy] = useState(null); // null | "save" | "ai"
   const [progress, setProgress] = useState(null);
@@ -38,8 +40,10 @@ export function MealEditor({ slug, onClose, showToast }) {
   // What a meal keeps through an edit: its date and where it came from (shared link, pasted recipe). The list of
   // foods to check after an import is dropped once the user saves: they have checked them.
   const kept = { ...(doc?.date ? { date: doc.date } : {}), ...(doc?.shared ? { shared: true } : {}), ...(doc?.imported ? { imported: true } : {}) };
+  // The meal tags ticked here (decided 2026-11-14) go on the saved recipe, also after a change with AI
   const done = (newDoc, message) => {
-    if (!replaceLocalMeal(slug, { ...newDoc, ...kept })) return setError("Not saved: this browser blocks storage.");
+    const tagged = { ...newDoc, recipe: withTags(newDoc.recipe, tags) };
+    if (!replaceLocalMeal(slug, { ...tagged, ...kept })) return setError("Not saved: this browser blocks storage.");
     showToast(message);
     onClose(true);
   };
@@ -116,6 +120,7 @@ export function MealEditor({ slug, onClose, showToast }) {
             <label htmlFor="edit-title" className={label}>Name</label>
             <input id="edit-title" value={title} onChange={(e) => setTitle(e.target.value)} maxLength={100} className={input} />
           </div>
+          <TagPicker value={tags} onChange={setTags} idPrefix="edit-tags" />
           <div>
             <span className={label}>Foods per serving</span>
             <datalist id="known-foods">{known.map((f) => <option key={f} value={f} />)}</datalist>

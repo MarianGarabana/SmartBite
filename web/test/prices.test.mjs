@@ -18,7 +18,7 @@ export async function resolve(specifier, context, next) {
 }`));
 
 const { priceKey, productsFor, withPrices } = await import("../lib/cartmath.js");
-const { categoriesOf, demoIdea, demoPicks, estimateTitle, periodText, toMeal } = await import("../lib/meal.js");
+const { categoriesOf, demoIdea, demoPicks, estimateTitle, periodText, tagsOf, toMeal, withTags } = await import("../lib/meal.js");
 const { consolidate } = await import("../lib/cart.js");
 const { listText } = await import("../lib/packs.js");
 const { evaluateMeal } = await import("../lib/engine.js");
@@ -334,6 +334,26 @@ test("every demo meal has a category, and each category has a demo meal", () => 
   assert.deepEqual(categoriesOf("Carrot cake overnight oats with berries"), ["Breakfast"]);
   assert.deepEqual(categoriesOf("Tuna and chickpea salad with skyr dressing"), ["Salads", "Lunch", "Dinner"]);
   assert.deepEqual(categoriesOf("Mild chicken breast curry with rice"), ["Warm Meals", "Lunch", "Dinner"]);
+});
+
+test("meal tags: the recipe's own tags win; without them the title guess (snack words make a Snack)", () => {
+  for (const t of ["Protein Balls", "Preworkout", "Pre-workout bites", "Peanut butter snack", "Oat protein bar"]) {
+    assert.deepEqual(categoriesOf(t), ["Snacks"], t);
+  }
+  const tagged = (title, meal_times, meal_style) => categoriesOf(title, { title, meal_times, meal_style });
+  assert.deepEqual(tagged("Yoghurt Bowl", ["breakfast", "snack"], "none"), ["Breakfast", "Snacks"]);
+  assert.deepEqual(tagged("Honest Greens Salad", ["dinner", "lunch"], "warm"), ["Warm Meals", "Lunch", "Dinner"]);
+  assert.deepEqual(tagged("Oatmeal Pancake", ["breakfast"], "warm"), ["Breakfast", "Warm Meals"]);
+  assert.deepEqual(tagged("Tuna Poke Bowl", ["lunch", "dinner"], "none"), ["Lunch", "Dinner"]);
+  // Unknown values are ignored: the title guess fills what is missing
+  assert.deepEqual(tagged("Avo Toast and Eggs", ["brunch"], "spicy"), ["Breakfast"]);
+  assert.deepEqual(tagsOf({ title: "Bolognese Pasta", meal_times: ["dinner"] }), { times: ["dinner"], style: "warm", tagged: false });
+  assert.deepEqual(withTags({ title: "Protein Balls" }, { times: ["snack", "breakfast"], style: "none" }),
+    { title: "Protein Balls", meal_times: ["breakfast", "snack"], meal_style: "none" });
+  const doc = JSON.parse(fs.readFileSync(path.join(DEMO, `${TUNA}.json`), "utf8"));
+  const meal = toMeal("tuna-tagged", { ...doc, recipe: { ...doc.recipe, meal_times: ["lunch"], meal_style: "salad" } }, { kind: "local" });
+  assert.deepEqual([meal.category, meal.categories, meal.tags], ["Salads", ["Salads", "Lunch"], { times: ["lunch"], style: "salad", tagged: true }]);
+  assert.equal(toMeal("tuna-auto", doc, { kind: "local" }).tags.tagged, false);
 });
 
 test("a demo idea card shows the meal, not the idea it started from", () => {

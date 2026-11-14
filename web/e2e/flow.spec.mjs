@@ -235,6 +235,8 @@ test("make a meal with a mocked model, the real engine, then cart and Adjust lef
   // Add to cart -> Cart tab
   // Save in my recipes: the toast says where it is kept; My Recipes points to the profile file (decided 2026-11-01)
   await page.getByRole("button", { name: "Save in my recipes" }).click();
+  // The tags box (decided 2026-11-14): pre-ticked, Save keeps them
+  await page.getByRole("dialog", { name: /./ }).getByRole("button", { name: "Save" }).click();
   await expect(page.locator("#toast-text")).toHaveText('Saved "Greek chicken bowl" in My Recipes, in this browser.');
   const recipeUrl = page.url();
   await page.goto("/?tab=recipes");

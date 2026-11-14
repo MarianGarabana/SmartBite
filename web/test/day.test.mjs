@@ -199,6 +199,8 @@ test("picker: recipes that fit the slot first, order kept; Snack keeps the order
   assert.deepEqual(slugs(day.pickerList(MEALS, "lunch")), ["bowl", "old-salad", "oats"]);
   assert.deepEqual(slugs(day.pickerList(MEALS, "snack")), ["bowl", "old-salad", "oats"]);
   assert.deepEqual(day.pickerList(MEALS, "snack").map((x) => x.match), [false, false, false]);
+  const balls = { slug: "balls", name: "Protein Balls", categories: ["Snacks"], ingredients: [] };
+  assert.deepEqual(slugs(day.pickerList([...MEALS, balls], "snack")), ["balls", "bowl", "old-salad", "oats"]);
   assert.deepEqual(slugs(day.pickerList(MEALS, "dinner", "  TUNA ")), ["old-salad"]);
   assert.deepEqual(slugs(day.pickerList(MEALS, "dinner", "rice chicken")), ["bowl"]);
   assert.deepEqual(slugs(day.pickerList(MEALS, "dinner", "skyr")), ["oats"]);

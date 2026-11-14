@@ -124,3 +124,14 @@ test("import: the photo prompt lists one serving's foods and amounts, eggs count
   assert.equal(request.picked_idea.image_prompt, photoPromptFor(request.recipe));
   for (const it of request.recipe.ingredients.filter((i) => !i.pantry)) assert.ok(request.picked_idea.image_prompt.includes(it.name), it.name);
 });
+
+test("import: the AI's meal tags go on the recipe; a reply without them adds none", () => {
+  const reply = { ...stored("en-tuna-salad"), meal_times: ["lunch", "dinner"], meal_style: "salad" };
+  assert.deepEqual(validateOutput(reply, "import.schema.json"), []);
+  const { request } = importedRequest(reply, { servings: 2, targets: {}, budgetPerServing: 3 });
+  assert.deepEqual([request.recipe.meal_times, request.recipe.meal_style], [["lunch", "dinner"], "salad"]);
+  assert.deepEqual(validateOutput(request.recipe, "recipe.schema.json"), []);
+  const plain = importedRequest(stored("en-tuna-salad"), { servings: 2, targets: {}, budgetPerServing: 3 }).request.recipe;
+  assert.equal("meal_times" in plain || "meal_style" in plain, false);
+  assert.ok(validateOutput({ ...reply, meal_times: ["brunch"] }, "import.schema.json").length > 0);
+});

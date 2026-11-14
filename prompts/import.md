@@ -46,9 +46,13 @@ OTHER FIELDS:
 - pantry is true only for salt, pepper, dried spices, dried herbs, oil and vinegar. Everything else is pantry false, garlic, fresh herbs and fresh ginger too.
 - storage: "fresh" if it spoils within days once opened or bought, "keeps" for dry, canned, bottled or long-life food, "frozen" for frozen food.
 
+MEAL TAGS (from the dish itself; the user checks them when saving):
+- meal_times: when people usually eat this dish, one or more of "breakfast", "lunch", "dinner", "snack". A main dish is ["lunch", "dinner"]. Oats, pancakes, toast, yogurt bowls and egg breakfasts are ["breakfast"]. Small bites, energy or protein balls, bars and pre-workout food are ["snack"].
+- meal_style: "salad" for a salad, "warm" for a dish eaten hot (stews, curries, bakes, hot bowls, pancakes, frittatas), "none" for anything else (yogurt bowls, overnight oats, protein balls, cold bowls).
+
 OUTPUT:
 Reply with ONLY this JSON object, no other text, no summary, no code fence. Optional fields on an ingredient: "pieces" (above) and "note" (at most 80 characters). Add no other fields.
-{"title": "...", "servings": null, "prep_time_min": 0, "ingredients": [{"line": "...", "name": "...", "grams_total": 0, "units_total": 0, "guessed": false, "storage": "fresh", "pantry": false, "dry": false}], "steps": ["..."]}
+{"title": "...", "servings": null, "prep_time_min": 0, "ingredients": [{"line": "...", "name": "...", "grams_total": 0, "units_total": 0, "guessed": false, "storage": "fresh", "pantry": false, "dry": false}], "steps": ["..."], "meal_times": ["lunch", "dinner"], "meal_style": "warm"}
 <!-- user -->
 KNOWN FOODS (English names; use these exact names when they fit):
 {{known_ingredients}}

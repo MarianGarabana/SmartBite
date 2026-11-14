@@ -65,7 +65,9 @@ export function importedRequest(reply, { servings, targets = {}, budgetPerServin
   });
   const title = String(reply.title || "Imported recipe").trim().slice(0, 100);
   const recipe = { title, servings: cooked, prep_time_min: reply.prep_time_min, ingredients,
-    steps: reply.steps.filter((s) => s.trim()).length ? reply.steps.filter((s) => s.trim()) : [NO_STEPS] };
+    steps: reply.steps.filter((s) => s.trim()).length ? reply.steps.filter((s) => s.trim()) : [NO_STEPS],
+    // the AI's meal tags (decided 2026-11-14), checked by the user when saving; a reply without them gets none here
+    ...(reply.meal_times?.length ? { meal_times: reply.meal_times } : {}), ...(reply.meal_style ? { meal_style: reply.meal_style } : {}) };
   const idea = { one_line: title.slice(0, 140), main_ingredients: [],
     image_prompt: photoPromptFor(recipe),
     rough_macros: { kcal: 0, protein_g: 0, carbs_g: 0, fat_g: 0 } }; // unknown before the engine; never shown

@@ -17,6 +17,10 @@ const MACROS = {
   additionalProperties: false,
 };
 
+// Meal tags on a recipe (decided 2026-11-14): when it is eaten and its style; optional, the title guess fills gaps
+const MEAL_TIMES = { type: "array", minItems: 1, maxItems: 4, items: { enum: ["breakfast", "lunch", "dinner", "snack"] } };
+const MEAL_STYLE = { enum: ["salad", "warm", "none"] };
+
 const IDEA = {
   type: "object",
   required: ["idea_id", "name", "one_line", "main_ingredients", "rough_macros", "image_prompt"],
@@ -84,6 +88,8 @@ export const SCHEMAS = {
           ingredients: { type: "array", minItems: 1, items: { $ref: "#/$defs/Ingredient" } },
           steps: { type: "array", minItems: 1, items: { type: "string" } },
           note: { type: "string", maxLength: 200 },
+          meal_times: MEAL_TIMES,
+          meal_style: MEAL_STYLE,
         },
         additionalProperties: false,
       },
@@ -102,6 +108,8 @@ export const SCHEMAS = {
           prep_time_min: { type: "integer", minimum: 0 },
           ingredients: { type: "array", minItems: 1, items: { $ref: "#/$defs/Ingredient" } },
           steps: { type: "array", items: { type: "string" } },
+          meal_times: MEAL_TIMES,
+          meal_style: MEAL_STYLE,
         },
         additionalProperties: false,
       },

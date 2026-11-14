@@ -30,7 +30,9 @@
           "items": { "$ref": "#/$defs/Ingredient" }
         },
         "steps": { "type": "array", "minItems": 1, "items": { "type": "string" } },
-        "note": { "type": "string", "maxLength": 200, "description": "Optional. One short line for the cook about the whole recipe." }
+        "note": { "type": "string", "maxLength": 200, "description": "Optional. One short line for the cook about the whole recipe." },
+        "meal_times": { "type": "array", "minItems": 1, "maxItems": 4, "items": { "enum": ["breakfast", "lunch", "dinner", "snack"] }, "description": "Optional (decided 2026-11-14). When the dish is eaten; the user checks it when saving. Missing: guessed from the title." },
+        "meal_style": { "enum": ["salad", "warm", "none"], "description": "Optional (decided 2026-11-14). A salad, a warm meal, or neither (e.g. yogurt bowl, protein balls)." }
       },
       "additionalProperties": false
     },

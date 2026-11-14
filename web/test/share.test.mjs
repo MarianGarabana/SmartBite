@@ -115,3 +115,13 @@ test("the same link opens the same meal address; another link another one", asyn
   assert.notEqual(sharedSlug("Same", a), sharedSlug("Same", b));
   assert.match(sharedSlug("Crème brûlée oats!", a), /^creme-brulee-oats-shared-[a-z0-9]+$/);
 });
+
+test("meal tags travel in a link; unknown tag values are dropped", async () => {
+  const meal = DEMO[0];
+  const recipe = { ...meal.source.recipe, meal_times: ["snack", "breakfast"], meal_style: "none" };
+  const tagged = { ...meal, source: { ...meal.source, recipe } };
+  const back = await decodeShare(await encodeShare(sharePayload(tagged)));
+  assert.deepEqual([back.recipe.meal_times, back.recipe.meal_style], [["breakfast", "snack"], "none"]);
+  const odd = cleanPayload({ ...sharePayload(meal), recipe: { ...sharePayload(meal).recipe, meal_times: ["brunch", "lunch"], meal_style: "cold" } });
+  assert.deepEqual([odd.recipe.meal_times, odd.recipe.meal_style], [["lunch"], undefined]);
+});

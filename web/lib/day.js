@@ -7,7 +7,7 @@ import { fieldValue } from "./profile";
 export const SLOTS = [
   { id: "breakfast", label: "Breakfast", category: "Breakfast" },
   { id: "lunch", label: "Lunch", category: "Lunch" },
-  { id: "snack", label: "Snack", category: null }, // no recipe is a Snack (meal.js categoriesOf): the plain list
+  { id: "snack", label: "Snack", category: "Snacks" }, // Snacks first (meal.js categoriesOf, decided 2026-11-14)
   { id: "dinner", label: "Dinner", category: "Dinner" },
 ];
 export const STEP = 0.5;
@@ -258,8 +258,8 @@ export function microsToday(rows) {
   };
 }
 
-// The "+ Add" picker: recipes that fit the slot first (Breakfast, Lunch, Dinner), then the rest, each in the order
-// given; Snack has no category and keeps the order. A search keeps recipes with every word in the name or a food.
+// The "+ Add" picker: recipes that fit the slot first (Breakfast, Lunch, Snacks, Dinner), then the rest, each in the
+// order given. A search keeps recipes with every word in the name or a food.
 // match: the recipe fits this slot.
 export function pickerList(meals, slotId, query = "") {
   const category = SLOTS.find((s) => s.id === slotId)?.category || null;

@@ -65,6 +65,17 @@ test("paste a recipe: read, pick servings, check in the editor, save", async ({ 
   await expect(page.locator("#tile-kcal")).not.toHaveText("");
   await expect(page.locator("#pack-table-body tr").first()).toBeVisible();
   await page.getByRole("button", { name: "Save in my recipes" }).click();
+  // The tags box (decided 2026-11-14): the reply had no tags, so the title guess is ticked (a soup: lunch and dinner,
+  // warm); the user makes it a snack before saving
+  const box = page.getByRole("dialog", { name: /Lentil soup/i });
+  await expect(box.getByRole("button", { name: "Lunch", pressed: true })).toBeVisible();
+  await expect(box.getByRole("button", { name: "Dinner", pressed: true })).toBeVisible();
+  await expect(box.getByRole("radio", { name: "Warm meal" })).toHaveAttribute("aria-checked", "true");
+  await box.getByRole("button", { name: "Snack" }).click();
+  await box.getByRole("button", { name: "Lunch" }).click();
+  await box.getByRole("button", { name: "Dinner" }).click();
+  await box.getByRole("radio", { name: "Neither" }).click();
+  await box.getByRole("button", { name: "Save" }).click();
   await expect(page.getByText(/^Saved ".*" in My Recipes, in this browser\.$/)).toBeVisible();
   await expect(page.getByText("Imported recipe", { exact: true })).toBeVisible(); // kept after the edit
   await expect(page.getByText("Read by AI", { exact: true })).toBeVisible(); // the foods are the user's recipe
@@ -79,6 +90,10 @@ test("paste a recipe: read, pick servings, check in the editor, save", async ({ 
   const doc = await page.evaluate((s) => JSON.parse(localStorage.getItem("smartbite.meals"))[s], slug);
   expect(doc.imported).toBe(true);
   expect(doc.import_check).toBeUndefined(); // checked and saved
+  expect([doc.recipe.meal_times, doc.recipe.meal_style]).toEqual([["snack"], "none"]);
+  await page.goto("/?tab=recipes");
+  await page.locator("#recipe-filter-chips").getByRole("button", { name: "Snacks" }).click();
+  await expect(page.getByRole("heading", { name: /Lentil soup/i })).toBeVisible();
   expect(JSON.stringify(doc)).not.toContain(FAKE_KEY);
   expect(errors).toEqual([]);
 });

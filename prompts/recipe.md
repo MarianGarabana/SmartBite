@@ -41,9 +41,13 @@ RERUN (only when the user part has a RERUN block):
 - A bought ingredient may grow at most 15% over its grams in the first recipe: GRAM LIMITS gives the maximum for each. Cuts over 15% are fine for macros or budget fixes, as long as protein stays at or above 90% of the target. Pantry items may change freely.
 - To cut a fresh leftover, use a different food or set "leftover_plan": "use_in_another_meal" on that ingredient instead of growing the portion.
 
+MEAL TAGS (the user checks them when saving):
+- meal_times: when people usually eat this dish, one or more of "breakfast", "lunch", "dinner", "snack". A main dish is ["lunch", "dinner"]. Oats, pancakes, toast, yogurt bowls and egg breakfasts are ["breakfast"]. Small bites, energy or protein balls, bars and pre-workout food are ["snack"].
+- meal_style: "salad" for a salad, "warm" for a dish eaten hot (stews, curries, bakes, hot bowls, pancakes, frittatas), "none" for anything else (yogurt bowls, overnight oats, protein balls, cold bowls).
+
 OUTPUT:
 Reply with ONLY this JSON object, no other text, no summary, no code fence. Optional fields: "note" on the recipe (one short line for the cook, at most 200 characters), and "note" (at most 80 characters) and "leftover_plan" on an ingredient. Add no other fields.
-{"idea_id": "...", "title": "...", "servings": 0, "prep_time_min": 0, "ingredients": [{"name": "...", "grams_per_serving": 0, "units_per_serving": 0, "storage": "fresh", "pantry": false, "dry": false}], "steps": ["..."]}
+{"idea_id": "...", "title": "...", "servings": 0, "prep_time_min": 0, "ingredients": [{"name": "...", "grams_per_serving": 0, "units_per_serving": 0, "storage": "fresh", "pantry": false, "dry": false}], "steps": ["..."], "meal_times": ["lunch", "dinner"], "meal_style": "warm"}
 <!-- user -->
 {{form}}
 

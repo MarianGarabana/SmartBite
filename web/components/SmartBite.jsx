@@ -40,14 +40,19 @@ function CartPrice({ item, prices, onBlocked, priceClass }) {
 }
 
 // Home category tiles (Marian, 2026-11-14, option A of her preview): square crops of demo meal photos, kept apart from
-// /demo/images so Home loads no demo meal files
-const CATEGORIES = [
+// /demo/images so Home loads no demo meal files. Snacks added the same day (option C): meal times in the order of a
+// day (as My Day), then the two dish styles; the Snacks photo is Marian's own Gemini photo of her Protein Balls.
+const MEAL_TIMES = [
   { name: "Breakfast", img: "/img/categories/breakfast.jpg" },
   { name: "Lunch", img: "/img/categories/lunch.jpg" },
+  { name: "Snacks", img: "/img/categories/snacks.jpg" },
   { name: "Dinner", img: "/img/categories/dinner.jpg" },
+];
+const DISH_STYLES = [
   { name: "Salads", img: "/img/categories/salads.jpg" },
   { name: "Warm Meals", img: "/img/categories/warm-meals.jpg" },
 ];
+const CATEGORIES = [...MEAL_TIMES, ...DISH_STYLES];
 // Meals show their category if they have one, else their date; "~" marks totals read as "about"
 const label = (m) => m.category || m.date;
 const kcal = (m) => `${m.approx ? "~" : ""}${m.kcal} kcal`;
@@ -268,10 +273,11 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
               </div>
               <AiLabel text="AI-generated photos" />
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
-              {CATEGORIES.map((c, i) => (
+            {[[MEAL_TIMES, "md:grid-cols-4", "h-52 sm:h-64 lg:h-80"], [DISH_STYLES, "mt-3 sm:mt-4", "h-52 lg:h-56"]].map(([row, cols, height]) => (
+            <div key={row[0].name} className={`grid grid-cols-2 ${cols} gap-3 sm:gap-4`}>
+              {row.map((c) => (
                 <button key={c.name} onClick={() => openCategory(c.name)}
-                  className={`group relative isolate h-52 sm:h-64 lg:h-80 rounded-[1.6rem] overflow-hidden text-left shadow-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime${i === CATEGORIES.length - 1 ? " col-span-2 md:col-span-1" : ""}`}>
+                  className={`group relative isolate ${height} rounded-[1.6rem] overflow-hidden text-left shadow-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime`}>
                   <img src={c.img} alt="" loading="lazy" decoding="async"
                     className="absolute inset-0 -z-10 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.07] motion-reduce:transition-none" />
                   <span className="absolute inset-0 -z-10 bg-gradient-to-t from-forest/90 via-forest/10 to-transparent" aria-hidden="true"></span>
@@ -284,6 +290,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                 </button>
               ))}
             </div>
+            ))}
           </div>
 
           {homeList.length > 0 ? (

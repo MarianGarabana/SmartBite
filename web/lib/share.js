@@ -84,6 +84,8 @@ export function sharePayload(meal) {
       })),
       steps: recipe.steps,
       ...(recipe.note ? { note: recipe.note } : {}),
+      ...(Array.isArray(recipe.meal_times) && recipe.meal_times.length ? { meal_times: recipe.meal_times } : {}),
+      ...(recipe.meal_style ? { meal_style: recipe.meal_style } : {}),
     },
     idea: {
       one_line: idea.one_line || "",
@@ -105,6 +107,8 @@ export const shareUrl = (origin, code) => `${origin}${SHARE_PATH}#${code}`;
 
 // --- reading a link: everything in it is untrusted, so only known fields of the right type and size come out ---
 const STORAGE = new Set(["fresh", "keeps", "frozen"]);
+const MEAL_TIME_SET = ["breakfast", "lunch", "dinner", "snack"]; // same values as lib/meal.js MEAL_TIMES
+const MEAL_STYLE_SET = ["salad", "warm", "none"];
 const text = (v, max, { required = true } = {}) => {
   if (v == null || v === "") {
     if (required) throw new ShareError("missing text");
@@ -155,6 +159,10 @@ export function cleanPayload(raw) {
   };
   const note = text(r.note, 200, { required: false });
   if (note) recipe.note = note;
+  // Meal tags (decided 2026-11-14): only the known values are kept; anything else is dropped, never an error
+  const times = Array.isArray(r.meal_times) ? MEAL_TIME_SET.filter((t) => r.meal_times.includes(t)) : [];
+  if (times.length) recipe.meal_times = times;
+  if (MEAL_STYLE_SET.includes(r.meal_style)) recipe.meal_style = r.meal_style;
   const i = raw.idea || {};
   const m = i.rough_macros || {};
   const idea = {

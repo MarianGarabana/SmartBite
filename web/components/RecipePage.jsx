@@ -9,17 +9,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { withPrices } from "../lib/cartmath";
-import { estimateTitle, periodText, toMeal } from "../lib/meal";
+import { estimateTitle, periodText, toMeal, withTags } from "../lib/meal";
 import { tabUrl } from "../lib/site";
 import { packRow, totals } from "../lib/packs";
 import { PHOTO_MAKERS, photoMaker } from "../lib/llm";
 import { MAX_PHOTO_BYTES, deletePhoto, makePhoto, putPhoto, usePhoto, usePhotoJob } from "../lib/photos";
-import { COUNTRIES, ESTIMATES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, profileComplete, readLlm, setLinePrice, setSaved } from "../lib/store";
+import { COUNTRIES, ESTIMATES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, profileComplete, readLlm, readLocalMeals, saveLocalMeal, setLinePrice,
+  setSaved } from "../lib/store";
 import { encodeShare, sharePayload, shareUrl } from "../lib/share";
 import { AiLabel, Footer, Header, MealImage, RECIPE_TABLE as T, Toast, money, moneySymbol, grams, useCart, useCurrency, useEstimates, useEvaluations, useMeals, usePrices,
   useProducts, useToast } from "./Chrome";
 import { EditProductButton, ProductCell, ProductDialog } from "./ProductDialog";
 import { MealEditor } from "./MealEditor";
+import { SaveTagsDialog } from "./MealTags";
 
 // Demo meals come from the server; meals made in this browser are looked up in its storage
 export default function RecipePage({ slug, demoMeals }) {
@@ -193,8 +195,13 @@ function RecipeView({ meal, meals, router }) {
   // A shared recipe opened by someone with no setup gets the "Make your own" card, like the demo (read after mount)
   const [setUp, setSetUp] = useState(true);
   useEffect(() => { setSetUp(profileComplete()); }, []);
-  const saveToRecipes = () => {
-    const ok = setSaved(meal.slug, true);
+  // "Save in my recipes" first asks for the meal tags (decided 2026-11-14), pre-ticked with the AI's or the title guess
+  const [savingTags, setSavingTags] = useState(false);
+  const saveToRecipes = () => setSavingTags(true);
+  const confirmSave = (tags) => {
+    const doc = readLocalMeals()[meal.slug];
+    const ok = !!doc && saveLocalMeal(meal.slug, { ...doc, recipe: withTags(doc.recipe, tags) }) && setSaved(meal.slug, true);
+    setSavingTags(false);
     if (ok) askPersist();
     showToast(ok ? `Saved "${meal.name}" in My Recipes, in this browser.` : "Not saved: this browser blocks storage.");
   };
@@ -645,6 +652,7 @@ function RecipeView({ meal, meals, router }) {
 
       <Footer onNavigate={go} />
       {editingMeal && <MealEditor slug={meal.slug} onClose={closeEditor} showToast={showToast} />}
+      {savingTags && <SaveTagsDialog name={meal.name} initial={meal.tags} onSave={confirmSave} onClose={() => setSavingTags(false)} />}
       {editing && <ProductDialog row={editing} onClose={() => setEditing(null)} showToast={showToast} />}
       <Toast toast={toast} />
     </div>

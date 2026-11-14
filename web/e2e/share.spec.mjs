@@ -45,6 +45,8 @@ test("a fresh browser with no key opens the link as a recipe page and can save i
   await expect(other.locator("#make-your-own")).toBeVisible(); // no setup yet: the way to make your own
 
   await other.getByRole("button", { name: "Save in my recipes" }).click();
+  // The tags box (decided 2026-11-14): pre-ticked, Save keeps them
+  await other.getByRole("dialog", { name: /./ }).getByRole("button", { name: "Save" }).click();
   await expect(other.getByText(`Saved "${TITLE}" in My Recipes, in this browser.`)).toBeVisible();
   const slug = new URL(other.url()).pathname.split("/").pop();
   expect(await other.evaluate(() => JSON.parse(localStorage.getItem("smartbite.saved")))).toEqual([slug]);

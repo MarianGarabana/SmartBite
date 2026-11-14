@@ -35,12 +35,50 @@ export const estimateLabel = (period, region, country = readCountry()) => {
 // Tooltip of an estimated price
 export const estimateTitle = (period, region, country) => `Estimated: ${estimateLabel(period, region, country)}`;
 
-// Recipe categories come from the title, in code (no AI): breakfast foods make a Breakfast; any other meal is a
-// Lunch and a Dinner, and a Salad or a Warm Meal. The first one is the label on the meal's card.
+// Meal tags (decided 2026-11-14): when a dish is eaten (one or more meal times) and its style (salad, warm or
+// neither). The AI that writes or reads a recipe sets them (recipe.meal_times, recipe.meal_style), the user checks them
+// when saving and in Edit meal. A recipe without them (made before, a demo meal, a shared link) gets a guess from its
+// title, in code: snack words make a Snack, breakfast foods a Breakfast, anything else a Lunch and Dinner, a Salad
+// when the title says salad, else a Warm Meal.
+export const MEAL_TIMES = ["breakfast", "lunch", "dinner", "snack"];
+export const MEAL_STYLES = ["salad", "warm", "none"];
+export const TIME_LABELS = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner", snack: "Snack" };
+export const STYLE_LABELS = { salad: "Salad", warm: "Warm meal", none: "Neither" };
+const TIME_CATEGORY = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner", snack: "Snacks" };
+const STYLE_CATEGORY = { salad: "Salads", warm: "Warm Meals" };
+const SNACK = /\b(snacks?|protein balls?|energy balls?|bites|bars?|pre-?workout)\b/i;
 const BREAKFAST = /\b(oats|porridge|pancakes?|granola|muesli|toast|smoothie)\b/i;
-export function categoriesOf(title) {
-  if (BREAKFAST.test(title)) return ["Breakfast"];
-  return [/\bsalad\b/i.test(title) ? "Salads" : "Warm Meals", "Lunch", "Dinner"];
+
+export function guessTags(title) {
+  if (SNACK.test(title)) return { times: ["snack"], style: "none" };
+  if (BREAKFAST.test(title)) return { times: ["breakfast"], style: "none" };
+  return { times: ["lunch", "dinner"], style: /\bsalad\b/i.test(title) ? "salad" : "warm" };
+}
+
+// The tags of a recipe: its own when it has them (meal times in a fixed order), else the title guess for the part
+// it lacks. tagged: both came with the recipe.
+export function tagsOf(recipe) {
+  const own = Array.isArray(recipe?.meal_times) ? MEAL_TIMES.filter((t) => recipe.meal_times.includes(t)) : [];
+  const style = MEAL_STYLES.includes(recipe?.meal_style) ? recipe.meal_style : null;
+  const guess = guessTags(recipe?.title || "");
+  return { times: own.length ? own : guess.times, style: style || guess.style, tagged: own.length > 0 && !!style };
+}
+
+// The recipe with these tags written on it (an empty times list keeps the recipe's own or the guess)
+export const withTags = (recipe, { times, style }) => ({
+  ...recipe,
+  meal_times: MEAL_TIMES.filter((t) => (times || []).includes(t)).length ? MEAL_TIMES.filter((t) => times.includes(t)) : tagsOf(recipe).times,
+  meal_style: MEAL_STYLES.includes(style) ? style : tagsOf(recipe).style,
+});
+
+// Recipe categories for Home, My Recipes and My Day: one per meal time, plus Salads or Warm Meals. The first is the
+// label on the meal's card: the style for a lunch or dinner dish, else its first meal time.
+export function categoriesOf(title, recipe = null) {
+  const { times, style } = recipe ? tagsOf({ title, ...recipe }) : guessTags(title);
+  const timeCats = times.map((t) => TIME_CATEGORY[t]);
+  const styleCat = STYLE_CATEGORY[style];
+  if (!styleCat) return timeCats;
+  return times.includes("lunch") || times.includes("dinner") ? [styleCat, ...timeCats] : [...timeCats, styleCat];
 }
 
 // A demo meal as an idea card: name, macros and foods of the meal itself, not of the idea it started from
@@ -144,8 +182,9 @@ export function toMeal(slug, doc, { kind = "demo", saved = false } = {}) {
     shared: !!doc.shared, // opened from a shared link (lib/share.js), labelled "Shared recipe"
     imported: !!doc.imported, // read from a pasted recipe (lib/importer.js), labelled "Imported recipe"
     name: doc.recipe.title,
-    categories: categoriesOf(doc.recipe.title),
-    category: categoriesOf(doc.recipe.title)[0],
+    categories: categoriesOf(doc.recipe.title, doc.recipe),
+    category: categoriesOf(doc.recipe.title, doc.recipe)[0],
+    tags: tagsOf(doc.recipe), // { times, style, tagged }: set by the AI and checked by the user, else the title guess
     date: doc.date || null,
     servings,
     time: doc.recipe.prep_time_min,
