@@ -99,9 +99,12 @@ test("demo tabs show in the address under /demo, and Back goes to the tab before
   await expect(page.locator("#tab-cart")).toBeVisible();
 });
 
-test("the real app shows only the user's meals; a new visitor gets Set up profile or Try the demo", async ({ page }) => {
+test("the real app shows only the user's meals; a new visitor gets Make your meal or Try the demo", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator("#home-setup")).toContainText("Set up your profile first");
+  // Home (2026-11-14): no setup card; the hero has Make your meal (to /start) and Try the demo
+  await expect(page.locator("#home-setup")).toHaveCount(0);
+  await expect(page.locator("#hero-demo")).toBeVisible();
+  await expect(page.locator("#home-why")).toContainText("Why I built SmartBite");
   await expect(page.locator("#home-kitchen-grid")).toHaveCount(0);
   await expect(page.locator("#demo-banner")).toHaveCount(0);
   await page.goto("/?tab=recipes");
@@ -145,4 +148,12 @@ test("a demo recipe shows a greyed save button that explains how to save a meal"
   await expect(save).toHaveAttribute("aria-disabled", "true");
   await save.click({ force: true }); // Playwright skips aria-disabled elements; browsers still deliver the click
   await expect(page.getByText("Example meals are already in My Recipes. Make your own meal to save it.")).toBeVisible();
+});
+
+test("a Home category with no recipes of your own opens the demo recipes in that category", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Breakfast" }).click();
+  await expect(page).toHaveURL(/\/demo\?tab=recipes&category=Breakfast$/);
+  await expect(page.locator("#recipe-filter-chips .active-chip")).toHaveText("Breakfast");
+  await expect(page.locator("#recipes-grid a[href^='/recipes/']").first()).toBeVisible();
 });

@@ -38,17 +38,58 @@ function CartPrice({ item, prices, onBlocked, priceClass }) {
   );
 }
 
+// Home category tiles (Marian, 2026-11-14, option A of her preview): square crops of demo meal photos, kept apart from
+// /demo/images so Home loads no demo meal files
 const CATEGORIES = [
-  { name: "Breakfast", img: "/img/breakfast.jpg" },
-  { name: "Lunch", img: "/img/lunch.jpg" },
-  { name: "Dinner", img: "/img/dinner.jpg" },
-  { name: "Salads", img: "/img/salads.jpg" },
-  { name: "Warm Meals", img: "/img/warm-meals.jpg" },
+  { name: "Breakfast", img: "/img/categories/breakfast.jpg" },
+  { name: "Lunch", img: "/img/categories/lunch.jpg" },
+  { name: "Dinner", img: "/img/categories/dinner.jpg" },
+  { name: "Salads", img: "/img/categories/salads.jpg" },
+  { name: "Warm Meals", img: "/img/categories/warm-meals.jpg" },
 ];
 // Meals show their category if they have one, else their date; "~" marks totals read as "about"
 const label = (m) => m.category || m.date;
 const kcal = (m) => `${m.approx ? "~" : ""}${m.kcal} kcal`;
 const protein = (m) => `${m.approx ? "~" : ""}${m.protein}g`;
+
+// "How SmartBite works" steps on Home (Marian, 2026-11-14): the real flow, with the AI steps named as AI. One step is
+// open at a time; hovering a step opens it (her ask), and click or keyboard focus does too for touch and keyboards.
+const HOME_STEPS = [
+  ["fa-brain", "Tell us what you're craving", "Say what you feel like eating, what to leave out, and your calorie, protein and budget targets."],
+  ["fa-robot", "AI suggests 4 ideas", "Four meal ideas made for your targets. Pick one, or tell the AI what to change."],
+  ["fa-wand-magic-sparkles", "AI writes the recipe", "Every ingredient in grams, with the steps to cook it."],
+  ["fa-calculator", "Code does the math", "Each ingredient is matched to a typical pack size. Macros, vitamins and minerals are calculated, never guessed."],
+  ["fa-basket-shopping", "One cart, less waste", "Add meals to one cart for a shopping list in whole packs, then turn the leftovers into more meals."],
+];
+function HomeSteps() {
+  const [open, setOpen] = useState(0);
+  return (
+    <ol className="space-y-3">
+      {HOME_STEPS.map(([icon, title, text], i) => {
+        const on = open === i;
+        return (
+          <li key={title}>
+            <button type="button" onClick={() => setOpen(i)} onMouseEnter={() => setOpen(i)} onFocus={() => setOpen(i)} aria-expanded={on}
+              className={`w-full text-left rounded-2xl border px-4 py-3 sm:px-5 sm:py-4 transition-colors duration-300 ${on ? "bg-forest border-forest text-cream shadow-lg" : "bg-white border-cream-dark text-forest hover:border-forest/40"}`}>
+              <span className="flex items-center gap-4">
+                <span className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-colors duration-300 ${on ? "bg-lime text-forest" : "bg-forest text-lime"}`}>
+                  <i className={`fa-solid ${icon} text-sm`} aria-hidden="true"></i>
+                </span>
+                <span className="flex-1 font-bold">{title}</span>
+                <span className={`text-xs font-bold tabular-nums ${on ? "text-lime" : "text-forest/50"}`}>{String(i + 1).padStart(2, "0")}</span>
+              </span>
+              <span className={`grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none ${on ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+                <span className="overflow-hidden">
+                  <span className="block pt-2 pl-14 text-sm text-cream/85 leading-relaxed">{text}</span>
+                </span>
+              </span>
+            </button>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
 
 // The two ways in before the real app can make meals (decided 2026-10-30): set up the profile, or try the demo.
 // On home and in an empty My Recipes (Make Your Meal sends people to /start instead); same card as "How SmartBite
@@ -75,12 +116,12 @@ function SetupChoices({ id, onSetUp }) {
 
 // The same shell runs the real app (/) and the demo (/demo, inside DemoMode): the demo shows only the demo meals and
 // its own cart; the real app only the meals made in this browser, and Make Your Meal once the profile is complete.
-export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab = "home" }) {
+export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab = "home", initialCategory = "All" }) {
   useCurrency();
   const demo = useDemo();
   const complete = useProfileComplete(); // null until read
   const [tab, setTab] = useState(initialTab);
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState(CATEGORIES.some((c) => c.name === initialCategory) ? initialCategory : "All");
   const [query, setQuery] = useState("");
   const [pasting, setPasting] = useState(false); // the Paste a recipe box on My Recipes
   const { toast, showToast } = useToast();
@@ -133,7 +174,9 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
     window.addEventListener("popstate", onBack);
     return () => window.removeEventListener("popstate", onBack);
   }, []);
+  // A new visitor has no recipes of their own yet: a category opens the demo recipes instead of an empty page
   const openCategory = (name) => {
+    if (!demo && own.length === 0) return router.push(`${tabUrl("recipes", true)}&category=${encodeURIComponent(name)}`);
     switchTab("recipes");
     setCategory(name);
   };
@@ -171,67 +214,65 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
 
         {/* TAB 1: HOME */}
         <section id="tab-home" className={`tab-page space-y-12${tab === "home" ? "" : " hidden"}`}>
-          <div className="max-w-[1360px] mx-auto px-8">
-            <div className="bg-forest text-cream rounded-[2.5rem] p-10 lg:p-14 relative overflow-hidden shadow-xl">
-              <div className="absolute -top-32 -right-32 w-96 h-96 bg-lime/10 rounded-full blur-3xl pointer-events-none"></div>
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-                <div className="lg:col-span-7 space-y-6">
-                  <span className="inline-block px-3.5 py-1.5 rounded-full bg-forest-light border border-lime/30 text-lime text-xs font-semibold tracking-wider">
-                    Whole-pack meal planner
-                  </span>
-                  <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.12] text-white">
-                    Meals that fit{" "}
-                    <span className="font-script text-lime text-5xl sm:text-6xl block -rotate-2 -my-2">your macros</span>
-                    and your budget.
-                  </h1>
-                  <p className="text-cream/80 text-base sm:text-lg max-w-xl font-light leading-relaxed">
-                    Tell SmartBite what you feel like eating. It writes a recipe in grams and a shopping list in whole packs, with the macros worked out in code.
-                  </p>
-                  <div className="pt-2 flex flex-wrap items-center gap-4">
-                    <button onClick={() => switchTab("make-meal")} className="bg-lime hover:bg-lime-hover text-forest font-bold text-base px-8 py-4 rounded-full transition-all duration-300 shadow-glow flex items-center gap-3">
-                      <span>Make your meal</span>
-                      <i className="fa-solid fa-arrow-right text-sm"></i>
-                    </button>
-                    {/* Demo button on home (Marian, 2026-11-10): the real app only; the demo is already the demo */}
-                    {!demo && (
-                      <Link id="hero-demo" href="/demo" className="border-2 border-lime/60 hover:border-lime hover:bg-forest-light text-lime font-bold text-base px-8 py-[14px] rounded-full transition-all duration-300 flex items-center gap-3">
-                        <i className="fa-solid fa-play text-sm"></i>
-                        <span>Try the demo</span>
-                      </Link>
-                    )}
-                  </div>
-                </div>
-                <div className="lg:col-span-5 flex justify-center items-center relative">
-                  <div className="absolute w-[320px] h-[320px] sm:w-[380px] sm:h-[380px] bg-lime rounded-full -rotate-6 shadow-glow opacity-90"></div>
-                  <div className="relative z-10 w-[300px] h-[300px] sm:w-[360px] sm:h-[360px] rounded-full overflow-hidden border-8 border-forest shadow-2xl">
-                    <img src="/img/hero-bowl.jpg" alt="Healthy chicken and vegetable bowl" fetchPriority="high" width="800" height="800" className="w-full h-full object-cover" />
-                  </div>
+          {/* Hero on one photo, text straight on its empty side (Marian, 2026-11-14, after a Greenify reference she liked):
+              her Unsplash flat lay, mirrored so the food sits on the right. Forest scrim from the left keeps the words readable. */}
+          <div className="max-w-[1360px] mx-auto px-4 sm:px-8">
+            <div id="home-photo" className="relative isolate overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] shadow-xl bg-forest">
+              <img src="/img/home/hero.jpg" alt="" fetchPriority="high" decoding="async" className="absolute inset-0 -z-10 w-full h-full object-cover object-right" />
+              <div className="absolute inset-0 -z-10 bg-forest/75 sm:bg-transparent sm:bg-gradient-to-r sm:from-forest/90 sm:via-forest/60 sm:to-transparent" aria-hidden="true"></div>
+              <div className="text-cream px-7 py-12 sm:px-12 sm:py-20 lg:px-16 lg:py-24 max-w-[720px] space-y-6">
+                <span className="inline-block px-3.5 py-1.5 rounded-full bg-forest/60 border border-lime/40 text-lime text-xs font-semibold tracking-wider">
+                  Whole-pack meal planner
+                </span>
+                <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.12] text-white">
+                  Meals that fit{" "}
+                  <span className="font-script text-lime text-5xl sm:text-6xl block -rotate-2 mt-1 mb-2">your macros</span>
+                  and your budget.
+                </h1>
+                <p className="text-cream/90 text-base sm:text-lg max-w-xl leading-relaxed">
+                  Tell SmartBite what you feel like eating. It writes a recipe in grams and a shopping list in whole packs, with the macros calculated for you.
+                </p>
+                <div className="pt-2 flex flex-wrap items-center gap-4">
+                  <button onClick={() => switchTab("make-meal")} className="bg-cream hover:bg-lime text-forest font-bold text-base px-8 py-4 rounded-full transition-all duration-300 shadow-lg flex items-center gap-3">
+                    <span>Make your meal</span>
+                    <i className="fa-solid fa-arrow-right text-sm"></i>
+                  </button>
+                  {/* Demo button on home (Marian, 2026-11-10): the real app only; the demo is already the demo.
+                      It replaces the "Set up your profile first" card here (2026-11-14): Make your meal opens /start */}
+                  {!demo && (
+                    <Link id="hero-demo" href="/demo" className="border-2 border-cream/50 hover:border-cream hover:bg-cream/10 text-cream font-bold text-base px-8 py-[14px] rounded-full transition-all duration-300 flex items-center gap-3">
+                      <i className="fa-solid fa-play text-sm"></i>
+                      <span>Try the demo</span>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* New visitor: the two choices come right under the hero, so phones see them first */}
-          {homeList.length === 0 && !demo && complete === false && (
-            <div className="max-w-[1360px] mx-auto px-8">
-              <SetupChoices id="home-setup" onSetUp={setUp} />
-            </div>
-          )}
-
-          <div className="max-w-[1360px] mx-auto px-8">
-            <div className="flex items-center justify-between mb-6">
+          {/* Explore Categories as big photo tiles (Marian, 2026-11-14, option A): name on a dark fade, hover zooms the photo
+              and shows an arrow. The photos are AI-generated demo photos, so the row carries one label like elsewhere. */}
+          <div className="max-w-[1360px] mx-auto px-4 sm:px-8">
+            <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-forest/70">Recipe Collection</span>
-                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-forest">Explore Categories</h2>
+                <span className="font-script text-2xl sm:text-3xl text-forest font-bold block">Recipe collection</span>
+                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-forest">Explore Categories</h2>
               </div>
+              <AiLabel text="AI-generated photos" />
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-              {CATEGORIES.map((c) => (
-                <button key={c.name} onClick={() => openCategory(c.name)} className="group flex flex-col items-center p-6 bg-white rounded-3xl shadow-soft hover:shadow-card hover:-translate-y-1 transition-all border border-cream-dark/50">
-                  <div className="w-24 h-24 rounded-full bg-cream-card group-hover:bg-lime/20 flex items-center justify-center mb-4 transition-colors overflow-hidden">
-                    <img src={c.img} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                  </div>
-                  <span className="font-serif font-bold text-lg text-forest">{c.name}</span>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
+              {CATEGORIES.map((c, i) => (
+                <button key={c.name} onClick={() => openCategory(c.name)}
+                  className={`group relative isolate h-52 sm:h-64 lg:h-80 rounded-[1.6rem] overflow-hidden text-left shadow-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime${i === CATEGORIES.length - 1 ? " col-span-2 md:col-span-1" : ""}`}>
+                  <img src={c.img} alt="" loading="lazy" decoding="async"
+                    className="absolute inset-0 -z-10 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.07] motion-reduce:transition-none" />
+                  <span className="absolute inset-0 -z-10 bg-gradient-to-t from-forest/90 via-forest/10 to-transparent" aria-hidden="true"></span>
+                  <span className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-2">
+                    <span className="font-serif font-bold text-lg lg:text-xl text-white leading-tight">{c.name}</span>
+                    <span className="w-9 h-9 shrink-0 rounded-full bg-lime text-forest flex items-center justify-center opacity-0 translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0" aria-hidden="true">
+                      <i className="fa-solid fa-arrow-right text-sm"></i>
+                    </span>
+                  </span>
                 </button>
               ))}
             </div>
@@ -274,18 +315,59 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
           </div>
           ) : null}
 
-          <div className="max-w-[1360px] mx-auto px-8 pt-6">
-            <div className="bg-cream-card rounded-3xl p-8 border border-cream-dark flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-widest text-forest/70">How SmartBite Works</span>
-                <h3 className="font-serif text-2xl font-bold text-forest">From craving to shopping list in 5 steps</h3>
-                <p className="text-xs text-forest/70 max-w-2xl">
-                  Type a craving and your targets. AI writes the recipe; code matches each ingredient to a typical pack size and works out macros, vitamins, minerals and leftovers.
+          {/* Why I built SmartBite + How it works at the bottom (Marian, 2026-11-14, after a Healora reference she liked):
+              on the page background, text on one side and a rounded photo on the other, alternating sides. */}
+          <div className="max-w-[1360px] mx-auto px-4 sm:px-8 pt-4 space-y-16 sm:space-y-24">
+            {/* Why SmartBite exists (Marian, 2026-11-14): her reason for building it, for people trying the app */}
+            <div id="home-why" className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+              <div className="lg:col-span-7 space-y-5">
+                <span className="font-script text-3xl text-forest font-bold block">Why I built SmartBite</span>
+                <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest leading-tight">I wanted my meal prep to take less time.</h2>
+                <p className="text-base text-forest/75 leading-relaxed max-w-2xl">
+                  Every week I planned my meal prep recipes by hand, and it took too long. I wanted each meal to give me the macros and nutrients I need for the day, at a price that fits my budget.
                 </p>
+                <p className="text-base text-forest/75 leading-relaxed max-w-2xl">
+                  I also wanted to use every pack I buy, so food doesn't go to waste. SmartBite does that for me: tell it what you feel like eating, and it gives you the recipe, the shopping list and a plan for the leftovers.
+                </p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-7 pt-4">
+                  {[
+                    ["fa-clock", "Faster meal prep", "A full recipe in grams in a few minutes, not an evening of planning."],
+                    ["fa-dumbbell", "Your macros and nutrients", "Each meal is built around your calorie and protein targets, with vitamins and minerals listed."],
+                    ["fa-wallet", "Budget-friendly meals", "Everyday ingredients and a shopping list in whole packs."],
+                    ["fa-leaf", "Less food waste", "A plan for what is left in each pack, so nothing gets thrown out."],
+                  ].map(([icon, title, line]) => (
+                    <li key={title} className="flex items-start gap-4">
+                      <span className="w-10 h-10 shrink-0 rounded-full bg-forest text-lime flex items-center justify-center">
+                        <i className={`fa-solid ${icon} text-sm`} aria-hidden="true"></i>
+                      </span>
+                      <div className="space-y-1 pt-2">
+                        <h3 className="font-bold text-forest leading-tight">{title}</h3>
+                        <p className="text-sm text-forest/70 leading-relaxed">{line}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <button onClick={() => switchTab("how-it-works")} className="bg-forest hover:bg-forest-light text-lime font-bold text-xs px-6 py-3 rounded-full transition-all whitespace-nowrap">
-                Learn How It Works
-              </button>
+              <img src="/img/home/why.jpg" alt="Three glass meal prep containers with lentils, corn, tomato and cucumber" loading="lazy" decoding="async"
+                className="lg:col-span-5 w-full aspect-[4/3] lg:aspect-[4/5] object-cover rounded-[2rem] shadow-xl" />
+            </div>
+
+            <div id="home-how" className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              <div className="space-y-5 lg:order-2">
+                <span className="font-script text-3xl text-forest font-bold block">How SmartBite works</span>
+                <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest leading-tight">From craving to shopping list in 5 steps</h2>
+                <p className="text-base text-forest/75 leading-relaxed max-w-xl">
+                  AI picks the foods and grams; code does all the math.
+                </p>
+                <HomeSteps />
+                <div className="pt-3">
+                  <button onClick={() => switchTab("how-it-works")} className="bg-forest hover:bg-forest-light text-lime font-bold text-sm px-6 py-3 rounded-full transition-all whitespace-nowrap">
+                    Learn How It Works
+                  </button>
+                </div>
+              </div>
+              <img src="/img/home/how.jpg" alt="Bowls of diced potato, carrot and green beans ready to cook" loading="lazy" decoding="async"
+                className="w-full aspect-[4/3] lg:aspect-square object-cover rounded-[2rem] shadow-xl lg:order-1" />
             </div>
           </div>
         </section>

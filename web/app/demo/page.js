@@ -12,11 +12,12 @@ export const metadata = {
 
 // The demo (decided 2026-10-30): the same app with the demo meals and its own cart, no key, no model call
 export default async function Page({ searchParams }) {
-  const { tab } = await searchParams;
+  const { tab, category } = await searchParams; // ?category= from a Home category on the real app with no own recipes
   const meals = loadDemoMeals();
   return (
     <DemoMode>
-      <SmartBite demoMeals={meals} homeMeals={randomFive(meals)} initialTab={TAB_IDS.includes(tab) ? tab : "home"} />
+      <SmartBite demoMeals={meals} homeMeals={randomFive(meals)} initialTab={TAB_IDS.includes(tab) ? tab : "home"}
+        initialCategory={category} />
     </DemoMode>
   );
 }
