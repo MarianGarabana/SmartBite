@@ -108,10 +108,38 @@ async function send(url, headers, body, llm, signal) {
       ? `The provider did not accept the key (${res.status}). Check it in your Profile.`
       : res.status === 429 ? "The provider says too many requests (429). Free keys allow only a few calls per minute and per day: wait a minute, or try again tomorrow."
         : `The provider answered with an error (${res.status}).`;
-    throw new LlmError(detail ? `${lead} ${detail}` : lead);
+    const error = new LlmError(detail ? `${lead} ${detail}` : lead);
+    error.keyRejected = res.status === 401 || res.status === 403; // the screen then links to the Profile
+    throw error;
   }
   if (!data) throw new LlmError("The provider sent a reply that is not JSON.");
   return data;
+}
+
+// Is this key accepted? Asked when the key is saved in the setup, so a wrong key shows there and not after the whole
+// quiz. One GET of the provider's model list: no model runs, nothing is billed. Anthropic and Gemini only (the two
+// setup choices; both answer browsers on these routes, checked 2026-11-17: preflight 200, a wrong key gets 401 from
+// Anthropic and 400 from Gemini). Returns true (accepted), false (rejected) or null (could not check: offline, the
+// provider is down or busy), and null never blocks saving.
+export const KEY_CHECK_MS = 10 * 1000;
+export async function checkKey({ provider, apiKey, baseUrl }) {
+  const anthropic = provider === ANTHROPIC;
+  if (!anthropic && !isGemini(baseUrl)) return null;
+  const url = anthropic ? "https://api.anthropic.com/v1/models?limit=1" : `${new URL(baseUrl).origin}/v1beta/models?pageSize=1`;
+  const headers = anthropic
+    ? { "x-api-key": apiKey, "anthropic-version": ANTHROPIC_VERSION, "anthropic-dangerous-direct-browser-access": "true" }
+    : { "x-goog-api-key": apiKey };
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), KEY_CHECK_MS);
+  try {
+    const res = await fetch(url, { headers, signal: controller.signal });
+    if (res.ok) return true;
+    return [400, 401, 403].includes(res.status) ? false : null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 // One Messages API call. Returns the reply text and the assistant turn to send back on a retry (the full content,

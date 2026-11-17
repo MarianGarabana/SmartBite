@@ -120,6 +120,9 @@ function SetupChoices({ id, onSetUp }) {
   );
 }
 
+const HERO_MAIN = "bg-cream hover:bg-lime text-forest font-bold text-base px-8 py-4 rounded-full transition-all duration-300 shadow-lg flex items-center gap-3";
+const HERO_SECOND = "border-2 border-cream/50 hover:border-cream hover:bg-cream/10 text-cream font-bold text-base px-8 py-[14px] rounded-full transition-all duration-300 flex items-center gap-3";
+
 // The same shell runs the real app (/) and the demo (/demo, inside DemoMode): the demo shows only the demo meals and
 // its own cart; the real app only the meals made in this browser, and Make Your Meal once the profile is complete.
 export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab = "home", initialCategory = "All" }) {
@@ -231,7 +234,10 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
               her Unsplash flat lay, mirrored so the food sits on the right. Forest scrim from the left keeps the words readable. */}
           <div className="max-w-[1360px] mx-auto px-4 sm:px-8">
             <div id="home-photo" className="relative isolate overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] shadow-xl bg-forest">
-              <img src="/img/home/hero.jpg" alt="" fetchPriority="high" decoding="async" className="absolute inset-0 -z-10 w-full h-full object-cover object-right" />
+              <picture>
+                <source media="(max-width: 639px)" srcSet="/img/home/hero-phone.jpg" />
+                <img src="/img/home/hero.jpg" alt="" fetchPriority="high" decoding="async" className="absolute inset-0 -z-10 w-full h-full object-cover object-right" />
+              </picture>
               <div className="absolute inset-0 -z-10 bg-forest/75 sm:bg-transparent sm:bg-gradient-to-r sm:from-forest/90 sm:via-forest/60 sm:to-transparent" aria-hidden="true"></div>
               <div className="text-cream px-7 py-12 sm:px-12 sm:py-20 lg:px-16 lg:py-24 max-w-[720px] space-y-6">
                 <span className="inline-block px-3.5 py-1.5 rounded-full bg-forest/60 border border-lime/40 text-lime text-xs font-semibold tracking-wider">
@@ -245,20 +251,45 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                 <p className="text-cream/90 text-base sm:text-lg max-w-xl leading-relaxed">
                   Tell SmartBite what you feel like eating. It writes a recipe in grams and a shopping list in whole packs, with the macros calculated for you.
                 </p>
+                {/* Two buttons, the same two styles (2026-11-17, Home is the first page again). With a key: Make your
+                    meal first, the demo second. With no key yet (or storage unread): the demo meals first, since Make
+                    your meal leads to the key setup. In the demo: straight to its meals, then the way to a real one. */}
                 <div className="pt-2 flex flex-wrap items-center gap-4">
-                  <button onClick={() => switchTab("make-meal")} className="bg-cream hover:bg-lime text-forest font-bold text-base px-8 py-4 rounded-full transition-all duration-300 shadow-lg flex items-center gap-3">
-                    <span>Make your meal</span>
-                    <i className="fa-solid fa-arrow-right text-sm"></i>
-                  </button>
-                  {/* Demo button on home (Marian, 2026-11-10): the real app only; the demo is already the demo.
-                      It replaces the "Set up your profile first" card here (2026-11-14): Make your meal opens /start */}
-                  {!demo && (
-                    <Link id="hero-demo" href="/demo" className="border-2 border-cream/50 hover:border-cream hover:bg-cream/10 text-cream font-bold text-base px-8 py-[14px] rounded-full transition-all duration-300 flex items-center gap-3">
-                      <i className="fa-solid fa-play text-sm"></i>
-                      <span>Try the demo</span>
-                    </Link>
+                  {demo ? (
+                    <>
+                      <button id="hero-meals" onClick={() => switchTab("recipes")} className={HERO_MAIN}>
+                        <span>See the demo meals</span>
+                        <i className="fa-solid fa-arrow-right text-sm"></i>
+                      </button>
+                      <Link href="/start" className={HERO_SECOND}>
+                        <span>Make your own</span>
+                      </Link>
+                    </>
+                  ) : complete ? (
+                    <>
+                      <button onClick={() => switchTab("make-meal")} className={HERO_MAIN}>
+                        <span>Make your meal</span>
+                        <i className="fa-solid fa-arrow-right text-sm"></i>
+                      </button>
+                      <Link id="hero-demo" href={tabUrl("recipes", true)} className={HERO_SECOND}>
+                        <i className="fa-solid fa-play text-sm"></i>
+                        <span>See a demo meal</span>
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link id="hero-demo" href={tabUrl("recipes", true)} className={HERO_MAIN}>
+                        <i className="fa-solid fa-play text-sm"></i>
+                        <span>See a demo meal</span>
+                      </Link>
+                      <button onClick={() => switchTab("make-meal")} className={HERO_SECOND}>
+                        <span>Make your meal</span>
+                        <i className="fa-solid fa-arrow-right text-sm"></i>
+                      </button>
+                    </>
                   )}
                 </div>
+                {!demo && !complete && <p id="hero-note" className="text-cream/80 text-sm">The demo needs no sign-up and no key. Making your own meals needs an AI key.</p>}
               </div>
             </div>
           </div>
@@ -474,8 +505,8 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
             </div>
             <h3 className="font-serif font-bold text-xl text-forest">Your cart is empty</h3>
             <p className="text-xs text-forest/70">{demo ? "Add a demo meal to build your shopping list." : "Make your first meal to build your shopping list."}</p>
-            <button onClick={() => switchTab("make-meal")} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all">
-              Make your first meal
+            <button onClick={() => switchTab(demo ? "recipes" : "make-meal")} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all">
+              {demo ? "See the demo meals" : "Make your first meal"}
             </button>
           </div>
 
@@ -1189,6 +1220,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
       ) },
   ];
   const review = q === QUESTIONS.length;
+  const fast = q === 0 && !toSummary; // first question, not reached from "Change" on the summary
   const goTo = (n, fromSummary = false) => { moved.current = true; setQuizError(""); setToSummary(fromSummary); setQ(n); };
   // after a move: focus the new question title and bring the card's top into view
   useEffect(() => {
@@ -1220,14 +1252,24 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
     });
     if (errors.length) return showToast(`Not sent: ${errors.join(", ")}.`);
     if (demo) return showDemo();
-    const llm = readLlm();
+    askIdeas(form);
+  };
+  // Also "Try again" on the ideas error (2026-11-17): the same answers, asked again
+  const askIdeas = async (form) => {
     setRun({ step: 2, loading: true, form });
     try {
-      const out = await generateIdeas({ form, profile: readProfile(), llm });
+      const out = await generateIdeas({ form, profile: readProfile(), llm: readLlm() });
       setRun({ step: 2, form, ideas: out.ideas });
     } catch (e) {
-      setRun({ step: 2, form, error: e.message });
+      setRun({ step: 2, form, error: e.message, keyRejected: Boolean(e.keyRejected) });
     }
+  };
+  // Fast path on the first question (2026-11-17): the craving alone, every other answer at its starting value
+  const quick = () => {
+    const problem = QUESTIONS[0].check();
+    if (problem) return setQuizError(problem);
+    setQuizError("");
+    saveRequest();
   };
   // Recipe -> engine (packs and macros) -> up to 2 reruns on macro misses or high leftovers (lib/flow.js), with a
   // short progress line. If the engine fails, the written recipe stays in this run for "Try again".
@@ -1243,7 +1285,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
       setProgress(null);
       const recipe = e.recipe || given;
       return setRun(recipe ? { ...base, step: 3, loading: false, idea, recipe, error: notReady(recipe, e.message) }
-        : { ...base, step: 3, loading: false, error: e.message });
+        : { ...base, step: 3, loading: false, error: e.message, keyRejected: Boolean(e.keyRejected) });
     }
     setProgress(null);
     const { meal: doc, recipe } = out;
@@ -1265,7 +1307,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
   const pick = async (idea) => {
     setPreview(null);
     if (run.demo) return router.push(`/recipes/${idea.slug}`);
-    const base = { ...run, recipe: null, idea: null, error: null };
+    const base = { ...run, recipe: null, idea: null, error: null, keyRejected: false };
     setRun({ ...base, step: 3, loading: true });
     await finish(base, idea);
   };
@@ -1355,15 +1397,36 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
 
           {quizError && <p role="alert" className="text-xs font-bold text-red-700">{quizError}</p>}
 
-          <div className="flex items-center justify-between gap-3 pt-5 border-t border-cream-dark">
-            <button type="button" onClick={() => goTo(q - 1)} className={`flex items-center gap-2 text-sm font-bold text-forest px-2 py-3 hover:text-lime-hover${q === 0 ? " invisible" : ""}`}>
-              <i className="fa-solid fa-arrow-left text-xs"></i> Back
-            </button>
-            <span className="hidden sm:inline text-[11px] text-forest/70">Press <kbd className="font-sans font-bold bg-cream-card border border-cream-dark rounded-md px-1.5 py-px">Enter</kbd> to continue</span>
-            <button type="button" onClick={next} className="flex-1 sm:flex-none bg-lime hover:bg-lime-hover text-forest font-bold py-3.5 px-7 rounded-2xl text-base transition-all shadow-glow flex items-center justify-center gap-2">
-              <span>{review ? "Show me 4 ideas" : toSummary ? "Back to summary" : "Continue"}</span>
-              <i className="fa-solid fa-arrow-right text-sm"></i>
-            </button>
+          {/* First question (2026-11-17): the craving is enough. "Show me 4 ideas" uses the starting values shown;
+              Continue goes through the other questions. On phones the buttons stay at the bottom of the screen. */}
+          {fast && (
+            <p id="quiz-fast-note" className="text-xs text-forest/70">
+              <span className="font-bold text-forest">In a hurry?</span> Show me 4 ideas uses {kcalTarget} kcal, {proteinTarget} g protein, {plural(servings, "serving")}, {money(budget)} and {quizLabel(QUIZ.time, time).toLowerCase()}. Continue to change them.
+            </p>
+          )}
+          <div className="flex items-center justify-between gap-3 pt-5 border-t border-cream-dark max-sm:sticky max-sm:bottom-0 max-sm:z-10 max-sm:bg-white max-sm:pb-4 max-sm:-mx-2 max-sm:px-2">
+            {!fast && (
+              <button type="button" onClick={() => goTo(q - 1)} className={`flex items-center gap-2 text-sm font-bold text-forest px-2 py-3 hover:text-lime-hover${q === 0 ? " invisible" : ""}`}>
+                <i className="fa-solid fa-arrow-left text-xs"></i> Back
+              </button>
+            )}
+            {!fast && <span className="hidden sm:inline text-[11px] text-forest/70">Press <kbd className="font-sans font-bold bg-cream-card border border-cream-dark rounded-md px-1.5 py-px">Enter</kbd> to continue</span>}
+            {fast ? (
+              <>
+                <button type="button" onClick={next} className="flex-none sm:ml-auto bg-transparent border-2 border-forest hover:bg-forest hover:text-cream text-forest font-bold py-3 px-4 sm:px-6 rounded-2xl text-sm sm:text-base transition-all flex items-center justify-center">
+                  Continue
+                </button>
+                <button type="button" id="quiz-fast" onClick={quick} className="flex-1 sm:flex-none min-w-0 bg-lime hover:bg-lime-hover text-forest font-bold py-3.5 px-3 sm:px-7 rounded-2xl text-sm sm:text-base transition-all shadow-glow flex items-center justify-center gap-2 whitespace-nowrap">
+                  <span>Show me 4 ideas</span>
+                  <i className="fa-solid fa-arrow-right text-sm"></i>
+                </button>
+              </>
+            ) : (
+              <button type="button" onClick={next} className="flex-1 sm:flex-none bg-lime hover:bg-lime-hover text-forest font-bold py-3.5 px-7 rounded-2xl text-base transition-all shadow-glow flex items-center justify-center gap-2">
+                <span>{review ? "Show me 4 ideas" : toSummary ? "Back to summary" : "Continue"}</span>
+                <i className="fa-solid fa-arrow-right text-sm"></i>
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -1466,11 +1529,11 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
           </div>
         ) : (
           <div id="step-2-loading" className="space-y-6 text-center py-12">
-            <div className="inline-flex items-center gap-3 bg-forest text-lime px-5 py-2.5 rounded-full text-xs font-bold shadow-md">
+            <div role={run.error ? "alert" : "status"} className={`inline-flex items-center gap-3 bg-forest text-lime px-5 py-2.5 text-xs font-bold shadow-md ${run.error ? "rounded-2xl text-left max-w-2xl" : "rounded-full"}`}>
               <i className={`fa-solid ${run.error ? "fa-circle-exclamation" : "fa-circle-notch fa-spin"}`}></i>
-              <span>{run.error || "Creating your ideas..."}</span>
+              <span>{run.error || "Creating your ideas... this takes a few seconds"}</span>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6${run.error ? " hidden" : ""}`}>
               {[0, 1, 2, 3].map((n) => (
                 <div key={n} className="bg-white rounded-3xl p-4 border border-cream-dark space-y-3 animate-skeleton">
                   <div className="h-4 bg-cream-dark rounded w-3/4"></div>
@@ -1479,11 +1542,19 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
                 </div>
               ))}
             </div>
-            <div className="flex items-center justify-center gap-6">
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
               <button onClick={startOver} className="text-xs font-bold text-forest/70 hover:text-forest inline-flex items-center gap-1.5">
                 <i className="fa-solid fa-arrow-left text-[10px]"></i>
                 <span>Back to edit</span>
               </button>
+              {run.error && run.keyRejected && (
+                <Link id="ideas-fix-key" href="/profile#ai-provider" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all">Check your key in Profile</Link>
+              )}
+              {run.error && !run.keyRejected && (
+                <button id="ideas-retry" onClick={() => askIdeas(run.form)} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all inline-flex items-center gap-2">
+                  <i className="fa-solid fa-rotate-right text-[10px]"></i><span>Try again</span>
+                </button>
+              )}
             </div>
           </div>
         )}
@@ -1495,7 +1566,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
           <i className={`fa-solid ${run.error ? "fa-circle-exclamation" : "fa-circle-notch fa-spin"}`}></i>
           <span>{run.error || progressText(progress) || "Cooking your meal... recipe, packs and macros take a moment"}</span>
         </div>
-        <div className="bg-white rounded-3xl p-6 border border-cream-dark space-y-3 animate-skeleton max-w-3xl mx-auto">
+        <div className={`bg-white rounded-3xl p-6 border border-cream-dark space-y-3 animate-skeleton max-w-3xl mx-auto${run.error ? " hidden" : ""}`}>
           <div className="h-40 bg-cream-dark rounded-2xl"></div>
           <div className="h-4 bg-cream-dark rounded w-3/4"></div>
           <div className="h-3 bg-cream-dark rounded w-1/2"></div>
@@ -1508,6 +1579,9 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
             </button>
             {run.recipe && (
               <button onClick={retryEngine} className="text-xs font-bold text-forest hover:text-lime-hover">Try again</button>
+            )}
+            {run.keyRejected && (
+              <Link href="/profile#ai-provider" className="text-xs font-bold text-forest underline hover:text-lime-hover">Check your key in Profile</Link>
             )}
           </div>
         )}

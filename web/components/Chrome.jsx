@@ -539,15 +539,17 @@ export function Footer({ onNavigate: navigate }) {
         <div className="text-[11px] text-cream/60 text-center sm:text-right space-y-1">
           <p>© 2026 SmartBite. Whole-pack meal planner. Open source, AGPL-3.0.</p>
           <p>Not medical advice. For a health condition, ask a doctor or dietitian.</p>
+          <p id="footer-data">Food data: Open Food Facts (ODbL), Ciqual and USDA FoodData Central. <a href={`${REPO_URL}#data-and-licenses`} target="_blank" rel="noopener noreferrer" className="underline hover:text-lime">Sources</a></p>
         </div>
       </div>
     </footer>
   );
 }
 
-export function Toast({ toast }) {
+// lift: on phones the toast sits above a bar fixed to the bottom of the screen (the recipe page's Add to my cart)
+export function Toast({ toast, lift = false }) {
   return (
-    <div id="toast-msg" className={`fixed bottom-6 right-6 z-50 bg-forest text-cream px-5 py-3.5 rounded-2xl shadow-2xl border border-lime/30 flex items-center gap-3 transform transition-all pointer-events-none${toast.show ? "" : " translate-y-20 opacity-0"}`}>
+    <div id="toast-msg" className={`fixed bottom-6${lift ? " max-sm:bottom-24" : ""} right-6 z-50 bg-forest text-cream px-5 py-3.5 rounded-2xl shadow-2xl border border-lime/30 flex items-center gap-3 transform transition-all pointer-events-none${toast.show ? "" : " translate-y-20 opacity-0"}`}>
       <div className="w-7 h-7 rounded-full bg-lime text-forest flex items-center justify-center font-bold text-xs">
         <i className="fa-solid fa-check"></i>
       </div>

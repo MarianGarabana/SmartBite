@@ -29,7 +29,6 @@ export const KEYS = {
   setup: "smartbite.setup", // "done" or "skipped": the Create profile setup was finished or skipped once
   // true once /start was shown (decided 2026-11-03). Any "smartbite." key tells app/layout.js FRONT_DOOR that this
   // browser was here before, so "/" opens Home instead of sending it to /start.
-  startSeen: "smartbite.startSeen",
   day: "smartbite.day", // My Day (lib/day.js): { version, next, slots: { breakfast: [item], ... } }, until "Clear day"
 };
 const CHANGED = "smartbite-storage";

@@ -6,6 +6,14 @@
 // 3. Phones: no sideways scroll, the tabs sit in a menu; desktop keeps the tab bar.
 import { expect, test } from "@playwright/test";
 
+// The setup asks the provider whether the key is accepted (lib/llm.js checkKey): answered here, no real call
+const KEY_CHECK = /^https:\/\/(api\.anthropic\.com\/v1\/models|generativelanguage\.googleapis\.com\/v1beta\/models)/;
+const CHECK_CORS = { "access-control-allow-origin": "*", "access-control-allow-headers": "*" };
+const answerKeyCheck = (page, status) => page.route(KEY_CHECK, (route) => (route.request().method() === "OPTIONS"
+  ? route.fulfill({ status: 204, headers: CHECK_CORS })
+  : route.fulfill({ status, headers: { ...CHECK_CORS, "content-type": "application/json" }, body: "{}" })));
+test.beforeEach(async ({ page }) => { await answerKeyCheck(page, 200); });
+
 // Make Your Meal is a quiz (2026-11-09): type the craving, click Continue through the questions, then ask for ideas
 async function askForIdeas(page, craving) {
   await page.locator("#input-craving").fill(craving);

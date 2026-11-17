@@ -8,6 +8,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { checkKey } from "../lib/llm";
 import { ANTHROPIC, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, presetById } from "../lib/providers";
 import { COUNTRIES, DEFAULT_COUNTRY, ESTIMATE_CURRENCY, NATIONAL, REGIONS, SETUP_DONE, SETUP_SKIPPED,
   currencyFor, currencySymbol, markSetup, readApiKey, readCountry, readCurrency, readLlmSettings, readOpenAiKey, readRegion,
@@ -25,9 +26,13 @@ const GEMINI = presetById("gemini");
 const OTHER = "other";
 const KEY_CHOICES = [
   { id: ANTHROPIC, label: "Anthropic (Claude)", field: "Anthropic API key", placeholder: "sk-ant-...", host: "api.anthropic.com",
-    getKey: "https://console.anthropic.com/settings/keys", getKeyLabel: "Get a key in the Anthropic Console" },
+    getKey: "https://console.anthropic.com/settings/keys", getKeyLabel: "Open the Anthropic Console", site: "the Anthropic Console",
+    steps: ["and sign in or create an account.", "Add credit under Billing, then create a key and copy it.", "Paste it here."],
+    cost: "Anthropic charges your account for each meal you make." },
   { id: GEMINI.id, label: "Google Gemini", field: "Gemini API key", placeholder: "AIza...", host: new URL(GEMINI.baseUrl).host,
-    getKey: "https://aistudio.google.com/apikey", getKeyLabel: "Get a key in Google AI Studio (free tier: a limited number of calls per day)" },
+    getKey: "https://aistudio.google.com/apikey", getKeyLabel: "Open Google AI Studio", site: "Google AI Studio",
+    steps: ["and sign in with a Google account.", "Press Create API key and copy the key.", "Paste it here."],
+    cost: "Free to start: a free key allows a limited number of calls per day." },
   { id: OTHER, label: "OpenAI or other" },
 ];
 
@@ -64,6 +69,7 @@ function SetupDialog({ onClose, keyOnly }) {
   const [key, setKey] = useState("");
   const [provider, setProvider] = useState(ANTHROPIC); // ANTHROPIC or "gemini"
   const [error, setError] = useState("");
+  const [checking, setChecking] = useState(false);
   useEffect(() => {
     setCountry(readCountry());
     setRegion(readRegion());
@@ -98,8 +104,18 @@ function SetupDialog({ onClose, keyOnly }) {
     setKey(id === ANTHROPIC ? readApiKey() : id === GEMINI.id ? readOpenAiKey() : "");
   };
   const choice = KEY_CHOICES.find((c) => c.id === provider);
-  const saveKey = () => {
+  // The key is checked with the provider before it is saved (2026-11-17): a wrong key is caught here, not after the
+  // quiz. If the provider cannot be reached the key is saved anyway.
+  const saveKey = async () => {
+    if (checking) return;
     if (!key.trim()) return setError("Paste your key first. No key? Close this and try the demo.");
+    setError("");
+    setChecking(true);
+    const accepted = await checkKey({ provider: provider === ANTHROPIC ? ANTHROPIC : OPENAI_COMPATIBLE, apiKey: key.trim(), baseUrl: GEMINI.baseUrl });
+    setChecking(false);
+    if (accepted === false) {
+      return setError(`${choice.label} did not accept this key. Copy the whole key again from ${choice.site} and paste it here.`);
+    }
     const settings = readLlmSettings();
     if (provider === ANTHROPIC) {
       writeLlmSettings({ ...settings, provider: ANTHROPIC });
@@ -177,9 +193,15 @@ function SetupDialog({ onClose, keyOnly }) {
             <div>
               <label htmlFor="setup-key" className={label}>{choice.field}</label>
               <input id="setup-key" type="password" autoComplete="off" value={key} onChange={(e) => setKey(e.target.value)} placeholder={choice.placeholder} className={input} />
-              <span className={small}>
-                <a href={choice.getKey} target="_blank" rel="noopener noreferrer" className="font-bold underline hover:text-lime-hover">{choice.getKeyLabel}</a>.
-              </span>
+              <div id="setup-key-help" className="mt-3 bg-cream/50 border border-cream-dark rounded-xl p-3 text-xs text-forest/80 space-y-1.5">
+                <p className="font-bold text-forest">No key yet? It takes about 2 minutes:</p>
+                <ol className="list-decimal pl-4 space-y-1">
+                  <li><a href={choice.getKey} target="_blank" rel="noopener noreferrer" className="font-bold underline hover:text-lime-hover">{choice.getKeyLabel}</a> {choice.steps[0]}</li>
+                  <li>{choice.steps[1]}</li>
+                  <li>{choice.steps[2]}</li>
+                </ol>
+                <p className="text-forest/70">{choice.cost}</p>
+              </div>
             </div>
             )}
             {error && <div role="status" className="bg-amber-100 text-amber-900 text-xs rounded-xl p-3">{error}</div>}
@@ -195,7 +217,11 @@ function SetupDialog({ onClose, keyOnly }) {
 
         <div className="flex flex-wrap gap-3">
           {step === 0 && <button onClick={saveShop} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Next</button>}
-          {step === 1 && provider !== OTHER && <button onClick={saveKey} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Save key</button>}
+          {step === 1 && provider !== OTHER && (
+            <button onClick={saveKey} disabled={checking} className="bg-lime hover:bg-lime-hover disabled:opacity-60 text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">
+              {checking ? "Checking your key..." : "Save key"}
+            </button>
+          )}
           {step === 2 && <button onClick={() => onClose(SETUP_DONE)} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Make Your Meal</button>}
           {step === 1 && !keyOnly && <button onClick={() => { setError(""); setStep(0); }} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2.5">Back</button>}
         </div>

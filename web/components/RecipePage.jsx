@@ -107,6 +107,9 @@ function RecipeView({ meal, meals, router }) {
   const { toast, showToast } = useToast();
   const { cart, add } = useCart(showToast, meals);
   const go = (tab) => router.push(tabUrl(tab, meal.kind === "demo")); // a demo meal leads back into /demo
+  // Add to my cart says it worked and offers the cart (2026-11-17); on phones the button stays at the bottom of the screen
+  const [added, setAdded] = useState(false);
+  const addToCart = () => { add(meal, servings); setAdded(true); };
 
   // Lines hold grams for the servings they were computed for; scale them to the chosen servings. The engine's last
   // reply wins over the saved meal and stays while a newer one loads (the table never falls back to the saved
@@ -240,7 +243,7 @@ function RecipeView({ meal, meals, router }) {
     <div className="desktop-frame flex flex-col justify-between">
       <Header active="recipes" onNavigate={go} cartCount={cart.meals.length} />
 
-      <main className="flex-1 py-6">
+      <main className="flex-1 py-6 max-sm:pb-24">
         <section id="recipe-page" className="tab-page space-y-8 max-w-[1360px] mx-auto px-8">
           <div className="space-y-8 max-w-5xl mx-auto">
             <div className="flex items-center justify-between">
@@ -559,6 +562,13 @@ function RecipeView({ meal, meals, router }) {
                     </>}
                 {est ? <> Prices marked est. are estimates ({estLabel}). Type your store&apos;s price to replace one.</> : null}
               </p>
+              <details id="how-calculated" className="text-xs text-forest/70">
+                <summary className="cursor-pointer font-bold text-forest underline decoration-lime decoration-2 underline-offset-4 hover:text-lime-hover">How this is calculated</summary>
+                <div className="pt-2 space-y-1.5">
+                  <p>Code matched each food to a typical pack size, counted the packs, and added up the macros from food composition tables.</p>
+                  <p>Leftover is what stays in the packs after cooking. A price marked est. is an average price for your country, used until you type the price you pay.</p>
+                </div>
+              </details>
             </div>
 
             {/* Vitamins and minerals per serving (meals made before they were counted have none) */}
@@ -600,10 +610,18 @@ function RecipeView({ meal, meals, router }) {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
-              <button onClick={() => add(meal, servings)} className="w-full sm:flex-1 bg-lime hover:bg-lime-hover text-forest font-bold py-4 rounded-2xl text-sm transition-all shadow-glow flex items-center justify-center gap-2">
-                <i className="fa-solid fa-basket-shopping"></i>
-                <span>Add to my cart</span>
-              </button>
+              <div id="add-bar" className="w-full sm:flex-1 flex gap-3 max-sm:fixed max-sm:bottom-0 max-sm:inset-x-0 max-sm:z-40 max-sm:bg-cream/95 max-sm:backdrop-blur-md max-sm:border-t max-sm:border-forest/10 max-sm:px-4 max-sm:py-3">
+                <button onClick={addToCart} className="flex-1 bg-lime hover:bg-lime-hover text-forest font-bold py-4 rounded-2xl text-sm transition-all shadow-glow flex items-center justify-center gap-2">
+                  <i className={`fa-solid ${added ? "fa-check" : "fa-basket-shopping"}`}></i>
+                  <span>{added ? "Added. Add again" : "Add to my cart"}</span>
+                </button>
+                {added && (
+                  <button id="open-cart" onClick={() => go("cart")} className="flex-1 bg-forest hover:bg-forest-light text-lime font-bold py-4 rounded-2xl text-sm transition-all flex items-center justify-center gap-2">
+                    <span>Open my cart</span>
+                    <i className="fa-solid fa-arrow-right text-xs"></i>
+                  </button>
+                )}
+              </div>
               {meal.kind === "local" && (
                 <button onClick={saveToRecipes} className="w-full sm:flex-1 bg-transparent border-2 border-forest hover:bg-forest hover:text-cream text-forest font-bold py-4 rounded-2xl text-sm transition-all flex items-center justify-center gap-2">
                   <i className="fa-regular fa-bookmark"></i>
@@ -654,7 +672,7 @@ function RecipeView({ meal, meals, router }) {
       {editingMeal && <MealEditor slug={meal.slug} onClose={closeEditor} showToast={showToast} />}
       {savingTags && <SaveTagsDialog name={meal.name} initial={meal.tags} onSave={confirmSave} onClose={() => setSavingTags(false)} />}
       {editing && <ProductDialog row={editing} onClose={() => setEditing(null)} showToast={showToast} />}
-      <Toast toast={toast} />
+      <Toast toast={toast} lift />
     </div>
   );
 }

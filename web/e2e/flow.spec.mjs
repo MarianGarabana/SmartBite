@@ -269,3 +269,46 @@ test("make a meal with a mocked model, the real engine, then cart and Adjust lef
 
   expect(calls.filter((c) => c.step === "unexpected")).toEqual([]);
 });
+
+// Fast path and error screens (2026-11-17)
+test("the craving alone gets ideas; a failed ideas call can be tried again; a refused key leads to the Profile", async ({ page }) => {
+  const replies = [503, 200, 401];
+  const bodies = [];
+  await page.route(ANTHROPIC, async (route) => {
+    const req = route.request();
+    if (req.method() === "OPTIONS") return route.fulfill({ status: 204, headers: CORS });
+    bodies.push(String(req.postDataJSON().messages?.[0]?.content ?? ""));
+    const status = replies.shift();
+    return route.fulfill({ status, headers: { ...CORS, "content-type": "application/json" },
+      body: JSON.stringify(status === 200
+        ? { id: "msg_e2e", type: "message", role: "assistant", content: [{ type: "text", text: JSON.stringify(IDEAS) }], stop_reason: "end_turn" }
+        : { type: "error", error: { message: status === 401 ? "invalid x-api-key" : "overloaded" } }) });
+  });
+  await page.goto("/privacy");
+  await page.evaluate((key) => { localStorage.setItem("smartbite.anthropicKey", JSON.stringify(key)); localStorage.setItem("smartbite.setup", JSON.stringify("done")); }, FAKE_KEY);
+
+  await page.goto("/?tab=make-meal");
+  // No craving yet: the fast button says so and stays on the question
+  await page.locator("#quiz-fast").click();
+  await expect(page.locator("#make-step-1 [role=alert]")).toContainText("Tap at least one thing");
+  await page.locator("#input-craving").fill("chicken bowl");
+  await expect(page.locator("#quiz-fast-note")).toContainText("450 kcal, 45 g protein, 1 serving");
+  await page.locator("#quiz-fast").click();
+
+  // First call: the provider is busy. The message shows with Try again, and no loading cards under it
+  const loading = page.locator("#step-2-loading");
+  await expect(loading.getByRole("alert")).toContainText("busy right now (503)");
+  await expect(loading.locator(".animate-skeleton").first()).toBeHidden();
+  await expect(page.locator("#ideas-fix-key")).toHaveCount(0);
+  await page.locator("#ideas-retry").click();
+  await expect(page.locator("#ideas-card-grid > div")).toHaveCount(4);
+  expect(bodies.length).toBe(2);
+  for (const body of bodies) expect(body).toContain("chicken bowl"); // the same answers, asked again
+
+  // A refused key: no Try again, a link to the key in the Profile
+  await page.getByRole("button", { name: "Back to edit" }).click();
+  await page.locator("#quiz-fast").click();
+  await expect(loading.getByRole("alert")).toContainText("did not accept the key (401)");
+  await expect(page.locator("#ideas-retry")).toHaveCount(0);
+  await expect(page.locator("#ideas-fix-key")).toHaveAttribute("href", "/profile#ai-provider");
+});

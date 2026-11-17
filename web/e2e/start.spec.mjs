@@ -5,8 +5,18 @@
 // 3. "I have a profile file" (decided 2026-11-01): a file with no key asks only for the key, a file with one goes
 //    straight to Make Your Meal; the file can be dropped or chosen.
 // 4. Phones: no sideways scroll on /start.
-// 5. Front door (decided 2026-11-03): a browser with no SmartBite storage that opens "/" goes to /start, once.
+// 5. Front door (2026-11-17, replaces the 2026-11-03 move to /start): a first visit to "/" opens Home, whose main
+//    button leads to the demo meals.
+// 6. The key is checked when it is saved: a key the provider refuses stays on the key step.
 import { expect, test } from "@playwright/test";
+
+// The setup asks the provider whether the key is accepted (lib/llm.js checkKey): answered here, no real call
+const KEY_CHECK = /^https:\/\/(api\.anthropic\.com\/v1\/models|generativelanguage\.googleapis\.com\/v1beta\/models)/;
+const CHECK_CORS = { "access-control-allow-origin": "*", "access-control-allow-headers": "*" };
+const answerKeyCheck = (page, status) => page.route(KEY_CHECK, (route) => (route.request().method() === "OPTIONS"
+  ? route.fulfill({ status: 204, headers: CHECK_CORS })
+  : route.fulfill({ status, headers: { ...CHECK_CORS, "content-type": "application/json" }, body: "{}" })));
+test.beforeEach(async ({ page }) => { await answerKeyCheck(page, 200); });
 
 const DEMO_SLUG = "tuna-frittata-with-vegetables";
 
@@ -92,45 +102,46 @@ test("the demo's Make Your Meal and demo recipe pages lead to /start", async ({ 
 test.describe("front door", () => {
   test.use({ storageState: { cookies: [], origins: [] } }); // a browser that never opened SmartBite
 
-  test("a first visit to / opens /start once, then Home; Back leaves the site", async ({ page }) => {
-    await page.goto("about:blank");
-    await page.goto("/");
-    await expect(page).toHaveURL(/\/start$/);
-    await expect(page.locator("#start-page h1")).toHaveText("Start SmartBite");
-    await expect.poll(() => page.evaluate(() => localStorage.getItem("smartbite.startSeen"))).toBe("true");
-    await page.goBack(); // replace(), not push: Back goes to where the visitor came from, not to /
-    await expect(page).toHaveURL("about:blank");
+  test("a first visit to / opens Home; its main button leads to the demo meals", async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveURL(/127\.0\.0\.1:3100\/$/);
-    await expect(page.locator("#tab-home")).toBeVisible();
+    await expect(page.locator("#tab-home h1")).toContainText("Meals that fit");
+    await expect(page.locator("#hero-note")).toContainText("no sign-up and no key");
+    const buttons = await page.locator("#home-photo").locator("a, button").allInnerTexts();
+    expect(buttons.map((t) => t.trim())).toEqual(["See a demo meal", "Make your meal"]);
+    await page.locator("#hero-demo").click();
+    await expect(page).toHaveURL(/\/demo\?tab=recipes$/);
+    await expect(page.locator("#tab-recipes a[href^='/recipes/']").first()).toBeVisible();
   });
 
-  test("a tab link, another page or any SmartBite storage is never sent to /start", async ({ page }) => {
-    await page.goto("/?tab=cart");
-    await expect(page).toHaveURL(/\?tab=cart$/);
+  test("with a key, Make your meal is the main button", async ({ page }) => {
     await page.goto("/privacy");
-    await expect(page).toHaveURL(/\/privacy$/);
-    await page.goto("/demo");
-    await expect(page.locator("#demo-banner")).toBeVisible();
-    await page.evaluate(() => localStorage.setItem("smartbite.demoCart", JSON.stringify({ meals: [] })));
+    await page.evaluate(() => { localStorage.setItem("smartbite.anthropicKey", JSON.stringify("sk-ant-test")); localStorage.setItem("smartbite.setup", JSON.stringify("done")); });
     await page.goto("/");
-    await expect(page).toHaveURL(/127\.0\.0\.1:3100\/$/);
-    await expect(page.locator("#tab-home")).toBeVisible();
+    await expect(page.locator("#hero-note")).toHaveCount(0);
+    const buttons = await page.locator("#home-photo").locator("a, button").allInnerTexts();
+    expect(buttons.map((t) => t.trim())).toEqual(["Make your meal", "See a demo meal"]);
   });
+});
 
-  test("Home never shows before the move to /start", async ({ page }) => {
-    const painted = [];
-    await page.exposeFunction("seenHome", (v) => painted.push(v));
-    await page.addInitScript(() => {
-      new MutationObserver(() => {
-        const home = document.getElementById("tab-home");
-        if (home && getComputedStyle(document.documentElement).visibility !== "hidden") window.seenHome?.(location.pathname);
-      }).observe(document, { childList: true, subtree: true });
-    });
-    await page.goto("/");
-    await expect(page).toHaveURL(/\/start$/);
-    expect(painted.filter((p) => p === "/")).toEqual([]);
-  });
+test("a key the provider refuses stays on the key step; one it cannot check is saved", async ({ page }) => {
+  await page.unroute(KEY_CHECK);
+  await answerKeyCheck(page, 401);
+  await page.goto("/start");
+  await page.locator("#start-key").getByRole("button", { name: "Use my API key" }).click();
+  const setup = page.getByRole("dialog");
+  await setup.getByRole("button", { name: "Next" }).click();
+  await expect(setup.locator("#setup-key-help")).toContainText("Open the Anthropic Console");
+  await setup.locator("#setup-key").fill("sk-ant-wrong-key");
+  await setup.getByRole("button", { name: "Save key" }).click();
+  await expect(setup).toContainText("Anthropic (Claude) did not accept this key.");
+  await expect(setup).toContainText("Step 2 of 2");
+  expect(await page.evaluate(() => localStorage.getItem("smartbite.anthropicKey"))).toBeNull();
+  // The provider is down (503): the key cannot be checked, so it is saved
+  await page.unroute(KEY_CHECK);
+  await answerKeyCheck(page, 503);
+  await setup.getByRole("button", { name: "Save key" }).click();
+  await expect(setup).toContainText("You're set");
 });
 
 const profileFile = (data) => ({ name: "smartbite-profile-2026-11-01.json", mimeType: "application/json",

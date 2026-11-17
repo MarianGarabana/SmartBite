@@ -186,6 +186,7 @@ test.describe("phone", () => {
 test("a meal for what's left starts the quiz over when it already shows ideas", async ({ page }) => {
   await page.goto("/demo?tab=make-meal");
   await page.locator("#input-craving").fill("tuna frittata");
+  await page.getByRole("button", { name: "Continue" }).click(); // the whole quiz, not the fast button of question 1
   const show = page.getByRole("button", { name: "Show me 4 ideas" });
   for (let i = 0; i < 10 && !(await show.isVisible()); i++) await page.getByRole("button", { name: /^(Continue|Back to summary)/ }).click();
   await show.click();

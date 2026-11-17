@@ -67,7 +67,7 @@ Since 2026-10-20 `dependencies` lists every pin from `requirements.txt` (FastAPI
 installs the same versions as local. Checked in a clean Python 3.13 venv: `pip install .`, `pip check` clean,
 `api.index` imports. Keep both lists equal.
 
-Not tested: a full `vercel dev` with the web service too, and a real deploy.
+Not tested: a full `vercel dev` with the web service too. The real deploy runs on Vercel since October 2026 (smartbite-steel.vercel.app).
 
 ## Keys and private files stay out of the upload
 

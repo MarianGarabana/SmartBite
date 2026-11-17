@@ -34,7 +34,7 @@ export function ProductCell({ row, onEdit }) {
   return (
     <>
       <span className="block">{row.product || "Typical pack"}</span>
-      <span className="block text-[10px] text-forest/70 mt-0.5">
+      <span className="block max-sm:hidden text-[10px] text-forest/70 mt-0.5">
         {row.userProduct ? <span className="font-bold text-lime-hover">Your product · </span> : null}
         {sourceText(row)}
       </span>

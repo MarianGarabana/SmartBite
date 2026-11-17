@@ -116,12 +116,20 @@ test("the real app shows only the user's meals; a new visitor gets Make your mea
   await expect(page).toHaveURL(/\/demo$/);
 });
 
-test("home has a Try the demo button in the hero; the demo itself does not", async ({ page }) => {
+test("home has a demo button in the hero; the demo's own hero leads to its meals, not to the quiz", async ({ page }) => {
   await page.goto("/");
   await page.locator("#hero-demo").click();
-  await expect(page).toHaveURL(/\/demo$/);
+  await expect(page).toHaveURL(/\/demo\?tab=recipes$/);
   await expect(page.locator("#demo-banner")).toBeVisible();
   await expect(page.locator("#hero-demo")).toHaveCount(0);
+  await page.goto("/demo");
+  await page.locator("#hero-meals").click();
+  await expect(page).toHaveURL(/\/demo\?tab=recipes$/);
+  await expect(page.locator("#tab-recipes")).toBeVisible();
+  // An empty demo cart leads to the demo meals too
+  await page.goto("/demo?tab=cart");
+  await page.locator("#cart-empty-state").getByRole("button", { name: "See the demo meals" }).click();
+  await expect(page.locator("#tab-recipes")).toBeVisible();
 });
 
 test("the demo cart is kept apart from the real cart", async ({ page }) => {
