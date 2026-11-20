@@ -3,9 +3,14 @@
 // "Try the demo" opens /demo; "I have a profile file" (decided 2026-11-01) opens a saved profile, asks for the key if
 // the file has none, then Make Your Meal. The real Make Your Meal sends people here until the profile is complete.
 // Cards and buttons reuse the Make Your Meal and setup card styles (design freeze).
+// Free trial (decided 2026-11-20): when /api/trial says it is on, a card above the others makes up to 3 meals with
+// SmartBite's own key (lib/providers.js TRIAL), no key needed.
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { profileComplete } from "../lib/store";
+import { useEffect, useState } from "react";
+import { TRIAL_MEALS } from "../lib/providers";
+import { TRIAL_URL } from "../lib/llm";
+import { llmReady, profileComplete, readOwnLlm, readTrial, startTrial, trialMealsLeft } from "../lib/store";
 import { PageShell, useProfileComplete, useToast } from "./Chrome";
 import ProfileFileOpen from "./ProfileFileOpen";
 import { openSetup } from "./SetupDialog";
@@ -23,6 +28,19 @@ export default function StartPage({ demoMeals }) {
     else toastState.showToast("Add your AI key to make your own meals.");
   };
   const setUp = () => openSetup(afterSetup);
+  // Free trial: offered when the server has the trial key and this browser has no key of its own
+  const [trial, setTrial] = useState(null); // null | { left }
+  useEffect(() => {
+    if (llmReady(readOwnLlm())) return;
+    let live = true;
+    fetch(TRIAL_URL).then((r) => (r.ok ? r.json() : null)).catch(() => null)
+      .then((s) => live && s?.available && setTrial({ left: trialMealsLeft(readTrial()) }));
+    return () => { live = false; };
+  }, []);
+  const tryFree = () => {
+    if (!startTrial()) return toastState.showToast("Not started: this browser blocks storage.");
+    router.push("/?tab=make-meal");
+  };
   // A profile file with a key (or a provider that needs none) goes straight to Make Your Meal; else the key step
   const fileOpened = (_summary, ok, backup) => {
     if (!ok) return toastState.showToast("Not saved: this browser blocks storage.");
@@ -34,10 +52,34 @@ export default function StartPage({ demoMeals }) {
     <PageShell active={null} demoMeals={demoMeals} router={router} toastState={toastState}>
       <section id="start-page" className="tab-page space-y-10 max-w-[1360px] mx-auto px-8">
         <div className="text-center max-w-xl mx-auto space-y-2">
-          <span className="font-script text-3xl text-forest font-bold">Three ways in</span>
+          <span className="font-script text-3xl text-forest font-bold">{trial ? "Four ways in" : "Three ways in"}</span>
           <h1 className="font-serif text-4xl font-bold text-forest">Start SmartBite</h1>
-          <p className="text-sm text-forest/70">No sign-up. Make your own meals with your AI key, look around with example meals first, or open the profile file you saved.</p>
+          <p className="text-sm text-forest/70">
+            {trial?.left > 0 ? `No sign-up. Try ${TRIAL_MEALS} free meals, make` : "No sign-up. Make"} your own meals with your AI key, look
+            around with example meals first, or open the profile file you saved.
+          </p>
         </div>
+        {trial && (
+          <div id="start-trial" className="bg-forest rounded-3xl p-8 shadow-soft max-w-6xl mx-auto flex flex-col md:flex-row md:items-center gap-6">
+            <div className="w-12 h-12 rounded-2xl bg-lime text-forest flex items-center justify-center text-lg shrink-0">
+              <i className="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <div className="flex-1 space-y-2">
+              <h2 className="font-serif text-2xl font-bold text-cream">Try {TRIAL_MEALS} free meals</h2>
+              <p className="text-xs text-cream/80">
+                {trial.left > 0
+                  ? <>No key needed. SmartBite makes your first {TRIAL_MEALS} meals with its own AI key (Claude Haiku). Your
+                    answers go through SmartBite&apos;s server to Anthropic and are not stored. {trial.left < TRIAL_MEALS && <span className="font-bold text-cream">{trial.left} left.</span>}</>
+                  : <>You have made your {TRIAL_MEALS} free meals. Add your own AI key to keep going.</>}
+              </p>
+            </div>
+            {trial.left > 0 && (
+              <button id="start-trial-go" onClick={tryFree} className="self-start md:self-center bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all whitespace-nowrap">
+                Make a free meal
+              </button>
+            )}
+          </div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           <div id="start-key" className={card}>
             <div className={icon}><i className="fa-solid fa-key"></i></div>

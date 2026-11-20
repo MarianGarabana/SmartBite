@@ -9,7 +9,7 @@ from pathlib import Path
 
 from smartbite_engine.calc import EGG_GRAMS, Nutrition, scale, total
 from smartbite_engine.contracts import parse_reply, validate_output
-from smartbite_engine.names import canonical, pairs as name_pairs, plain, stems
+from smartbite_engine.names import base_words, canonical, missing_main_foods, pairs as name_pairs, plain, stems
 
 PASS, FAIL, SKIP = "pass", "fail", "skip"
 NAME_MAX = 60
@@ -83,24 +83,6 @@ def check_servings(recipe, form):
     if got == form["servings"]:
         return result("recipe_servings", PASS)
     return result("recipe_servings", FAIL, f"servings {got}, form asks {form['servings']}")
-
-
-def base_words(name):
-    """Words of a food after names.canonical: the English key's words when the food is known, else its own words."""
-    return stems(canonical(name) or name)
-
-
-def missing_main_foods(idea, ingredients):
-    """Main foods of the idea the recipe dropped. A food counts as kept when its first word is in an ingredient name,
-    both names are the same food (same English key, so "pechuga de pollo" keeps "chicken breast"), or an ingredient
-    is a specific kind of it: every base word of the main food is in the ingredient's base words, so "basmati rice"
-    keeps "rice" and "arroz", "cherry tomatoes" keeps "tomato". Base words come after names.canonical."""
-    have = set().union(*(stems(_name(i)) for i in ingredients)) if ingredients else set()
-    keys = {canonical(_name(i)) for i in ingredients} - {None}
-    bases = [base_words(_name(i)) for i in ingredients]
-    return [f for f in idea.get("main_ingredients") or []
-            if stems(f.split()[0] if f.split() else f) - have and canonical(f) not in keys
-            and not any(base_words(f) <= b for b in bases)]
 
 
 def check_keeps_main(idea, ingredients):

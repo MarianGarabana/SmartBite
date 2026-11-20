@@ -50,6 +50,7 @@ const nextConfig = {
     return [
       { source: "/api/evaluate", destination: "http://127.0.0.1:8100/api/evaluate" },
       { source: "/api/health", destination: "http://127.0.0.1:8100/api/health" },
+      { source: "/api/trial", destination: "http://127.0.0.1:8100/api/trial" },
     ];
   },
 };

@@ -12,7 +12,7 @@ import { LINK_MESSAGE, MAX_PASTE, MAX_SERVINGS, importSlug, importedRequest, nee
 import { importRecipe } from "../lib/llm";
 import { toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
-import { engineEstimates, llmReady, readActiveProducts, readBudget, readLlm, readProfile, saveLocalMeal } from "../lib/store";
+import { engineEstimates, llmReady, readActiveProducts, readBudget, readOwnLlm, readProfile, saveLocalMeal } from "../lib/store";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-1.5";
 const field = "bg-cream/50 border border-cream-dark rounded-xl px-3 py-2.5 text-sm text-forest focus:outline-none focus:border-forest";
@@ -25,7 +25,7 @@ export function PasteRecipe({ onClose }) {
   const [busy, setBusy] = useState(null); // null | "read" | "engine"
   const [error, setError] = useState("");
   const [ready, setReady] = useState(true);
-  useEffect(() => { setReady(llmReady(readLlm())); }, []);
+  useEffect(() => { setReady(llmReady(readOwnLlm())); }, []);
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && !busy && onClose();
     window.addEventListener("keydown", onKey);
@@ -57,7 +57,7 @@ export function PasteRecipe({ onClose }) {
     setError("");
     setBusy("read");
     try {
-      const data = await importRecipe({ paste: text, llm: readLlm() });
+      const data = await importRecipe({ paste: text, llm: readOwnLlm() });
       if (needsServings(data)) {
         setReply(data);
         setServings(String(Math.min(MAX_SERVINGS, data.servings || 2)));

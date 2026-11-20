@@ -10,7 +10,7 @@ import { makeMeal, progressText } from "../lib/flow";
 import { editProblem, editedRecipe, tagsOf, withTags } from "../lib/meal";
 import { TagPicker } from "./MealTags";
 import { foods } from "../lib/names";
-import { engineEstimates, llmReady, readActiveProducts, readLlm, readLocalMeals, readProfile, replaceLocalMeal } from "../lib/store";
+import { engineEstimates, llmReady, readActiveProducts, readLocalMeals, readOwnLlm, readProfile, replaceLocalMeal } from "../lib/store";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-1.5";
 const field = "bg-cream/50 border border-cream-dark rounded-xl px-3 py-2.5 text-sm text-forest focus:outline-none focus:border-forest";
@@ -74,7 +74,7 @@ export function MealEditor({ slug, onClose, showToast }) {
   const askAi = async () => {
     const text = ask.trim();
     if (!text) return setError("Write what you want to change.");
-    const llm = readLlm();
+    const llm = readOwnLlm(); // AI edits need the user's own key (not the free trial)
     if (!llmReady(llm)) return setError("Add your AI key in your Profile first.");
     setError("");
     setBusy("ai");

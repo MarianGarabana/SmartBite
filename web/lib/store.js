@@ -5,7 +5,8 @@ import { PACK_SIZES } from "../generated/index.js";
 import { EGG_GRAMS, norm, priceKey } from "./cartmath";
 import { normalizeDay } from "./day";
 import { DEFAULT_PROFILE, fieldValue, mergeProfile } from "./profile";
-import { ANTHROPIC, DEFAULT_ANTHROPIC_MODEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, presetById } from "./providers";
+import { ANTHROPIC, DEFAULT_ANTHROPIC_MODEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, TRIAL, TRIAL_IDEA_ROUNDS, TRIAL_MEALS,
+  presetById } from "./providers";
 
 export const KEYS = {
   cart: "smartbite.cart", // { meals: [{ slug, servings, grams?, baseServings? }], optional: [key], have: [key] }
@@ -29,6 +30,7 @@ export const KEYS = {
   setup: "smartbite.setup", // "done" or "skipped": the Create profile setup was finished or skipped once
   // true once /start was shown (decided 2026-11-03). Any "smartbite." key tells app/layout.js FRONT_DOOR that this
   // browser was here before, so "/" opens Home instead of sending it to /start.
+  trial: "smartbite.trial", // free trial (decided 2026-11-20): { on, meals, ideas } counts in this browser
   day: "smartbite.day", // My Day (lib/day.js): { version, next, slots: { breakfast: [item], ... } }, until "Clear day"
 };
 const CHANGED = "smartbite-storage";
@@ -574,7 +576,9 @@ export const markSetup = (state) => writeJson(KEYS.setup, state === SETUP_DONE ?
 // saved. The second half is the migration: browsers that saved a key and targets before this rule (in the Profile
 // page, or before the setup existed) count as complete on load and are never sent back through the setup.
 export function profileComplete() {
-  if (!llmReady(readLlm())) return false;
+  const llm = readLlm();
+  if (!llmReady(llm)) return false;
+  if (llm.provider === TRIAL) return true; // the trial uses the default Kitchen Profile unless one was saved
   if (readJson(KEYS.setup, null) === SETUP_DONE) return true;
   const saved = readJson(KEYS.profile, null);
   const target = (id) => { try { return Number(fieldValue(saved, id)) > 0; } catch { return false; } }; // odd shapes: no
@@ -683,7 +687,32 @@ export function readLlmSettings() {
 export const writeLlmSettings = (settings) => writeJson(KEYS.llm, settings);
 
 // What lib/llm.js needs for the chosen provider: { provider, model, baseUrl, apiKey }
+// Free trial state: on once the visitor picked "Try 3 free meals"; meals = recipes written, ideas = idea rounds asked.
+// The counts never reset in this browser (the prepaid balance on the trial key is the real cap).
+export function readTrial() {
+  const t = readJson(KEYS.trial, null) || {};
+  const count = (n) => (Number.isInteger(n) && n > 0 ? n : 0);
+  return { on: t.on === true, meals: count(t.meals), ideas: count(t.ideas) };
+}
+export const trialMealsLeft = (t = readTrial()) => Math.max(TRIAL_MEALS - t.meals, 0);
+// Idea rounds left: TRIAL_IDEA_ROUNDS per meal, 9 in all, and none once the meals are used
+export const trialIdeasLeft = (t = readTrial()) =>
+  (trialMealsLeft(t) > 0 ? Math.max(TRIAL_MEALS * TRIAL_IDEA_ROUNDS - t.ideas, 0) : 0);
+export const startTrial = () => writeJson(KEYS.trial, { ...readTrial(), on: true });
+export const noteTrialIdeas = () => writeJson(KEYS.trial, { ...readTrial(), ideas: readTrial().ideas + 1 });
+export const noteTrialMeal = () => writeJson(KEYS.trial, { ...readTrial(), meals: readTrial().meals + 1 });
+
+// The user's own settings first; with no usable key of their own, the trial once started. It stays the provider
+// after the 3 meals (review 2026-11-20): Make Your Meal then says the free meals are used instead of sending the page
+// to /start, which raced the last meal's own page opening.
 export function readLlm() {
+  const own = readOwnLlm();
+  if (!llmReady(own) && readTrial().on) return { provider: TRIAL, model: null, baseUrl: null, apiKey: null };
+  return own;
+}
+
+// Only the user's own key settings: features outside the 3 trial steps (paste a recipe, AI edit of a saved meal)
+export function readOwnLlm() {
   const s = readLlmSettings();
   if (s.provider === OPENAI_COMPATIBLE) {
     return { provider: OPENAI_COMPATIBLE, model: s.openai.model.trim(), baseUrl: s.openai.baseUrl.trim(), apiKey: readOpenAiKey(),
@@ -695,6 +724,7 @@ export function readLlm() {
 // True when Make Your Meal can call a model; false keeps the demo mode
 export function llmReady(llm) {
   if (!llm) return false;
+  if (llm.provider === TRIAL) return true;
   if (llm.provider === ANTHROPIC) return Boolean(llm.apiKey);
   const preset = presetById(llm.preset);
   return Boolean(llm.baseUrl && llm.model && (llm.apiKey || !preset.keyNeeded));

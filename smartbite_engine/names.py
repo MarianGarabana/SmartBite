@@ -97,3 +97,22 @@ def canonical(name, path=ALIASES):
         return exact[form]
     keys = loose.get(_singular_phrase(form))
     return next(iter(keys)) if keys and len(keys) == 1 else None
+
+
+def base_words(name):
+    """Words of a food after names.canonical: the English key's words when the food is known, else its own words."""
+    return stems(canonical(name) or name)
+
+
+def missing_main_foods(idea, ingredients):
+    """Main foods of the idea the recipe dropped (moved here from eval/checks.py on 2026-11-20 for the trial route).
+    A food counts as kept when its first word is in an ingredient name, both names are the same food (same English
+    key, so "pechuga de pollo" keeps "chicken breast"), or an ingredient is a specific kind of it: every base word of
+    the main food is in the ingredient's base words, so "basmati rice" keeps "rice" and "arroz", "cherry tomatoes"
+    keeps "tomato". Base words come after names.canonical."""
+    have = set().union(*(stems(str(i.get("name") or "")) for i in ingredients)) if ingredients else set()
+    keys = {canonical(str(i.get("name") or "")) for i in ingredients} - {None}
+    bases = [base_words(str(i.get("name") or "")) for i in ingredients]
+    return [f for f in idea.get("main_ingredients") or []
+            if stems(f.split()[0] if f.split() else f) - have and canonical(f) not in keys
+            and not any(base_words(f) <= b for b in bases)]

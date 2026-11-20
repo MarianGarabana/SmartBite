@@ -1,0 +1,929 @@
+{
+ "run": "live-haiku55-trial",
+ "provider": "anthropic",
+ "model": "claude-haiku-5-5",
+ "max_usd": 0.6,
+ "finished": "2026-11-20T16:42:38+00:00",
+ "stopped": null,
+ "prices": {
+  "claude-haiku-5-5": {
+   "input": 0.1,
+   "output": 0.5,
+   "cache_write": 0.125,
+   "cache_read": 0.01,
+   "source": "claude-api skill (cached 2026-10-06), read 2026-10-19; cache prices derived",
+   "valid_until": null
+  }
+ },
+ "calls": 38,
+ "failed_calls": 0,
+ "contract_retries": 0,
+ "input_tokens": 157140,
+ "output_tokens": 107972,
+ "cache_write_tokens": 0,
+ "cache_read_tokens": 0,
+ "total_cost_usd": 0.069698,
+ "meals": 15,
+ "cost_per_meal_mean_usd": 0.004647,
+ "cost_per_meal_max_usd": 0.005831,
+ "latency_mean_s": 12.375,
+ "reruns": 8,
+ "cases_with_reruns": 8,
+ "kept_not_last": [],
+ "cases": [
+  {
+   "case": "c01-greek-chicken",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 1,
+     "misses": []
+    },
+    {
+     "attempt": 2,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 2,
+   "calls": 3,
+   "cost_usd": 0.005648,
+   "has_recipe": true
+  },
+  {
+   "case": "c02-salmon-horno",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 2,
+     "misses": []
+    },
+    {
+     "attempt": 2,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 2,
+   "calls": 3,
+   "cost_usd": 0.005118,
+   "has_recipe": true
+  },
+  {
+   "case": "c03-tuna-no-cook",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 2,
+     "misses": []
+    },
+    {
+     "attempt": 2,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 2,
+   "calls": 3,
+   "cost_usd": 0.004855,
+   "has_recipe": true
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 1,
+     "misses": [
+      "kcal 557 vs target 500"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 2,
+   "calls": 3,
+   "cost_usd": 0.005502,
+   "has_recipe": true
+  },
+  {
+   "case": "c05-vegetarian-lentils",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 2,
+   "cost_usd": 0.003704,
+   "has_recipe": true
+  },
+  {
+   "case": "c06-chicken-pasta-exclude",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 2,
+   "cost_usd": 0.00395,
+   "has_recipe": true
+  },
+  {
+   "case": "c07-pavo-ligero",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 2,
+   "cost_usd": 0.003818,
+   "has_recipe": true
+  },
+  {
+   "case": "c08-egg-breakfast-1",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 2,
+     "misses": [
+      "protein 36 g is more than 20% over target 30 g: cut the protein ingredient"
+     ]
+    },
+    {
+     "attempt": 2,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 2,
+   "calls": 3,
+   "cost_usd": 0.004789,
+   "has_recipe": true
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 2,
+   "cost_usd": 0.003595,
+   "has_recipe": true
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 1,
+     "misses": []
+    },
+    {
+     "attempt": 2,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 2,
+   "calls": 3,
+   "cost_usd": 0.004926,
+   "has_recipe": true
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 1,
+     "misses": []
+    },
+    {
+     "attempt": 2,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 2,
+   "calls": 3,
+   "cost_usd": 0.0054,
+   "has_recipe": true
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 1,
+     "misses": []
+    },
+    {
+     "attempt": 2,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 2,
+   "calls": 3,
+   "cost_usd": 0.005831,
+   "has_recipe": true
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 2,
+   "cost_usd": 0.004411,
+   "has_recipe": true
+  },
+  {
+   "case": "c14-merluza-patatas",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 2,
+   "cost_usd": 0.003148,
+   "has_recipe": true
+  },
+  {
+   "case": "c15-bolognese-high-protein",
+   "status": "ok",
+   "error": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "problems": 0,
+     "misses": []
+    }
+   ],
+   "kept_attempt": 1,
+   "calls": 2,
+   "cost_usd": 0.005003,
+   "has_recipe": true
+  }
+ ],
+ "call_log": [
+  {
+   "case": "c01-greek-chicken",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3619,
+   "output_tokens": 1925,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.343,
+   "cost_usd": 0.001324,
+   "error": null
+  },
+  {
+   "case": "c01-greek-chicken",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3881,
+   "output_tokens": 4941,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 21.034,
+   "cost_usd": 0.002859,
+   "error": null
+  },
+  {
+   "case": "c01-greek-chicken",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 5911,
+   "output_tokens": 1747,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 6.474,
+   "cost_usd": 0.001465,
+   "error": null
+  },
+  {
+   "case": "c02-salmon-horno",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3488,
+   "output_tokens": 1843,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 7.699,
+   "cost_usd": 0.00127,
+   "error": null
+  },
+  {
+   "case": "c02-salmon-horno",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3783,
+   "output_tokens": 3667,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 16.343,
+   "cost_usd": 0.002212,
+   "error": null
+  },
+  {
+   "case": "c02-salmon-horno",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 5936,
+   "output_tokens": 2085,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.438,
+   "cost_usd": 0.001636,
+   "error": null
+  },
+  {
+   "case": "c03-tuna-no-cook",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3475,
+   "output_tokens": 1908,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.462,
+   "cost_usd": 0.001301,
+   "error": null
+  },
+  {
+   "case": "c03-tuna-no-cook",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3825,
+   "output_tokens": 3294,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 14.902,
+   "cost_usd": 0.00203,
+   "error": null
+  },
+  {
+   "case": "c03-tuna-no-cook",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 5511,
+   "output_tokens": 1945,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.402,
+   "cost_usd": 0.001524,
+   "error": null
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3502,
+   "output_tokens": 1868,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.728,
+   "cost_usd": 0.001284,
+   "error": null
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3840,
+   "output_tokens": 4053,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 18.696,
+   "cost_usd": 0.00241,
+   "error": null
+  },
+  {
+   "case": "c04-ternera-coreana",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 5546,
+   "output_tokens": 2507,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 11.298,
+   "cost_usd": 0.001808,
+   "error": null
+  },
+  {
+   "case": "c05-vegetarian-lentils",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3465,
+   "output_tokens": 1823,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.438,
+   "cost_usd": 0.001258,
+   "error": null
+  },
+  {
+   "case": "c05-vegetarian-lentils",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3933,
+   "output_tokens": 4105,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 17.649,
+   "cost_usd": 0.002446,
+   "error": null
+  },
+  {
+   "case": "c06-chicken-pasta-exclude",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3586,
+   "output_tokens": 2362,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 10.233,
+   "cost_usd": 0.00154,
+   "error": null
+  },
+  {
+   "case": "c06-chicken-pasta-exclude",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3873,
+   "output_tokens": 4045,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 18.013,
+   "cost_usd": 0.00241,
+   "error": null
+  },
+  {
+   "case": "c07-pavo-ligero",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3556,
+   "output_tokens": 2093,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.6,
+   "cost_usd": 0.001402,
+   "error": null
+  },
+  {
+   "case": "c07-pavo-ligero",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3870,
+   "output_tokens": 4058,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 18.258,
+   "cost_usd": 0.002416,
+   "error": null
+  },
+  {
+   "case": "c08-egg-breakfast-1",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3481,
+   "output_tokens": 1808,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.165,
+   "cost_usd": 0.001252,
+   "error": null
+  },
+  {
+   "case": "c08-egg-breakfast-1",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3801,
+   "output_tokens": 2665,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 11.574,
+   "cost_usd": 0.001713,
+   "error": null
+  },
+  {
+   "case": "c08-egg-breakfast-1",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 5584,
+   "output_tokens": 2532,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 10.648,
+   "cost_usd": 0.001824,
+   "error": null
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3572,
+   "output_tokens": 2176,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 9.428,
+   "cost_usd": 0.001445,
+   "error": null
+  },
+  {
+   "case": "c09-garbanzos-6",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3844,
+   "output_tokens": 3532,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 15.797,
+   "cost_usd": 0.00215,
+   "error": null
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3537,
+   "output_tokens": 1933,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.843,
+   "cost_usd": 0.00132,
+   "error": null
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3834,
+   "output_tokens": 3729,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 16.966,
+   "cost_usd": 0.002248,
+   "error": null
+  },
+  {
+   "case": "c10-pork-stir-fry",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 5535,
+   "output_tokens": 1610,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 6.351,
+   "cost_usd": 0.001358,
+   "error": null
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3544,
+   "output_tokens": 2017,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.99,
+   "cost_usd": 0.001363,
+   "error": null
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3865,
+   "output_tokens": 4112,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 17.776,
+   "cost_usd": 0.002442,
+   "error": null
+  },
+  {
+   "case": "c11-pollo-curry-sin-garbanzos",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 6027,
+   "output_tokens": 1985,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 7.65,
+   "cost_usd": 0.001595,
+   "error": null
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3511,
+   "output_tokens": 2086,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 9.33,
+   "cost_usd": 0.001394,
+   "error": null
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3864,
+   "output_tokens": 4492,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 19.91,
+   "cost_usd": 0.002632,
+   "error": null
+  },
+  {
+   "case": "c12-turkey-sweet-potato",
+   "stage": "rerun",
+   "attempt": 2,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 6418,
+   "output_tokens": 2326,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 9.09,
+   "cost_usd": 0.001805,
+   "error": null
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3554,
+   "output_tokens": 2407,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 10.357,
+   "cost_usd": 0.001559,
+   "error": null
+  },
+  {
+   "case": "c13-tuna-microwave",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3902,
+   "output_tokens": 4923,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 21.514,
+   "cost_usd": 0.002852,
+   "error": null
+  },
+  {
+   "case": "c14-merluza-patatas",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3490,
+   "output_tokens": 1899,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 8.183,
+   "cost_usd": 0.001298,
+   "error": null
+  },
+  {
+   "case": "c14-merluza-patatas",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3830,
+   "output_tokens": 2935,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 12.908,
+   "cost_usd": 0.00185,
+   "error": null
+  },
+  {
+   "case": "c15-bolognese-high-protein",
+   "stage": "ideas",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3521,
+   "output_tokens": 2436,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 10.774,
+   "cost_usd": 0.00157,
+   "error": null
+  },
+  {
+   "case": "c15-bolognese-high-protein",
+   "stage": "recipe",
+   "attempt": 1,
+   "try": 1,
+   "model": "claude-haiku-5-5",
+   "status": 200,
+   "input_tokens": 3826,
+   "output_tokens": 6100,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "reasoning_tokens": null,
+   "latency_s": 25.969,
+   "cost_usd": 0.003433,
+   "error": null
+  }
+ ]
+}

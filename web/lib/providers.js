@@ -15,6 +15,12 @@
 
 export const ANTHROPIC = "anthropic";
 export const OPENAI_COMPATIBLE = "openai_compatible";
+// Free trial (decided 2026-11-20): no key in the browser; SmartBite's own steps go to /api/trial, which runs them on
+// Marian's Anthropic key (Claude Haiku 5.5, prepaid 10 USD). 3 meals per browser; a meal counts when its recipe is
+// written, and each meal left allows 3 rounds of ideas.
+export const TRIAL = "trial";
+export const TRIAL_MEALS = 3;
+export const TRIAL_IDEA_ROUNDS = 3;
 
 export const ANTHROPIC_MODELS = [
   { id: "claude-sonnet-5-5", label: "Claude Sonnet 5.5 (default)" },

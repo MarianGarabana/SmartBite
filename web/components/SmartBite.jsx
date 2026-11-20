@@ -12,8 +12,9 @@ import { listText } from "../lib/packs";
 import { demoIdea, demoPicks, estimateLabel, estimateTitle, recipeMeals, toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
 import { tabUrl } from "../lib/site";
-import { DEFAULT_BUDGET, deleteLocalMeal, engineEstimates, profileComplete, readActiveProducts, readBudget, readLlm, readProfile, saveLocalMeal }
-  from "../lib/store";
+import { DEFAULT_BUDGET, deleteLocalMeal, engineEstimates, noteTrialIdeas, noteTrialMeal, profileComplete, readActiveProducts, readBudget, readLlm,
+  readProfile, readTrial, saveLocalMeal, trialIdeasLeft } from "../lib/store";
+import { TRIAL, TRIAL_MEALS } from "../lib/providers";
 import { SETUP_DONE_EVENT, openSetup } from "./SetupDialog";
 import { AddButton, AiLabel, Footer, Header, MealPhoto, CART_TABLE as T, TABS, Toast, money, moneySymbol, grams, useCart, useCurrency, useDemo, useMeals, usePrices,
   useProfileComplete, useToast } from "./Chrome";
@@ -969,6 +970,9 @@ function Dial({ id, label, icon, unit, min, max, step, value, onChange, presets 
 
 // Step 1: one question per screen, then a check-your-answers summary (decided 2026-11-09). Each visit starts from the
 // user's profile (targets, gear, foods to avoid, budget); answers are not remembered between visits.
+// The free trial ended (no meals left on the trial key, or the trial is off): the page offers the own-key setup
+const trialOver = (e) => e?.trialCode === "trial_off" || e?.trialCode === "trial_used_up";
+
 function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete, start }) {
   const [crave, setCrave] = useState({ protein: [], style: [], cuisine: [] });
   const [craveText, setCraveText] = useState("");
@@ -1048,6 +1052,9 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
   // { step: 1 } | { step: 2, loading } | { step: 2, ideas, demo } | { step: 2 or 3, error } | { step: 3, loading }
   // Step 3 also keeps { idea, recipe } once the recipe is written, so "Try again" re-runs only the engine
   const [run, setRun] = useState({ step: 1 });
+  // Free trial counts (lib/store.js), read after mount and again when the step changes: null when not on the trial
+  const [trial, setTrial] = useState(null);
+  useEffect(() => { setTrial(readLlm().provider === TRIAL ? readTrial() : null); }, [run.step]);
   const [preview, setPreview] = useState(null); // idea shown in the preview card before picking
   const [changes, setChanges] = useState("");
   useEffect(() => {
@@ -1256,12 +1263,18 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
   };
   // Also "Try again" on the ideas error (2026-11-17): the same answers, asked again
   const askIdeas = async (form) => {
+    const llm = readLlm();
+    const onTrial = llm.provider === TRIAL;
+    if (onTrial && trialIdeasLeft() === 0) {
+      return setRun({ step: 2, form, error: "You have used the free rounds of ideas. Add your own AI key to keep making meals.", trialOver: true });
+    }
     setRun({ step: 2, loading: true, form });
     try {
-      const out = await generateIdeas({ form, profile: readProfile(), llm: readLlm() });
+      const out = await generateIdeas({ form, profile: readProfile(), llm });
+      if (onTrial) noteTrialIdeas();
       setRun({ step: 2, form, ideas: out.ideas });
     } catch (e) {
-      setRun({ step: 2, form, error: e.message, keyRejected: Boolean(e.keyRejected) });
+      setRun({ step: 2, form, error: e.message, keyRejected: Boolean(e.keyRejected), trialOver: trialOver(e) });
     }
   };
   // Fast path on the first question (2026-11-17): the craving alone, every other answer at its starting value
@@ -1278,16 +1291,19 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
     `Your recipe "${recipe.title}" is written, but packs and macros are not ready: ${message} The recipe is kept, so you can try again.`;
   const finish = async (base, idea, given = null) => {
     let out;
+    const onTrial = readLlm().provider === TRIAL;
     try {
       out = await makeMeal({ idea, form: base.form, profile: readProfile(), llm: readLlm(), recipe: given,
         products: readActiveProducts(), ...engineEstimates(), onProgress: setProgress });
     } catch (e) {
       setProgress(null);
+      if (onTrial && e.recipe && !given) noteTrialMeal(); // written but the engine failed: still a free meal
       const recipe = e.recipe || given;
       return setRun(recipe ? { ...base, step: 3, loading: false, idea, recipe, error: notReady(recipe, e.message) }
-        : { ...base, step: 3, loading: false, error: e.message, keyRejected: Boolean(e.keyRejected) });
+        : { ...base, step: 3, loading: false, error: e.message, keyRejected: Boolean(e.keyRejected), trialOver: trialOver(e) });
     }
     setProgress(null);
+    if (onTrial && !given) noteTrialMeal(); // a free meal counts once its recipe is written
     const { meal: doc, recipe } = out;
     try {
       const slug = mealSlug(recipe.title);
@@ -1320,11 +1336,15 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
   const [revising, setRevising] = useState(false);
   const revise = async (idea) => {
     if (revising) return;
+    // On the free trial a change uses one round of ideas (review 2026-11-20)
+    const onTrial = readLlm().provider === TRIAL;
+    if (onTrial && trialIdeasLeft() === 0) return showToast("Not changed: the free rounds are used. Add your own AI key to keep going.");
     setPreview(null);
     setRevising(true);
     showToast("Updating the idea...");
     try {
       const updated = await reviseIdea({ idea, changes, form: run.form, profile: readProfile(), llm: readLlm() });
+      if (onTrial) noteTrialIdeas();
       setRun({ ...run, ideas: run.ideas.map((i) => (i.idea_id === idea.idea_id ? updated : i)) });
       setChanges("");
       setPreview(updated);
@@ -1357,13 +1377,27 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
       <div id="make-step-1" ref={quizTop} onKeyDown={onQuizKey} className={`bg-white rounded-3xl p-6 sm:p-10 shadow-soft border border-cream-dark max-w-4xl mx-auto space-y-6 scroll-mt-6${step !== 1 ? " hidden" : ""}`}>
         {/* Real app: the quiz waits for a complete profile (hidden, not unmounted, while the profile is read; once read
             as not complete, the page goes to /start). The demo says what it is and leads to /start. */}
+        {!demo && trial && trial.meals < TRIAL_MEALS && (
+          <div id="trial-make-bar" className="bg-lime-soft rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
+            <span className="font-bold text-forest">Free meal {trial.meals + 1} of {TRIAL_MEALS}.</span> Made with
+            SmartBite&apos;s AI key, so no key is needed yet.{" "}
+            <Link href="/start" className="font-bold underline hover:text-lime-hover">Use my own key</Link>
+          </div>
+        )}
+        {!demo && trial && trial.meals >= TRIAL_MEALS && (
+          <div id="trial-done" className="bg-cream-card rounded-2xl p-6 border border-cream-dark text-sm text-forest/80 space-y-3">
+            <p><span className="font-bold text-forest">You have made your {TRIAL_MEALS} free meals.</span> Add your own AI key to keep
+              making meals. Your meals, cart and profile stay as they are.</p>
+            <Link href="/start" className="inline-block bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all">Use my API key</Link>
+          </div>
+        )}
         {demo && (
           <div id="demo-make-bar" className="bg-cream-card rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
             <span className="font-bold text-forest">This is the demo.</span> Ideas come from the example meals, not from your craving.{" "}
             <Link href="/start" className="font-bold underline hover:text-lime-hover">Make a real one?</Link>
           </div>
         )}
-        <div className={`space-y-6${demo || complete ? "" : " hidden"}`}>
+        <div className={`space-y-6${(demo || complete) && !(trial && trial.meals >= TRIAL_MEALS) ? "" : " hidden"}`}>
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <span className="font-script text-2xl text-forest font-bold">{review ? "Last step" : `Question ${q + 1} of ${QUESTIONS.length}`}</span>
             <div className="flex gap-1 flex-1 max-w-xs" aria-hidden="true">
@@ -1550,7 +1584,10 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
               {run.error && run.keyRejected && (
                 <Link id="ideas-fix-key" href="/profile#ai-provider" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all">Check your key in Profile</Link>
               )}
-              {run.error && !run.keyRejected && (
+              {run.error && run.trialOver && (
+                <Link id="ideas-own-key" href="/start" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all">Use my API key</Link>
+              )}
+              {run.error && !run.keyRejected && !run.trialOver && (
                 <button id="ideas-retry" onClick={() => askIdeas(run.form)} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all inline-flex items-center gap-2">
                   <i className="fa-solid fa-rotate-right text-[10px]"></i><span>Try again</span>
                 </button>
@@ -1582,6 +1619,9 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
             )}
             {run.keyRejected && (
               <Link href="/profile#ai-provider" className="text-xs font-bold text-forest underline hover:text-lime-hover">Check your key in Profile</Link>
+            )}
+            {run.trialOver && (
+              <Link href="/start" className="text-xs font-bold text-forest underline hover:text-lime-hover">Use my API key</Link>
             )}
           </div>
         )}

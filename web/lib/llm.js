@@ -15,7 +15,7 @@ import { pickDishes } from "./inspiration.js";
 import { foods } from "./names.js";
 import { LINK_MESSAGE, MAX_PASTE, looksLikeLink } from "./importer.js";
 import { ideaPrompt, importPrompt, recipePrompt, revisionPrompt, typicalPackHints } from "./prompts.js";
-import { ANTHROPIC, DEFAULT_ANTHROPIC_MODEL, OPENAI_COMPATIBLE } from "./providers.js";
+import { ANTHROPIC, DEFAULT_ANTHROPIC_MODEL, OPENAI_COMPATIBLE, TRIAL } from "./providers.js";
 
 export const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 export const ANTHROPIC_VERSION = "2023-06-01";
@@ -51,6 +51,7 @@ export function redact(text, key) {
 }
 
 function checkSettings(llm) {
+  if (llm?.provider === TRIAL) return;
   if (!llm || (llm.provider !== ANTHROPIC && llm.provider !== OPENAI_COMPATIBLE)) throw new LlmError("Pick a provider in your Profile first.");
   if (llm.provider === ANTHROPIC && !llm.apiKey) throw new LlmError("Add your Anthropic API key in your Profile first.");
   if (llm.provider === OPENAI_COMPATIBLE) {
@@ -256,9 +257,39 @@ async function callOpenAi(llm, step, system, messages) {
 const retryMessage = (errors) => "Your reply did not pass the checks:\n" + errors.map((e) => `- ${e}`).join("\n") +
   "\n\nReply again with ONLY the corrected JSON object, no other text.";
 
-// Ask, check the reply, and on a failure send the errors back once. Returns the checked data.
-async function askJson(llm, step, prompt, check) {
+// Free trial (decided 2026-11-20): the server builds the same prompt from these inputs, runs it on the trial key and
+// checks the reply the same way (smartbite_engine/trial.py); the checks run here again. Errors carry trialCode
+// (trial_off, trial_used_up, rate_limited, busy, ...) so the page can point to the own-key setup.
+export const TRIAL_URL = "/api/trial";
+async function askTrial(step, inputs, check) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), CALL_TIMEOUT_MS);
+  let res;
+  let data = null;
+  try {
+    res = await fetch(TRIAL_URL, { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ step, ...inputs }), signal: controller.signal });
+    data = await res.json().catch(() => null);
+  } catch (e) {
+    throw new LlmError(controller.signal.aborted ? TIMEOUT_MESSAGE : "Could not reach SmartBite. Check your connection and try again.");
+  } finally {
+    clearTimeout(timer);
+  }
+  if (!res.ok) {
+    const error = new LlmError(data?.errors?.[0] || `SmartBite answered with an error (${res.status}). Try again.`);
+    error.trialCode = data?.code || "error";
+    throw error;
+  }
+  const errors = check(data?.data);
+  if (errors.length) throw new LlmError(`The ${LABEL[step]} reply was not valid. Try again. ${errors.slice(0, 3).join("; ")}`);
+  return data.data;
+}
+
+// Ask, check the reply, and on a failure send the errors back once. Returns the checked data. trialInputs: what the
+// free trial server needs to build the same prompt (used only when llm.provider is TRIAL).
+async function askJson(llm, step, prompt, check, trialInputs) {
   checkSettings(llm);
+  if (llm.provider === TRIAL) return askTrial(step, trialInputs, check);
   const call = llm.provider === ANTHROPIC ? callAnthropic : callOpenAi;
   let messages = [{ role: "user", content: prompt.user }];
   for (let attempt = 0; attempt < 2; attempt++) {
@@ -289,7 +320,7 @@ export async function generateIdeas({ form, profile, llm, seed = newSeed(), insp
       if (new Set(ids).size !== ids.length) errors.push(`idea_id values must all be different, got ${ids.join(", ")}`);
     }
     return errors;
-  });
+  }, { form, profile, seed });
 }
 
 // One idea rewritten with the user's changes (revision.schema.json). The changes are kept on the idea for the
@@ -302,7 +333,7 @@ export async function reviseIdea({ idea, changes, form, profile, llm, knownIngre
     const errors = validateOutput(d, "revision.schema.json");
     if (!errors.length && d.idea.idea_id !== idea.idea_id) errors.push(`idea_id must stay "${idea.idea_id}", got "${d.idea.idea_id}"`);
     return errors;
-  });
+  }, { form, profile, idea, changes: text });
   return { ...data.idea, changes: idea.changes ? `${idea.changes}; ${text}` : text };
 }
 
@@ -330,13 +361,14 @@ export async function writeRecipe({ idea, form, profile, llm, knownIngredients, 
         `main_ingredients (${idea.main_ingredients.join(", ")}); change grams or other foods instead.`);
     }
     return errors;
-  });
+  }, { form, profile, idea, rerun });
 }
 
 // A pasted recipe read into foods and whole-recipe grams (import.schema.json Output), with the recipe call's model
 // settings (the eval ran it that way, eval/recipe_import). Code then weighs pieces and divides by servings
 // (lib/importer.js).
 export async function importRecipe({ paste, llm, knownIngredients }) {
+  if (llm?.provider === TRIAL) throw new LlmError("Reading a pasted recipe needs your own AI key. Add it in your Profile.");
   const text = String(paste ?? "").trim();
   if (!text) throw new LlmError("Paste a recipe first.");
   if (looksLikeLink(text)) throw new LlmError(LINK_MESSAGE);

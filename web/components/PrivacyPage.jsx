@@ -15,6 +15,8 @@ const POINTS = [
     "Your API key is stored only in this browser. It never leaves the browser except to the provider you chose in your Profile (api.anthropic.com for Anthropic), when you make a meal."],
   ["fa-wand-magic-sparkles", "What goes to the AI provider",
     "When you make a meal, your craving, form and Kitchen Profile are sent from your browser to the provider you chose (Anthropic by default) to write the ideas and the recipe. Your daily targets for My Day are left out. When you paste a recipe, only the pasted text goes there, to read its foods and amounts. That provider's own terms apply to those requests."],
+  ["fa-bolt", "Free meals",
+    "If you use the free meals, there is no key in your browser. Your craving, form, Kitchen Profile, the picked idea and any changes you ask for go to the SmartBite engine, which sends them to Anthropic (Claude Haiku) with SmartBite's own key and sends the reply back. The engine keeps none of it: for each call it logs only the step, the token counts and the time taken. A counter in your browser keeps track of the free meals. Anthropic's terms apply to those requests."],
   ["fa-gears", "What goes to the SmartBite engine",
     "The form, your Kitchen Profile, the picked idea and the recipe go to the SmartBite engine to compute packs, macros and leftovers. It sends the result back and keeps nothing. Your key is never sent there."],
   ["fa-share-nodes", "Shared recipe links",
