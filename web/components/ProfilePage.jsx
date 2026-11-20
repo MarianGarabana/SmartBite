@@ -16,6 +16,9 @@ import { PageShell, downloadJson, useToast } from "./Chrome";
 import ProfileFileOpen from "./ProfileFileOpen";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
+// Phone jump bar: [section id, icon, text]
+const JUMP = [["kitchen-profile", "fa-kitchen-set", "Kitchen"], ["ai-provider", "fa-key", "AI key"],
+  ["where-you-shop", "fa-wallet", "Prices"], ["profile-file", "fa-file-arrow-down", "File"]];
 const input = "w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest";
 // Text fields hold whole sentences: same look as the craving box of the Make Your Meal form
 const textArea = "w-full bg-cream/50 border border-cream-dark rounded-2xl p-4 text-sm text-forest placeholder-forest/40 focus:outline-none focus:border-forest";
@@ -244,10 +247,19 @@ export default function ProfilePage({ demoMeals }) {
           <span className="font-script text-3xl text-forest font-bold">Your Kitchen</span>
           <h1 className="font-serif text-4xl font-bold text-forest">{readyName ? `${readyName}'s profile` : "Your profile"}</h1>
         </div>
+        {/* Phones only (decided 2026-11-20, option 3B): a jump bar that stays under the header, and the right column
+            (name, AI key, prices, profile file) first, so the key is on the first screen. Hidden from 640 px. */}
+        <nav aria-label="On this page" className="sm:hidden sticky top-[81px] z-30 -mx-8 px-4 py-2 bg-cream/95 backdrop-blur-md border-b border-forest/10 grid grid-cols-4 gap-1">
+          {JUMP.map(([id, icon, text]) => (
+            <a key={id} href={`#${id}`} className="py-2 rounded-xl text-[11px] font-bold text-forest bg-white border border-cream-dark flex flex-col items-center gap-1">
+              <i className={`fa-solid ${icon} text-xs`} aria-hidden="true"></i>{text}
+            </a>
+          ))}
+        </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Kitchen Profile */}
-          <div className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 shadow-soft border border-cream-dark space-y-8">
+          <div id="kitchen-profile" className="max-sm:scroll-mt-40 lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 shadow-soft border border-cream-dark space-y-8">
             <div>
               <span className="font-script text-2xl text-forest font-bold">How you cook</span>
               <h2 className="font-serif text-3xl font-bold text-forest">Kitchen Profile</h2>
@@ -274,7 +286,7 @@ export default function ProfilePage({ demoMeals }) {
           </div>
 
           {/* About you, API key, where you shop */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="lg:col-span-5 space-y-6 max-sm:order-first">
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
               <div>
                 <span className="font-script text-2xl text-forest font-bold">On this page</span>
@@ -287,7 +299,7 @@ export default function ProfilePage({ demoMeals }) {
                 <span className="block text-[11px] text-forest/70 mt-1">Shown on this page only. It stays in this browser.</span>
               </div>
             </div>
-            <div id="ai-provider" className="scroll-mt-24 bg-forest text-cream rounded-3xl p-6 sm:p-8 shadow-card space-y-5">
+            <div id="ai-provider" className="scroll-mt-24 max-sm:scroll-mt-40 bg-forest text-cream rounded-3xl p-6 sm:p-8 shadow-card space-y-5">
               <div className="flex items-center gap-2">
                 <i className="fa-solid fa-key text-lime text-lg"></i>
                 <h2 className="font-serif font-bold text-xl text-white">Your AI provider and key</h2>
@@ -364,7 +376,7 @@ export default function ProfilePage({ demoMeals }) {
                 )}
               </div>
             </div>
-            <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
+            <div id="where-you-shop" className="max-sm:scroll-mt-40 bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
               <div>
                 <span className="font-script text-2xl text-forest font-bold">Where you shop</span>
                 <h2 className="font-serif font-bold text-xl text-forest">Country and prices</h2>
@@ -427,7 +439,7 @@ export default function ProfilePage({ demoMeals }) {
                 <span className="block text-[11px] text-forest/70">A file to keep your products, or move them to another browser.</span>
               </div>
             </div>
-            <div id="profile-file" className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
+            <div id="profile-file" className="max-sm:scroll-mt-40 bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
               <div>
                 <span className="font-script text-2xl text-forest font-bold">Keep it or move it</span>
                 <h2 className="font-serif font-bold text-xl text-forest">Profile file</h2>

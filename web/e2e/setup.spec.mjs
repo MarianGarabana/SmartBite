@@ -148,6 +148,7 @@ test("the shopping tables fit their card at every width, with no sideways scroll
   for (const width of [390, 768, 1024, 1280, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/recipes/classic-lentil-stew-with-chickpeas-and-chicken");
+    if (width < 640) await page.locator("#phone-tab-shopping").click(); // phones show the list under its tab (2026-11-20)
     await expect(page.locator("#pack-table-body tr").first()).toBeVisible();
     expect(await fits("#pack-table-body"), `recipe at ${width}`).toBe(true);
     await page.goto("/demo?tab=cart");

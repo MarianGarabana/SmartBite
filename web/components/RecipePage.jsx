@@ -110,6 +110,11 @@ function RecipeView({ meal, meals, router }) {
   // Add to my cart says it worked and offers the cart (2026-11-17); on phones the button stays at the bottom of the screen
   const [added, setAdded] = useState(false);
   const addToCart = () => { add(meal, servings); setAdded(true); };
+  // Phones only (decided 2026-11-20, option 2B): tabs Recipe / Shopping / Nutrients under the macros, so the page is
+  // about 3 screens instead of 5.6. Each section hides on phones (max-sm:hidden) when its tab is not picked; at 640 px
+  // and up the tab bar is hidden and every section shows as before. Starts on Recipe, so the server HTML is the same.
+  const [phoneTab, setPhoneTab] = useState("recipe");
+  const phoneHide = (tab) => (phoneTab !== tab ? " max-sm:hidden" : "");
 
   // Lines hold grams for the servings they were computed for; scale them to the chosen servings. The engine's last
   // reply wins over the saved meal and stays while a newer one loads (the table never falls back to the saved
@@ -261,7 +266,7 @@ function RecipeView({ meal, meals, router }) {
               {/* No photo: no image box, the title and macros take the full width (decided 2026-11-09) */}
               {hasPhoto && (
                 <div className="md:col-span-5 h-64 rounded-2xl overflow-hidden relative">
-                  <MealImage meal={meal} label eager className="w-full h-full object-cover" textClass="text-2xl" />
+                  <MealImage meal={meal} label labelTopOnPhones eager className="w-full h-full object-cover" textClass="text-2xl" />
                   <button onClick={() => setPhotoOpen(!photoOpen)}
                     className="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-forest text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-soft">
                     <i className="fa-solid fa-camera mr-1.5"></i>{photoOpen ? "Close" : "Replace photo"}
@@ -323,10 +328,12 @@ function RecipeView({ meal, meals, router }) {
               </div>
             </div>
 
+            <PhoneTabs tab={phoneTab} setTab={setPhoneTab} tabs={PHONE_TABS.filter(([id]) => id !== "nutrients" || micros)} />
+
             {/* Photo card. Gemini key: SmartBite makes the photo (decided 2026-11-09); on failure, or with any other key,
                 the prompt for Gemini and a drop zone (the image stays in this browser) */}
             {showPhotoCard && (
-              <div id="photo-card" className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-5">
+              <div id="photo-card" className={`bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-5${phoneHide("recipe")}`}>
                 <div>
                   <span className="font-script text-2xl text-forest font-bold">Your photo</span>
                   <h3 className="font-serif text-2xl font-bold text-forest">
@@ -401,7 +408,8 @@ function RecipeView({ meal, meals, router }) {
             )}
 
             {/* Ingredients Grams & Steps */}
-            <div className={`grid grid-cols-1 gap-8${meal.steps?.length ? " md:grid-cols-2" : ""}`}>
+            <div id="phone-panel-recipe" role="tabpanel" aria-labelledby="phone-tab-recipe"
+              className={`grid grid-cols-1 gap-8${meal.steps?.length ? " md:grid-cols-2" : ""}${phoneHide("recipe")}`}>
               <div className="bg-white rounded-3xl p-6 shadow-soft border border-cream-dark">
                 <h3 className="font-serif font-bold text-xl text-forest mb-4">Recipe Ingredients</h3>
                 <ul id="picked-ingredients-list" className="space-y-2.5 text-xs text-forest/80">
@@ -440,7 +448,8 @@ function RecipeView({ meal, meals, router }) {
             </div>
 
             {/* Ingredients to Buy Table */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
+            <div id="phone-panel-shopping" role="tabpanel" aria-labelledby="phone-tab-shopping"
+              className={`bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4${phoneHide("shopping")}`}>
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-serif font-bold text-xl text-forest">Ingredients to Buy</h3>
@@ -573,7 +582,8 @@ function RecipeView({ meal, meals, router }) {
 
             {/* Vitamins and minerals per serving (meals made before they were counted have none) */}
             {micros ? (
-              <div id="micros-panel" className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
+              <div id="micros-panel" role="tabpanel" aria-labelledby="phone-tab-nutrients"
+                className={`bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4${phoneHide("nutrients")}`}>
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="font-serif font-bold text-xl text-forest">Vitamins and minerals</h3>
@@ -673,6 +683,34 @@ function RecipeView({ meal, meals, router }) {
       {savingTags && <SaveTagsDialog name={meal.name} initial={meal.tags} onSave={confirmSave} onClose={() => setSavingTags(false)} />}
       {editing && <ProductDialog row={editing} onClose={() => setEditing(null)} showToast={showToast} />}
       <Toast toast={toast} lift />
+    </div>
+  );
+}
+
+// Phone tab bar of the recipe page (hidden from 640 px). Arrow keys move between tabs, as in the ARIA tabs pattern.
+const PHONE_TABS = [["recipe", "fa-utensils", "Recipe"], ["shopping", "fa-basket-shopping", "Shopping"],
+  ["nutrients", "fa-leaf", "Nutrients"]];
+
+function PhoneTabs({ tab, setTab, tabs }) {
+  const onKeyDown = (e) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    e.preventDefault();
+    const at = tabs.findIndex(([id]) => id === tab);
+    const [next] = tabs[(at + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+    setTab(next);
+    document.getElementById(`phone-tab-${next}`)?.focus();
+  };
+  return (
+    <div role="tablist" aria-label="Recipe sections" onKeyDown={onKeyDown}
+      className={`sm:hidden grid ${tabs.length === 3 ? "grid-cols-3" : "grid-cols-2"} gap-1 bg-white rounded-2xl p-1 border border-cream-dark shadow-soft`}>
+      {tabs.map(([id, icon, text]) => (
+        <button key={id} id={`phone-tab-${id}`} type="button" role="tab" aria-selected={tab === id}
+          aria-controls={id === "nutrients" ? "micros-panel" : `phone-panel-${id}`} tabIndex={tab === id ? 0 : -1}
+          onClick={() => setTab(id)}
+          className={`py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors ${tab === id ? "bg-forest text-lime" : "text-forest/70"}`}>
+          <i className={`fa-solid ${icon} text-[11px]`} aria-hidden="true"></i>{text}
+        </button>
+      ))}
     </div>
   );
 }

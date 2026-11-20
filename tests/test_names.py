@@ -62,12 +62,19 @@ def test_every_key_is_english_plain_and_maps_to_itself():
         assert canonical(key) == key, key
 
 
+# The one exception (Marian, 2026-11-20): peas in Spanish shops are sold frozen and have about the same nutrition, so
+# plain pea names use the frozen peas record (they were unmatched before and left out of every total)
+FRESH_TO_FROZEN_OK = {"guisantes": "frozen peas", "peas": "frozen peas", "green peas": "frozen peas"}
+
+
 def test_aliases_point_to_keys_and_agree_on_frozen():
     keys = set(foods())
     frozen = lambda name: "frozen" in name or "congelad" in name
     for alias, key in pairs():
         assert key in keys, alias
         assert alias not in keys, alias
+        if FRESH_TO_FROZEN_OK.get(alias) == key:
+            continue
         assert frozen(alias) == frozen(key), alias  # a fresh name never resolves to a frozen record
     assert aliases()["pechuga de pollo"] == "chicken breast"
     assert aliases_of("strawberries") == ["fresas", "freson"]

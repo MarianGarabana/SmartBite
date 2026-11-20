@@ -298,13 +298,15 @@ export function MealPhoto({ meal, frameClass, imgClass, label = false, eager = f
 
 // label: show "AI-generated photo" on a demo photo made with AI (the parent is positioned)
 // lazy by default: hidden tabs hold every demo photo; eager only for a page's main photo
-export function MealImage({ meal, className, textClass = "text-sm", label = false, eager = false }) {
+// labelTopOnPhones: the recipe page's Replace photo button sits bottom right, so on phones the label moves to the top
+// left (decided 2026-11-20; at 390 px they overlapped)
+export function MealImage({ meal, className, textClass = "text-sm", label = false, eager = false, labelTopOnPhones = false }) {
   const loading = eager ? "eager" : "lazy";
   const { url: photo, ai } = usePhoto(meal.slug, true);
   const src = photo || meal.images[0];
   if (src && (photo ? ai : meal.aiPhoto)) {
     const img = <img src={src} alt={`${meal.name} (AI-generated photo)`} loading={loading} className={className} />;
-    return label ? <>{img}<PhotoLabel /></> : img;
+    return label ? <>{img}<PhotoLabel topOnPhones={labelTopOnPhones} /></> : img;
   }
   if (src) return <img src={src} alt={meal.name} loading={loading} className={className} />;
   return (
@@ -324,9 +326,9 @@ export function AiLabel({ className = "", text = "AI-generated" }) {
 }
 
 // Small label on demo photos made with an image model; same look as AiLabel
-export function PhotoLabel() {
+export function PhotoLabel({ topOnPhones = false }) {
   return (
-    <span className="absolute bottom-2.5 left-2.5 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-forest/70 bg-cream-card border border-cream-dark px-2 py-0.5 rounded-full">
+    <span className={`absolute ${topOnPhones ? "max-sm:top-2.5 max-sm:bottom-auto " : ""}bottom-2.5 left-2.5 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-forest/70 bg-cream-card border border-cream-dark px-2 py-0.5 rounded-full`}>
       <i className="fa-solid fa-wand-magic-sparkles text-[9px]"></i>AI-generated photo
     </span>
   );
