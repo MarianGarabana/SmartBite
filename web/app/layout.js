@@ -1,8 +1,6 @@
 import { Caveat, Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
-// Only the two icon styles the app uses (solid, regular), not the brands and old-version files of all.min.css
-import "@fortawesome/fontawesome-free/css/fontawesome.min.css";
-import "@fortawesome/fontawesome-free/css/solid.min.css";
-import "@fortawesome/fontawesome-free/css/regular.min.css";
+// Font Awesome trimmed to the icons the app uses (solid + regular): run scripts/subset-icons.py after adding an icon
+import "./icons/fontawesome.css";
 import "./globals.css";
 import SiteAnalytics from "../components/SiteAnalytics";
 import { loadDemoMeals } from "../lib/demo";
