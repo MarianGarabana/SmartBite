@@ -135,7 +135,9 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
   const [query, setQuery] = useState("");
   const [pasting, setPasting] = useState(false); // the Paste a recipe box on My Recipes
   const { toast, showToast } = useToast();
-  const { meals, ready: mealsReady } = useMeals(demoMeals);
+  // Free trial (decided 2026-11-20): the demo meals show as "Example recipes", fetched only for trial visitors
+  const [examples, setExamples] = useState([]);
+  const { meals, ready: mealsReady } = useMeals(demoMeals.length ? demoMeals : examples);
   const { cart, add: addToCart, remove: removeFromCart, setOptional, setHave, adjustSuggestions, previewAdjust,
     applyAdjust, resetAdjust } = useCart(showToast, meals, { evaluate: true });
   const optionalRows = cart.rows.filter((r) => r.optional && r.packSize && !r.have);
@@ -204,14 +206,48 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
     if (!demo && complete === false && tab === "make-meal") router.replace("/start");
   }, [demo, complete, tab, router]);
 
+  useEffect(() => {
+    if (demo || !complete || readLlm().provider !== TRIAL) return setExamples([]);
+    let live = true;
+    fetch("/demo-meals.json").then((r) => (r.ok ? r.json() : [])).then((m) => live && Array.isArray(m) && setExamples(m))
+      .catch(() => {});
+    return () => { live = false; };
+  }, [demo, complete]);
+
   // The demo lists the demo meals; the real app the meals made in this browser once saved ("Save in my recipes").
   const q = query.toLowerCase();
   const own = recipeMeals(meals, false);
-  const homeList = demo ? homeMeals : own.slice(-5).reverse(); // real app: the last five saved
-  const shown = recipeMeals(meals, demo).filter(
-    (m) =>
-      (category === "All" || m.categories.includes(category)) &&
-      (!q || m.name.toLowerCase().includes(q) || m.ingredients.some((i) => i.name.toLowerCase().includes(q)))
+  const matches = (m) =>
+    (category === "All" || m.categories.includes(category)) &&
+    (!q || m.name.toLowerCase().includes(q) || m.ingredients.some((i) => i.name.toLowerCase().includes(q)));
+  const exampleMeals = !demo && examples.length ? recipeMeals(meals, true) : [];
+  // Home: the demo's five; the real app the last five saved, or five examples on the free trial before the first meal
+  const homeExamples = !demo && own.length === 0 && exampleMeals.length > 0;
+  const homeList = demo ? homeMeals : homeExamples ? exampleMeals.slice(0, 5) : own.slice(-5).reverse();
+  const shown = recipeMeals(meals, demo).filter(matches);
+  const shownExamples = exampleMeals.filter(matches);
+  // One My Recipes card (own meals and, on the free trial, the examples)
+  const recipeCard = (m) => (
+    <div key={m.slug} className="relative bg-white rounded-3xl overflow-hidden shadow-soft border border-cream-dark/60 flex flex-col justify-between group">
+      {m.kind === "local" && <CardMenu meal={m} showToast={showToast} />}
+      <MealPhoto meal={m} label frameClass="h-44 overflow-hidden relative" imgClass="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        fallback={<div className="px-5 pt-5"><span className="inline-block bg-forest text-lime font-bold text-xs px-3 py-1 rounded-full">{kcal(m)}</span></div>}>
+        <span className="absolute top-3 left-3 bg-forest/90 text-lime font-bold text-xs px-3 py-1 rounded-full">{kcal(m)}</span>
+      </MealPhoto>
+      <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+        <div>
+          <span className="text-[11px] font-bold uppercase tracking-wider text-forest/70">{label(m)}</span>
+          <h3 className="font-serif font-bold text-base text-forest mt-0.5 leading-snug"><Link href={`/recipes/${m.slug}`} className="after:absolute after:inset-0">{m.name}</Link></h3>
+        </div>
+        <div className="pt-3 border-t border-cream-dark flex items-center justify-between">
+          <span className="text-xs font-bold text-forest">Protein: {protein(m)}</span>
+          <AddButton onAdd={() => addToCart(m)} className="relative z-10 bg-cream-card hover:bg-lime text-forest font-bold px-3.5 py-2 rounded-xl text-xs transition-colors flex items-center gap-1.5">
+            <i className="fa-solid fa-plus text-[10px]"></i>
+            <span>Add to cart</span>
+          </AddButton>
+        </div>
+      </div>
+    </div>
   );
 
   return (
@@ -329,8 +365,8 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
           <div className="max-w-[1360px] mx-auto px-8 pt-4">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <span className="font-script text-2xl text-forest font-bold">{demo ? "Pre-built examples" : "Saved in this browser"}</span>
-                <h2 className="font-serif text-3xl font-bold text-forest">{demo ? "Demo Meals" : "Your Meals"}</h2>
+                <span className="font-script text-2xl text-forest font-bold">{demo || homeExamples ? "Pre-built examples" : "Saved in this browser"}</span>
+                <h2 className="font-serif text-3xl font-bold text-forest">{demo ? "Demo Meals" : homeExamples ? "Example Recipes" : "Your Meals"}</h2>
               </div>
               <button onClick={() => switchTab("recipes")} className="text-xs font-bold text-forest hover:text-lime-hover flex items-center gap-1.5">
                 <span>View all recipes</span>
@@ -460,30 +496,21 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
           </div>
           {pasting && <PasteRecipe onClose={() => setPasting(false)} />}
           <div id="recipes-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {shown.map((m) => (
-              <div key={m.slug} className="relative bg-white rounded-3xl overflow-hidden shadow-soft border border-cream-dark/60 flex flex-col justify-between group">
-                {m.kind === "local" && <CardMenu meal={m} showToast={showToast} />}
-                <MealPhoto meal={m} label frameClass="h-44 overflow-hidden relative" imgClass="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  fallback={<div className="px-5 pt-5"><span className="inline-block bg-forest text-lime font-bold text-xs px-3 py-1 rounded-full">{kcal(m)}</span></div>}>
-                  <span className="absolute top-3 left-3 bg-forest/90 text-lime font-bold text-xs px-3 py-1 rounded-full">{kcal(m)}</span>
-                </MealPhoto>
-                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                  <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-forest/70">{label(m)}</span>
-                    <h3 className="font-serif font-bold text-base text-forest mt-0.5 leading-snug"><Link href={`/recipes/${m.slug}`} className="after:absolute after:inset-0">{m.name}</Link></h3>
-                  </div>
-                  <div className="pt-3 border-t border-cream-dark flex items-center justify-between">
-                    <span className="text-xs font-bold text-forest">Protein: {protein(m)}</span>
-                    <AddButton onAdd={() => addToCart(m)} className="relative z-10 bg-cream-card hover:bg-lime text-forest font-bold px-3.5 py-2 rounded-xl text-xs transition-colors flex items-center gap-1.5">
-                      <i className="fa-solid fa-plus text-[10px]"></i>
-                      <span>Add to cart</span>
-                    </AddButton>
-                  </div>
-                </div>
-              </div>
-            ))}
+            {shown.map(recipeCard)}
           </div>
           {!demo && complete === false && own.length === 0 && <SetupChoices id="recipes-setup" onSetUp={setUp} />}
+          {shownExamples.length > 0 && (
+            <div id="recipes-examples" className="space-y-6 pt-4">
+              <div>
+                <span className="font-script text-2xl text-forest font-bold">Pre-built examples</span>
+                <h2 className="font-serif text-3xl font-bold text-forest">Example Recipes</h2>
+                <p className="text-xs text-forest/70 mt-2">Meals SmartBite made ahead, so you can see what you get. Opening them does not use a free meal.</p>
+              </div>
+              <div id="recipes-examples-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {shownExamples.map(recipeCard)}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* TAB: MY DAY (2026-11-14): one day of meals against daily targets */}

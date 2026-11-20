@@ -163,3 +163,25 @@ test("the last free meal opens its recipe, and then Make Your Meal says the free
   await page.goto("/?tab=make-meal");
   await expect(page.locator("#trial-done")).toBeVisible();
 });
+
+test("trial visitors see example recipes in My Recipes and on Home; others do not", async ({ page }) => {
+  await mockTrial(page);
+  await page.goto("/?tab=recipes");
+  await expect(page.locator("#recipes-examples")).toHaveCount(0); // no trial, no key: no examples
+  await page.goto("/start");
+  await page.locator("#start-trial-go").click();
+  await page.goto("/?tab=recipes");
+  const grid = page.locator("#recipes-examples-grid > div");
+  await expect(grid.first()).toBeVisible();
+  expect(await grid.count()).toBeGreaterThanOrEqual(10);
+  await expect(page.locator("#recipes-examples")).toContainText("Opening them does not use a free meal.");
+  await page.locator("#recipe-filter-chips").getByRole("button", { name: "Breakfast", exact: true }).click();
+  expect(await grid.count()).toBeLessThan(10); // the category filter applies to the examples too
+  await page.goto("/");
+  await expect(page.locator("#home-kitchen-grid > div")).toHaveCount(5);
+  await expect(page.getByRole("heading", { name: "Example Recipes" })).toBeVisible();
+  await page.locator("#home-kitchen-grid a").first().click();
+  await expect(page).toHaveURL(/\/recipes\//);
+  await expect(page.locator("#picked-meal-title")).toBeVisible();
+  expect((await trialState(page)).meals).toBe(0); // looking at examples is free
+});
