@@ -8,9 +8,10 @@ import { withPrices } from "../lib/cartmath";
 import { fitInfo } from "../lib/fitpacks";
 import { checkForm } from "../lib/form";
 import { makeMeal, progressText } from "../lib/flow";
-import { generateIdeas, photoMaker, reviseIdea } from "../lib/llm";
+import { TRIAL_URL, generateIdeas, photoMaker, reviseIdea } from "../lib/llm";
 import { deletePhoto, makePhoto } from "../lib/photos";
 import { listText } from "../lib/packs";
+import { formatFixed } from "../lib/numbers";
 import { demoIdea, demoPicks, recipeMeals, toMeal } from "../lib/meal";
 import { estimateLabel, estimateTitle } from "./ProductDialog";
 import { fieldValue } from "../lib/profile";
@@ -196,6 +197,15 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
     window.addEventListener("popstate", onBack);
     return () => window.removeEventListener("popstate", onBack);
   }, []);
+  // Home note for a new visitor (UX review 2026-11-21): when the server has the free trial on, say the first meals
+  // are free too, instead of "needs an AI key" (which /start then contradicts)
+  const [trialOn, setTrialOn] = useState(false);
+  useEffect(() => {
+    if (demo || complete !== false) return;
+    let live = true;
+    fetch(TRIAL_URL).then((r) => (r.ok ? r.json() : null)).catch(() => null).then((s) => live && setTrialOn(!!s?.available));
+    return () => { live = false; };
+  }, [demo, complete]);
   // A new visitor has no recipes of their own yet: a category opens the demo recipes instead of an empty page
   const openCategory = (name) => {
     if (!demo && own.length === 0) return router.push(`${tabUrl("recipes", true)}&category=${encodeURIComponent(name)}`);
@@ -235,6 +245,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
   const homeExamples = !demo && own.length === 0 && exampleMeals.length > 0;
   const homeList = demo ? homeMeals : homeExamples ? exampleMeals.slice(0, 5) : own.slice(-5).reverse();
   const shown = recipeMeals(meals, demo).filter(matches);
+  const unsaved = demo ? null : meals.filter((m) => m.kind === "local" && !m.saved).at(-1) || null;
   const shownExamples = exampleMeals.filter(matches);
   // One My Recipes card (own meals and, on the free trial, the examples)
   const recipeCard = (m) => (
@@ -346,7 +357,9 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                     </>
                   )}
                 </div>
-                {!demo && !complete && <p id="hero-note" className="text-cream/80 text-sm">{t("The demo needs no sign-up and no key. Making your own meals needs an AI key.")}</p>}
+                {!demo && !complete && <p id="hero-note" className="text-cream/80 text-sm">{trialOn
+                  ? t("No sign-up. The demo needs no key, and your first {n} meals are free.", { n: TRIAL_MEALS })
+                  : t("The demo needs no sign-up and no key. Making your own meals needs an AI key.")}</p>}
               </div>
             </div>
           </div>
@@ -502,7 +515,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
             <div className="flex items-center gap-2 w-full md:w-auto">
               <div className="relative flex-1 md:w-72 md:flex-none">
                 <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-forest/40"></i>
-                <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t("Search recipes or ingredients...")} className="w-full bg-white border border-cream-dark rounded-full pl-9 pr-4 py-2 text-xs text-forest placeholder-forest/40 focus:outline-none focus:border-forest" />
+                <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} aria-label={t("Search recipes or ingredients...")} placeholder={t("Search recipes or ingredients...")} className="w-full bg-white border border-cream-dark rounded-full pl-9 pr-4 py-2 text-xs text-forest placeholder-forest/40 focus:outline-none focus:border-forest" />
               </div>
               {/* Paste a recipe (decided 2026-11-09, Q14): the real app only, not the demo */}
               {!demo && (
@@ -518,6 +531,17 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
           <div id="recipes-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {shown.map(recipeCard)}
           </div>
+          {/* Empty state (UX review 2026-11-21): a meal shows here only once saved, so say so, and lead back to the
+              last meal made in this browser that is not saved yet (a free trial meal looked lost without it) */}
+          {!demo && complete && own.length === 0 && !query && category === "All" && (
+            <p id="recipes-empty" className="text-xs text-forest/70">
+              {unsaved
+                ? tx("Not saved yet: {name}. Open it and tap Save in my recipes to keep it here.", {
+                    name: <Link href={`/recipes/${unsaved.slug}`} className="font-bold underline hover:text-lime-hover">{unsaved.name}</Link> })
+                : tx("Meals you save show here. {make}, then tap Save in my recipes on its page.", {
+                    make: <button onClick={() => switchTab("make-meal")} className="font-bold underline hover:text-lime-hover">{t("Make your first meal")}</button> })}
+            </p>
+          )}
           {!demo && complete === false && own.length === 0 && <SetupChoices id="recipes-setup" onSetUp={setUp} />}
           {shownExamples.length > 0 && (
             <div id="recipes-examples" className="space-y-6 pt-4">
@@ -975,7 +999,7 @@ const Chip = ({ on, onClick, children }) => (
 // Slider with the number beside it: drag, tap a preset, or type (sliders need a typed fallback)
 function Dial({ id, label, icon, unit, min, max, step, value, onChange, presets = [], note, money: isMoney, children }) {
   const [draft, setDraft] = useState(null);
-  const show = (v) => (isMoney ? v.toFixed(2) : String(v));
+  const show = (v) => (isMoney ? formatFixed(v, 2) : String(v)); // "5,50" in Spain (lib/numbers.js)
   const clamp = (v) => Math.min(max, Math.max(min, isMoney ? Math.round(v * 2) / 2 : Math.round(v)));
   const typed = (raw) => {
     setDraft(raw);
@@ -1102,6 +1126,13 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
   const [q, setQ] = useState(0);
   const [toSummary, setToSummary] = useState(false);
   const [quizError, setQuizError] = useState("");
+  // The error shows under the question; on a phone that is below the screen, so bring it into view (UX review 2026-11-21)
+  const quizAlert = useRef(null);
+  const showQuizError = (problem) => {
+    setQuizError(problem);
+    setTimeout(() => quizAlert.current?.scrollIntoView({ block: "center",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }), 0);
+  };
   const quizTop = useRef(null);
   const quizTitle = useRef(null);
   const moved = useRef(false);
@@ -1309,7 +1340,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
   const next = () => {
     if (review) return saveRequest();
     const problem = QUESTIONS[q].check?.();
-    if (problem) return setQuizError(problem);
+    if (problem) return showQuizError(problem);
     goTo(toSummary ? QUESTIONS.length : q + 1);
   };
   const onQuizKey = (e) => {
@@ -1351,7 +1382,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
   // Fast path on the first question (2026-11-17): the craving alone, every other answer at its starting value
   const quick = () => {
     const problem = QUESTIONS[0].check();
-    if (problem) return setQuizError(problem);
+    if (problem) return showQuizError(problem);
     setQuizError("");
     saveRequest();
   };
@@ -1498,7 +1529,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
             ) : QUESTIONS[q].body}
           </div>
 
-          {quizError && <p role="alert" className="text-xs font-bold text-red-700">{quizError}</p>}
+          {quizError && <p ref={quizAlert} role="alert" className="text-xs font-bold text-red-700">{quizError}</p>}
 
           {/* First question (2026-11-17): the craving is enough. "Show me 4 ideas" uses the starting values shown;
               Continue goes through the other questions. On phones the buttons stay at the bottom of the screen. */}

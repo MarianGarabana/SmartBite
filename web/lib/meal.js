@@ -179,6 +179,8 @@ export function toMeal(slug, doc, { kind = "demo", saved = false } = {}) {
     note: it.note || null });
   // Where each food's macros come from: ciqual, usda, open_food_facts, or label (the user's product)
   const nutrition = Object.fromEntries((ev.macros.lines || []).filter((m) => m.food).map((m) => [norm(m.food), m.source]));
+  // A name no food matched that a word rule counted as the closest food ("pork chops" -> pork loin), by ingredient name
+  const countedAs = Object.fromEntries((ev.macros.lines || []).filter((m) => m.counted_as).map((m) => [norm(m.name), m.counted_as]));
   return {
     slug,
     kind, // "demo": ships with the site; "local": made in this browser
@@ -236,6 +238,7 @@ export function toMeal(slug, doc, { kind = "demo", saved = false } = {}) {
         unitsPerPack: l.units_bought && l.packs_to_buy ? l.units_bought / l.packs_to_buy : null, // eggs per box
         userProduct: !!l.user_product, // from a product the user saved
         nutritionSource: (l.food && nutrition[norm(l.food)]) || null,
+        countedAs: countedAs[norm(l.ingredient)] || null, // the food a word rule counted this name as (shown with the source)
         priceDate: l.price_source === "user" ? l.price_date || null : null,
         ingredient: l.ingredient,
         food: l.ingredient,

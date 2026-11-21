@@ -4,55 +4,66 @@
 // food to the day. The nutrition table loads when the picker opens (lib/foods.js loadFoodTable). All math in
 // lib/foods.js, the same as the engine's; nothing is sent anywhere.
 import { useEffect, useMemo, useRef, useState } from "react";
-import { EGG_GRAMS, EGG_SIZE, MAX_EGGS, MAX_FOOD_GRAMS, foodItem, gramsOf, loadFoodTable, readAmount, roundFood,
+import { EGG_GRAMS, EGG_SIZE, MAX_EGGS, MAX_FOOD_GRAMS, amountShown, foodItem, gramsOf, loadFoodTable, readAmount, roundFood,
   macrosFor, searchFoods } from "../lib/foods";
+import { foodName, t, useLang } from "../lib/i18n";
+import { formatDecimal } from "../lib/numbers";
+import { plain } from "../lib/names";
 import { readActiveProducts } from "../lib/store";
 
-// Every string this tab shows, in one place
+// Every string this tab shows, in one place (lib/i18n.js: English is the key, Spanish in lib/i18n/es-profile.js)
 const TEXT = {
-  searchLabel: "Search foods",
-  searchPlaceholder: "Search foods, e.g. banana or platano...",
-  loading: "Loading the food list...",
-  loadFailed: "The food list did not load. Close this and try again.",
-  noMatch: (q) => `No foods match "${q}".`,
-  typeOwn: "Add your own food instead",
-  yourProduct: "Your product",
-  forFood: (food) => `For ${food}`,
-  per100: "Per 100 g",
-  perEgg: (size, grams) => `One egg, size ${size}, is ${grams} g`,
-  kcal: "kcal",
-  protein: "protein",
-  carbs: "carbs",
-  fat: "fat",
-  source: "Values per 100 g from Ciqual 2025 and USDA FoodData Central. Your products use their label.",
-  changeFood: "Change food",
-  grams: "Grams",
-  eggs: "Eggs",
-  eggSize: "Egg size",
-  amountHelp: (eggs) => (eggs ? `A whole number of eggs, 1 to ${MAX_EGGS}.` : `Grams of the food as you eat it, up to ${MAX_FOOD_GRAMS} g.`),
-  preview: (amount) => `For ${amount}`,
-  previewEmpty: (eggs) => (eggs ? "Type how many eggs to see the macros." : "Type the grams to see the macros."),
-  cells: [["kcal", "Calories", ""], ["protein_g", "Protein", " g"], ["carbs_g", "Carbs", " g"], ["fat_g", "Fat", " g"],
-    ["fiber_g", "Fiber", " g"]],
-  noData: "no data",
+  get searchLabel() { return t("Search foods"); },
+  get searchPlaceholder() { return t("Search foods, e.g. banana or platano..."); },
+  get loading() { return t("Loading the food list..."); },
+  get loadFailed() { return t("The food list did not load. Close this and try again."); },
+  noMatch: (q) => t("No foods match \"{q}\".", { q }),
+  get typeOwn() { return t("Add your own food instead"); },
+  get yourProduct() { return t("Your product"); },
+  forFood: (food) => t("For {food}", { food: foodName(food) }),
+  get per100() { return t("Per 100 g"); },
+  perEgg: (size, grams) => t("One egg, size {size}, is {grams} g", { size, grams }),
+  get kcal() { return t("kcal"); },
+  get protein() { return t("protein"); },
+  get carbs() { return t("carbs"); },
+  get fat() { return t("fat"); },
+  get source() { return t("Values per 100 g from Ciqual 2025 and USDA FoodData Central. Your products use their label."); },
+  get changeFood() { return t("Change food"); },
+  get grams() { return t("Grams"); },
+  get eggs() { return t("Eggs"); },
+  get eggSize() { return t("Egg size"); },
+  amountHelp: (eggs) => (eggs ? t("A whole number of eggs, 1 to {n}.", { n: MAX_EGGS })
+    : t("Grams of the food as you eat it, up to {n} g.", { n: MAX_FOOD_GRAMS })),
+  preview: (amount) => t("For {amount}", { amount }),
+  previewEmpty: (eggs) => (eggs ? t("Type how many eggs to see the macros.") : t("Type the grams to see the macros.")),
+  get cells() {
+    return [["kcal", t("Calories"), ""], ["protein_g", t("Protein"), " g"], ["carbs_g", t("Carbs"), " g"], ["fat_g", t("Fat"), " g"],
+      ["fiber_g", t("Fiber"), " g"]];
+  },
+  get noData() { return t("no data"); },
+  // English as stored in the day (the item name keeps it); shown in the page language with lib/foods.js dayItemName
   amountText: (value, eggs, size) => (eggs ? `${value} ${value === 1 ? "egg" : "eggs"}, size ${size}` : `${value} g`),
   errors: {
-    empty: (eggs) => (eggs ? "Type how many eggs." : "Type the grams."),
-    grams: () => `Grams must be a number above 0 and up to ${MAX_FOOD_GRAMS}.`,
-    eggs: () => `Eggs must be a whole number from 1 to ${MAX_EGGS}.`,
+    empty: (eggs) => (eggs ? t("Type how many eggs.") : t("Type the grams.")),
+    grams: () => t("Grams must be a number above 0 and up to {n}.", { n: MAX_FOOD_GRAMS }),
+    eggs: () => t("Eggs must be a whole number from 1 to {n}.", { n: MAX_EGGS }),
   },
-  add: (slot) => `Add to ${slot}`,
-  cancel: "Cancel",
+  add: (slot) => t("Add to {slot}", { slot: t(slot) }),
+  get cancel() { return t("Cancel"); },
 };
 
 const fieldLabel = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
 const fieldInput = "w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest";
 const cap = (s) => (s ? s[0].toUpperCase() + s.slice(1) : s);
-const g1 = (v) => Math.round(v * 10) / 10;
+const g1 = (v) => formatDecimal(v, 1); // "5,9" in Spain (lib/numbers.js)
 const per100Line = (p) => `${Math.round(p.kcal)} ${TEXT.kcal} · ${g1(p.protein_g)}g ${TEXT.protein} · ${g1(p.carbs_g)}g ${TEXT.carbs} · ${g1(p.fat_g)}g ${TEXT.fat}`;
-const shownName = (r) => (r.kind === "food" ? cap(r.name) : r.name);
+// A food from the table shows its name in the page language; a product keeps the name the user gave it
+const shownName = (r) => (r.kind === "food" ? cap(foodName(r.name)) : r.name);
+// The name the search matched, when it is not the one shown ("guisantes" for frozen peas in English)
+const altName = (r) => (r.alt && plain(r.alt) !== plain(shownName(r)) ? r.alt : null);
 
 export default function DayFoods({ hidden, slot, demo, onAdd, onClose, onOwn }) {
+  useLang();
   const [table, setTable] = useState(null);
   const [failed, setFailed] = useState(false);
   useEffect(() => {
@@ -106,7 +117,8 @@ export default function DayFoods({ hidden, slot, demo, onAdd, onClose, onOwn }) 
   const submit = (e) => {
     e.preventDefault();
     if (!read.ok) return setError(TEXT.errors[read.error](eggs));
-    onAdd(foodItem({ ...picked, name: shownName(picked) }, grams, amountText));
+    // The day keeps the English name of a table food (shown in the page language by dayItemName)
+    onAdd(foodItem({ ...picked, name: picked.kind === "food" ? cap(picked.name) : picked.name }, grams, amountText));
   };
 
   return (
@@ -146,8 +158,8 @@ export default function DayFoods({ hidden, slot, demo, onAdd, onClose, onOwn }) 
                       <span className="block font-serif font-bold text-sm text-forest leading-snug break-words">{shownName(r)}</span>
                       {r.kind === "product" ? (
                         <span className="block text-[11px] text-forest/70 break-words">{TEXT.forFood(r.food)}</span>
-                      ) : r.alt ? (
-                        <span className="block text-[11px] text-forest/70 break-words">{r.alt}</span>
+                      ) : altName(r) ? (
+                        <span className="block text-[11px] text-forest/70 break-words">{altName(r)}</span>
                       ) : null}
                       <span className="block text-[11px] text-forest/70 tabular-nums">{TEXT.per100}: {per100Line(r.per100)}</span>
                     </span>
@@ -199,7 +211,7 @@ export default function DayFoods({ hidden, slot, demo, onAdd, onClose, onOwn }) 
             {shown ? (
               <>
                 <p className="text-[10px] font-bold uppercase tracking-wider text-forest/70">
-                  {TEXT.preview(eggs ? `${amountText} (${g1(grams)} g)` : amountText)}
+                  {TEXT.preview(eggs ? `${amountShown(amountText)} (${g1(grams)} g)` : amountText)}
                 </p>
                 <dl className="grid grid-cols-3 sm:grid-cols-5 gap-x-3 gap-y-3">
                   {TEXT.cells.map(([k, label, unit]) => (
@@ -207,7 +219,7 @@ export default function DayFoods({ hidden, slot, demo, onAdd, onClose, onOwn }) 
                       <dt className="text-[10px] uppercase font-bold text-forest/70">{label}</dt>
                       <dd className="text-forest tabular-nums">
                         {shown[k] === null ? <span className="text-xs text-forest/70">{TEXT.noData}</span>
-                          : <><span className="font-serif font-bold text-lg">{shown[k]}</span><span className="text-xs text-forest/70">{unit}</span></>}
+                          : <><span className="font-serif font-bold text-lg">{formatDecimal(shown[k], 1)}</span><span className="text-xs text-forest/70">{unit}</span></>}
                       </dd>
                     </div>
                   ))}

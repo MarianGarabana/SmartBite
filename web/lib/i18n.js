@@ -13,9 +13,10 @@
 // Namespace import: lib/ modules that import this (day.js, packs.js) are also in the server graph (app/layout.js ->
 // lib/demo.js -> meal.js), and Next.js refuses a named import of a client-only hook there. The hooks only run in the browser.
 import * as React from "react";
-import { canonical } from "./names.js";
+import { match } from "./names.js";
 import { ES } from "./i18n/es.js";
 import { FOODS_ES } from "./i18n/foods-es.js";
+import { ES_MX, FOODS_ES_MX } from "./i18n/foods-es-MX.js";
 
 export const LANGS = ["en", "es"];
 export const LANG_KEY = "smartbite.lang";
@@ -24,9 +25,12 @@ export const LANG_NAMES = { en: "English", es: "Español" };
 export const WAIT_CLASS = "lang-wait";
 
 let current = "en"; // English until LangSync reads the choice: the server render and hydration are English
+// Spanish variant by the Profile country (LangSync): "MX" uses Mexico's names (lib/i18n/foods-es-MX.js), else Spain's
+let variant = null;
 const listeners = new Set();
 
 export const getLang = () => current;
+const snapshot = () => `${current}|${variant || ""}`;
 export const okLang = (l) => (LANGS.includes(l) ? l : null);
 
 // The language this browser asked for: the stored choice, else the browser language
@@ -54,22 +58,32 @@ export function setLang(lang, { save = false } = {}) {
   listeners.forEach((f) => f());
 }
 
+// The Profile country, for the Spanish variant; only Mexico has its own names so far
+export function setVariant(country) {
+  const v = country === "MX" ? "MX" : null;
+  if (v === variant) return;
+  variant = v;
+  listeners.forEach((f) => f());
+}
+
 function subscribe(f) {
   listeners.add(f);
   return () => listeners.delete(f);
 }
 
-// The page language for a component; it renders again when the language changes. English on the server and during
-// hydration (getServerSnapshot), so the first client render matches the server HTML.
+// The page language for a component; it renders again when the language or its variant changes. English on the
+// server and during hydration (getServerSnapshot), so the first client render matches the server HTML.
 export function useLang() {
-  return React.useSyncExternalStore(subscribe, getLang, () => "en");
+  return React.useSyncExternalStore(subscribe, snapshot, () => "en|").split("|")[0];
 }
 
 const fill = (text, vars) => (vars ? text.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m)) : text);
 
 // The text in a language (default: the page language), placeholders filled
 export function translate(text, vars, lang = current) {
-  return fill(lang === "es" && Object.hasOwn(ES, text) ? ES[text] : text, vars);
+  if (lang !== "es") return fill(text, vars);
+  const mx = variant === "MX" && Object.hasOwn(ES_MX, text) ? ES_MX[text] : null;
+  return fill(mx ?? (Object.hasOwn(ES, text) ? ES[text] : text), vars);
 }
 export const t = (text, vars) => translate(text, vars);
 
@@ -88,12 +102,14 @@ export function tx(text, vars = {}) {
   }));
 }
 
-// A general food's display name: the Spanish name of a known food in Spanish, else the name as given. Keeps a
-// capital first letter when the given name has one ("Chicken breast" -> "Pechuga de pollo").
-export function foodName(name, lang = current) {
+// A general food's display name: the Spanish name of a known food in Spanish (Mexico's when the country is MX), else
+// the name as given. Keeps a capital first letter when the given name has one ("Chicken breast" -> "Pechuga de pollo").
+// A name that only a word rule matched ("pork chops", counted as pork loin) is not that food: it shows as written.
+export function foodName(name, lang = current, region = variant) {
   if (lang !== "es" || typeof name !== "string" || !name) return name;
-  const key = Object.hasOwn(FOODS_ES, name) ? name : canonical(name);
-  const es = key && FOODS_ES[key];
+  const [found, byRule] = Object.hasOwn(FOODS_ES, name) ? [name, false] : match(name);
+  const key = byRule ? null : found;
+  const es = key && ((region === "MX" && FOODS_ES_MX[key]) || FOODS_ES[key]);
   if (!es) return name;
   return name[0] !== name[0].toLowerCase() ? es[0].toUpperCase() + es.slice(1) : es;
 }

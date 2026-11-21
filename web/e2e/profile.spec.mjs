@@ -50,10 +50,10 @@ test("a country's currency shows on prices, and Spain's estimates need euros", a
   await expect(page.locator("#pack-table-body").getByText("est.")).toHaveCount(0);
   await expect(page.locator("#summary-bought-cost")).toHaveText("No prices yet");
   const beef = page.locator("#pack-table-body tr").filter({ hasText: "ground beef" });
-  await expect(beef.locator("input")).toHaveAttribute("placeholder", "A$ / pack");
+  await expect(beef.locator("input")).toHaveAttribute("placeholder", "$ / pack"); // the symbol as Australia writes it
   await beef.locator("input").fill("4.99");
-  await expect(beef).toContainText("A$ 4.99"); // symbols longer than one character get a space, as for CA$
-  await expect(page.locator("#summary-bought-cost")).toContainText(/A\$ ?4\.99/);
+  await expect(beef).toContainText("$4.99"); // Australia's own format for its dollar (lib/numbers.js, 2026-11-21)
+  await expect(page.locator("#summary-bought-cost")).toHaveText("$4.99");
 
   // Back to Spain but paying in pounds: estimates stay off; then euros brings them back
   await page.goto("/profile");
@@ -82,7 +82,7 @@ test("a profile file saved in one browser opens in another, after a confirm and 
   await toOneServing(a);
   const beef = a.locator("#pack-table-body tr").filter({ hasText: "ground beef" });
   await beef.locator("input").fill("4.99");
-  await expect(beef).toContainText("€4.99");
+  await expect(beef).toContainText(/4,99\s€/);
   await a.goto("/profile");
   const [saved] = await Promise.all([a.waitForEvent("download"), a.getByRole("button", { name: "Save profile file" }).click()]);
   expect(saved.suggestedFilename()).toMatch(/^smartbite-profile-\d{4}-\d{2}-\d{2}\.json$/);
@@ -111,7 +111,7 @@ test("a profile file saved in one browser opens in another, after a confirm and 
   await expect(b.locator("#price-region")).toHaveValue("ES-CN");
   await b.goto(`/recipes/${KOREAN}`);
   await toOneServing(b);
-  await expect(b.locator("#pack-table-body tr").filter({ hasText: "ground beef" })).toContainText("€4.99");
+  await expect(b.locator("#pack-table-body tr").filter({ hasText: "ground beef" })).toContainText(/4,99\s€/);
   await context.close();
 });
 
@@ -144,8 +144,8 @@ test("Canada gets estimated prices in CAD from Statistics Canada", async ({ page
   await expect(page.getByText("Prices marked est. are estimates (Canada average price paid, Statistics Canada, Sep 2025 to Aug 2026)")).toBeVisible();
   const beef = page.locator("#pack-table-body tr").filter({ hasText: "ground beef" });
   await expect(beef.getByText("est.")).toBeVisible();
-  await expect(beef).toContainText("CA$");
-  await expect(page.locator("#summary-bought-cost")).toContainText("CA$");
+  await expect(beef).toContainText(/\$\d+\.\d\d est\./); // Canada's own format for its dollar (lib/numbers.js, 2026-11-21)
+  await expect(page.locator("#summary-bought-cost")).toHaveText(/^\$\d+\.\d\d$/);
 
   await page.goto("/profile");
   await page.locator("#price-region").selectOption("off");

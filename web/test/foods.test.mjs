@@ -196,6 +196,32 @@ test("real data: every food in the nutrition table loads, with Spanish names fro
   assert.equal(foods.searchFoods("", { table }).length, Object.keys(source).length);
 });
 
+test("real data: the foods added for names only are found by their Spanish and Mexican names", async () => {
+  const table = await foods.loadFoodTable();
+  assert.equal(foods.searchFoods("miel", { table })[0].food, "honey");
+  assert.equal(foods.searchFoods("durazno", { table })[0].food, "peach");
+  assert.equal(foods.searchFoods("melocotón", { table })[0].food, "peach");
+  assert.equal(foods.searchFoods("chicharos", { table })[0].food, "frozen peas");
+  const pollo = foods.searchFoods("pollo", { table }).map((r) => r.food);
+  for (const f of ["chicken breast", "chicken thigh", "whole chicken"]) assert.ok(pollo.includes(f), `"pollo" finds ${f}`);
+  assert.ok(foods.searchFoods("almendr", { table }).some((r) => r.food === "almonds")); // a partial word
+});
+
+test("My Day item names show in the page language and keep the amount", async () => {
+  const { setLang } = await import("../lib/i18n.js");
+  assert.equal(foods.dayItemName("Frozen peas (150 g)"), "Frozen peas (150 g)");
+  try {
+    setLang("es");
+    assert.equal(foods.dayItemName("Frozen peas (150 g)"), "Guisantes congelados (150 g)");
+    assert.equal(foods.dayItemName("Eggs (2 eggs, size M)"), "Huevos (2 huevos, tamaño M)");
+    assert.equal(foods.dayItemName("Eggs (1 egg, size L)"), "Huevos (1 huevo, tamaño L)");
+    assert.equal(foods.dayItemName("Banana"), "Plátano");
+    assert.equal(foods.dayItemName("Mis barritas (40 g)"), "Mis barritas (40 g)"); // own names stay
+  } finally {
+    setLang("en");
+  }
+});
+
 // Peas with all 10 micros, a food with only some (the rest unknown), per 100 g in FIELDS order
 const MICRO_TABLE = {
   "frozen peas": [77.9, 5.86, 9.5, 0.4, 6.45, 1.5, 25, 200, 30, 1, 40, 20, 0, 0, 60],

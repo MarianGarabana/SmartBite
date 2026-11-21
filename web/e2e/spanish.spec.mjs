@@ -3,6 +3,7 @@
 //    and leaves no cookie.
 // 2. Key screens in Spanish (home, Make Your Meal quiz, a demo recipe page, cart, profile): no English left in the
 //    interface and no sideways scroll at 390 px. AI-written text (meal names, recipe steps) stays as the model wrote it.
+import fs from "node:fs";
 import { expect, test } from "@playwright/test";
 
 const DEMO_SLUG = "tuna-frittata-with-vegetables";
@@ -128,3 +129,94 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1280, height: 900 
     });
   });
 }
+
+// 2026-11-21, after the owner's review: the switch in the profile menu, Mexico's names, money by country, the engine's
+// counted_as note, and the My Day food picker in Spanish
+const seed = (page, items) => page.addInitScript((kv) => {
+  if (sessionStorage.getItem("seeded")) return;
+  sessionStorage.setItem("seeded", "1");
+  for (const [k, v] of Object.entries(kv)) localStorage.setItem(k, JSON.stringify(v));
+}, items);
+const SET_UP = { "smartbite.anthropicKey": "sk-ant-e2e-fake-key-0000", "smartbite.setup": "done" };
+
+test.describe("Spanish browser, more", () => {
+  test.use({ locale: "es-ES" });
+
+  test("language lives in the footer and on the Profile page, not in the profile menu", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: "Menú del perfil" }).click();
+    await expect(page.getByRole("menuitem")).toHaveText(["Empezar"]); // a site setting, not a profile action (2026-11-21)
+    await page.goto("/profile");
+    const select = page.getByLabel("Idioma");
+    await expect(select).toHaveValue("es");
+    await select.selectOption("en");
+    await expect(page.getByLabel("Language")).toHaveValue("en");
+    await expect(page.locator("#footer-lang")).toHaveText("Español");
+    expect(await page.evaluate(() => JSON.parse(localStorage.getItem("smartbite.lang")))).toBe("en"); // stored as JSON like the other keys
+  });
+
+  test("Spain: Spain's food names and money as 5,50 €", async ({ page }) => {
+    await page.goto(`/recipes/${DEMO_SLUG}`);
+    await expect(page.locator("#picked-ingredients-list")).toContainText("calabacín");
+    await expect(page.locator("#summary-bought-cost")).toHaveText(/^\d+,\d\d\s€$/);
+  });
+
+  test("Mexico: Mexico's food names, gear words and money as $5.50", async ({ page }) => {
+    await seed(page, { "smartbite.country": "MX" });
+    await page.goto(`/recipes/${DEMO_SLUG}`);
+    const list = page.locator("#picked-ingredients-list");
+    await expect(list).toContainText("calabacita");
+    await expect(list).not.toContainText("calabacín");
+    await page.goto("/demo?tab=make-meal"); // no price estimates for Mexico yet: the quiz shows the budget
+    await page.locator("#input-craving").fill("tortilla");
+    await expect(page.locator("#make-step-1")).toContainText(/\$\d+\.\d\d/);
+    for (let i = 0; i < 12 && !(await page.locator("#make-step-1 h2", { hasText: "¿Con qué puedes cocinar?" }).isVisible()); i++) {
+      await page.locator("#make-step-1").getByRole("button", { name: /^Continuar/ }).click();
+    }
+    await expect(page.locator("#make-step-1")).toContainText("Estufa");
+    await expect(page.locator("#make-step-1")).toContainText("Licuadora");
+    await expectNoSidewaysScroll(page);
+  });
+
+  test("a name the food table does not have says which food it was counted as", async ({ page }) => {
+    const demo = JSON.parse(fs.readFileSync(`demo/meals/${DEMO_SLUG}.json`, "utf8"));
+    const { photo: _p, photo_ai_generated: _a, demo: _d, ...doc } = demo;
+    doc.recipe.ingredients = doc.recipe.ingredients.map((i) => (i.name === "canned tuna in water" ? { ...i, name: "pork chops" } : i));
+    await seed(page, { ...SET_UP, "smartbite.meals": { "pork-frittata": { ...doc, slug: "pork-frittata" } } });
+    await page.goto("/recipes/pork-frittata");
+    const row = page.locator("#pack-table-body tr", { hasText: "pork chops" });
+    await expect(row).toContainText("Macros: Ciqual, contado como lomo de cerdo");
+    await page.locator("#footer-lang").click();
+    await expect(page.locator("#pack-table-body tr", { hasText: "pork chops" })).toContainText("Macros: Ciqual, counted as pork loin");
+  });
+
+  test("My Day food picker in Spanish: Spanish and Mexican names find the new foods", async ({ page }) => {
+    await seed(page, SET_UP);
+    await page.route("**/api/**", (route) => route.abort());
+    await page.goto("/?tab=my-day");
+    await page.getByRole("button", { name: "Añadir a Comida" }).click();
+    const dialog = page.getByRole("dialog");
+    await dialog.getByRole("tab", { name: "Alimentos" }).click();
+    const search = dialog.getByLabel("Buscar alimentos");
+    const first = dialog.locator("#day-food-list li").first();
+    for (const [q, shown] of [["miel", "Miel"], ["durazno", "Melocotón"], ["chícharos", "Guisantes congelados"], ["pollo entero", "Pollo entero"]]) {
+      await search.fill(q);
+      await expect(first, q).toContainText(shown);
+    }
+    await search.fill("melocoton");
+    await first.getByRole("button").click();
+    await dialog.getByLabel("Gramos").fill("150");
+    await expect(dialog.locator("#day-food-preview")).toContainText("Para 150 g");
+    await expect(dialog.locator("#day-food-protein_g")).toContainText(","); // 1,4 g: Spain's decimal comma
+    await dialog.getByRole("button", { name: "Añadir a Comida" }).click();
+    await expect(page.locator("#day-slot-lunch")).toContainText("Melocotón (150 g)");
+    await expectNoEnglish(page, "#tab-my-day");
+    await expectNoSidewaysScroll(page);
+  });
+});
+
+test("USA in English: money as $5.50", async ({ page }) => {
+  await seed(page, { "smartbite.country": "US" });
+  await page.goto(`/recipes/${DEMO_SLUG}`);
+  await expect(page.locator("#summary-bought-cost")).toHaveText(/^\$\d+\.\d\d$/);
+});

@@ -6,7 +6,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { t, tx, useLang, useT } from "../lib/i18n";
+import { LANG_NAMES, setLang, t, tx, useLang, useT } from "../lib/i18n";
+import { formatFixed } from "../lib/numbers";
 import { DEFAULT_PROFILE, setField } from "../lib/profile";
 import { ANTHROPIC, ANTHROPIC_MODELS, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, endpointAllowed, presetAvailable, presetById }
   from "../lib/providers";
@@ -117,7 +118,7 @@ export default function ProfilePage({ demoMeals }) {
     setCurrencyList(currencies());
     setName(readName());
     setReadyName(readName());
-    setBudget(readBudget().toFixed(2));
+    setBudget(formatFixed(readBudget(), 2, { country: readCountry() })); // "5,50" in Spain (lib/numbers.js)
     setProfile(readProfile());
     setLlm(readLlmSettings());
     const k = { [ANTHROPIC]: readApiKey(), [OPENAI_COMPATIBLE]: readOpenAiKey() };
@@ -127,6 +128,10 @@ export default function ProfilePage({ demoMeals }) {
   useEffect(() => {
     load();
     setHostname(window.location.hostname);
+    // A link to one field (My Day's "Set your daily targets", UX review 2026-11-21): bring it to the middle of the
+    // screen, clear of the sticky header and jump bar, and put the cursor in it
+    const field = /^#field-[\w-]+$/.test(window.location.hash) && document.querySelector(window.location.hash);
+    if (field) setTimeout(() => { field.scrollIntoView({ block: "center" }); field.focus({ preventScroll: true }); }, 100);
   }, []);
 
   // A new country brings its currency (when SmartBite knows it); the user can pick another after
@@ -410,6 +415,14 @@ export default function ProfilePage({ demoMeals }) {
                   {t("Shown next to every price. Nothing is converted: type prices in this currency.")}
                   {hasEstimates(country) && ESTIMATE_CURRENCY[country] !== currency ? t(" Estimated prices for {country} are in {estimate}, so they are off while your currency is {currency}.", { country: countryLabel, estimate: ESTIMATE_CURRENCY[country], currency }) : ""}
                 </span>
+              </div>
+              {/* Language (Marian 2026-11-21): a site setting next to country and currency, besides the footer switch */}
+              <div>
+                <label htmlFor="profile-lang" className={label}>{t("Language")}</label>
+                <select id="profile-lang" value={lang} onChange={(e) => setLang(e.target.value, { save: true })} className={input}>
+                  {["es", "en"].map((l) => <option key={l} value={l} lang={l}>{LANG_NAMES[l]}</option>)}
+                </select>
+                <span className="block text-[11px] text-forest/70 mt-1">{t("Saved in this browser. The link at the bottom of every page switches it too.")}</span>
               </div>
               <div>
                 <label htmlFor="profile-budget" className={label}>{t("Budget per meal")}</label>

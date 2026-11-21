@@ -18,6 +18,9 @@ const amount = (p100, grams) => {
 // % of the daily value of one food, as the engine's micros_block for that food alone
 const pct = (p100, key, grams, reference) => Math.floor(((p100[key] * grams) / 100 / reference) * 100 + 0.5);
 
+// Decimals as the page shows them: Spain's format (the default country) has a decimal comma (lib/numbers.js, 2026-11-21)
+const dec = (v) => String(v).replace(".", ",");
+
 const OATS_LABEL = { kcal: 372, protein_g: 13.5, carbs_g: 58.7, fat_g: 7 }; // no fiber on the label
 const PRODUCTS = { "none|rolled oats": { food: "rolled oats", name: "Copos de avena integral", sold_by: "pack", pack_grams: 500,
   per_100g: OATS_LABEL } };
@@ -73,8 +76,8 @@ test("Spanish search, keyboard pick, grams: the day goes up by the engine's numb
   await grams.fill("150");
   const want = amount(peas, 150);
   await expect(dialog.locator("#day-food-kcal")).toContainText(String(want.kcal));
-  await expect(dialog.locator("#day-food-protein_g")).toContainText(String(want.protein_g));
-  await expect(dialog.locator("#day-food-fiber_g")).toContainText(String(want.fiber_g));
+  await expect(dialog.locator("#day-food-protein_g")).toContainText(dec(want.protein_g));
+  await expect(dialog.locator("#day-food-fiber_g")).toContainText(dec(want.fiber_g));
   await dialog.getByRole("button", { name: "Add to Lunch" }).click();
   await expect(dialog).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Add to Lunch" })).toBeFocused();
@@ -97,7 +100,8 @@ test("Spanish search, keyboard pick, grams: the day goes up by the engine's numb
   expect(stored.slots.lunch[0]).toMatchObject({ kind: "extra", name: "Frozen peas (150 g)", kcal: want.kcal, fiber_g: want.fiber_g,
     source: "food" });
   await page.reload();
-  expect(await totalKcal(page)).toBe(want.kcal);
+  // The page loads the saved day after it starts: poll, a single read can come before that (cold first run read 0)
+  await expect.poll(() => totalKcal(page)).toBe(want.kcal);
 });
 
 test("eggs: how many and the size", async ({ page }) => {
@@ -127,11 +131,11 @@ test("a saved product with a label: first, its label values, fiber from the food
   const dialog = await openFoods(page, "Breakfast");
   await dialog.getByLabel("Search foods").fill("avena");
   const results = dialog.locator("#day-food-list li");
-  await expect(results).toHaveCount(2);
+  await expect(results).toHaveCount(3); // the product, rolled oats and oat drink ("bebida de avena", more_aliases)
   await expect(results.first()).toContainText("Your product");
   await expect(results.first()).toContainText("Copos de avena integral");
-  await expect(results.first()).toContainText("Per 100 g: 372 kcal · 13.5g protein · 58.7g carbs · 7g fat");
-  await expect(results.nth(1)).toContainText("Rolled oats");
+  await expect(results.first()).toContainText("Per 100 g: 372 kcal · 13,5g protein · 58,7g carbs · 7g fat");
+  await expect(results.filter({ hasText: /^Rolled oats/ })).toHaveCount(1); // the table food (the product says "For rolled oats")
 
   // "Change food" goes back to the search with the words kept
   await results.first().getByRole("button").click();
@@ -143,7 +147,7 @@ test("a saved product with a label: first, its label values, fiber from the food
   await dialog.getByLabel("Grams").fill("60");
   const want = amount({ ...OATS_LABEL, fiber_g: TABLE["rolled oats"].fiber_g }, 60);
   await expect(dialog.locator("#day-food-kcal")).toContainText(String(want.kcal));
-  await expect(dialog.locator("#day-food-fiber_g")).toContainText(String(want.fiber_g));
+  await expect(dialog.locator("#day-food-fiber_g")).toContainText(dec(want.fiber_g));
   await dialog.getByRole("button", { name: "Add to Breakfast" }).click();
   await expect(slot(page, "breakfast").locator(".day-item")).toContainText("Copos de avena integral (60 g)");
   expect(await totalKcal(page)).toBe(want.kcal);
@@ -158,7 +162,7 @@ test("demo: the food list works and the user's products are not read", async ({ 
   const before = await totalKcal(page);
   const dialog = await openFoods(page, "Snack");
   await dialog.getByLabel("Search foods").fill("avena");
-  await expect(dialog.locator("#day-food-list li")).toHaveCount(1);
+  await expect(dialog.locator("#day-food-list li")).toHaveCount(2); // rolled oats and oat drink, no product
   await expect(dialog.locator("#day-food-list")).not.toContainText("Your product");
   await dialog.getByLabel("Search foods").fill("platano");
   await dialog.getByLabel("Search foods").press("Enter");

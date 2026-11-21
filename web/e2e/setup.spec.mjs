@@ -83,7 +83,7 @@ test("a key and saved targets from before the setup count as a complete profile"
 test("Get started from the menu leads to /start; the setup saves shop and key, then Make Your Meal opens", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Profile menu" }).click();
-  await expect(page.getByRole("menuitem")).toHaveText(["Get started"]);
+  await expect(page.getByRole("menuitem")).toHaveText(["Get started"]); // no language here (2026-11-21): footer + Profile page
   await page.getByRole("menuitem", { name: "Get started" }).click();
   await expect(page).toHaveURL(/\/start$/);
   await page.locator("#start-key").getByRole("button", { name: "Use my API key" }).click();

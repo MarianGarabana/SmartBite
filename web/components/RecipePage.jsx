@@ -14,6 +14,7 @@ import { fitInfo, fitPreview, fittedRecipe, undoFit, withFit } from "../lib/fitp
 import { toMeal, withTags } from "../lib/meal";
 import { foodName, t, tx, useLang, useT } from "../lib/i18n";
 import { tabUrl } from "../lib/site";
+import { decimalsIn, formatDecimal, formatFixed } from "../lib/numbers";
 import { packRow, totals } from "../lib/packs";
 import { PHOTO_MAKERS, photoMaker } from "../lib/llm";
 import { MAX_PHOTO_BYTES, deletePhoto, makePhoto, putPhoto, usePhoto, usePhotoJob } from "../lib/photos";
@@ -43,10 +44,10 @@ export default function RecipePage({ slug, demoMeals }) {
 export function PriceInput({ row, prices, onBlocked, onFocus, onBlur }) {
   useLang();
   const value = row.priceKey ? prices[row.priceKey] : undefined;
-  const [draft, setDraft] = useState(value == null ? "" : String(value));
+  const [draft, setDraft] = useState(value == null ? "" : formatDecimal(value, 2)); // "4,99" in Spain (lib/numbers.js)
   // A price changed elsewhere (another meal, another tab) shows here, but typing "1." is never rewritten to "1"
   useEffect(() => {
-    setDraft((d) => (parse(d) === (value ?? null) ? d : value == null ? "" : String(value)));
+    setDraft((d) => (parse(d) === (value ?? null) ? d : value == null ? "" : formatDecimal(value, 2)));
   }, [value]);
   if (!row.priceKey) return null;
   const change = (text) => {
@@ -57,7 +58,7 @@ export function PriceInput({ row, prices, onBlocked, onFocus, onBlur }) {
   };
   return (
     <input type="text" inputMode="decimal" value={draft} onChange={(e) => change(e.target.value)} onFocus={onFocus} onBlur={onBlur}
-      placeholder={row.estimate ? row.packPrice.toFixed(2) : t("{symbol} / pack", { symbol: moneySymbol() })} title={row.estimate ? estimateTitle(row.pricePeriod, row.priceRegion) : undefined}
+      placeholder={row.estimate ? formatFixed(row.packPrice, 2) : t("{symbol} / pack", { symbol: moneySymbol() })} title={row.estimate ? estimateTitle(row.pricePeriod, row.priceRegion) : undefined}
       aria-label={row.estimate ? t("Price for one pack of {name} (estimated {price})", { name: productText(row) || foodName(row.ingredient), price: money(row.packPrice) })
         : t("Price for one pack of {name}", { name: productText(row) || foodName(row.ingredient) })}
       className="w-20 bg-cream/50 border border-cream-dark rounded-xl px-2 py-1 text-xs text-forest text-right font-normal placeholder-forest/40 focus:outline-none focus:border-forest" />
@@ -631,7 +632,7 @@ function RecipeView({ meal, meals, router }) {
                           {tr(MICRO_NAMES[r.key] || r.label)}
                           {r.partial ? <><span aria-hidden="true" className="text-forest/70">*</span><span className="sr-only"> {tr("(some ingredients have no data)")}</span></> : null}
                         </span>
-                        <span className="text-forest/70 whitespace-nowrap">{r.amount}{" "}<span className="font-bold text-forest ml-2">{r.pct}%</span></span>
+                        <span className="text-forest/70 whitespace-nowrap">{decimalsIn(r.amount)}{" "}<span className="font-bold text-forest ml-2">{r.pct}%</span></span>
                       </div>
                       <div aria-hidden="true" className="h-1.5 mt-1.5 rounded-full bg-cream-dark overflow-hidden">
                         <div className="h-full rounded-full bg-lime" style={{ width: `${r.bar}%` }}></div>

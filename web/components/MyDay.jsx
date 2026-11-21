@@ -7,7 +7,9 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MIN_SERVINGS, SAMPLE_TARGETS, SLOTS, STEP, addExtra, addRecipe, dailyTargets, emptyDay, hasTargets, mealForWhatsLeft,
   microsToday, pickerList, readExtra, removeItem, resolveDay, sampleDay, stepServings, targetStatus } from "../lib/day";
-import { foodName, t, tx, useLang } from "../lib/i18n";
+import { t, tx, useLang } from "../lib/i18n";
+import { dayItemName } from "../lib/foods";
+import { decimalsIn } from "../lib/numbers";
 import { recipeMeals } from "../lib/meal";
 import { clearDay, onStoreChange, readDay, readProfile, writeDay } from "../lib/store";
 import DayFoods from "./DayFoods";
@@ -23,7 +25,7 @@ const statusText = (s, unit) => {
   return s.kind === "goal" ? t("{amount} left", { amount }) : t("{amount} under", { amount });
 };
 // Foods typed by hand: a known food shows its name in the page language (the demo's banana); anything else as typed
-const rowName = (row) => (row.kind === "extra" ? foodName(row.name) : row.name);
+const rowName = (row) => (row.kind === "extra" ? dayItemName(row.name) : row.name);
 
 export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, showToast }) {
   useLang();
@@ -73,7 +75,7 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
     closePicker();
   };
   const pickRecipe = (meal) => added(addRecipe(day, picker, meal.slug, 1), meal.name);
-  const pickExtra = (extra) => added(addExtra(day, picker, extra), foodName(extra.name));
+  const pickExtra = (extra) => added(addExtra(day, picker, extra), dayItemName(extra.name));
 
   const [confirmClear, setConfirmClear] = useState(false);
   useEffect(() => {
@@ -155,7 +157,7 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
             <p id="day-targets-note" className="text-xs text-forest/80 bg-cream-card border border-cream-dark rounded-2xl px-4 py-3">
               <i className="fa-solid fa-bullseye mr-2 text-forest/70" aria-hidden="true"></i>
               {tx("Set your daily targets in your {profile} to see what's left.", {
-                profile: <Link href="/profile" className="font-bold underline hover:text-lime-hover">{t("Profile")}</Link> })}
+                profile: <Link href="/profile#field-daily_kcal_target" className="font-bold underline hover:text-lime-hover">{t("Profile")}</Link> })}
             </p>
           )}
         </div>
@@ -242,7 +244,7 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
                       {t(n.label)}
                       {n.partial ? <><span aria-hidden="true" className="text-forest/70">*</span><span className="sr-only">{t(" (some foods have no data)")}</span></> : null}
                     </span>
-                    <span className="text-forest/70 whitespace-nowrap">{n.amount ? `${n.amount} ` : ""}<span className="font-bold text-forest ml-2">{n.pct}%</span></span>
+                    <span className="text-forest/70 whitespace-nowrap">{n.amount ? `${decimalsIn(n.amount)} ` : ""}<span className="font-bold text-forest ml-2">{n.pct}%</span></span>
                   </div>
                   <div aria-hidden="true" className="h-1.5 mt-1.5 rounded-full bg-cream-dark overflow-hidden">
                     <div className="h-full rounded-full bg-lime" style={{ width: `${n.bar}%` }}></div>
@@ -256,7 +258,7 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
           <div className="pt-4 border-t border-cream-dark space-y-1 text-[11px] text-forest/70">
             <p>{t("% of the daily value for an adult. Fiber is out of 25 g a day.")}</p>
             {micros.notCounted.length > 0 && (
-              <p id="day-not-counted">{t("Not counted, no vitamin data: {names}.", { names: micros.notCounted.map((n) => foodName(n)).join(", ") })}</p>
+              <p id="day-not-counted">{t("Not counted, no vitamin data: {names}.", { names: micros.notCounted.map((n) => dayItemName(n)).join(", ") })}</p>
             )}
             {micros.nutrients.some((n) => n.partial) && <p>{t("* Some foods have no data for this nutrient, so the real amount may be higher.")}</p>}
           </div>

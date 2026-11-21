@@ -270,6 +270,7 @@ export const ES_RECIPE = {
   "yours": "tuyo",
   "none yet": "aún ninguno",
   "Macros: {source}": "Macros: {source}",
+  "Macros: {source}, counted as {food}": "Macros: {source}, contado como {food}",
   "Price: {price}": "Precio: {price}",
   "Your product · ": "Tu producto · ",
   "Edit product for {food}": "Editar producto para {food}",

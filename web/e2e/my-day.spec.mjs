@@ -102,11 +102,13 @@ test("real app: picker, servings, your own food, kept on reload, Clear day", asy
 test("targets: a note without them; with them what's left, an orange over limit, and a meal for what's left", async ({ page }) => {
   await page.goto("/?tab=my-day");
   await expect(page.locator("#day-targets-note")).toContainText("Set your daily targets in your Profile");
-  await expect(page.locator("#day-targets-note a")).toHaveAttribute("href", /^\/profile/);
+  await expect(page.locator("#day-targets-note a")).toHaveAttribute("href", "/profile#field-daily_kcal_target");
   await expect(page.locator("#day-make-meal")).toHaveCount(0); // no targets: no invented defaults
   await addRecipe(page, "Dinner", "Tuna frittata with vegetables");
 
-  await page.goto("/profile");
+  await page.locator("#day-targets-note a").click(); // lands on the daily targets, cursor in the first (UX review 2026-11-21)
+  await expect(page.locator("#field-daily_kcal_target")).toBeFocused();
+  await expect(page.locator("#field-daily_kcal_target")).toBeInViewport();
   await page.locator("#field-daily_kcal_target").fill("2000");
   await page.locator("#field-daily_protein_g_target").fill("150");
   await page.locator("#field-daily_carbs_g_max").fill("200");

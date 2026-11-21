@@ -7,12 +7,13 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { adjustApply, adjustInfo, adjustPreview, adjustReset, cartJobs, consolidate } from "../lib/cart";
 import { mealRequest } from "../lib/cartmath";
 import { LANG_NAMES, setLang, t, useLang, useT } from "../lib/i18n";
+import { formatMoney, moneySymbolFor, setNumberFormat } from "../lib/numbers";
 import { REPO_URL, tabUrl } from "../lib/site";
 import { cachedReply, evaluateCached, requestKey } from "../lib/engine";
 import { modeMeals, toMeal } from "../lib/meal";
 import { usePhoto } from "../lib/photos";
-import { DEFAULT_CURRENCY, currencySymbol, engineEstimates, exportProfile, hasProfile, onStoreChange, profileComplete,
-  readActiveProducts, readCart, readCurrency, readLocalMeals, readName, readPrices, readSaved, writeCart } from "../lib/store";
+import { DEFAULT_COUNTRY, DEFAULT_CURRENCY, currencySymbol, engineEstimates, exportProfile, hasProfile, onStoreChange, profileComplete,
+  readActiveProducts, readCart, readCountry, readCurrency, readLocalMeals, readName, readPrices, readSaved, writeCart } from "../lib/store";
 import { SetupHost } from "./SetupDialog";
 
 export const TABS = [
@@ -50,20 +51,25 @@ export function useProfileComplete() {
 
 export const EMPTY_CART = { meals: [], rows: [], totals: { bought: 0, used: 0, wasteGrams: 0, wasteCost: 0, unpriced: 0, priced: 0, optional: 0 },
   leftovers: [], leftoverRecipes: [] };
-// Money in the user's currency (Profile): "€4.99", "£4.99", "CHF 4.99". Only the symbol changes, nothing is converted.
-// The symbol comes from useCurrency, called at the top of each page; the server render and first paint show €.
+// Money in the user's currency (Profile) and the format of their country (lib/numbers.js, 2026-11-21): "5,50 €" in
+// Spain, "$5.50" in Mexico and the USA. Only the symbol changes, nothing is converted. Country and currency come from
+// useCurrency, called at the top of each page; the server render and first paint use Spain and the euro.
 let symbol = "€";
-export const money = (v) => `${symbol}${symbol.length > 1 ? " " : ""}${v.toFixed(2)}`;
+export const money = (v) => formatMoney(v);
 export const moneySymbol = () => symbol;
 export function useCurrency() {
-  const [currency, setCurrency] = useState(DEFAULT_CURRENCY);
+  const [state, setState] = useState({ currency: DEFAULT_CURRENCY, country: DEFAULT_COUNTRY });
   useEffect(() => {
-    const read = () => setCurrency(readCurrency());
+    const read = () => {
+      const next = { currency: readCurrency(), country: readCountry() };
+      setState((old) => (old.currency === next.currency && old.country === next.country ? old : next));
+    };
     read();
     return onStoreChange(read);
   }, []);
-  symbol = currencySymbol(currency) || "€";
-  return { currency, symbol };
+  setNumberFormat(state.country, state.currency);
+  symbol = moneySymbolFor() || currencySymbol(state.currency) || "€"; // as the country writes it: "$" for AUD in Australia
+  return { currency: state.currency, country: state.country, symbol };
 }
 export const grams = (v) => `${Math.round(v)}g`;
 
@@ -385,7 +391,8 @@ const menuItem = "block w-full text-left px-4 py-2.5 text-sm text-forest hover:b
 
 // Profile menu (decided 2026-10-22): no accounts, so no "Log in". Without a profile: Get started (/start: key, demo
 // or profile file). With one: Profile (where a profile file is opened) and Save profile file, under the display name
-// if there is one. "Open profile file" left the menu on 2026-11-01: it led to the same Profile page.
+// if there is one. "Open profile file" left the menu on 2026-11-01: it led to the same Profile page. Language is not here
+// (Marian 2026-11-21: it is a site setting, not a profile action): footer switch and the Profile page.
 function ProfileMenu({ active }) {
   useLang();
   const [open, setOpen, ref] = useMenu();
@@ -577,6 +584,7 @@ export function Toast({ toast, lift = false }) {
 
 // Shell for the pages outside the tabs (profile, privacy): same header, footer and toast
 export function PageShell({ active, demoMeals, router, children, toastState }) {
+  useCurrency(); // money and numbers in the format of the user's country
   const { meals } = useMeals(demoMeals);
   const { cart } = useCart(toastState.showToast, meals);
   const go = (tab) => router.push(tab === "home" ? "/" : `/?tab=${tab}`);

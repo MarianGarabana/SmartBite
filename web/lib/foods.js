@@ -8,6 +8,9 @@
 // (smartbite_engine/nutrition.py scale_micros); a value the source does not have stays unknown, never 0.
 import { ALIASES } from "../generated/index.js";
 import { MICROS } from "./day";
+import { foodName, t } from "./i18n";
+import { FOODS_ES } from "./i18n/foods-es";
+import { FOODS_ES_MX } from "./i18n/foods-es-MX";
 import { canonical, plain, singular, words } from "./names";
 
 export const EGGS = "eggs"; // smartbite_engine/meal.py EGGS
@@ -41,13 +44,16 @@ export function labelPer100(product, table, aliases = ALIASES) {
   return { kcal: label.kcal, protein_g: label.protein_g, carbs_g: label.carbs_g, fat_g: label.fat_g, ...rest };
 }
 
-// Other names per food key, as written in aliases.json
+// Other names per food key: aliases.json ("aliases" and "more_aliases": "durazno", "miel"), then the Spanish names
+// the site shows (lib/i18n/foods-es.js, and Mexico's: "chícharos", "calabacita")
 function otherNames(aliases) {
   const out = new Map();
-  for (const [name, key] of Object.entries(aliases.aliases || {})) {
+  const add = (name, key) => {
     if (!out.has(key)) out.set(key, []);
-    out.get(key).push(name);
-  }
+    if (!out.get(key).includes(name)) out.get(key).push(name);
+  };
+  for (const [name, key] of Object.entries({ ...(aliases.more_aliases || {}), ...(aliases.aliases || {}) })) add(name, key);
+  for (const names of [FOODS_ES, FOODS_ES_MX]) for (const [key, name] of Object.entries(names)) add(name, key);
   return out;
 }
 
@@ -106,7 +112,7 @@ export function searchFoods(query, { table, products = {}, aliases = ALIASES, li
   const qTokens = tokens(query);
   const clean = (e, via) => ({ id: e.id, kind: e.kind, food: e.food, name: e.name, per100: e.per100, eggs: e.eggs,
     alt: via && via.plain !== plain(e.name) ? via.text : null });
-  if (!q) return all.slice(0, limit).map((e) => clean(e, null));
+  if (!q) return all.map((e) => clean(e, null)); // the whole list: limit is for searches only
   const exactKey = canonical(query, aliases);
   const found = [];
   for (const e of all) {
@@ -166,4 +172,18 @@ export function foodItem(result, grams, amountText) {
   const micros = microsFor(result.per100, grams);
   return { name: itemName(result.name, amountText), ...macros, ...(fiber !== null && { fiber_g: fiber }),
     source: result.kind === "product" ? "label" : "food", ...(Object.keys(micros).length && { micros }) };
+}
+
+// An amount as components/DayFoods.jsx amountText writes it, in the page language: "2 eggs, size M" -> "2 huevos, tamaño M"
+export function amountShown(text) {
+  const m = String(text).match(/^(\d+) eggs?, size (\w+)$/);
+  if (!m) return text;
+  return Number(m[1]) === 1 ? t("{n} egg, size {size}", { n: m[1], size: m[2] }) : t("{n} eggs, size {size}", { n: m[1], size: m[2] });
+}
+
+// A My Day item's name in the page language: the food name shown in Spanish, the amount after it too
+// ("Frozen peas (150 g)" -> "Guisantes congelados (150 g)"). The day keeps the English name, so a switch back works.
+export function dayItemName(name) {
+  const m = String(name).match(/^(.*) \(([^()]*)\)$/);
+  return m ? `${foodName(m[1])} (${amountShown(m[2])})` : foodName(name);
 }

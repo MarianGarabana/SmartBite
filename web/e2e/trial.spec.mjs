@@ -185,3 +185,29 @@ test("trial visitors see example recipes in My Recipes and on Home; others do no
   await expect(page.locator("#picked-meal-title")).toBeVisible();
   expect((await trialState(page)).meals).toBe(0); // looking at examples is free
 });
+
+// UX review 2026-11-21: Home says the first meals are free when the trial is on; a phone visitor who taps
+// "Show me 4 ideas" with nothing picked sees why; a free meal that is not saved yet is not lost from My Recipes
+test("new visitor: Home names the free meals, the quiz error is on screen, an unsaved meal is linked", async ({ page }) => {
+  await mockTrial(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await expect(page.locator("#hero-note")).toHaveText("No sign-up. The demo needs no key, and your first 3 meals are free.");
+  await page.goto("/start");
+  await page.locator("#start-trial-go").click();
+  await page.locator("#quiz-fast").click();
+  const alert = page.locator("#make-step-1 [role=alert]");
+  await expect(alert).toHaveText("Tap at least one thing, or type a few words.");
+  await expect(alert).toBeInViewport();
+  await page.goto("/?tab=recipes");
+  await expect(page.locator("#recipes-empty")).toContainText("Meals you save show here.");
+  await page.goto("/?tab=make-meal");
+  await askForIdeas(page, "chicken bowl with rice and cucumber");
+  await page.locator("#ideas-card-grid > div").first().click();
+  await page.getByRole("dialog").getByRole("button", { name: "Select meal" }).click();
+  await page.waitForURL(/\/recipes\/greek-chicken-bowl-[a-z0-9]+$/);
+  await page.goto("/?tab=recipes");
+  await expect(page.locator("#recipes-empty")).toContainText("Not saved yet: Greek chicken bowl.");
+  await page.locator("#recipes-empty a").click();
+  await expect(page).toHaveURL(/\/recipes\/greek-chicken-bowl-[a-z0-9]+$/);
+});

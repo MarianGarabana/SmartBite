@@ -4,9 +4,10 @@ import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { ALIASES, DEFAULT_PROFILE } from "../generated/index.js";
-import { foodName, translate } from "../lib/i18n.js";
+import { foodName, setVariant, translate } from "../lib/i18n.js";
 import { ES, ES_PARTS } from "../lib/i18n/es.js";
 import { FOODS_ES } from "../lib/i18n/foods-es.js";
+import { ES_MX, FOODS_ES_MX } from "../lib/i18n/foods-es-MX.js";
 
 const WEB = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DIRS = ["app", "components", "lib"];
@@ -91,8 +92,8 @@ test("i18n: translate fills placeholders and falls back to English", () => {
   assert.equal(translate("A text with no entry", null, "es"), "A text with no entry");
 });
 
-test("food names: every known food has a Spanish name, and only known foods do", () => {
-  const foods = ALIASES.foods;
+test("food names: every known food (foods and more_foods) has a Spanish name, and only known foods do", () => {
+  const foods = [...ALIASES.foods, ...(ALIASES.more_foods || [])]; // the prompt's foods and the names-only foods
   assert.equal(foods.length, new Set(foods).size);
   const missing = foods.filter((f) => !FOODS_ES[f]?.trim());
   assert.deepEqual(missing, [], `no Spanish name for: ${missing.join(", ")}`);
@@ -114,4 +115,36 @@ test("food names: foodName shows the Spanish name of a known food and leaves any
   assert.equal(foodName("Hacendado Atún claro en aceite de oliva 3x80 g", "es"), "Hacendado Atún claro en aceite de oliva 3x80 g");
   assert.equal(foodName("dragon fruit", "es"), "dragon fruit");
   assert.equal(foodName("", "es"), "");
+});
+
+test("food names: a name only a word rule matched is not that food, so it shows as written", () => {
+  assert.equal(foodName("pork chops", "es"), "pork chops"); // the engine counts it as pork loin; the name stays
+  assert.equal(foodName("honey", "es"), "miel"); // more_foods have Spanish names too
+  assert.equal(foodName("peach", "es"), "melocotón");
+});
+
+test("Mexico: every Mexican name has a Spain name to replace, and shows only when the country is MX", () => {
+  const noSpain = Object.keys(FOODS_ES_MX).filter((k) => !FOODS_ES[k]);
+  assert.deepEqual(noSpain, [], `Mexican food names with no Spain name: ${noSpain.join(", ")}`);
+  const noText = Object.keys(ES_MX).filter((k) => !Object.hasOwn(ES, k));
+  assert.deepEqual(noText, [], `Mexican texts with no Spain text: ${noText.join(", ")}`);
+  for (const [en, mx] of Object.entries(ES_MX)) {
+    assert.deepEqual(holes(mx), holes(en), `placeholders differ: "${en}" -> "${mx}"`);
+    assert.ok(!/[—–]/.test(mx), `dash in "${mx}"`);
+  }
+  for (const mx of Object.values(FOODS_ES_MX)) assert.equal(mx, mx.toLowerCase(), `lowercase like the English keys: ${mx}`);
+  assert.equal(foodName("frozen peas", "es", "MX"), "chícharos congelados");
+  assert.equal(foodName("Potato", "es", "MX"), "Papa");
+  assert.equal(foodName("frozen peas", "es", null), "guisantes congelados");
+  assert.equal(foodName("frozen peas", "en", "MX"), "frozen peas");
+  try {
+    setVariant("MX");
+    assert.equal(translate("Stove", null, "es"), "Estufa");
+    assert.equal(translate("Stove", null, "en"), "Stove");
+    assert.equal(foodName("green beans", "es"), "ejotes");
+    setVariant("ES");
+    assert.equal(translate("Stove", null, "es"), "Fogones");
+  } finally {
+    setVariant(null);
+  }
 });

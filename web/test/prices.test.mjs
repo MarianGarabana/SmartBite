@@ -419,3 +419,15 @@ test("Canada gets estimates in CAD, and they are off in another currency", () =>
   assert.deepEqual(store.engineEstimates(), { country: null, region: null });
   assert.equal(JSON.parse(data[store.KEYS.country]), "CA");
 });
+
+// Engine counted_as (2026-11-21): a name a word rule counted as the closest food ("pork chops" -> pork loin) carries
+// that food on its shopping line, so the page can say "Macros: Ciqual, counted as pork loin"
+test("a macros line with counted_as marks its shopping line; the others have none", () => {
+  const doc = JSON.parse(fs.readFileSync(path.join(DEMO, `${TUNA}.json`), "utf8"));
+  const line = doc.evaluation.macros.lines.find((m) => m.name === "canned tuna in water");
+  line.counted_as = "canned tuna in oil"; // made up: only the mapping is tested
+  const meal = toMeal(TUNA, doc);
+  assert.equal(meal.lines.find((l) => l.ingredient === "canned tuna in water").countedAs, "canned tuna in oil");
+  assert.ok(meal.lines.filter((l) => l.ingredient !== "canned tuna in water").every((l) => l.countedAs === null));
+  assert.ok(load(TUNA).lines.every((l) => l.countedAs === null)); // the saved meal has no counted_as
+});

@@ -9,6 +9,8 @@ export const ES_CHROME = {
   "How It Works": "Cómo funciona",
   "Menu": "Menú",
   "Profile menu": "Menú del perfil",
+  "Language": "Idioma",
+  "Saved in this browser. The link at the bottom of every page switches it too.": "Se guarda en este navegador. El enlace al pie de cada página también lo cambia.",
   "Profile": "Perfil",
   "Save profile file": "Guardar archivo de perfil",
   "Get started": "Empezar",

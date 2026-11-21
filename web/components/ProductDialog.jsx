@@ -59,7 +59,11 @@ export function sourceText(row) {
   const source = `${(ESTIMATES[readCountry()] || ESTIMATES.ES).source}${row.priceRegion ? `, ${regionLabel(row.priceRegion)}` : ""}`;
   const price = row.estimate ? t("estimate ({source})", { source }) : row.hasPrice ? (date ? t("yours, {date}", { date }) : t("yours"))
     : t("none yet");
-  return [macros && t("Macros: {source}", { source: macros }), t("Price: {price}", { price })].filter(Boolean).join(" · ");
+  // A name the food table does not have, counted as the closest food (engine counted_as): "Macros: Ciqual, counted as
+  // pork loin"
+  const macroLine = macros && (row.countedAs ? t("Macros: {source}, counted as {food}", { source: macros, food: foodName(row.countedAs) })
+    : t("Macros: {source}", { source: macros }));
+  return [macroLine, t("Price: {price}", { price })].filter(Boolean).join(" · ");
 }
 
 // A row's product name in the page language. With no product of the user's, the engine names the typical pack after

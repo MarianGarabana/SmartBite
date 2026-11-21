@@ -31,6 +31,8 @@ export const ES_MAIN = {
   "See a demo meal": "Ver una comida demo",
   "The demo needs no sign-up and no key. Making your own meals needs an AI key.":
     "La demo no necesita registro ni clave. Para crear tus propias comidas necesitas una clave de IA.",
+  "No sign-up. The demo needs no key, and your first {n} meals are free.":
+    "Sin registro. La demo no necesita clave y tus primeras {n} comidas son gratis.",
   "Recipe collection": "Colección de recetas",
   "Explore Categories": "Explora las categorías",
   "AI-generated photos": "Fotos generadas con IA",
@@ -105,6 +107,10 @@ export const ES_MAIN = {
   "Add a demo meal to build your shopping list.": "Añade una comida demo para crear tu lista de la compra.",
   "Make your first meal to build your shopping list.": "Crea tu primera comida para tener tu lista de la compra.",
   "Make your first meal": "Crea tu primera comida",
+  "Not saved yet: {name}. Open it and tap Save in my recipes to keep it here.":
+    "Aún sin guardar: {name}. Ábrela y pulsa Guardar en mis recetas para tenerla aquí.",
+  "Meals you save show here. {make}, then tap Save in my recipes on its page.":
+    "Aquí salen las comidas que guardes. {make} y luego pulsa Guardar en mis recetas en su página.",
   "Added Meals": "Comidas añadidas",
   "Undo adjustments": "Deshacer ajustes",
   "{kcal} kcal • Protein: {protein}g": "{kcal} kcal • Proteína: {protein}g",

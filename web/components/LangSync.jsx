@@ -3,7 +3,8 @@
 // class and the tab title in step with it. Rendered once, in app/layout.js.
 import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect } from "react";
-import { LANG_KEY, WAIT_CLASS, preferredLang, setLang, translate, useLang } from "../lib/i18n";
+import { LANG_KEY, WAIT_CLASS, preferredLang, setLang, setVariant, translate, useLang } from "../lib/i18n";
+import { onStoreChange, readCountry } from "../lib/store";
 import { ES } from "../lib/i18n/es";
 
 // Spanish title -> English title, to put the English one back when the switch goes to English
@@ -15,12 +16,17 @@ export default function LangSync() {
   const path = usePathname();
   // Before paint: switch to the stored or browser language, then show the page the inline script hid
   useLayoutEffect(() => {
+    setVariant(readCountry()); // Mexico's names when the Profile country is MX
     setLang(preferredLang());
     document.documentElement.classList.remove(WAIT_CLASS);
+    const country = onStoreChange(() => setVariant(readCountry()));
     // Another tab changed the language: follow it
     const other = (e) => e.key === LANG_KEY && setLang(preferredLang());
     window.addEventListener("storage", other);
-    return () => window.removeEventListener("storage", other);
+    return () => {
+      window.removeEventListener("storage", other);
+      country();
+    };
   }, []);
   // Tab title: the server writes it in English (page metadata); Next.js may write it again after a navigation
   useEffect(() => {

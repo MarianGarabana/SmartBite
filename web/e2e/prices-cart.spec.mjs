@@ -58,7 +58,7 @@ test("a price typed key by key keeps every keystroke and the table never flashes
     const p = JSON.parse(localStorage.getItem("smartbite.products") || "{}")["none|ground beef"];
     return p && { pack_grams: p.pack_grams, price_eur: p.price_eur };
   })).toEqual({ pack_grams: 300, price_eur: 4.99 });
-  await expect(beef).toContainText("€4.99");
+  await expect(beef).toContainText(/4,99\s€/);
   await page.waitForLoadState("networkidle");
   await expect(input).toBeFocused();
   expect(await page.evaluate(() => window.__flash)).toEqual([]);
@@ -67,12 +67,12 @@ test("a price typed key by key keeps every keystroke and the table never flashes
 test("the Cart shows the recipe page's packs, estimates and total", async ({ page }) => {
   await openKorean(page);
   await row(page, "ground beef").locator("input").fill("4.99");
-  await expect(row(page, "ground beef")).toContainText("€4.99");
+  await expect(row(page, "ground beef")).toContainText(/4,99\s€/);
   await page.waitForLoadState("networkidle");
   // What the recipe page shows for 1 serving: per food the pack size, packs and price cell
   const read = (rows) => rows.evaluateAll((trs) => trs.map((tr) => {
     const td = [...tr.querySelectorAll("td")].map((c) => c.textContent.trim());
-    return { food: td[0], pack: td[2], packs: td[3], needed: td[4], price: td[7].replace(/^.*?(€\S+)/, "$1") };
+    return { food: td[0], pack: td[2], packs: td[3], needed: td[4], price: td[7].replace(/^.*?(\d+,\d\d\s€)/, "$1") };
   }));
   const recipeRows = await read(table(page).locator("tr"));
   const recipeTotal = await page.locator("#summary-bought-cost").innerText();
