@@ -477,10 +477,26 @@ export const regionLabel = (id) => Object.values(REGIONS).flat().find((r) => r.i
 const okCountry = (id) => COUNTRIES.some((x) => x.id === id);
 const isoCountry = (id) => ISO_COUNTRIES.includes(id);
 
+// Country from the browser (decided 2026-11-21: with no country picked, everyone got Spain, so a US or Mexican visitor
+// saw euros): the region of the first language that has one ("en-US" -> US, "es-MX" -> MX, "en-GB" -> GB). No region
+// (just "en" or "es") or no browser: the default. Never saved: only a country the user picks is.
+// Only in a browser: the server (Node has a navigator too) always renders the default, like before.
+export function browserCountry(languages = typeof window === "undefined" || typeof navigator === "undefined" ? []
+  : navigator.languages?.length ? navigator.languages : [navigator.language]) {
+  for (const tag of languages || []) {
+    let region = null;
+    try { region = new Intl.Locale(tag).region || null; } catch { region = null; }
+    if (region && /^[A-Z]{2}$/.test(region)) return region;
+  }
+  return DEFAULT_COUNTRY;
+}
+// The saved country, else the browser's (an ISO code), as stored
+const rawCountry = () => readJson(KEYS.country, null) ?? browserCountry();
+
 // A listed country; another ISO code reads as "Other country"; anything else gives the default. Before 2026-10-22
 // "none" meant Spain with no estimates.
 export function readCountry() {
-  const c = readJson(KEYS.country, DEFAULT_COUNTRY);
+  const c = rawCountry();
   return okCountry(c) ? c : isoCountry(c) ? OTHER_COUNTRY : DEFAULT_COUNTRY;
 }
 
@@ -537,7 +553,7 @@ export function currencies() {
 export function readCurrency(country = readCountry()) {
   const c = readJson(KEYS.currency, null);
   if (okCurrency(c)) return c;
-  const own = country === OTHER_COUNTRY ? readJson(KEYS.country, null) : country;
+  const own = country === OTHER_COUNTRY ? rawCountry() : country;
   return currencyFor(own) || DEFAULT_CURRENCY;
 }
 

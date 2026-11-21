@@ -17,6 +17,9 @@ export default defineConfig({
   reporter: "list",
   use: {
     baseURL: "http://127.0.0.1:3100",
+    // A language with no region keeps the default country (Spain): the country follows the browser's region since
+    // 2026-11-21 (lib/store.js browserCountry), and Desktop Chrome's en-US would make every test a US visitor
+    locale: "en",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },

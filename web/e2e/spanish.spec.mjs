@@ -220,3 +220,21 @@ test("USA in English: money as $5.50", async ({ page }) => {
   await page.goto(`/recipes/${DEMO_SLUG}`);
   await expect(page.locator("#summary-bought-cost")).toHaveText(/^\$\d+\.\d\d$/);
 });
+
+// Country from the browser (decided 2026-11-21): with no country picked, the browser's region decides; a pick wins
+for (const [locale, cost, name] of [["en-US", /^\$\d+\.\d\d$/, "United States"], ["en-GB", /^£\d+\.\d\d$/, "United Kingdom"],
+  ["es-MX", "Aún sin precios", "México"]]) { // no Mexican price estimates yet: no prices, never Spain's euros
+  test.describe(`browser ${locale}, no country picked`, () => {
+    test.use({ locale });
+    test("the country and money follow the browser, and nothing is saved until the user picks", async ({ page }) => {
+      await page.goto(`/recipes/${DEMO_SLUG}`);
+      await expect(page.locator("#summary-bought-cost")).toHaveText(cost);
+      await page.goto("/profile");
+      await expect(page.locator("#price-country option:checked")).toHaveText(name);
+      expect(await page.evaluate(() => localStorage.getItem("smartbite.country"))).toBeNull();
+      await page.locator("#price-country").selectOption("ES");
+      await page.goto(`/recipes/${DEMO_SLUG}`);
+      await expect(page.locator("#summary-bought-cost")).toHaveText(/^\d+,\d\d\s€$/);
+    });
+  });
+}

@@ -40,6 +40,8 @@ function fakeWindow({ blocked = false } = {}) {
     },
     dispatchEvent: () => true, addEventListener() {}, removeEventListener() {},
   };
+  // A browser language with no region, so the country is the default (Node's own navigator says en-US)
+  Object.defineProperty(globalThis, "navigator", { configurable: true, value: { languages: ["en"], language: "en" } });
   return data;
 }
 

@@ -25,6 +25,8 @@ function fakeWindow() {
     },
     dispatchEvent: () => true, addEventListener() {}, removeEventListener() {},
   };
+  // A browser language with no region, so the country is the default (Node's own navigator says en-US)
+  Object.defineProperty(globalThis, "navigator", { configurable: true, value: { languages: ["en"], language: "en" } });
   return data;
 }
 
@@ -250,4 +252,33 @@ test("settings saved with the old Gemini default move to the new one; a later pi
   assert.equal(store.readLlmSettings().openai.model, "gemini-3.5-flash-lite");
   data[store.KEYS.llm] = JSON.stringify({ ...old, openai: { preset: "custom", baseUrl: "https://x.test/v1", model: "gemini-3.8-flash" } });
   assert.equal(store.readLlmSettings().openai.model, "gemini-3.8-flash");
+});
+
+test("with no country picked, the country follows the browser's region; a pick wins; nothing is saved", () => {
+  assert.equal(store.browserCountry(["en-US", "en"]), "US");
+  assert.equal(store.browserCountry(["es-MX"]), "MX");
+  assert.equal(store.browserCountry(["en", "en-GB"]), "GB"); // the first language that has a region
+  assert.equal(store.browserCountry(["de-DE"]), "DE"); // not listed: reads as Other country
+  assert.equal(store.browserCountry(["en", "es"]), store.DEFAULT_COUNTRY); // no region: Spain
+  assert.equal(store.browserCountry([]), store.DEFAULT_COUNTRY);
+  assert.equal(store.browserCountry(["not a tag!"]), store.DEFAULT_COUNTRY);
+  const had = Object.getOwnPropertyDescriptor(globalThis, "navigator");
+  const as = (languages) => Object.defineProperty(globalThis, "navigator", { configurable: true, value: { languages, language: languages[0] } });
+  try {
+    fakeWindow();
+    as(["es-MX", "es"]);
+    assert.equal(store.readCountry(), "MX");
+    assert.equal(store.readCurrency(), "MXN");
+    as(["de-DE"]);
+    assert.equal(store.readCountry(), store.OTHER_COUNTRY);
+    assert.equal(store.readCurrency(), "EUR"); // the ISO code's own currency
+    as(["ja-JP"]);
+    assert.equal(store.readCurrency(), "JPY");
+    assert.equal(globalThis.window.localStorage.getItem("smartbite.country"), null); // a guess is never saved
+    store.writeCountry("FR");
+    assert.equal(store.readCountry(), "FR"); // a pick wins over the browser
+  } finally {
+    fakeWindow();
+    if (had) Object.defineProperty(globalThis, "navigator", had);
+  }
 });
