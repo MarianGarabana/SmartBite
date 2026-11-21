@@ -112,6 +112,22 @@ def test_label_replaces_the_nutrition_table_for_that_food_only():
     assert macro(data, "canned chickpeas") == macro(plain, "canned chickpeas")  # product with no label: table
 
 
+def test_values_missing_from_a_label_come_from_the_nutrition_table():
+    # Decided 2026-11-21: most saved labels have no fiber, which counted as 0 (peas and quinoa showed 0 g fiber).
+    from smartbite_engine.nutrition import load_table
+    record = load_table()["canned chickpeas"]
+    label = {"kcal": 100, "protein_g": 5.7, "carbs_g": 12, "fat_g": 1.9}
+    data = post(TUNA, products=[product(per_100g=label)])
+    got = macro(data, "canned chickpeas")
+    assert got["source"] == "label"
+    assert got["amount"]["kcal"] == pytest.approx(400)  # 400 g: the label still wins for what it has
+    assert got["amount"]["fiber_g"] == pytest.approx(record["fiber_g"] * 4)  # fiber from the table
+    # so do the micronutrients: the nutrients panel is the same as with the table alone
+    assert data["evaluation"]["macros"]["micros"] == post(TUNA)["evaluation"]["macros"]["micros"]
+    with_fiber = macro(post(TUNA, products=[product(per_100g={**label, "fiber_g": 9})]), "canned chickpeas")
+    assert with_fiber["amount"]["fiber_g"] == pytest.approx(36)  # a label with fiber keeps its own value
+
+
 def test_label_from_open_food_facts_is_named_as_the_macro_source():
     label = {"kcal": 60, "protein_g": 11, "carbs_g": 3.5, "fat_g": 0.2}
     skyr = {"food": "skyr", "name": "Skyr natural 500 g", "sold_by": "pack", "pack_grams": 500,

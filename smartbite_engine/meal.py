@@ -22,8 +22,8 @@ from .estimated_prices import for_region, load_estimates, pack_estimate, period
 from .form import MealForm
 from .generic_packs import buy_unpriced, load_packs, pack_entry, product_option
 from .names import canonical, plain
-from .nutrition import (FIBER_REFERENCE_G, FIELDS, IngredientMacros, ingredient_macros, load_table, micros_block,
-                        percent)
+from .nutrition import (FIBER_REFERENCE_G, FIELDS, MICRO_KEYS, IngredientMacros, find, ingredient_macros, load_table,
+                        micros_block, percent, scale_micros)
 from .pack import EGG_SIZE, HIGH_LEFTOVER_PCT, pack_line, pack_meal
 
 MACRO_TOLERANCE = 0.10  # kcal within 10% of target, protein at least 90% of target
@@ -299,13 +299,22 @@ def _unpriced_leftover_requests(lines):
     return out
 
 
-def _label_macros(food, grams, product):
+def _label_macros(food, grams, product, table):
     """Macros from the label on the user's saved product (source "label", or "open_food_facts" when a barcode lookup
-    filled it): it wins over the nutrition table."""
+    filled it): it wins over the nutrition table for every value it has. A value the label leaves out (fiber,
+    micronutrients) comes from the food's table record (decided 2026-11-21: most saved labels have no fiber, which
+    counted as 0); a food the table does not know keeps fiber 0 and no micros."""
     per = product["per_100g"]
-    label = Nutrition(**{f: per[f] for f in FIELDS}, fiber_g=per.get("fiber_g") or 0.0)  # labels carry no micros
+    record = find(food, table) or {}
+    fiber = per.get("fiber_g")
+    if fiber is None:
+        fiber = record.get("fiber_g")
+    label = Nutrition(**{f: per[f] for f in FIELDS}, fiber_g=fiber or 0.0)
+    micros = {k: per[k] if per.get(k) is not None else record[k] for k in MICRO_KEYS
+              if per.get(k) is not None or record.get(k) is not None}
     source = "open_food_facts" if product.get("label_source") == "open_food_facts" else "label"
-    return IngredientMacros(food, grams, label, scale(label, grams), source, product.get("barcode"), ())
+    return IngredientMacros(food, grams, label, scale(label, grams), source, product.get("barcode"), (),
+                            scale_micros(micros, grams))
 
 
 def _food_key(item):
@@ -329,7 +338,7 @@ def _macro_lines(items, table, products=None):
             continue
         try:
             if product:
-                got = _label_macros(key, it["total_grams"], product)
+                got = _label_macros(key, it["total_grams"], product, table)
             else:
                 got = ingredient_macros(it["food"], it["total_grams"], table=table)
         except LookupError:
