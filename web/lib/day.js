@@ -36,6 +36,20 @@ export function snapServings(value) {
 
 export const emptyDay = () => ({ version: 1, next: 1, slots: Object.fromEntries(SLOTS.map((s) => [s.id, []])) });
 
+// An extra typed by hand has no source; "food": a food from the nutrition table, "label": the user's saved product
+const EXTRA_SOURCES = ["food", "label"];
+// Vitamins and minerals (smartbite_engine/nutrition.py MICROS): key, label, unit, EU reference value for adults.
+// A food from the picker keeps the amounts it has (lib/foods.js); a key it lacks is unknown, not 0.
+export const MICROS = [["iron_mg", "Iron", "mg", 14], ["calcium_mg", "Calcium", "mg", 800], ["potassium_mg", "Potassium", "mg", 2000],
+  ["magnesium_mg", "Magnesium", "mg", 375], ["zinc_mg", "Zinc", "mg", 10], ["vitamin_a_ug", "Vitamin A", "ug", 800],
+  ["vitamin_c_mg", "Vitamin C", "mg", 80], ["vitamin_d_ug", "Vitamin D", "ug", 5], ["vitamin_b12_ug", "Vitamin B12", "ug", 2.5],
+  ["folate_ug", "Folate", "ug", 200]];
+const MAX_MICRO = 1e6;
+function okMicros(m) {
+  if (!isObject(m)) return null;
+  const out = Object.fromEntries(MICROS.map(([k]) => k).filter((k) => okNumber(m[k], MAX_MICRO)).map((k) => [k, m[k]]));
+  return Object.keys(out).length ? out : null;
+}
 const okNumber = (v, max) => typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= max;
 const MAX_KCAL = 5000;
 const MAX_GRAMS = 1000;
@@ -51,8 +65,10 @@ function okItem(raw) {
     const name = typeof raw.name === "string" ? raw.name.trim().slice(0, MAX_NAME) : "";
     if (!name || !okNumber(raw.kcal, MAX_KCAL)) return null;
     const grams = (v) => (okNumber(v, MAX_GRAMS) ? gramRound(v) : 0);
+    // From the food picker (2026-11-21): fiber when the food has a value, and where the numbers come from
     return { kind: "extra", name, kcal: kcalRound(raw.kcal), protein_g: grams(raw.protein_g), carbs_g: grams(raw.carbs_g),
-      fat_g: grams(raw.fat_g) };
+      fat_g: grams(raw.fat_g), ...(okNumber(raw.fiber_g, MAX_GRAMS) && { fiber_g: gramRound(raw.fiber_g) }),
+      ...(EXTRA_SOURCES.includes(raw.source) && { source: raw.source }), ...(okMicros(raw.micros) && { micros: okMicros(raw.micros) }) };
   }
   return null;
 }
@@ -170,7 +186,8 @@ export function resolveDay(day, meals) {
           ...scale(meal.perServing, it.servings), meal });
       } else if (it.kind === "extra") {
         slotRows.push({ id: it.id, slotId: s.id, kind: "extra", name: it.name, kcal: it.kcal, protein_g: it.protein_g,
-          carbs_g: it.carbs_g, fat_g: it.fat_g });
+          carbs_g: it.carbs_g, fat_g: it.fat_g, ...(it.fiber_g !== undefined && { fiber_g: it.fiber_g }),
+          ...(it.source && { source: it.source }), ...(it.micros && { micros: it.micros }) });
       }
     }
     rows.push(...slotRows);
@@ -230,8 +247,11 @@ export function mealForWhatsLeft(totals, targets) {
 }
 
 // Fiber and vitamins and minerals for the day: % of the daily value per serving times the servings, added up over the
-// recipes. Extras and recipes made before micros were counted are listed in notCounted (once each, in day order).
-// fiber: whole grams and % of 25 g, or null when no recipe has fiber. bar: the % capped at 100.
+// recipes, plus the amounts of foods from the picker (amount / reference value; a nutrient a food has no value for
+// makes that row partial). Extras without micros (typed by hand) and recipes made before micros were counted are
+// listed in notCounted (once each, in day order).
+// fiber: whole grams and % of 25 g, or null when no item has fiber (recipes, and foods from the picker that have a
+// fiber value). bar: the % capped at 100.
 export function microsToday(rows) {
   const nutrients = new Map();
   const notCounted = [];
@@ -239,6 +259,16 @@ export function microsToday(rows) {
   for (const r of rows || []) {
     const micros = r.kind === "recipe" ? r.meal?.micros : null;
     if (r.kind === "recipe" && Number.isFinite(r.meal?.fiberG)) fiber = (fiber || 0) + r.meal.fiberG * r.servings;
+    if (r.kind === "extra" && Number.isFinite(r.fiber_g)) fiber = (fiber || 0) + r.fiber_g;
+    if (r.kind === "extra" && isObject(r.micros)) {
+      for (const [key, label, , reference] of MICROS) {
+        const had = nutrients.get(key) || { key, label, pct: 0, partial: false };
+        const v = r.micros[key];
+        const known = Number.isFinite(v);
+        nutrients.set(key, { ...had, pct: had.pct + (known ? (v / reference) * 100 : 0), partial: had.partial || !known });
+      }
+      continue;
+    }
     if (!micros) {
       if (!notCounted.includes(r.name)) notCounted.push(r.name);
       continue;

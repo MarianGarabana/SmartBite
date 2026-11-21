@@ -9,6 +9,7 @@ import { MIN_SERVINGS, SAMPLE_TARGETS, SLOTS, STEP, addExtra, addRecipe, dailyTa
   microsToday, pickerList, readExtra, removeItem, resolveDay, sampleDay, stepServings, targetStatus } from "../lib/day";
 import { recipeMeals } from "../lib/meal";
 import { clearDay, onStoreChange, readDay, readProfile, writeDay } from "../lib/store";
+import DayFoods from "./DayFoods";
 
 const ICONS = { breakfast: "fa-mug-saucer", lunch: "fa-bowl-food", snack: "fa-apple-whole", dinner: "fa-utensils" };
 const MACROS = [["kcal", "Calories", "kcal"], ["protein_g", "Protein", "g"], ["carbs_g", "Carbs", "g"], ["fat_g", "Fat", "g"]];
@@ -176,7 +177,7 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
                             <span className="font-serif font-bold text-sm text-forest leading-snug break-words">{row.name}</span>
                           )}
                           <p className="text-[11px] text-forest/70 tabular-nums">
-                            {r0(row.kcal)} kcal · {r0(row.protein_g)}g protein{row.kind === "extra" ? " · your own" : ""}
+                            {r0(row.kcal)} kcal · {r0(row.protein_g)}g protein{row.kind === "extra" && !row.source ? " · your own" : ""}
                           </p>
                         </div>
                         <button type="button" onClick={() => update(removeItem(day, slot.id, row.id))} aria-label={`Remove ${row.name} from ${slot.label}`}
@@ -213,12 +214,12 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
           ))}
         </div>
 
-        {/* Fiber and % daily values over the recipe items, scaled by servings */}
+        {/* Fiber and % daily values over the recipes (scaled by servings) and the foods from the picker */}
         <div id="day-micros" className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <h2 className="font-serif font-bold text-xl text-forest">Fiber and vitamins today</h2>
-              <p className="text-xs text-forest/70">Added up from the recipes in your day, for the servings you eat.</p>
+              <p className="text-xs text-forest/70">Added up from the recipes and foods in your day, for the amounts you eat.</p>
             </div>
             <span className="text-xs bg-forest text-lime font-bold px-3 py-1 rounded-full whitespace-nowrap">Whole day</span>
           </div>
@@ -241,7 +242,7 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
               ))}
             </ul>
           ) : (
-            <p className="text-xs text-forest/70">{ready ? "Add a recipe to see fiber, vitamins and minerals for the day." : ""}</p>
+            <p className="text-xs text-forest/70">{ready ? "Add a recipe or a food to see fiber, vitamins and minerals for the day." : ""}</p>
           )}
           <div className="pt-4 border-t border-cream-dark space-y-1 text-[11px] text-forest/70">
             <p>% of the daily value for an adult. Fiber is out of 25 g a day.</p>
@@ -272,8 +273,9 @@ const fieldLabel = "block text-xs font-bold uppercase tracking-wider text-forest
 const fieldInput = "w-full bg-cream/50 border border-cream-dark rounded-xl p-3 text-sm text-forest font-bold focus:outline-none focus:border-forest";
 const EXTRA_FIELDS = [["kcal", "Calories (kcal)"], ["protein", "Protein (g)"], ["carbs", "Carbs (g)"], ["fat", "Fat (g)"]];
 
-// "+ Add" opens this native modal dialog: the user's recipes with a search box (the slot's category first), or a
-// food typed by hand. Escape, the X and a click outside close it; focus goes back to the Add button.
+// "+ Add" opens this native modal dialog: the user's recipes with a search box (the slot's category first), a food
+// from the food list by grams (DayFoods, 2026-11-21), or a food typed by hand. Escape, the X and a click outside
+// close it; focus goes back to the Add button.
 function Picker({ slot, recipes, demo, onRecipe, onExtra, onClose }) {
   const box = useRef(null);
   const search = useRef(null);
@@ -287,7 +289,7 @@ function Picker({ slot, recipes, demo, onRecipe, onExtra, onClose }) {
     search.current?.focus();
   }, []);
   const list = pickerList(recipes, slot.id, query);
-  const tabs = [["recipes", "Your recipes"], ["own", "Add your own"]];
+  const tabs = [["recipes", "Your recipes"], ["foods", "Foods"], ["own", "Add your own"]];
   const choose = (id) => {
     setTab(id);
     document.getElementById(`day-tab-${id}`)?.focus();
@@ -295,7 +297,8 @@ function Picker({ slot, recipes, demo, onRecipe, onExtra, onClose }) {
   const onTabKey = (e) => {
     if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
     e.preventDefault();
-    choose(tab === "recipes" ? "own" : "recipes");
+    const i = tabs.findIndex(([id]) => id === tab);
+    choose(tabs[(i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length][0]);
   };
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
   const submit = (e) => {
@@ -321,7 +324,7 @@ function Picker({ slot, recipes, demo, onRecipe, onExtra, onClose }) {
           </button>
         </div>
 
-        <div role="tablist" aria-label="What to add" className="flex gap-2" onKeyDown={onTabKey}>
+        <div role="tablist" aria-label="What to add" className="flex flex-wrap gap-2" onKeyDown={onTabKey}>
           {tabs.map(([id, label]) => (
             <button key={id} id={`day-tab-${id}`} type="button" role="tab" aria-selected={tab === id} aria-controls={`day-panel-${id}`}
               tabIndex={tab === id ? 0 : -1} onClick={() => setTab(id)}
@@ -368,6 +371,9 @@ function Picker({ slot, recipes, demo, onRecipe, onExtra, onClose }) {
             </div>
           )}
         </div>
+
+        <DayFoods hidden={tab !== "foods"} slot={slot} demo={demo} onAdd={onExtra} onClose={() => box.current.close()}
+          onOwn={() => choose("own")} />
 
         <form id="day-panel-own" role="tabpanel" aria-labelledby="day-tab-own" hidden={tab !== "own"} onSubmit={submit} noValidate className="space-y-4">
           <div>
