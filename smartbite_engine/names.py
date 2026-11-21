@@ -1,8 +1,11 @@
 """One name per food. canonical(name) gives the English key used in every data file, or None.
 
-The keys and their other spellings live in data/open/aliases.json: "foods" lists every English key, "aliases"
-maps Spanish names and other spellings to one key. Matching ignores case, accents, extra spaces and simple
-plurals ("Pechugas de pollo" -> "chicken breast", "egg" -> "eggs", "Champiñón" -> "mushrooms").
+The keys and their other spellings live in data/open/aliases.json: "foods" lists the English keys of the AI prompt's
+food list, "more_foods" the keys the engine also knows (name and nutrition, not in the prompt list), "aliases" and
+"more_aliases" map Spanish names and other spellings to one key (only "aliases" feeds aliases_of, which the dish
+picks for the Idea prompt use). Matching ignores case, accents, extra spaces and simple plurals
+("Pechugas de pollo" -> "chicken breast", "egg" -> "eggs", "Champiñón" -> "mushrooms"). A name no alias matches can
+still count as a food through "word_rules" ("pork chops" -> "pork loin"); match() says when that happened.
 """
 import json
 import re
@@ -48,24 +51,46 @@ def _singular_phrase(text):
     return " ".join(singular(w) for w in _form(text).split())
 
 
+def _rules(data):
+    """word_rules from aliases.json with every word in its singular form, as sets."""
+    spec = data.get("word_rules") or {}
+    sing = lambda ws: frozenset(singular(w) for w in ws)
+    rules = tuple({"words": sing(r["words"]), "food": r["food"], "head": r.get("head"),
+                   "unless": sing(r.get("unless", ()))} for r in spec.get("rules", ()))
+    return (rules, frozenset(spec.get("split_words", ())), sing(spec.get("stop_words", ())),
+            sing(spec.get("frozen_words", ())))
+
+
 @lru_cache(maxsize=4)
 def _load(path):
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     foods = tuple(data["foods"])
-    aliases = {_form(k): v for k, v in data["aliases"].items()}
+    every = foods + tuple(data.get("more_foods", ()))
+    aliases = {_form(k): v for k, v in {**data["aliases"], **data.get("more_aliases", {})}.items()}
+    dish_aliases = {_form(k): v for k, v in data["aliases"].items()}
     exact, clashes = {}, set()
-    for form, key in [(_form(f), f) for f in foods] + list(aliases.items()):
+    for form, key in [(_form(f), f) for f in every] + list(aliases.items()):
         if exact.setdefault(form, key) != key:
             clashes.add(form)
     loose = {}
     for form, key in exact.items():
         loose.setdefault(_singular_phrase(form), set()).add(key)
-    return foods, aliases, exact, loose, clashes
+    return foods, aliases, exact, loose, clashes, every, _rules(data), dish_aliases
 
 
 def foods(path=ALIASES):
-    """Every English food key, sorted."""
+    """English food keys of the AI prompt's food list (KNOWN INGREDIENTS), sorted."""
     return sorted(_load(str(path))[0])
+
+
+def all_foods(path=ALIASES):
+    """Every English food key the engine knows: the prompt's food list and "more_foods", sorted."""
+    return sorted(_load(str(path))[5])
+
+
+def word_rules(path=ALIASES):
+    """The word rules in order, each {"words", "food", "head", "unless"} with singular word sets."""
+    return list(_load(str(path))[6][0])
 
 
 def aliases(path=ALIASES):
@@ -74,8 +99,9 @@ def aliases(path=ALIASES):
 
 
 def aliases_of(key, path=ALIASES):
-    """Other names of one English key, sorted."""
-    return sorted(a for a, k in _load(str(path))[1].items() if k == key)
+    """Other names of one English key from "aliases", sorted (not "more_aliases": the dish picks for the Idea prompt
+    match cravings and exclusions through these, and stay the same until an eval run)."""
+    return sorted(a for a, k in _load(str(path))[7].items() if k == key)
 
 
 def pairs(path=ALIASES):
@@ -85,25 +111,60 @@ def pairs(path=ALIASES):
 
 def ambiguous(path=ALIASES):
     """Names that point to more than one key, exactly or once plurals are dropped. Empty for good data."""
-    _, _, _, loose, clashes = _load(str(path))
+    loose, clashes = _load(str(path))[3:5]
     return sorted(clashes | {form for form, keys in loose.items() if len(keys) > 1})
 
 
-# A name no alias matches still counts as this food when it has one of these words (decided 2026-11-21: "ground
-# pork" was unknown and counted 0 kcal and 0 g protein; any pork counts as pork loin)
-WORD_FOODS = {"pork": "pork loin", "cerdo": "pork loin"}
+def _by_rule(form, spec):
+    """Food of the first word rule that fits the name, or None (see "word_rules" in aliases.json). The name is read up
+    to the first split word, so "sardinas en aceite" is about sardines, not oil; a rule's unless words count in the
+    whole name ("frozen chicken in sauce" is not plain chicken). A rule with no food ("pork fat") stops the search: the
+    name stays unknown."""
+    rules, split, stop, frozen_words = spec
+    tokens = re.findall(r"[a-z0-9]+", form)
+    every = {singular(w) for w in tokens if w not in STOPWORDS}
+    main = []
+    for token in tokens:
+        if token in split:
+            break
+        main.append(token)
+    ws = [singular(w) for w in main if w not in STOPWORDS]
+    if not ws:
+        return None
+    have, ends = set(ws), {ws[0], ws[-1]}
+    frozen = bool(have & frozen_words)
+    for rule in rules:
+        need = rule["words"]
+        if not need <= have or every & rule["unless"] or (ends & stop) - need:
+            continue
+        if rule["food"] is None:
+            return None
+        if frozen != ("frozen" in rule["food"]):
+            continue  # a fresh name never counts as a frozen food, nor a frozen name as a fresh one
+        if rule["head"] and ws[0 if rule["head"] == "first" else -1] not in need:
+            continue
+        return rule["food"]
+    return None
+
+
+def match(name, path=ALIASES):
+    """(English key, by_rule) for a food name: by_rule is True when no name of the food matched and a word rule
+    picked the closest food ("pork chops" -> ("pork loin", True)). (None, False) when the food is unknown."""
+    data = _load(str(path))
+    exact, loose = data[2], data[3]
+    form = _form(name)
+    if form in exact:
+        return exact[form], False
+    keys = loose.get(_singular_phrase(form))
+    if keys and len(keys) == 1:
+        return next(iter(keys)), False
+    key = _by_rule(form, data[6])
+    return key, key is not None
 
 
 def canonical(name, path=ALIASES):
-    """English key for a food name (any case, accents, simple plurals), or None when the food is unknown."""
-    _, _, exact, loose, _ = _load(str(path))
-    form = _form(name)
-    if form in exact:
-        return exact[form]
-    keys = loose.get(_singular_phrase(form))
-    if keys and len(keys) == 1:
-        return next(iter(keys))
-    return next((WORD_FOODS[w] for w in words(form) if w in WORD_FOODS), None)
+    """English key for a food name (any case, accents, simple plurals, word rules), or None when the food is unknown."""
+    return match(name, path)[0]
 
 
 def base_words(name):

@@ -171,6 +171,7 @@
         "fiber_pct": { "type": "integer", "minimum": 0, "description": "Per-serving fiber as % of 25 g a day (EFSA adequate intake for adults), rounded half up." },
         "micros": { "$ref": "#/$defs/Micros" },
         "missing_nutrition": { "type": "array", "items": { "type": "string" } },
+        "counted_as": { "type": "array", "items": { "type": "string" }, "description": "Only when a word rule matched a name (smartbite_engine/names.py match): e.g. 'pork chops: not in the food table, counted as pork loin'." },
         "lines": {
           "type": "array",
           "items": {
@@ -181,6 +182,7 @@
               "grams": { "type": "number", "minimum": 0 },
               "source": { "type": ["string", "null"], "description": "e.g. ciqual, usda, open_food_facts, or label (nutrition from the user's saved product)." },
               "source_id": { "type": ["string", "null"] },
+              "counted_as": { "type": "string", "description": "The food a word rule counted this name as; only on such lines." },
               "amount": { "$ref": "#/$defs/MealNutrition" }
             }
           }

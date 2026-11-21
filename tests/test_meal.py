@@ -242,3 +242,71 @@ def test_percent_rounds_half_up():
 def test_form_rules_are_checked():
     with pytest.raises(ValueError):
         run(form={**FORM, "servings": 9})
+
+
+# Foods for names only (aliases.json "more_foods") and word rules, 2026-11-21: the real tables, no test table
+WORD = {"idea_id": "1", "title": "Pork bowl", "servings": 1, "prep_time_min": 20, "steps": ["Cook."],
+        "ingredients": [ing("pork chops", 150, "fresh"), ing("honey", 10), ing("chili crisp", 5)]}
+WORD_FORM = {**FORM, "servings": 1}
+
+
+def test_a_word_rule_match_counts_and_the_meal_says_which_food_it_counted():
+    meal = evaluate(WORD_FORM, IDEA, WORD)
+    assert validate_output(meal, "meal.schema.json") == []
+    ev = meal["evaluation"]
+    items = {i["name"]: i for i in ev["items"]}
+    assert items["pork chops"]["food"] == "pork loin" and items["pork chops"]["counted_as"] == "pork loin"
+    assert items["honey"]["food"] == "honey" and "counted_as" not in items["honey"]  # a name of the food: no note
+    macros = ev["macros"]
+    assert macros["counted_as"] == ["pork chops: not in the food table, counted as pork loin"]
+    by_name = {l["name"]: l for l in macros["lines"]}
+    assert by_name["pork chops"]["counted_as"] == "pork loin" and "counted_as" not in by_name["honey"]
+    assert by_name["honey"]["source"] == "ciqual" and by_name["honey"]["amount"]["kcal"] > 0
+    # still unknown, and still said: chili crisp has no record in Ciqual or USDA
+    assert macros["unresolved"] == ["chili crisp"]
+    assert "chili crisp: unknown food, left out of the totals" in macros["missing_nutrition"]
+
+
+def test_meal_without_word_rule_matches_has_no_counted_as_note():
+    ev = run()["evaluation"]
+    assert "counted_as" not in ev["macros"] and not any("counted_as" in i for i in ev["items"])
+
+
+def test_new_oils_and_sauces_are_optional_like_the_others():
+    assert {"sunflower oil", "mayonnaise", "ketchup", "hot sauce", "turmeric"} <= OPTIONAL_FOODS
+    assert "honey" not in OPTIONAL_FOODS
+
+
+def test_a_product_saved_under_the_old_unknown_name_still_counts():
+    # "miel" was unknown and keyed by its plain name; it is now honey, and the user's label still wins
+    recipe = {**WORD, "ingredients": [ing("miel", 20)]}
+    label = {"food": "miel", "name": "Miel de azahar 500 g", "sold_by": "pack", "pack_grams": 500, "price_eur": 4.5,
+             "per_100g": {"kcal": 320, "protein_g": 0.4, "carbs_g": 80, "fat_g": 0}}
+    ev = evaluate(WORD_FORM, IDEA, recipe, products=[label])["evaluation"]
+    line = ev["macros"]["lines"][0]
+    assert line["source"] == "label" and line["amount"]["kcal"] == pytest.approx(64)
+    bought = ev["pack"]["lines"][0]
+    assert bought["user_product"] is True and bought["food"] == "miel"
+    assert evaluate(WORD_FORM, IDEA, recipe)["evaluation"]["macros"]["lines"][0]["source"] == "ciqual"
+
+
+def test_plain_chicken_and_frozen_salmon_count_in_the_meal():
+    # Decided 2026-11-21 (owner): plain "pollo" counts as chicken meat (marked), frozen salmon uses the raw salmon
+    # record as a stated exception (it was left out of the totals before)
+    recipe = {**WORD, "ingredients": [ing("pollo", 150, "fresh"), ing("salmón congelado", 120, "frozen")]}
+    macros = evaluate(WORD_FORM, IDEA, recipe)["evaluation"]["macros"]
+    assert macros["unresolved"] == [] and macros["missing_nutrition"] == []
+    assert macros["counted_as"] == ["pollo: not in the food table, counted as chicken meat"]
+    by_name = {l["name"]: l for l in macros["lines"]}
+    assert by_name["pollo"]["source_id"] == "36003" and by_name["salmón congelado"]["food"] == "frozen salmon"
+    assert by_name["salmón congelado"]["amount"]["kcal"] > 0 and "counted_as" not in by_name["salmón congelado"]
+
+
+def test_plain_frozen_chicken_counts_and_a_rule_match_is_marked():
+    # Decided 2026-11-21 (owner): frozen chicken breast on the raw breast record, a frozen food
+    recipe = {**WORD, "ingredients": [ing("pechuga de pollo congelada", 150, "frozen"),
+                                      ing("frozen boneless chicken breast", 100, "frozen")]}
+    macros = evaluate(WORD_FORM, IDEA, recipe)["evaluation"]["macros"]
+    assert macros["unresolved"] == [] and macros["missing_nutrition"] == []
+    assert macros["counted_as"] == ["frozen boneless chicken breast: not in the food table, counted as frozen chicken breast"]
+    assert [l["source_id"] for l in macros["lines"]] == ["36017", "36017"]

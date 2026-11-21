@@ -168,5 +168,29 @@ def test_english_names_cover_every_food():
 
 def test_map_keys_are_english_food_keys():
     food_map = json.loads((ROOT / "data" / "build" / "nutrition-map.json").read_text(encoding="utf-8"))
-    keys = set(json.loads((ROOT / "data" / "open" / "aliases.json").read_text(encoding="utf-8"))["foods"])
+    data = json.loads((ROOT / "data" / "open" / "aliases.json").read_text(encoding="utf-8"))
+    keys = set(data["foods"]) | set(data["more_foods"])  # the prompt's food list and the foods for names only
     assert set(food_map["foods"]) | set(food_map["dropped"]) <= keys
+
+
+# A frozen food uses a frozen record. The stated exceptions (data/build/nutrition-map.json "fresh_record_ok"), like
+# frozen peas in tests/test_names.py, decided 2026-11-21 because Ciqual and USDA have no plain frozen record: frozen
+# salmon, and plain frozen raw chicken (breast, thigh, drumstick, plain chicken) on the matching raw records
+FRESH_RECORD_FOR_FROZEN_OK = {"frozen salmon": "salmon", "frozen chicken breast": "chicken breast",
+                              "frozen chicken thigh": "chicken thigh", "frozen chicken drumsticks": "chicken drumsticks",
+                              "frozen chicken": "chicken meat"}
+
+
+def test_frozen_foods_use_frozen_records_except_the_stated_ones():
+    food_map = json.loads((ROOT / "data" / "build" / "nutrition-map.json").read_text(encoding="utf-8"))["foods"]
+    table = json.loads((ROOT / "data" / "open" / "nutrition" / "per-100g.json").read_text(encoding="utf-8"))["foods"]
+    frozen = {name for name, entry in food_map.items() if entry["state"] == "frozen"}
+    assert {name for name in frozen if food_map[name].get("fresh_record_ok")} == set(FRESH_RECORD_FOR_FROZEN_OK)
+    for name in frozen - set(FRESH_RECORD_FOR_FROZEN_OK):
+        assert "frozen" in table[name]["source_name"].lower(), name
+    review = (ROOT / "data" / "open" / "nutrition" / "review.md").read_text(encoding="utf-8")
+    for frozen_food, raw in FRESH_RECORD_FOR_FROZEN_OK.items():
+        got = table[frozen_food]
+        assert got["state"] == "frozen" and got["source_id"] == table[raw]["source_id"], frozen_food
+        assert got["kcal"] == table[raw]["kcal"] and "exception" in got["match_note"].lower(), frozen_food
+        assert f"- **{frozen_food}**:" in review and "Exception decided 2026-11-21" in review, frozen_food
