@@ -101,3 +101,20 @@ def test_every_food_has_nutrition_and_pack_entry():
 
 def test_photo_names_cover_every_food():
     assert set(load("english-names.json")["names"]) == set(foods())
+
+
+@pytest.mark.parametrize("name", ["ground pork", "Pork mince", "pork chops", "carne picada de cerdo", "Cerdo"])
+def test_any_pork_counts_as_pork_loin(name):
+    # Decided 2026-11-21: "ground pork" was unknown and counted 0 kcal and 0 g protein
+    assert canonical(name) == "pork loin"
+
+
+def test_ground_pork_counts_in_the_meal_macros():
+    from smartbite_engine.meal import evaluate
+    recipe = {"title": "Pork fried quinoa", "servings": 1, "steps": ["Cook."],
+              "ingredients": [{"name": "ground pork", "grams_per_serving": 100, "units_per_serving": 0,
+                               "storage": "fresh", "pantry": False, "dry": False}]}
+    form = {"craving": "pork", "kcal_target": 450, "protein_g_target": 45, "servings": 1, "budget_total_eur": 5.5}
+    macros = evaluate(form, {"idea_id": "1", "name": "Pork", "main_ingredients": []}, recipe)["evaluation"]["macros"]
+    assert macros["unresolved"] == []
+    assert macros["per_serving"]["protein_g"] > 20  # pork loin, 100 g

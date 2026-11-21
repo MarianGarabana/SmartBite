@@ -89,6 +89,11 @@ def ambiguous(path=ALIASES):
     return sorted(clashes | {form for form, keys in loose.items() if len(keys) > 1})
 
 
+# A name no alias matches still counts as this food when it has one of these words (decided 2026-11-21: "ground
+# pork" was unknown and counted 0 kcal and 0 g protein; any pork counts as pork loin)
+WORD_FOODS = {"pork": "pork loin", "cerdo": "pork loin"}
+
+
 def canonical(name, path=ALIASES):
     """English key for a food name (any case, accents, simple plurals), or None when the food is unknown."""
     _, _, exact, loose, _ = _load(str(path))
@@ -96,7 +101,9 @@ def canonical(name, path=ALIASES):
     if form in exact:
         return exact[form]
     keys = loose.get(_singular_phrase(form))
-    return next(iter(keys)) if keys and len(keys) == 1 else None
+    if keys and len(keys) == 1:
+        return next(iter(keys))
+    return next((WORD_FOODS[w] for w in words(form) if w in WORD_FOODS), None)
 
 
 def base_words(name):
