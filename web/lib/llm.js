@@ -12,6 +12,7 @@
 // leftovers come from the engine (lib/engine.js), never from the model.
 import { missingMainFoods, parseReply, validateOutput } from "./contracts.js";
 import { pickDishes } from "./inspiration.js";
+import { t } from "./i18n.js";
 import { foods } from "./names.js";
 import { LINK_MESSAGE, MAX_PASTE, looksLikeLink } from "./importer.js";
 import { ideaPrompt, importPrompt, recipePrompt, revisionPrompt, typicalPackHints } from "./prompts.js";
@@ -33,8 +34,8 @@ const GEMINI_HOST = "generativelanguage.googleapis.com";
 // Live eval, successful calls: gemini-3.6-flash max 22 s, gemini-3.5-flash-lite max 3 s, gemini-3.8-flash max 575 s
 // (8 of 36 calls over 5 min). Counts from the request until the whole reply is read.
 export const CALL_TIMEOUT_MS = 5 * 60 * 1000;
-export const TIMEOUT_MESSAGE = "The AI provider did not answer within 5 minutes, so SmartBite stopped waiting. " +
-  "Try again, or pick a faster model in your Profile (for Gemini: gemini-3.6-flash).";
+// One literal each (not joined with +): the Spanish dictionary is keyed by the whole English text (lib/i18n.js)
+export const TIMEOUT_MESSAGE = "The AI provider did not answer within 5 minutes, so SmartBite stopped waiting. Try again, or pick a faster model in your Profile (for Gemini: gemini-3.6-flash).";
 
 export class LlmError extends Error {
   constructor(message) {
@@ -52,11 +53,11 @@ export function redact(text, key) {
 
 function checkSettings(llm) {
   if (llm?.provider === TRIAL) return;
-  if (!llm || (llm.provider !== ANTHROPIC && llm.provider !== OPENAI_COMPATIBLE)) throw new LlmError("Pick a provider in your Profile first.");
-  if (llm.provider === ANTHROPIC && !llm.apiKey) throw new LlmError("Add your Anthropic API key in your Profile first.");
+  if (!llm || (llm.provider !== ANTHROPIC && llm.provider !== OPENAI_COMPATIBLE)) throw new LlmError(t("Pick a provider in your Profile first."));
+  if (llm.provider === ANTHROPIC && !llm.apiKey) throw new LlmError(t("Add your Anthropic API key in your Profile first."));
   if (llm.provider === OPENAI_COMPATIBLE) {
-    if (!/^https?:\/\/[^\s]+$/i.test(llm.baseUrl || "")) throw new LlmError("Add the provider's base URL in your Profile first.");
-    if (!llm.model) throw new LlmError("Add the model name in your Profile first.");
+    if (!/^https?:\/\/[^\s]+$/i.test(llm.baseUrl || "")) throw new LlmError(t("Add the provider's base URL in your Profile first."));
+    if (!llm.model) throw new LlmError(t("Add the model name in your Profile first."));
   }
 }
 
@@ -74,7 +75,7 @@ async function post(url, headers, body, llm) {
   try {
     return await send(url, headers, body, llm, controller.signal);
   } catch (e) {
-    if (controller.signal.aborted) throw new LlmError(TIMEOUT_MESSAGE);
+    if (controller.signal.aborted) throw new LlmError(t(TIMEOUT_MESSAGE));
     throw e;
   } finally {
     clearTimeout(timer);
@@ -89,8 +90,8 @@ async function send(url, headers, body, llm, signal) {
     if (signal.aborted) throw e;
     const where = hostOf(url);
     throw new LlmError(llm.provider === ANTHROPIC
-      ? `Could not reach ${where}. Check your connection and try again.`
-      : `Could not reach ${where}. Check the base URL, your connection, and that this provider allows calls from a browser (CORS).`);
+      ? t("Could not reach {where}. Check your connection and try again.", { where })
+      : t("Could not reach {where}. Check the base URL, your connection, and that this provider allows calls from a browser (CORS).", { where }));
   }
   let data = null;
   try {
@@ -103,17 +104,17 @@ async function send(url, headers, body, llm, signal) {
     const detail = redact(err?.error?.message || err?.message || res.statusText || "", llm.apiKey);
     // 503 (decided 2026-11-01): the provider is overloaded, often on free keys; its own text adds nothing to this
     if (res.status === 503) {
-      throw new LlmError("The AI provider is busy right now (503). This is on their side, not yours: wait a minute and try again.");
+      throw new LlmError(t("The AI provider is busy right now (503). This is on their side, not yours: wait a minute and try again."));
     }
     const lead = res.status === 401 || res.status === 403
-      ? `The provider did not accept the key (${res.status}). Check it in your Profile.`
-      : res.status === 429 ? "The provider says too many requests (429). Free keys allow only a few calls per minute and per day: wait a minute, or try again tomorrow."
-        : `The provider answered with an error (${res.status}).`;
+      ? t("The provider did not accept the key ({status}). Check it in your Profile.", { status: res.status })
+      : res.status === 429 ? t("The provider says too many requests (429). Free keys allow only a few calls per minute and per day: wait a minute, or try again tomorrow.")
+        : t("The provider answered with an error ({status}).", { status: res.status });
     const error = new LlmError(detail ? `${lead} ${detail}` : lead);
     error.keyRejected = res.status === 401 || res.status === 403; // the screen then links to the Profile
     throw error;
   }
-  if (!data) throw new LlmError("The provider sent a reply that is not JSON.");
+  if (!data) throw new LlmError(t("The provider sent a reply that is not JSON."));
   return data;
 }
 
@@ -158,8 +159,8 @@ async function callAnthropic(llm, step, system, messages) {
     messages,
     output_config: { effort: EFFORT[step] },
   }, llm);
-  if (data.stop_reason === "refusal") throw new LlmError("The model declined this request. Try a different craving or change.");
-  if (data.stop_reason === "max_tokens") throw new LlmError("The reply was cut off before it ended. Try again.");
+  if (data.stop_reason === "refusal") throw new LlmError(t("The model declined this request. Try a different craving or change."));
+  if (data.stop_reason === "max_tokens") throw new LlmError(t("The reply was cut off before it ended. Try again."));
   const content = Array.isArray(data.content) ? data.content : [];
   const text = content.filter((b) => b.type === "text").map((b) => b.text).join("");
   return { text, assistant: { role: "assistant", content } };
@@ -185,8 +186,7 @@ export const PHOTO_MAKERS = {
   openrouter: { label: "OpenRouter", model: "openai/gpt-image-1-mini",
     cost: "Paid from your OpenRouter credit, under $0.01 per photo (low quality)." },
 };
-export const FREE_KEY_PHOTO = "Your Gemini key is on the free tier, and Google does not allow image models on free keys. " +
-  "Turn on billing for the key in Google AI Studio, or make the photo by hand below.";
+export const FREE_KEY_PHOTO = "Your Gemini key is on the free tier, and Google does not allow image models on free keys. Turn on billing for the key in Google AI Studio, or make the photo by hand below.";
 
 // Which provider can make the photo for this key: "gemini", "openai", "openrouter", or null (the manual card)
 export function photoMaker(llm) {
@@ -197,13 +197,14 @@ export function photoMaker(llm) {
 export const usesGemini = (llm) => photoMaker(llm) === "gemini";
 
 const toBlob = (b64, type) => new Blob([Uint8Array.from(atob(b64), (c) => c.charCodeAt(0))], { type });
-const noImage = (who, why) => new LlmError(`${who} sent no image${why ? ` (${why})` : ""}. Try again, or make the photo by hand.`);
+const noImage = (who, why) => new LlmError(why ? t("{who} sent no image ({why}). Try again, or make the photo by hand.", { who, why })
+  : t("{who} sent no image. Try again, or make the photo by hand.", { who }));
 
 // One image call; returns the photo as a Blob. Errors are LlmError with the provider's reason (key never shown).
 export async function generatePhoto({ prompt, llm }) {
   const maker = photoMaker(llm);
-  if (!maker) throw new LlmError("Photos are made only with a Gemini, OpenAI or OpenRouter key.");
-  if (!prompt) throw new LlmError("This meal has no photo prompt.");
+  if (!maker) throw new LlmError(t("Photos are made only with a Gemini, OpenAI or OpenRouter key."));
+  if (!prompt) throw new LlmError(t("This meal has no photo prompt."));
   const origin = new URL(llm.baseUrl).origin;
   if (maker === "gemini") {
     let data;
@@ -215,7 +216,7 @@ export async function generatePhoto({ prompt, llm }) {
         }, llm);
     } catch (e) {
       // Free keys get 429 with "free_tier ... limit: 0" (seen 2026-11-09): waiting never helps, so say what does
-      if (/free_tier/.test(e.message) && /limit: 0\b/.test(e.message)) throw new LlmError(FREE_KEY_PHOTO);
+      if (/free_tier/.test(e.message) && /limit: 0\b/.test(e.message)) throw new LlmError(t(FREE_KEY_PHOTO));
       throw e;
     }
     const parts = data?.candidates?.[0]?.content?.parts || [];
@@ -249,7 +250,7 @@ async function callOpenAi(llm, step, system, messages) {
   if (GEMINI_EFFORT[step] && isGemini(llm.baseUrl)) body.reasoning_effort = GEMINI_EFFORT[step];
   const data = await post(`${llm.baseUrl.replace(/\/+$/, "")}/chat/completions`, headers, body, llm);
   const choice = data.choices?.[0];
-  if (choice?.finish_reason === "length") throw new LlmError("The reply was cut off before it ended. Try again.");
+  if (choice?.finish_reason === "length") throw new LlmError(t("The reply was cut off before it ended. Try again."));
   const text = typeof choice?.message?.content === "string" ? choice.message.content : "";
   return { text, assistant: { role: "assistant", content: text } };
 }
@@ -271,17 +272,17 @@ async function askTrial(step, inputs, check) {
       body: JSON.stringify({ step, ...inputs }), signal: controller.signal });
     data = await res.json().catch(() => null);
   } catch (e) {
-    throw new LlmError(controller.signal.aborted ? TIMEOUT_MESSAGE : "Could not reach SmartBite. Check your connection and try again.");
+    throw new LlmError(controller.signal.aborted ? t(TIMEOUT_MESSAGE) : t("Could not reach SmartBite. Check your connection and try again."));
   } finally {
     clearTimeout(timer);
   }
   if (!res.ok) {
-    const error = new LlmError(data?.errors?.[0] || `SmartBite answered with an error (${res.status}). Try again.`);
+    const error = new LlmError(data?.errors?.[0] || t("SmartBite answered with an error ({status}). Try again.", { status: res.status }));
     error.trialCode = data?.code || "error";
     throw error;
   }
   const errors = check(data?.data);
-  if (errors.length) throw new LlmError(`The ${LABEL[step]} reply was not valid. Try again. ${errors.slice(0, 3).join("; ")}`);
+  if (errors.length) throw new LlmError(t("The {step} reply was not valid. Try again. {errors}", { step: t(LABEL[step]), errors: errors.slice(0, 3).join("; ") }));
   return data.data;
 }
 
@@ -298,7 +299,7 @@ async function askJson(llm, step, prompt, check, trialInputs) {
     if (!errors.length) errors = check(data);
     if (!errors.length) return data;
     if (attempt === 1) {
-      throw new LlmError(`The ${LABEL[step]} reply was not valid twice. Try again. Last problems: ${errors.slice(0, 5).join("; ")}`);
+      throw new LlmError(t("The {step} reply was not valid twice. Try again. Last problems: {errors}", { step: t(LABEL[step]), errors: errors.slice(0, 5).join("; ") }));
     }
     messages = [...messages, assistant, { role: "user", content: retryMessage(errors) }];
   }
@@ -327,7 +328,7 @@ export async function generateIdeas({ form, profile, llm, seed = newSeed(), insp
 // Recipe agent, added to the ones made before.
 export async function reviseIdea({ idea, changes, form, profile, llm, knownIngredients }) {
   const text = String(changes || "").trim();
-  if (!text) throw new LlmError("Write what you want to change first.");
+  if (!text) throw new LlmError(t("Write what you want to change first."));
   const prompt = revisionPrompt(form, idea, text, { profile, knownIngredients: knownIngredients ?? foods() });
   const data = await askJson(llm, "revision", prompt, (d) => {
     const errors = validateOutput(d, "revision.schema.json");
@@ -368,12 +369,13 @@ export async function writeRecipe({ idea, form, profile, llm, knownIngredients, 
 // settings (the eval ran it that way, eval/recipe_import). Code then weighs pieces and divides by servings
 // (lib/importer.js).
 export async function importRecipe({ paste, llm, knownIngredients }) {
-  if (llm?.provider === TRIAL) throw new LlmError("Reading a pasted recipe needs your own AI key. Add it in your Profile.");
+  if (llm?.provider === TRIAL) throw new LlmError(t("Reading a pasted recipe needs your own AI key. Add it in your Profile."));
   const text = String(paste ?? "").trim();
-  if (!text) throw new LlmError("Paste a recipe first.");
+  if (!text) throw new LlmError(t("Paste a recipe first."));
   if (looksLikeLink(text)) throw new LlmError(LINK_MESSAGE);
   if (text.length > MAX_PASTE) {
-    throw new LlmError(`That is ${text.length.toLocaleString("en")} characters. Paste only the recipe (up to ${MAX_PASTE.toLocaleString("en")}): the ingredients and the steps.`);
+    throw new LlmError(t("That is {count} characters. Paste only the recipe (up to {max}): the ingredients and the steps.",
+      { count: text.length.toLocaleString("en"), max: MAX_PASTE.toLocaleString("en") }));
   }
   const prompt = importPrompt(text, { knownIngredients: knownIngredients ?? foods() });
   return askJson(llm, "recipe", prompt, (d) => validateOutput(d, "import.schema.json"));

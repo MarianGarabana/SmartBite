@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { adjustApply, adjustInfo, adjustPreview, adjustReset, cartJobs, consolidate } from "../lib/cart";
 import { mealRequest } from "../lib/cartmath";
+import { LANG_NAMES, setLang, t, useLang, useT } from "../lib/i18n";
 import { REPO_URL, tabUrl } from "../lib/site";
 import { cachedReply, evaluateCached, requestKey } from "../lib/engine";
 import { modeMeals, toMeal } from "../lib/meal";
@@ -225,12 +226,12 @@ export function useCart(showToast, allMeals, { evaluate = false } = {}) {
   const cart = useMemo(() => (stored ? consolidate(stored, meals, evaluated) : EMPTY_CART), [stored, meals, evaluated]);
   const save = (next) => {
     setStored(next);
-    if (!writeCart(next, demo)) showToast("This browser blocks storage: the cart is kept until you reload.");
+    if (!writeCart(next, demo)) showToast(t("This browser blocks storage: the cart is kept until you reload."));
   };
   const add = (meal, servings) => {
     const c = readCart(demo);
     save({ ...c, meals: [...c.meals, servings ? { slug: meal.slug, servings } : { slug: meal.slug }] });
-    showToast(`Added "${meal.name}" to cart!`);
+    showToast(t("Added \"{name}\" to cart!", { name: meal.name }));
   };
   // The index is the row the page shows (only meals that still exist). Remove it only if that row still holds
   // the same meal; if the cart changed in another tab, show the fresh cart instead
@@ -240,10 +241,10 @@ export function useCart(showToast, allMeals, { evaluate = false } = {}) {
     const target = c.meals.filter((e) => known.has(e.slug))[index];
     if (!target || target.slug !== slug) {
       setStored(c);
-      return showToast("Your cart changed in another window. Here it is now.");
+      return showToast(t("Your cart changed in another window. Here it is now."));
     }
     save({ ...c, meals: c.meals.filter((e) => e !== target) });
-    showToast("Meal removed from cart.");
+    showToast(t("Meal removed from cart."));
   };
   const setOptional = (key, on) => {
     const c = readCart(demo);
@@ -255,18 +256,18 @@ export function useCart(showToast, allMeals, { evaluate = false } = {}) {
     const c = readCart(demo);
     const keys = c.have.filter((k) => k !== key);
     save({ ...c, have: on ? [...keys, key] : keys });
-    showToast(on ? `"${name}" marked as already at home.` : `"${name}" is back in the list.`);
+    showToast(on ? t("\"{name}\" marked as already at home.", { name }) : t("\"{name}\" is back in the list.", { name }));
   };
   // "Adjust leftovers to meals": suggestions from code, previewed before anything changes
   const adjustSuggestions = () => adjustInfo(readCart(demo), meals, evaluated);
   const previewAdjust = (ids) => adjustPreview(readCart(demo), meals, ids, evaluated);
   const applyAdjust = (ids) => {
     save(adjustApply(readCart(demo), meals, ids, evaluated));
-    showToast("Cart adjusted.");
+    showToast(t("Cart adjusted."));
   };
   const resetAdjust = () => {
     save(adjustReset(readCart(demo), meals, evaluated));
-    showToast("Adjustments undone.");
+    showToast(t("Adjustments undone."));
   };
   return { cart, add, remove, setOptional, setHave, adjustSuggestions, previewAdjust, applyAdjust, resetAdjust };
 }
@@ -301,11 +302,12 @@ export function MealPhoto({ meal, frameClass, imgClass, label = false, eager = f
 // labelTopOnPhones: the recipe page's Replace photo button sits bottom right, so on phones the label moves to the top
 // left (decided 2026-11-20; at 390 px they overlapped)
 export function MealImage({ meal, className, textClass = "text-sm", label = false, eager = false, labelTopOnPhones = false }) {
+  useLang();
   const loading = eager ? "eager" : "lazy";
   const { url: photo, ai } = usePhoto(meal.slug, true);
   const src = photo || meal.images[0];
   if (src && (photo ? ai : meal.aiPhoto)) {
-    const img = <img src={src} alt={`${meal.name} (AI-generated photo)`} loading={loading} className={className} />;
+    const img = <img src={src} alt={t("{name} (AI-generated photo)", { name: meal.name })} loading={loading} className={className} />;
     return label ? <>{img}<PhotoLabel topOnPhones={labelTopOnPhones} /></> : img;
   }
   if (src) return <img src={src} alt={meal.name} loading={loading} className={className} />;
@@ -318,23 +320,26 @@ export function MealImage({ meal, className, textClass = "text-sm", label = fals
 
 // Ideas and recipes come from a language model: always labelled
 export function AiLabel({ className = "", text = "AI-generated" }) {
+  useLang();
   return (
     <span className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-forest/70 bg-cream-card border border-cream-dark px-2 py-0.5 rounded-full ${className}`}>
-      <i className="fa-solid fa-wand-magic-sparkles text-[9px]"></i>{text}
+      <i className="fa-solid fa-wand-magic-sparkles text-[9px]"></i>{t(text)}
     </span>
   );
 }
 
 // Small label on demo photos made with an image model; same look as AiLabel
 export function PhotoLabel({ topOnPhones = false }) {
+  useLang();
   return (
     <span className={`absolute ${topOnPhones ? "max-sm:top-2.5 max-sm:bottom-auto " : ""}bottom-2.5 left-2.5 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-forest/70 bg-cream-card border border-cream-dark px-2 py-0.5 rounded-full`}>
-      <i className="fa-solid fa-wand-magic-sparkles text-[9px]"></i>AI-generated photo
+      <i className="fa-solid fa-wand-magic-sparkles text-[9px]"></i>{t("AI-generated photo")}
     </span>
   );
 }
 
 export function AddButton({ onAdd, className, children }) {
+  useLang();
   const [added, setAdded] = useState(false);
   const click = () => {
     onAdd();
@@ -343,7 +348,7 @@ export function AddButton({ onAdd, className, children }) {
   };
   return (
     <button onClick={click} className={`${className}${added ? " bg-lime" : ""}`}>
-      {added ? <span>Added ✓</span> : children}
+      {added ? <span>{t("Added ✓")}</span> : children}
     </button>
   );
 }
@@ -382,6 +387,7 @@ const menuItem = "block w-full text-left px-4 py-2.5 text-sm text-forest hover:b
 // or profile file). With one: Profile (where a profile file is opened) and Save profile file, under the display name
 // if there is one. "Open profile file" left the menu on 2026-11-01: it led to the same Profile page.
 function ProfileMenu({ active }) {
+  useLang();
   const [open, setOpen, ref] = useMenu();
   const [me, setMe] = useState({ has: false, name: "" });
   useEffect(() => {
@@ -395,7 +401,7 @@ function ProfileMenu({ active }) {
   };
   return (
     <div ref={ref} className="relative max-sm:static">
-      <button onClick={() => setOpen((o) => !o)} aria-label="Profile menu" aria-haspopup="menu" aria-expanded={open} title="Profile"
+      <button onClick={() => setOpen((o) => !o)} aria-label={t("Profile menu")} aria-haspopup="menu" aria-expanded={open} title={t("Profile")}
         className={`w-9 h-9 rounded-full flex items-center justify-center hover:text-forest hover:bg-forest/5 transition-all ${active === "profile" || open ? "bg-forest/5 text-forest" : "text-forest/70"}`}>
         <i className="fa-solid fa-user text-sm"></i>
       </button>
@@ -404,11 +410,11 @@ function ProfileMenu({ active }) {
           {me.name && <p className="px-4 pt-2 pb-1 text-xs font-bold text-forest/70 truncate">{me.name}</p>}
           {me.has ? (
             <>
-              <Link role="menuitem" href="/profile" onClick={() => setOpen(false)} className={menuItem}>Profile</Link>
-              <button role="menuitem" onClick={save} className={menuItem}>Save profile file</button>
+              <Link role="menuitem" href="/profile" onClick={() => setOpen(false)} className={menuItem}>{t("Profile")}</Link>
+              <button role="menuitem" onClick={save} className={menuItem}>{t("Save profile file")}</button>
             </>
           ) : (
-            <Link role="menuitem" href="/start" onClick={() => setOpen(false)} className={menuItem}>Get started</Link>
+            <Link role="menuitem" href="/start" onClick={() => setOpen(false)} className={menuItem}>{t("Get started")}</Link>
           )}
         </div>
       )}
@@ -420,10 +426,11 @@ function ProfileMenu({ active }) {
 // Both header menus (2026-11-03): under 640 px they open 16 px from the header's right edge (the sticky header is
 // their anchor), not from their icon, which on small phones sits too far left and pushed the menu off screen
 function TabsMenu({ active, onNavigate }) {
+  const tr = useT();
   const [open, setOpen, ref] = useMenu();
   return (
     <div ref={ref} className="relative max-sm:static lg:hidden">
-      <button onClick={() => setOpen((o) => !o)} aria-label="Menu" aria-haspopup="menu" aria-expanded={open}
+      <button onClick={() => setOpen((o) => !o)} aria-label={t("Menu")} aria-haspopup="menu" aria-expanded={open}
         className={`w-9 h-9 rounded-full flex items-center justify-center hover:text-forest hover:bg-forest/5 transition-all ${open ? "bg-forest/5 text-forest" : "text-forest/70"}`}>
         <i className={`fa-solid ${open ? "fa-xmark" : "fa-bars"} text-sm`}></i>
       </button>
@@ -432,7 +439,7 @@ function TabsMenu({ active, onNavigate }) {
           {TABS.map((t) => (
             <button key={t.id} role="menuitem" onClick={() => { setOpen(false); onNavigate(t.id); }}
               className={`${menuItem} flex items-center gap-1.5 ${active === t.id ? "font-semibold bg-forest/5" : ""}`}>
-              {t.label}
+              {tr(t.label)}
               {t.id === "make-meal" && <span className="w-2 h-2 rounded-full bg-lime"></span>}
             </button>
           ))}
@@ -443,6 +450,7 @@ function TabsMenu({ active, onNavigate }) {
 }
 
 export function Header({ active, onNavigate: navigate, cartCount }) {
+  const tr = useT();
   const onNavigate = useTabNav(navigate);
   // Get started (decided 2026-11-01): a lime pill to /start until the profile is complete (key and setup), on every
   // page but /start itself. Hidden while storage is unread (null) so it never flashes for a set-up visitor.
@@ -481,11 +489,11 @@ export function Header({ active, onNavigate: navigate, cartCount }) {
               >
                 {t.id === "make-meal" ? (
                   <>
-                    <span>Make Your Meal</span>
+                    <span>{tr("Make Your Meal")}</span>
                     <span className="w-2 h-2 rounded-full bg-lime"></span>
                   </>
                 ) : (
-                  t.label
+                  tr(t.label)
                 )}
               </button>
             );
@@ -502,12 +510,12 @@ export function Header({ active, onNavigate: navigate, cartCount }) {
           </div>
           {showStart && (
             <Link id="nav-start" href="/start" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-4 py-2.5 rounded-full transition-all whitespace-nowrap shadow-sm">
-              Get started
+              {tr("Get started")}
             </Link>
           )}
-          <button onClick={() => onNavigate("cart")} aria-label="Cart" className="relative px-4 py-2 rounded-full bg-forest text-cream hover:bg-forest-light transition-all flex items-center gap-2.5 shadow-sm">
+          <button onClick={() => onNavigate("cart")} aria-label={tr("Cart")} className="relative px-4 py-2 rounded-full bg-forest text-cream hover:bg-forest-light transition-all flex items-center gap-2.5 shadow-sm">
             <i className="fa-solid fa-basket-shopping text-lime text-sm"></i>
-            <span className="text-xs font-bold hidden sm:inline">Cart</span>
+            <span className="text-xs font-bold hidden sm:inline">{tr("Cart")}</span>
             <span id="cart-badge" className="bg-lime text-forest font-bold text-[11px] px-2 py-0.5 rounded-full min-w-[20px] text-center">{cartCount}</span>
           </button>
         </div>
@@ -517,6 +525,8 @@ export function Header({ active, onNavigate: navigate, cartCount }) {
 }
 
 export function Footer({ onNavigate: navigate }) {
+  const tr = useT();
+  const other = useLang() === "es" ? "en" : "es";
   const onNavigate = useTabNav(navigate);
   return (
     <footer className="bg-forest text-cream pt-10 pb-8 px-8 border-t border-forest-light mt-12">
@@ -531,17 +541,22 @@ export function Footer({ onNavigate: navigate }) {
         </a>
         <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs text-cream/70 font-medium">
           {TABS.map((t) => (
-            <button key={t.id} onClick={() => onNavigate(t.id)} className="hover:text-lime transition-colors">{t.label}</button>
+            <button key={t.id} onClick={() => onNavigate(t.id)} className="hover:text-lime transition-colors">{tr(t.label)}</button>
           ))}
-          <Link href="/demo" id="footer-demo" className="hover:text-lime transition-colors">Demo</Link>
-          <Link href="/profile" className="hover:text-lime transition-colors">Profile</Link>
-          <Link href="/privacy" className="hover:text-lime transition-colors">Privacy</Link>
-          <a href={REPO_URL} target="_blank" rel="noopener noreferrer" className="hover:text-lime transition-colors">Source code</a>
+          <Link href="/demo" id="footer-demo" className="hover:text-lime transition-colors">{tr("Demo")}</Link>
+          <Link href="/profile" className="hover:text-lime transition-colors">{tr("Profile")}</Link>
+          <Link href="/privacy" className="hover:text-lime transition-colors">{tr("Privacy")}</Link>
+          <a href={REPO_URL} target="_blank" rel="noopener noreferrer" className="hover:text-lime transition-colors">{tr("Source code")}</a>
+          {/* Language switch (2026-11-21): the other language, named in that language; remembered in this browser */}
+          <button id="footer-lang" lang={other} onClick={() => setLang(other, { save: true })}
+            aria-label={other === "es" ? "Cambiar a español" : "Switch to English"} className="hover:text-lime transition-colors">
+            {LANG_NAMES[other]}
+          </button>
         </nav>
         <div className="text-[11px] text-cream/60 text-center sm:text-right space-y-1">
-          <p>© 2026 SmartBite. Whole-pack meal planner. Open source, AGPL-3.0.</p>
-          <p>Not medical advice. For a health condition, ask a doctor or dietitian.</p>
-          <p id="footer-data">Food data: Open Food Facts (ODbL), Ciqual and USDA FoodData Central. <a href={`${REPO_URL}#data-and-licenses`} target="_blank" rel="noopener noreferrer" className="underline hover:text-lime">Sources</a></p>
+          <p>{tr("© 2026 SmartBite. Whole-pack meal planner. Open source, AGPL-3.0.")}</p>
+          <p>{tr("Not medical advice. For a health condition, ask a doctor or dietitian.")}</p>
+          <p id="footer-data">{tr("Food data: Open Food Facts (ODbL), Ciqual and USDA FoodData Central.")} <a href={`${REPO_URL}#data-and-licenses`} target="_blank" rel="noopener noreferrer" className="underline hover:text-lime">{tr("Sources")}</a></p>
         </div>
       </div>
     </footer>

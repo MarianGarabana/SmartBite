@@ -156,6 +156,11 @@ export function microsOf(macros) {
     coverage: short ? `Based on ${c.with_data} of ${c.total} ingredients.` : null,
     missing: missing.length ? `No data for ${missing.join(", ")}.` : null,
     partial: rows.some((r) => r.partial),
+    // The same numbers apart, so the page can say them in its language (components/RecipePage.jsx)
+    high,
+    withData: short ? c.with_data : null,
+    total: short ? c.total : null,
+    missingFoods: missing,
     reference: typeof m.reference === "string" && m.reference ? m.reference : null,
   };
 }

@@ -6,6 +6,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { t, tx, useLang, useT } from "../lib/i18n";
 import { DEFAULT_PROFILE, setField } from "../lib/profile";
 import { ANTHROPIC, ANTHROPIC_MODELS, EXPERIMENTAL_LABEL, OPENAI_COMPATIBLE, OPENAI_PRESETS, endpointAllowed, presetAvailable, presetById }
   from "../lib/providers";
@@ -14,6 +15,7 @@ import { COUNTRIES, DEFAULT_COUNTRY, OTHER_COUNTRY, DEFAULT_CURRENCY, ESTIMATES,
   writeApiKey, writeCountry, writeLlmSettings, writeOpenAiKey, writeBudget, writeCurrency, writeName, writeProfile, writeRegion } from "../lib/store";
 import { PageShell, downloadJson, useToast } from "./Chrome";
 import ProfileFileOpen from "./ProfileFileOpen";
+import { countryOptions, countryText, currencyOptions } from "./SetupDialog";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2";
 // Phone jump bar: [section id, icon, text]
@@ -27,6 +29,7 @@ const darkLabel = "block text-xs font-bold uppercase tracking-wider text-cream/7
 const darkInput = "w-full bg-forest-card border border-cream/10 rounded-xl px-4 py-2.5 text-xs text-cream font-mono placeholder-cream/40 focus:outline-none focus:border-lime";
 
 function ListField({ field, onChange }) {
+  const tr = useT();
   const [text, setText] = useState("");
   const items = Array.isArray(field.value) ? field.value : [];
   const add = () => {
@@ -37,18 +40,18 @@ function ListField({ field, onChange }) {
   };
   return (
     <div>
-      <label htmlFor={`field-${field.id}`} className={label}>{field.label}</label>
+      <label htmlFor={`field-${field.id}`} className={label}>{tr(field.label)}</label>
       <div className="flex items-center gap-2 mb-3">
         <input type="text" id={`field-${field.id}`} value={text} onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); add(); } }} placeholder={field.help || "Type one item and press Add"}
+          onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); add(); } }} placeholder={field.help ? tr(field.help) : tr("Type one item and press Add")}
           className="flex-1 bg-cream/50 border border-cream-dark rounded-xl px-4 py-2.5 text-xs text-forest focus:outline-none focus:border-forest" />
-        <button onClick={add} className="bg-forest text-cream font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-forest-light">Add</button>
+        <button onClick={add} className="bg-forest text-cream font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-forest-light">{tr("Add")}</button>
       </div>
       <div className="flex flex-wrap gap-2">
         {items.map((t, i) => (
           <span key={`${t}-${i}`} className="tag-item inline-flex items-center gap-1.5 bg-cream-dark text-forest text-xs px-3 py-1 rounded-full font-medium">
             {t}
-            <button onClick={() => onChange(items.filter((_, j) => j !== i))} aria-label={`Remove ${t}`} className="hover:text-red-600"><i className="fa-solid fa-xmark text-[10px]"></i></button>
+            <button onClick={() => onChange(items.filter((_, j) => j !== i))} aria-label={tr("Remove {item}", { item: t })} className="hover:text-red-600"><i className="fa-solid fa-xmark text-[10px]"></i></button>
           </span>
         ))}
       </div>
@@ -57,31 +60,33 @@ function ListField({ field, onChange }) {
 }
 
 function Field({ field, onChange }) {
+  useLang();
   if (field.type === "list") return <ListField field={field} onChange={onChange} />;
   if (field.type === "text") {
     return (
       <div>
-        <label htmlFor={`field-${field.id}`} className={label}>{field.label}</label>
+        <label htmlFor={`field-${field.id}`} className={label}>{t(field.label)}</label>
         {/* Tall enough for its text (about 60 characters a line); browsers with field-sizing grow it as you type */}
         <textarea id={`field-${field.id}`} rows={Math.min(8, Math.max(2, Math.ceil(String(field.value ?? "").length / 60)))}
           value={field.value ?? ""} onChange={(e) => onChange(e.target.value)}
-          placeholder="Empty: this line is left out" className={`${textArea} [field-sizing:content] min-h-[4.5rem]`}></textarea>
-        {field.help && <span className="block text-[11px] text-forest/70 mt-1">{field.help}</span>}
+          placeholder={t("Empty: this line is left out")} className={`${textArea} [field-sizing:content] min-h-[4.5rem]`}></textarea>
+        {field.help && <span className="block text-[11px] text-forest/70 mt-1">{t(field.help)}</span>}
       </div>
     );
   }
   return (
     <div>
-      <label htmlFor={`field-${field.id}`} className={label}>{field.label}{field.unit ? ` (${field.unit})` : ""}</label>
+      <label htmlFor={`field-${field.id}`} className={label}>{t(field.label)}{field.unit ? ` (${field.unit})` : ""}</label>
       <input id={`field-${field.id}`} type={field.type === "number" ? "number" : "text"} value={field.value ?? ""}
         onChange={(e) => onChange(field.type === "number" ? (e.target.value === "" ? null : Number(e.target.value)) : e.target.value)}
         className={input} />
-      {field.help && <span className="block text-[11px] text-forest/70 mt-1">{field.help}</span>}
+      {field.help && <span className="block text-[11px] text-forest/70 mt-1">{t(field.help)}</span>}
     </div>
   );
 }
 
 export default function ProfilePage({ demoMeals }) {
+  const lang = useLang();
   const router = useRouter();
   const toastState = useToast();
   const { showToast } = toastState;
@@ -133,32 +138,33 @@ export default function ProfilePage({ demoMeals }) {
       setCurrency(own);
       writeCurrency(own);
     }
-    showToast(writeCountry(id) ? "Country saved in this browser." : "Not saved: this browser blocks storage.");
+    showToast(writeCountry(id) ? t("Country saved in this browser.") : t("Not saved: this browser blocks storage."));
   };
   const pickCurrency = (code) => {
     setCurrency(code);
-    showToast(writeCurrency(code) ? "Currency saved in this browser." : "Not saved: this browser blocks storage.");
+    showToast(writeCurrency(code) ? t("Currency saved in this browser.") : t("Not saved: this browser blocks storage."));
   };
   const saveBudget = () => {
     const b = Number(String(budget).trim().replace(",", "."));
-    if (!(b > 0 && b <= 1000)) return showToast("Budget per meal: a number above 0.");
+    if (!(b > 0 && b <= 1000)) return showToast(t("Budget per meal: a number above 0."));
     if (b === readBudget()) return;
-    showToast(writeBudget(b) ? "Budget saved in this browser." : "Not saved: this browser blocks storage.");
+    showToast(writeBudget(b) ? t("Budget saved in this browser.") : t("Not saved: this browser blocks storage."));
   };
   const saveName = () => {
     if (name.trim() === readName()) return;
-    if (!writeName(name)) return showToast("Not saved: this browser blocks storage.");
+    if (!writeName(name)) return showToast(t("Not saved: this browser blocks storage."));
     setReadyName(readName());
-    showToast(name.trim() ? "Name saved in this browser." : "Name removed.");
+    showToast(name.trim() ? t("Name saved in this browser.") : t("Name removed."));
   };
   const pickRegion = (id) => {
     setRegion(id);
-    showToast(!writeRegion(id) ? "Not saved: this browser blocks storage."
-      : id === ESTIMATES_OFF ? "Estimated prices off." : "Estimated prices saved in this browser.");
+    showToast(!writeRegion(id) ? t("Not saved: this browser blocks storage.")
+      : id === ESTIMATES_OFF ? t("Estimated prices off.") : t("Estimated prices saved in this browser."));
   };
   const regions = REGIONS[country] || [];
-  const countryLabel = COUNTRIES.find((c) => c.id === country)?.label || country;
-  const theCountry = `${["GB", "US"].includes(country) ? "the " : ""}${countryLabel}`;
+  const countryLabel = countryText(COUNTRIES.find((c) => c.id === country), lang) || country;
+  // "the United Kingdom" in English; Spanish names need no article here
+  const theCountry = `${lang === "en" && ["GB", "US"].includes(country) ? "the " : ""}${countryLabel}`;
   const regionName = regions.find((r) => r.id === region)?.label;
 
   // Products: counted on every storage change
@@ -176,27 +182,29 @@ export default function ProfilePage({ demoMeals }) {
   const [withKey, setWithKey] = useState(false);
   const saveProfileFile = () => {
     saveFile(exportProfile({ withKeys: withKey }), "smartbite-profile");
-    showToast(withKey ? "Profile file saved, with your key. Keep it private." : "Profile file saved.");
+    showToast(withKey ? t("Profile file saved, with your key. Keep it private.") : t("Profile file saved."));
   };
   const profileOpened = (_summary, ok, backup) => {
     load();
-    showToast(!ok ? "Not saved: this browser blocks storage."
-      : backup ? "Profile opened. Your previous one was downloaded as a backup." : "Profile opened.");
+    showToast(!ok ? t("Not saved: this browser blocks storage.")
+      : backup ? t("Profile opened. Your previous one was downloaded as a backup.") : t("Profile opened."));
   };
   const upload = async (e) => {
     const file = e.target.files?.[0];
     e.target.value = "";
     if (!file) return;
-    if (file.size > 1_000_000) return showToast("This file is too big for a products file.");
+    if (file.size > 1_000_000) return showToast(t("This file is too big for a products file."));
     const out = importProducts(await file.text());
-    showToast(out.ok ? `Added ${out.added} product${out.added === 1 ? "" : "s"}${out.skipped ? `, ${out.skipped} skipped` : ""}.` : out.error);
+    showToast(!out.ok ? t(out.error)
+      : out.skipped ? (out.added === 1 ? t("Added {n} product, {skipped} skipped.", { n: out.added, skipped: out.skipped }) : t("Added {n} products, {skipped} skipped.", { n: out.added, skipped: out.skipped }))
+        : out.added === 1 ? t("Added {n} product.", { n: out.added }) : t("Added {n} products.", { n: out.added }));
   };
 
-  const saveProfile = () => showToast(writeProfile(profile) ? "Profile saved in this browser." : "Not saved: this browser blocks storage.");
+  const saveProfile = () => showToast(writeProfile(profile) ? t("Profile saved in this browser.") : t("Not saved: this browser blocks storage."));
   const reset = () => {
     resetProfile();
     setProfile(DEFAULT_PROFILE);
-    showToast("Profile back to the defaults.");
+    showToast(t("Profile back to the defaults."));
   };
 
   const provider = llm?.provider || ANTHROPIC;
@@ -211,48 +219,48 @@ export default function ProfilePage({ demoMeals }) {
   const saveProvider = () => {
     const k = key.trim();
     if (provider === ANTHROPIC) {
-      if (!k) return showToast("Paste your key first.");
-      if (!k.startsWith("sk-ant-")) return showToast("That does not look like an Anthropic key (it starts with sk-ant-).");
+      if (!k) return showToast(t("Paste your key first."));
+      if (!k.startsWith("sk-ant-")) return showToast(t("That does not look like an Anthropic key (it starts with sk-ant-)."));
     } else {
-      if (!presetAvailable(preset, hostname)) return showToast("Ollama is not reachable from this site. Pick another endpoint.");
-      if (!/^https?:\/\/\S+$/i.test(llm.openai.baseUrl.trim())) return showToast("Add the base URL first (it starts with https://).");
+      if (!presetAvailable(preset, hostname)) return showToast(t("Ollama is not reachable from this site. Pick another endpoint."));
+      if (!/^https?:\/\/\S+$/i.test(llm.openai.baseUrl.trim())) return showToast(t("Add the base URL first (it starts with https://)."));
       if (!endpointAllowed(llm.openai.baseUrl, hostname)) {
-        return showToast("This site can only reach the listed endpoints and your own computer. For others, run SmartBite on your computer.");
+        return showToast(t("This site can only reach the listed endpoints and your own computer. For others, run SmartBite on your computer."));
       }
-      if (!llm.openai.model.trim()) return showToast("Add the model name first.");
-      if (preset.keyNeeded && !k) return showToast("Paste your key first.");
+      if (!llm.openai.model.trim()) return showToast(t("Add the model name first."));
+      if (preset.keyNeeded && !k) return showToast(t("Paste your key first."));
     }
     const settings = { ...llm, openai: { ...llm.openai, baseUrl: llm.openai.baseUrl.trim(), model: llm.openai.model.trim() } };
     const keyOk = provider === ANTHROPIC ? writeApiKey(k) : k ? writeOpenAiKey(k) : (clearOpenAiKey(), true);
-    if (!writeLlmSettings(settings) || !keyOk) return showToast("Not saved: this browser blocks storage.");
+    if (!writeLlmSettings(settings) || !keyOk) return showToast(t("Not saved: this browser blocks storage."));
     setLlm(settings);
     setSavedKeys({ ...savedKeys, [provider]: k });
-    showToast("Provider and key saved in this browser.");
+    showToast(t("Provider and key saved in this browser."));
   };
   const removeKey = () => {
     if (provider === ANTHROPIC) clearApiKey();
     else clearOpenAiKey();
     setSavedKeys({ ...savedKeys, [provider]: "" });
     setKeys({ ...keys, [provider]: "" });
-    showToast("Key removed from this browser.");
+    showToast(t("Key removed from this browser."));
   };
   const keyHost = provider === ANTHROPIC ? "api.anthropic.com" : (() => {
-    try { return new URL(llm.openai.baseUrl).host; } catch { return "the endpoint you set"; }
+    try { return new URL(llm.openai.baseUrl).host; } catch { return t("the endpoint you set"); }
   })();
 
   return (
     <PageShell active="profile" demoMeals={demoMeals} router={router} toastState={toastState}>
       <section id="profile-page" className="tab-page space-y-8 max-w-[1360px] mx-auto px-8">
         <div>
-          <span className="font-script text-3xl text-forest font-bold">Your Kitchen</span>
-          <h1 className="font-serif text-4xl font-bold text-forest">{readyName ? `${readyName}'s profile` : "Your profile"}</h1>
+          <span className="font-script text-3xl text-forest font-bold">{t("Your Kitchen")}</span>
+          <h1 className="font-serif text-4xl font-bold text-forest">{readyName ? t("{name}'s profile", { name: readyName }) : t("Your profile")}</h1>
         </div>
         {/* Phones only (decided 2026-11-20, option 3B): a jump bar that stays under the header, and the right column
             (name, AI key, prices, profile file) first, so the key is on the first screen. Hidden from 640 px. */}
-        <nav aria-label="On this page" className="sm:hidden sticky top-[81px] z-30 -mx-8 px-4 py-2 bg-cream/95 backdrop-blur-md border-b border-forest/10 grid grid-cols-4 gap-1">
+        <nav aria-label={t("On this page")} className="sm:hidden sticky top-[81px] z-30 -mx-8 px-4 py-2 bg-cream/95 backdrop-blur-md border-b border-forest/10 grid grid-cols-4 gap-1">
           {JUMP.map(([id, icon, text]) => (
             <a key={id} href={`#${id}`} className="py-2 rounded-xl text-[11px] font-bold text-forest bg-white border border-cream-dark flex flex-col items-center gap-1">
-              <i className={`fa-solid ${icon} text-xs`} aria-hidden="true"></i>{text}
+              <i className={`fa-solid ${icon} text-xs`} aria-hidden="true"></i>{t(text)}
             </a>
           ))}
         </nav>
@@ -261,13 +269,13 @@ export default function ProfilePage({ demoMeals }) {
           {/* Kitchen Profile */}
           <div id="kitchen-profile" className="max-sm:scroll-mt-40 lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 shadow-soft border border-cream-dark space-y-8">
             <div>
-              <span className="font-script text-2xl text-forest font-bold">How you cook</span>
-              <h2 className="font-serif text-3xl font-bold text-forest">Kitchen Profile</h2>
-              <p className="text-xs text-forest/70 mt-2">Every line here goes into the prompt for your ideas and recipes; the targets also fill in the Make Your Meal form. Empty a line to leave it out. The daily targets are for My Day only and are not sent to the AI.</p>
+              <span className="font-script text-2xl text-forest font-bold">{t("How you cook")}</span>
+              <h2 className="font-serif text-3xl font-bold text-forest">{t("Kitchen Profile")}</h2>
+              <p className="text-xs text-forest/70 mt-2">{t("Every line here goes into the prompt for your ideas and recipes; the targets also fill in the Make Your Meal form. Empty a line to leave it out. The daily targets are for My Day only and are not sent to the AI.")}</p>
             </div>
             {profile.sections.map((s) => (
               <div key={s.id} className="space-y-6 pt-2 border-t border-cream-dark first:border-t-0 first:pt-0">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-forest/70">{s.label}</h3>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-forest/70">{t(s.label)}</h3>
                 <div className={`grid grid-cols-1 gap-6${s.fields.every((f) => f.type === "number") ? " sm:grid-cols-2" : ""}`}>
                   {s.fields.map((f) => (
                     <Field key={f.id} field={f} onChange={(value) => setProfile((p) => setField(p, f.id, value))} />
@@ -277,10 +285,10 @@ export default function ProfilePage({ demoMeals }) {
             ))}
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <button onClick={saveProfile} className="flex-1 bg-lime hover:bg-lime-hover text-forest font-bold py-3 rounded-2xl text-sm transition-all shadow-glow">
-                Save profile
+                {t("Save profile")}
               </button>
               <button onClick={reset} className="flex-1 bg-cream-card hover:bg-cream-dark text-forest font-bold py-3 rounded-2xl text-sm transition-colors border border-cream-dark">
-                Reset to defaults
+                {t("Reset to defaults")}
               </button>
             </div>
           </div>
@@ -289,174 +297,179 @@ export default function ProfilePage({ demoMeals }) {
           <div className="lg:col-span-5 space-y-6 max-sm:order-first">
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
               <div>
-                <span className="font-script text-2xl text-forest font-bold">On this page</span>
-                <h2 className="font-serif font-bold text-xl text-forest">Your name</h2>
+                <span className="font-script text-2xl text-forest font-bold">{t("On this page")}</span>
+                <h2 className="font-serif font-bold text-xl text-forest">{t("Your name")}</h2>
               </div>
               <div>
-                <label htmlFor="profile-name" className={label}>Display name</label>
-                <input id="profile-name" value={name} maxLength={40} placeholder="Optional" onChange={(e) => setName(e.target.value)}
+                <label htmlFor="profile-name" className={label}>{t("Display name")}</label>
+                <input id="profile-name" value={name} maxLength={40} placeholder={t("Optional")} onChange={(e) => setName(e.target.value)}
                   onBlur={saveName} onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }} className={input} />
-                <span className="block text-[11px] text-forest/70 mt-1">Shown on this page only. It stays in this browser.</span>
+                <span className="block text-[11px] text-forest/70 mt-1">{t("Shown on this page only. It stays in this browser.")}</span>
               </div>
             </div>
             <div id="ai-provider" className="scroll-mt-24 max-sm:scroll-mt-40 bg-forest text-cream rounded-3xl p-6 sm:p-8 shadow-card space-y-5">
               <div className="flex items-center gap-2">
                 <i className="fa-solid fa-key text-lime text-lg"></i>
-                <h2 className="font-serif font-bold text-xl text-white">Your AI provider and key</h2>
+                <h2 className="font-serif font-bold text-xl text-white">{t("Your AI provider and key")}</h2>
               </div>
               <p className="text-xs text-cream/80 leading-relaxed">
-                SmartBite uses your own key to write ideas and recipes. The key is stored only in this browser. It never leaves the browser except to {keyHost}, when you make a meal. Usage is billed to your account with that provider.
+                {t("SmartBite uses your own key to write ideas and recipes. The key is stored only in this browser. It never leaves the browser except to {host}, when you make a meal. Usage is billed to your account with that provider.", { host: keyHost })}
               </p>
               <div>
-                <label htmlFor="llm-provider" className={darkLabel}>Provider</label>
+                <label htmlFor="llm-provider" className={darkLabel}>{t("Provider")}</label>
                 <select id="llm-provider" value={provider} disabled={!llm}
                   onChange={(e) => { setLlm((l) => ({ ...l, provider: e.target.value })); setShowKey(false); }} className={darkInput}>
                   <option value={ANTHROPIC}>Anthropic (Claude)</option>
-                  <option value={OPENAI_COMPATIBLE}>OpenAI-compatible (experimental)</option>
+                  <option value={OPENAI_COMPATIBLE}>{t("OpenAI-compatible (experimental)")}</option>
                 </select>
               </div>
               {llm && provider === ANTHROPIC && (
                 <div>
-                  <label htmlFor="llm-model" className={darkLabel}>Model</label>
+                  <label htmlFor="llm-model" className={darkLabel}>{t("Model")}</label>
                   <select id="llm-model" value={llm.anthropicModel} onChange={(e) => setLlm((l) => ({ ...l, anthropicModel: e.target.value }))} className={darkInput}>
-                    {ANTHROPIC_MODELS.map((m) => <option key={m.id} value={m.id}>{m.label}</option>)}
+                    {ANTHROPIC_MODELS.map((m) => <option key={m.id} value={m.id}>{t(m.label)}</option>)}
                   </select>
                 </div>
               )}
               {llm && provider === OPENAI_COMPATIBLE && (
                 <div className="space-y-5">
                   <span id="llm-experimental" className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-forest bg-lime px-2 py-0.5 rounded-full">
-                    <i className="fa-solid fa-flask text-[9px]"></i>{EXPERIMENTAL_LABEL}
+                    <i className="fa-solid fa-flask text-[9px]"></i>{t(EXPERIMENTAL_LABEL)}
                   </span>
                   <div>
-                    <label htmlFor="llm-preset" className={darkLabel}>Endpoint</label>
+                    <label htmlFor="llm-preset" className={darkLabel}>{t("Endpoint")}</label>
                     <select id="llm-preset" value={preset.id} onChange={(e) => pickPreset(e.target.value)} className={darkInput}>
                       {OPENAI_PRESETS.map((p) => (
                         <option key={p.id} value={p.id} disabled={!presetAvailable(p, hostname)}>
-                          {p.label}{presetAvailable(p, hostname) ? "" : " (not reachable from this site)"}
+                          {t(p.label)}{presetAvailable(p, hostname) ? "" : t(" (not reachable from this site)")}
                         </option>
                       ))}
                     </select>
                     <span id="llm-cors-note" className="block text-[11px] text-cream/60 mt-2">
-                      {presetAvailable(preset, hostname) ? preset.cors
-                        : "Not offered here: Ollama blocks browser calls from other sites by default. Run SmartBite on your own computer, or start Ollama with OLLAMA_ORIGINS set to this site's address and use Other OpenAI-compatible endpoint."}
+                      {presetAvailable(preset, hostname) ? t(preset.cors)
+                        : t("Not offered here: Ollama blocks browser calls from other sites by default. Run SmartBite on your own computer, or start Ollama with OLLAMA_ORIGINS set to this site's address and use Other OpenAI-compatible endpoint.")}
                     </span>
                   </div>
                   <div>
-                    <label htmlFor="llm-base-url" className={darkLabel}>Base URL</label>
+                    <label htmlFor="llm-base-url" className={darkLabel}>{t("Base URL")}</label>
                     <input id="llm-base-url" type="url" value={llm.openai.baseUrl} onChange={(e) => setOpenAi({ baseUrl: e.target.value })}
                       autoComplete="off" spellCheck={false} placeholder="https://.../v1" className={darkInput} />
                   </div>
                   <div>
-                    <label htmlFor="llm-openai-model" className={darkLabel}>Model</label>
+                    <label htmlFor="llm-openai-model" className={darkLabel}>{t("Model")}</label>
                     <input id="llm-openai-model" type="text" value={llm.openai.model} onChange={(e) => setOpenAi({ model: e.target.value })}
-                      autoComplete="off" spellCheck={false} placeholder="Model name from your provider" className={darkInput} />
+                      autoComplete="off" spellCheck={false} placeholder={t("Model name from your provider")} className={darkInput} />
                   </div>
                 </div>
               )}
               <div>
-                <label htmlFor="api-key" className={darkLabel}>API key{provider === OPENAI_COMPATIBLE && !preset.keyNeeded ? " (if the endpoint needs one)" : ""}</label>
+                <label htmlFor="api-key" className={darkLabel}>{t("API key")}{provider === OPENAI_COMPATIBLE && !preset.keyNeeded ? t(" (if the endpoint needs one)") : ""}</label>
                 <div className="flex items-center gap-2">
                   <input id="api-key" type={showKey ? "text" : "password"} value={key} onChange={(e) => setKeys({ ...keys, [provider]: e.target.value })}
-                    autoComplete="off" spellCheck={false} placeholder={provider === ANTHROPIC ? "sk-ant-..." : "Your key for this endpoint"}
+                    autoComplete="off" spellCheck={false} placeholder={provider === ANTHROPIC ? "sk-ant-..." : t("Your key for this endpoint")}
                     className="flex-1 bg-forest-card border border-cream/10 rounded-xl px-4 py-2.5 text-xs text-cream font-mono placeholder-cream/40 focus:outline-none focus:border-lime" />
-                  <button onClick={() => setShowKey(!showKey)} aria-label={showKey ? "Hide key" : "Show key"}
+                  <button onClick={() => setShowKey(!showKey)} aria-label={showKey ? t("Hide key") : t("Show key")}
                     className="w-10 h-10 rounded-xl bg-forest-card border border-cream/10 text-cream/70 hover:text-lime">
                     <i className={`fa-regular ${showKey ? "fa-eye-slash" : "fa-eye"} text-xs`}></i>
                   </button>
                 </div>
                 <span id="api-key-status" className="block text-[11px] text-cream/60 mt-2">
-                  {savedKey ? `Saved in this browser (ends in ${savedKey.slice(-4)}).` : provider === ANTHROPIC ? "No key saved: Make Your Meal needs one. The demo works without a key." : "No key saved for this endpoint."}
+                  {savedKey ? t("Saved in this browser (ends in {end}).", { end: savedKey.slice(-4) }) : provider === ANTHROPIC ? t("No key saved: Make Your Meal needs one. The demo works without a key.") : t("No key saved for this endpoint.")}
                 </span>
               </div>
               <div className="flex gap-3">
-                <button onClick={saveProvider} disabled={!llm} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">Save provider and key</button>
+                <button onClick={saveProvider} disabled={!llm} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">{t("Save provider and key")}</button>
                 {savedKey && (
-                  <button onClick={removeKey} className="text-xs font-bold text-cream/70 hover:text-lime px-3 py-2.5">Remove key</button>
+                  <button onClick={removeKey} className="text-xs font-bold text-cream/70 hover:text-lime px-3 py-2.5">{t("Remove key")}</button>
                 )}
               </div>
             </div>
             <div id="where-you-shop" className="max-sm:scroll-mt-40 bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
               <div>
-                <span className="font-script text-2xl text-forest font-bold">Where you shop</span>
-                <h2 className="font-serif font-bold text-xl text-forest">Country and prices</h2>
+                <span className="font-script text-2xl text-forest font-bold">{t("Where you shop")}</span>
+                <h2 className="font-serif font-bold text-xl text-forest">{t("Country and prices")}</h2>
               </div>
               <div>
-                <label htmlFor="price-country" className={label}>Country</label>
+                <label htmlFor="price-country" className={label}>{t("Country")}</label>
                 <select id="price-country" value={country} onChange={(e) => pickCountry(e.target.value)} className={input}>
-                  {(countryList.length ? countryList : COUNTRIES.filter((c) => c.id === country)).map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
+                  {countryOptions(countryList.length ? countryList : COUNTRIES.filter((c) => c.id === country), lang).map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
                 </select>
                 {!hasEstimates(country) && (
                   <span className="block text-[11px] text-forest/70 mt-1">
-                    {country === OTHER_COUNTRY ? "No estimated prices outside the listed countries" : `No estimated prices for ${theCountry} yet`}: only the prices you type count. The budget check waits for a price on every item.
+                    {country === OTHER_COUNTRY ? t("No estimated prices outside the listed countries: only the prices you type count. The budget check waits for a price on every item.")
+                      : t("No estimated prices for {country} yet: only the prices you type count. The budget check waits for a price on every item.", { country: theCountry })}
                   </span>
                 )}
               </div>
               <div>
-                <label htmlFor="currency" className={label}>Currency</label>
+                <label htmlFor="currency" className={label}>{t("Currency")}</label>
                 <select id="currency" value={currency} onChange={(e) => pickCurrency(e.target.value)} className={input}>
-                  {(currencyList.length ? currencyList : [{ id: currency, label: currency }]).map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
+                  {(currencyList.length ? currencyOptions(currencyList, lang) : [{ id: currency, label: currency }]).map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
                 </select>
                 <span className="block text-[11px] text-forest/70 mt-1">
-                  Shown next to every price. Nothing is converted: type prices in this currency.
-                  {hasEstimates(country) && ESTIMATE_CURRENCY[country] !== currency ? ` Estimated prices for ${countryLabel} are in ${ESTIMATE_CURRENCY[country]}, so they are off while your currency is ${currency}.` : ""}
+                  {t("Shown next to every price. Nothing is converted: type prices in this currency.")}
+                  {hasEstimates(country) && ESTIMATE_CURRENCY[country] !== currency ? t(" Estimated prices for {country} are in {estimate}, so they are off while your currency is {currency}.", { country: countryLabel, estimate: ESTIMATE_CURRENCY[country], currency }) : ""}
                 </span>
               </div>
               <div>
-                <label htmlFor="profile-budget" className={label}>Budget per meal</label>
+                <label htmlFor="profile-budget" className={label}>{t("Budget per meal")}</label>
                 <input id="profile-budget" inputMode="decimal" value={budget} onChange={(e) => setBudget(e.target.value)} onBlur={saveBudget}
                   onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }} className={input} />
-                <span className="block text-[11px] text-forest/70 mt-1">For one serving. Make Your Meal starts from this; it is not sent to the AI.</span>
+                <span className="block text-[11px] text-forest/70 mt-1">{t("For one serving. Make Your Meal starts from this; it is not sent to the AI.")}</span>
               </div>
               {hasEstimates(country) && ESTIMATE_CURRENCY[country] === currency && (
                 <div>
-                  <label htmlFor="price-region" className={label}>Estimated prices</label>
+                  <label htmlFor="price-region" className={label}>{t("Estimated prices")}</label>
                   <select id="price-region" value={region} onChange={(e) => pickRegion(e.target.value)} className={input}>
-                    <option value={NATIONAL}>{countryLabel} average</option>
+                    <option value={NATIONAL}>{t("{country} average", { country: countryLabel })}</option>
                     {regions.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
-                    <option value={ESTIMATES_OFF}>Off: only my prices</option>
+                    <option value={ESTIMATES_OFF}>{t("Off: only my prices")}</option>
                   </select>
                   <span className="block text-[11px] text-forest/70 mt-1">
                     {region === ESTIMATES_OFF
-                      ? "Only the prices you type count. The budget check waits for a price on every item."
-                      : `Items you have not priced get ${ESTIMATES[country].phrase} ${regionName ? `in ${regionName} (the ${countryLabel} average where the region has too little data)` : `in ${theCountry}`} over the latest 12 months published (${ESTIMATES[country].sourceLong}; ${ESTIMATES[country].foods} foods have one). They show as est. on the recipe page; a price you type always wins.`}
+                      ? t("Only the prices you type count. The budget check waits for a price on every item.")
+                      : regionName
+                        ? t("Items you have not priced get {phrase} in {region} (the {country} average where the region has too little data) over the latest 12 months published ({source}; {foods} foods have one). They show as est. on the recipe page; a price you type always wins.",
+                          { phrase: t(ESTIMATES[country].phrase), region: regionName, country: countryLabel, source: t(ESTIMATES[country].sourceLong), foods: ESTIMATES[country].foods })
+                        : t("Items you have not priced get {phrase} in {country} over the latest 12 months published ({source}; {foods} foods have one). They show as est. on the recipe page; a price you type always wins.",
+                          { phrase: t(ESTIMATES[country].phrase), country: theCountry, source: t(ESTIMATES[country].sourceLong), foods: ESTIMATES[country].foods })}
                   </span>
                 </div>
               )}
               <div className="space-y-2">
-                <span className={label}>Your products</span>
+                <span className={label}>{t("Your products")}</span>
                 <p className="text-xs text-forest/80">
-                  {total === 0 ? "None yet. Use Edit product on a shopping line, or type a price there."
-                    : `${total} saved in this browser. They count wherever you shop.`}
+                  {total === 0 ? t("None yet. Use Edit product on a shopping line, or type a price there.")
+                    : t("{n} saved in this browser. They count wherever you shop.", { n: total })}
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <button onClick={download} disabled={!total} className="bg-forest text-cream hover:bg-forest/90 disabled:opacity-40 font-bold text-xs px-4 py-2 rounded-xl transition-colors">Export products</button>
+                  <button onClick={download} disabled={!total} className="bg-forest text-cream hover:bg-forest/90 disabled:opacity-40 font-bold text-xs px-4 py-2 rounded-xl transition-colors">{t("Export products")}</button>
                   <label className="bg-cream-dark text-forest hover:bg-cream-dark/70 font-bold text-xs px-4 py-2 rounded-xl transition-colors cursor-pointer">
-                    Import products
+                    {t("Import products")}
                     <input type="file" accept="application/json,.json" onChange={upload} className="sr-only" />
                   </label>
                 </div>
-                <span className="block text-[11px] text-forest/70">A file to keep your products, or move them to another browser.</span>
+                <span className="block text-[11px] text-forest/70">{t("A file to keep your products, or move them to another browser.")}</span>
               </div>
             </div>
             <div id="profile-file" className="max-sm:scroll-mt-40 bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
               <div>
-                <span className="font-script text-2xl text-forest font-bold">Keep it or move it</span>
-                <h2 className="font-serif font-bold text-xl text-forest">Profile file</h2>
+                <span className="font-script text-2xl text-forest font-bold">{t("Keep it or move it")}</span>
+                <h2 className="font-serif font-bold text-xl text-forest">{t("Profile file")}</h2>
               </div>
               <p className="text-xs text-forest/80 leading-relaxed">
-                One file with your Kitchen Profile, where you shop, your products, saved meals, cart and My Day. Open it in another browser to pick up where you left off. Photos are not included.
+                {t("One file with your Kitchen Profile, where you shop, your products, saved meals, cart and My Day. Open it in another browser to pick up where you left off. Photos are not included.")}
               </p>
               <label className="flex items-start gap-2 text-xs font-bold text-forest">
                 <input id="profile-file-key" type="checkbox" checked={withKey} onChange={(e) => setWithKey(e.target.checked)} className="accent-lime w-4 h-4 mt-0.5" />
-                <span>Include my API key</span>
+                <span>{t("Include my API key")}</span>
               </label>
               {withKey && (
                 <div role="status" className="bg-amber-100 text-amber-900 text-xs rounded-xl p-3">
-                  Anyone who has this file can use your key and spend on your account. Keep the file private.
+                  {t("Anyone who has this file can use your key and spend on your account. Keep the file private.")}
                 </div>
               )}
-              <button onClick={saveProfileFile} className="bg-forest text-cream hover:bg-forest/90 font-bold text-xs px-4 py-2 rounded-xl transition-colors">Save profile file</button>
+              <button onClick={saveProfileFile} className="bg-forest text-cream hover:bg-forest/90 font-bold text-xs px-4 py-2 rounded-xl transition-colors">{t("Save profile file")}</button>
               <ProfileFileOpen id="profile-file" onOpened={profileOpened} showToast={showToast} />
             </div>
             <div className="bg-cream-card rounded-3xl p-6 border border-cream-dark flex items-start gap-4">
@@ -464,9 +477,10 @@ export default function ProfilePage({ demoMeals }) {
                 <i className="fa-solid fa-lock"></i>
               </div>
               <div className="space-y-1">
-                <h4 className="font-serif font-bold text-lg text-forest">No accounts</h4>
+                <h4 className="font-serif font-bold text-lg text-forest">{t("No accounts")}</h4>
                 <p className="text-xs text-forest/80 leading-relaxed">
-                  Your profile, cart, saved meals and photos stay in this browser. <Link href="/privacy" className="font-bold underline hover:text-lime-hover">Read the privacy note</Link>.
+                  {tx("Your profile, cart, saved meals and photos stay in this browser. {link}.", {
+                    link: <Link href="/privacy" className="font-bold underline hover:text-lime-hover">{t("Read the privacy note")}</Link> })}
                 </p>
               </div>
             </div>

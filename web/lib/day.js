@@ -2,6 +2,7 @@
 // targets in the Profile. Pure: the page keeps the day (lib/store.js readDay/writeDay; the demo in React state only).
 // Recipes are kept by slug, so edits to a recipe flow through and a deleted recipe drops out of the totals; storage
 // is never pruned (the meals may not be read yet). All math here, rounded like the recipe page: kcal whole, grams to 0.1.
+import { t } from "./i18n.js";
 import { fieldValue } from "./profile";
 
 export const SLOTS = [
@@ -129,17 +130,17 @@ export function addRecipe(day, slotId, slug, servings = 1) {
 export function readExtra({ name, kcal, protein, carbs, fat } = {}) {
   const text = (v) => (v === null || v === undefined ? "" : String(v).trim());
   const label = text(name);
-  if (!label) return { ok: false, error: "Give the food a name." };
-  if (label.length > MAX_NAME) return { ok: false, error: `The name is too long (${MAX_NAME} characters at most).` };
+  if (!label) return { ok: false, error: t("Give the food a name.") };
+  if (label.length > MAX_NAME) return { ok: false, error: t("The name is too long ({max} characters at most).", { max: MAX_NAME }) };
   const num = (v) => Number(text(v).replace(",", "."));
-  if (!text(kcal)) return { ok: false, error: "Type the calories." };
+  if (!text(kcal)) return { ok: false, error: t("Type the calories.") };
   const k = num(kcal);
-  if (!okNumber(k, MAX_KCAL)) return { ok: false, error: `Calories must be a number from 0 to ${MAX_KCAL}.` };
+  if (!okNumber(k, MAX_KCAL)) return { ok: false, error: t("Calories must be a number from 0 to {max}.", { max: MAX_KCAL }) };
   const grams = {};
   for (const [key, value, word] of [["protein_g", protein, "Protein"], ["carbs_g", carbs, "Carbs"], ["fat_g", fat, "Fat"]]) {
     if (!text(value)) { grams[key] = 0; continue; }
     const g = num(value);
-    if (!okNumber(g, MAX_GRAMS)) return { ok: false, error: `${word} must be a number of grams from 0 to ${MAX_GRAMS}.` };
+    if (!okNumber(g, MAX_GRAMS)) return { ok: false, error: t("{macro} must be a number of grams from 0 to {max}.", { macro: t(word), max: MAX_GRAMS }) };
     grams[key] = gramRound(g);
   }
   return { ok: true, extra: { name: label, kcal: kcalRound(k), ...grams } };

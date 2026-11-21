@@ -5,6 +5,7 @@
 // the rerun loop of the personal app. The model still picks foods and grams only: every number here comes from code.
 import { productsFor } from "./cartmath.js";
 import { evaluateMeal } from "./engine.js";
+import { t } from "./i18n.js";
 import { writeRecipe } from "./llm.js";
 import { MAX_ATTEMPTS, rerunInfo } from "./prompts.js";
 
@@ -23,9 +24,9 @@ export const needsRerun = (meal) => problemCount(meal) > 0;
 // The short line shown while the loop runs
 export function progressText(p) {
   if (!p) return "";
-  if (p.stage === "evaluate") return p.attempt > 1 ? `Checking macros (${p.attempt}/${p.total})...` : "Checking macros...";
-  if (p.stage === "rerun") return `Adjusting grams (${p.attempt}/${p.total})...`;
-  return "Writing your recipe...";
+  if (p.stage === "evaluate") return p.attempt > 1 ? t("Checking macros ({n}/{total})...", { n: p.attempt, total: p.total }) : t("Checking macros...");
+  if (p.stage === "rerun") return t("Adjusting grams ({n}/{total})...", { n: p.attempt, total: p.total });
+  return t("Writing your recipe...");
 }
 
 // The attempt kept: fewest problems; on a tie the later one, which had more feedback

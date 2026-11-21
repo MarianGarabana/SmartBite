@@ -34,17 +34,22 @@ export function totals(rows) {
 
 // The Cart's shopping list as plain text for Copy and Share: what to buy (not "already at home"; optional rows only
 // when ticked, after the rest), packs and product, then the total. money formats a price in the user's currency.
-export function listText(rows, t, money) {
+// lang: { tr: t of lib/i18n.js, food: foodName } from the page, so the list is in the page language (general food
+// names in Spanish, product names as typed). Passed in, not imported: lib/i18n.js uses React hooks and this file is
+// also loaded by server pages. Without it the list is in English.
+const fill = (text, vars) => (vars ? text.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m)) : text);
+export function listText(rows, t, money, { tr = fill, food: foodName = (n) => n } = {}) {
   const g = (v) => `${Math.round(v)}g`;
   const buy = rows.filter((r) => !r.have && (!r.optional || r.included));
   const lines = [...buy.filter((r) => !r.optional), ...buy.filter((r) => r.optional)].map((r) => {
-    if (!r.packSize) return `- ${r.ingredient}: ${g(r.needed)}`;
-    const price = r.hasPrice ? `, ${money(r.price)}${r.estimate ? " est." : ""}` : "";
+    if (!r.packSize) return `- ${foodName(r.ingredient)}: ${g(r.needed)}`;
+    const price = r.hasPrice ? `, ${money(r.price)}${r.estimate ? ` ${tr("est.")}` : ""}` : "";
     // The product name says the pack ("eggs clase M 24 uds", "ground beef 400 g"); grams only when it has no number
     const pack = !r.product ? g(r.packSize) : /\d/.test(r.product) ? r.product : `${r.product} (${g(r.packSize)})`;
-    return `- ${r.ingredient}: ${r.packs} x ${pack}${price}`;
+    return `- ${foodName(r.ingredient)}: ${r.packs} x ${pack}${price}`;
   });
   const total = !t.priced ? null
-    : t.unpriced ? `Partial total (${t.unpriced} without a price): ${money(t.bought)}` : `Total: ${money(t.bought)}`;
-  return ["SmartBite shopping list", "", ...lines, ...(total ? ["", total] : [])].join("\n");
+    : t.unpriced ? tr("Partial total ({n} without a price): {total}", { n: t.unpriced, total: money(t.bought) })
+      : tr("Total: {total}", { total: money(t.bought) });
+  return [tr("SmartBite shopping list"), "", ...lines, ...(total ? ["", total] : [])].join("\n");
 }

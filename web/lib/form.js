@@ -1,4 +1,6 @@
-// Make Your Meal form check, same rules as smartbite_engine/form.py (MealForm). Pure.
+// Make Your Meal form check, same rules as smartbite_engine/form.py (MealForm). Pure. Error texts in the page language.
+import { t } from "./i18n.js";
+
 const GEAR = new Set(["microwave_only", "oven", "air_fryer", "no_blender"]);
 const num = (v) => (v === null || v === "" || v === undefined ? null : Number(v));
 
@@ -14,12 +16,12 @@ export function checkForm(f) {
     reheat_at_work: Boolean(f.reheat_at_work), keep_leftovers_low: Boolean(f.keep_leftovers_low),
   };
   const errors = [];
-  if (!form.craving) errors.push("craving is required");
-  if (form.craving.length > 300) errors.push("craving is longer than 300 characters");
-  if (!Number.isInteger(form.servings) || form.servings < 1 || form.servings > 8) errors.push("servings must be 1 to 8");
-  if (!(form.budget_total_eur > 0)) errors.push("budget must be above 0");
+  if (!form.craving) errors.push(t("craving is required"));
+  if (form.craving.length > 300) errors.push(t("craving is longer than 300 characters"));
+  if (!Number.isInteger(form.servings) || form.servings < 1 || form.servings > 8) errors.push(t("servings must be 1 to 8"));
+  if (!(form.budget_total_eur > 0)) errors.push(t("budget must be above 0"));
   for (const k of ["kcal_target", "protein_g_target", "carbs_g_max", "fat_g_max", "time_limit_min"])
-    if (form[k] !== null && !(form[k] > 0)) errors.push(`${k} must be above 0`);
-  if (form.gear.some((g) => !GEAR.has(g))) errors.push("unknown gear");
+    if (form[k] !== null && !(form[k] > 0)) errors.push(t("{field} must be above 0", { field: k }));
+  if (form.gear.some((g) => !GEAR.has(g))) errors.push(t("unknown gear"));
   return { form, errors };
 }

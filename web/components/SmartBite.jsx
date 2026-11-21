@@ -11,8 +11,10 @@ import { makeMeal, progressText } from "../lib/flow";
 import { generateIdeas, photoMaker, reviseIdea } from "../lib/llm";
 import { deletePhoto, makePhoto } from "../lib/photos";
 import { listText } from "../lib/packs";
-import { demoIdea, demoPicks, estimateLabel, estimateTitle, recipeMeals, toMeal } from "../lib/meal";
+import { demoIdea, demoPicks, recipeMeals, toMeal } from "../lib/meal";
+import { estimateLabel, estimateTitle } from "./ProductDialog";
 import { fieldValue } from "../lib/profile";
+import { foodName, t, tx, useLang, useT } from "../lib/i18n";
 import { tabUrl } from "../lib/site";
 import { DEFAULT_BUDGET, deleteLocalMeal, engineEstimates, noteTrialIdeas, noteTrialMeal, profileComplete, readActiveProducts, readBudget, readLlm,
   readProfile, readTrial, saveLocalMeal, trialIdeasLeft } from "../lib/store";
@@ -28,6 +30,7 @@ import { PriceInput } from "./RecipePage";
 // Price cell of a Cart row: a typed price as text; no price or an estimate (grey, "est.", as on the recipe page) as
 // the price field. The field stays while it has focus, so typing "4.99" is not cut off once the "4" is a price.
 function CartPrice({ item, prices, onBlocked, priceClass }) {
+  useLang();
   const [editing, setEditing] = useState(false);
   if (item.hasPrice && !item.estimate && !editing) return <span className={priceClass}>{money(item.price)}</span>;
   return (
@@ -35,7 +38,7 @@ function CartPrice({ item, prices, onBlocked, priceClass }) {
       <PriceInput row={item} prices={prices} onBlocked={onBlocked} onFocus={() => setEditing(true)} onBlur={() => setEditing(false)} />
       {item.hasPrice ? (
         <span className={`min-w-[3.25rem] text-right whitespace-nowrap${item.estimate ? " font-normal text-forest/70" : ""}`} title={item.estimate ? estimateTitle(item.pricePeriod, item.priceRegion) : undefined}>
-          {money(item.price)}{item.estimate ? <> <span className="text-[10px]">est.</span></> : null}
+          {money(item.price)}{item.estimate ? <> <span className="text-[10px]">{t("est.")}</span></> : null}
         </span>
       ) : null}
     </span>
@@ -57,7 +60,7 @@ const DISH_STYLES = [
 ];
 const CATEGORIES = [...MEAL_TIMES, ...DISH_STYLES];
 // Meals show their category if they have one, else their date; "~" marks totals read as "about"
-const label = (m) => m.category || m.date;
+const label = (m) => (m.category ? t(m.category) : m.date);
 const kcal = (m) => `${m.approx ? "~" : ""}${m.kcal} kcal`;
 const protein = (m) => `${m.approx ? "~" : ""}${m.protein}g`;
 
@@ -71,6 +74,7 @@ const HOME_STEPS = [
   ["fa-basket-shopping", "One cart, less waste", "Add meals to one cart for a shopping list in whole packs, then turn the leftovers into more meals."],
 ];
 function HomeSteps() {
+  useLang();
   const [open, setOpen] = useState(0);
   return (
     <ol className="space-y-3">
@@ -84,12 +88,12 @@ function HomeSteps() {
                 <span className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-colors duration-300 ${on ? "bg-lime text-forest" : "bg-forest text-lime"}`}>
                   <i className={`fa-solid ${icon} text-sm`} aria-hidden="true"></i>
                 </span>
-                <span className="flex-1 font-bold">{title}</span>
+                <span className="flex-1 font-bold">{t(title)}</span>
                 <span className={`text-xs font-bold tabular-nums ${on ? "text-lime" : "text-forest/50"}`}>{String(i + 1).padStart(2, "0")}</span>
               </span>
               <span className={`grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none ${on ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
                 <span className="overflow-hidden">
-                  <span className="block pt-2 pl-14 text-sm text-cream/85 leading-relaxed">{text}</span>
+                  <span className="block pt-2 pl-14 text-sm text-cream/85 leading-relaxed">{t(text)}</span>
                 </span>
               </span>
             </button>
@@ -104,19 +108,20 @@ function HomeSteps() {
 // On home and in an empty My Recipes (Make Your Meal sends people to /start instead); same card as "How SmartBite
 // Works". Button wording as on /start (decided 2026-10-31).
 function SetupChoices({ id, onSetUp }) {
+  useLang();
   return (
     <div id={id} className="bg-cream-card rounded-3xl p-8 border border-cream-dark flex flex-col md:flex-row items-center justify-between gap-6">
       <div className="space-y-2">
-        <span className="text-xs font-bold uppercase tracking-widest text-forest/70">Get started</span>
-        <h3 className="font-serif text-2xl font-bold text-forest">Set up your profile first</h3>
-        <p className="text-xs text-forest/70 max-w-2xl">Your AI key and your preferences, saved only in this browser. No key? Try the demo with example meals.</p>
+        <span className="text-xs font-bold uppercase tracking-widest text-forest/70">{t("Get started")}</span>
+        <h3 className="font-serif text-2xl font-bold text-forest">{t("Set up your profile first")}</h3>
+        <p className="text-xs text-forest/70 max-w-2xl">{t("Your AI key and your preferences, saved only in this browser. No key? Try the demo with example meals.")}</p>
       </div>
       <div className="flex flex-wrap justify-center gap-3 md:shrink-0">
         <button onClick={onSetUp} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all whitespace-nowrap">
-          Use my API key
+          {t("Use my API key")}
         </button>
         <Link href="/demo" className="bg-forest hover:bg-forest-light text-lime font-bold text-xs px-6 py-3 rounded-full transition-all whitespace-nowrap">
-          Try the demo
+          {t("Try the demo")}
         </Link>
       </div>
     </div>
@@ -130,6 +135,7 @@ const HERO_SECOND = "border-2 border-cream/50 hover:border-cream hover:bg-cream/
 // its own cart; the real app only the meals made in this browser, and Make Your Meal once the profile is complete.
 export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab = "home", initialCategory = "All" }) {
   useCurrency();
+  useLang();
   const demo = useDemo();
   const complete = useProfileComplete(); // null until read
   const [tab, setTab] = useState(initialTab);
@@ -145,7 +151,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
   const optionalRows = cart.rows.filter((r) => r.optional && r.packSize && !r.have);
   // Prices can be typed in the Cart too (same field as the recipe page); a typed price prices every meal's lines
   const prices = usePrices();
-  const priceBlocked = () => showToast("Not saved: this browser blocks storage.");
+  const priceBlocked = () => showToast(t("Not saved: this browser blocks storage."));
   const [editing, setEditing] = useState(null); // Cart row whose product is being edited
   const haveRows = cart.rows.filter((r) => r.have);
   // A row priced with an estimate that counts in the total, for the note under the list
@@ -154,9 +160,9 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
   // Copy, Share (phones and browsers that have it) and Print for the shopping list
   const [canShare, setCanShare] = useState(false);
   useEffect(() => setCanShare(typeof navigator.share === "function"), []);
-  const listCopy = () => navigator.clipboard.writeText(listText(cart.rows, cart.totals, money))
-    .then(() => showToast("Shopping list copied.")).catch(() => showToast("Could not copy. Use Print instead."));
-  const listShare = () => navigator.share({ title: "Shopping list", text: listText(cart.rows, cart.totals, money) })
+  const listCopy = () => navigator.clipboard.writeText(listText(cart.rows, cart.totals, money, { tr: t, food: foodName }))
+    .then(() => showToast(t("Shopping list copied."))).catch(() => showToast(t("Could not copy. Use Print instead.")));
+  const listShare = () => navigator.share({ title: t("Shopping list"), text: listText(cart.rows, cart.totals, money, { tr: t, food: foodName }) })
     .catch(() => {}); // closed without sharing
   // "Adjust leftovers to meals": suggestions from code, previewed before anything changes
   const [adjust, setAdjust] = useState(null);
@@ -170,6 +176,8 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
   };
   // Leftovers before and after: in money when prices exist, else in grams
   const leftValue = (sum) => (sum.priced ? money(sum.leftCost) : grams(sum.wasteGrams));
+  const fitVars = (sg) => ({ meal: <span className="font-bold">{sg.meal}</span>, from: sg.from, to: sg.to, food: foodName(sg.ingredient),
+    gramsFrom: sg.gramsFrom, gramsTo: sg.gramsTo, packs: sg.packs });
   const pct = (from, to) => `${to > from ? "+" : ""}${Math.round(((to - from) / from) * 100)}%`;
   const bySlug = Object.fromEntries(meals.map((m) => [m.slug, m]));
 
@@ -241,17 +249,17 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
           <span className="text-[11px] font-bold uppercase tracking-wider text-forest/70">{label(m)}</span>
           <h3 className="font-serif font-bold text-base text-forest mt-0.5 leading-snug"><Link href={`/recipes/${m.slug}`} className="after:absolute after:inset-0">{m.name}</Link></h3>
           {fits.has(m.slug) && (
-            <Link href={`/recipes/${m.slug}?fit=1`} aria-label={`Fit ${m.name} to packs`} className="relative z-10 mt-2 inline-flex items-center gap-1.5 bg-cream-card hover:bg-lime text-forest font-bold px-3 py-1.5 rounded-xl text-[11px] transition-colors">
+            <Link href={`/recipes/${m.slug}?fit=1`} aria-label={t("Fit {name} to packs", { name: m.name })} className="relative z-10 mt-2 inline-flex items-center gap-1.5 bg-cream-card hover:bg-lime text-forest font-bold px-3 py-1.5 rounded-xl text-[11px] transition-colors">
               <i className="fa-solid fa-scale-balanced text-[10px]"></i>
-              <span>Fit to packs</span>
+              <span>{t("Fit to packs")}</span>
             </Link>
           )}
         </div>
         <div className="pt-3 border-t border-cream-dark flex items-center justify-between">
-          <span className="text-xs font-bold text-forest">Protein: {protein(m)}</span>
+          <span className="text-xs font-bold text-forest">{t("Protein: {protein}", { protein: protein(m) })}</span>
           <AddButton onAdd={() => addToCart(m)} className="relative z-10 bg-cream-card hover:bg-lime text-forest font-bold px-3.5 py-2 rounded-xl text-xs transition-colors flex items-center gap-1.5">
             <i className="fa-solid fa-plus text-[10px]"></i>
-            <span>Add to cart</span>
+            <span>{t("Add to cart")}</span>
           </AddButton>
         </div>
       </div>
@@ -271,8 +279,8 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
         {demo && (
           <div className="max-w-[1360px] mx-auto px-8 mb-6">
             <div id="demo-banner" className="bg-cream-card rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
-              <span className="font-bold text-forest">Demo mode.</span> Example meals made ahead, no AI key needed.{" "}
-              <Link href="/start" className="font-bold underline hover:text-lime-hover">Make your own meals</Link>
+              <span className="font-bold text-forest">{t("Demo mode.")}</span> {t("Example meals made ahead, no AI key needed.")}{" "}
+              <Link href="/start" className="font-bold underline hover:text-lime-hover">{t("Make your own meals")}</Link>
             </div>
           </div>
         )}
@@ -290,15 +298,15 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
               <div className="absolute inset-0 -z-10 bg-forest/75 sm:bg-transparent sm:bg-gradient-to-r sm:from-forest/90 sm:via-forest/60 sm:to-transparent" aria-hidden="true"></div>
               <div className="text-cream px-7 py-12 sm:px-12 sm:py-20 lg:px-16 lg:py-24 max-w-[720px] space-y-6">
                 <span className="inline-block px-3.5 py-1.5 rounded-full bg-forest/60 border border-lime/40 text-lime text-xs font-semibold tracking-wider">
-                  Whole-pack meal planner
+                  {t("Whole-pack meal planner")}
                 </span>
                 <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.12] text-white">
-                  Meals that fit{" "}
-                  <span className="font-script text-lime text-5xl sm:text-6xl block -rotate-2 mt-1 mb-2">your macros</span>
-                  and your budget.
+                  {t("Meals that fit")}{" "}
+                  <span className="font-script text-lime text-5xl sm:text-6xl block -rotate-2 mt-1 mb-2">{t("your macros")}</span>
+                  {t("and your budget.")}
                 </h1>
                 <p className="text-cream/90 text-base sm:text-lg max-w-xl leading-relaxed">
-                  Tell SmartBite what you feel like eating. It writes a recipe in grams and a shopping list in whole packs, with the macros calculated for you.
+                  {t("Tell SmartBite what you feel like eating. It writes a recipe in grams and a shopping list in whole packs, with the macros calculated for you.")}
                 </p>
                 {/* Two buttons, the same two styles (2026-11-17, Home is the first page again). With a key: Make your
                     meal first, the demo second. With no key yet (or storage unread): the demo meals first, since Make
@@ -307,38 +315,38 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                   {demo ? (
                     <>
                       <button id="hero-meals" onClick={() => switchTab("recipes")} className={HERO_MAIN}>
-                        <span>See the demo meals</span>
+                        <span>{t("See the demo meals")}</span>
                         <i className="fa-solid fa-arrow-right text-sm"></i>
                       </button>
                       <Link href="/start" className={HERO_SECOND}>
-                        <span>Make your own</span>
+                        <span>{t("Make your own")}</span>
                       </Link>
                     </>
                   ) : complete ? (
                     <>
                       <button onClick={() => switchTab("make-meal")} className={HERO_MAIN}>
-                        <span>Make your meal</span>
+                        <span>{t("Make your meal")}</span>
                         <i className="fa-solid fa-arrow-right text-sm"></i>
                       </button>
                       <Link id="hero-demo" href={tabUrl("recipes", true)} className={HERO_SECOND}>
                         <i className="fa-solid fa-play text-sm"></i>
-                        <span>See a demo meal</span>
+                        <span>{t("See a demo meal")}</span>
                       </Link>
                     </>
                   ) : (
                     <>
                       <Link id="hero-demo" href={tabUrl("recipes", true)} className={HERO_MAIN}>
                         <i className="fa-solid fa-play text-sm"></i>
-                        <span>See a demo meal</span>
+                        <span>{t("See a demo meal")}</span>
                       </Link>
                       <button onClick={() => switchTab("make-meal")} className={HERO_SECOND}>
-                        <span>Make your meal</span>
+                        <span>{t("Make your meal")}</span>
                         <i className="fa-solid fa-arrow-right text-sm"></i>
                       </button>
                     </>
                   )}
                 </div>
-                {!demo && !complete && <p id="hero-note" className="text-cream/80 text-sm">The demo needs no sign-up and no key. Making your own meals needs an AI key.</p>}
+                {!demo && !complete && <p id="hero-note" className="text-cream/80 text-sm">{t("The demo needs no sign-up and no key. Making your own meals needs an AI key.")}</p>}
               </div>
             </div>
           </div>
@@ -348,8 +356,8 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
           <div className="max-w-[1360px] mx-auto px-4 sm:px-8">
             <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
               <div>
-                <span className="font-script text-2xl sm:text-3xl text-forest font-bold block">Recipe collection</span>
-                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-forest">Explore Categories</h2>
+                <span className="font-script text-2xl sm:text-3xl text-forest font-bold block">{t("Recipe collection")}</span>
+                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-forest">{t("Explore Categories")}</h2>
               </div>
               <AiLabel text="AI-generated photos" />
             </div>
@@ -362,7 +370,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                     className="absolute inset-0 -z-10 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.07] motion-reduce:transition-none" />
                   <span className="absolute inset-0 -z-10 bg-gradient-to-t from-forest/90 via-forest/10 to-transparent" aria-hidden="true"></span>
                   <span className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-2">
-                    <span className="font-serif font-bold text-lg lg:text-xl text-white leading-tight">{c.name}</span>
+                    <span className="font-serif font-bold text-lg lg:text-xl text-white leading-tight">{t(c.name)}</span>
                     <span className="w-9 h-9 shrink-0 rounded-full bg-lime text-forest flex items-center justify-center opacity-0 translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0" aria-hidden="true">
                       <i className="fa-solid fa-arrow-right text-sm"></i>
                     </span>
@@ -377,11 +385,11 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
           <div className="max-w-[1360px] mx-auto px-8 pt-4">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <span className="font-script text-2xl text-forest font-bold">{demo || homeExamples ? "Pre-built examples" : "Saved in this browser"}</span>
-                <h2 className="font-serif text-3xl font-bold text-forest">{demo ? "Demo Meals" : homeExamples ? "Example Recipes" : "Your Meals"}</h2>
+                <span className="font-script text-2xl text-forest font-bold">{demo || homeExamples ? t("Pre-built examples") : t("Saved in this browser")}</span>
+                <h2 className="font-serif text-3xl font-bold text-forest">{demo ? t("Demo Meals") : homeExamples ? t("Example Recipes") : t("Your Meals")}</h2>
               </div>
               <button onClick={() => switchTab("recipes")} className="text-xs font-bold text-forest hover:text-lime-hover flex items-center gap-1.5">
-                <span>View all recipes</span>
+                <span>{t("View all recipes")}</span>
                 <i className="fa-solid fa-arrow-right text-[10px]"></i>
               </button>
             </div>
@@ -398,9 +406,9 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                       <h4 className="font-serif font-bold text-sm text-forest leading-snug line-clamp-2 mt-0.5"><Link href={`/recipes/${m.slug}`} className="after:absolute after:inset-0">{m.name}</Link></h4>
                     </div>
                     <div className="mt-3 pt-2 border-t border-cream-dark flex items-center justify-between">
-                      <span className="text-xs font-bold text-forest">Protein: {protein(m)}</span>
+                      <span className="text-xs font-bold text-forest">{t("Protein: {protein}", { protein: protein(m) })}</span>
                       <AddButton onAdd={() => addToCart(m)} className="relative z-10 bg-cream-card hover:bg-lime text-forest font-bold px-3 py-1.5 rounded-xl text-xs transition-colors">
-                        Add to cart
+                        {t("Add to cart")}
                       </AddButton>
                     </div>
                   </div>
@@ -416,13 +424,13 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
             {/* Why SmartBite exists (Marian, 2026-11-14): her reason for building it, for people trying the app */}
             <div id="home-why" className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
               <div className="lg:col-span-7 space-y-5">
-                <span className="font-script text-3xl text-forest font-bold block">Why I built SmartBite</span>
-                <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest leading-tight">I wanted my meal prep to take less time.</h2>
+                <span className="font-script text-3xl text-forest font-bold block">{t("Why I built SmartBite")}</span>
+                <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest leading-tight">{t("I wanted my meal prep to take less time.")}</h2>
                 <p className="text-base text-forest/75 leading-relaxed max-w-2xl">
-                  Every week I planned my meal prep recipes by hand, and it took too long. I wanted each meal to give me the macros and nutrients I need for the day, at a price that fits my budget.
+                  {t("Every week I planned my meal prep recipes by hand, and it took too long. I wanted each meal to give me the macros and nutrients I need for the day, at a price that fits my budget.")}
                 </p>
                 <p className="text-base text-forest/75 leading-relaxed max-w-2xl">
-                  I also wanted to use every pack I buy, so food doesn't go to waste. SmartBite does that for me: tell it what you feel like eating, and it gives you the recipe, the shopping list and a plan for the leftovers.
+                  {t("I also wanted to use every pack I buy, so food doesn't go to waste. SmartBite does that for me: tell it what you feel like eating, and it gives you the recipe, the shopping list and a plan for the leftovers.")}
                 </p>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-7 pt-4">
                   {[
@@ -436,32 +444,32 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                         <i className={`fa-solid ${icon} text-sm`} aria-hidden="true"></i>
                       </span>
                       <div className="space-y-1 pt-2">
-                        <h3 className="font-bold text-forest leading-tight">{title}</h3>
-                        <p className="text-sm text-forest/70 leading-relaxed">{line}</p>
+                        <h3 className="font-bold text-forest leading-tight">{t(title)}</h3>
+                        <p className="text-sm text-forest/70 leading-relaxed">{t(line)}</p>
                       </div>
                     </li>
                   ))}
                 </ul>
               </div>
-              <img src="/img/home/why.jpg" alt="Three glass meal prep containers with lentils, corn, tomato and cucumber" loading="lazy" decoding="async"
+              <img src="/img/home/why.jpg" alt={t("Three glass meal prep containers with lentils, corn, tomato and cucumber")} loading="lazy" decoding="async"
                 className="lg:col-span-5 w-full aspect-[4/3] lg:aspect-[4/5] object-cover rounded-[2rem] shadow-xl" />
             </div>
 
             <div id="home-how" className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <div className="space-y-5 lg:order-2">
-                <span className="font-script text-3xl text-forest font-bold block">How SmartBite works</span>
-                <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest leading-tight">From craving to shopping list in 5 steps</h2>
+                <span className="font-script text-3xl text-forest font-bold block">{t("How SmartBite works")}</span>
+                <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest leading-tight">{t("From craving to shopping list in 5 steps")}</h2>
                 <p className="text-base text-forest/75 leading-relaxed max-w-xl">
-                  AI picks the foods and grams; code does all the math.
+                  {t("AI picks the foods and grams; code does all the math.")}
                 </p>
                 <HomeSteps />
                 <div className="pt-3">
                   <button onClick={() => switchTab("how-it-works")} className="bg-forest hover:bg-forest-light text-lime font-bold text-sm px-6 py-3 rounded-full transition-all whitespace-nowrap">
-                    Learn How It Works
+                    {t("Learn How It Works")}
                   </button>
                 </div>
               </div>
-              <img src="/img/home/how.jpg" alt="Bowls of diced potato, carrot and green beans ready to cook" loading="lazy" decoding="async"
+              <img src="/img/home/how.jpg" alt={t("Bowls of diced potato, carrot and green beans ready to cook")} loading="lazy" decoding="async"
                 className="w-full aspect-[4/3] lg:aspect-square object-cover rounded-[2rem] shadow-xl lg:order-1" />
             </div>
           </div>
@@ -470,14 +478,14 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
         {/* TAB 2: MY RECIPES */}
         <section id="tab-recipes" className={`tab-page space-y-8 max-w-[1360px] mx-auto px-8${tab === "recipes" ? "" : " hidden"}`}>
           <div>
-            <span className="font-script text-3xl text-forest font-bold">{demo ? "Demo Meals" : "Saved Meals"}</span>
-            <h1 className="font-serif text-4xl font-bold text-forest">My Recipes</h1>
+            <span className="font-script text-3xl text-forest font-bold">{demo ? t("Demo Meals") : t("Saved Meals")}</span>
+            <h1 className="font-serif text-4xl font-bold text-forest">{t("My Recipes")}</h1>
             {/* Saved meals live only in this browser (decided 2026-11-01): the profile file is the copy */}
             {!demo && own.length > 0 && (
               <p id="recipes-kept" className="text-xs text-forest/70 mt-2">
-                Your meals are kept in this browser only.{" "}
-                <Link href="/profile#profile-file" className="font-bold underline hover:text-lime-hover">Save a profile file</Link>{" "}
-                to keep a copy or move them to another device.
+                {t("Your meals are kept in this browser only.")}{" "}
+                <Link href="/profile#profile-file" className="font-bold underline hover:text-lime-hover">{t("Save a profile file")}</Link>{" "}
+                {t("to keep a copy or move them to another device.")}
               </p>
             )}
           </div>
@@ -485,23 +493,23 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
             <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0" id="recipe-filter-chips">
               {["All", ...CATEGORIES.map((c) => c.name)].map((name) =>
                 name === category ? (
-                  <button key={name} onClick={() => setCategory(name)} className="chip-btn active-chip bg-forest text-lime font-semibold px-4 py-2 rounded-full text-xs transition-all">{name}</button>
+                  <button key={name} onClick={() => setCategory(name)} className="chip-btn active-chip bg-forest text-lime font-semibold px-4 py-2 rounded-full text-xs transition-all">{t(name)}</button>
                 ) : (
-                  <button key={name} onClick={() => setCategory(name)} className="chip-btn bg-white hover:bg-cream-dark text-forest font-medium px-4 py-2 rounded-full text-xs transition-all border border-cream-dark">{name}</button>
+                  <button key={name} onClick={() => setCategory(name)} className="chip-btn bg-white hover:bg-cream-dark text-forest font-medium px-4 py-2 rounded-full text-xs transition-all border border-cream-dark">{t(name)}</button>
                 )
               )}
             </div>
             <div className="flex items-center gap-2 w-full md:w-auto">
               <div className="relative flex-1 md:w-72 md:flex-none">
                 <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-forest/40"></i>
-                <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search recipes or ingredients..." className="w-full bg-white border border-cream-dark rounded-full pl-9 pr-4 py-2 text-xs text-forest placeholder-forest/40 focus:outline-none focus:border-forest" />
+                <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t("Search recipes or ingredients...")} className="w-full bg-white border border-cream-dark rounded-full pl-9 pr-4 py-2 text-xs text-forest placeholder-forest/40 focus:outline-none focus:border-forest" />
               </div>
               {/* Paste a recipe (decided 2026-11-09, Q14): the real app only, not the demo */}
               {!demo && (
                 <button id="paste-recipe" onClick={() => setPasting(true)}
                   className="shrink-0 bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-4 py-2 rounded-full transition-all flex items-center gap-1.5">
                   <i className="fa-solid fa-paste text-[11px]"></i>
-                  <span>Paste a recipe</span>
+                  <span>{t("Paste a recipe")}</span>
                 </button>
               )}
             </div>
@@ -514,9 +522,9 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
           {shownExamples.length > 0 && (
             <div id="recipes-examples" className="space-y-6 pt-4">
               <div>
-                <span className="font-script text-2xl text-forest font-bold">Pre-built examples</span>
-                <h2 className="font-serif text-3xl font-bold text-forest">Example Recipes</h2>
-                <p className="text-xs text-forest/70 mt-2">Meals SmartBite made ahead, so you can see what you get. Opening them does not use a free meal.</p>
+                <span className="font-script text-2xl text-forest font-bold">{t("Pre-built examples")}</span>
+                <h2 className="font-serif text-3xl font-bold text-forest">{t("Example Recipes")}</h2>
+                <p className="text-xs text-forest/70 mt-2">{t("Meals SmartBite made ahead, so you can see what you get. Opening them does not use a free meal.")}</p>
               </div>
               <div id="recipes-examples-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {shownExamples.map(recipeCard)}
@@ -535,27 +543,27 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
         {/* TAB 4: CART */}
         <section id="tab-cart" className={`tab-page space-y-8 max-w-[1360px] mx-auto px-8${tab === "cart" ? "" : " hidden"}`}>
           <div>
-            <span className="font-script text-3xl text-forest font-bold">Grocery Plan</span>
-            <h1 className="font-serif text-4xl font-bold text-forest">My Cart</h1>
+            <span className="font-script text-3xl text-forest font-bold">{t("Grocery Plan")}</span>
+            <h1 className="font-serif text-4xl font-bold text-forest">{t("My Cart")}</h1>
           </div>
 
           <div id="cart-empty-state" className={`bg-white rounded-3xl p-12 text-center border border-cream-dark space-y-4 max-w-xl mx-auto my-12${cart.meals.length ? " hidden" : ""}`}>
             <div className="w-16 h-16 rounded-full bg-cream-card text-forest/40 flex items-center justify-center mx-auto text-2xl">
               <i className="fa-solid fa-basket-shopping"></i>
             </div>
-            <h3 className="font-serif font-bold text-xl text-forest">Your cart is empty</h3>
-            <p className="text-xs text-forest/70">{demo ? "Add a demo meal to build your shopping list." : "Make your first meal to build your shopping list."}</p>
+            <h3 className="font-serif font-bold text-xl text-forest">{t("Your cart is empty")}</h3>
+            <p className="text-xs text-forest/70">{demo ? t("Add a demo meal to build your shopping list.") : t("Make your first meal to build your shopping list.")}</p>
             <button onClick={() => switchTab(demo ? "recipes" : "make-meal")} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all">
-              {demo ? "See the demo meals" : "Make your first meal"}
+              {demo ? t("See the demo meals") : t("Make your first meal")}
             </button>
           </div>
 
           <div id="cart-loaded-view" className={`grid grid-cols-1 lg:grid-cols-12 gap-8${cart.meals.length ? "" : " hidden"}`}>
             <div className="lg:col-span-4 space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-serif font-bold text-xl text-forest">Added Meals</h3>
+                <h3 className="font-serif font-bold text-xl text-forest">{t("Added Meals")}</h3>
                 {cart.meals.some((m) => m.adjusted) && (
-                  <button onClick={resetAdjust} className="text-xs font-bold text-forest/70 hover:text-forest">Undo adjustments</button>
+                  <button onClick={resetAdjust} className="text-xs font-bold text-forest/70 hover:text-forest">{t("Undo adjustments")}</button>
                 )}
               </div>
               <div id="cart-meals-container" className="space-y-4">
@@ -569,10 +577,11 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                       <div className="flex-1">
                         <h4 className="font-serif font-bold text-sm text-forest">{meal.name}</h4>
                         <span className="text-xs text-forest/70">
-                          {entry.macros ? `${Math.round(entry.macros.kcal)} kcal • Protein: ${Math.round(entry.macros.protein_g)}g` : `${kcal(meal)} • Protein: ${protein(meal)}`}
-                          {" • "}{entry.servings} {entry.servings === 1 ? "serving" : "servings"}
+                          {entry.macros ? t("{kcal} kcal • Protein: {protein}g", { kcal: Math.round(entry.macros.kcal), protein: Math.round(entry.macros.protein_g) })
+                            : t("{kcal} • Protein: {protein}", { kcal: kcal(meal), protein: protein(meal) })}
+                          {" • "}{entry.servings === 1 ? t("{n} serving", { n: entry.servings }) : t("{n} servings", { n: entry.servings })}
                         </span>
-                        {entry.adjusted && <span className="ml-2 text-[10px] font-bold bg-lime-soft text-forest px-1.5 py-0.5 rounded">Adjusted</span>}
+                        {entry.adjusted && <span className="ml-2 text-[10px] font-bold bg-lime-soft text-forest px-1.5 py-0.5 rounded">{t("Adjusted")}</span>}
                       </div>
                       <button onClick={() => removeFromCart(idx, entry.slug)} className="text-forest/40 hover:text-red-600 p-2 text-sm">
                         <i className="fa-solid fa-trash-can"></i>
@@ -587,8 +596,8 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
               <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-6">
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-cream-dark pb-4">
                   <div>
-                    <h3 className="font-serif font-bold text-xl text-forest">Consolidated Shopping List</h3>
-                    <p className="text-xs text-forest/70">Identical ingredients across all cart meals are automatically merged into single store packs.</p>
+                    <h3 className="font-serif font-bold text-xl text-forest">{t("Consolidated Shopping List")}</h3>
+                    <p className="text-xs text-forest/70">{t("Identical ingredients across all cart meals are automatically merged into single store packs.")}</p>
                   </div>
                   <div id="cart-list-actions" className="flex gap-2 print:hidden">
                     {[
@@ -598,7 +607,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                     ].map(([text, icon, onClick]) => (
                       <button key={text} onClick={onClick} className="bg-cream-card hover:bg-lime text-forest font-bold px-3.5 py-2 rounded-xl text-xs transition-colors flex items-center gap-1.5">
                         <i className={`fa-solid ${icon} text-[10px]`}></i>
-                        <span>{text}</span>
+                        <span>{t(text)}</span>
                       </button>
                     ))}
                   </div>
@@ -608,47 +617,47 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                   <table className={T.table}>
                     <thead className={T.head}>
                       <tr className="border-b border-cream-dark bg-cream/60 text-forest/70 uppercase text-[10px] font-bold">
-                        <th className={T.th}>Ingredient</th>
-                        <th className={T.th}>Product</th>
-                        <th className={T.thNum}>Pack Size</th>
-                        <th className={T.thNum}>Packs</th>
-                        <th className={T.thNum}>Used</th>
-                        <th className={T.thNum}>Bought</th>
-                        <th className={T.thNum}>Leftover</th>
-                        <th className={`${T.thNum} text-right`}>Price</th>
-                        <th className={T.thNum}><span className="sr-only">Already have</span></th>
+                        <th className={T.th}>{t("Ingredient")}</th>
+                        <th className={T.th}>{t("Product")}</th>
+                        <th className={T.thNum}>{t("Pack Size")}</th>
+                        <th className={T.thNum}>{t("Packs")}</th>
+                        <th className={T.thNum}>{t("Used")}</th>
+                        <th className={T.thNum}>{t("Bought")}</th>
+                        <th className={T.thNum}>{t("Leftover")}</th>
+                        <th className={`${T.thNum} text-right`}>{t("Price")}</th>
+                        <th className={T.thNum}><span className="sr-only">{t("Already have")}</span></th>
                       </tr>
                     </thead>
                     <tbody id="cart-consolidated-tbody" className={T.body}>
                       {cart.rows.filter((r) => !r.optional && !r.have).map((item) =>
                         item.packSize ? (
                           <tr key={item.key} className={T.row}>
-                            <td className={T.ingredient}>{item.ingredient}</td>
+                            <td className={T.ingredient}>{foodName(item.ingredient)}</td>
                             <td className={T.product}><ProductCell row={item} onEdit={setEditing} /></td>
-                            <td data-label="Pack" className={`${T.num} text-forest/70`}>{grams(item.packSize)}</td>
-                            <td data-label="Packs" className={`${T.num} font-bold text-forest`}>{item.packs}</td>
-                            <td data-label="Used" className={`${T.num} text-forest/70`}>{grams(item.needed)}</td>
-                            <td data-label="Bought" className={`${T.num} text-forest/70`}>{grams(item.bought)}</td>
-                            <td data-label="Leftover" className={T.num}>
+                            <td data-label={t("Pack")} className={`${T.num} text-forest/70`}>{grams(item.packSize)}</td>
+                            <td data-label={t("Packs")} className={`${T.num} font-bold text-forest`}>{item.packs}</td>
+                            <td data-label={t("Used")} className={`${T.num} text-forest/70`}>{grams(item.needed)}</td>
+                            <td data-label={t("Bought")} className={`${T.num} text-forest/70`}>{grams(item.bought)}</td>
+                            <td data-label={t("Leftover")} className={T.num}>
                               <span className="font-bold text-forest">{grams(item.left)}</span>{" "}
                               {item.hasPrice ? <span className="text-[10px] text-forest/70">({money(item.leftCost)})</span> : null}
                             </td>
                             <td className={T.price}><CartPrice item={item} prices={prices} onBlocked={priceBlocked} /></td>
                             <td className={T.action}>
-                              <button onClick={() => setHave(item.key, true, item.ingredient)} title="I already have this" aria-label={`I already have ${item.ingredient}`} className="text-forest/40 hover:text-red-600 p-1 text-sm">
+                              <button onClick={() => setHave(item.key, true, foodName(item.ingredient))} title={t("I already have this")} aria-label={t("I already have {food}", { food: foodName(item.ingredient) })} className="text-forest/40 hover:text-red-600 p-1 text-sm">
                                 <i className="fa-solid fa-trash-can"></i>
                               </button>
                             </td>
                           </tr>
                         ) : (
                           <tr key={item.key} className={T.row}>
-                            <td className={T.ingredient}>{item.ingredient}</td>
-                            <td className={T.product}><span className="block">no pack size yet</span><EditProductButton row={item} onEdit={setEditing} /></td>
-                            <td data-label="Pack" className={`${T.num} text-forest/70`}></td>
-                            <td data-label="Packs" className={`${T.num} font-bold text-forest`}></td>
-                            <td data-label="Used" className={`${T.num} text-forest/70`}>{grams(item.needed)}</td>
-                            <td data-label="Bought" className={`${T.num} text-forest/70`}></td>
-                            <td data-label="Leftover" className={T.num}></td>
+                            <td className={T.ingredient}>{foodName(item.ingredient)}</td>
+                            <td className={T.product}><span className="block">{t("no pack size yet")}</span><EditProductButton row={item} onEdit={setEditing} /></td>
+                            <td data-label={t("Pack")} className={`${T.num} text-forest/70`}></td>
+                            <td data-label={t("Packs")} className={`${T.num} font-bold text-forest`}></td>
+                            <td data-label={t("Used")} className={`${T.num} text-forest/70`}>{grams(item.needed)}</td>
+                            <td data-label={t("Bought")} className={`${T.num} text-forest/70`}></td>
+                            <td data-label={t("Leftover")} className={T.num}></td>
                             <td className={T.price}></td>
                             <td className={T.action}></td>
                           </tr>
@@ -660,23 +669,23 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                 {/* Estimated prices count in the total, as on the recipe page */}
                 {estRow && (
                   <p id="cart-estimates" className="text-xs text-forest/70">
-                    Prices marked est. are estimates ({estimateLabel(estRow.pricePeriod, estRegion)}). Type your store&apos;s price to replace one.
+                    {t("Prices marked est. are estimates ({source}). Type your store's price to replace one.", { source: estimateLabel(estRow.pricePeriod, estRegion) })}
                   </p>
                 )}
                 {/* Already at home: out of the total and leftovers; Restore buys it again */}
                 {haveRows.length > 0 && (
                   <div id="cart-have" className="bg-cream/50 border border-cream-dark rounded-2xl p-4 space-y-3">
                     <div>
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-forest/70">Already at home</h4>
-                      <p className="text-[11px] text-forest/70">Not bought and not in the total. Restore one to buy it again.</p>
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-forest/70">{t("Already at home")}</h4>
+                      <p className="text-[11px] text-forest/70">{t("Not bought and not in the total. Restore one to buy it again.")}</p>
                     </div>
                     <div className="space-y-2">
                       {haveRows.map((item) => (
                         <div key={item.key} className="flex items-center gap-3 text-xs text-forest">
-                          <span className="font-semibold w-36 shrink-0">{item.ingredient}</span>
-                          <span className="flex-1 text-forest/70">{item.product || "Typical pack"}</span>
-                          <span className="text-forest/70">{grams(item.needed)} needed</span>
-                          <button onClick={() => setHave(item.key, false, item.ingredient)} className="font-bold underline hover:text-lime-hover">Restore</button>
+                          <span className="font-semibold w-36 shrink-0">{foodName(item.ingredient)}</span>
+                          <span className="flex-1 text-forest/70">{item.product || t("Typical pack")}</span>
+                          <span className="text-forest/70">{t("{grams} needed", { grams: grams(item.needed) })}</span>
+                          <button onClick={() => setHave(item.key, false, foodName(item.ingredient))} className="font-bold underline hover:text-lime-hover">{t("Restore")}</button>
                         </div>
                       ))}
                     </div>
@@ -686,16 +695,16 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                 {optionalRows.length > 0 && (
                   <div id="cart-optional" className="bg-cream/50 border border-cream-dark rounded-2xl p-4 space-y-3">
                     <div>
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-forest/70">Optional: you may already have these</h4>
-                      <p className="text-[11px] text-forest/70">They last for weeks. Tick the ones you need to buy and they are added to the total.</p>
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-forest/70">{t("Optional: you may already have these")}</h4>
+                      <p className="text-[11px] text-forest/70">{t("They last for weeks. Tick the ones you need to buy and they are added to the total.")}</p>
                     </div>
                     <div className="space-y-2">
                       {optionalRows.map((item) => (
                         <label key={item.key} className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-forest cursor-pointer">
                           <input type="checkbox" checked={!!item.included} onChange={(e) => setOptional(item.key, e.target.checked)} className="w-4 h-4 accent-forest" />
-                          <span className="font-semibold sm:w-36 shrink-0">{item.ingredient}</span>
+                          <span className="font-semibold sm:w-36 shrink-0">{foodName(item.ingredient)}</span>
                           {/* On phones the product, then pack size and price, wrap to their own lines */}
-                          <span className="flex-1 min-w-[9rem]">{item.product || "Typical pack"}</span>
+                          <span className="flex-1 min-w-[9rem]">{item.product || t("Typical pack")}</span>
                           <span className="ml-auto flex items-center gap-3">
                             <span className="text-forest/70">{item.packs > 1 ? `${item.packs} x ` : ""}{grams(item.packSize)}</span>
                             <CartPrice item={item} prices={prices} onBlocked={priceBlocked} priceClass="font-bold w-14 text-right" />
@@ -709,17 +718,18 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
                   <div className="flex justify-between text-xs">
                     <span className="text-cream/70">
                       {cart.totals.unpriced && cart.totals.priced
-                        ? `Partial total (${cart.totals.unpriced} ${cart.totals.unpriced === 1 ? "item has" : "items have"} no price yet):`
-                        : "Cost of purchase:"}
+                        ? (cart.totals.unpriced === 1 ? t("Partial total ({n} item has no price yet):", { n: cart.totals.unpriced })
+                          : t("Partial total ({n} items have no price yet):", { n: cart.totals.unpriced }))
+                        : t("Cost of purchase:")}
                     </span>
-                    <span id="cart-total-bought" className="font-bold text-lime text-sm">{cart.totals.priced ? money(cart.totals.bought) : "No prices yet"}</span>
+                    <span id="cart-total-bought" className="font-bold text-lime text-sm">{cart.totals.priced ? money(cart.totals.bought) : t("No prices yet")}</span>
                   </div>
                   <div className="flex justify-between text-xs">
-                    <span className="text-cream/70">Cost of what you use:</span>
-                    <span id="cart-total-used" className="font-bold text-white">{cart.totals.priced ? money(cart.totals.used) : "No prices yet"}</span>
+                    <span className="text-cream/70">{t("Cost of what you use:")}</span>
+                    <span id="cart-total-used" className="font-bold text-white">{cart.totals.priced ? money(cart.totals.used) : t("No prices yet")}</span>
                   </div>
                   <div className="flex justify-between text-xs border-t border-cream/10 pt-2">
-                    <span className="text-cream/70">Total waste/leftover:</span>
+                    <span className="text-cream/70">{t("Total waste/leftover:")}</span>
                     <span id="cart-total-waste" className="font-bold text-amber-300">{grams(cart.totals.wasteGrams)}{cart.totals.priced ? ` (${money(cart.totals.wasteCost)})` : ""}</span>
                   </div>
                 </div>
@@ -729,66 +739,68 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
               {cart.leftovers.length > 0 && (
                 <div id="cart-leftovers" className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-5">
                   <div className="border-b border-cream-dark pb-4">
-                    <h3 className="font-serif font-bold text-xl text-forest">Your Leftovers</h3>
-                    <p className="text-xs text-forest/70">What the meals in your cart leave over. Use them in another meal and the packs above cover it, so you buy less.</p>
+                    <h3 className="font-serif font-bold text-xl text-forest">{t("Your Leftovers")}</h3>
+                    <p className="text-xs text-forest/70">{t("What the meals in your cart leave over. Use them in another meal and the packs above cover it, so you buy less.")}</p>
                     {!adjust && (
                       <button onClick={openAdjust} className="mt-3 bg-forest hover:bg-forest-light text-lime font-bold text-xs px-5 py-2.5 rounded-full transition-all inline-flex items-center gap-2">
-                        <i className="fa-solid fa-scale-balanced"></i><span>Adjust leftovers to meals</span>
+                        <i className="fa-solid fa-scale-balanced"></i><span>{t("Adjust leftovers to meals")}</span>
                       </button>
                     )}
                   </div>
                   {adjust && (
                     <div id="adjust-panel" className="bg-cream/50 border border-cream-dark rounded-2xl p-4 space-y-3">
                       {adjust.suggestions.length === 0 ? (
-                        <p className="text-xs text-forest/70">Nothing to improve: with small gram changes (up to 15%) and servings, these leftovers are already as low as they go.</p>
+                        <p className="text-xs text-forest/70">{t("Nothing to improve: with small gram changes (up to 15%) and servings, these leftovers are already as low as they go.")}</p>
                       ) : (
                         <>
-                          <p className="text-xs text-forest/70">Small changes for this cart only; your saved recipes stay the same. Protein stays at 90% of your target or more.</p>
+                          <p className="text-xs text-forest/70">{t("Small changes for this cart only; your saved recipes stay the same. Protein stays at 90% of your target or more.")}</p>
                           {adjust.suggestions.map((sg) => (
                             <label key={sg.id} className="flex items-start gap-3 text-xs text-forest cursor-pointer">
                               <input type="checkbox" checked={adjust.picked.includes(sg.id)} onChange={() => togglePick(sg.id)} className="w-4 h-4 mt-0.5 accent-forest" />
                               {sg.kind === "servings" ? (
-                                <span><span className="font-bold">{sg.meal}</span>: {sg.from} → {sg.to} servings</span>
+                                <span>{tx("{meal}: {from} → {to} servings", { meal: <span className="font-bold">{sg.meal}</span>, from: sg.from, to: sg.to })}</span>
                               ) : sg.kind === "fit" ? (
-                                <span><span className="font-bold">{sg.meal}</span>: {sg.from} → {sg.to} servings, {sg.ingredient} {sg.gramsFrom} → {sg.gramsTo} g per serving ({sg.packs} {sg.packs === 1 ? "pack" : "packs"} in total, protein stays on target)</span>
+                                <span>{sg.packs === 1
+                                  ? tx("{meal}: {from} → {to} servings, {food} {gramsFrom} → {gramsTo} g per serving ({packs} pack in total, protein stays on target)", fitVars(sg))
+                                  : tx("{meal}: {from} → {to} servings, {food} {gramsFrom} → {gramsTo} g per serving ({packs} packs in total, protein stays on target)", fitVars(sg))}</span>
                               ) : (
-                                <span><span className="font-bold">{sg.ingredient}</span>:{" "}
+                                <span><span className="font-bold">{foodName(sg.ingredient)}</span>:{" "}
                                   {sg.changes.map((c, i) => (
-                                    <span key={i}>{i ? "; " : ""}{c.meal} {c.from} → {c.to} g per serving ({pct(c.own, c.to)})</span>
+                                    <span key={i}>{i ? "; " : ""}{t("{meal} {from} → {to} g per serving ({change})", { meal: c.meal, from: c.from, to: c.to, change: pct(c.own, c.to) })}</span>
                                   ))}
                                 </span>
                               )}
                             </label>
                           ))}
                           <p className="text-xs text-forest">
-                            Leftovers <span className="font-bold">{leftValue(adjust.before)} → {leftValue(adjust.after)}</span>
-                            {adjust.before.priced ? <>{" · "}Cart <span className="font-bold">{money(adjust.before.bought)} → {money(adjust.after.bought)}</span></> : null}
+                            {tx("Leftovers {change}", { change: <span className="font-bold">{leftValue(adjust.before)} → {leftValue(adjust.after)}</span> })}
+                            {adjust.before.priced ? <>{" · "}{tx("Cart {change}", { change: <span className="font-bold">{money(adjust.before.bought)} → {money(adjust.after.bought)}</span> })}</> : null}
                           </p>
                         </>
                       )}
                       <div className="flex gap-2">
                         {adjust.suggestions.length > 0 && (
-                          <button onClick={() => { applyAdjust(adjust.picked); setAdjust(null); }} disabled={!adjust.picked.length} className="bg-lime hover:bg-lime-hover disabled:opacity-50 text-forest font-bold text-xs px-5 py-2 rounded-full transition-all">Apply</button>
+                          <button onClick={() => { applyAdjust(adjust.picked); setAdjust(null); }} disabled={!adjust.picked.length} className="bg-lime hover:bg-lime-hover disabled:opacity-50 text-forest font-bold text-xs px-5 py-2 rounded-full transition-all">{t("Apply")}</button>
                         )}
-                        <button onClick={() => setAdjust(null)} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2">{adjust.suggestions.length ? "Cancel" : "Close"}</button>
+                        <button onClick={() => setAdjust(null)} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2">{adjust.suggestions.length ? t("Cancel") : t("Close")}</button>
                       </div>
                     </div>
                   )}
                   <div className="flex flex-wrap gap-2">
                     {cart.leftovers.map((l) => (
                       <span key={l.key} className="inline-flex items-center gap-1.5 bg-cream-dark text-forest text-xs px-3 py-1 rounded-full font-medium">
-                        <span className="font-bold">{l.ingredient}</span> {grams(l.left)}
-                        <span className="text-[10px] text-forest/70">({l.leftCost != null ? `${money(l.leftCost)}, ` : ""}{l.status})</span>
+                        <span className="font-bold">{foodName(l.ingredient)}</span> {grams(l.left)}
+                        <span className="text-[10px] text-forest/70">({l.leftCost != null ? `${money(l.leftCost)}, ` : ""}{l.status && t(l.status)})</span>
                       </span>
                     ))}
                   </div>
                   {cart.leftoverRecipes.length > 0 && (
                     <div className="space-y-2">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-forest/70">Recipes that use them</h4>
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-forest/70">{t("Recipes that use them")}</h4>
                       {cart.leftoverRecipes.map((r) => (
                         <Link key={r.slug} href={`/recipes/${r.slug}`} className="flex items-center justify-between gap-4 bg-cream/50 border border-cream-dark rounded-2xl px-4 py-3 hover:border-forest transition-colors">
                           <span className="font-serif font-bold text-sm text-forest">{r.name}</span>
-                          <span className="text-xs text-forest/70 text-right">uses {r.uses.join(", ")}</span>
+                          <span className="text-xs text-forest/70 text-right">{t("uses {foods}", { foods: r.uses.map((u) => foodName(u)).join(", ") })}</span>
                         </Link>
                       ))}
                     </div>
@@ -802,9 +814,9 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
         {/* TAB 5: HOW IT WORKS */}
         <section id="tab-how-it-works" className={`tab-page space-y-10 max-w-[1360px] mx-auto px-8${tab === "how-it-works" ? "" : " hidden"}`}>
           <div className="text-center max-w-xl mx-auto space-y-2">
-            <span className="font-script text-3xl text-forest font-bold">From craving to cart</span>
-            <h1 className="font-serif text-4xl font-bold text-forest">How SmartBite Works</h1>
-            <p className="text-xs text-forest/70">AI picks the foods and grams; code does all the math. Bring your own AI key, or try the demo without one.</p>
+            <span className="font-script text-3xl text-forest font-bold">{t("From craving to cart")}</span>
+            <h1 className="font-serif text-4xl font-bold text-forest">{t("How SmartBite Works")}</h1>
+            <p className="text-xs text-forest/70">{t("AI picks the foods and grams; code does all the math. Bring your own AI key, or try the demo without one.")}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
             {[
@@ -816,8 +828,8 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
             ].map(([title, text], i) => (
               <div key={title} className="bg-white rounded-3xl p-6 shadow-soft border border-cream-dark space-y-3 flex flex-col items-center text-center">
                 <div className="w-12 h-12 rounded-2xl bg-forest text-lime font-bold flex items-center justify-center text-lg">{i + 1}</div>
-                <h3 className="font-serif font-bold text-base text-forest">{title}</h3>
-                <p className="text-xs text-forest/70">{text}</p>
+                <h3 className="font-serif font-bold text-base text-forest">{t(title)}</h3>
+                <p className="text-xs text-forest/70">{t(text)}</p>
               </div>
             ))}
           </div>
@@ -826,9 +838,9 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
               <i className="fa-solid fa-leaf"></i>
             </div>
             <div className="space-y-1">
-              <h4 className="font-serif font-bold text-lg text-forest">Leftovers you can use</h4>
+              <h4 className="font-serif font-bold text-lg text-forest">{t("Leftovers you can use")}</h4>
               <p className="text-xs text-forest/80 leading-relaxed">
-                We try to keep leftovers low, because stores sell fixed packs and fruit and vegetables often come per kg. Each leftover is marked: it keeps, or use it within 2 days.
+                {t("We try to keep leftovers low, because stores sell fixed packs and fruit and vegetables often come per kg. Each leftover is marked: it keeps, or use it within 2 days.")}
               </p>
             </div>
           </div>
@@ -849,6 +861,7 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
 // "..." menu on a My Recipes card for a meal made in this browser (decided 2026-11-09): Edit opens the recipe page with
 // the editor; Delete asks once more, then removes the meal, its photo and its cart entries for good.
 function CardMenu({ meal, showToast }) {
+  useLang();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
@@ -863,25 +876,25 @@ function CardMenu({ meal, showToast }) {
   }, [open]);
   const remove = async () => {
     if (!confirm) return setConfirm(true);
-    if (!deleteLocalMeal(meal.slug)) return showToast("Not deleted. Try again.");
+    if (!deleteLocalMeal(meal.slug)) return showToast(t("Not deleted. Try again."));
     await deletePhoto(meal.slug);
     setOpen(false);
-    showToast(`Deleted "${meal.name}".`);
+    showToast(t("Deleted \"{name}\".", { name: meal.name }));
   };
   const item = "w-full text-left px-4 py-2.5 text-xs font-bold flex items-center gap-2.5 hover:bg-cream-card";
   return (
     <div ref={box} className="absolute top-3 right-3 z-20">
-      <button type="button" aria-label={`Options for ${meal.name}`} aria-haspopup="menu" aria-expanded={open} onClick={() => { setOpen(!open); setConfirm(false); }}
+      <button type="button" aria-label={t("Options for {name}", { name: meal.name })} aria-haspopup="menu" aria-expanded={open} onClick={() => { setOpen(!open); setConfirm(false); }}
         className="w-8 h-8 rounded-full bg-white/90 hover:bg-white shadow-soft text-forest flex items-center justify-center">
         <i className="fa-solid fa-ellipsis"></i>
       </button>
       {open && (
         <div role="menu" className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-card border border-cream-dark overflow-hidden">
           <button role="menuitem" onClick={() => router.push(`/recipes/${meal.slug}?edit=1`)} className={`${item} text-forest`}>
-            <i className="fa-regular fa-pen-to-square w-4"></i>Edit meal
+            <i className="fa-regular fa-pen-to-square w-4"></i>{t("Edit meal")}
           </button>
           <button role="menuitem" onClick={remove} className={`${item} text-red-700`}>
-            <i className="fa-regular fa-trash-can w-4"></i>{confirm ? "Tap again to delete" : "Delete meal"}
+            <i className="fa-regular fa-trash-can w-4"></i>{confirm ? t("Tap again to delete") : t("Delete meal")}
           </button>
         </div>
       )}
@@ -922,11 +935,14 @@ const QUIZ = {
   gear: [["microwave", "Microwave", "fa-tv"], ["stove", "Stove", "fa-fire-burner"], ["oven", "Oven", "fa-temperature-high"],
     ["airFryer", "Air fryer", "fa-wind"], ["blender", "Blender", "fa-blender"]],
 };
-const quizLabel = (list, v) => (list.find((o) => o[0] === v) || [v, v])[1];
+const quizLabel = (list, v) => { const o = list.find((x) => x[0] === v); return o ? t(o[1]) : v; };
+// A quiz label as running text (soft hyphen and zero-width space out), lower case: "Comida/Cena" -> "comida/cena"
+const plainLabel = (label) => label.replace(/[\u00ad\u200b]/g, "").toLowerCase();
 const flip = (list, v) => (list.includes(v) ? list.filter((x) => x !== v) : [...list, v]);
 
 // Option card on a native checkbox or radio (selected state shown by fill and tick, not by colour alone)
 function Choice({ type = "checkbox", name, checked, onChange, icon, label, sub, tall, tile }) {
+  useLang();
   const box = tile ? "justify-center p-0 min-h-[48px]" : tall ? "flex-col items-start p-4 min-h-[118px]" : "items-center p-3 min-h-[52px]";
   return (
     <label className={`quiz-opt relative flex ${box} gap-2.5 border-[1.5px] border-cream-dark rounded-2xl bg-cream/50 cursor-pointer select-none text-forest hover:border-forest-light transition-colors active:scale-[.98]`}>
@@ -1013,6 +1029,8 @@ function Dial({ id, label, icon, unit, min, max, step, value, onChange, presets 
 const trialOver = (e) => e?.trialCode === "trial_off" || e?.trialCode === "trial_used_up";
 
 function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete, start }) {
+  const lang = useLang();
+  const tr = useT(); // the foods-to-avoid list names its loop variable t
   const [crave, setCrave] = useState({ protein: [], style: [], cuisine: [] });
   const [craveText, setCraveText] = useState("");
   // Leftovers in the cart: a tap adds one to the craving, so the ideas build on it
@@ -1103,6 +1121,13 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
     return () => window.removeEventListener("keydown", onKey);
   }, [preview]);
   const step = run.step;
+  // A demo idea's line names its foods in English (lib/meal.js demoIdea): in Spanish it is written again from them
+  const ideaLine = (idea) => {
+    if (lang !== "es" || !run.demo || !idea.main_ingredients?.length) return idea.one_line;
+    const foods = idea.main_ingredients.map((f) => foodName(f));
+    const list = foods.length > 1 ? t("{list} and {last}", { list: foods.slice(0, -1).join(", "), last: foods.at(-1) }) : foods[0];
+    return `${list.charAt(0).toUpperCase()}${list.slice(1)}.`;
+  };
   const demoIdeas = () => demoPicks(demoMeals.filter((m) => m.idea), craving, exclude)
     .map((m, i) => ({ ...m.idea, ...demoIdea(m), idea_id: String(i + 1), slug: m.slug }));
   const showDemo = () => { setPreview(null); setRun({ step: 2, demo: true, ideas: demoIdeas() }); };
@@ -1114,153 +1139,160 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
   const hasGearOn = (k) => (k === "blender" ? !gear.noBlender : gear[k]);
   const toggleGearCard = (k) => toggleGear(k === "blender" ? "noBlender" : k);
 
-  const plural = (n, word) => `${n} ${word}${n > 1 ? "s" : ""}`;
+  const plural = (n) => (n > 1 ? t("{n} servings", { n }) : t("{n} serving", { n }));
+  // The craving as the page shows it: in English the text sent to the model; in Spanish the same answers in Spanish
+  // (what goes to the model stays English: prompts are not translated)
+  const cravingShown = lang !== "es" ? craving : [
+    ...crave.protein.map((v) => plainLabel(quizLabel(QUIZ.protein, v))), ...crave.style.map((v) => plainLabel(quizLabel(QUIZ.style, v))),
+    ...crave.cuisine.map((v) => t("{cuisine} cuisine", { cuisine: plainLabel(quizLabel(QUIZ.cuisine, v)) })), craveText.trim(),
+    ...leftovers.filter((l) => useLeftovers.includes(l.key)).map((l) => t("use my leftover {food} ({grams})", { food: foodName(l.ingredient), grams: grams(l.left) }))]
+    .filter(Boolean).join(", ");
   const QUESTIONS = [
-    { title: "What are you craving?", icon: "fa-utensils",
-      hint: "Tap anything that sounds good. Mix as many as you like, or add your own words.",
-      summary: craving || "Not chosen yet",
-      check: () => (craving ? "" : "Tap at least one thing, or type a few words."),
+    { title: t("What are you craving?"), icon: "fa-utensils",
+      hint: t("Tap anything that sounds good. Mix as many as you like, or add your own words."),
+      summary: cravingShown || t("Not chosen yet"),
+      check: () => (craving ? "" : t("Tap at least one thing, or type a few words.")),
       body: (
         <>
-          {[["protein", "Protein"], ["style", "Kind of meal"], ["cuisine", "Flavour"]].map(([key, legend]) => (
+          {[["protein", t("Protein")], ["style", t("Kind of meal")], ["cuisine", t("Flavour")]].map(([key, legend]) => (
             <fieldset key={key} className="space-y-2.5">
               <legend className="text-xs font-bold uppercase tracking-wider text-forest/70 mb-2.5">{legend}</legend>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
                 {QUIZ[key].map(([v, label, icon]) => (
-                  <Choice key={v} checked={crave[key].includes(v)} onChange={() => setCrave({ ...crave, [key]: flip(crave[key], v) })} icon={icon} label={label} />
+                  <Choice key={v} checked={crave[key].includes(v)} onChange={() => setCrave({ ...crave, [key]: flip(crave[key], v) })} icon={icon} label={t(label)} />
                 ))}
               </div>
             </fieldset>
           ))}
           {leftovers.length > 0 && (
             <div id="craving-leftovers" className="bg-cream/50 border border-cream-dark rounded-2xl p-3 space-y-2">
-              <p className="text-xs text-forest/70"><span className="font-bold">Leftovers in your cart.</span> Tap one to cook with it.</p>
+              <p className="text-xs text-forest/70"><span className="font-bold">{t("Leftovers in your cart.")}</span> {t("Tap one to cook with it.")}</p>
               <div className="flex flex-wrap gap-2">
                 {leftovers.map((l) => (
                   <Chip key={l.key} on={useLeftovers.includes(l.key)} onClick={() => setUseLeftovers(flip(useLeftovers, l.key))}>
-                    <i className="fa-solid fa-plus text-[10px] mr-1"></i>{l.ingredient} {grams(l.left)}
+                    <i className="fa-solid fa-plus text-[10px] mr-1"></i>{foodName(l.ingredient)} {grams(l.left)}
                   </Chip>
                 ))}
               </div>
             </div>
           )}
           <div>
-            <label htmlFor="input-craving" className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Your own words (optional)</label>
-            <input type="text" id="input-craving" value={craveText} onChange={(e) => setCraveText(e.target.value)} placeholder="e.g. something with a crunchy topping" className="w-full bg-cream/50 border border-cream-dark rounded-2xl px-4 py-3 text-sm text-forest placeholder-forest/40 focus:outline-none focus:border-forest" />
+            <label htmlFor="input-craving" className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">{t("Your own words (optional)")}</label>
+            <input type="text" id="input-craving" value={craveText} onChange={(e) => setCraveText(e.target.value)} placeholder={t("e.g. something with a crunchy topping")} className="w-full bg-cream/50 border border-cream-dark rounded-2xl px-4 py-3 text-sm text-forest placeholder-forest/40 focus:outline-none focus:border-forest" />
           </div>
           <div className="bg-lime-soft rounded-2xl px-4 py-3 text-sm text-forest flex gap-2.5 items-start">
             <i className="fa-solid fa-comment mt-0.5"></i>
-            <span>{craving ? <>We will ask for: <span className="font-bold">{craving}</span></> : "Your craving shows here as you tap."}</span>
+            <span>{craving ? tx("We will ask for: {craving}", { craving: <span className="font-bold">{cravingShown}</span> }) : t("Your craving shows here as you tap.")}</span>
           </div>
         </>
       ) },
-    { title: "Anything you do NOT want?", icon: "fa-ban",
-      hint: "Tap the foods to leave out. Skip this if nothing bothers you.",
-      summary: [...avoid.map((v) => quizLabel(QUIZ.avoid, v)), ...tags].join(", ") || "Nothing",
+    { title: t("Anything you do NOT want?"), icon: "fa-ban",
+      hint: t("Tap the foods to leave out. Skip this if nothing bothers you."),
+      summary: [...avoid.map((v) => quizLabel(QUIZ.avoid, v)), ...tags].join(", ") || t("Nothing"),
       body: (
         <>
           <fieldset>
-            <legend className="sr-only">Foods to leave out</legend>
+            <legend className="sr-only">{t("Foods to leave out")}</legend>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
-              {QUIZ.avoid.map(([v, label]) => <Choice key={v} checked={avoid.includes(v)} onChange={() => setAvoid(flip(avoid, v))} label={label} />)}
+              {QUIZ.avoid.map(([v, label]) => <Choice key={v} checked={avoid.includes(v)} onChange={() => setAvoid(flip(avoid, v))} label={t(label)} />)}
             </div>
           </fieldset>
           <div>
-            <label htmlFor="unwanted-input" className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Something else</label>
+            <label htmlFor="unwanted-input" className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">{t("Something else")}</label>
             <div className="flex items-center gap-2 mb-3">
               <input type="text" id="unwanted-input" value={tagInput} onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); e.stopPropagation(); addTag(); } }}
-                placeholder="Type a food and press Add (e.g. olive oil)" className="flex-1 min-w-0 bg-cream/50 border border-cream-dark rounded-xl px-4 py-2.5 text-xs text-forest focus:outline-none focus:border-forest" />
-              <button type="button" onClick={addTag} className="bg-forest text-cream font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-forest-light">Add</button>
+                placeholder={t("Type a food and press Add (e.g. olive oil)")} className="flex-1 min-w-0 bg-cream/50 border border-cream-dark rounded-xl px-4 py-2.5 text-xs text-forest focus:outline-none focus:border-forest" />
+              <button type="button" onClick={addTag} className="bg-forest text-cream font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-forest-light">{t("Add")}</button>
             </div>
             <div id="unwanted-tags-container" className="flex flex-wrap gap-2">
               {tags.map((t, i) => (
                 <span key={`${t}-${i}`} className="tag-item inline-flex items-center gap-1.5 bg-cream-dark text-forest text-xs px-3 py-1 rounded-full font-medium">
                   {t}
-                  <button type="button" onClick={() => setTags(tags.filter((_, j) => j !== i))} aria-label={`Remove ${t}`} className="hover:text-red-600"><i className="fa-solid fa-xmark text-[10px]"></i></button>
+                  <button type="button" onClick={() => setTags(tags.filter((_, j) => j !== i))} aria-label={tr("Remove {item}", { item: t })} className="hover:text-red-600"><i className="fa-solid fa-xmark text-[10px]"></i></button>
                 </span>
               ))}
             </div>
           </div>
         </>
       ) },
-    { title: "How big should it be?", icon: "fa-dumbbell",
-      hint: "Per serving. Drag the bar, tap a preset, or type the exact number.",
-      summary: `${kcalTarget} kcal, ${proteinTarget} g protein`,
-      check: () => (proteinTarget * 4 > kcalTarget ? "Protein alone is more calories than the target. Lower protein or raise calories." : ""),
+    { title: t("How big should it be?"), icon: "fa-dumbbell",
+      hint: t("Per serving. Drag the bar, tap a preset, or type the exact number."),
+      summary: t("{kcal} kcal, {protein} g protein", { kcal: kcalTarget, protein: proteinTarget }),
+      check: () => (proteinTarget * 4 > kcalTarget ? t("Protein alone is more calories than the target. Lower protein or raise calories.") : ""),
       body: (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Dial id="input-calories" label="Calories" icon="fa-fire" unit="kcal" min={200} max={1200} step={10} value={kcalTarget} onChange={setKcalTarget}
-            presets={[350, 450, 550, 650]} note={fromDay ? "From what is left in My Day." : profileTargets.kcal ? `Your profile target: ${profileTargets.kcal} kcal.` : null} />
-          <Dial id="input-protein" label="Protein" icon="fa-dumbbell" unit="g" min={10} max={120} step={1} value={proteinTarget} onChange={setProteinTarget}
-            presets={[30, 40, 45, 55]} note={`About ${Math.round((proteinTarget * 4 * 100) / kcalTarget)}% of the calories come from protein.`} />
+          <Dial id="input-calories" label={t("Calories")} icon="fa-fire" unit="kcal" min={200} max={1200} step={10} value={kcalTarget} onChange={setKcalTarget}
+            presets={[350, 450, 550, 650]} note={fromDay ? t("From what is left in My Day.") : profileTargets.kcal ? t("Your profile target: {kcal} kcal.", { kcal: profileTargets.kcal }) : null} />
+          <Dial id="input-protein" label={t("Protein")} icon="fa-dumbbell" unit="g" min={10} max={120} step={1} value={proteinTarget} onChange={setProteinTarget}
+            presets={[30, 40, 45, 55]} note={t("About {pct}% of the calories come from protein.", { pct: Math.round((proteinTarget * 4 * 100) / kcalTarget) })} />
         </div>
       ) },
-    { title: "Any limits on carbs or fat?", icon: "fa-sliders",
-      hint: "Optional. Most meals need no limit here.",
-      summary: `${carbsMax === null ? "carbs no limit" : `carbs max ${carbsMax} g`}, ${fatMax === null ? "fat no limit" : `fat max ${fatMax} g`}`,
+    { title: t("Any limits on carbs or fat?"), icon: "fa-sliders",
+      hint: t("Optional. Most meals need no limit here."),
+      summary: `${carbsMax === null ? t("carbs no limit") : t("carbs max {n} g", { n: carbsMax })}, ${fatMax === null ? t("fat no limit") : t("fat max {n} g", { n: fatMax })}`,
       body: (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {[["input-carbs", "Max carbs", "fa-wheat-awn", carbsMax, setCarbsMax, 10, 150, 5, 50, [30, 50, 70]],
-            ["input-fat", "Max fat", "fa-droplet", fatMax, setFatMax, 5, 60, 1, 20, [15, 20, 25]]].map(([id, label, icon, value, set, min, max, step, start, presets]) => (
+          {[["input-carbs", t("Max carbs"), "fa-wheat-awn", carbsMax, setCarbsMax, 10, 150, 5, 50, [30, 50, 70]],
+            ["input-fat", t("Max fat"), "fa-droplet", fatMax, setFatMax, 5, 60, 1, 20, [15, 20, 25]]].map(([id, label, icon, value, set, min, max, step, start, presets]) => (
             <Dial key={id} id={id} label={label} icon={icon} unit="g" min={min} max={max} step={step} value={value} onChange={set} presets={presets}
-              note={value === null ? "No limit." : null}>
+              note={value === null ? t("No limit.") : null}>
               <div className="flex gap-1.5">
-                <Chip on={value === null} onClick={() => set(null)}>No limit</Chip>
-                <Chip on={value !== null} onClick={() => value === null && set(start)}>Set a max</Chip>
+                <Chip on={value === null} onClick={() => set(null)}>{t("No limit")}</Chip>
+                <Chip on={value !== null} onClick={() => value === null && set(start)}>{t("Set a max")}</Chip>
               </div>
             </Dial>
           ))}
         </div>
       ) },
-    { title: "How many servings, and what budget?", icon: "fa-cart-shopping",
-      hint: "Servings for the batch you cook at once.",
-      summary: `${plural(servings, "serving")}, ${money(budget)} total`,
+    { title: t("How many servings, and what budget?"), icon: "fa-cart-shopping",
+      hint: t("Servings for the batch you cook at once."),
+      summary: t("{servings}, {money} total", { servings: plural(servings), money: money(budget) }),
       body: (
         <>
           <fieldset>
-            <legend className="text-xs font-bold uppercase tracking-wider text-forest/70 mb-2.5">Servings</legend>
+            <legend className="text-xs font-bold uppercase tracking-wider text-forest/70 mb-2.5">{t("Servings")}</legend>
             <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
               {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
                 <Choice key={n} type="radio" name="servings" checked={servings === n} onChange={() => setServings(n)} label={n} tile />
               ))}
             </div>
           </fieldset>
-          <Dial id="input-budget" label="Total budget" icon="fa-wallet" unit={moneySymbol()} min={2} max={60} step={0.5} value={budget} onChange={setBudget} money
-            presets={[4, 5.5, 8, 12]} note={<span id="budget-per-serving"><span className="font-bold">{money(perServing)}</span> per serving for {plural(servings, "serving")}.</span>} />
+          <Dial id="input-budget" label={t("Total budget")} icon="fa-wallet" unit={moneySymbol()} min={2} max={60} step={0.5} value={budget} onChange={setBudget} money
+            presets={[4, 5.5, 8, 12]} note={<span id="budget-per-serving">{tx("{price} per serving for {servings}.", { price: <span className="font-bold">{money(perServing)}</span>, servings: plural(servings) })}</span>} />
         </>
       ) },
-    { title: "How much time to cook?", icon: "fa-clock",
-      hint: "Hands-on time for one batch.",
+    { title: t("How much time to cook?"), icon: "fa-clock",
+      hint: t("Hands-on time for one batch."),
       summary: quizLabel(QUIZ.time, time),
       body: (
         <fieldset>
-          <legend className="sr-only">Time limit</legend>
+          <legend className="sr-only">{t("Time limit")}</legend>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {QUIZ.time.map(([v, label, icon, sub]) => <Choice key={v} type="radio" name="time" checked={time === v} onChange={() => setTime(v)} icon={icon} label={label} sub={sub} tall />)}
+            {QUIZ.time.map(([v, label, icon, sub]) => <Choice key={v} type="radio" name="time" checked={time === v} onChange={() => setTime(v)} icon={icon} label={t(label)} sub={t(sub)} tall />)}
           </div>
         </fieldset>
       ) },
-    { title: "What can you cook with?", icon: "fa-kitchen-set",
-      hint: "Untick anything you do not have this week.",
-      summary: QUIZ.gear.filter(([k]) => hasGearOn(k)).map(([, label]) => label).join(", ") || "Nothing ticked",
+    { title: t("What can you cook with?"), icon: "fa-kitchen-set",
+      hint: t("Untick anything you do not have this week."),
+      summary: QUIZ.gear.filter(([k]) => hasGearOn(k)).map(([, label]) => t(label)).join(", ") || t("Nothing ticked"),
       body: (
         <fieldset>
-          <legend className="sr-only">Kitchen gear</legend>
+          <legend className="sr-only">{t("Kitchen gear")}</legend>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {QUIZ.gear.map(([k, label, icon]) => <Choice key={k} checked={hasGearOn(k)} onChange={() => toggleGearCard(k)} icon={icon} label={label} tall />)}
+            {QUIZ.gear.map(([k, label, icon]) => <Choice key={k} checked={hasGearOn(k)} onChange={() => toggleGearCard(k)} icon={icon} label={t(label)} tall />)}
           </div>
         </fieldset>
       ) },
-    { title: "Two last things", icon: "fa-list-check",
-      hint: "Both are on by default.",
-      summary: [reheat && "I can reheat at work", lowLeftovers && "Keep leftovers low"].filter(Boolean).join(", ") || "Neither",
+    { title: t("Two last things"), icon: "fa-list-check",
+      hint: t("Both are on by default."),
+      summary: [reheat && t("I can reheat at work"), lowLeftovers && t("Keep leftovers low")].filter(Boolean).join(", ") || t("Neither"),
       body: (
         <fieldset>
-          <legend className="sr-only">Extras</legend>
+          <legend className="sr-only">{t("Extras")}</legend>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Choice checked={reheat} onChange={() => setReheat(!reheat)} icon="fa-briefcase" label="I can reheat at work" sub="Meals that keep and reheat in a microwave" tall />
-            <Choice checked={lowLeftovers} onChange={() => setLowLeftovers(!lowLeftovers)} icon="fa-recycle" label="Keep leftovers low" sub="Stores sell fixed pack sizes, so we try to buy only what you will use" tall />
+            <Choice checked={reheat} onChange={() => setReheat(!reheat)} icon="fa-briefcase" label={t("I can reheat at work")} sub={t("Meals that keep and reheat in a microwave")} tall />
+            <Choice checked={lowLeftovers} onChange={() => setLowLeftovers(!lowLeftovers)} icon="fa-recycle" label={t("Keep leftovers low")} sub={t("Stores sell fixed pack sizes, so we try to buy only what you will use")} tall />
           </div>
         </fieldset>
       ) },
@@ -1287,7 +1319,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
   };
 
   const saveRequest = async () => {
-    if (!craving.trim()) return showToast("Tell us what you are craving first.");
+    if (!craving.trim()) return showToast(t("Tell us what you are craving first."));
     const { form, errors } = checkForm({
       craving, exclude, kcal_target: kcalTarget, protein_g_target: proteinTarget,
       carbs_g_max: carbsMax ?? "", fat_g_max: fatMax ?? "", budget_total_eur: budget, servings, time_limit_min: time,
@@ -1296,7 +1328,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
              gear.microwave && !gear.stove && !gear.oven && !gear.airFryer && "microwave_only"].filter(Boolean),
       reheat_at_work: reheat, keep_leftovers_low: lowLeftovers,
     });
-    if (errors.length) return showToast(`Not sent: ${errors.join(", ")}.`);
+    if (errors.length) return showToast(t("Not sent: {errors}.", { errors: errors.join(", ") }));
     if (demo) return showDemo();
     askIdeas(form);
   };
@@ -1305,7 +1337,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
     const llm = readLlm();
     const onTrial = llm.provider === TRIAL;
     if (onTrial && trialIdeasLeft() === 0) {
-      return setRun({ step: 2, form, error: "You have used the free rounds of ideas. Add your own AI key to keep making meals.", trialOver: true });
+      return setRun({ step: 2, form, error: t("You have used the free rounds of ideas. Add your own AI key to keep making meals."), trialOver: true });
     }
     setRun({ step: 2, loading: true, form });
     try {
@@ -1327,7 +1359,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
   // short progress line. If the engine fails, the written recipe stays in this run for "Try again".
   const [progress, setProgress] = useState(null);
   const notReady = (recipe, message) =>
-    `Your recipe "${recipe.title}" is written, but packs and macros are not ready: ${message} The recipe is kept, so you can try again.`;
+    t("Your recipe \"{title}\" is written, but packs and macros are not ready: {message} The recipe is kept, so you can try again.", { title: recipe.title, message });
   const finish = async (base, idea, given = null) => {
     let out;
     const onTrial = readLlm().provider === TRIAL;
@@ -1348,7 +1380,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
       const slug = mealSlug(recipe.title);
       const shown = toMeal(slug, doc, { kind: "local" }); // throws if the page could not show it
       if (!saveLocalMeal(slug, doc)) {
-        return setRun({ ...base, step: 3, loading: false, idea, recipe, error: "Not saved: this browser blocks storage." });
+        return setRun({ ...base, step: 3, loading: false, idea, recipe, error: t("Not saved: this browser blocks storage.") });
       }
       // A key that can make images (Gemini, OpenAI, OpenRouter) makes the photo right away (decided 2026-11-09);
       // other keys keep the manual photo card
@@ -1377,10 +1409,10 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
     if (revising) return;
     // On the free trial a change uses one round of ideas (review 2026-11-20)
     const onTrial = readLlm().provider === TRIAL;
-    if (onTrial && trialIdeasLeft() === 0) return showToast("Not changed: the free rounds are used. Add your own AI key to keep going.");
+    if (onTrial && trialIdeasLeft() === 0) return showToast(t("Not changed: the free rounds are used. Add your own AI key to keep going."));
     setPreview(null);
     setRevising(true);
-    showToast("Updating the idea...");
+    showToast(t("Updating the idea..."));
     try {
       const updated = await reviseIdea({ idea, changes, form: run.form, profile: readProfile(), llm: readLlm() });
       if (onTrial) noteTrialIdeas();
@@ -1388,7 +1420,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
       setChanges("");
       setPreview(updated);
     } catch (e) {
-      showToast(`Not changed: ${e.message}`);
+      showToast(t("Not changed: {message}", { message: e.message }));
     } finally {
       setRevising(false);
     }
@@ -1399,17 +1431,17 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
       <div className="bg-white rounded-3xl p-4 shadow-soft border border-cream-dark flex items-center justify-around max-w-3xl mx-auto">
         <div id="step-indicator-1" className={indicator(1)[0]}>
           <span className={indicator(1)[1]}>1</span>
-          <span>Your craving</span>
+          <span>{t("Your craving")}</span>
         </div>
         <div className="w-12 h-0.5 bg-cream-dark"></div>
         <div id="step-indicator-2" className={indicator(2)[0]}>
           <span className={indicator(2)[1]}>2</span>
-          <span>Pick an idea</span>
+          <span>{t("Pick an idea")}</span>
         </div>
         <div className="w-12 h-0.5 bg-cream-dark"></div>
         <div id="step-indicator-3" className={indicator(3)[0]}>
           <span className={indicator(3)[1]}>3</span>
-          <span>Your meal</span>
+          <span>{t("Your meal")}</span>
         </div>
       </div>
 
@@ -1418,27 +1450,25 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
             as not complete, the page goes to /start). The demo says what it is and leads to /start. */}
         {!demo && trial && trial.meals < TRIAL_MEALS && (
           <div id="trial-make-bar" className="bg-lime-soft rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
-            <span className="font-bold text-forest">Free meal {trial.meals + 1} of {TRIAL_MEALS}.</span> Made with
-            SmartBite&apos;s AI key, so no key is needed yet.{" "}
-            <Link href="/start" className="font-bold underline hover:text-lime-hover">Use my own key</Link>
+            <span className="font-bold text-forest">{t("Free meal {n} of {total}.", { n: trial.meals + 1, total: TRIAL_MEALS })}</span> {t("Made with SmartBite's AI key, so no key is needed yet.")}{" "}
+            <Link href="/start" className="font-bold underline hover:text-lime-hover">{t("Use my own key")}</Link>
           </div>
         )}
         {!demo && trial && trial.meals >= TRIAL_MEALS && (
           <div id="trial-done" className="bg-cream-card rounded-2xl p-6 border border-cream-dark text-sm text-forest/80 space-y-3">
-            <p><span className="font-bold text-forest">You have made your {TRIAL_MEALS} free meals.</span> Add your own AI key to keep
-              making meals. Your meals, cart and profile stay as they are.</p>
-            <Link href="/start" className="inline-block bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all">Use my API key</Link>
+            <p><span className="font-bold text-forest">{t("You have made your {n} free meals.", { n: TRIAL_MEALS })}</span> {t("Add your own AI key to keep making meals. Your meals, cart and profile stay as they are.")}</p>
+            <Link href="/start" className="inline-block bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all">{t("Use my API key")}</Link>
           </div>
         )}
         {demo && (
           <div id="demo-make-bar" className="bg-cream-card rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
-            <span className="font-bold text-forest">This is the demo.</span> Ideas come from the example meals, not from your craving.{" "}
-            <Link href="/start" className="font-bold underline hover:text-lime-hover">Make a real one?</Link>
+            <span className="font-bold text-forest">{t("This is the demo.")}</span> {t("Ideas come from the example meals, not from your craving.")}{" "}
+            <Link href="/start" className="font-bold underline hover:text-lime-hover">{t("Make a real one?")}</Link>
           </div>
         )}
         <div className={`space-y-6${(demo || complete) && !(trial && trial.meals >= TRIAL_MEALS) ? "" : " hidden"}`}>
           <div className="flex items-center justify-between gap-3 flex-wrap">
-            <span className="font-script text-2xl text-forest font-bold">{review ? "Last step" : `Question ${q + 1} of ${QUESTIONS.length}`}</span>
+            <span className="font-script text-2xl text-forest font-bold">{review ? t("Last step") : t("Question {n} of {total}", { n: q + 1, total: QUESTIONS.length })}</span>
             <div className="flex gap-1 flex-1 max-w-xs" aria-hidden="true">
               {[...QUESTIONS, null].map((_, k) => (
                 <span key={k} className={`h-1.5 flex-1 rounded-full transition-colors ${k < q ? "bg-lime" : k === q ? "bg-forest" : "bg-cream-dark"}`}></span>
@@ -1449,18 +1479,18 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
           <div key={q} className="quiz-enter space-y-6">
             <div>
               <h2 ref={quizTitle} tabIndex={-1} className="font-serif text-3xl font-bold text-forest focus:outline-none text-balance">
-                {review ? "Check your answers" : QUESTIONS[q].title}
+                {review ? t("Check your answers") : QUESTIONS[q].title}
               </h2>
-              <p className="text-sm text-forest/70 mt-1.5">{review ? "Change anything, then get your ideas." : QUESTIONS[q].hint}</p>
+              <p className="text-sm text-forest/70 mt-1.5">{review ? t("Change anything, then get your ideas.") : QUESTIONS[q].hint}</p>
             </div>
             {review ? (
               <dl className="border border-cream-dark rounded-2xl overflow-hidden">
                 {QUESTIONS.map((item, k) => (
                   <div key={item.title} className={`grid grid-cols-[1fr_auto] sm:grid-cols-[minmax(150px,30%)_1fr_auto] gap-x-4 gap-y-1 px-4 py-3.5 items-start${k ? " border-t border-cream-dark" : ""}`}>
-                    <dt className="text-xs font-bold text-forest/70 flex items-center gap-2"><i className={`fa-solid ${item.icon} w-4 text-center`}></i>{item.title.replace(/\?$/, "")}</dt>
+                    <dt className="text-xs font-bold text-forest/70 flex items-center gap-2"><i className={`fa-solid ${item.icon} w-4 text-center`}></i>{item.title.replace(/^¿|\?$/g, "")}</dt>
                     <dd className="text-sm font-semibold text-forest min-w-0 break-words col-span-2 row-start-2 sm:col-span-1 sm:row-start-auto">{item.summary}</dd>
                     <button type="button" onClick={() => goTo(k, true)} className="col-start-2 row-start-1 sm:col-start-auto sm:row-start-auto text-xs font-extrabold text-forest underline decoration-lime decoration-2 underline-offset-4 hover:text-lime-hover">
-                      Change<span className="sr-only"> {item.title}</span>
+                      {t("Change")}<span className="sr-only"> {item.title}</span>
                     </button>
                   </div>
                 ))}
@@ -1474,29 +1504,30 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
               Continue goes through the other questions. On phones the buttons stay at the bottom of the screen. */}
           {fast && (
             <p id="quiz-fast-note" className="text-xs text-forest/70">
-              <span className="font-bold text-forest">In a hurry?</span> Show me 4 ideas uses {kcalTarget} kcal, {proteinTarget} g protein, {plural(servings, "serving")}, {money(budget)} and {quizLabel(QUIZ.time, time).toLowerCase()}. Continue to change them.
+              <span className="font-bold text-forest">{t("In a hurry?")}</span> {t("Show me 4 ideas uses {kcal} kcal, {protein} g protein, {servings}, {money} and {time}. Continue to change them.",
+                { kcal: kcalTarget, protein: proteinTarget, servings: plural(servings), money: money(budget), time: quizLabel(QUIZ.time, time).toLowerCase() })}
             </p>
           )}
           <div className="flex items-center justify-between gap-3 pt-5 border-t border-cream-dark max-sm:sticky max-sm:bottom-0 max-sm:z-10 max-sm:bg-white max-sm:pb-4 max-sm:-mx-2 max-sm:px-2">
             {!fast && (
               <button type="button" onClick={() => goTo(q - 1)} className={`flex items-center gap-2 text-sm font-bold text-forest px-2 py-3 hover:text-lime-hover${q === 0 ? " invisible" : ""}`}>
-                <i className="fa-solid fa-arrow-left text-xs"></i> Back
+                <i className="fa-solid fa-arrow-left text-xs"></i> {t("Back")}
               </button>
             )}
-            {!fast && <span className="hidden sm:inline text-[11px] text-forest/70">Press <kbd className="font-sans font-bold bg-cream-card border border-cream-dark rounded-md px-1.5 py-px">Enter</kbd> to continue</span>}
+            {!fast && <span className="hidden sm:inline text-[11px] text-forest/70">{tx("Press {key} to continue", { key: <kbd className="font-sans font-bold bg-cream-card border border-cream-dark rounded-md px-1.5 py-px">Enter</kbd> })}</span>}
             {fast ? (
               <>
                 <button type="button" onClick={next} className="flex-none sm:ml-auto bg-transparent border-2 border-forest hover:bg-forest hover:text-cream text-forest font-bold py-3 px-4 sm:px-6 rounded-2xl text-sm sm:text-base transition-all flex items-center justify-center">
-                  Continue
+                  {t("Continue")}
                 </button>
                 <button type="button" id="quiz-fast" onClick={quick} className="flex-1 sm:flex-none min-w-0 bg-lime hover:bg-lime-hover text-forest font-bold py-3.5 px-3 sm:px-7 rounded-2xl text-sm sm:text-base transition-all shadow-glow flex items-center justify-center gap-2 whitespace-nowrap">
-                  <span>Show me 4 ideas</span>
+                  <span>{t("Show me 4 ideas")}</span>
                   <i className="fa-solid fa-arrow-right text-sm"></i>
                 </button>
               </>
             ) : (
               <button type="button" onClick={next} className="flex-1 sm:flex-none bg-lime hover:bg-lime-hover text-forest font-bold py-3.5 px-7 rounded-2xl text-base transition-all shadow-glow flex items-center justify-center gap-2">
-                <span>{review ? "Show me 4 ideas" : toSummary ? "Back to summary" : "Continue"}</span>
+                <span>{review ? t("Show me 4 ideas") : toSummary ? t("Back to summary") : t("Continue")}</span>
                 <i className="fa-solid fa-arrow-right text-sm"></i>
               </button>
             )}
@@ -1510,18 +1541,18 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
           <div id="step-2-ideas" className="space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <span className="font-script text-2xl text-forest font-bold">Step 2 of 3</span>
-                <h2 className="font-serif text-3xl font-bold text-forest">Pick One Meal Idea</h2>
+                <span className="font-script text-2xl text-forest font-bold">{t("Step 2 of 3")}</span>
+                <h2 className="font-serif text-3xl font-bold text-forest">{t("Pick One Meal Idea")}</h2>
               </div>
               <button onClick={startOver} className="text-xs font-bold text-forest/70 hover:text-forest flex items-center gap-1.5">
                 <i className="fa-solid fa-arrow-left text-[10px]"></i>
-                <span>Back to edit</span>
+                <span>{t("Back to edit")}</span>
               </button>
             </div>
             {run.demo && (
               <div id="demo-note" className="bg-cream-card rounded-2xl p-4 border border-cream-dark text-xs text-forest/80">
-                <span className="font-bold text-forest">Demo mode.</span> These are the pre-built example meals closest to your craving, not made from it.
-                To make your own, <Link href="/start" className="font-bold underline hover:text-lime-hover">use your API key</Link>.
+                <span className="font-bold text-forest">{t("Demo mode.")}</span> {t("These are the pre-built example meals closest to your craving, not made from it.")}{" "}
+                {tx("To make your own, {link}.", { link: <Link href="/start" className="font-bold underline hover:text-lime-hover">{t("use your API key")}</Link> })}
               </div>
             )}
             <div id="ideas-card-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1531,11 +1562,11 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
                   <div>
                     <AiLabel className="mb-2" />
                     <h3 className="font-serif font-bold text-lg text-forest leading-snug">{idea.name}</h3>
-                    <p className="text-xs text-forest/70 mt-1 line-clamp-2">{idea.one_line}</p>
+                    <p className="text-xs text-forest/70 mt-1 line-clamp-2">{ideaLine(idea)}</p>
                   </div>
                   <div className="mt-4 pt-3 border-t border-cream-dark flex items-center justify-between text-xs font-bold text-forest">
                     <span>~{Math.round(idea.rough_macros?.kcal)} kcal</span>
-                    <span className="text-lime-hover bg-lime-soft px-2.5 py-0.5 rounded-md">~{Math.round(idea.rough_macros?.protein_g)}g Protein</span>
+                    <span className="text-lime-hover bg-lime-soft px-2.5 py-0.5 rounded-md">{t("~{n}g Protein", { n: Math.round(idea.rough_macros?.protein_g) })}</span>
                   </div>
                 </div>
               ))}
@@ -1547,53 +1578,53 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
                   className="bg-white rounded-3xl p-8 shadow-card border border-cream-dark max-w-lg w-full space-y-6">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-script text-2xl text-forest font-bold">Idea {preview.idea_id} of {run.ideas.length}</span>
+                      <span className="font-script text-2xl text-forest font-bold">{t("Idea {n} of {total}", { n: preview.idea_id, total: run.ideas.length })}</span>
                       <AiLabel />
                     </div>
                     <h2 id="idea-preview-title" className="font-serif text-3xl font-bold text-forest leading-snug">{preview.name}</h2>
                   </div>
-                  <p className="text-sm text-forest/80">{preview.one_line}</p>
+                  <p className="text-sm text-forest/80">{ideaLine(preview)}</p>
                   {preview.main_ingredients?.length > 0 && (
                     <div>
-                      <span className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Main ingredients</span>
+                      <span className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">{t("Main ingredients")}</span>
                       <div className="flex flex-wrap gap-2">
                         {preview.main_ingredients.map((f) => (
-                          <span key={f} className="inline-flex items-center bg-cream-dark text-forest text-xs px-3 py-1 rounded-full font-medium">{f}</span>
+                          <span key={f} className="inline-flex items-center bg-cream-dark text-forest text-xs px-3 py-1 rounded-full font-medium">{foodName(f)}</span>
                         ))}
                       </div>
                     </div>
                   )}
-                  {preview.changes && <p className="text-xs text-forest/70"><span className="font-bold text-forest">Your changes:</span> {preview.changes}</p>}
+                  {preview.changes && <p className="text-xs text-forest/70"><span className="font-bold text-forest">{t("Your changes:")}</span> {preview.changes}</p>}
                   <div className="grid grid-cols-4 gap-3 text-center">
                     {[["kcal", preview.rough_macros?.kcal, ""], ["Protein", preview.rough_macros?.protein_g, "g"],
                       ["Carbs", preview.rough_macros?.carbs_g, "g"], ["Fat", preview.rough_macros?.fat_g, "g"]].map(([label, v, unit]) => (
                       <div key={label} className="bg-cream/50 border border-cream-dark rounded-2xl p-3">
-                        <span className="block text-[11px] font-bold uppercase tracking-wider text-forest/70">{label}</span>
+                        <span className="block text-[11px] font-bold uppercase tracking-wider text-forest/70">{t(label)}</span>
                         <span className="block text-sm font-bold text-forest mt-0.5">~{Math.round(v)}{unit}</span>
                       </div>
                     ))}
                   </div>
-                  <p className="text-[11px] text-forest/70">Quick estimate per serving. The real macros come with the recipe.</p>
+                  <p className="text-[11px] text-forest/70">{t("Quick estimate per serving. The real macros come with the recipe.")}</p>
                   <div>
-                    <label htmlFor="idea-changes" className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">Want to change something?</label>
+                    <label htmlFor="idea-changes" className="block text-xs font-bold uppercase tracking-wider text-forest/70 mb-2">{t("Want to change something?")}</label>
                     <div className="flex items-start gap-2">
                       <textarea id="idea-changes" rows={2} maxLength={300} value={changes} onChange={(e) => setChanges(e.target.value)}
-                        disabled={run.demo} placeholder={run.demo ? "Needs your API key (Profile)" : "e.g. no potatoes, add cucumber"}
+                        disabled={run.demo} placeholder={run.demo ? t("Needs your API key (Profile)") : t("e.g. no potatoes, add cucumber")}
                         className="flex-1 bg-cream/50 border border-cream-dark rounded-xl px-4 py-2.5 text-xs text-forest placeholder-forest/40 focus:outline-none focus:border-forest disabled:cursor-not-allowed"></textarea>
                       <button disabled={run.demo || revising || !changes.trim()} onClick={() => revise(preview)}
                         className="bg-forest text-cream font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-forest-light disabled:opacity-40 disabled:cursor-not-allowed">
-                        Update idea
+                        {t("Update idea")}
                       </button>
                     </div>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button onClick={() => pick(preview)}
                       className="flex-1 bg-lime hover:bg-lime-hover text-forest font-bold py-3 rounded-2xl text-sm transition-all shadow-glow">
-                      Select meal
+                      {t("Select meal")}
                     </button>
                     <button onClick={() => setPreview(null)} autoFocus
                       className="flex-1 bg-cream-card hover:bg-cream-dark text-forest font-bold py-3 rounded-2xl text-sm transition-colors border border-cream-dark">
-                      Close
+                      {t("Close")}
                     </button>
                   </div>
                 </div>
@@ -1604,7 +1635,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
           <div id="step-2-loading" className="space-y-6 text-center py-12">
             <div role={run.error ? "alert" : "status"} className={`inline-flex items-center gap-3 bg-forest text-lime px-5 py-2.5 text-xs font-bold shadow-md ${run.error ? "rounded-2xl text-left max-w-2xl" : "rounded-full"}`}>
               <i className={`fa-solid ${run.error ? "fa-circle-exclamation" : "fa-circle-notch fa-spin"}`}></i>
-              <span>{run.error || "Creating your ideas... this takes a few seconds"}</span>
+              <span>{run.error || t("Creating your ideas... this takes a few seconds")}</span>
             </div>
             <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6${run.error ? " hidden" : ""}`}>
               {[0, 1, 2, 3].map((n) => (
@@ -1618,17 +1649,17 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
               <button onClick={startOver} className="text-xs font-bold text-forest/70 hover:text-forest inline-flex items-center gap-1.5">
                 <i className="fa-solid fa-arrow-left text-[10px]"></i>
-                <span>Back to edit</span>
+                <span>{t("Back to edit")}</span>
               </button>
               {run.error && run.keyRejected && (
-                <Link id="ideas-fix-key" href="/profile#ai-provider" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all">Check your key in Profile</Link>
+                <Link id="ideas-fix-key" href="/profile#ai-provider" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all">{t("Check your key in Profile")}</Link>
               )}
               {run.error && run.trialOver && (
-                <Link id="ideas-own-key" href="/start" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all">Use my API key</Link>
+                <Link id="ideas-own-key" href="/start" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all">{t("Use my API key")}</Link>
               )}
               {run.error && !run.keyRejected && !run.trialOver && (
                 <button id="ideas-retry" onClick={() => askIdeas(run.form)} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-full transition-all inline-flex items-center gap-2">
-                  <i className="fa-solid fa-rotate-right text-[10px]"></i><span>Try again</span>
+                  <i className="fa-solid fa-rotate-right text-[10px]"></i><span>{t("Try again")}</span>
                 </button>
               )}
             </div>
@@ -1640,7 +1671,7 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
       <div id="make-step-3" className={`space-y-6 max-w-5xl mx-auto text-center py-12${step !== 3 ? " hidden" : ""}`}>
         <div className="inline-flex items-center gap-3 bg-forest text-lime px-5 py-2.5 rounded-full text-xs font-bold shadow-md">
           <i className={`fa-solid ${run.error ? "fa-circle-exclamation" : "fa-circle-notch fa-spin"}`}></i>
-          <span>{run.error || progressText(progress) || "Cooking your meal... recipe, packs and macros take a moment"}</span>
+          <span>{run.error || progressText(progress) || t("Cooking your meal... recipe, packs and macros take a moment")}</span>
         </div>
         <div className={`bg-white rounded-3xl p-6 border border-cream-dark space-y-3 animate-skeleton max-w-3xl mx-auto${run.error ? " hidden" : ""}`}>
           <div className="h-40 bg-cream-dark rounded-2xl"></div>
@@ -1651,16 +1682,16 @@ function MakeMealStep1({ hidden, showToast, leftovers, demoMeals, demo, complete
           <div className="flex items-center justify-center gap-6">
             <button onClick={() => setRun({ ...run, step: 2, error: null, recipe: null, idea: null })} className="text-xs font-bold text-forest/70 hover:text-forest inline-flex items-center gap-1.5">
               <i className="fa-solid fa-arrow-left text-[10px]"></i>
-              <span>Back to the ideas</span>
+              <span>{t("Back to the ideas")}</span>
             </button>
             {run.recipe && (
-              <button onClick={retryEngine} className="text-xs font-bold text-forest hover:text-lime-hover">Try again</button>
+              <button onClick={retryEngine} className="text-xs font-bold text-forest hover:text-lime-hover">{t("Try again")}</button>
             )}
             {run.keyRejected && (
-              <Link href="/profile#ai-provider" className="text-xs font-bold text-forest underline hover:text-lime-hover">Check your key in Profile</Link>
+              <Link href="/profile#ai-provider" className="text-xs font-bold text-forest underline hover:text-lime-hover">{t("Check your key in Profile")}</Link>
             )}
             {run.trialOver && (
-              <Link href="/start" className="text-xs font-bold text-forest underline hover:text-lime-hover">Use my API key</Link>
+              <Link href="/start" className="text-xs font-bold text-forest underline hover:text-lime-hover">{t("Use my API key")}</Link>
             )}
           </div>
         )}

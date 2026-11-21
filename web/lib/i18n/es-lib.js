@@ -1,0 +1,106 @@
+// Spanish texts, keyed by the English text (lib/i18n.js). See lib/i18n/es.js for which files each dictionary covers.
+export const ES_LIB = {
+  // lib/llm.js: messages when a model call fails (the model's own text and the reply checks stay in English)
+  "Pick a provider in your Profile first.": "Primero elige un proveedor en tu Perfil.",
+  "Add your Anthropic API key in your Profile first.": "Primero añade tu clave de API de Anthropic en tu Perfil.",
+  "Add the provider's base URL in your Profile first.": "Primero añade la URL base del proveedor en tu Perfil.",
+  "Add the model name in your Profile first.": "Primero añade el nombre del modelo en tu Perfil.",
+  "The AI provider did not answer within 5 minutes, so SmartBite stopped waiting. Try again, or pick a faster model in your Profile (for Gemini: gemini-3.6-flash).":
+    "El proveedor de IA no respondió en 5 minutos y SmartBite dejó de esperar. Inténtalo de nuevo o elige un modelo más rápido en tu Perfil (para Gemini: gemini-3.6-flash).",
+  "Could not reach {where}. Check your connection and try again.": "No se pudo conectar con {where}. Revisa tu conexión e inténtalo de nuevo.",
+  "Could not reach {where}. Check the base URL, your connection, and that this provider allows calls from a browser (CORS).":
+    "No se pudo conectar con {where}. Revisa la URL base, tu conexión y que este proveedor acepte llamadas desde un navegador (CORS).",
+  "The AI provider is busy right now (503). This is on their side, not yours: wait a minute and try again.":
+    "El proveedor de IA está saturado ahora mismo (503). Es un problema suyo, no tuyo: espera un minuto e inténtalo de nuevo.",
+  "The provider did not accept the key ({status}). Check it in your Profile.": "El proveedor no aceptó la clave ({status}). Revísala en tu Perfil.",
+  "The provider says too many requests (429). Free keys allow only a few calls per minute and per day: wait a minute, or try again tomorrow.":
+    "El proveedor dice que hay demasiadas peticiones (429). Las claves gratis permiten pocas llamadas por minuto y por día: espera un minuto o inténtalo mañana.",
+  "The provider answered with an error ({status}).": "El proveedor respondió con un error ({status}).",
+  "The provider sent a reply that is not JSON.": "El proveedor envió una respuesta que no es JSON.",
+  "The model declined this request. Try a different craving or change.": "El modelo rechazó esta petición. Prueba con otro antojo u otro cambio.",
+  "The reply was cut off before it ended. Try again.": "La respuesta se cortó antes de terminar. Inténtalo de nuevo.",
+  "Google charges about $0.03 per photo on paid keys; free keys cannot make images.":
+    "Google cobra unos $0.03 por foto con claves de pago; las claves gratis no pueden hacer imágenes.",
+  "OpenAI charges about $0.005 per photo (low quality). OpenAI may ask you to verify your organization first.":
+    "OpenAI cobra unos $0.005 por foto (calidad baja). Puede que OpenAI te pida verificar tu organización antes.",
+  "Paid from your OpenRouter credit, under $0.01 per photo (low quality).": "Se paga con tu saldo de OpenRouter, menos de $0.01 por foto (calidad baja).",
+  "Your Gemini key is on the free tier, and Google does not allow image models on free keys. Turn on billing for the key in Google AI Studio, or make the photo by hand below.":
+    "Tu clave de Gemini es del plan gratis y Google no permite modelos de imagen con claves gratis. Activa la facturación de la clave en Google AI Studio o haz la foto a mano más abajo.",
+  "{who} sent no image ({why}). Try again, or make the photo by hand.": "{who} no envió ninguna imagen ({why}). Inténtalo de nuevo o haz la foto a mano.",
+  "{who} sent no image. Try again, or make the photo by hand.": "{who} no envió ninguna imagen. Inténtalo de nuevo o haz la foto a mano.",
+  "Photos are made only with a Gemini, OpenAI or OpenRouter key.": "Las fotos solo se hacen con una clave de Gemini, OpenAI u OpenRouter.",
+  "This meal has no photo prompt.": "Esta comida no tiene instrucciones para la foto.",
+  "Could not reach SmartBite. Check your connection and try again.": "No se pudo conectar con SmartBite. Revisa tu conexión e inténtalo de nuevo.",
+  "SmartBite answered with an error ({status}). Try again.": "SmartBite respondió con un error ({status}). Inténtalo de nuevo.",
+  "The {step} reply was not valid. Try again. {errors}": "La respuesta ({step}) no era válida. Inténtalo de nuevo. {errors}",
+  "The {step} reply was not valid twice. Try again. Last problems: {errors}": "La respuesta ({step}) no fue válida dos veces. Inténtalo de nuevo. Últimos problemas: {errors}",
+  "ideas": "ideas",
+  "changed idea": "idea cambiada",
+  "recipe": "receta",
+  "Write what you want to change first.": "Primero escribe lo que quieres cambiar.",
+  "Reading a pasted recipe needs your own AI key. Add it in your Profile.": "Para leer una receta pegada necesitas tu propia clave de IA. Añádela en tu Perfil.",
+  "Paste a recipe first.": "Primero pega una receta.",
+  "That is {count} characters. Paste only the recipe (up to {max}): the ingredients and the steps.":
+    "Son {count} caracteres. Pega solo la receta (hasta {max}): los ingredientes y los pasos.",
+  // lib/engine.js
+  "Could not reach the meal engine that computes packs and macros.": "No se pudo conectar con el motor que calcula los paquetes y los macros.",
+  "The meal engine that computes packs and macros is not running on this site yet.": "El motor que calcula los paquetes y los macros aún no funciona en este sitio.",
+  "The meal engine answered with an error ({status}).": "El motor respondió con un error ({status}).",
+  "The meal engine sent a reply that is not a finished meal.": "El motor envió una respuesta que no es una comida terminada.",
+  // lib/day.js: My Day slots, macros and the "Add your own" form
+  "Breakfast": "Desayuno",
+  "Lunch": "Comida",
+  "Snack": "Snack",
+  "Snacks": "Snacks",
+  "Dinner": "Cena",
+  "Calories": "Calorías",
+  "Protein": "Proteína",
+  "Carbs": "Hidratos",
+  "Fat": "Grasa",
+  "Give the food a name.": "Ponle un nombre al alimento.",
+  "The name is too long ({max} characters at most).": "El nombre es demasiado largo ({max} caracteres como máximo).",
+  "Type the calories.": "Escribe las calorías.",
+  "Calories must be a number from 0 to {max}.": "Las calorías deben ser un número de 0 a {max}.",
+  "{macro} must be a number of grams from 0 to {max}.": "{macro}: escribe un número de gramos de 0 a {max}.",
+  // lib/providers.js: labels in the Profile's selects
+  "Claude Sonnet 5.5 (default)": "Claude Sonnet 5.5 (estándar)",
+  "Claude Haiku 5.5 (faster, lower cost)": "Claude Haiku 5.5 (más rápido y barato)",
+  "Experimental: tested with three Gemini models.": "Experimental: probado con tres modelos de Gemini.",
+  "Ollama (on this computer)": "Ollama (en este ordenador)",
+  "Other OpenAI-compatible endpoint": "Otro endpoint compatible con OpenAI",
+  "Allows calls from the browser (checked 2026-10-19).": "Acepta llamadas desde el navegador (comprobado el 2026-10-19).",
+  "Allows calls from the browser (checked 2026-10-19). Uses Google's OpenAI-compatible endpoint, which is in beta.":
+    "Acepta llamadas desde el navegador (comprobado el 2026-10-19). Usa el endpoint de Google compatible con OpenAI, que está en beta.",
+  "Works when SmartBite itself runs on this computer (localhost). Ollama blocks browser calls from other sites unless you start it with OLLAMA_ORIGINS set to this site's address.":
+    "Funciona cuando SmartBite se ejecuta en este ordenador (localhost). Ollama bloquea las llamadas de otros sitios salvo que lo inicies con OLLAMA_ORIGINS con la dirección de este sitio.",
+  "Works only if that endpoint allows calls from a browser (CORS). The hosted site reaches only the endpoints above and your own computer (localhost); for any other, run SmartBite on your computer.":
+    "Solo funciona si ese endpoint acepta llamadas desde un navegador (CORS). El sitio publicado solo llega a los endpoints de arriba y a tu propio ordenador (localhost); para cualquier otro, ejecuta SmartBite en tu ordenador.",
+  // Kitchen Profile labels and help (prompts/kitchen-profile.default.json, shown on the Profile page). The values are
+  // prompt text and stay as they are.
+  "About you": "Sobre ti",
+  "Who you cook for": "Para quién cocinas",
+  "Targets": "Objetivos",
+  "Calories per meal": "Calorías por comida",
+  "Protein per meal": "Proteína por comida",
+  "Calories per day": "Calorías al día",
+  "Protein per day": "Proteína al día",
+  "Carbs per day, at most": "Hidratos al día, como máximo",
+  "Fat per day, at most": "Grasa al día, como máximo",
+  "For My Day only; not sent to the AI.": "Solo para Mi día; no se envía a la IA.",
+  "Budget": "Presupuesto",
+  "Kind of ingredients": "Tipo de ingredientes",
+  "Packs": "Paquetes",
+  "Kitchen": "Cocina",
+  "Fridge": "Nevera",
+  "Freezer": "Congelador",
+  "Gear": "Utensilios",
+  "Reheating": "Recalentar",
+  "Prep time": "Tiempo de preparación",
+  "Style": "Estilo",
+  "Prep style": "Forma de preparar",
+  "Dressings": "Aliños",
+  "Whole foods": "Comida poco procesada",
+  "Proteins you like": "Proteínas que te gustan",
+  "Optional, e.g. chicken, canned tuna, eggs, lentils.": "Opcional, p. ej. pollo, atún en lata, huevos, lentejas.",
+  "Writing": "Forma de escribir",
+};

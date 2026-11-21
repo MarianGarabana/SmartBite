@@ -3,6 +3,8 @@
 // docs/contracts/evaluate.schema.json. products (the user's saved products: pack, price, label) is sent only when
 // there is at least one, and country ("ES": estimated prices for the other lines) only when given, so a request
 // without them is the same as before. The API key is never part of it.
+import { t } from "./i18n.js";
+
 export const EVALUATE_URL = "/api/evaluate";
 
 export class EngineError extends Error {
@@ -24,7 +26,7 @@ export async function evaluateMeal({ form, profile, picked_idea, recipe, product
         ...(country ? { country } : {}), ...(country && region ? { region } : {}) }),
     });
   } catch {
-    throw new EngineError("Could not reach the meal engine that computes packs and macros.");
+    throw new EngineError(t("Could not reach the meal engine that computes packs and macros."));
   }
   let data = null;
   try {
@@ -34,11 +36,11 @@ export async function evaluateMeal({ form, profile, picked_idea, recipe, product
     const detail = typeof data?.detail === "string" ? ` ${data.detail}` : typeof data?.error === "string" ? ` ${data.error}`
       : typeof data?.errors?.[0] === "string" ? ` ${data.errors[0]}` : "";
     throw new EngineError(res.status === 404
-      ? "The meal engine that computes packs and macros is not running on this site yet."
-      : `The meal engine answered with an error (${res.status}).${detail}`);
+      ? t("The meal engine that computes packs and macros is not running on this site yet.")
+      : t("The meal engine answered with an error ({status}).", { status: res.status }) + detail);
   }
   const meal = isMeal(data) ? data : isMeal(data?.meal) ? data.meal : null;
-  if (!meal) throw new EngineError("The meal engine sent a reply that is not a finished meal.");
+  if (!meal) throw new EngineError(t("The meal engine sent a reply that is not a finished meal."));
   return meal;
 }
 

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MIN_SERVINGS, SAMPLE_TARGETS, SLOTS, STEP, addExtra, addRecipe, dailyTargets, emptyDay, hasTargets, mealForWhatsLeft,
   microsToday, pickerList, readExtra, removeItem, resolveDay, sampleDay, stepServings, targetStatus } from "../lib/day";
+import { foodName, t, tx, useLang } from "../lib/i18n";
 import { recipeMeals } from "../lib/meal";
 import { clearDay, onStoreChange, readDay, readProfile, writeDay } from "../lib/store";
 import DayFoods from "./DayFoods";
@@ -14,9 +15,18 @@ import DayFoods from "./DayFoods";
 const ICONS = { breakfast: "fa-mug-saucer", lunch: "fa-bowl-food", snack: "fa-apple-whole", dinner: "fa-utensils" };
 const MACROS = [["kcal", "Calories", "kcal"], ["protein_g", "Protein", "g"], ["carbs_g", "Carbs", "g"], ["fat_g", "Fat", "g"]];
 const r0 = (v) => Math.round(v);
-const servingsText = (s) => `${s} ${s === 1 ? "serving" : "servings"}`;
+const servingsText = (s) => (s === 1 ? t("{n} serving", { n: s }) : t("{n} servings", { n: s }));
+// The status line under a target bar, in the page language: same text as lib/day.js targetStatus in English
+const statusText = (s, unit) => {
+  const amount = `${Math.abs(s.left)} ${unit}`;
+  if (s.over) return t("{amount} over", { amount });
+  return s.kind === "goal" ? t("{amount} left", { amount }) : t("{amount} under", { amount });
+};
+// Foods typed by hand: a known food shows its name in the page language (the demo's banana); anything else as typed
+const rowName = (row) => (row.kind === "extra" ? foodName(row.name) : row.name);
 
 export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, showToast }) {
+  useLang();
   const recipes = useMemo(() => recipeMeals(meals, demo), [meals, demo]);
   // Demo: the sample day lives in page state only. Real app: null until this browser's storage is read.
   const [day, setDay] = useState(() => (demo ? sampleDay(recipes) : null));
@@ -32,7 +42,7 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
   }, [demo]);
   const update = (next) => {
     setDay(next);
-    if (!demo && !writeDay(next)) showToast("Not saved: this browser blocks storage. The day is kept until you reload.");
+    if (!demo && !writeDay(next)) showToast(t("Not saved: this browser blocks storage. The day is kept until you reload."));
   };
 
   // A recipe is shown only once the meals are read, so a saved item never flashes as missing
@@ -58,12 +68,12 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
   }, [picker]);
   const slotOf = (id) => SLOTS.find((s) => s.id === id);
   const added = (next, name) => {
-    if (next === day) showToast(`${slotOf(picker).label} is full. Remove something first.`);
-    else { update(next); showToast(`Added "${name}" to ${slotOf(picker).label}.`); }
+    if (next === day) showToast(t("{slot} is full. Remove something first.", { slot: t(slotOf(picker).label) }));
+    else { update(next); showToast(t("Added \"{name}\" to {slot}.", { name, slot: t(slotOf(picker).label) })); }
     closePicker();
   };
   const pickRecipe = (meal) => added(addRecipe(day, picker, meal.slug, 1), meal.name);
-  const pickExtra = (extra) => added(addExtra(day, picker, extra), extra.name);
+  const pickExtra = (extra) => added(addExtra(day, picker, extra), foodName(extra.name));
 
   const [confirmClear, setConfirmClear] = useState(false);
   useEffect(() => {
@@ -76,26 +86,26 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
     setConfirmClear(false);
     if (!demo) clearDay();
     setDay(emptyDay());
-    showToast("Day cleared.");
+    showToast(t("Day cleared."));
   };
 
   const makeMeal = () => {
     onMakeMeal(whatsLeft);
     showToast(whatsLeft.clamped
-      ? `What's left is outside the Make Your Meal range, so it starts at ${whatsLeft.kcal_target} kcal and ${whatsLeft.protein_g_target} g protein.`
-      : `Make Your Meal starts at ${whatsLeft.kcal_target} kcal and ${whatsLeft.protein_g_target} g protein.`);
+      ? t("What's left is outside the Make Your Meal range, so it starts at {kcal} kcal and {protein} g protein.", { kcal: whatsLeft.kcal_target, protein: whatsLeft.protein_g_target })
+      : t("Make Your Meal starts at {kcal} kcal and {protein} g protein.", { kcal: whatsLeft.kcal_target, protein: whatsLeft.protein_g_target }));
   };
 
   return (
     <section id="tab-my-day" className={`tab-page max-w-[1360px] mx-auto px-4 sm:px-8${hidden ? " hidden" : ""}`}>
       <div className="space-y-8">
         <div>
-          <span className="font-script text-3xl text-forest font-bold">{demo ? "Sample day" : "Plan your day"}</span>
-          <h1 className="font-serif text-4xl font-bold text-forest">My Day</h1>
+          <span className="font-script text-3xl text-forest font-bold">{demo ? t("Sample day") : t("Plan your day")}</span>
+          <h1 className="font-serif text-4xl font-bold text-forest">{t("My Day")}</h1>
           <p className="text-xs text-forest/70 mt-2 max-w-2xl">
             {demo
-              ? "A sample day made from demo meals, with sample targets. Change anything you like; a reload brings the sample back."
-              : "Add what you eat today and see what is left of your daily targets. The day stays in this browser until you clear it."}
+              ? t("A sample day made from demo meals, with sample targets. Change anything you like; a reload brings the sample back.")
+              : t("Add what you eat today and see what is left of your daily targets. The day stays in this browser until you clear it.")}
           </p>
         </div>
 
@@ -103,14 +113,14 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
         <div id="day-targets" className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h2 className="font-serif font-bold text-xl text-forest">Today so far</h2>
-              <p className="text-xs text-forest/70">{demo ? "Against sample targets for the demo." : targeted ? "Against your daily targets from your Profile." : "Totals for everything in your day."}</p>
+              <h2 className="font-serif font-bold text-xl text-forest">{t("Today so far")}</h2>
+              <p className="text-xs text-forest/70">{demo ? t("Against sample targets for the demo.") : targeted ? t("Against your daily targets from your Profile.") : t("Totals for everything in your day.")}</p>
             </div>
             {whatsLeft && (
               <button id="day-make-meal" type="button" onClick={makeMeal}
                 className="bg-forest hover:bg-forest-light text-lime font-bold text-xs px-5 py-2.5 rounded-full transition-all inline-flex items-center gap-2">
                 <i className="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
-                <span>Make a meal for what&apos;s left</span>
+                <span>{t("Make a meal for what's left")}</span>
               </button>
             )}
           </div>
@@ -121,7 +131,7 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
               const warn = s && s.kind === "limit" && s.over;
               return (
                 <div key={key} id={`day-total-${key}`} className="space-y-2 min-w-0">
-                  <span className="text-[10px] uppercase font-bold text-forest/70 block">{label}{s ? (s.kind === "limit" ? ", at most" : ", goal") : ""}</span>
+                  <span className="text-[10px] uppercase font-bold text-forest/70 block">{t(label)}{s ? (s.kind === "limit" ? t(", at most") : t(", goal")) : ""}</span>
                   <p className="text-forest tabular-nums">
                     <span className="font-serif font-bold text-2xl">{total}</span>
                     <span className="text-xs text-forest/70">{s ? ` / ${s.target} ${unit}` : ` ${unit}`}</span>
@@ -133,7 +143,7 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
                       </div>
                       <p className={`day-status text-xs font-bold ${warn ? "text-amber-700" : "text-forest"}`} data-over={s.over ? "true" : "false"} data-kind={s.kind}>
                         {warn && <i className="fa-solid fa-triangle-exclamation mr-1" aria-hidden="true"></i>}
-                        {s.text}
+                        {statusText(s, unit)}
                       </p>
                     </>
                   )}
@@ -144,9 +154,8 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
           {!demo && targets !== null && !targeted && (
             <p id="day-targets-note" className="text-xs text-forest/80 bg-cream-card border border-cream-dark rounded-2xl px-4 py-3">
               <i className="fa-solid fa-bullseye mr-2 text-forest/70" aria-hidden="true"></i>
-              Set your daily targets in your{" "}
-              <Link href="/profile" className="font-bold underline hover:text-lime-hover">Profile</Link>{" "}
-              to see what&apos;s left.
+              {tx("Set your daily targets in your {profile} to see what's left.", {
+                profile: <Link href="/profile" className="font-bold underline hover:text-lime-hover">{t("Profile")}</Link> })}
             </p>
           )}
         </div>
@@ -161,8 +170,8 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
                   <i className={`fa-solid ${ICONS[slot.id]} text-sm`} aria-hidden="true"></i>
                 </span>
                 <div className="min-w-0">
-                  <h2 id={`day-slot-${slot.id}-title`} className="font-serif font-bold text-xl text-forest leading-tight">{slot.label}</h2>
-                  <p className="day-subtotal text-xs text-forest/70 tabular-nums">{r0(slot.subtotal.kcal)} kcal · {r0(slot.subtotal.protein_g)}g protein</p>
+                  <h2 id={`day-slot-${slot.id}-title`} className="font-serif font-bold text-xl text-forest leading-tight">{t(slot.label)}</h2>
+                  <p className="day-subtotal text-xs text-forest/70 tabular-nums">{t("{kcal} kcal · {protein}g protein", { kcal: r0(slot.subtotal.kcal), protein: r0(slot.subtotal.protein_g) })}</p>
                 </div>
               </div>
               {slot.rows.length > 0 ? (
@@ -174,26 +183,26 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
                           {row.kind === "recipe" ? (
                             <Link href={`/recipes/${row.slug}`} className="font-serif font-bold text-sm text-forest leading-snug hover:text-lime-hover break-words">{row.name}</Link>
                           ) : (
-                            <span className="font-serif font-bold text-sm text-forest leading-snug break-words">{row.name}</span>
+                            <span className="font-serif font-bold text-sm text-forest leading-snug break-words">{rowName(row)}</span>
                           )}
                           <p className="text-[11px] text-forest/70 tabular-nums">
-                            {r0(row.kcal)} kcal · {r0(row.protein_g)}g protein{row.kind === "extra" && !row.source ? " · your own" : ""}
+                            {t("{kcal} kcal · {protein}g protein", { kcal: r0(row.kcal), protein: r0(row.protein_g) })}{row.kind === "extra" && !row.source ? t(" · your own") : ""}
                           </p>
                         </div>
-                        <button type="button" onClick={() => update(removeItem(day, slot.id, row.id))} aria-label={`Remove ${row.name} from ${slot.label}`}
+                        <button type="button" onClick={() => update(removeItem(day, slot.id, row.id))} aria-label={t("Remove {name} from {slot}", { name: rowName(row), slot: t(slot.label) })}
                           className="w-8 h-8 shrink-0 rounded-full text-forest/50 hover:text-red-700 hover:bg-white flex items-center justify-center transition-colors">
                           <i className="fa-solid fa-xmark text-sm" aria-hidden="true"></i>
                         </button>
                       </div>
                       {row.kind === "recipe" && (
-                        <div className="flex items-center gap-2" role="group" aria-label={`Servings of ${row.name}`}>
+                        <div className="flex items-center gap-2" role="group" aria-label={t("Servings of {name}", { name: row.name })}>
                           <button type="button" onClick={() => update(stepServings(day, slot.id, row.id, -STEP))} disabled={row.servings <= MIN_SERVINGS}
-                            aria-label={`Fewer servings of ${row.name}`}
+                            aria-label={t("Fewer servings of {name}", { name: row.name })}
                             className="w-8 h-8 rounded-full bg-white border border-cream-dark text-forest hover:border-forest disabled:opacity-40 disabled:hover:border-cream-dark flex items-center justify-center transition-colors">
                             <i className="fa-solid fa-minus text-[10px]" aria-hidden="true"></i>
                           </button>
                           <span className="day-servings text-xs font-bold text-forest min-w-[5.5rem] text-center tabular-nums" aria-live="polite">{servingsText(row.servings)}</span>
-                          <button type="button" onClick={() => update(stepServings(day, slot.id, row.id, STEP))} aria-label={`More servings of ${row.name}`}
+                          <button type="button" onClick={() => update(stepServings(day, slot.id, row.id, STEP))} aria-label={t("More servings of {name}", { name: row.name })}
                             className="w-8 h-8 rounded-full bg-white border border-cream-dark text-forest hover:border-forest flex items-center justify-center transition-colors">
                             <i className="fa-solid fa-plus text-[10px]" aria-hidden="true"></i>
                           </button>
@@ -203,12 +212,12 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
                   ))}
                 </ul>
               ) : (
-                <p className="text-xs text-forest/70 flex-1">{ready ? "Nothing here yet." : ""}</p>
+                <p className="text-xs text-forest/70 flex-1">{ready ? t("Nothing here yet.") : ""}</p>
               )}
-              <button type="button" onClick={(e) => openPicker(slot.id, e.currentTarget)} aria-label={`Add to ${slot.label}`} disabled={!ready}
+              <button type="button" onClick={(e) => openPicker(slot.id, e.currentTarget)} aria-label={t("Add to {slot}", { slot: t(slot.label) })} disabled={!ready}
                 className="self-start bg-forest hover:bg-forest-light disabled:opacity-50 text-lime font-bold text-xs px-5 py-2.5 rounded-full transition-all inline-flex items-center gap-2">
                 <i className="fa-solid fa-plus text-[10px]" aria-hidden="true"></i>
-                <span>Add</span>
+                <span>{t("Add")}</span>
               </button>
             </article>
           ))}
@@ -218,10 +227,10 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
         <div id="day-micros" className="bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
-              <h2 className="font-serif font-bold text-xl text-forest">Fiber and vitamins today</h2>
-              <p className="text-xs text-forest/70">Added up from the recipes and foods in your day, for the amounts you eat.</p>
+              <h2 className="font-serif font-bold text-xl text-forest">{t("Fiber and vitamins today")}</h2>
+              <p className="text-xs text-forest/70">{t("Added up from the recipes and foods in your day, for the amounts you eat.")}</p>
             </div>
-            <span className="text-xs bg-forest text-lime font-bold px-3 py-1 rounded-full whitespace-nowrap">Whole day</span>
+            <span className="text-xs bg-forest text-lime font-bold px-3 py-1 rounded-full whitespace-nowrap">{t("Whole day")}</span>
           </div>
           {micros.fiber || micros.nutrients.length ? (
             <ul id="day-micros-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3">
@@ -230,8 +239,8 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
                 <li key={n.key} className="text-xs">
                   <div className="flex items-baseline justify-between gap-3">
                     <span className="font-semibold text-forest">
-                      {n.label}
-                      {n.partial ? <><span aria-hidden="true" className="text-forest/70">*</span><span className="sr-only"> (some foods have no data)</span></> : null}
+                      {t(n.label)}
+                      {n.partial ? <><span aria-hidden="true" className="text-forest/70">*</span><span className="sr-only">{t(" (some foods have no data)")}</span></> : null}
                     </span>
                     <span className="text-forest/70 whitespace-nowrap">{n.amount ? `${n.amount} ` : ""}<span className="font-bold text-forest ml-2">{n.pct}%</span></span>
                   </div>
@@ -242,14 +251,14 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
               ))}
             </ul>
           ) : (
-            <p className="text-xs text-forest/70">{ready ? "Add a recipe or a food to see fiber, vitamins and minerals for the day." : ""}</p>
+            <p className="text-xs text-forest/70">{ready ? t("Add a recipe or a food to see fiber, vitamins and minerals for the day.") : ""}</p>
           )}
           <div className="pt-4 border-t border-cream-dark space-y-1 text-[11px] text-forest/70">
-            <p>% of the daily value for an adult. Fiber is out of 25 g a day.</p>
+            <p>{t("% of the daily value for an adult. Fiber is out of 25 g a day.")}</p>
             {micros.notCounted.length > 0 && (
-              <p id="day-not-counted">Not counted, no vitamin data: {micros.notCounted.join(", ")}.</p>
+              <p id="day-not-counted">{t("Not counted, no vitamin data: {names}.", { names: micros.notCounted.map((n) => foodName(n)).join(", ") })}</p>
             )}
-            {micros.nutrients.some((n) => n.partial) && <p>* Some foods have no data for this nutrient, so the real amount may be higher.</p>}
+            {micros.nutrients.some((n) => n.partial) && <p>{t("* Some foods have no data for this nutrient, so the real amount may be higher.")}</p>}
           </div>
         </div>
 
@@ -257,7 +266,7 @@ export default function MyDay({ hidden, meals, mealsReady, demo, onMakeMeal, sho
           <button id="day-clear" type="button" onClick={clear} onBlur={() => setConfirmClear(false)} disabled={!ready || empty}
             className={`text-xs font-bold rounded-full px-5 py-2.5 border transition-colors inline-flex items-center gap-2 disabled:opacity-40 ${confirmClear ? "bg-red-700 border-red-700 text-white" : "bg-white border-cream-dark text-forest/80 hover:text-red-700 hover:border-red-700"}`}>
             <i className="fa-regular fa-trash-can" aria-hidden="true"></i>
-            <span>{confirmClear ? "Tap again to clear the day" : "Clear day"}</span>
+            <span>{confirmClear ? t("Tap again to clear the day") : t("Clear day")}</span>
           </button>
         </div>
       </div>
@@ -277,6 +286,7 @@ const EXTRA_FIELDS = [["kcal", "Calories (kcal)"], ["protein", "Protein (g)"], [
 // from the food list by grams (DayFoods, 2026-11-21), or a food typed by hand. Escape, the X and a click outside
 // close it; focus goes back to the Add button.
 function Picker({ slot, recipes, demo, onRecipe, onExtra, onClose }) {
+  useLang();
   const box = useRef(null);
   const search = useRef(null);
   const [tab, setTab] = useState("recipes");
@@ -315,31 +325,31 @@ function Picker({ slot, recipes, demo, onRecipe, onExtra, onClose }) {
       <div className="p-6 sm:p-8 space-y-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <span className="font-script text-2xl text-forest font-bold">My Day</span>
-            <h2 id="day-picker-title" className="font-serif text-3xl font-bold text-forest leading-snug">Add to {slot.label}</h2>
+            <span className="font-script text-2xl text-forest font-bold">{t("My Day")}</span>
+            <h2 id="day-picker-title" className="font-serif text-3xl font-bold text-forest leading-snug">{t("Add to {slot}", { slot: t(slot.label) })}</h2>
           </div>
-          <button type="button" onClick={() => box.current.close()} aria-label="Close"
+          <button type="button" onClick={() => box.current.close()} aria-label={t("Close")}
             className="w-9 h-9 shrink-0 rounded-full text-forest/70 hover:text-forest hover:bg-forest/5 flex items-center justify-center">
             <i className="fa-solid fa-xmark" aria-hidden="true"></i>
           </button>
         </div>
 
-        <div role="tablist" aria-label="What to add" className="flex flex-wrap gap-2" onKeyDown={onTabKey}>
+        <div role="tablist" aria-label={t("What to add")} className="flex flex-wrap gap-2" onKeyDown={onTabKey}>
           {tabs.map(([id, label]) => (
             <button key={id} id={`day-tab-${id}`} type="button" role="tab" aria-selected={tab === id} aria-controls={`day-panel-${id}`}
               tabIndex={tab === id ? 0 : -1} onClick={() => setTab(id)}
               className={`font-semibold px-4 py-2 rounded-full text-xs transition-all border ${tab === id ? "bg-forest text-lime border-forest" : "bg-white hover:bg-cream-dark text-forest border-cream-dark"}`}>
-              {label}
+              {t(label)}
             </button>
           ))}
         </div>
 
         <div id="day-panel-recipes" role="tabpanel" aria-labelledby="day-tab-recipes" hidden={tab !== "recipes"} className="space-y-4">
           <div className="relative">
-            <label htmlFor="day-search" className="sr-only">Search your recipes</label>
+            <label htmlFor="day-search" className="sr-only">{t("Search your recipes")}</label>
             <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-forest/40" aria-hidden="true"></i>
             <input ref={search} id="day-search" type="text" enterKeyHint="search" value={query} onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search recipes or ingredients..."
+              placeholder={t("Search recipes or ingredients...")}
               className="w-full bg-white border border-cream-dark rounded-full pl-9 pr-4 py-2.5 text-sm text-forest placeholder-forest/40 focus:outline-none focus:border-forest" />
           </div>
           {list.length > 0 ? (
@@ -349,9 +359,9 @@ function Picker({ slot, recipes, demo, onRecipe, onExtra, onClose }) {
                   <button type="button" onClick={() => onRecipe(meal)}
                     className="w-full text-left bg-cream/50 border border-cream-dark hover:border-forest rounded-2xl px-4 py-3 flex items-center justify-between gap-3 transition-colors">
                     <span className="min-w-0">
-                      <span className="block text-[10px] font-bold uppercase tracking-wider text-forest/70">{match && slot.category ? slot.category : meal.category}</span>
+                      <span className="block text-[10px] font-bold uppercase tracking-wider text-forest/70">{t(match && slot.category ? slot.category : meal.category)}</span>
                       <span className="block font-serif font-bold text-sm text-forest leading-snug">{meal.name}</span>
-                      <span className="block text-[11px] text-forest/70 tabular-nums">{meal.kcal} kcal · {meal.protein}g protein per serving</span>
+                      <span className="block text-[11px] text-forest/70 tabular-nums">{t("{kcal} kcal · {protein}g protein per serving", { kcal: meal.kcal, protein: meal.protein })}</span>
                     </span>
                     <span className="w-8 h-8 shrink-0 rounded-full bg-forest text-lime flex items-center justify-center" aria-hidden="true">
                       <i className="fa-solid fa-plus text-[10px]"></i>
@@ -364,10 +374,10 @@ function Picker({ slot, recipes, demo, onRecipe, onExtra, onClose }) {
             <div className="bg-cream-card border border-cream-dark rounded-2xl p-4 text-xs text-forest/80 space-y-2">
               <p>
                 {recipes.length === 0
-                  ? demo ? "No demo recipes here." : "You have no saved recipes yet. Make a meal, or paste a recipe in My Recipes."
-                  : `No recipes match "${query.trim()}".`}
+                  ? demo ? t("No demo recipes here.") : t("You have no saved recipes yet. Make a meal, or paste a recipe in My Recipes.")
+                  : t("No recipes match \"{query}\".", { query: query.trim() })}
               </p>
-              <button type="button" onClick={() => choose("own")} className="font-bold underline hover:text-lime-hover">Add your own food instead</button>
+              <button type="button" onClick={() => choose("own")} className="font-bold underline hover:text-lime-hover">{t("Add your own food instead")}</button>
             </div>
           )}
         </div>
@@ -377,26 +387,26 @@ function Picker({ slot, recipes, demo, onRecipe, onExtra, onClose }) {
 
         <form id="day-panel-own" role="tabpanel" aria-labelledby="day-tab-own" hidden={tab !== "own"} onSubmit={submit} noValidate className="space-y-4">
           <div>
-            <label htmlFor="day-extra-name" className={fieldLabel}>Name</label>
-            <input id="day-extra-name" value={form.name} onChange={set("name")} maxLength={80} placeholder="e.g. Banana" autoComplete="off"
+            <label htmlFor="day-extra-name" className={fieldLabel}>{t("Name")}</label>
+            <input id="day-extra-name" value={form.name} onChange={set("name")} maxLength={80} placeholder={t("e.g. Banana")} autoComplete="off"
               aria-describedby="day-extra-help" className={fieldInput} />
           </div>
           <div className="grid grid-cols-2 gap-3">
             {EXTRA_FIELDS.map(([k, label]) => (
               <div key={k}>
-                <label htmlFor={`day-extra-${k}`} className={fieldLabel}>{label}</label>
-                <input id={`day-extra-${k}`} inputMode="decimal" value={form[k]} onChange={set(k)} placeholder={k === "kcal" ? "" : "optional"}
+                <label htmlFor={`day-extra-${k}`} className={fieldLabel}>{t(label)}</label>
+                <input id={`day-extra-${k}`} inputMode="decimal" value={form[k]} onChange={set(k)} placeholder={k === "kcal" ? "" : t("optional")}
                   aria-describedby="day-extra-help" className={fieldInput} />
               </div>
             ))}
           </div>
-          <p id="day-extra-help" className="text-[11px] text-forest/70">Name and calories are needed. Protein, carbs and fat are optional; empty counts as 0.</p>
+          <p id="day-extra-help" className="text-[11px] text-forest/70">{t("Name and calories are needed. Protein, carbs and fat are optional; empty counts as 0.")}</p>
           {error && <p role="alert" className="text-xs font-bold text-red-700">{error}</p>}
           <div className="flex flex-wrap gap-3">
             <button type="submit" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-5 py-2.5 rounded-xl transition-colors">
-              Add to {slot.label}
+              {t("Add to {slot}", { slot: t(slot.label) })}
             </button>
-            <button type="button" onClick={() => box.current.close()} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2.5">Cancel</button>
+            <button type="button" onClick={() => box.current.close()} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2.5">{t("Cancel")}</button>
           </div>
         </form>
       </div>

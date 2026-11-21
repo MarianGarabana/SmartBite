@@ -10,9 +10,11 @@ import { evaluateMeal } from "../lib/engine";
 import { toMeal } from "../lib/meal";
 import { decodeShare, sharedRequest, sharedSlug } from "../lib/share";
 import { engineEstimates, readActiveProducts, readBudget, readLocalMeals, readProfile, saveLocalMeal } from "../lib/store";
+import { t, useLang } from "../lib/i18n";
 import { PageShell, useToast } from "./Chrome";
 
 export default function SharedRecipe({ demoMeals }) {
+  useLang();
   const router = useRouter();
   const toastState = useToast();
   const [state, setState] = useState({ status: "opening" });
@@ -34,7 +36,7 @@ export default function SharedRecipe({ demoMeals }) {
         products: productsFor(req.recipe, readActiveProducts()), ...engineEstimates() });
       const doc = { ...out, shared: true };
       toMeal(slug, doc, { kind: "local" }); // throws if the page could not show it
-      if (!saveLocalMeal(slug, doc)) return setState({ status: "error", message: "This browser blocks storage, so the recipe cannot open here." });
+      if (!saveLocalMeal(slug, doc)) return setState({ status: "error", message: t("This browser blocks storage, so the recipe cannot open here.") });
       router.replace(`/recipes/${slug}`);
     } catch (e) {
       setState({ status: "error", message: e.message, title: payload.recipe.title });
@@ -49,23 +51,23 @@ export default function SharedRecipe({ demoMeals }) {
           {state.status === "opening" ? (
             <div role="status" className="space-y-3">
               <i className="fa-solid fa-circle-notch fa-spin text-2xl text-forest/60"></i>
-              <h3 className="font-serif font-bold text-xl text-forest">Opening the shared recipe</h3>
-              <p className="text-xs text-forest/70">Working out macros, packs and prices for you.</p>
+              <h3 className="font-serif font-bold text-xl text-forest">{t("Opening the shared recipe")}</h3>
+              <p className="text-xs text-forest/70">{t("Working out macros, packs and prices for you.")}</p>
             </div>
           ) : state.status === "broken" ? (
             <div role="alert" className="space-y-4">
-              <h3 className="font-serif font-bold text-xl text-forest">This link does not open a recipe</h3>
-              <p className="text-xs text-forest/70">It may have been cut off when it was copied. Ask for the link again, or look at the example meals.</p>
+              <h3 className="font-serif font-bold text-xl text-forest">{t("This link does not open a recipe")}</h3>
+              <p className="text-xs text-forest/70">{t("It may have been cut off when it was copied. Ask for the link again, or look at the example meals.")}</p>
               <button onClick={() => router.push("/demo")} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all">
-                See example meals
+                {t("See example meals")}
               </button>
             </div>
           ) : (
             <div role="alert" className="space-y-4">
-              <h3 className="font-serif font-bold text-xl text-forest">{state.title ? `"${state.title}" did not open` : "The recipe did not open"}</h3>
+              <h3 className="font-serif font-bold text-xl text-forest">{state.title ? t("\"{title}\" did not open", { title: state.title }) : t("The recipe did not open")}</h3>
               <p className="text-xs text-forest/70">{state.message}</p>
               <button onClick={open} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all">
-                Try again
+                {t("Try again")}
               </button>
             </div>
           )}
