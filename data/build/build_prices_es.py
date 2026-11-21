@@ -56,7 +56,7 @@ REGIONS = {
 }
 MAX_GAP = 60  # a product row sits at most this many rows under its section row
 TOP = ".TOTAL ALIMENTACION"  # first row of each sheet; rows mapped under it have no smaller group
-MIN_MONTHS = 6  # fewer months with data: no estimate
+MIN_MONTHS = 10  # fewer of the 12 months with data: no estimate (same rule as the other countries, decided 2026-11-21)
 NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
       "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships"}
 M = "{%s}" % NS["m"]
@@ -217,10 +217,11 @@ def build(raw=RAW, map_path=MAP, packs_path=PACKS, today=None):
                     s[0] += got[0]
                     s[1] += got[1]
                     s[2] += 1
+    short = {f: s[2] for f, s in sums[SPAIN].items() if s[2] < MIN_MONTHS}
+    for col_sums in sums.values():
+        for food in short:
+            col_sums.pop(food, None)
     national = sums[SPAIN]
-    short = {f: s[2] for f, s in national.items() if s[2] < MIN_MONTHS}
-    if short:
-        raise SystemExit(f"Fewer than {MIN_MONTHS} months with data: {short}")
     foods = {}
     for food, (value, volume, n) in sorted(national.items()):
         m = mapping[food]
@@ -254,6 +255,8 @@ def build(raw=RAW, map_path=MAP, packs_path=PACKS, today=None):
                  "regions: the same average per comunidad autonoma (ISO 3166-2 code), only for foods with data in "
                  "as many months as the national price; other foods use the national price."),
         "foods": foods,
+        "left_out": {f: {"months": n, "reason": f"only {n} of the {len(months)} months have data, {MIN_MONTHS} needed"}
+                     for f, n in sorted(short.items())},
         "regions": dict(sorted(regions.items())),
     }
 
@@ -267,6 +270,8 @@ def main():
     for food, rec in doc["foods"].items():
         if rec["months"] < doc["months"]:
             print(f"  {food}: {rec['months']} months with data")
+    for food, rec in doc["left_out"].items():
+        print(f"  {food}: left out, {rec['reason']}")
     for code, region in doc["regions"].items():
         print(f"  {code} {region['name']}: {len(region['foods'])} of {len(doc['foods'])} foods with a regional price")
     return 0

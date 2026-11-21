@@ -10,7 +10,7 @@
  "period_from": "2025-08",
  "period_to": "2026-07",
  "months": 12,
- "built": "2026-10-22",
+ "built": "2026-11-21",
  "note": "Average price paid by households in Spain, volume-weighted over the period (total value / total volume, T.ESPANA). Averages over brands, pack sizes, shops and promotions; not a shop price. Liquids sold per litre are converted to per kg with the density used for the pack sizes. regions: the same average per comunidad autonoma (ISO 3166-2 code), only for foods with data in as many months as the national price; other foods use the national price.",
  "foods": {
   "apple": {
@@ -309,13 +309,6 @@
    "months": 12,
    "price_per_kg_eur": 2.708
   },
-  "kefir": {
-   "match": "exact",
-   "mapa_section": "LECHES FERMENTADAS",
-   "mapa_row": "KEFIR",
-   "months": 7,
-   "price_per_kg_eur": 3.507
-  },
   "kiwi": {
    "match": "exact",
    "mapa_section": "T.FRUTAS FRESCAS",
@@ -554,6 +547,12 @@
    "price_per_kg_eur": 1.866
   }
  },
+ "left_out": {
+  "kefir": {
+   "months": 7,
+   "reason": "only 7 of the 12 months have data, 10 needed"
+  }
+ },
  "regions": {
   "ES-AN": {
    "name": "Andalucía",
@@ -727,10 +726,6 @@
     "green bell pepper": {
      "months": 12,
      "price_per_kg_eur": 2.592
-    },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.168
     },
     "kiwi": {
      "months": 12,
@@ -1042,10 +1037,6 @@
      "months": 12,
      "price_per_kg_eur": 2.821
     },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.348
-    },
     "kiwi": {
      "months": 12,
      "price_per_kg_eur": 4.839
@@ -1352,10 +1343,6 @@
      "months": 12,
      "price_per_kg_eur": 2.992
     },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 4.147
-    },
     "kiwi": {
      "months": 12,
      "price_per_kg_eur": 4.471
@@ -1641,10 +1628,6 @@
     "green bell pepper": {
      "months": 12,
      "price_per_kg_eur": 2.976
-    },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.513
     },
     "kiwi": {
      "months": 12,
@@ -1956,10 +1939,6 @@
      "months": 12,
      "price_per_kg_eur": 2.835
     },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.526
-    },
     "kiwi": {
      "months": 12,
      "price_per_kg_eur": 4.201
@@ -2269,10 +2248,6 @@
     "green bell pepper": {
      "months": 12,
      "price_per_kg_eur": 2.501
-    },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.006
     },
     "kiwi": {
      "months": 12,
@@ -2584,10 +2559,6 @@
      "months": 12,
      "price_per_kg_eur": 3.025
     },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.437
-    },
     "kiwi": {
      "months": 12,
      "price_per_kg_eur": 4.664
@@ -2897,10 +2868,6 @@
     "green bell pepper": {
      "months": 12,
      "price_per_kg_eur": 2.78
-    },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.792
     },
     "kiwi": {
      "months": 12,
@@ -3212,10 +3179,6 @@
      "months": 12,
      "price_per_kg_eur": 2.572
     },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.089
-    },
     "kiwi": {
      "months": 12,
      "price_per_kg_eur": 4.38
@@ -3517,10 +3480,6 @@
     "green bell pepper": {
      "months": 12,
      "price_per_kg_eur": 2.98
-    },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.99
     },
     "kiwi": {
      "months": 12,
@@ -3828,10 +3787,6 @@
      "months": 12,
      "price_per_kg_eur": 2.757
     },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 4.25
-    },
     "kiwi": {
      "months": 12,
      "price_per_kg_eur": 4.818
@@ -4137,10 +4092,6 @@
     "green bell pepper": {
      "months": 12,
      "price_per_kg_eur": 2.557
-    },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.1
     },
     "kiwi": {
      "months": 12,
@@ -4452,10 +4403,6 @@
      "months": 12,
      "price_per_kg_eur": 2.59
     },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.458
-    },
     "kiwi": {
      "months": 12,
      "price_per_kg_eur": 4.382
@@ -4737,10 +4684,6 @@
     "green bell pepper": {
      "months": 12,
      "price_per_kg_eur": 2.573
-    },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.082
     },
     "kiwi": {
      "months": 12,
@@ -5048,10 +4991,6 @@
      "months": 12,
      "price_per_kg_eur": 2.667
     },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.684
-    },
     "kiwi": {
      "months": 12,
      "price_per_kg_eur": 4.344
@@ -5321,10 +5260,6 @@
     "green bell pepper": {
      "months": 12,
      "price_per_kg_eur": 2.865
-    },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.809
     },
     "kiwi": {
      "months": 12,
@@ -5623,10 +5558,6 @@
     "green bell pepper": {
      "months": 12,
      "price_per_kg_eur": 2.665
-    },
-    "kefir": {
-     "months": 7,
-     "price_per_kg_eur": 3.487
     },
     "kiwi": {
      "months": 12,

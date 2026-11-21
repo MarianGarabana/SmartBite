@@ -56,7 +56,9 @@ def test_mapping_covers_every_food_once():
 
 def test_price_table_has_exact_and_close_foods_only():
     priced = {f for f, m in MAP.items() if m["match"] in ("exact", "close")}
-    assert set(ES["foods"]) == priced and len(priced) == 76
+    assert set(ES["left_out"]) == {"kefir"} and ES["left_out"]["kefir"]["months"] == 7  # 10 of 12 needed
+    assert "7 of the 12 months" in MAP["kefir"]["note"]
+    assert set(ES["foods"]) == priced - {"kefir"} and len(ES["foods"]) == 75
     assert ES["country"] == "ES" and ES["currency"] == "EUR" and ES["months"] == 12
     assert (ES["period_from"], ES["period_to"]) == ("2025-08", "2026-07")
     for food, rec in ES["foods"].items():
@@ -64,7 +66,7 @@ def test_price_table_has_exact_and_close_foods_only():
         assert rec["mapa_section"] == MAP[food]["section"]
         price = rec.get("price_per_unit_eur") if MAP[food]["unit"] == "unit" else rec.get("price_per_kg_eur")
         assert price and 0.05 < price < 60, food
-        assert rec["months"] >= 6, food
+        assert rec["months"] >= bp.MIN_MONTHS == 10, food
     assert "price_per_unit_eur" in ES["foods"]["eggs"]
 
 
@@ -147,6 +149,27 @@ def test_build_keys_on_section_and_row_and_weights_by_volume(tmp_path):
     assert foods["eggs"]["price_per_unit_eur"] == pytest.approx(0.3)
     assert foods["canned tuna in water"]["price_per_kg_eur"] == pytest.approx((6 * 300 + 6 * 100) / 120)
     assert all(r["months"] == 12 for r in foods.values())
+
+
+def test_build_leaves_out_a_food_with_fewer_than_10_of_12_months(tmp_path):
+    full = HEAD + [_row(".TOTAL ALIMENTACION", 1, 1), _row("T.HORTALIZAS FRESCAS", 1, 1), _row("BROCOLI", 30, 10),
+                   _row("CALABACIN", 20, 10)]
+    gap = HEAD + [_row(".TOTAL ALIMENTACION", 1, 1), _row("T.HORTALIZAS FRESCAS", 1, 1), _row("BROCOLI", 30, 10),
+                  _row("CALABACIN", None, None)]
+    names = ("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre",
+             "Noviembre", "Diciembre")
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    _xlsx(raw / "a.xlsx", {f"{m} 2025": (gap if i < 3 else full) for i, m in enumerate(names)})  # zucchini: 9 months
+    mapping = {"broccoli": {"match": "exact", "section": "T.HORTALIZAS FRESCAS", "row": "BROCOLI", "unit": "kg"},
+               "zucchini": {"match": "exact", "section": "T.HORTALIZAS FRESCAS", "row": "CALABACIN", "unit": "kg"}}
+    map_path = tmp_path / "map.json"
+    map_path.write_text(json.dumps({"foods": mapping}), encoding="utf-8")
+    packs = tmp_path / "packs.json"
+    packs.write_text(json.dumps({"foods": {}}), encoding="utf-8")
+    doc = bp.build(raw=raw, map_path=map_path, packs_path=packs)
+    assert set(doc["foods"]) == {"broccoli"}
+    assert doc["left_out"] == {"zucchini": {"months": 9, "reason": "only 9 of the 12 months have data, 10 needed"}}
 
 
 def test_build_prices_each_region_only_with_as_many_months_as_spain(tmp_path):

@@ -574,7 +574,7 @@
    "section": "LECHES FERMENTADAS",
    "row": "KEFIR",
    "unit": "kg",
-   "note": "Kefir."
+   "note": "Kefir. No price: the row has data in only 7 of the 12 months (no row in the Sep to Dec 2025 sheets, empty in August 2025); prices need 10 of 12."
   },
   "kiwi": {
    "match": "exact",

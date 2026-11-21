@@ -459,13 +459,13 @@ export const ESTIMATES_OFF = "off"; // only the prices the user types
 // Ireland and France since 2026-11-03.
 export const ESTIMATES = {
   ES: { currency: "EUR", source: "MAPA", sourceLong: "MAPA household consumption panel", kind: "average price paid",
-    phrase: "the average price households paid", foods: 76 },
+    phrase: "the average price households paid", foods: 75 },
   CA: { currency: "CAD", source: "Statistics Canada", sourceLong: "Statistics Canada monthly average retail prices",
     kind: "average price paid", phrase: "the average price shoppers paid", foods: 53 },
   GB: { currency: "GBP", source: "ONS", sourceLong: "ONS shopping prices comparison tool", kind: "average price",
     phrase: "the average price", foods: 50 },
-  US: { currency: "USD", source: "BLS", sourceLong: "U.S. Bureau of Labor Statistics average prices", kind: "average price",
-    phrase: "the average price", foods: 18 },
+  US: { currency: "USD", source: "BLS, USDA ERS", kind: "average price", phrase: "the average price", foods: 53,
+    sourceLong: "U.S. Bureau of Labor Statistics average prices, and for fruits and vegetables USDA ERS 2023 prices moved forward with the CPI" },
   IE: { currency: "EUR", source: "CSO", sourceLong: "CSO national average prices", kind: "average price",
     phrase: "the national average price", foods: 17 },
   FR: { currency: "EUR", source: "INSEE", sourceLong: "INSEE average retail prices, fresh foods only", kind: "average price",

@@ -3,7 +3,7 @@
 // 2. A country with another currency changes the price symbol everywhere and turns Spain's estimates off.
 // 3. The country list is the 8 countries with price data plus Other country; there is no supermarket choice (2026-11-09).
 // 4. Canada: estimated prices in CAD from Statistics Canada on the recipe page; off when turned off. The UK: GBP, ONS.
-//    The US: USD, BLS. Ireland: EUR, CSO. France: EUR, INSEE (fresh foods only).
+//    The US: USD, BLS and USDA ERS. Ireland: EUR, CSO. France: EUR, INSEE (fresh foods only).
 import { expect, test } from "@playwright/test";
 
 const KOREAN = "korean-beef-bowl-with-peas-and-brown-rice-lentil-mix";
@@ -170,15 +170,15 @@ test("the United Kingdom gets estimated prices in GBP from the ONS", async ({ pa
   await expect(beef).toContainText("£");
 });
 
-test("the United States gets estimated prices in USD from the BLS", async ({ page }) => {
+test("the United States gets estimated prices in USD from the BLS and USDA ERS", async ({ page }) => {
   await page.goto("/profile");
   await page.locator("#price-country").selectOption("US");
   await expect(page.locator("#currency")).toHaveValue("USD");
-  await expect(page.getByText("the average price in the United States")).toContainText("U.S. Bureau of Labor Statistics average prices; 18 foods have one");
+  await expect(page.getByText("the average price in the United States")).toContainText("U.S. Bureau of Labor Statistics average prices, and for fruits and vegetables USDA ERS 2023 prices moved forward with the CPI; 53 foods have one");
   await page.goto(`/recipes/${KOREAN}`);
   await toOneServing(page);
   await page.waitForLoadState("networkidle");
-  await expect(page.getByText("Prices marked est. are estimates (United States average price, BLS, Oct 2025 to Sep 2026)")).toBeVisible();
+  await expect(page.getByText("Prices marked est. are estimates (United States average price, BLS, USDA ERS, Nov 2025 to Oct 2026)")).toBeVisible();
   const beef = page.locator("#pack-table-body tr").filter({ hasText: "ground beef" });
   await expect(beef.getByText("est.")).toBeVisible();
   await expect(beef).toContainText("$");

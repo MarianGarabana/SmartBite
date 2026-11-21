@@ -8,7 +8,8 @@ hold the table's currency), national only.
 United Kingdom (GB): average price, ONS Shopping prices comparison tool (price quotes and supermarket scanner data),
 mean of 12 months, in GBP, national only.
 United States (US): average price, BLS Average Price Data (U.S. city average), mean of the months with data in the
-latest 12 (October 2025 has none), in USD.
+latest 12, in USD; fruits and vegetables the BLS does not price use the USDA ERS 2023 average retail price moved to the
+same period with the CPI index of their group.
 Ireland (IE): national average price, CSO table CPM12, mean of 12 months, in EUR.
 France (FR): average retail price in metropolitan France, INSEE IPC-PM-2015, mean of 12 months, in EUR, fresh
 foods only.

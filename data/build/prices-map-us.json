@@ -1,12 +1,53 @@
 {
- "note": "Each SmartBite food mapped by hand to one BLS Average Price Data series (area 0000, U.S. city average), fetched from the BLS public API v1. match: exact, close (same food, mixed with its subtypes), broad (no price, kept to show why). Only exact and close get an estimated price. Size: grams (453.6 per lb, or the stated ounces), litres (3.785 per gallon, density from packs.json) or eggs (per dozen). Series with no 2025 or 2026 data in the API (peanut butter, apples, canned tuna, broccoli, peppers, onions, carrots, cucumbers) are not listed.",
+ "note": "Each SmartBite food mapped by hand to one BLS Average Price Data series (area 0000, U.S. city average), fetched from the BLS public API v1, or, for fruits and vegetables BLS does not price, to one item of the USDA ERS Fruit and Vegetable Prices (2023 annual average retail price per lb, moved to the BLS period with the matching CPI index in cpi). match: exact, close (same food, mixed with its subtypes), broad (a different or wider product, no price), none (nothing to match; no price). Only exact and close get an estimated price. Size: grams (453.6 per lb, or the stated ounces), litres (3.785 per gallon, density from packs.json) or eggs (per dozen). BLS series with no 2025 or 2026 data: apples, broccoli, peppers, onions, carrots, cucumbers, canned tuna, peanut butter, scallions, precooked rice.",
  "foods": {
+  "apple": {
+   "match": "exact",
+   "ers": {
+    "group": "fruits",
+    "item": "Apples",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFK",
+   "grams": 453.6,
+   "note": "BLS Red Delicious apples have no 2025 or 2026 data."
+  },
+  "artichoke hearts": {
+   "match": "close",
+   "ers": {
+    "group": "vegetables",
+    "item": "Artichoke",
+    "form": "Canned"
+   },
+   "cpi": "CUUR0000SEFM01",
+   "grams": 453.6,
+   "note": "All canned artichokes, hearts and whole. SmartBite packs are drained weight and ERS weights are probably net weight, so the estimate can be low."
+  },
+  "arugula": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "avocado": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Avocados",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": "Per lb of whole fruit; SmartBite weighs the part you eat, so one avocado is on the low side."
+  },
   "banana": {
    "match": "exact",
    "series": "APU0000711211",
    "product": "Bananas, per lb.",
    "grams": 453.6,
    "note": ""
+  },
+  "basmati rice": {
+   "match": "broad",
+   "note": "Only white long grain rice (BLS APU0000701312); basmati costs more."
   },
   "beef steak": {
    "match": "close",
@@ -15,6 +56,78 @@
    "grams": 453.6,
    "note": "Sirloin, the everyday steak cut."
   },
+  "black pepper": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "blueberries": {
+   "match": "exact",
+   "ers": {
+    "group": "fruits",
+    "item": "Blueberries",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFK",
+   "grams": 453.6,
+   "note": ""
+  },
+  "broccoli": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Broccoli heads",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": "Heads (florets cost about the same per lb)."
+  },
+  "brown rice": {
+   "match": "broad",
+   "note": "Only white long grain rice (BLS APU0000701312)."
+  },
+  "brussels sprouts": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Brussels sprouts",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": ""
+  },
+  "canned chickpeas": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "canned lentils": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "canned mackerel": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "canned red kidney beans": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Kidney beans",
+    "form": "Canned"
+   },
+   "cpi": "CUUR0000SEFM01",
+   "grams": 453.6,
+   "note": "SmartBite packs are drained weight and ERS weights are probably net weight, so the estimate can be low."
+  },
+  "canned sardines": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "canned sliced mushrooms": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
   "canned sweetcorn": {
    "match": "close",
    "series": "APU0000714221",
@@ -22,12 +135,126 @@
    "grams": 453.6,
    "note": "Any canned corn, per lb of net weight; SmartBite packs are drained weight, so the estimate can be low."
   },
+  "canned tuna in oil": {
+   "match": "none",
+   "note": "BLS light chunk tuna (APU0000707111) has no 2025 or 2026 data."
+  },
+  "canned tuna in water": {
+   "match": "none",
+   "note": "BLS light chunk tuna (APU0000707111) has no 2025 or 2026 data."
+  },
+  "canned white beans": {
+   "match": "close",
+   "ers": {
+    "group": "vegetables",
+    "item": "Great northern beans",
+    "form": "Canned"
+   },
+   "cpi": "CUUR0000SEFM01",
+   "grams": 453.6,
+   "note": "Great northern beans, a common US white bean (navy beans cost about the same). SmartBite packs are drained weight and ERS weights are probably net weight, so the estimate can be low."
+  },
+  "carrot": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Carrots, raw whole",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": "Whole carrots, not baby carrots."
+  },
+  "cauliflower": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Cauliflower heads",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": "Heads; florets cost almost twice as much per lb."
+  },
+  "cherry tomatoes": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Tomatoes, grape and cherry",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": ""
+  },
+  "chia seeds": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
   "chicken breast": {
    "match": "exact",
    "series": "APU0000FF1101",
    "product": "Chicken breast, boneless, per lb.",
    "grams": 453.6,
    "note": ""
+  },
+  "chicken broth": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "chicken thigh": {
+   "match": "broad",
+   "note": "Only chicken legs, bone-in (BLS APU0000706212): drumsticks and bone weight, not boneless thighs."
+  },
+  "chili flakes": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "cinnamon": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "cooked quinoa": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "cottage cheese": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "couscous": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "crushed tomatoes": {
+   "match": "close",
+   "ers": {
+    "group": "vegetables",
+    "item": "Tomatoes",
+    "form": "Canned"
+   },
+   "cpi": "CUUR0000SEFM01",
+   "grams": 453.6,
+   "note": "All canned tomatoes, any style."
+  },
+  "cucumber": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Cucumbers with peel",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": ""
+  },
+  "cumin": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "curry powder": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
   },
   "dried chickpeas": {
    "match": "close",
@@ -37,11 +264,27 @@
    "note": "All dried beans."
   },
   "dried lentils": {
-   "match": "broad",
-   "series": "APU0000714233",
-   "product": "Beans, dried, any type, all sizes, per lb.",
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Lentils",
+    "form": "Dried"
+   },
+   "cpi": "CUUR0000SEFM03",
    "grams": 453.6,
-   "note": "Beans, not lentils: no price."
+   "note": ""
+  },
+  "dried parsley": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "egg whites": {
+   "match": "broad",
+   "note": "Only whole eggs (BLS); liquid egg whites are a different product."
+  },
+  "eggplant": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
   },
   "eggs": {
    "match": "exact",
@@ -50,6 +293,128 @@
    "eggs": 12,
    "note": "Price per egg = price of a dozen / 12."
   },
+  "extra virgin olive oil": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "feta": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "firm tofu": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "fresh parsley": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "fresh tuna": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "frozen broccoli": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Broccoli",
+    "form": "Frozen"
+   },
+   "cpi": "CUUR0000SEFM02",
+   "grams": 453.6,
+   "note": ""
+  },
+  "frozen cauliflower": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Cauliflower",
+    "form": "Frozen"
+   },
+   "cpi": "CUUR0000SEFM02",
+   "grams": 453.6,
+   "note": ""
+  },
+  "frozen edamame": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "frozen green beans": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Green beans",
+    "form": "Frozen"
+   },
+   "cpi": "CUUR0000SEFM02",
+   "grams": 453.6,
+   "note": ""
+  },
+  "frozen hake": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "frozen mixed berries": {
+   "match": "exact",
+   "ers": {
+    "group": "fruits",
+    "item": "Berries, mixed",
+    "form": "Frozen"
+   },
+   "cpi": "CUUR0000SEFM02",
+   "grams": 453.6,
+   "note": ""
+  },
+  "frozen peas": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Green peas",
+    "form": "Frozen"
+   },
+   "cpi": "CUUR0000SEFM02",
+   "grams": 453.6,
+   "note": ""
+  },
+  "frozen salmon": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "frozen shrimp": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "frozen spinach": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Spinach",
+    "form": "Frozen"
+   },
+   "cpi": "CUUR0000SEFM02",
+   "grams": 453.6,
+   "note": ""
+  },
+  "frozen stir-fry vegetables": {
+   "match": "broad",
+   "note": "Only ERS frozen broccoli, cauliflower and carrots; stir-fry mixes have peppers, onions and snap peas."
+  },
+  "garlic": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "garlic powder": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "gnocchi": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "grana padano": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
   "grated cheese": {
    "match": "close",
    "series": "APU0000710212",
@@ -57,10 +422,86 @@
    "grams": 453.6,
    "note": "Cheddar, the usual shredded cheese."
   },
+  "greek yogurt": {
+   "match": "broad",
+   "note": "Only all yogurt per 8 oz (BLS APU0000FJ4101); Greek yogurt costs more."
+  },
+  "greek yogurt 0%": {
+   "match": "broad",
+   "note": "Only all yogurt per 8 oz (BLS APU0000FJ4101); Greek yogurt costs more."
+  },
+  "green beans": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Green beans",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": ""
+  },
+  "green bell pepper": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Green peppers",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": ""
+  },
   "ground beef": {
    "match": "exact",
    "series": "APU0000703112",
    "product": "Ground beef, 100% beef, per lb.",
+   "grams": 453.6,
+   "note": ""
+  },
+  "ground chicken": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "ground ginger": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "ground turkey": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "hummus": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "kalamata olives": {
+   "match": "broad",
+   "note": "Only ERS canned olives, which are mostly ripe black olives; jarred kalamata cost more."
+  },
+  "kale": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Kale",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": ""
+  },
+  "kefir": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "kiwi": {
+   "match": "exact",
+   "ers": {
+    "group": "fruits",
+    "item": "Kiwi",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFK",
    "grams": 453.6,
    "note": ""
   },
@@ -71,12 +512,36 @@
    "grams": 453.6,
    "note": ""
   },
+  "lemon juice": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
   "lettuce": {
    "match": "close",
    "series": "APU0000FL2101",
    "product": "Lettuce, romaine, per lb.",
    "grams": 453.6,
    "note": "Romaine; iceberg has only 9 of the 12 months."
+  },
+  "light cream cheese": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "light fresh cheese": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "light mozzarella": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "lime": {
+   "match": "broad",
+   "note": "Only lemons (BLS); limes are not priced."
+  },
+  "lime juice": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
   },
   "macaroni": {
    "match": "close",
@@ -85,12 +550,74 @@
    "grams": 453.6,
    "note": "Spaghetti and macaroni together."
   },
-  "orange": {
-   "match": "broad",
-   "series": "APU0000711311",
-   "product": "Oranges, Navel, per lb.",
+  "microwave rice": {
+   "match": "none",
+   "note": "BLS precooked rice (APU0000701311) has no 2025 or 2026 data."
+  },
+  "mozzarella": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "mushrooms": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Mushrooms, whole",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
    "grams": 453.6,
-   "note": "Only 9 of the 12 months in the period: no price."
+   "note": "Whole white mushrooms (sliced cost about the same per lb)."
+  },
+  "mustard": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "nutmeg": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "onion": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Onions",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": ""
+  },
+  "onion powder": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "orange": {
+   "match": "exact",
+   "ers": {
+    "group": "fruits",
+    "item": "Oranges",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFK",
+   "grams": 453.6,
+   "note": "BLS Navel oranges have only 9 of the 12 months, so ERS prices it."
+  },
+  "oregano": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "paprika": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "peanut butter": {
+   "match": "none",
+   "note": "BLS creamy peanut butter (APU0000716141) has no 2025 or 2026 data."
+  },
+  "pita bread": {
+   "match": "broad",
+   "note": "Only white pan bread (BLS APU0000702111)."
   },
   "plain yogurt 0%": {
    "match": "close",
@@ -98,6 +625,17 @@
    "product": "Yogurt, per 8 oz.",
    "grams": 226.8,
    "note": "All yogurt, any fat or flavour, per 8 oz (226.8 g)."
+  },
+  "pomegranate": {
+   "match": "exact",
+   "ers": {
+    "group": "fruits",
+    "item": "Pomegranate",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFK",
+   "grams": 453.6,
+   "note": ""
   },
   "pork loin": {
    "match": "close",
@@ -113,12 +651,73 @@
    "grams": 453.6,
    "note": ""
   },
+  "pumpkin": {
+   "match": "close",
+   "ers": {
+    "group": "vegetables",
+    "item": "Butternut squash",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": "Butternut squash, a whole winter squash like the SmartBite pumpkin (acorn squash costs about the same per lb)."
+  },
+  "quark 0%": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "quinoa": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "raspberries": {
+   "match": "exact",
+   "ers": {
+    "group": "fruits",
+    "item": "Raspberries",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFK",
+   "grams": 453.6,
+   "note": ""
+  },
+  "red bell pepper": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Red peppers",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": ""
+  },
   "rice": {
    "match": "exact",
    "series": "APU0000701312",
    "product": "Rice, white, long grain, uncooked, per lb.",
    "grams": 453.6,
    "note": ""
+  },
+  "ricotta": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "roasted red peppers": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "rolled oats": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "salmon": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "salt": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
   },
   "semi-skimmed milk": {
    "match": "close",
@@ -127,12 +726,81 @@
    "litres": 3.785,
    "note": "Low-fat, reduced fat and skim together, per gallon (3.785 l)."
   },
+  "sesame seeds": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "skyr": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "sliced turkey breast": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "smoked paprika": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "soy milk": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "soy sauce": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "spinach": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Spinach, eaten raw",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": ""
+  },
+  "spring onion": {
+   "match": "none",
+   "note": "BLS green scallions (APU0000712405) have no 2025 or 2026 data; ERS has no scallions."
+  },
   "strawberries": {
    "match": "exact",
    "series": "APU0000711415",
    "product": "Strawberries, dry pint, per 12 oz.",
    "grams": 340.2,
    "note": "12 oz (340.2 g)."
+  },
+  "sugar": {
+   "match": "exact",
+   "series": "APU0000715211",
+   "product": "Sugar, white, all sizes, per lb.",
+   "grams": 453.6,
+   "note": ""
+  },
+  "sweet potato": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Sweet potatoes",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": ""
+  },
+  "teriyaki sauce": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "textured soy protein": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "thyme": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
   },
   "tomato": {
    "match": "exact",
@@ -141,12 +809,51 @@
    "grams": 453.6,
    "note": ""
   },
+  "tomato sauce": {
+   "match": "broad",
+   "note": "Only ERS canned tomatoes; not clear that sauce is included."
+  },
+  "turkey tenderloin": {
+   "match": "broad",
+   "note": "Only frozen whole turkey (BLS APU0000706311, no 2025 or 2026 data)."
+  },
+  "vanilla whey protein": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "vinegar": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "walnuts": {
+   "match": "none",
+   "note": "No BLS series or ERS item."
+  },
+  "wheat tortillas": {
+   "match": "broad",
+   "note": "Only white pan bread (BLS APU0000702111)."
+  },
+  "wholemeal pasta": {
+   "match": "broad",
+   "note": "Only spaghetti and macaroni, any flour (BLS APU0000701322); wholemeal costs more."
+  },
   "wholemeal sandwich bread": {
    "match": "broad",
    "series": "APU0000702212",
    "product": "Bread, whole wheat, pan, per lb.",
    "grams": 453.6,
    "note": "Only 7 of the 12 months in the period: no price."
+  },
+  "zucchini": {
+   "match": "exact",
+   "ers": {
+    "group": "vegetables",
+    "item": "Zucchini",
+    "form": "Fresh"
+   },
+   "cpi": "CUUR0000SEFL",
+   "grams": 453.6,
+   "note": ""
   }
  }
 }

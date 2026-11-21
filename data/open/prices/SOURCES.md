@@ -33,15 +33,16 @@ because row names repeat across groups (for example BROCOLI fresh and frozen). M
 - **broad**: a parent category that can be far off, for example all spices or all fresh cheeses (55 foods).
 - **none**: no row in the panel (8 foods).
 
-Only exact and close matches get a price (76 of 139 foods). Price = sum of value / sum of volume over the 12
-months (a volume-weighted average, so seasonal prices of fruit and vegetables even out), per kg, per litre or
+Only exact and close matches with data in at least 10 of the 12 months get a price (75 of 139 foods; the same
+rule as the other countries since 2026-11-21). Price = sum of value / sum of volume over the 12 months (a volume-weighted average, so seasonal prices of fruit and vegetables even out), per kg, per litre or
 per egg. Liquids sold per litre (olive oil, milk, plant drinks, vinegar) are converted to per kg with the same
 density the pack sizes use (`data/open/packs/packs.json`).
 
 The Sep to Dec 2025 sheets use older row names for canned fish and yogurt (for example ATUN under
 CONS.PESCADO/MOLUSCO instead of CONS.ATUN under T.PESCADO/MARISCO CONSERVADO). The mapping lists these as `alt`
-rows; their monthly prices were checked against the new rows and match within a few percent. Kefir has no row
-in those sheets and is empty in August 2025, so its price uses 7 months (January to July 2026).
+rows; their monthly prices were checked against the new rows and match within a few percent. Kefir (an exact
+match) has no row in those sheets and is empty in August 2025: 7 of the 12 months, so it has no price and is listed
+under `left_out` in `es.json`.
 
 ### Regions
 
@@ -49,8 +50,8 @@ The same files have one column group per comunidad autónoma (17; Ceuta and Meli
 `regions` holds a price per food for each one, keyed by ISO 3166-2 code (for example `ES-MD`), made the same way
 from that region's value and volume columns. A regional price is kept only when the region has data in as many
 months as the national price for that food: regional samples are small, and the prices from months with gaps were
-the furthest off (for example 0.58x and 1.78x the national price). With that rule each region has a price for 63
-(La Rioja) to 76 of the 76 foods, between 0.72x and 1.66x the national price. A food with no regional price uses
+the furthest off (for example 0.58x and 1.78x the national price). With that rule each region has a price for 62
+(La Rioja) to 75 of the 75 foods, between 0.72x and 1.66x the national price. A food with no regional price uses
 the national one, and the line says which one priced it.
 
 In the app, a pack's estimated price = price per kg x pack weight (eggs: price per egg x eggs per pack), rounded
@@ -182,48 +183,94 @@ curl -L -A SmartBite -o data/raw/ons/datadownload.xlsx https://github.com/onsdig
 .venv/bin/python data/build/build_prices_gb.py
 ```
 
-## United States: BLS Average Price Data (`us.json`)
+## United States: BLS Average Price Data and USDA ERS Fruit and Vegetable Prices (`us.json`)
 
-Estimated prices for the United States come from the U.S. Bureau of Labor Statistics (BLS), **Average Price Data**,
-U.S. city average (series APU0000...). Cite as: "U.S. Bureau of Labor Statistics, Average Price Data, U.S. city
-average, October 2025 to September 2026."
+Estimated prices for the United States come from two federal sources:
+
+1. The U.S. Bureau of Labor Statistics (BLS), **Average Price Data**, U.S. city average (series APU0000...). Cite as:
+   "U.S. Bureau of Labor Statistics, Average Price Data, U.S. city average, November 2025 to October 2026."
+2. For fruits and vegetables the BLS does not price (added 2026-11-21): the USDA Economic Research Service (ERS),
+   **Fruit and Vegetable Prices**, 2023 average retail prices. Cite as: "U.S. Department of Agriculture, Economic
+   Research Service. (2025). Fruit and Vegetable Prices." ERS asks that its findings not be attributed to Circana, whose
+   scanner data it uses.
+
+Each record in `us.json` says which one priced it (`source`: "BLS" or "USDA ERS").
+
+### BLS
 
 - Fact sheet: https://www.bls.gov/cpi/factsheets/average-prices.htm
-- Data: the BLS public API v1 (https://api.bls.gov/publicAPI/v1/timeseries/data/, no key), fetched 2026-11-03 with
+- Data: the BLS public API v1 (https://api.bls.gov/publicAPI/v1/timeseries/data/, no key), fetched 2026-11-21 with
   `User-Agent: SmartBite` only, saved as `data/raw/bls/ap.json`. The bulk files on download.bls.gov and the www.bls.gov
   pages answered 403 to that header, so the API is the only route used.
-- Period: October 2025 to September 2026. October 2025 has no data; the API marks it "Data unavailable due to the
-  2025 lapse in appropriations". Most foods average the other 11 months; strawberries and potatoes 10.
+- Which series exist: the BLS one-screen data tool (https://data.bls.gov/PDQWeb/ap) lists 160 average price items,
+  saved as `data/raw/bls/ap-items.json`. On 2026-11-21 all 140 food items were fetched for 2025 and 2026
+  (`data/raw/bls/ap-scan.json`); 52 have data in 2026. Every one that matches a SmartBite food and has 10 of the 12 months is used. The
+  others are foods SmartBite does not have (flour, white bread, bacon, coffee and so on) or cuts that are not a match.
+- Period: November 2025 to October 2026 (12 months). October 2025 is outside it; the API marks that month "Data
+  unavailable due to the 2025 lapse in appropriations". Most foods have all 12 months; potatoes, strawberries and
+  canned corn have 11.
 - Method: average prices of the items the BLS prices for the Consumer Price Index, per stated unit (per lb, per dozen
   eggs, per gallon of milk, per 8 or 12 oz).
 
+### USDA ERS
+
+- Data product: https://www.ers.usda.gov/data-products/fruit-and-vegetable-prices (updated 2025-12-09; the current
+  files hold 2023 data, the item tables say "2023 Circana OmniMarket Core Outlets data").
+- Files used, downloaded 2026-11-21 with `User-Agent: SmartBite` only, saved in `data/raw/ers/`:
+  - https://www.ers.usda.gov/media/6210/all-fruits-average-prices-csv-format.csv
+  - https://www.ers.usda.gov/media/6240/all-vegetables-average-prices-csv-format.csv
+- Method (documentation page): the average retail price per pound is total dollar sales over total pounds sold in a
+  sample of stores that report weekly sales to Circana (grocery stores, supermarkets, supercenters, club stores,
+  convenience and drug stores), over a calendar year, all brands and pack sizes, organic products left out.
+- Moved to the BLS period with the CPI: a 2023 price x the mean CPI-U index (U.S. city average, not seasonally
+  adjusted) of the food's group over November 2025 to October 2026 / its mean over 2023. Groups: fresh fruits
+  (CUUR0000SEFK), fresh vegetables (CUUR0000SEFL; the ERS vegetables file, avocados included), canned fruits and
+  vegetables (CUUR0000SEFM01), frozen fruits and vegetables (CUUR0000SEFM02) and other processed, dried included
+  (CUUR0000SEFM03). The factors on 2026-11-21 were 0.997 (frozen) to 1.081 (canned); each record keeps its
+  `ers_price_per_lb` and `cpi_factor`. The index series are saved as `data/raw/bls/cpi.json`. ERS warns that its yearly
+  files are not made to compare years with each other; SmartBite uses only the latest year and takes the change over
+  time from the CPI, not from older ERS files.
+
 ### Reuse terms
 
-Works of the U.S. federal government are not subject to copyright in the United States (17 U.S.C. 105), so BLS data
-are in the public domain; the BLS asks for a citation, given above. (The BLS copyright page could not be read from the
-build machine: www.bls.gov answered 403.)
+- BLS: works of the U.S. federal government are not subject to copyright in the United States (17 U.S.C. 105), so BLS
+  data are in the public domain; the BLS asks for a citation, given above. (The BLS copyright page could not be read
+  from the build machine: www.bls.gov answered 403.)
+- ERS: the data.gov catalog entry for "Fruit and Vegetable Prices" (https://catalog.data.gov/dataset/fruit-and-vegetable-prices,
+  publisher Economic Research Service, read 2026-11-21) gives the licence as CC0 1.0
+  (https://creativecommons.org/publicdomain/zero/1.0/) and access as public. The ERS website policy page refers to the
+  USDA site policies, which answered 403 to `User-Agent: SmartBite` and were not read. SmartBite cites ERS as asked
+  above and does not attribute the figures to Circana.
 
 ### How the prices are made
 
-`data/build/build_prices_us.py --download` fetches the mapped series from the API (one request per 25 series) and
-saves the reply; the build then reads the saved file. Each food maps by hand to one series in
-`data/build/prices-map-us.json`, with its unit: per lb as 453.6 g, ounces as stated, milk per gallon (3.785 l, per kg
-with the density used for the pack sizes) and eggs per dozen (per egg). The price is the plain mean of the monthly
-averages with data in the latest 12 calendar months; a food needs at least 10. Match quality: 9 exact and 9
-close matches get a price (18 foods); dried lentils (dried beans only), oranges (9 of 12 months) and wholemeal
-bread (7 of 12) are broad matches kept to say why they have none. The BLS API returned no 2025 or 2026 data for the
-apple, broccoli, pepper, onion, carrot, cucumber, canned tuna and peanut butter series: those foods have no estimate.
+`data/build/build_prices_us.py --download` fetches the mapped BLS series and CPI series from the API (one request per
+25 series) and the two ERS files, and saves them; the build then reads the saved files. Each of the 139 foods is in
+`data/build/prices-map-us.json`, with a BLS series or an ERS item (group, item, form) when one exists, and its unit: per
+lb as 453.6 g, ounces as stated, milk per gallon (3.785 l, per kg with the density used for the pack sizes) and eggs per
+dozen (per egg). A BLS price is the plain mean of the monthly averages with data in the latest 12 calendar months; a
+food needs at least 10. A BLS match wins over an ERS one, since it is current. Fresh and frozen are separate ERS forms
+and are never mixed. Match quality: 40 exact and 13 close matches get a price (53 foods: 19 BLS, 34 ERS); 15 broad
+matches and 71 foods with nothing to match have none, each with its reason in the map. Broad, for example: wholemeal
+bread (BLS whole wheat bread has 7 of the 12 months), chicken thigh (only bone-in chicken legs), Greek yogurt (only all
+yogurt), kalamata olives (ERS canned olives are mostly ripe black olives). The BLS API has no 2025 or 2026 data for
+apples, broccoli, peppers, onions, carrots, cucumbers, canned tuna, peanut butter, scallions and precooked rice; ERS
+prices the fruits and vegetables among them.
 
 ### Caveats
 
-- Fewer foods than the other countries: the BLS prices about 60 food items, and many fresh items are no longer
-  published.
-- Per-lb prices of loose fruit are for the whole fruit; SmartBite weighs the part you eat (a lemon is 58 g), so the
-  estimate for one lemon or banana is on the low side.
-- Close matches mix subtypes (low-fat, reduced fat and skim milk together; any yogurt for 0% plain; all dried beans
-  for chickpeas; cheddar for grated cheese).
+- ERS prices are a 2023 average moved forward with a group index, not prices measured in the period. A food whose price
+  moved unlike its group (for example eggs or avocados in a bad harvest year) can be off.
+- Per-lb prices of loose fruit and vegetables are for the whole item as sold; SmartBite weighs the part you eat (a lemon
+  is 58 g, an avocado 136 g), so the estimate for one piece is on the low side.
+- Canned food: SmartBite pack sizes are drained weight; BLS and ERS weights are probably net weight, so estimates for
+  canned beans, corn, tomatoes and artichokes can be low.
+- Close matches mix subtypes (low-fat, reduced fat and skim milk together; any yogurt for 0% plain; all dried beans for
+  chickpeas; cheddar for grated cheese; all canned tomatoes for crushed; great northern beans for white beans; canned
+  artichokes for hearts; butternut squash for pumpkin).
 - U.S. city average only; the BLS also publishes four regions, not used yet.
-- Rebuild every quarter or so: the BLS publishes monthly with the CPI.
+- Rebuild every quarter or so: the BLS publishes monthly with the CPI; ERS updates its file about once a year (check
+  the year in the item tables and update `ERS_YEAR` in the build).
 
 Rebuild:
 

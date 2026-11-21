@@ -1,145 +1,583 @@
 {
  "country": "US",
  "currency": "USD",
- "source": "U.S. Bureau of Labor Statistics, Average Price Data (U.S. city average)",
+ "source": "U.S. Bureau of Labor Statistics, Average Price Data (U.S. city average); USDA Economic Research Service, Fruit and Vegetable Prices (2023)",
  "source_url": "https://www.bls.gov/cpi/factsheets/average-prices.htm",
+ "ers_source_url": "https://www.ers.usda.gov/data-products/fruit-and-vegetable-prices",
  "files": [
-  "ap.json"
+  "ap.json",
+  "cpi.json",
+  "all-fruits-average-prices.csv",
+  "all-vegetables-average-prices.csv"
  ],
- "fetched": "2026-11-03",
- "period_from": "2025-10",
- "period_to": "2026-09",
+ "fetched": "2026-11-21",
+ "period_from": "2025-11",
+ "period_to": "2026-10",
  "months": 12,
- "built": "2026-11-03",
- "note": "Average price in U.S. cities (BLS, prices collected for the Consumer Price Index), the mean of the monthly averages in the period; October 2025 has no data (2025 lapse in appropriations). Averages over brands and stores; not a store's price. Per kg from per lb (453.6 g) or the stated ounces; milk per gallon (3.785 l) with the density used for the pack sizes. Prices are in USD (fields named _eur hold the table's currency).",
+ "built": "2026-11-21",
+ "note": "Average price in U.S. cities (BLS, prices collected for the Consumer Price Index), the mean of the monthly averages in the period; October 2025 has no data (2025 lapse in appropriations). Averages over brands and stores; not a store's price. Per kg from per lb (453.6 g) or the stated ounces; milk per gallon (3.785 l) with the density used for the pack sizes. Prices are in USD (fields named _eur hold the table's currency). Foods with source USDA ERS (fruits and vegetables the BLS does not price): the ERS 2023 average retail price per lb (Circana scanner data) times cpi_factor, the CPI-U index of the food's group averaged over the period divided by its 2023 average.",
  "foods": {
+  "apple": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Apples",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.8609,
+   "cpi_series": "CUUR0000SEFK",
+   "cpi_factor": 1.0358,
+   "months": 12,
+   "price_per_kg_eur": 4.249
+  },
+  "artichoke hearts": {
+   "match": "close",
+   "source": "USDA ERS",
+   "ers_item": "Artichoke",
+   "ers_form": "Canned",
+   "ers_year": 2023,
+   "ers_price_per_lb": 3.5051,
+   "cpi_series": "CUUR0000SEFM01",
+   "cpi_factor": 1.081,
+   "months": 12,
+   "price_per_kg_eur": 8.353
+  },
+  "avocado": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Avocados",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 2.2624,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 5.278
+  },
   "banana": {
    "match": "exact",
+   "source": "BLS",
    "bls_series": "APU0000711211",
    "bls_item": "Bananas, per lb.",
-   "months": 11,
-   "price_per_kg_eur": 1.44
+   "months": 12,
+   "price_per_kg_eur": 1.441
   },
   "beef steak": {
    "match": "close",
+   "source": "BLS",
    "bls_series": "APU0000703613",
    "bls_item": "Steak, sirloin, USDA Choice, boneless, per lb.",
-   "months": 11,
-   "price_per_kg_eur": 31.271
+   "months": 12,
+   "price_per_kg_eur": 31.209
+  },
+  "blueberries": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Blueberries",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 5.1325,
+   "cpi_series": "CUUR0000SEFK",
+   "cpi_factor": 1.0358,
+   "months": 12,
+   "price_per_kg_eur": 11.72
+  },
+  "broccoli": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Broccoli heads",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 3.0236,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 7.054
+  },
+  "brussels sprouts": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Brussels sprouts",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 3.0395,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 7.091
+  },
+  "canned red kidney beans": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Kidney beans",
+   "ers_form": "Canned",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.1999,
+   "cpi_series": "CUUR0000SEFM01",
+   "cpi_factor": 1.081,
+   "months": 12,
+   "price_per_kg_eur": 2.86
   },
   "canned sweetcorn": {
    "match": "close",
+   "source": "BLS",
    "bls_series": "APU0000714221",
    "bls_item": "Corn, canned, any style, all sizes, per lb.",
    "months": 11,
    "price_per_kg_eur": 2.812
   },
+  "canned white beans": {
+   "match": "close",
+   "source": "USDA ERS",
+   "ers_item": "Great northern beans",
+   "ers_form": "Canned",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.1673,
+   "cpi_series": "CUUR0000SEFM01",
+   "cpi_factor": 1.081,
+   "months": 12,
+   "price_per_kg_eur": 2.782
+  },
+  "carrot": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Carrots, raw whole",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.0055,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 2.346
+  },
+  "cauliflower": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Cauliflower heads",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 2.1244,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 4.956
+  },
+  "cherry tomatoes": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Tomatoes, grape and cherry",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 4.1556,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 9.694
+  },
   "chicken breast": {
    "match": "exact",
+   "source": "BLS",
    "bls_series": "APU0000FF1101",
    "bls_item": "Chicken breast, boneless, per lb.",
-   "months": 11,
-   "price_per_kg_eur": 9.185
+   "months": 12,
+   "price_per_kg_eur": 9.173
+  },
+  "crushed tomatoes": {
+   "match": "close",
+   "source": "USDA ERS",
+   "ers_item": "Tomatoes",
+   "ers_form": "Canned",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.2082,
+   "cpi_series": "CUUR0000SEFM01",
+   "cpi_factor": 1.081,
+   "months": 12,
+   "price_per_kg_eur": 2.879
+  },
+  "cucumber": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Cucumbers with peel",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.0928,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 2.549
   },
   "dried chickpeas": {
    "match": "close",
+   "source": "BLS",
    "bls_series": "APU0000714233",
    "bls_item": "Beans, dried, any type, all sizes, per lb.",
-   "months": 11,
+   "months": 12,
    "price_per_kg_eur": 3.701
+  },
+  "dried lentils": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Lentils",
+   "ers_form": "Dried",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.9577,
+   "cpi_series": "CUUR0000SEFM03",
+   "cpi_factor": 1.0654,
+   "months": 12,
+   "price_per_kg_eur": 4.598
   },
   "eggs": {
    "match": "exact",
+   "source": "BLS",
    "bls_series": "APU0000708111",
    "bls_item": "Eggs, grade A, large, per doz.",
-   "months": 11,
-   "price_per_unit_eur": 0.1993
+   "months": 12,
+   "price_per_unit_eur": 0.1988
+  },
+  "frozen broccoli": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Broccoli",
+   "ers_form": "Frozen",
+   "ers_year": 2023,
+   "ers_price_per_lb": 2.5725,
+   "cpi_series": "CUUR0000SEFM02",
+   "cpi_factor": 0.997,
+   "months": 12,
+   "price_per_kg_eur": 5.654
+  },
+  "frozen cauliflower": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Cauliflower",
+   "ers_form": "Frozen",
+   "ers_year": 2023,
+   "ers_price_per_lb": 2.7191,
+   "cpi_series": "CUUR0000SEFM02",
+   "cpi_factor": 0.997,
+   "months": 12,
+   "price_per_kg_eur": 5.976
+  },
+  "frozen green beans": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Green beans",
+   "ers_form": "Frozen",
+   "ers_year": 2023,
+   "ers_price_per_lb": 2.1733,
+   "cpi_series": "CUUR0000SEFM02",
+   "cpi_factor": 0.997,
+   "months": 12,
+   "price_per_kg_eur": 4.777
+  },
+  "frozen mixed berries": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Berries, mixed",
+   "ers_form": "Frozen",
+   "ers_year": 2023,
+   "ers_price_per_lb": 4.4484,
+   "cpi_series": "CUUR0000SEFM02",
+   "cpi_factor": 0.997,
+   "months": 12,
+   "price_per_kg_eur": 9.777
+  },
+  "frozen peas": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Green peas",
+   "ers_form": "Frozen",
+   "ers_year": 2023,
+   "ers_price_per_lb": 2.191,
+   "cpi_series": "CUUR0000SEFM02",
+   "cpi_factor": 0.997,
+   "months": 12,
+   "price_per_kg_eur": 4.816
+  },
+  "frozen spinach": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Spinach",
+   "ers_form": "Frozen",
+   "ers_year": 2023,
+   "ers_price_per_lb": 2.469,
+   "cpi_series": "CUUR0000SEFM02",
+   "cpi_factor": 0.997,
+   "months": 12,
+   "price_per_kg_eur": 5.427
   },
   "grated cheese": {
    "match": "close",
+   "source": "BLS",
    "bls_series": "APU0000710212",
    "bls_item": "Cheddar cheese, natural, per lb.",
-   "months": 11,
-   "price_per_kg_eur": 13.006
+   "months": 12,
+   "price_per_kg_eur": 13.048
+  },
+  "green beans": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Green beans",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 2.6592,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 6.204
+  },
+  "green bell pepper": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Green peppers",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.5033,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 3.507
   },
   "ground beef": {
    "match": "exact",
+   "source": "BLS",
    "bls_series": "APU0000703112",
    "bls_item": "Ground beef, 100% beef, per lb.",
-   "months": 11,
-   "price_per_kg_eur": 14.929
+   "months": 12,
+   "price_per_kg_eur": 14.926
+  },
+  "kale": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Kale",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 3.5711,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 8.331
+  },
+  "kiwi": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Kiwi",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 2.8347,
+   "cpi_series": "CUUR0000SEFK",
+   "cpi_factor": 1.0358,
+   "months": 12,
+   "price_per_kg_eur": 6.473
   },
   "lemon": {
    "match": "exact",
+   "source": "BLS",
    "bls_series": "APU0000711412",
    "bls_item": "Lemons, per lb.",
-   "months": 11,
-   "price_per_kg_eur": 4.515
+   "months": 12,
+   "price_per_kg_eur": 4.533
   },
   "lettuce": {
    "match": "close",
+   "source": "BLS",
    "bls_series": "APU0000FL2101",
    "bls_item": "Lettuce, romaine, per lb.",
-   "months": 11,
-   "price_per_kg_eur": 7.68
+   "months": 12,
+   "price_per_kg_eur": 7.681
   },
   "macaroni": {
    "match": "close",
+   "source": "BLS",
    "bls_series": "APU0000701322",
    "bls_item": "Spaghetti and macaroni, per lb.",
-   "months": 11,
-   "price_per_kg_eur": 2.962
+   "months": 12,
+   "price_per_kg_eur": 2.97
+  },
+  "mushrooms": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Mushrooms, whole",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 4.1545,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 9.692
+  },
+  "onion": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Onions",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.0622,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 2.478
+  },
+  "orange": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Oranges",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.4397,
+   "cpi_series": "CUUR0000SEFK",
+   "cpi_factor": 1.0358,
+   "months": 12,
+   "price_per_kg_eur": 3.287
   },
   "plain yogurt 0%": {
    "match": "close",
+   "source": "BLS",
    "bls_series": "APU0000FJ4101",
    "bls_item": "Yogurt, per 8 oz.",
-   "months": 11,
-   "price_per_kg_eur": 6.832
+   "months": 12,
+   "price_per_kg_eur": 6.872
+  },
+  "pomegranate": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Pomegranate",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 2.4756,
+   "cpi_series": "CUUR0000SEFK",
+   "cpi_factor": 1.0358,
+   "months": 12,
+   "price_per_kg_eur": 5.653
   },
   "pork loin": {
    "match": "close",
+   "source": "BLS",
    "bls_series": "APU0000704212",
    "bls_item": "Chops, boneless, per lb.",
-   "months": 11,
-   "price_per_kg_eur": 10.021
+   "months": 12,
+   "price_per_kg_eur": 10.016
   },
   "potato": {
    "match": "exact",
+   "source": "BLS",
    "bls_series": "APU0000712112",
    "bls_item": "Potatoes, white, per lb.",
-   "months": 10,
-   "price_per_kg_eur": 1.987
+   "months": 11,
+   "price_per_kg_eur": 2.005
+  },
+  "pumpkin": {
+   "match": "close",
+   "source": "USDA ERS",
+   "ers_item": "Butternut squash",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.271,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 2.965
+  },
+  "raspberries": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Raspberries",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 7.9668,
+   "cpi_series": "CUUR0000SEFK",
+   "cpi_factor": 1.0358,
+   "months": 12,
+   "price_per_kg_eur": 18.191
+  },
+  "red bell pepper": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Red peppers",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.7052,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 3.978
   },
   "rice": {
    "match": "exact",
+   "source": "BLS",
    "bls_series": "APU0000701312",
    "bls_item": "Rice, white, long grain, uncooked, per lb.",
-   "months": 11,
-   "price_per_kg_eur": 2.385
+   "months": 12,
+   "price_per_kg_eur": 2.388
   },
   "semi-skimmed milk": {
    "match": "close",
+   "source": "BLS",
    "bls_series": "APU0000FJ1101",
    "bls_item": "Milk, fresh, low-fat, reduced fat, skim, per gal.",
-   "months": 11,
-   "price_per_kg_eur": 0.91,
-   "price_per_litre_eur": 0.937,
+   "months": 12,
+   "price_per_kg_eur": 0.911,
+   "price_per_litre_eur": 0.938,
    "grams_per_ml": 1.03
+  },
+  "spinach": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Spinach, eaten raw",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 4.5004,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 10.499
   },
   "strawberries": {
    "match": "exact",
+   "source": "BLS",
    "bls_series": "APU0000711415",
    "bls_item": "Strawberries, dry pint, per 12 oz.",
-   "months": 10,
-   "price_per_kg_eur": 8.117
+   "months": 11,
+   "price_per_kg_eur": 8.129
+  },
+  "sugar": {
+   "match": "exact",
+   "source": "BLS",
+   "bls_series": "APU0000715211",
+   "bls_item": "Sugar, white, all sizes, per lb.",
+   "months": 12,
+   "price_per_kg_eur": 2.23
+  },
+  "sweet potato": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Sweet potatoes",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.1646,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 2.717
   },
   "tomato": {
    "match": "exact",
+   "source": "BLS",
    "bls_series": "APU0000712311",
    "bls_item": "Tomatoes, field grown, per lb.",
-   "months": 11,
+   "months": 12,
    "price_per_kg_eur": 4.594
+  },
+  "zucchini": {
+   "match": "exact",
+   "source": "USDA ERS",
+   "ers_item": "Zucchini",
+   "ers_form": "Fresh",
+   "ers_year": 2023,
+   "ers_price_per_lb": 1.6391,
+   "cpi_series": "CUUR0000SEFL",
+   "cpi_factor": 1.0582,
+   "months": 12,
+   "price_per_kg_eur": 3.824
   }
  }
 }
