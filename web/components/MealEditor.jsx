@@ -54,7 +54,8 @@ export function MealEditor({ slug, onClose, showToast }) {
     setError("");
     const recipe = editedRecipe(doc.recipe, { title, stepsText, rows });
     const foodsChanged = JSON.stringify(recipe.ingredients) !== JSON.stringify(doc.recipe.ingredients);
-    const { import_check: _checked, ...rest } = doc;
+    // An edit is the new starting point: an earlier Fit to packs can no longer be undone (decided 2026-11-20)
+    const { import_check: _checked, before_fit: _fit, ...rest } = doc;
     setBusy("save");
     try {
       const out = await evaluateMeal({ form: doc.form, profile: readProfile(), picked_idea: doc.picked_idea, recipe,

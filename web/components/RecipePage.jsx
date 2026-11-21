@@ -8,13 +8,16 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { withPrices } from "../lib/cartmath";
+import { productsFor, withPrices } from "../lib/cartmath";
+import { evaluateMeal } from "../lib/engine";
+import { fitInfo, fitPreview, fittedRecipe, undoFit, withFit } from "../lib/fitpacks";
 import { estimateTitle, periodText, toMeal, withTags } from "../lib/meal";
 import { tabUrl } from "../lib/site";
 import { packRow, totals } from "../lib/packs";
 import { PHOTO_MAKERS, photoMaker } from "../lib/llm";
 import { MAX_PHOTO_BYTES, deletePhoto, makePhoto, putPhoto, usePhoto, usePhotoJob } from "../lib/photos";
-import { COUNTRIES, ESTIMATES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, profileComplete, readLlm, readLocalMeals, saveLocalMeal, setLinePrice,
+import { COUNTRIES, ESTIMATES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, engineEstimates, profileComplete, readActiveProducts, readLlm, readLocalMeals,
+  readProfile, replaceLocalMeal, saveLocalMeal, setLinePrice,
   setSaved } from "../lib/store";
 import { encodeShare, sharePayload, shareUrl } from "../lib/share";
 import { AiLabel, Footer, Header, MealImage, RECIPE_TABLE as T, Toast, money, moneySymbol, grams, useCart, useCurrency, useEstimates, useEvaluations, useMeals, usePrices,
@@ -133,6 +136,9 @@ function RecipeView({ meal, meals, router }) {
   const budget = priced && !priced.pending ? priced.doc?.evaluation.pack : null;
   const lastPack = priced?.doc?.evaluation.pack;
   const optionalRows = rows.filter((r) => r.optional && r.packSize);
+  // Fit to packs (decided 2026-11-20) works on the saved meal at its own servings with the user's typed prices, the
+  // same meal its My Recipes card checks, so the card and this page always agree (Apply runs the engine again)
+  const fitMeal = meal.kind === "local" ? withPrices(meal, prices) : null;
   // Photo: made in Gemini from the prompt and dropped here; it stays in this browser
   const photo = usePhoto(meal.slug);
   const hasPhoto = Boolean(photo || meal.images.length);
@@ -217,6 +223,13 @@ function RecipeView({ meal, meals, router }) {
   const [editingMeal, setEditingMeal] = useState(false);
   useEffect(() => {
     if (meal.kind === "local" && new URLSearchParams(window.location.search).get("edit") === "1") setEditingMeal(true);
+  }, [meal.kind]);
+  // "?fit=1" from a My Recipes card opens Fit to packs (on phones, under the Shopping tab)
+  const [fitAtStart, setFitAtStart] = useState(false);
+  useEffect(() => {
+    if (meal.kind !== "local" || new URLSearchParams(window.location.search).get("fit") !== "1") return;
+    setFitAtStart(true);
+    setPhoneTab("shopping");
   }, [meal.kind]);
   const closeEditor = () => {
     setEditingMeal(false);
@@ -571,6 +584,9 @@ function RecipeView({ meal, meals, router }) {
                     </>}
                 {est ? <> Prices marked est. are estimates ({estLabel}). Type your store&apos;s price to replace one.</> : null}
               </p>
+              {fitMeal && (
+                <FitPacks meal={fitMeal} slug={meal.slug} showToast={showToast} autoOpen={fitAtStart} onChanged={(n) => setServings(n)} />
+              )}
               <details id="how-calculated" className="text-xs text-forest/70">
                 <summary className="cursor-pointer font-bold text-forest underline decoration-lime decoration-2 underline-offset-4 hover:text-lime-hover">How this is calculated</summary>
                 <div className="pt-2 space-y-1.5">
@@ -711,6 +727,113 @@ function PhoneTabs({ tab, setTab, tabs }) {
           <i className={`fa-solid ${icon} text-[11px]`} aria-hidden="true"></i>{text}
         </button>
       ))}
+    </div>
+  );
+}
+
+// Fit to packs (decided 2026-11-20): the Cart's "Adjust leftovers" (lib/adjust.js) on this one meal, previewed with
+// checkboxes. Apply changes the saved meal: new grams and servings, then the engine works out packs, macros and cost
+// again. Undo brings back the meal from before the first fit (lib/fitpacks.js). Meals made in this browser only.
+function FitPacks({ meal, slug, showToast, autoOpen, onChanged }) {
+  // { meal, before, after, suggestions, picked }: the meal as it was when the panel opened, so the preview and Apply
+  // use the same suggestions even if the page's engine run for prices lands in between
+  const [panel, setPanel] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [fitted, setFitted] = useState(false);
+  useEffect(() => { setFitted(Boolean(readLocalMeals()[slug]?.before_fit)); }, [slug, meal]);
+  const open = () => {
+    const info = fitInfo(meal);
+    setPanel({ ...info, meal, picked: info.suggestions.map((x) => x.id) });
+  };
+  const opened = useRef(false);
+  useEffect(() => {
+    if (autoOpen && !opened.current) { opened.current = true; open(); }
+  });
+  const toggle = (id) => {
+    const picked = panel.picked.includes(id) ? panel.picked.filter((x) => x !== id) : [...panel.picked, id];
+    setPanel({ ...panel, picked, after: fitPreview(panel.meal, picked) });
+  };
+  const apply = async () => {
+    const doc = readLocalMeals()[slug];
+    if (!doc) return;
+    setBusy(true);
+    try {
+      const { form, recipe } = fittedRecipe(doc, panel.meal, panel.picked);
+      const out = await evaluateMeal({ form, profile: readProfile(), picked_idea: doc.picked_idea, recipe,
+        products: productsFor(recipe, readActiveProducts()), ...engineEstimates() });
+      if (!replaceLocalMeal(slug, withFit(doc, out))) return showToast("Not saved: this browser blocks storage.");
+      setPanel(null);
+      onChanged(out.form.servings);
+      showToast("Meal fitted to packs. Macros, packs and cost are updated.");
+    } catch (e) {
+      showToast(`Not changed: ${e.message}`);
+    } finally {
+      setBusy(false);
+    }
+  };
+  const undo = () => {
+    const doc = readLocalMeals()[slug];
+    if (!doc?.before_fit) return;
+    const back = undoFit(doc);
+    if (!replaceLocalMeal(slug, back)) return showToast("Not saved: this browser blocks storage.");
+    setPanel(null);
+    onChanged(back.form.servings);
+    showToast("Back to the meal as it was before fitting.");
+  };
+  const left = (sum) => (sum.priced ? money(sum.leftCost) : grams(sum.wasteGrams));
+  const pct = (from, to) => `${to > from ? "+" : ""}${Math.round(((to - from) / from) * 100)}%`;
+  return (
+    <div id="fit-packs" className="space-y-3">
+      {!panel && (
+        <div className="flex flex-wrap items-center gap-3">
+          <button id="fit-packs-open" onClick={open} className="bg-forest hover:bg-forest-light text-lime font-bold text-xs px-5 py-2.5 rounded-full transition-all inline-flex items-center gap-2">
+            <i className="fa-solid fa-scale-balanced"></i><span>Fit to packs</span>
+          </button>
+          {fitted && (
+            <span className="text-xs text-forest/70">
+              Fitted to packs.{" "}
+              <button id="fit-packs-undo" onClick={undo} className="font-bold text-forest underline hover:text-lime-hover">Undo</button>
+            </span>
+          )}
+        </div>
+      )}
+      {panel && (
+        <div id="fit-packs-panel" className="bg-cream/50 border border-cream-dark rounded-2xl p-4 space-y-3">
+          {panel.suggestions.length === 0 ? (
+            <p className="text-xs text-forest/70">Nothing to change: with small gram changes (up to 15%) and servings, these leftovers are already as low as they go.</p>
+          ) : (
+            <>
+              <p className="text-xs text-forest/70">This changes the saved meal: grams and servings, then macros, packs and cost are worked out again. Protein stays at 90% of your target or more. You can undo it.</p>
+              {panel.suggestions.map((sg) => (
+                <label key={sg.id} className="flex items-start gap-3 text-xs text-forest cursor-pointer">
+                  <input type="checkbox" checked={panel.picked.includes(sg.id)} onChange={() => toggle(sg.id)} className="w-4 h-4 mt-0.5 accent-forest" />
+                  {sg.kind === "servings" ? (
+                    <span>{sg.from} → {sg.to} servings</span>
+                  ) : sg.kind === "fit" ? (
+                    <span>{sg.from} → {sg.to} servings, <span className="font-bold">{sg.ingredient}</span> {sg.gramsFrom} → {sg.gramsTo} g per serving ({sg.packs} {sg.packs === 1 ? "pack" : "packs"} in total, protein stays on target)</span>
+                  ) : (
+                    <span><span className="font-bold">{sg.ingredient}</span>:{" "}
+                      {sg.changes.map((c, i) => <span key={i}>{i ? "; " : ""}{c.from} → {c.to} g per serving ({pct(c.own, c.to)})</span>)}
+                    </span>
+                  )}
+                </label>
+              ))}
+              <p className="text-xs text-forest">
+                Leftovers <span className="font-bold">{left(panel.before)} → {left(panel.after)}</span>
+                {panel.before.priced ? <>{" · "}Purchase <span className="font-bold">{money(panel.before.bought)} → {money(panel.after.bought)}</span></> : null}
+              </p>
+            </>
+          )}
+          <div className="flex gap-2">
+            {panel.suggestions.length > 0 && (
+              <button id="fit-packs-apply" onClick={apply} disabled={busy || !panel.picked.length} className="bg-lime hover:bg-lime-hover disabled:opacity-50 text-forest font-bold text-xs px-5 py-2 rounded-full transition-all inline-flex items-center gap-2">
+                {busy && <i className="fa-solid fa-circle-notch fa-spin"></i>}<span>{busy ? "Working out the meal..." : "Apply"}</span>
+              </button>
+            )}
+            <button onClick={() => setPanel(null)} disabled={busy} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2">{panel.suggestions.length ? "Cancel" : "Close"}</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -3,7 +3,9 @@
 // meals plus what this browser keeps (cart, saved meals) in localStorage.
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { withPrices } from "../lib/cartmath";
+import { fitInfo } from "../lib/fitpacks";
 import { checkForm } from "../lib/form";
 import { makeMeal, progressText } from "../lib/flow";
 import { generateIdeas, photoMaker, reviseIdea } from "../lib/llm";
@@ -238,6 +240,12 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
         <div>
           <span className="text-[11px] font-bold uppercase tracking-wider text-forest/70">{label(m)}</span>
           <h3 className="font-serif font-bold text-base text-forest mt-0.5 leading-snug"><Link href={`/recipes/${m.slug}`} className="after:absolute after:inset-0">{m.name}</Link></h3>
+          {fits.has(m.slug) && (
+            <Link href={`/recipes/${m.slug}?fit=1`} aria-label={`Fit ${m.name} to packs`} className="relative z-10 mt-2 inline-flex items-center gap-1.5 bg-cream-card hover:bg-lime text-forest font-bold px-3 py-1.5 rounded-xl text-[11px] transition-colors">
+              <i className="fa-solid fa-scale-balanced text-[10px]"></i>
+              <span>Fit to packs</span>
+            </Link>
+          )}
         </div>
         <div className="pt-3 border-t border-cream-dark flex items-center justify-between">
           <span className="text-xs font-bold text-forest">Protein: {protein(m)}</span>
@@ -249,6 +257,10 @@ export default function SmartBite({ demoMeals = [], homeMeals = [], initialTab =
       </div>
     </div>
   );
+  // Fit to packs (decided 2026-11-20): the card shows the button only when code finds a change for that meal
+  const fits = useMemo(() => new Set(meals.filter((m) => m.kind === "local").filter((m) => {
+    try { return fitInfo(withPrices(m, prices)).suggestions.length > 0; } catch { return false; }
+  }).map((m) => m.slug)), [meals, prices]);
 
   return (
     <div className="desktop-frame flex flex-col justify-between">
