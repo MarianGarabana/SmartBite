@@ -8,6 +8,7 @@ import { productsFor } from "../lib/cartmath";
 import { evaluateMeal } from "../lib/engine";
 import { makeMeal, progressText } from "../lib/flow";
 import { editProblem, editedRecipe, tagsOf, withTags } from "../lib/meal";
+import { foodName, t, useLang } from "../lib/i18n";
 import { TagPicker } from "./MealTags";
 import { foods } from "../lib/names";
 import { engineEstimates, llmReady, readActiveProducts, readLocalMeals, readOwnLlm, readProfile, replaceLocalMeal } from "../lib/store";
@@ -17,6 +18,7 @@ const field = "bg-cream/50 border border-cream-dark rounded-xl px-3 py-2.5 text-
 const input = `w-full ${field}`;
 
 export function MealEditor({ slug, onClose, showToast }) {
+  const lang = useLang();
   const doc = useMemo(() => readLocalMeals()[slug], [slug]);
   const [title, setTitle] = useState(doc?.recipe.title || "");
   const [stepsText, setStepsText] = useState((doc?.recipe.steps || []).join("\n"));
@@ -43,14 +45,14 @@ export function MealEditor({ slug, onClose, showToast }) {
   // The meal tags ticked here (decided 2026-11-14) go on the saved recipe, also after a change with AI
   const done = (newDoc, message) => {
     const tagged = { ...newDoc, recipe: withTags(newDoc.recipe, tags) };
-    if (!replaceLocalMeal(slug, { ...tagged, ...kept })) return setError("Not saved: this browser blocks storage.");
+    if (!replaceLocalMeal(slug, { ...tagged, ...kept })) return setError(t("Not saved: this browser blocks storage."));
     showToast(message);
     onClose(true);
   };
 
   const save = async () => {
     const problem = editProblem({ title, stepsText, rows });
-    if (problem) return setError(problem);
+    if (problem) return setError(t(problem));
     setError("");
     const recipe = editedRecipe(doc.recipe, { title, stepsText, rows });
     const foodsChanged = JSON.stringify(recipe.ingredients) !== JSON.stringify(doc.recipe.ingredients);
@@ -62,11 +64,11 @@ export function MealEditor({ slug, onClose, showToast }) {
         products: productsFor(recipe, readActiveProducts()), ...engineEstimates() });
       // Same foods: the meal keeps everything else (photo too) and takes the new numbers, so a product saved since
       // (pack, price, label) counts after Save (decided 2026-11-14)
-      if (foodsChanged) done(out, "Meal saved. Macros, packs and cost are updated.");
-      else done({ ...rest, recipe, evaluation: out.evaluation }, "Meal saved.");
+      if (foodsChanged) done(out, t("Meal saved. Macros, packs and cost are updated."));
+      else done({ ...rest, recipe, evaluation: out.evaluation }, t("Meal saved."));
     } catch (e) {
-      if (!foodsChanged) return done({ ...rest, recipe }, "Meal saved."); // engine unreachable: name and steps still save
-      setError(`Not saved: ${e.message}`);
+      if (!foodsChanged) return done({ ...rest, recipe }, t("Meal saved.")); // engine unreachable: name and steps still save
+      setError(t("Not saved: {reason}", { reason: e.message }));
     } finally {
       setBusy(null);
     }
@@ -74,9 +76,9 @@ export function MealEditor({ slug, onClose, showToast }) {
 
   const askAi = async () => {
     const text = ask.trim();
-    if (!text) return setError("Write what you want to change.");
+    if (!text) return setError(t("Write what you want to change."));
     const llm = readOwnLlm(); // AI edits need the user's own key (not the free trial)
-    if (!llmReady(llm)) return setError("Add your AI key in your Profile first.");
+    if (!llmReady(llm)) return setError(t("Add your AI key in your Profile first."));
     setError("");
     setBusy("ai");
     const before = doc.picked_idea?.changes;
@@ -84,9 +86,9 @@ export function MealEditor({ slug, onClose, showToast }) {
     try {
       const out = await makeMeal({ idea, form: doc.form, profile: readProfile(), llm, products: readActiveProducts(),
         ...engineEstimates(), onProgress: setProgress });
-      done(out.meal, "Meal changed. Macros, packs and cost are updated.");
+      done(out.meal, t("Meal changed. Macros, packs and cost are updated."));
     } catch (e) {
-      setError(`Not changed: ${e.message}`);
+      setError(t("Not changed: {reason}", { reason: e.message }));
     } finally {
       setBusy(null);
       setProgress(null);
@@ -98,77 +100,77 @@ export function MealEditor({ slug, onClose, showToast }) {
       <div role="dialog" aria-modal="true" aria-labelledby="meal-editor-title" onClick={(e) => e.stopPropagation()}
         className="bg-white rounded-3xl p-6 sm:p-8 shadow-card border border-cream-dark max-w-2xl w-full space-y-6 max-h-[90vh] overflow-y-auto">
         <div>
-          <span className="font-script text-2xl text-forest font-bold">Edit meal</span>
+          <span className="font-script text-2xl text-forest font-bold">{t("Edit meal")}</span>
           <h2 id="meal-editor-title" className="font-serif text-3xl font-bold text-forest leading-snug">{doc.recipe.title}</h2>
-          <p className="text-xs text-forest/70 mt-1">Saved in this browser. Changing a food or its grams recomputes macros, packs and cost.</p>
+          <p className="text-xs text-forest/70 mt-1">{t("Saved in this browser. Changing a food or its grams recomputes macros, packs and cost.")}</p>
         </div>
         {doc.imported && doc.import_check && (
           <div id="import-check" className="bg-lime-soft rounded-2xl p-4 space-y-1.5 text-xs text-forest">
-            <p className="font-bold">Read from your pasted recipe. Check the foods and grams per serving, then save.</p>
+            <p className="font-bold">{t("Read from your pasted recipe. Check the foods and grams per serving, then save.")}</p>
             {doc.import_check.filter((c) => c.why === "unknown").length > 0 && (
-              <p>Not in SmartBite&apos;s food list, so left out of macros and cart: <span className="font-bold">
-                {doc.import_check.filter((c) => c.why === "unknown").map((c) => c.name).join(", ")}</span>. Swap one for a listed food if you can.</p>
+              <p>{t("Not in SmartBite's food list, so left out of macros and cart:")} <span className="font-bold">
+                {doc.import_check.filter((c) => c.why === "unknown").map((c) => c.name).join(", ")}</span>{t(". Swap one for a listed food if you can.")}</p>
             )}
             {doc.import_check.filter((c) => c.why === "guessed").length > 0 && (
-              <p>No amount in the recipe, so the grams are a guess: <span className="font-bold">
-                {doc.import_check.filter((c) => c.why === "guessed").map((c) => c.name).join(", ")}</span>.</p>
+              <p>{t("No amount in the recipe, so the grams are a guess:")} <span className="font-bold">
+                {doc.import_check.filter((c) => c.why === "guessed").map((c) => foodName(c.name)).join(", ")}</span>.</p>
             )}
           </div>
         )}
 
         <div className="space-y-4">
           <div>
-            <label htmlFor="edit-title" className={label}>Name</label>
+            <label htmlFor="edit-title" className={label}>{t("Name")}</label>
             <input id="edit-title" value={title} onChange={(e) => setTitle(e.target.value)} maxLength={100} className={input} />
           </div>
           <TagPicker value={tags} onChange={setTags} idPrefix="edit-tags" />
           <div>
-            <span className={label}>Foods per serving</span>
-            <datalist id="known-foods">{known.map((f) => <option key={f} value={f} />)}</datalist>
+            <span className={label}>{t("Foods per serving")}</span>
+            <datalist id="known-foods">{known.map((f) => <option key={f} value={f} label={lang === "es" ? foodName(f, "es") : undefined} />)}</datalist>
             <ul className="space-y-2">
               {rows.map((r) => (
                 <li key={r.key} className="flex items-center gap-2">
-                  <input aria-label="Food" list="known-foods" value={r.name} onChange={(e) => setRow(r.key, { name: e.target.value })}
-                    disabled={!r.isNew} placeholder="Pick a food" className={`${field} flex-1 min-w-0 disabled:opacity-80`} />
-                  <input aria-label={r.units_per_serving ? `${r.name} eggs per serving` : `${r.name || "Food"} grams per serving`} inputMode="decimal"
+                  <input aria-label={t("Food")} list="known-foods" value={r.isNew ? r.name : foodName(r.name)} onChange={(e) => setRow(r.key, { name: e.target.value })}
+                    disabled={!r.isNew} placeholder={t("Pick a food")} className={`${field} flex-1 min-w-0 disabled:opacity-80`} />
+                  <input aria-label={r.units_per_serving ? t("{food} eggs per serving", { food: foodName(r.name) }) : t("{food} grams per serving", { food: foodName(r.name) || t("Food") })} inputMode="decimal"
                     value={r.amount} onChange={(e) => setRow(r.key, { amount: e.target.value.replace(",", ".") })} className={`${field} w-20 shrink-0 text-right`} />
-                  <span className="text-xs text-forest/70 w-10 shrink-0">{r.units_per_serving ? "eggs" : "g"}</span>
-                  <button type="button" onClick={() => setRows(rows.filter((x) => x.key !== r.key))} aria-label={`Remove ${r.name || "food"}`}
+                  <span className="text-xs text-forest/70 w-10 shrink-0">{r.units_per_serving ? t("eggs") : "g"}</span>
+                  <button type="button" onClick={() => setRows(rows.filter((x) => x.key !== r.key))} aria-label={r.name ? t("Remove {food}", { food: foodName(r.name) }) : t("Remove food")}
                     className="w-9 h-9 shrink-0 rounded-xl text-forest/70 hover:text-red-600 hover:bg-cream-card"><i className="fa-regular fa-trash-can"></i></button>
                 </li>
               ))}
             </ul>
             <button type="button" onClick={addRow} className="mt-2 text-xs font-bold text-forest hover:text-lime-hover flex items-center gap-1.5">
-              <i className="fa-solid fa-plus text-[10px]"></i>Add a food
+              <i className="fa-solid fa-plus text-[10px]"></i>{t("Add a food")}
             </button>
-            <span className="block text-[11px] text-forest/70 mt-1">Pick from the list so SmartBite knows its nutrition and packs.</span>
+            <span className="block text-[11px] text-forest/70 mt-1">{t("Pick from the list so SmartBite knows its nutrition and packs.")}</span>
           </div>
           <div>
-            <label htmlFor="edit-steps" className={label}>Steps (one per line)</label>
+            <label htmlFor="edit-steps" className={label}>{t("Steps (one per line)")}</label>
             <textarea id="edit-steps" rows={6} value={stepsText} onChange={(e) => setStepsText(e.target.value)} className={`${input} leading-relaxed`} />
           </div>
           <button onClick={save} disabled={Boolean(busy)}
             className="w-full bg-lime hover:bg-lime-hover disabled:opacity-60 text-forest font-bold py-3.5 rounded-2xl text-sm transition-all shadow-glow flex items-center justify-center gap-2">
             <i className={`fa-solid ${busy === "save" ? "fa-circle-notch fa-spin" : "fa-check"}`}></i>
-            <span>{busy === "save" ? "Updating macros and packs..." : "Save changes"}</span>
+            <span>{busy === "save" ? t("Updating macros and packs...") : t("Save changes")}</span>
           </button>
         </div>
 
         <div className="space-y-3 pt-5 border-t border-cream-dark">
-          <label htmlFor="edit-ask" className={label}>Or ask the AI to change it</label>
-          <textarea id="edit-ask" rows={2} value={ask} onChange={(e) => setAsk(e.target.value)} placeholder="e.g. less rice, add spinach, make it spicier"
+          <label htmlFor="edit-ask" className={label}>{t("Or ask the AI to change it")}</label>
+          <textarea id="edit-ask" rows={2} value={ask} onChange={(e) => setAsk(e.target.value)} placeholder={t("e.g. less rice, add spinach, make it spicier")}
             className={input} />
           <button onClick={askAi} disabled={Boolean(busy)}
             className="bg-forest hover:bg-forest-light disabled:opacity-60 text-cream font-bold text-xs px-4 py-2.5 rounded-xl transition-colors flex items-center gap-2">
             <i className={`fa-solid ${busy === "ai" ? "fa-circle-notch fa-spin" : "fa-wand-magic-sparkles"}`}></i>
-            <span>{busy === "ai" ? progressText(progress) || "Rewriting the recipe..." : "Change with AI"}</span>
+            <span>{busy === "ai" ? progressText(progress) || t("Rewriting the recipe...") : t("Change with AI")}</span>
           </button>
-          <span className="block text-[11px] text-forest/70">Uses your AI key, like a new meal. Your change wins over the profile and the form.</span>
+          <span className="block text-[11px] text-forest/70">{t("Uses your AI key, like a new meal. Your change wins over the profile and the form.")}</span>
         </div>
 
         {error && <p role="alert" className="text-xs font-bold text-red-700">{error}</p>}
         <div className="flex justify-end">
-          <button onClick={() => onClose()} disabled={Boolean(busy)} className="text-xs font-bold text-forest/70 hover:text-forest disabled:opacity-50">Close</button>
+          <button onClick={() => onClose()} disabled={Boolean(busy)} className="text-xs font-bold text-forest/70 hover:text-forest disabled:opacity-50">{t("Close")}</button>
         </div>
       </div>
     </div>

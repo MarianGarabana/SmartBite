@@ -4,13 +4,14 @@
 // a profile asks first and downloads its current profile as a backup. Drop zone styles from the recipe photo drop
 // zone, confirm from the Profile page's (design freeze).
 import { useState } from "react";
+import { t, useLang } from "../lib/i18n";
 import { MAX_PROFILE_FILE, exportProfile, hasProfile, openProfile, readProfileFile } from "../lib/store";
 import { downloadJson } from "./Chrome";
 
-const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
 // onOpened(summary, ok) runs after the file replaced this browser's profile; showToast shows the errors
 export default function ProfileFileOpen({ id, onOpened, showToast }) {
+  useLang();
   const [dragging, setDragging] = useState(false);
   const [pending, setPending] = useState(null); // { fileName, data, summary, backup } waiting for the confirm
 
@@ -22,9 +23,9 @@ export default function ProfileFileOpen({ id, onOpened, showToast }) {
   };
   const read = async (file) => {
     if (!file) return;
-    if (file.size > MAX_PROFILE_FILE) return showToast("This file is too big for a profile file.");
+    if (file.size > MAX_PROFILE_FILE) return showToast(t("This file is too big for a profile file."));
     const out = readProfileFile(await file.text());
-    if (!out.ok) return showToast(out.error);
+    if (!out.ok) return showToast(t(out.error));
     const p = { fileName: file.name, ...out, backup: hasProfile() };
     if (p.backup) setPending(p);
     else open(p);
@@ -39,22 +40,27 @@ export default function ProfileFileOpen({ id, onOpened, showToast }) {
         className={`flex flex-col items-center justify-center gap-2 h-32 rounded-2xl border-2 border-dashed cursor-pointer transition-colors ${dragging ? "border-lime bg-lime-soft" : "border-cream-dark bg-cream/50 hover:bg-cream-card"}`}>
         <i className="fa-solid fa-file-import text-2xl text-forest/50"></i>
         {/* Phones and tablets cannot drag a file: they read "Tap to choose" */}
-        <span className="text-xs font-bold text-forest [@media(pointer:coarse)]:hidden">Drop your profile file here, or click to choose it</span>
-        <span className="text-xs font-bold text-forest hidden [@media(pointer:coarse)]:inline">Tap to choose your profile file</span>
-        <span className="text-[11px] text-forest/70">Named smartbite-profile-(date).json</span>
+        <span className="text-xs font-bold text-forest [@media(pointer:coarse)]:hidden">{t("Drop your profile file here, or click to choose it")}</span>
+        <span className="text-xs font-bold text-forest hidden [@media(pointer:coarse)]:inline">{t("Tap to choose your profile file")}</span>
+        <span className="text-[11px] text-forest/70">{t("Named smartbite-profile-(date).json")}</span>
         <input id={`${id}-open`} type="file" accept="application/json,.json" className="sr-only"
           onChange={(e) => { const f = e.target.files?.[0]; e.target.value = ""; read(f); }} />
       </label>
       {pending && (
         <div role="alertdialog" aria-labelledby={`${id}-confirm`} className="bg-cream rounded-xl p-4 space-y-3 border border-cream-dark">
           <p id={`${id}-confirm`} className="text-xs text-forest leading-relaxed">
-            <span className="font-bold">Replace this browser&apos;s profile with {pending.summary.name ? `${pending.summary.name}'s profile` : "the profile"} ({pending.fileName})?</span>{" "}
-            It has {plural(pending.summary.meals, "saved meal")} and {plural(pending.summary.products, "product")}{pending.summary.keys ? ", and an API key" : ""}.
-            Your current profile downloads first as a backup{pending.summary.keys ? "" : "; your API key stays as it is"}.
+            <span className="font-bold">{pending.summary.name
+              ? t("Replace this browser's profile with {name}'s profile ({file})?", { name: pending.summary.name, file: pending.fileName })
+              : t("Replace this browser's profile with the profile ({file})?", { file: pending.fileName })}</span>{" "}
+            {t("It has {meals} and {products}", {
+              meals: pending.summary.meals === 1 ? t("{n} saved meal", { n: 1 }) : t("{n} saved meals", { n: pending.summary.meals }),
+              products: pending.summary.products === 1 ? t("{n} product", { n: 1 }) : t("{n} products", { n: pending.summary.products }) })}
+            {pending.summary.keys ? t(", and an API key") : ""}.{" "}
+            {pending.summary.keys ? t("Your current profile downloads first as a backup.") : t("Your current profile downloads first as a backup; your API key stays as it is.")}
           </p>
           <div className="flex gap-3">
-            <button onClick={() => open(pending)} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-4 py-2 rounded-xl transition-colors">Replace</button>
-            <button onClick={() => setPending(null)} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2">Cancel</button>
+            <button onClick={() => open(pending)} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-4 py-2 rounded-xl transition-colors">{t("Replace")}</button>
+            <button onClick={() => setPending(null)} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2">{t("Cancel")}</button>
           </div>
         </div>
       )}

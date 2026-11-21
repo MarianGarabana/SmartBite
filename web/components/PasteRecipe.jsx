@@ -12,12 +12,17 @@ import { LINK_MESSAGE, MAX_PASTE, MAX_SERVINGS, importSlug, importedRequest, nee
 import { importRecipe } from "../lib/llm";
 import { toMeal } from "../lib/meal";
 import { fieldValue } from "../lib/profile";
+import { t, tx, useLang } from "../lib/i18n";
 import { engineEstimates, llmReady, readActiveProducts, readBudget, readOwnLlm, readProfile, saveLocalMeal } from "../lib/store";
 
 const label = "block text-xs font-bold uppercase tracking-wider text-forest/70 mb-1.5";
 const field = "bg-cream/50 border border-cream-dark rounded-xl px-3 py-2.5 text-sm text-forest focus:outline-none focus:border-forest";
 
+// lib/importer.js LINK_MESSAGE in the page language
+const linkText = () => t("That looks like a link. SmartBite does not open websites: open the page, select the ingredients and the steps, copy them, and paste the text here.");
+
 export function PasteRecipe({ onClose }) {
+  useLang();
   const router = useRouter();
   const [text, setText] = useState("");
   const [reply, setReply] = useState(null); // the model's reading, kept while the user picks servings
@@ -44,16 +49,16 @@ export function PasteRecipe({ onClose }) {
       const slug = importSlug(request.recipe.title);
       const doc = { ...out, imported: true, import_check: check };
       toMeal(slug, doc, { kind: "local" }); // throws if the page could not show it
-      if (!saveLocalMeal(slug, doc)) throw new Error("this browser blocks storage.");
+      if (!saveLocalMeal(slug, doc)) throw new Error(t("this browser blocks storage."));
       router.push(`/recipes/${slug}?edit=1`);
     } catch (e) {
-      setError(`Not opened: ${e.message}`);
+      setError(t("Not opened: {reason}", { reason: e.message }));
       setBusy(null);
     }
   };
 
   const read = async () => {
-    if (!text.trim()) return setError("Paste a recipe first.");
+    if (!text.trim()) return setError(t("Paste a recipe first."));
     setError("");
     setBusy("read");
     try {
@@ -65,7 +70,7 @@ export function PasteRecipe({ onClose }) {
       }
       await open(data, data.servings);
     } catch (e) {
-      setError(e.message === LINK_MESSAGE ? e.message : `Not read: ${e.message}`);
+      setError(e.message === LINK_MESSAGE ? linkText() : t("Not read: {reason}", { reason: e.message }));
       setBusy(null);
     }
   };
@@ -78,48 +83,48 @@ export function PasteRecipe({ onClose }) {
       <div role="dialog" aria-modal="true" aria-labelledby="paste-recipe-title" onClick={(e) => e.stopPropagation()}
         className="bg-white rounded-3xl p-6 sm:p-8 shadow-card border border-cream-dark max-w-2xl w-full space-y-5 max-h-[90vh] overflow-y-auto">
         <div>
-          <span className="font-script text-2xl text-forest font-bold">From any website or book</span>
-          <h2 id="paste-recipe-title" className="font-serif text-3xl font-bold text-forest leading-snug">Paste a recipe</h2>
-          <p className="text-xs text-forest/70 mt-1">Your AI reads the foods and amounts. SmartBite keeps the recipe as written and works out macros, packs and prices. You check the foods and grams before you save it.</p>
+          <span className="font-script text-2xl text-forest font-bold">{t("From any website or book")}</span>
+          <h2 id="paste-recipe-title" className="font-serif text-3xl font-bold text-forest leading-snug">{t("Paste a recipe")}</h2>
+          <p className="text-xs text-forest/70 mt-1">{t("Your AI reads the foods and amounts. SmartBite keeps the recipe as written and works out macros, packs and prices. You check the foods and grams before you save it.")}</p>
         </div>
 
         {!ready ? (
           <p role="alert" className="text-xs text-forest bg-lime-soft rounded-2xl p-4">
-            Reading a recipe uses your own AI key. <Link href="/profile" className="font-bold underline hover:text-lime-hover">Add your key in your Profile</Link> first.
+            {tx("Reading a recipe uses your own AI key. {link} first.", { link: <Link href="/profile" className="font-bold underline hover:text-lime-hover">{t("Add your key in your Profile")}</Link> })}
           </p>
         ) : !reply ? (
           <div className="space-y-3">
-            <label htmlFor="paste-text" className={label}>Recipe text</label>
+            <label htmlFor="paste-text" className={label}>{t("Recipe text")}</label>
             <textarea id="paste-text" rows={10} value={text} onChange={(e) => setText(e.target.value)} maxLength={MAX_PASTE} disabled={Boolean(busy)}
-              placeholder={"Paste the title, the ingredients and the steps.\n\ne.g.\nLentil soup\n1 onion, diced\n2 carrots\n1/2 lb red lentils\n..."}
+              placeholder={t("Paste the title, the ingredients and the steps.\n\ne.g.\nLentil soup\n1 onion, diced\n2 carrots\n1/2 lb red lentils\n...")}
               className={`w-full ${field} leading-relaxed`} />
-            <span className="block text-[11px] text-forest/70 -mt-1">Paste the text, not the link.</span>
+            <span className="block text-[11px] text-forest/70 -mt-1">{t("Paste the text, not the link.")}</span>
             <button onClick={read} disabled={Boolean(busy)}
               className="w-full bg-lime hover:bg-lime-hover disabled:opacity-60 text-forest font-bold py-3.5 rounded-2xl text-sm transition-all shadow-glow flex items-center justify-center gap-2">
               <i className={`fa-solid ${busy ? "fa-circle-notch fa-spin" : "fa-wand-magic-sparkles"}`}></i>
-              <span>{busy === "read" ? "Reading the recipe..." : busy === "engine" ? "Working out macros, packs and prices..." : "Read recipe"}</span>
+              <span>{busy === "read" ? t("Reading the recipe...") : busy === "engine" ? t("Working out macros, packs and prices...") : t("Read recipe")}</span>
             </button>
-            <span className="block text-[11px] text-forest/70">The text goes to your AI provider with your key, like a new meal. Nothing else about you is sent with it.</span>
+            <span className="block text-[11px] text-forest/70">{t("The text goes to your AI provider with your key, like a new meal. Nothing else about you is sent with it.")}</span>
           </div>
         ) : (
           <div className="space-y-3">
             <p className="text-sm text-forest"><span className="font-bold">{reply.title}</span>: {reply.servings
-              ? `the recipe makes ${reply.servings} servings. SmartBite plans up to ${MAX_SERVINGS}.`
-              : "the recipe does not say how many servings it makes."}</p>
-            <label htmlFor="paste-servings" className={label}>{reply.servings ? "How many servings do you want to cook?" : "How many servings does it make?"}</label>
+              ? t("the recipe makes {n} servings. SmartBite plans up to {max}.", { n: reply.servings, max: MAX_SERVINGS })
+              : t("the recipe does not say how many servings it makes.")}</p>
+            <label htmlFor="paste-servings" className={label}>{reply.servings ? t("How many servings do you want to cook?") : t("How many servings does it make?")}</label>
             <input id="paste-servings" type="number" min={1} max={MAX_SERVINGS} step={1} inputMode="numeric" value={servings}
               onChange={(e) => setServings(e.target.value)} disabled={Boolean(busy)} className={`${field} w-24 text-right`} />
-            <button onClick={() => servingsOk ? (setError(""), open(reply, cook)) : setError(`Pick 1 to ${MAX_SERVINGS} servings.`)} disabled={Boolean(busy)}
+            <button onClick={() => servingsOk ? (setError(""), open(reply, cook)) : setError(t("Pick 1 to {max} servings.", { max: MAX_SERVINGS }))} disabled={Boolean(busy)}
               className="w-full bg-lime hover:bg-lime-hover disabled:opacity-60 text-forest font-bold py-3.5 rounded-2xl text-sm transition-all shadow-glow flex items-center justify-center gap-2">
               <i className={`fa-solid ${busy ? "fa-circle-notch fa-spin" : "fa-arrow-right"}`}></i>
-              <span>{busy ? "Working out macros, packs and prices..." : "Continue"}</span>
+              <span>{busy ? t("Working out macros, packs and prices...") : t("Continue")}</span>
             </button>
           </div>
         )}
 
         {error && <p role="alert" className="text-xs font-bold text-red-700">{error}</p>}
         <div className="flex justify-end">
-          <button onClick={() => onClose()} disabled={Boolean(busy)} className="text-xs font-bold text-forest/70 hover:text-forest disabled:opacity-50">Close</button>
+          <button onClick={() => onClose()} disabled={Boolean(busy)} className="text-xs font-bold text-forest/70 hover:text-forest disabled:opacity-50">{t("Close")}</button>
         </div>
       </div>
     </div>

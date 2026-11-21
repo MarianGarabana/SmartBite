@@ -11,24 +11,26 @@ import { useEffect, useRef, useState } from "react";
 import { productsFor, withPrices } from "../lib/cartmath";
 import { evaluateMeal } from "../lib/engine";
 import { fitInfo, fitPreview, fittedRecipe, undoFit, withFit } from "../lib/fitpacks";
-import { estimateTitle, periodText, toMeal, withTags } from "../lib/meal";
+import { toMeal, withTags } from "../lib/meal";
+import { foodName, t, tx, useLang, useT } from "../lib/i18n";
 import { tabUrl } from "../lib/site";
 import { packRow, totals } from "../lib/packs";
 import { PHOTO_MAKERS, photoMaker } from "../lib/llm";
 import { MAX_PHOTO_BYTES, deletePhoto, makePhoto, putPhoto, usePhoto, usePhotoJob } from "../lib/photos";
-import { COUNTRIES, ESTIMATES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, engineEstimates, profileComplete, readActiveProducts, readLlm, readLocalMeals,
+import { ESTIMATES, MAX_PRICE_EUR, askPersist, deleteLocalMeal, engineEstimates, profileComplete, readActiveProducts, readLlm, readLocalMeals,
   readProfile, replaceLocalMeal, saveLocalMeal, setLinePrice,
   setSaved } from "../lib/store";
 import { encodeShare, sharePayload, shareUrl } from "../lib/share";
 import { AiLabel, Footer, Header, MealImage, RECIPE_TABLE as T, Toast, money, moneySymbol, grams, useCart, useCurrency, useEstimates, useEvaluations, useMeals, usePrices,
   useProducts, useToast } from "./Chrome";
-import { EditProductButton, ProductCell, ProductDialog } from "./ProductDialog";
+import { EditProductButton, ProductCell, ProductDialog, countryText, estimateTitle, periodText, productText } from "./ProductDialog";
 import { MealEditor } from "./MealEditor";
 import { SaveTagsDialog } from "./MealTags";
 
 // Demo meals come from the server; meals made in this browser are looked up in its storage
 export default function RecipePage({ slug, demoMeals }) {
   useCurrency();
+  useLang();
   const router = useRouter();
   const { meals, ready } = useMeals(demoMeals);
   const meal = meals.find((m) => m.slug === slug);
@@ -39,6 +41,7 @@ export default function RecipePage({ slug, demoMeals }) {
 // Small "price per pack" field for a shopping row with a pack size; an empty field removes the price. Also meant for
 // the Cart's "no price" cell. An estimated price shows as the placeholder until the user types one.
 export function PriceInput({ row, prices, onBlocked, onFocus, onBlur }) {
+  useLang();
   const value = row.priceKey ? prices[row.priceKey] : undefined;
   const [draft, setDraft] = useState(value == null ? "" : String(value));
   // A price changed elsewhere (another meal, another tab) shows here, but typing "1." is never rewritten to "1"
@@ -54,8 +57,9 @@ export function PriceInput({ row, prices, onBlocked, onFocus, onBlur }) {
   };
   return (
     <input type="text" inputMode="decimal" value={draft} onChange={(e) => change(e.target.value)} onFocus={onFocus} onBlur={onBlur}
-      placeholder={row.estimate ? row.packPrice.toFixed(2) : `${moneySymbol()} / pack`} title={row.estimate ? estimateTitle(row.pricePeriod, row.priceRegion) : undefined}
-      aria-label={`Price for one pack of ${row.product || row.ingredient}${row.estimate ? ` (estimated ${money(row.packPrice)})` : ""}`}
+      placeholder={row.estimate ? row.packPrice.toFixed(2) : t("{symbol} / pack", { symbol: moneySymbol() })} title={row.estimate ? estimateTitle(row.pricePeriod, row.priceRegion) : undefined}
+      aria-label={row.estimate ? t("Price for one pack of {name} (estimated {price})", { name: productText(row) || foodName(row.ingredient), price: money(row.packPrice) })
+        : t("Price for one pack of {name}", { name: productText(row) || foodName(row.ingredient) })}
       className="w-20 bg-cream/50 border border-cream-dark rounded-xl px-2 py-1 text-xs text-forest text-right font-normal placeholder-forest/40 focus:outline-none focus:border-forest" />
   );
 }
@@ -78,6 +82,7 @@ function usePricedEvaluation(meal, servings, products, estimates) {
 }
 
 function MissingMeal({ meals, ready, router }) {
+  useLang();
   const { toast, showToast } = useToast();
   const { cart } = useCart(showToast, meals);
   const go = (tab) => router.push(tab === "home" ? "/" : `/?tab=${tab}`);
@@ -88,10 +93,10 @@ function MissingMeal({ meals, ready, router }) {
         {ready && (
           <section className="tab-page max-w-[1360px] mx-auto px-8">
             <div className="bg-white rounded-3xl p-12 text-center border border-cream-dark space-y-4 max-w-xl mx-auto my-12">
-              <h3 className="font-serif font-bold text-xl text-forest">This meal is not here</h3>
-              <p className="text-xs text-forest/70">It may have been deleted, or it was made in another browser. Meals you make stay in the browser that made them.</p>
+              <h3 className="font-serif font-bold text-xl text-forest">{t("This meal is not here")}</h3>
+              <p className="text-xs text-forest/70">{t("It may have been deleted, or it was made in another browser. Meals you make stay in the browser that made them.")}</p>
               <button onClick={() => go("recipes")} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all">
-                Back to recipes
+                {t("Back to recipes")}
               </button>
             </div>
           </section>
@@ -104,6 +109,9 @@ function MissingMeal({ meals, ready, router }) {
 }
 
 function RecipeView({ meal, meals, router }) {
+  const tr = useT(); // t is the totals below
+  // Spanish "Carbohidratos" is wider than a macro tile at every width, so the tile says "Hidratos" (labels say both)
+  const lang = useLang();
   // Opens at the servings the meal was made for: its steps, packs and budget are for those (1 to 8, the stepper's range)
   const [servings, setServings] = useState(Math.min(8, Math.max(1, meal.servings || 1)));
   const [editing, setEditing] = useState(null); // shopping row whose product is being edited
@@ -174,17 +182,17 @@ function RecipeView({ meal, meals, router }) {
     window.addEventListener("paste", onPaste);
     return () => window.removeEventListener("paste", onPaste);
   });
-  const copyPrompt = () => navigator.clipboard.writeText(meal.photoPrompt).then(() => showToast("Prompt copied. Paste it in Gemini."))
-    .catch(() => showToast("Could not copy. Select the prompt and copy it."));
+  const copyPrompt = () => navigator.clipboard.writeText(meal.photoPrompt).then(() => showToast(tr("Prompt copied. Paste it in Gemini.")))
+    .catch(() => showToast(tr("Could not copy. Select the prompt and copy it.")));
   const uploadPhoto = async (file) => {
     if (!file) return;
-    if (!file.type.startsWith("image/")) return showToast("That is not an image.");
-    if (file.size > MAX_PHOTO_BYTES) return showToast("Not saved: image is larger than 20 MB.");
+    if (!file.type.startsWith("image/")) return showToast(tr("That is not an image."));
+    if (file.size > MAX_PHOTO_BYTES) return showToast(tr("Not saved: image is larger than 20 MB."));
     setUploading(true);
     const ok = await putPhoto(meal.slug, file);
     setUploading(false);
-    if (!ok) return showToast("Not saved: this browser blocks storage.");
-    showToast("Photo saved in this browser.");
+    if (!ok) return showToast(tr("Not saved: this browser blocks storage."));
+    showToast(tr("Photo saved in this browser."));
     setPhotoOpen(false);
   };
   // Share recipe (decided 2026-11-09): a link with the recipe only (lib/share.js); phones get their share menu, other
@@ -194,7 +202,7 @@ function RecipeView({ meal, meals, router }) {
     try {
       url = shareUrl(window.location.origin, await encodeShare(sharePayload(meal)));
     } catch {
-      return showToast("Could not make the link for this recipe.");
+      return showToast(tr("Could not make the link for this recipe."));
     }
     if (touch && typeof navigator.share === "function") {
       try {
@@ -203,8 +211,8 @@ function RecipeView({ meal, meals, router }) {
         if (e?.name === "AbortError") return; // closed the share menu
       }
     }
-    navigator.clipboard.writeText(url).then(() => showToast("Link copied. It holds the recipe only, nothing about you."))
-      .catch(() => showToast("Could not copy the link."));
+    navigator.clipboard.writeText(url).then(() => showToast(tr("Link copied. It holds the recipe only, nothing about you.")))
+      .catch(() => showToast(tr("Could not copy the link.")));
   };
   // A shared recipe opened by someone with no setup gets the "Make your own" card, like the demo (read after mount)
   const [setUp, setSetUp] = useState(true);
@@ -217,7 +225,7 @@ function RecipeView({ meal, meals, router }) {
     const ok = !!doc && saveLocalMeal(meal.slug, { ...doc, recipe: withTags(doc.recipe, tags) }) && setSaved(meal.slug, true);
     setSavingTags(false);
     if (ok) askPersist();
-    showToast(ok ? `Saved "${meal.name}" in My Recipes, in this browser.` : "Not saved: this browser blocks storage.");
+    showToast(ok ? tr("Saved \"{name}\" in My Recipes, in this browser.", { name: meal.name }) : tr("Not saved: this browser blocks storage."));
   };
   // Edit meal (meals made in this browser only, decided 2026-11-09); "?edit=1" from a My Recipes card opens it
   const [editingMeal, setEditingMeal] = useState(false);
@@ -245,7 +253,7 @@ function RecipeView({ meal, meals, router }) {
       return setTimeout(() => setConfirmDelete(false), 4000);
     }
     if (Date.now() - askedAt.current < 500) return; // a double-click is not a confirmation
-    if (!deleteLocalMeal(meal.slug)) return showToast("Not deleted. Try again.");
+    if (!deleteLocalMeal(meal.slug)) return showToast(tr("Not deleted. Try again."));
     await deletePhoto(meal.slug);
     router.push("/?tab=recipes");
   };
@@ -253,8 +261,9 @@ function RecipeView({ meal, meals, router }) {
   // Estimates in the budget: where they come from, for the note under the table
   const est = lastPack?.prices_estimated ? lastPack.estimate_source : null;
   const estInfo = est ? ESTIMATES[est.country] || ESTIMATES.ES : null;
-  const estPlace = est?.region_name ? `${est.region_name} ${estInfo.kind} (${COUNTRIES.find((c) => c.id === est.country)?.label || est.country}'s where the region has none)`
-    : est ? `${COUNTRIES.find((c) => c.id === est.country)?.label || est.country} ${estInfo.kind}` : null;
+  const estPlace = est?.region_name ? tr("{region} {kind} ({country}'s where the region has none)", { region: est.region_name,
+    kind: tr(estInfo.kind), country: countryText(est.country) })
+    : est ? tr("{place} {kind}", { place: countryText(est.country), kind: tr(estInfo.kind) }) : null;
   const estLabel = est ? `${estPlace}, ${estInfo.source}, ${periodText(est.period_from, est.period_to)}` : null;
 
   return (
@@ -267,10 +276,10 @@ function RecipeView({ meal, meals, router }) {
             <div className="flex items-center justify-between">
               <button onClick={() => go("recipes")} className="text-xs font-bold text-forest/70 hover:text-forest flex items-center gap-1.5">
                 <i className="fa-solid fa-arrow-left text-[10px]"></i>
-                <span>Back to recipes</span>
+                <span>{tr("Back to recipes")}</span>
               </button>
               <button id="share-recipe" onClick={shareRecipe} className="bg-white hover:bg-cream-dark text-forest font-bold text-xs px-4 py-2 rounded-xl transition-colors border border-cream-dark flex items-center gap-2">
-                <i className="fa-solid fa-share-nodes"></i><span>Share recipe</span>
+                <i className="fa-solid fa-share-nodes"></i><span>{tr("Share recipe")}</span>
               </button>
             </div>
 
@@ -282,16 +291,16 @@ function RecipeView({ meal, meals, router }) {
                   <MealImage meal={meal} label labelTopOnPhones eager className="w-full h-full object-cover" textClass="text-2xl" />
                   <button onClick={() => setPhotoOpen(!photoOpen)}
                     className="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-forest text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-soft">
-                    <i className="fa-solid fa-camera mr-1.5"></i>{photoOpen ? "Close" : "Replace photo"}
+                    <i className="fa-solid fa-camera mr-1.5"></i>{photoOpen ? tr("Close") : tr("Replace photo")}
                   </button>
                 </div>
               )}
               <div className={`${hasPhoto ? "md:col-span-7" : "md:col-span-12"} space-y-4`}>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-bold uppercase tracking-widest text-forest bg-lime-soft px-3 py-1 rounded-full">{meal.kind === "demo" ? "Demo Meal" : meal.shared ? "Shared recipe" : meal.imported ? "Imported recipe" : "Chosen Custom Recipe"}</span>
+                  <span className="text-xs font-bold uppercase tracking-widest text-forest bg-lime-soft px-3 py-1 rounded-full">{meal.kind === "demo" ? tr("Demo Meal") : meal.shared ? tr("Shared recipe") : meal.imported ? tr("Imported recipe") : tr("Chosen Custom Recipe")}</span>
                   <AiLabel text={meal.imported ? "Read by AI" : "AI-generated"} />
                   {meal.fixture && (
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full">Test fixture</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full">{tr("Test fixture")}</span>
                   )}
                 </div>
                 <h2 id="picked-meal-title" className="font-serif text-3xl font-bold text-forest">{meal.name}</h2>
@@ -303,41 +312,41 @@ function RecipeView({ meal, meals, router }) {
                       <span id="servings-count" className="flex-1 text-center text-xs font-bold text-forest">{servings}</span>
                       <button onClick={() => setServings(Math.min(8, servings + 1))} className="w-8 h-9 text-forest font-bold hover:bg-cream-dark">+</button>
                     </span>
-                    <span>{servings === 1 ? "Serving" : "Servings"}</span>
+                    <span>{servings === 1 ? tr("Serving") : tr("Servings")}</span>
                   </span>
                   {meal.time ? (
-                    <span><i className="fa-regular fa-clock mr-1 text-lime-hover"></i><span>{meal.time}</span> Mins</span>
+                    <span><i className="fa-regular fa-clock mr-1 text-lime-hover"></i><span>{meal.time}</span> {tr("Mins")}</span>
                   ) : null}
                 </div>
 
                 {/* 4 Macro Tiles (per serving), and fiber for meals that have it */}
                 <div className={`grid ${fiber ? "grid-cols-3 sm:grid-cols-5" : "grid-cols-4"} gap-3 pt-2`}>
                   <div className="bg-cream-card p-3 rounded-2xl text-center border border-cream-dark">
-                    <span className="text-[10px] uppercase font-bold text-forest/70 block">Calories</span>
+                    <span className="text-[10px] uppercase font-bold text-forest/70 block">{tr("Calories")}</span>
                     <span id="tile-kcal" className="font-bold text-base text-forest">{meal.macros.kcal}</span>{" "}
                     <span className="text-[10px] text-forest/70">kcal</span>
                   </div>
                   <div className="bg-lime-soft p-3 rounded-2xl text-center border border-lime/30">
-                    <span className="text-[10px] uppercase font-bold text-forest/70 block">Protein</span>
+                    <span className="text-[10px] uppercase font-bold text-forest/70 block">{tr("Protein")}</span>
                     <span id="tile-protein" className="font-bold text-base text-forest">{meal.macros.protein}</span>
                   </div>
                   <div className="bg-cream-card p-3 rounded-2xl text-center border border-cream-dark">
-                    <span className="text-[10px] uppercase font-bold text-forest/70 block">Carbs</span>
+                    <span className="text-[10px] uppercase font-bold text-forest/70 block">{tr("Carbs")}</span>
                     <span id="tile-carbs" className="font-bold text-base text-forest">{meal.macros.carbs}</span>
                   </div>
                   <div className="bg-cream-card p-3 rounded-2xl text-center border border-cream-dark">
-                    <span className="text-[10px] uppercase font-bold text-forest/70 block">Fat</span>
+                    <span className="text-[10px] uppercase font-bold text-forest/70 block">{tr("Fat")}</span>
                     <span id="tile-fat" className="font-bold text-base text-forest">{meal.macros.fat}</span>
                   </div>
                   {fiber ? (
                     <div className="col-span-2 sm:col-span-1 bg-cream-card p-3 rounded-2xl text-center border border-cream-dark">
-                      <span className="text-[10px] uppercase font-bold text-forest/70 block">Fiber</span>
+                      <span className="text-[10px] uppercase font-bold text-forest/70 block">{tr("Fiber")}</span>
                       <span id="tile-fiber" className="font-bold text-base text-forest">{fiber.grams}</span>
-                      <span id="tile-fiber-pct" className="text-[10px] text-forest/70 block">{fiber.pct}% of 25 g</span>
+                      <span id="tile-fiber-pct" className="text-[10px] text-forest/70 block">{tr("{pct}% of 25 g", { pct: fiber.pct })}</span>
                     </div>
                   ) : null}
                 </div>
-                <p className="text-[11px] text-forest/70">{meal.imported ? "AI read the foods and grams from the pasted recipe." : "AI picked the foods and grams."} Macros and packs are computed in code.</p>
+                <p className="text-[11px] text-forest/70">{meal.imported ? tr("AI read the foods and grams from the pasted recipe.") : tr("AI picked the foods and grams.")} {tr("Macros and packs are computed in code.")}</p>
               </div>
             </div>
 
@@ -348,54 +357,54 @@ function RecipeView({ meal, meals, router }) {
             {showPhotoCard && (
               <div id="photo-card" className={`bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-5${phoneHide("recipe")}`}>
                 <div>
-                  <span className="font-script text-2xl text-forest font-bold">Your photo</span>
+                  <span className="font-script text-2xl text-forest font-bold">{tr("Your photo")}</span>
                   <h3 className="font-serif text-2xl font-bold text-forest">
-                    {photoMaking ? "Making your photo" : autoPhoto ? `Make the photo with ${imageKey.maker.label}` : "Make the photo in Gemini"}
+                    {photoMaking ? tr("Making your photo") : autoPhoto ? tr("Make the photo with {maker}", { maker: imageKey.maker.label }) : tr("Make the photo in Gemini")}
                   </h3>
                 </div>
                 {photoMaking ? (
                   <div className="flex items-center gap-3 bg-cream-card rounded-2xl p-4 border border-cream-dark" role="status">
                     <i className="fa-solid fa-circle-notch fa-spin text-forest/60"></i>
-                    <p className="text-xs text-forest">{imageKey?.maker.label || "Your AI provider"} is making the photo from your recipe with your key. It usually takes under a minute.</p>
+                    <p className="text-xs text-forest">{tr("{maker} is making the photo from your recipe with your key. It usually takes under a minute.", { maker: imageKey?.maker.label || tr("Your AI provider") })}</p>
                   </div>
                 ) : autoPhoto ? (
                   <div className="space-y-3">
                     <button onClick={startPhoto} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
-                      <i className="fa-solid fa-wand-magic-sparkles"></i><span>{hasPhoto ? "Make a new photo" : "Make photo"}</span>
+                      <i className="fa-solid fa-wand-magic-sparkles"></i><span>{hasPhoto ? tr("Make a new photo") : tr("Make photo")}</span>
                     </button>
                   </div>
                 ) : null}
                 {touch && !photoMaking && (
                   <label className="inline-flex bg-forest hover:bg-forest-light text-cream font-bold text-xs px-4 py-2.5 rounded-xl transition-colors items-center gap-2 cursor-pointer">
-                    <i className="fa-solid fa-camera"></i><span>Take a photo of your plate</span>
+                    <i className="fa-solid fa-camera"></i><span>{tr("Take a photo of your plate")}</span>
                     <input type="file" accept="image/*" capture="environment" className="hidden" onChange={(e) => uploadPhoto(e.target.files[0])} />
                   </label>
                 )}
                 {imageKey && (
                   <p className="text-[11px] text-forest/70">
-                    Made with your {imageKey.maker.label} key ({imageKey.maker.model}). {imageKey.maker.cost}
+                    {tr("Made with your {maker} key ({model}).", { maker: imageKey.maker.label, model: imageKey.maker.model })} {tr(imageKey.maker.cost)}
                   </p>
                 )}
                 {photoJob?.status === "failed" && (
                   <div className="bg-cream-card rounded-2xl p-4 border border-cream-dark space-y-3" role="alert">
-                    <p className="text-xs text-forest"><span className="font-bold">SmartBite could not make the photo.</span> {photoJob.error}</p>
+                    <p className="text-xs text-forest"><span className="font-bold">{tr("SmartBite could not make the photo.")}</span> {tr(photoJob.error)}</p>
                     <button onClick={startPhoto} className="bg-white hover:bg-cream-dark text-forest font-bold text-xs px-4 py-2 rounded-xl transition-colors border border-cream-dark flex items-center gap-2">
-                      <i className="fa-solid fa-rotate-right"></i><span>Try again</span>
+                      <i className="fa-solid fa-rotate-right"></i><span>{tr("Try again")}</span>
                     </button>
-                    <p className="text-xs text-forest/70">Or make it by hand in Gemini:</p>
+                    <p className="text-xs text-forest/70">{tr("Or make it by hand in Gemini:")}</p>
                   </div>
                 )}
                 {!photoMaking && !autoPhoto && meal.photoPrompt ? (
                   <div className="space-y-3">
-                    <p className="text-xs text-forest/70">1. Copy this prompt and paste it in Gemini.</p>
+                    <p className="text-xs text-forest/70">{tr("1. Copy this prompt and paste it in Gemini.")}</p>
                     <pre className="bg-cream-card p-4 rounded-2xl text-xs text-forest/80 leading-relaxed whitespace-pre-wrap border border-cream-dark">{meal.photoPrompt}</pre>
                     <div className="flex gap-3">
                       <button onClick={copyPrompt} className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
-                        <i className="fa-regular fa-copy"></i><span>Copy prompt</span>
+                        <i className="fa-regular fa-copy"></i><span>{tr("Copy prompt")}</span>
                       </button>
                       <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer"
                         className="bg-cream-card hover:bg-cream-dark text-forest font-bold text-xs px-4 py-2 rounded-xl transition-colors border border-cream-dark flex items-center gap-2">
-                        <i className="fa-solid fa-arrow-up-right-from-square"></i><span>Open Gemini</span>
+                        <i className="fa-solid fa-arrow-up-right-from-square"></i><span>{tr("Open Gemini")}</span>
                       </a>
                     </div>
                   </div>
@@ -403,7 +412,7 @@ function RecipeView({ meal, meals, router }) {
                 {!photoMaking && (
                   <>
                     <p className="text-xs text-forest/70">
-                      {autoPhoto ? "Or drop your own image here, paste it, or click to choose it." : `${meal.photoPrompt ? "2. " : ""}Drop the image here, paste it, or click to choose it.`} It stays in this browser.
+                      {autoPhoto ? tr("Or drop your own image here, paste it, or click to choose it.") : `${meal.photoPrompt ? "2. " : ""}${tr("Drop the image here, paste it, or click to choose it.")}`} {tr("It stays in this browser.")}
                     </p>
                     <label
                       onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
@@ -411,8 +420,8 @@ function RecipeView({ meal, meals, router }) {
                       onDrop={(e) => { e.preventDefault(); setDragging(false); uploadPhoto(e.dataTransfer.files[0]); }}
                       className={`flex flex-col items-center justify-center gap-2 h-40 rounded-2xl border-2 border-dashed cursor-pointer transition-colors ${dragging ? "border-lime bg-lime-soft" : "border-cream-dark bg-cream/50 hover:bg-cream-card"}`}>
                       <i className={`fa-solid ${uploading ? "fa-circle-notch fa-spin" : "fa-image"} text-2xl text-forest/50`}></i>
-                      <span className="text-xs font-bold text-forest">{uploading ? "Saving the photo..." : "Drop image here"}</span>
-                      <span className="text-[11px] text-forest/70">PNG, JPEG or WebP</span>
+                      <span className="text-xs font-bold text-forest">{uploading ? tr("Saving the photo...") : tr("Drop image here")}</span>
+                      <span className="text-[11px] text-forest/70">{tr("PNG, JPEG or WebP")}</span>
                       <input type="file" accept="image/*" className="hidden" onChange={(e) => uploadPhoto(e.target.files[0])} />
                     </label>
                   </>
@@ -424,16 +433,16 @@ function RecipeView({ meal, meals, router }) {
             <div id="phone-panel-recipe" role="tabpanel" aria-labelledby="phone-tab-recipe"
               className={`grid grid-cols-1 gap-8${meal.steps?.length ? " md:grid-cols-2" : ""}${phoneHide("recipe")}`}>
               <div className="bg-white rounded-3xl p-6 shadow-soft border border-cream-dark">
-                <h3 className="font-serif font-bold text-xl text-forest mb-4">Recipe Ingredients</h3>
+                <h3 className="font-serif font-bold text-xl text-forest mb-4">{tr("Recipe Ingredients")}</h3>
                 <ul id="picked-ingredients-list" className="space-y-2.5 text-xs text-forest/80">
                   {meal.ingredients.map((ing) => (
                     <li key={ing.name} className="flex items-center justify-between py-1 border-b border-cream-dark/40">
                       <span>
-                        <span className="font-semibold text-forest">{ing.name}</span>
+                        <span className="font-semibold text-forest">{foodName(ing.name)}</span>
                         {ing.note ? <span className="text-[11px] text-forest/70 ml-1.5">{ing.note}</span> : null}
                       </span>
                       <span className="text-forest/70">
-                        {ing.units ? `${ing.units * servings} ${ing.units * servings === 1 ? "egg" : "eggs"} (` : ""}
+                        {ing.units ? `${ing.units * servings === 1 ? tr("{n} egg", { n: 1 }) : tr("{n} eggs", { n: ing.units * servings })} (` : ""}
                         {ing.est ? "~" : ""}{grams(ing.grams * servings)}{ing.units ? ")" : ""}
                       </span>
                     </li>
@@ -441,19 +450,20 @@ function RecipeView({ meal, meals, router }) {
                 </ul>
                 {meal.seasoning ? (
                   <p id="seasoning-line" className="text-xs text-forest/70 pt-3">
-                    <span className="font-semibold text-forest">Seasoning</span> ({meal.pantryNote}): {meal.seasoning}
+                    <span className="font-semibold text-forest">{tr("Seasoning")}</span> ({tr(meal.pantryNote)}): {meal.pantryItems.map((it) => foodName(it.name)).join(", ")}
                   </p>
                 ) : null}
               </div>
               {meal.steps?.length ? (
                 <div className="bg-white rounded-3xl p-6 shadow-soft border border-cream-dark">
-                  <h3 className="font-serif font-bold text-xl text-forest mb-4">Preparation Steps</h3>
+                  <h3 className="font-serif font-bold text-xl text-forest mb-4">{tr("Preparation Steps")}</h3>
                   <ol id="picked-steps-list" className="space-y-3 text-xs text-forest/80 list-decimal pl-4">
                     {meal.steps.map((s, i) => <li key={i} className="leading-relaxed">{s}</li>)}
                   </ol>
                   {servings !== meal.servings ? (
                     <p id="steps-servings-note" className="text-xs text-forest/70 pt-3">
-                      Steps are written for {meal.servings} {meal.servings === 1 ? "serving" : "servings"}. The ingredient list shows the grams for {servings} {servings === 1 ? "serving" : "servings"}.
+                      {meal.servings === 1 ? tr("Steps are written for {n} serving.", { n: meal.servings }) : tr("Steps are written for {n} servings.", { n: meal.servings })}{" "}
+                      {servings === 1 ? tr("The ingredient list shows the grams for {n} serving.", { n: servings }) : tr("The ingredient list shows the grams for {n} servings.", { n: servings })}
                     </p>
                   ) : null}
                 </div>
@@ -465,48 +475,48 @@ function RecipeView({ meal, meals, router }) {
               className={`bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4${phoneHide("shopping")}`}>
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-serif font-bold text-xl text-forest">Ingredients to Buy</h3>
-                  <p className="text-xs text-forest/70">Whole packs in typical sizes, so you see what you buy and what is left over.</p>
+                  <h3 className="font-serif font-bold text-xl text-forest">{tr("Ingredients to Buy")}</h3>
+                  <p className="text-xs text-forest/70">{tr("Whole packs in typical sizes, so you see what you buy and what is left over.")}</p>
                 </div>
-                <span className="text-xs bg-forest text-lime font-bold px-3 py-1 rounded-full">Typical packs</span>
+                <span className="text-xs bg-forest text-lime font-bold px-3 py-1 rounded-full">{tr("Typical packs")}</span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className={T.table}>
                   <thead className={T.head}>
                     <tr className="border-b border-cream-dark bg-cream/60 text-forest/70 uppercase text-[10px] font-bold">
-                      <th className={T.th}>Ingredient</th>
-                      <th className={T.th}>Product</th>
-                      <th className={T.thNum}>Pack Size</th>
-                      <th className={T.thNum}>Packs</th>
-                      <th className={T.thNum}>Needed</th>
-                      <th className={T.thNum}>Bought</th>
-                      <th className={T.thNum}>Leftover</th>
-                      <th className={`${T.thNum} text-right`}>Price</th>
+                      <th className={T.th}>{tr("Ingredient")}</th>
+                      <th className={T.th}>{tr("Product")}</th>
+                      <th className={T.thNum}>{tr("Pack Size")}</th>
+                      <th className={T.thNum}>{tr("Packs")}</th>
+                      <th className={T.thNum}>{tr("Needed")}</th>
+                      <th className={T.thNum}>{tr("Bought")}</th>
+                      <th className={T.thNum}>{tr("Leftover")}</th>
+                      <th className={`${T.thNum} text-right`}>{tr("Price")}</th>
                     </tr>
                   </thead>
                   <tbody id="pack-table-body" className={T.body}>
                     {rows.filter((r) => !r.optional).map((r) =>
                       r.packSize ? (
                         <tr key={r.key} className={T.row}>
-                          <td className={T.ingredient}>{r.ingredient}</td>
+                          <td className={T.ingredient}>{foodName(r.ingredient)}</td>
                           <td className={T.product}><ProductCell row={r} onEdit={setEditing} /></td>
-                          <td data-label="Pack" className={`${T.num} text-forest/70`}>{grams(r.packSize)}</td>
-                          <td data-label="Packs" className={`${T.num} font-bold text-forest`}>{r.packs}</td>
-                          <td data-label="Needed" className={`${T.num} text-forest/70`}>{grams(r.needed)}</td>
-                          <td data-label="Bought" className={`${T.num} text-forest/70`}>{grams(r.bought)}</td>
-                          <td data-label="Leftover" className={T.num}>
+                          <td data-label={tr("Pack")} className={`${T.num} text-forest/70`}>{grams(r.packSize)}</td>
+                          <td data-label={tr("Packs")} className={`${T.num} font-bold text-forest`}>{r.packs}</td>
+                          <td data-label={tr("Needed")} className={`${T.num} text-forest/70`}>{grams(r.needed)}</td>
+                          <td data-label={tr("Bought")} className={`${T.num} text-forest/70`}>{grams(r.bought)}</td>
+                          <td data-label={tr("Leftover")} className={T.num}>
                             <span className="font-bold text-forest">{grams(r.left)}</span>
                             {r.status ? (
-                              <span className={`ml-1 text-[10px] ${r.status === "Keeps" ? "bg-lime-soft text-forest font-bold" : "bg-amber-100 text-amber-900"} px-1.5 py-0.5 rounded`}>{r.status}</span>
+                              <span className={`ml-1 text-[10px] ${r.status === "Keeps" ? "bg-lime-soft text-forest font-bold" : "bg-amber-100 text-amber-900"} px-1.5 py-0.5 rounded`}>{tr(r.status)}</span>
                             ) : null}
                           </td>
                           <td className={T.price}>
                             <span className="inline-flex items-center justify-end gap-2">
-                              <PriceInput row={r} prices={prices} onBlocked={() => showToast("Not saved: this browser blocks storage.")} />
+                              <PriceInput row={r} prices={prices} onBlocked={() => showToast(tr("Not saved: this browser blocks storage."))} />
                               {r.hasPrice && r.estimate ? (
                                 <span className="min-w-[3.25rem] text-right font-normal text-forest/70" title={estimateTitle(r.pricePeriod, r.priceRegion)}>
-                                  {money(r.price)} <span className="text-[10px]">est.</span>
+                                  {money(r.price)} <span className="text-[10px]">{tr("est.")}</span>
                                 </span>
                               ) : r.hasPrice ? <span className="min-w-[3.25rem] text-right">{money(r.price)}</span> : null}
                             </span>
@@ -514,13 +524,13 @@ function RecipeView({ meal, meals, router }) {
                         </tr>
                       ) : (
                         <tr key={r.key} className={T.row}>
-                          <td className={T.ingredient}>{r.ingredient}</td>
-                          <td className={T.product}><span className="block">no pack size yet</span><EditProductButton row={r} onEdit={setEditing} /></td>
-                          <td data-label="Pack" className={`${T.num} text-forest/70`}></td>
-                          <td data-label="Packs" className={`${T.num} font-bold text-forest`}></td>
-                          <td data-label="Needed" className={`${T.num} text-forest/70`}>{grams(r.needed)}</td>
-                          <td data-label="Bought" className={`${T.num} text-forest/70`}></td>
-                          <td data-label="Leftover" className={T.num}></td>
+                          <td className={T.ingredient}>{foodName(r.ingredient)}</td>
+                          <td className={T.product}><span className="block">{tr("no pack size yet")}</span><EditProductButton row={r} onEdit={setEditing} /></td>
+                          <td data-label={tr("Pack")} className={`${T.num} text-forest/70`}></td>
+                          <td data-label={tr("Packs")} className={`${T.num} font-bold text-forest`}></td>
+                          <td data-label={tr("Needed")} className={`${T.num} text-forest/70`}>{grams(r.needed)}</td>
+                          <td data-label={tr("Bought")} className={`${T.num} text-forest/70`}></td>
+                          <td data-label={tr("Leftover")} className={T.num}></td>
                           <td className={T.price}></td>
                         </tr>
                       )
@@ -532,66 +542,70 @@ function RecipeView({ meal, meals, router }) {
               {/* Optional: not in the costs below; tick them in the cart if you need to buy them */}
               {optionalRows.length > 0 && (
                 <p id="recipe-optional" className="text-xs text-forest/70">
-                  <span className="font-bold text-forest">Optional, you may already have these:</span>{" "}
+                  <span className="font-bold text-forest">{tr("Optional, you may already have these:")}</span>{" "}
                   {optionalRows.map((r, i) => (
                     <span key={r.key} title={r.estimate ? estimateTitle(r.pricePeriod, r.priceRegion) : undefined}>
-                      {i ? " · " : ""}{r.ingredient}{r.hasPrice ? ` ${money(r.price)}${r.estimate ? " est." : ""}` : ""}
+                      {i ? " · " : ""}{foodName(r.ingredient)}{r.hasPrice ? ` ${money(r.price)}${r.estimate ? ` ${tr("est.")}` : ""}` : ""}
                     </span>
                   ))}
-                  . Not counted in the costs below; tick them in your cart if you need to buy them.
+                  {tr(". Not counted in the costs below; tick them in your cart if you need to buy them.")}
                 </p>
               )}
 
               {/* Metrics Summary Footer */}
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-4 border-t border-cream-dark bg-cream-card/50 p-4 rounded-2xl">
                 <div>
-                  <span className="text-[11px] text-forest/70 block">Cost of what you use:</span>
-                  <span id="summary-used-cost" className="font-bold text-sm text-forest">{noPrices ? "No prices yet" : money(t.used)}</span>
+                  <span className="text-[11px] text-forest/70 block">{tr("Cost of what you use:")}</span>
+                  <span id="summary-used-cost" className="font-bold text-sm text-forest">{noPrices ? tr("No prices yet") : money(t.used)}</span>
                 </div>
                 <div>
                   <span className="text-[11px] text-forest/70 block">
                     {t.unpriced && !noPrices
-                      ? `Partial total (${t.unpriced} ${t.unpriced === 1 ? "item has" : "items have"} no price yet):`
-                      : "Cost of purchase:"}
+                      ? (t.unpriced === 1 ? tr("Partial total ({n} item has no price yet):", { n: t.unpriced }) : tr("Partial total ({n} items have no price yet):", { n: t.unpriced }))
+                      : tr("Cost of purchase:")}
                   </span>
-                  <span id="summary-bought-cost" className="font-bold text-sm text-forest">{noPrices ? "No prices yet" : money(t.bought)}</span>
+                  <span id="summary-bought-cost" className="font-bold text-sm text-forest">{noPrices ? tr("No prices yet") : money(t.bought)}</span>
                 </div>
                 {/* Cost of what one serving uses, so it does not change with the servings chosen */}
                 <div>
-                  <span className="text-[11px] text-forest/70 block">{t.unpriced && !noPrices ? "Cost per serving (partial):" : "Cost per serving:"}</span>
-                  <span id="summary-serving-cost" className="font-bold text-sm text-forest">{noPrices ? "No prices yet" : money(t.used / servings)}</span>
+                  <span className="text-[11px] text-forest/70 block">{t.unpriced && !noPrices ? tr("Cost per serving (partial):") : tr("Cost per serving:")}</span>
+                  <span id="summary-serving-cost" className="font-bold text-sm text-forest">{noPrices ? tr("No prices yet") : money(t.used / servings)}</span>
                 </div>
                 <div>
-                  <span className="text-[11px] text-forest/70 block">Total waste/leftover:</span>
+                  <span className="text-[11px] text-forest/70 block">{tr("Total waste/leftover:")}</span>
                   <span id="summary-waste-metrics" className="font-bold text-sm text-forest">{grams(t.wasteGrams)}{noPrices ? "" : ` (${money(t.wasteCost)})`}</span>
                 </div>
               </div>
 
               {/* Budget: checked by the engine only when every bought line has a price */}
               <p id="budget-status" className="text-xs text-forest/70">
-                {noPrices && !priced?.pending ? "Add prices from your store to check the budget."
-                  : priced?.error ? "Budget check unavailable: the meal engine did not answer. Costs above use your prices."
-                  : !budget ? "Checking the budget..."
+                {noPrices && !priced?.pending ? tr("Add prices from your store to check the budget.")
+                  : priced?.error ? tr("Budget check unavailable: the meal engine did not answer. Costs above use your prices.")
+                  : !budget ? tr("Checking the budget...")
                   : !budget.budget_check_complete ? <>
-                      <span className="font-bold text-forest">Budget check incomplete{est ? " (estimated)" : ""}:</span>{" "}
-                      {budget.unpriced.length} {budget.unpriced.length === 1 ? "item has" : "items have"} no price yet.
+                      <span className="font-bold text-forest">{est ? tr("Budget check incomplete (estimated):") : tr("Budget check incomplete:")}</span>{" "}
+                      {budget.unpriced.length === 1 ? tr("{n} item has no price yet.", { n: 1 }) : tr("{n} items have no price yet.", { n: budget.unpriced.length })}
                     </>
                   : budget.within_budget ? <>
-                      <span className="font-bold text-forest">Within budget{est ? " (estimated)" : ""}:</span> {money(budget.cart_total_eur)} of your {money(priced.budget)} for {servings} {servings === 1 ? "serving" : "servings"}.
+                      <span className="font-bold text-forest">{est ? tr("Within budget (estimated):") : tr("Within budget:")}</span>{" "}
+                      {servings === 1 ? tr("{total} of your {budget} for {n} serving.", { total: money(budget.cart_total_eur), budget: money(priced.budget), n: servings })
+                        : tr("{total} of your {budget} for {n} servings.", { total: money(budget.cart_total_eur), budget: money(priced.budget), n: servings })}
                     </>
                   : <>
-                      <span className="font-bold text-amber-900">Over budget{est ? " (estimated)" : ""}</span> by {money(budget.over_budget_eur)}: {money(budget.cart_total_eur)} for a budget of {money(priced.budget)} for {servings} {servings === 1 ? "serving" : "servings"}.
+                      <span className="font-bold text-amber-900">{est ? tr("Over budget (estimated)") : tr("Over budget")}</span>{" "}
+                      {servings === 1 ? tr("by {over}: {total} for a budget of {budget} for {n} serving.", { over: money(budget.over_budget_eur), total: money(budget.cart_total_eur), budget: money(priced.budget), n: servings })
+                        : tr("by {over}: {total} for a budget of {budget} for {n} servings.", { over: money(budget.over_budget_eur), total: money(budget.cart_total_eur), budget: money(priced.budget), n: servings })}
                     </>}
-                {est ? <> Prices marked est. are estimates ({estLabel}). Type your store&apos;s price to replace one.</> : null}
+                {est ? <> {tr("Prices marked est. are estimates ({label}). Type your store's price to replace one.", { label: estLabel })}</> : null}
               </p>
               {fitMeal && (
                 <FitPacks meal={fitMeal} slug={meal.slug} showToast={showToast} autoOpen={fitAtStart} onChanged={(n) => setServings(n)} />
               )}
               <details id="how-calculated" className="text-xs text-forest/70">
-                <summary className="cursor-pointer font-bold text-forest underline decoration-lime decoration-2 underline-offset-4 hover:text-lime-hover">How this is calculated</summary>
+                <summary className="cursor-pointer font-bold text-forest underline decoration-lime decoration-2 underline-offset-4 hover:text-lime-hover">{tr("How this is calculated")}</summary>
                 <div className="pt-2 space-y-1.5">
-                  <p>Code matched each food to a typical pack size, counted the packs, and added up the macros from food composition tables.</p>
-                  <p>Leftover is what stays in the packs after cooking. A price marked est. is an average price for your country, used until you type the price you pay.</p>
+                  <p>{tr("Code matched each food to a typical pack size, counted the packs, and added up the macros from food composition tables.")}</p>
+                  <p>{tr("Leftover is what stays in the packs after cooking. A price marked est. is an average price for your country, used until you type the price you pay.")}</p>
                 </div>
               </details>
             </div>
@@ -602,18 +616,20 @@ function RecipeView({ meal, meals, router }) {
                 className={`bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-cream-dark space-y-4${phoneHide("nutrients")}`}>
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="font-serif font-bold text-xl text-forest">Vitamins and minerals</h3>
-                    <p id="micros-summary" className="text-xs text-forest/70">{micros.summary}</p>
+                    <h3 className="font-serif font-bold text-xl text-forest">{tr("Vitamins and minerals")}</h3>
+                    <p id="micros-summary" className="text-xs text-forest/70">{micros.rows.length === 1
+                      ? tr("At least 15% of the daily value for {high} of {n} nutrient.", { high: micros.high, n: 1 })
+                      : tr("At least 15% of the daily value for {high} of {n} nutrients.", { high: micros.high, n: micros.rows.length })}</p>
                   </div>
-                  <span className="text-xs bg-forest text-lime font-bold px-3 py-1 rounded-full whitespace-nowrap">Per serving</span>
+                  <span className="text-xs bg-forest text-lime font-bold px-3 py-1 rounded-full whitespace-nowrap">{tr("Per serving")}</span>
                 </div>
                 <ul id="micros-list" className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
                   {micros.rows.map((r) => (
                     <li key={r.key} className="text-xs">
                       <div className="flex items-baseline justify-between gap-3">
                         <span className="font-semibold text-forest">
-                          {r.label}
-                          {r.partial ? <><span aria-hidden="true" className="text-forest/70">*</span><span className="sr-only"> (some ingredients have no data)</span></> : null}
+                          {tr(MICRO_NAMES[r.key] || r.label)}
+                          {r.partial ? <><span aria-hidden="true" className="text-forest/70">*</span><span className="sr-only"> {tr("(some ingredients have no data)")}</span></> : null}
                         </span>
                         <span className="text-forest/70 whitespace-nowrap">{r.amount}{" "}<span className="font-bold text-forest ml-2">{r.pct}%</span></span>
                       </div>
@@ -624,12 +640,13 @@ function RecipeView({ meal, meals, router }) {
                   ))}
                 </ul>
                 <div className="pt-4 border-t border-cream-dark space-y-1 text-[11px] text-forest/70">
-                  <p>% of the daily value for an adult. One meal is about a third of your day.</p>
+                  <p>{tr("% of the daily value for an adult. One meal is about a third of your day.")}</p>
                   {micros.coverage ? (
-                    <p id="micros-coverage">{micros.coverage}{micros.missing ? ` ${micros.missing}` : ""}</p>
+                    <p id="micros-coverage">{tr("Based on {n} of {total} ingredients.", { n: micros.withData, total: micros.total })}
+                      {micros.missingFoods.length ? ` ${tr("No data for {foods}.", { foods: micros.missingFoods.map((f) => foodName(f)).join(", ") })}` : ""}</p>
                   ) : null}
-                  {micros.partial ? <p>* Some ingredients have no data for this nutrient, so the real amount may be higher.</p> : null}
-                  {micros.reference ? <p>Daily values: {micros.reference}.</p> : null}
+                  {micros.partial ? <p>{tr("* Some ingredients have no data for this nutrient, so the real amount may be higher.")}</p> : null}
+                  {micros.reference ? <p>{tr("Daily values: {reference}.", { reference: micros.reference === MICRO_NAMES.reference ? tr(MICRO_NAMES.reference) : micros.reference })}</p> : null}
                 </div>
               </div>
             ) : null}
@@ -639,11 +656,11 @@ function RecipeView({ meal, meals, router }) {
               <div id="add-bar" className="w-full sm:flex-1 flex gap-3 max-sm:fixed max-sm:bottom-0 max-sm:inset-x-0 max-sm:z-40 max-sm:bg-cream/95 max-sm:backdrop-blur-md max-sm:border-t max-sm:border-forest/10 max-sm:px-4 max-sm:py-3">
                 <button onClick={addToCart} className="flex-1 bg-lime hover:bg-lime-hover text-forest font-bold py-4 rounded-2xl text-sm transition-all shadow-glow flex items-center justify-center gap-2">
                   <i className={`fa-solid ${added ? "fa-check" : "fa-basket-shopping"}`}></i>
-                  <span>{added ? "Added. Add again" : "Add to my cart"}</span>
+                  <span>{added ? tr("Added. Add again") : tr("Add to my cart")}</span>
                 </button>
                 {added && (
                   <button id="open-cart" onClick={() => go("cart")} className="flex-1 bg-forest hover:bg-forest-light text-lime font-bold py-4 rounded-2xl text-sm transition-all flex items-center justify-center gap-2">
-                    <span>Open my cart</span>
+                    <span>{tr("Open my cart")}</span>
                     <i className="fa-solid fa-arrow-right text-xs"></i>
                   </button>
                 )}
@@ -651,28 +668,28 @@ function RecipeView({ meal, meals, router }) {
               {meal.kind === "local" && (
                 <button onClick={saveToRecipes} className="w-full sm:flex-1 bg-transparent border-2 border-forest hover:bg-forest hover:text-cream text-forest font-bold py-4 rounded-2xl text-sm transition-all flex items-center justify-center gap-2">
                   <i className="fa-regular fa-bookmark"></i>
-                  <span>Save in my recipes</span>
+                  <span>{tr("Save in my recipes")}</span>
                 </button>
               )}
               {/* Demo (decided 2026-11-09): the save button shows, greyed, and says how to save a meal of your own */}
               {meal.kind === "demo" && (
                 <button id="demo-save" aria-disabled="true"
-                  onClick={() => showToast("Example meals are already in My Recipes. Make your own meal to save it.")}
+                  onClick={() => showToast(tr("Example meals are already in My Recipes. Make your own meal to save it."))}
                   className="w-full sm:flex-1 bg-transparent border-2 border-forest/20 text-forest/70 font-bold py-4 rounded-2xl text-sm flex items-center justify-center gap-2 cursor-not-allowed">
                   <i className="fa-regular fa-bookmark"></i>
-                  <span>Save in my recipes</span>
+                  <span>{tr("Save in my recipes")}</span>
                 </button>
               )}
               {meal.kind === "local" && (
                 <button id="edit-meal" onClick={() => setEditingMeal(true)} className="w-full sm:flex-1 bg-transparent border-2 border-forest hover:bg-forest hover:text-cream text-forest font-bold py-4 rounded-2xl text-sm transition-all flex items-center justify-center gap-2">
                   <i className="fa-regular fa-pen-to-square"></i>
-                  <span>Edit meal</span>
+                  <span>{tr("Edit meal")}</span>
                 </button>
               )}
               {meal.kind === "local" && (
                 <button onClick={deleteMeal} className={`w-full sm:flex-1 bg-transparent border-2 font-bold py-4 rounded-2xl text-sm transition-all flex items-center justify-center gap-2 ${confirmDelete ? "border-red-600 text-red-600" : "border-forest/20 text-forest/70 hover:border-red-600 hover:text-red-600"}`}>
                   <i className="fa-regular fa-trash-can"></i>
-                  <span>{confirmDelete ? "Click again to delete for good" : "Delete meal"}</span>
+                  <span>{confirmDelete ? tr("Click again to delete for good") : tr("Delete meal")}</span>
                 </button>
               )}
             </div>
@@ -681,12 +698,12 @@ function RecipeView({ meal, meals, router }) {
             {(meal.kind === "demo" || (meal.shared && !setUp)) && (
               <div id="make-your-own" className="bg-cream-card rounded-3xl p-8 border border-cream-dark flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="space-y-2">
-                  <span className="text-xs font-bold uppercase tracking-widest text-forest/70">Like it?</span>
-                  <h3 className="font-serif text-2xl font-bold text-forest">Make your own</h3>
-                  <p className="text-xs text-forest/70 max-w-2xl">Tell SmartBite what you are craving and get your own recipe, shopping list and macros. Bring your AI key; it stays in this browser.</p>
+                  <span className="text-xs font-bold uppercase tracking-widest text-forest/70">{tr("Like it?")}</span>
+                  <h3 className="font-serif text-2xl font-bold text-forest">{tr("Make your own")}</h3>
+                  <p className="text-xs text-forest/70 max-w-2xl">{tr("Tell SmartBite what you are craving and get your own recipe, shopping list and macros. Bring your AI key; it stays in this browser.")}</p>
                 </div>
                 <Link href="/start" className="bg-lime hover:bg-lime-hover text-forest font-bold text-xs px-6 py-3 rounded-full transition-all whitespace-nowrap md:shrink-0">
-                  Make your own
+                  {tr("Make your own")}
                 </Link>
               </div>
             )}
@@ -707,7 +724,14 @@ function RecipeView({ meal, meals, router }) {
 const PHONE_TABS = [["recipe", "fa-utensils", "Recipe"], ["shopping", "fa-basket-shopping", "Shopping"],
   ["nutrients", "fa-leaf", "Nutrients"]];
 
+// English names of the engine's vitamins and minerals and of its reference (smartbite_engine/nutrition.py MICROS and
+// MICRO_REFERENCE), so the page can show them in Spanish (lib/i18n.js); a name not listed shows as the engine sends it
+const MICRO_NAMES = { iron_mg: "Iron", calcium_mg: "Calcium", potassium_mg: "Potassium", magnesium_mg: "Magnesium",
+  zinc_mg: "Zinc", vitamin_a_ug: "Vitamin A", vitamin_c_mg: "Vitamin C", vitamin_d_ug: "Vitamin D",
+  vitamin_b12_ug: "Vitamin B12", folate_ug: "Folate", reference: "EU reference intakes (Regulation (EU) 1169/2011, Annex XIII)" };
+
 function PhoneTabs({ tab, setTab, tabs }) {
+  useLang();
   const onKeyDown = (e) => {
     if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
     e.preventDefault();
@@ -717,14 +741,14 @@ function PhoneTabs({ tab, setTab, tabs }) {
     document.getElementById(`phone-tab-${next}`)?.focus();
   };
   return (
-    <div role="tablist" aria-label="Recipe sections" onKeyDown={onKeyDown}
+    <div role="tablist" aria-label={t("Recipe sections")} onKeyDown={onKeyDown}
       className={`sm:hidden grid ${tabs.length === 3 ? "grid-cols-3" : "grid-cols-2"} gap-1 bg-white rounded-2xl p-1 border border-cream-dark shadow-soft`}>
       {tabs.map(([id, icon, text]) => (
         <button key={id} id={`phone-tab-${id}`} type="button" role="tab" aria-selected={tab === id}
           aria-controls={id === "nutrients" ? "micros-panel" : `phone-panel-${id}`} tabIndex={tab === id ? 0 : -1}
           onClick={() => setTab(id)}
           className={`py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors ${tab === id ? "bg-forest text-lime" : "text-forest/70"}`}>
-          <i className={`fa-solid ${icon} text-[11px]`} aria-hidden="true"></i>{text}
+          <i className={`fa-solid ${icon} text-[11px]`} aria-hidden="true"></i>{t(text)}
         </button>
       ))}
     </div>
@@ -735,6 +759,7 @@ function PhoneTabs({ tab, setTab, tabs }) {
 // checkboxes. Apply changes the saved meal: new grams and servings, then the engine works out packs, macros and cost
 // again. Undo brings back the meal from before the first fit (lib/fitpacks.js). Meals made in this browser only.
 function FitPacks({ meal, slug, showToast, autoOpen, onChanged }) {
+  useLang();
   // { meal, before, after, suggestions, picked }: the meal as it was when the panel opened, so the preview and Apply
   // use the same suggestions even if the page's engine run for prices lands in between
   const [panel, setPanel] = useState(null);
@@ -761,12 +786,12 @@ function FitPacks({ meal, slug, showToast, autoOpen, onChanged }) {
       const { form, recipe } = fittedRecipe(doc, panel.meal, panel.picked);
       const out = await evaluateMeal({ form, profile: readProfile(), picked_idea: doc.picked_idea, recipe,
         products: productsFor(recipe, readActiveProducts()), ...engineEstimates() });
-      if (!replaceLocalMeal(slug, withFit(doc, out))) return showToast("Not saved: this browser blocks storage.");
+      if (!replaceLocalMeal(slug, withFit(doc, out))) return showToast(t("Not saved: this browser blocks storage."));
       setPanel(null);
       onChanged(out.form.servings);
-      showToast("Meal fitted to packs. Macros, packs and cost are updated.");
+      showToast(t("Meal fitted to packs. Macros, packs and cost are updated."));
     } catch (e) {
-      showToast(`Not changed: ${e.message}`);
+      showToast(t("Not changed: {reason}", { reason: e.message }));
     } finally {
       setBusy(false);
     }
@@ -775,10 +800,10 @@ function FitPacks({ meal, slug, showToast, autoOpen, onChanged }) {
     const doc = readLocalMeals()[slug];
     if (!doc?.before_fit) return;
     const back = undoFit(doc);
-    if (!replaceLocalMeal(slug, back)) return showToast("Not saved: this browser blocks storage.");
+    if (!replaceLocalMeal(slug, back)) return showToast(t("Not saved: this browser blocks storage."));
     setPanel(null);
     onChanged(back.form.servings);
-    showToast("Back to the meal as it was before fitting.");
+    showToast(t("Back to the meal as it was before fitting."));
   };
   const left = (sum) => (sum.priced ? money(sum.leftCost) : grams(sum.wasteGrams));
   const pct = (from, to) => `${to > from ? "+" : ""}${Math.round(((to - from) / from) * 100)}%`;
@@ -787,12 +812,12 @@ function FitPacks({ meal, slug, showToast, autoOpen, onChanged }) {
       {!panel && (
         <div className="flex flex-wrap items-center gap-3">
           <button id="fit-packs-open" onClick={open} className="bg-forest hover:bg-forest-light text-lime font-bold text-xs px-5 py-2.5 rounded-full transition-all inline-flex items-center gap-2">
-            <i className="fa-solid fa-scale-balanced"></i><span>Fit to packs</span>
+            <i className="fa-solid fa-scale-balanced"></i><span>{t("Fit to packs")}</span>
           </button>
           {fitted && (
             <span className="text-xs text-forest/70">
-              Fitted to packs.{" "}
-              <button id="fit-packs-undo" onClick={undo} className="font-bold text-forest underline hover:text-lime-hover">Undo</button>
+              {t("Fitted to packs.")}{" "}
+              <button id="fit-packs-undo" onClick={undo} className="font-bold text-forest underline hover:text-lime-hover">{t("Undo")}</button>
             </span>
           )}
         </div>
@@ -800,37 +825,41 @@ function FitPacks({ meal, slug, showToast, autoOpen, onChanged }) {
       {panel && (
         <div id="fit-packs-panel" className="bg-cream/50 border border-cream-dark rounded-2xl p-4 space-y-3">
           {panel.suggestions.length === 0 ? (
-            <p className="text-xs text-forest/70">Nothing to change: with small gram changes (up to 15%) and servings, these leftovers are already as low as they go.</p>
+            <p className="text-xs text-forest/70">{t("Nothing to change: with small gram changes (up to 15%) and servings, these leftovers are already as low as they go.")}</p>
           ) : (
             <>
-              <p className="text-xs text-forest/70">This changes the saved meal: grams and servings, then macros, packs and cost are worked out again. Protein stays at 90% of your target or more. You can undo it.</p>
+              <p className="text-xs text-forest/70">{t("This changes the saved meal: grams and servings, then macros, packs and cost are worked out again. Protein stays at 90% of your target or more. You can undo it.")}</p>
               {panel.suggestions.map((sg) => (
                 <label key={sg.id} className="flex items-start gap-3 text-xs text-forest cursor-pointer">
                   <input type="checkbox" checked={panel.picked.includes(sg.id)} onChange={() => toggle(sg.id)} className="w-4 h-4 mt-0.5 accent-forest" />
                   {sg.kind === "servings" ? (
-                    <span>{sg.from} → {sg.to} servings</span>
+                    <span>{t("{from} → {to} servings", { from: sg.from, to: sg.to })}</span>
                   ) : sg.kind === "fit" ? (
-                    <span>{sg.from} → {sg.to} servings, <span className="font-bold">{sg.ingredient}</span> {sg.gramsFrom} → {sg.gramsTo} g per serving ({sg.packs} {sg.packs === 1 ? "pack" : "packs"} in total, protein stays on target)</span>
+                    <span>{sg.packs === 1
+                      ? tx("{from} → {to} servings, {food} {gramsFrom} → {gramsTo} g per serving ({packs} pack in total, protein stays on target)",
+                        { from: sg.from, to: sg.to, food: <span className="font-bold">{foodName(sg.ingredient)}</span>, gramsFrom: sg.gramsFrom, gramsTo: sg.gramsTo, packs: sg.packs })
+                      : tx("{from} → {to} servings, {food} {gramsFrom} → {gramsTo} g per serving ({packs} packs in total, protein stays on target)",
+                        { from: sg.from, to: sg.to, food: <span className="font-bold">{foodName(sg.ingredient)}</span>, gramsFrom: sg.gramsFrom, gramsTo: sg.gramsTo, packs: sg.packs })}</span>
                   ) : (
-                    <span><span className="font-bold">{sg.ingredient}</span>:{" "}
-                      {sg.changes.map((c, i) => <span key={i}>{i ? "; " : ""}{c.from} → {c.to} g per serving ({pct(c.own, c.to)})</span>)}
+                    <span><span className="font-bold">{foodName(sg.ingredient)}</span>:{" "}
+                      {sg.changes.map((c, i) => <span key={i}>{i ? "; " : ""}{t("{from} → {to} g per serving ({pct})", { from: c.from, to: c.to, pct: pct(c.own, c.to) })}</span>)}
                     </span>
                   )}
                 </label>
               ))}
               <p className="text-xs text-forest">
-                Leftovers <span className="font-bold">{left(panel.before)} → {left(panel.after)}</span>
-                {panel.before.priced ? <>{" · "}Purchase <span className="font-bold">{money(panel.before.bought)} → {money(panel.after.bought)}</span></> : null}
+                {t("Leftovers")} <span className="font-bold">{left(panel.before)} → {left(panel.after)}</span>
+                {panel.before.priced ? <>{" · "}{t("Purchase")} <span className="font-bold">{money(panel.before.bought)} → {money(panel.after.bought)}</span></> : null}
               </p>
             </>
           )}
           <div className="flex gap-2">
             {panel.suggestions.length > 0 && (
               <button id="fit-packs-apply" onClick={apply} disabled={busy || !panel.picked.length} className="bg-lime hover:bg-lime-hover disabled:opacity-50 text-forest font-bold text-xs px-5 py-2 rounded-full transition-all inline-flex items-center gap-2">
-                {busy && <i className="fa-solid fa-circle-notch fa-spin"></i>}<span>{busy ? "Working out the meal..." : "Apply"}</span>
+                {busy && <i className="fa-solid fa-circle-notch fa-spin"></i>}<span>{busy ? t("Working out the meal...") : t("Apply")}</span>
               </button>
             )}
-            <button onClick={() => setPanel(null)} disabled={busy} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2">{panel.suggestions.length ? "Cancel" : "Close"}</button>
+            <button onClick={() => setPanel(null)} disabled={busy} className="text-xs font-bold text-forest/70 hover:text-forest px-3 py-2">{panel.suggestions.length ? t("Cancel") : t("Close")}</button>
           </div>
         </div>
       )}

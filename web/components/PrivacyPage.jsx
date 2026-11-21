@@ -2,13 +2,14 @@
 // Short privacy note: no accounts, data stays in the browser.
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { t, tx, useLang } from "../lib/i18n";
 import { REPO_URL } from "../lib/site";
 import { PageShell, useToast } from "./Chrome";
 
 const POINTS = [
   ["fa-user-slash", "No accounts", "There is no sign-up and no login. SmartBite does not know who you are."],
   ["fa-laptop", "Your data stays in your browser",
-    "Your Kitchen Profile, cart, saved meals, My Day and photos are kept in this browser's storage (localStorage and IndexedDB). They are not sent to a SmartBite server. Clearing your browser data deletes them."],
+    "Your Kitchen Profile, cart, saved meals, My Day and photos are kept in this browser's storage (localStorage and IndexedDB). They are not sent to a SmartBite server. Clearing your browser data deletes them. Your language choice (English or Spanish) is kept there too, not in a cookie."],
   ["fa-file-arrow-down", "Profile files",
     "Save profile file makes a file on your device with your Kitchen Profile, where you shop, your products, saved meals, cart and My Day. It is made in your browser and never uploaded. Your API key goes in only if you tick it. Open profile file reads one back, in this browser only."],
   ["fa-key", "Your API key",
@@ -34,15 +35,16 @@ const POINTS = [
 ];
 
 export default function PrivacyPage({ demoMeals }) {
+  useLang();
   const router = useRouter();
   const toastState = useToast();
   return (
     <PageShell active="privacy" demoMeals={demoMeals} router={router} toastState={toastState}>
       <section id="privacy-page" className="tab-page space-y-10 max-w-[1360px] mx-auto px-8">
         <div className="text-center max-w-xl mx-auto space-y-2">
-          <span className="font-script text-3xl text-forest font-bold">Short and plain</span>
-          <h1 className="font-serif text-4xl font-bold text-forest">Privacy Note</h1>
-          <p className="text-xs text-forest/70">No accounts, and your data stays in your browser.</p>
+          <span className="font-script text-3xl text-forest font-bold">{t("Short and plain")}</span>
+          <h1 className="font-serif text-4xl font-bold text-forest">{t("Privacy Note")}</h1>
+          <p className="text-xs text-forest/70">{t("No accounts, and your data stays in your browser.")}</p>
         </div>
         <div className="max-w-3xl mx-auto space-y-4">
           {POINTS.map(([icon, title, text]) => (
@@ -51,16 +53,18 @@ export default function PrivacyPage({ demoMeals }) {
                 <i className={`fa-solid ${icon}`}></i>
               </div>
               <div className="space-y-1">
-                <h3 className="font-serif font-bold text-base text-forest">{title}</h3>
-                <p className="text-xs text-forest/70 leading-relaxed">{text}</p>
+                <h3 className="font-serif font-bold text-base text-forest">{t(title)}</h3>
+                <p className="text-xs text-forest/70 leading-relaxed">{t(text)}</p>
               </div>
             </div>
           ))}
           <p className="text-xs text-forest/70 text-center pt-2">
-            Change your profile or remove your key in your <Link href="/profile" className="font-bold underline hover:text-lime-hover">Profile</Link>.
+            {tx("Change your profile or remove your key in your {profile}.", {
+              profile: <Link href="/profile" className="font-bold underline hover:text-lime-hover">{t("Profile")}</Link> })}
           </p>
           <p className="text-xs text-forest/70 text-center">
-            SmartBite is an open-source project by Marian Garabana. Questions go to the <a href={`${REPO_URL}/issues`} target="_blank" rel="noopener noreferrer" className="font-bold underline hover:text-lime-hover">issues page on GitHub</a>.
+            {tx("SmartBite is an open-source project by Marian Garabana. Questions go to the {link}.", {
+              link: <a href={`${REPO_URL}/issues`} target="_blank" rel="noopener noreferrer" className="font-bold underline hover:text-lime-hover">{t("issues page on GitHub")}</a> })}
           </p>
         </div>
       </section>

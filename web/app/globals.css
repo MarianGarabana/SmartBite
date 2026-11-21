@@ -64,3 +64,7 @@ body {
 @keyframes quizRise { from { transform: translateY(10px); opacity: 0; } to { transform: none; opacity: 1; } }
 .quiz-enter { animation: quizRise 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
 @media (prefers-reduced-motion: reduce) { .quiz-enter { animation: none; } }
+
+/* Spanish visitors (lib/i18n.js): the server renders English, so the page stays hidden until LangSync has switched
+   it to Spanish (a few hundred ms at most; app/layout.js shows it after 2 s whatever happens). Not a look change. */
+html.lang-wait body { visibility: hidden; }
