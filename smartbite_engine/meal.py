@@ -5,7 +5,9 @@ typical pack sizes (generic_packs.product_option, with the user's price when one
 pack_meal for the whole cart. Macros are for what is eaten (pantry items included), packs for what is bought.
 
 Names that are not a known food are listed in `unresolved`, never guessed: they get no nutrition (left out of the
-totals and listed in missing_nutrition) and no pack size.
+totals and listed in missing_nutrition) and no pack size. A name that only a word rule matched (names.match: "pork
+chops" -> pork loin) counts as that food and the meal says so (macros.counted_as, and counted_as on the item and its
+macro line).
 
 With a country ("ES", "CA", "FR", "GB", "IE" or "US"), lines the user did not price get an estimated price from that country's
 average prices (estimated_prices.py), for the same pack size the line buys without a price. The user's price wins.
@@ -21,7 +23,7 @@ from .calc import EGG_GRAMS, Nutrition, per_serving, scale, total
 from .estimated_prices import for_region, load_estimates, pack_estimate, period
 from .form import MealForm
 from .generic_packs import buy_unpriced, load_packs, pack_entry, product_option
-from .names import canonical, plain
+from .names import match, plain
 from .nutrition import (FIBER_REFERENCE_G, FIELDS, MICRO_KEYS, IngredientMacros, find, ingredient_macros, load_table,
                         micros_block, percent, scale_micros)
 from .pack import EGG_SIZE, HIGH_LEFTOVER_PCT, pack_line, pack_meal
@@ -36,7 +38,10 @@ EGGS = "eggs"
 OPTIONAL_FOODS = frozenset({
     "salt", "black pepper", "paprika", "smoked paprika", "cumin", "curry powder", "cinnamon", "nutmeg", "oregano",
     "thyme", "dried parsley", "garlic powder", "onion powder", "ground ginger", "chili flakes",
-    "extra virgin olive oil", "vinegar", "mustard", "soy sauce", "teriyaki sauce", "lemon juice", "lime juice"})
+    "extra virgin olive oil", "vinegar", "mustard", "soy sauce", "teriyaki sauce", "lemon juice", "lime juice",
+    # foods for names only (aliases.json "more_foods", 2026-11-21): spices, oils and sauces
+    "turmeric", "sunflower oil", "rapeseed oil", "avocado oil", "coconut oil", "ketchup", "mayonnaise",
+    "light mayonnaise", "tomato salsa", "salsa verde", "hot sauce", "sriracha", "bbq sauce"})
 
 
 def to_form(form):
@@ -84,7 +89,7 @@ def items_for(recipe, servings):
     out = []
     for ing in recipe["ingredients"]:
         name = ing["name"].strip()
-        food = canonical(name)
+        food, by_rule = match(name)
         units = ing.get("units_per_serving") or 0
         is_egg = food == EGGS and units > 0
         per = units * EGG_GRAMS[EGG_SIZE] if is_egg else ing["grams_per_serving"]
@@ -92,7 +97,7 @@ def items_for(recipe, servings):
                     "units_total": math.ceil(units * servings) if is_egg else None,
                     "storage": ing["storage"], "pantry": bool(ing["pantry"]), "dry": bool(ing["dry"]),
                     "optional": bool(ing["pantry"]) or food in OPTIONAL_FOODS,
-                    "leftover_plan": ing.get("leftover_plan")})
+                    "leftover_plan": ing.get("leftover_plan"), **({"counted_as": food} if by_rule else {})})
     return out
 
 
@@ -255,9 +260,10 @@ def _pack_line(item, packs, keep_leftovers_low, prices, estimates=None, products
     found = pack_entry(item["food"], packs) if item["food"] else None
     common = dict(units_needed=item["units_total"], storage=item["storage"], leftover_plan=item["leftover_plan"],
                   optional=item["optional"])
-    key = found[0] if found else _food_key(item)
-    if key and key in (products or {}):
+    key = _product_key(item, found[0] if found else _food_key(item), products)
+    if key:
         return _product_line(item, key, products[key], keep_leftovers_low, estimates, common)
+    key = found[0] if found else _food_key(item)
     if found is None and item["pantry"]:
         return None
     if found is None:  # unknown food: listed, no pack size, no price; its name key lets the user save a product
@@ -323,14 +329,24 @@ def _food_key(item):
     return item["food"] or plain(item["name"])
 
 
+def _product_key(item, key, products):
+    """The key of the user's product for this item: its food key, else its plain name (a product saved while the
+    food was unknown, keyed by its name, still counts once the name is a known food), else None."""
+    for k in (key, plain(item["name"])):
+        if k and k in (products or {}):
+            return k
+    return None
+
+
 def _labelled(item, products):
     """The user's product with a label for this item, or None."""
-    product = (products or {}).get(_food_key(item))
+    key = _product_key(item, _food_key(item), products)
+    product = products[key] if key else None
     return product if product and product.get("per_100g") else None
 
 
 def _macro_lines(items, table, products=None):
-    lines, missing = [], []
+    lines, missing, counted_as = [], [], []
     for it in items:
         key, product = _food_key(it), _labelled(it, products)
         if it["food"] is None and product is None:
@@ -346,10 +362,12 @@ def _macro_lines(items, table, products=None):
             continue
         lines.append({"name": it["name"], "food": key, "grams": it["total_grams"], "source": got.source,
                       "source_id": got.source_id, "amount": got.amount, "missing": list(got.missing),
-                      "micros": got.micros})
+                      "micros": got.micros, **({"counted_as": it["counted_as"]} if "counted_as" in it and not product else {})})
         if got.missing:
             missing.append(f"{it['name']}: no {', '.join(got.missing)} value in the source, counted as 0")
-    return lines, missing
+        if "counted_as" in it and not product:
+            counted_as.append(f"{it['name']}: not in the food table, counted as {it['counted_as']}")
+    return lines, missing, counted_as
 
 
 def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None, products=None, *, region=None,
@@ -400,7 +418,7 @@ def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None,
                                                             "period_to", "built", "region", "region_name")
                                    if k in estimates}
 
-    macro_lines, missing = _macro_lines(items, table, products)
+    macro_lines, missing, counted_as = _macro_lines(items, table, products)
     meal_total = total(l["amount"] for l in macro_lines)
     per = per_serving(meal_total, servings)
     misses = macro_check(per, meal_form)
@@ -418,7 +436,7 @@ def evaluate(form, picked_idea, recipe, profile=None, prices=None, country=None,
         "pack": pack,
         "macros": {"per_serving": _macros(per), "total": _macros(meal_total), "misses": misses,
                    "fiber_pct": percent(per.fiber_g, FIBER_REFERENCE_G), "micros": micros,
-                   "missing_nutrition": missing, "unresolved": unresolved,
+                   "missing_nutrition": missing, "unresolved": unresolved, **({"counted_as": counted_as} if counted_as else {}),
                    "lines": [{**{k: v for k, v in l.items() if k != "micros"}, "amount": _macros(l["amount"])}
                              for l in macro_lines]},
         "change_requests": requests,

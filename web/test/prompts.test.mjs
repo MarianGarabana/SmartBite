@@ -274,14 +274,22 @@ test("numbers are formatted like Python", () => {
 });
 
 test("food names map to the same English key as smartbite_engine/names.py", { skip: !hasPython && "no .venv/bin/python" }, async () => {
-  const { canonical } = await import("../lib/names.js");
+  const { canonical, match } = await import("../lib/names.js");
   const data = JSON.parse(fs.readFileSync(path.join(ROOT, "web", "generated", "aliases.json"), "utf8"));
-  const names = [...data.foods, ...Object.keys(data.aliases)];
-  const probes = [...names, ...names.map((n) => `${n.toUpperCase()}s`), "Pechugas de pollo", "Champiñón", "yogur griego 0 %", "unknown food"];
-  const run = spawnSync(PYTHON, ["-c", "import json,sys\nfrom smartbite_engine.names import canonical\nprint(json.dumps([canonical(n) for n in json.load(sys.stdin)]))"],
+  const names = [...data.foods, ...data.more_foods, ...Object.keys(data.aliases), ...Object.keys(data.more_aliases)];
+  // Word rules (2026-11-21): each rule's words, with a frozen word, a split word and extra words around them
+  const ruled = data.word_rules.rules.map((r) => r.words.join(" "));
+  const tricky = ["pork fat", "grasa de cerdo", "sardinas en aceite", "milk chocolate", "chocolate milk", "fat free milk",
+    "huevos camperos", "frozen shrimp tails", "gambas congeladas peladas", "aceite de oliva suave", "pan rallado",
+    "costillas de cerdo adobadas", "lentil rice cakes", "Cerdo", "beef broth", "yogur de fresa", "chili crisp"];
+  const probes = [...names, ...names.map((n) => `${n.toUpperCase()}s`), ...ruled, ...ruled.map((r) => `frozen ${r} fillets`),
+    ...ruled.map((r) => `${r} con arroz`), ...ruled.map((r) => `aceite de ${r}`), ...tricky,
+    "Pechugas de pollo", "Champiñón", "yogur griego 0 %", "unknown food"];
+  const run = spawnSync(PYTHON, ["-c", "import json,sys\nfrom smartbite_engine.names import match\nprint(json.dumps([list(match(n)) for n in json.load(sys.stdin)]))"],
     { cwd: ROOT, input: JSON.stringify(probes), encoding: "utf8" });
   assert.equal(run.status, 0, run.stderr);
-  assert.deepEqual(probes.map((n) => canonical(n)), JSON.parse(run.stdout));
+  assert.deepEqual(probes.map((n) => match(n)), JSON.parse(run.stdout));
+  assert.deepEqual(probes.map((n) => canonical(n)), JSON.parse(run.stdout).map(([key]) => key));
 });
 
 // A rerun from an engine evaluation: Python evaluates the recipe (smartbite_engine.meal.evaluate, the code behind
@@ -293,7 +301,7 @@ const RERUN_FIRST = { idea_id: "1", title: "Huevos con espinacas", servings: 3, 
   { name: "spinach", grams_per_serving: 133.3, units_per_serving: 0, storage: "fresh", pantry: false, dry: false },
   { name: "arroz", grams_per_serving: 45, units_per_serving: 0, storage: "keeps", pantry: false, dry: true },
   { name: "aceite de oliva virgen extra", grams_per_serving: 7, units_per_serving: 0, storage: "keeps", pantry: true, dry: false },
-  { name: "chorizo casero", grams_per_serving: 20, units_per_serving: 0, storage: "fresh", pantry: false, dry: false }] };
+  { name: "morcilla casera", grams_per_serving: 20, units_per_serving: 0, storage: "fresh", pantry: false, dry: false }] };
 
 test("rerunInfo from an engine evaluation gives the same prompt as rerun_info in Python", { skip: !hasPython && "no .venv/bin/python" }, () => {
   const second = { ...RERUN_FIRST, ingredients: RERUN_FIRST.ingredients.map((i) => (i.name === "arroz" ? { ...i, grams_per_serving: 51 } : i)) };
@@ -318,7 +326,7 @@ print(json.dumps({"meal": meal, "rerun": rerun, "prompt": recipe_prompt(c["form"
   assert.match(user, /- spinach: at most 153 g \(first recipe 133\.3 g\)/);
   assert.match(user, /- arroz: at most 51 g \(first recipe 45 g\)/);
   assert.doesNotMatch(user, /- aceite de oliva virgen extra: at most/);
-  assert.match(user, /Unknown foods, left out of the totals \(use a name from KNOWN INGREDIENTS\): chorizo casero/);
+  assert.match(user, /Unknown foods, left out of the totals \(use a name from KNOWN INGREDIENTS\): morcilla casera/);
 });
 
 test("OK ranges and gram limits are rounded inward, without float drift", () => {
